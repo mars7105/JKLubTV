@@ -1,7 +1,5 @@
 package de.turnierverwaltung.model;
 
-import de.turnierverwaltung.model.TurnierKonstanten;
-
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -58,25 +56,27 @@ public class TabelleToHTML {
 			htmlString += "      <tr>\n";
 
 			for (int x = 0; x < col; x++) {
-				String bgcolor = "";
-				if (this.tabellenMatrix[x][0] == "Folge-DWZ" && y > 0) {
-					String s1 = this.tabellenMatrix[x - 1][y];
-					String s2 = this.tabellenMatrix[x][y];
-					int sz1 = Integer.parseInt(s1);
-					int sz2 = Integer.parseInt(s2);
-					if (sz1 > sz2) {
-						bgcolor = " bgcolor=#F5D0A9";
-					}
-					if (sz2 > sz1) {
-						bgcolor = " bgcolor=#D0F5A9";
-					}
+				if (x != 1) {
+					String bgcolor = "";
+					if (this.tabellenMatrix[x][0] == "Folge-DWZ" && y > 0) {
+						String s1 = this.tabellenMatrix[x - 1][y];
+						String s2 = this.tabellenMatrix[x][y];
+						int sz1 = Integer.parseInt(s1);
+						int sz2 = Integer.parseInt(s2);
+						if (sz1 > sz2) {
+							bgcolor = " bgcolor=#F5D0A9";
+						}
+						if (sz2 > sz1) {
+							bgcolor = " bgcolor=#D0F5A9";
+						}
 
-				}
-				if (this.tabellenMatrix[x][y] != null && this.tabellenMatrix[x][y] != ""
-						&& this.tabellenMatrix[x][y] != " ") {
-					htmlString += "        <td" + bgcolor + ">" + this.tabellenMatrix[x][y] + "</td>\n";
-				} else {
-					htmlString += "        <td>" + TurnierKonstanten.HTML_LEERZEICHEN + "</td>\n";
+					}
+					if (this.tabellenMatrix[x][y] != null && this.tabellenMatrix[x][y] != ""
+							&& this.tabellenMatrix[x][y] != " ") {
+						htmlString += "        <td" + bgcolor + ">" + this.tabellenMatrix[x][y] + "</td>\n";
+					} else {
+						htmlString += "        <td>" + TurnierKonstanten.HTML_LEERZEICHEN + "</td>\n";
+					}
 				}
 			}
 			htmlString += "      </tr>\n";

@@ -40,6 +40,8 @@ import de.turnierverwaltung.view.TabAnzeigeView;
 import de.turnierverwaltung.view.TurnierListeLadenView;
 import de.turnierverwaltung.view.TurnierView;
 
+
+
 public class MainControl extends JFrame {
 
 	/**
@@ -86,11 +88,9 @@ public class MainControl extends JFrame {
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
 		windowHeight = TurnierKonstanten.WINDOW_HEIGHT;
-		setBounds(TurnierKonstanten.WINDOW_BOUNDS_X,
-				TurnierKonstanten.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
+		setBounds(TurnierKonstanten.WINDOW_BOUNDS_X, TurnierKonstanten.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
 		setMinimumSize(new Dimension(windowWidth, windowHeight));
-		setMaximumSize(new Dimension(Toolkit.getDefaultToolkit()
-				.getScreenSize()));
+		setMaximumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
 		setBackground(new Color(126, 201, 208));
 		setTitle("Klubturnierverwaltung");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -353,13 +353,11 @@ public class MainControl extends JFrame {
 		this.simpleTerminTabelle = simpleTerminTabelle;
 	}
 
-	public void setSimpleTerminTabelleView(
-			SimpleTerminTabelleView[] simpleTerminTabelleView) {
+	public void setSimpleTerminTabelleView(SimpleTerminTabelleView[] simpleTerminTabelleView) {
 		this.simpleTerminTabelleView = simpleTerminTabelleView;
 	}
 
-	public void setSpielerAnzahlControl(
-			SpielerAnzahlControl spielerAnzahlControl) {
+	public void setSpielerAnzahlControl(SpielerAnzahlControl spielerAnzahlControl) {
 		this.spielerAnzahlControl = spielerAnzahlControl;
 	}
 
@@ -367,13 +365,11 @@ public class MainControl extends JFrame {
 		this.spielerAnzahlView = spielerAnzahlView;
 	}
 
-	public void setSpielerEditierenControl(
-			SpielerLadenControl spielerLadenControl) {
+	public void setSpielerEditierenControl(SpielerLadenControl spielerLadenControl) {
 		this.spielerLadenControl = spielerLadenControl;
 	}
 
-	public void setSpielerEingabeControl(
-			SpielerEingabeControl spielerEingabeControl) {
+	public void setSpielerEingabeControl(SpielerEingabeControl spielerEingabeControl) {
 		this.spielerEingabeControl = spielerEingabeControl;
 	}
 
@@ -401,8 +397,7 @@ public class MainControl extends JFrame {
 		this.terminTabelle = terminTabelle;
 	}
 
-	public void setTerminTabelleControl(
-			TerminTabelleControl terminTabelleControl) {
+	public void setTerminTabelleControl(TerminTabelleControl terminTabelleControl) {
 		this.terminTabelleControl = terminTabelleControl;
 	}
 
@@ -410,8 +405,7 @@ public class MainControl extends JFrame {
 		this.turnier = turnier;
 	}
 
-	public void setTurnier_has_SpielerTableControl(
-			Turnier_has_SpielerTableControl turnier_has_SpielerTableControl) {
+	public void setTurnier_has_SpielerTableControl(Turnier_has_SpielerTableControl turnier_has_SpielerTableControl) {
 		this.turnier_has_SpielerTableControl = turnier_has_SpielerTableControl;
 	}
 
@@ -419,13 +413,11 @@ public class MainControl extends JFrame {
 		this.turnierControl = turnierControl;
 	}
 
-	public void setTurnierListeLadenControl(
-			TurnierListeLadenControl turnierListeLadenControl) {
+	public void setTurnierListeLadenControl(TurnierListeLadenControl turnierListeLadenControl) {
 		this.turnierListeLadenControl = turnierListeLadenControl;
 	}
 
-	public void setTurnierListeLadenView(
-			TurnierListeLadenView turnierListeLadenView) {
+	public void setTurnierListeLadenView(TurnierListeLadenView turnierListeLadenView) {
 		this.turnierListeLadenView = turnierListeLadenView;
 	}
 
@@ -433,8 +425,7 @@ public class MainControl extends JFrame {
 		this.turnierTabelle = turnierTabelle;
 	}
 
-	public void setTurnierTabelleControl(
-			TurnierTabelleControl turnierTabelleControl) {
+	public void setTurnierTabelleControl(TurnierTabelleControl turnierTabelleControl) {
 		this.turnierTabelleControl = turnierTabelleControl;
 	}
 

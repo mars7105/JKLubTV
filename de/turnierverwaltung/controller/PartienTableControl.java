@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 import de.turnierverwaltung.model.Partie;
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.model.Turnier;
+import de.turnierverwaltung.model.TurnierKonstanten;
 import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.PartienDAO;
 
@@ -35,7 +37,8 @@ public class PartienTableControl {
 	}
 
 	public void getPartien(int gruppenID) {
-		daoFactory = DAOFactory.getDAOFactory();
+		daoFactory = DAOFactory
+				.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 		PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
 		this.turnier = this.mainControl.getTurnier();
 		ArrayList<Partie> partie = new ArrayList<Partie>();
@@ -80,7 +83,8 @@ public class PartienTableControl {
 		int spielerIdweiss;
 		int spielerIdschwarz;
 
-		daoFactory = DAOFactory.getDAOFactory();
+		daoFactory = DAOFactory
+				.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 		PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
 		for (int i = 0; i < anzahlPartien; i++) {
 			if (turnier.getGruppe()[gruppe].getPartien()[i].getPartieId() == -1) {
@@ -107,7 +111,8 @@ public class PartienTableControl {
 
 	public boolean updatePartien(int gruppe) {
 		boolean saved = false;
-		daoFactory = DAOFactory.getDAOFactory();
+		daoFactory = DAOFactory
+				.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 		PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
 		for (int i = 0; i < turnier.getGruppe()[gruppe].getPartienAnzahl(); i++) {
 			saved = mySQLPartienDAO.updatePartien(turnier.getGruppe()[gruppe]

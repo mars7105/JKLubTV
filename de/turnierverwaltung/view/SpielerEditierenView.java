@@ -19,6 +19,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,6 +40,7 @@ public class SpielerEditierenView extends JDialog {
 	private JTextField textFieldDwz;
 	private JPanel buttonPane;
 	private JButton addSpielerButton;
+	private JComboBox<String> textComboBoxAge;
 
 	public SpielerEditierenView(Spieler spieler) {
 		this.setAlwaysOnTop(true);
@@ -74,6 +76,11 @@ public class SpielerEditierenView extends JDialog {
 		centerPane.add(new JLabel("DWZ: "));
 		centerPane.add(textFieldDwz);
 
+		String[] ageStrings = { "unter 20", "20 bis 25", "über 25" };
+		this.textComboBoxAge = new JComboBox<String>(ageStrings);
+		centerPane.add(new JLabel("Alter: "));
+		centerPane.add(textComboBoxAge);
+		
 		buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout());
 		buttonPane.setBackground(new Color(249, 222, 112));

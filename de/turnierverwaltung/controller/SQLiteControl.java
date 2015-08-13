@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -14,6 +15,7 @@ package de.turnierverwaltung.controller;
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import de.turnierverwaltung.model.TurnierKonstanten;
 import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.DatumDAO;
 import de.turnierverwaltung.mysql.GruppenDAO;
@@ -34,7 +36,7 @@ public class SQLiteControl {
 
 	public SQLiteControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		daoFactory = DAOFactory.getDAOFactory();
+		daoFactory = DAOFactory.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 		mySQLTurnierDAO = daoFactory.getTurnierDAO();
 		mySQLSpielerDAO = daoFactory.getSpielerDAO();
 		mySQLDatumDAO = daoFactory.getDatumDAO();

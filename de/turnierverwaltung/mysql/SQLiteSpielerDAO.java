@@ -23,22 +23,22 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import de.turnierverwaltung.model.Partie;
+import de.turnierverwaltung.model.Gruppe;
 import de.turnierverwaltung.model.Spieler;
 
-public class MySQLPartienDAO implements PartienDAO {
+public class SQLiteSpielerDAO implements SpielerDAO {
 	private Connection dbConnect;
 
-	public MySQLPartienDAO() {
+	public SQLiteSpielerDAO() {
 		this.dbConnect = null;
-		this.dbConnect = MySQLDAOFactory.createConnection();
+		this.dbConnect = SQLiteDAOFactory.createConnection();
 
 	}
 
 	@Override
-	public void createPartienTable() {
-		String sql = "CREATE TABLE partien (idPartie INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-				+ " idSpielerWeiss INTEGER NOT NULL , idSpielerSchwarz INTEGER, Runde INTEGER, Spieldatum VARCHAR, idGruppe INTEGER, Ergebnis INTEGER)";
+	public void createSpielerTable() {
+		String sql = "CREATE TABLE spieler (idSpieler INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
+				+ " Name VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR)";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -54,12 +54,13 @@ public class MySQLPartienDAO implements PartienDAO {
 				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
 		}
+
 	}
 
 	@Override
-	public boolean deletePartien(int id) {
+	public boolean deleteSpieler(int id) {
 		boolean ok = false;
-		String sql = "delete from partien where idPartie=?";
+		String sql = "delete from spieler where idSpieler=?";
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
@@ -77,33 +78,78 @@ public class MySQLPartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public String[] findPartien(int id) {
-		// TODO Automatisch generierter Methodenstub
-		return null;
+	public ArrayList<Gruppe> findSpieler(int id) {
+		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe ="
+				+ id + " AND Spieler_idSpieler = idSpieler";
+		ArrayList<Gruppe> gruppenListe = new ArrayList<Gruppe>();
+
+		Statement stmt;
+		if (this.dbConnect != null) {
+			try {
+				stmt = this.dbConnect.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+
+				while (rs.next()) {
+					int idGruppe = rs.getInt("idGruppe");
+					String gruppenName = rs.getString("Gruppenname");
+					gruppenListe.add(new Gruppe(idGruppe, gruppenName));
+				}
+				stmt.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			}
+		}
+		return gruppenListe;
 	}
 
 	@Override
-	public int insertPartien(int idGruppe, String spielDatum, int Runde,
-			int ergebnis, int spielerIdweiss, int spielerIdschwarz) {
+	public ArrayList<Spieler> getAllSpieler() {
+		String sql = "Select * from spieler";
+		ArrayList<Spieler> spielerListe = new ArrayList<Spieler>();
+
+		Statement stmt;
+		if (this.dbConnect != null) {
+			try {
+				stmt = this.dbConnect.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+
+				while (rs.next()) {
+					int idSpieler = rs.getInt("idSpieler");
+					String name = rs.getString("Name");
+					String kuerzel = rs.getString("kuerzel");
+					String dwz = rs.getString("dwz");
+					spielerListe
+							.add(new Spieler(idSpieler, name, kuerzel, dwz));
+				}
+				stmt.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			}
+		}
+		return spielerListe;
+
+	}
+
+	@Override
+	public int insertSpieler(String name, String dwz, String kuerzel) {
 
 		String sql;
 		int id = -1;
 
-		sql = "Insert into partien (idGruppe, Spieldatum, Runde, Ergebnis, idSpielerWeiss"
-				+ ", idSpielerSchwarz) values (?,?,?,?,?,?)";
+		sql = "Insert into spieler (DWZ, Kuerzel, Name) values (?,?,?)";
 
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
 						Statement.RETURN_GENERATED_KEYS);
 
-				preStm.setInt(1, idGruppe);
-				preStm.setString(2, spielDatum);
-				preStm.setInt(3, Runde);
-				preStm.setInt(4, ergebnis);
-				preStm.setInt(5, spielerIdweiss);
-				preStm.setInt(6, spielerIdschwarz);
-
+				preStm.setString(1, dwz);
+				preStm.setString(2, kuerzel);
+				preStm.setString(3, name);
 				preStm.executeUpdate();
 				ResultSet rs = preStm.getGeneratedKeys();
 				if (rs.next()) {
@@ -121,31 +167,24 @@ public class MySQLPartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public ArrayList<Partie> selectAllPartien(int idGruppe) {
-		String sql = "Select idPartie,idSpielerWeiss,"
-				+ "idSpielerSchwarz, Runde, Spieldatum, Ergebnis  "
-				+ "from partien where idGruppe=" + idGruppe;
-		ArrayList<Partie> partieListe = new ArrayList<Partie>();
+	public ArrayList<Spieler> selectAllSpieler(int idGruppe) {
+		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe = "
+				+ idGruppe + " AND Spieler_idSpieler = idSpieler";
+		ArrayList<Spieler> spielerListe = new ArrayList<Spieler>();
+
 		Statement stmt;
 		if (this.dbConnect != null) {
 			try {
 				stmt = this.dbConnect.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
+
 				while (rs.next()) {
-					int idPartie = rs.getInt("idPartie");
-					int idSpielerWeiss = rs.getInt("idSpielerWeiss");
-					int idSpielerSchwarz = rs.getInt("idSpielerSchwarz");
-					int runde = rs.getInt("Runde");
-					String spielDatum = rs.getString("Spieldatum");
-					int ergebnis = rs.getInt("Ergebnis");
-					Spieler spielerWeiss = new Spieler();
-					spielerWeiss.setSpielerId(idSpielerWeiss);
-					Spieler spielerSchwarz = new Spieler();
-					spielerSchwarz.setSpielerId(idSpielerSchwarz);
-
-					partieListe.add(new Partie(idPartie, spielDatum, ergebnis,
-							runde, spielerWeiss, spielerSchwarz));
-
+					int idSpieler = rs.getInt("idSpieler");
+					String name = rs.getString("Name");
+					String kuerzel = rs.getString("kuerzel");
+					String dwz = rs.getString("dwz");
+					spielerListe
+							.add(new Spieler(idSpieler, name, kuerzel, dwz));
 				}
 				stmt.close();
 
@@ -153,38 +192,30 @@ public class MySQLPartienDAO implements PartienDAO {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
-
 		}
-		return partieListe;
+		return spielerListe;
+
 	}
 
 	@Override
-	public boolean updatePartien(Partie partie) {
-
+	public boolean updateSpieler(Spieler spieler) {
 		boolean ok = false;
-		String sql = "update partien set idSpielerWeiss = ?, idSpielerSchwarz = ?"
-				+ ", Runde = ?, Ergebnis = ?, Spieldatum = ? where idPartie="
-				+ partie.getPartieId();
-
+		String sql = "update spieler set Name = ?, Kuerzel = ?"
+				+ ", DWZ = ? where idSpieler=" + spieler.getSpielerId();
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
-				preStm.setInt(1, partie.getSpielerWeiss().getSpielerId());
-				preStm.setInt(2, partie.getSpielerSchwarz().getSpielerId());
-				preStm.setInt(3, partie.getRunde());
-				preStm.setInt(4, partie.getErgebnis());
-				preStm.setString(5, partie.getSpielDatum());
+				preStm.setString(1, spieler.getName());
+				preStm.setString(2, spieler.getKuerzel());
+				preStm.setString(3, spieler.getDwz());
 				preStm.executeUpdate();
 				preStm.close();
 				ok = true;
-
 			} catch (SQLException e) {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, e.getMessage());
-
 			}
 		}
 		return ok;
 	}
-
 }

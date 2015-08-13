@@ -1,5 +1,4 @@
-package de.dwzberechnung.modelold;
-//DWZ Rechner - Ein Programm zum Berechnen von DWZ Zahlen von Schach Turnieren
+package de.turnierverwaltung.mysql;
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -14,19 +13,7 @@ package de.dwzberechnung.modelold;
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
-public class KonstantenModel {
-	public static int TABELLENSPALTEN = 4;
-	public static int TABELLENZEILEN = 50;
-	public static int DWZ_DIFFERENZ_VON = 0;
-	public static int DWZ_DIFFERENZ_BIS = 1;
-	public static int DWZ_IST_BESSER = 2;
-	public static int DWZ_IST_SCHLECHTER = 3;
-	public static int DWZ_DIFFERENZ_MAXIMUM = 735;
-	public static int ALTER_BIS_20_JAHRE = 5;
-	public static int ALTER_VON_21_BIS_25_JAHRE = 10;
-	public static int ALTER_UEBER_25_JAHRE = 15;
-	public static double EULERSCHE_ZAHL = 2.718281828;
+public interface DSBVereineDAO {
+	public void createDSBVereineTable();
 
-	
-	
 }

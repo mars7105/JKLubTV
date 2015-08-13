@@ -28,7 +28,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.turnierverwaltung.model.Turnier;
-import de.turnierverwaltung.mysql.MySQLDAOFactory;
+import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.MenueView;
 
 public class MenueControl implements ActionListener {
@@ -149,7 +149,7 @@ public class MenueControl implements ActionListener {
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
 					// This is where a real application would open the file.
-					MySQLDAOFactory.setDB_PATH(file.getAbsolutePath());
+					SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
 					mainControl.datenbankMenueView(true);
 
 				} else {
@@ -188,7 +188,7 @@ public class MenueControl implements ActionListener {
 							writer.close();
 
 							// true for rewrite, false for override
-							MySQLDAOFactory.setDB_PATH(file.getAbsolutePath());
+							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
 							SQLiteControl sqlC = new SQLiteControl(mainControl);
 							sqlC.createAllTables();
 							mainControl.datenbankMenueView(true);

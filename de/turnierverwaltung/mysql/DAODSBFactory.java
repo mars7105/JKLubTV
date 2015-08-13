@@ -13,37 +13,28 @@ package de.turnierverwaltung.mysql;
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
-public abstract class DAOFactory {
-	public static final int MYSQL = 1;
-	public static final int ORACLE = 2;
-	public static final int SQLITE = 3;
+public abstract class DAODSBFactory {
+	public static final int MYSQL_DSB = 1;
+	public static final int ORACLE_DSB = 2;
+	private static final int SQLITE_DSB = 3;
 
-	public static DAOFactory getDAOFactory(int database) {
+	public static SQLiteDSBDAOFactory getDAODSBFactory(int database) {
 		switch (database) {
-		case DAOFactory.MYSQL:
-			return new MySQLDAOFactory();
-		case DAOFactory.ORACLE:
+		case DAODSBFactory.MYSQL_DSB:
 			return null;
-		case DAOFactory.SQLITE:
-			return new SQLiteDAOFactory();
-
+		case DAODSBFactory.ORACLE_DSB:
+			return null;
+		case DAODSBFactory.SQLITE_DSB:
+			return new SQLiteDSBDAOFactory();
 		default:
 			return null;
 		}
 	}
 
-	public abstract DatumDAO getDatumDAO();
+	public abstract DSBVerbaendeDAO getDSBVerbaendeDAO();
 
-	public abstract GruppenDAO getGruppenDAO();
+	public abstract DSBVereineDAO getDSBVereineDAO();
 
-	public abstract PartienDAO getPartienDAO();
-
-	public abstract SpielerDAO getSpielerDAO();
-
-	public abstract Turnier_has_SpielerDAO getTurnier_has_SpielerDAO();
-
-	public abstract TurnierDAO getTurnierDAO();
-
-
+	public abstract DSBSpielerDAO getDSBSpielerDAO();
 
 }

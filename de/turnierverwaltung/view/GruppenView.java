@@ -38,13 +38,7 @@ public class GruppenView extends JPanel {
 	private JTextField[] gruppenNameTextField;
 	private String[] gruppenName;
 
-	/**
-	 * Create the dialog.
-	 * 
-	 * @param endDatum
-	 * @param startDatum
-	 * @param turnierName
-	 */
+
 
 	public GruppenView() {
 

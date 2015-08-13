@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import de.turnierverwaltung.model.Gruppe;
 import de.turnierverwaltung.model.Turnier;
+import de.turnierverwaltung.model.TurnierKonstanten;
 import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.GruppenDAO;
 
@@ -32,7 +33,7 @@ public class GruppenTableControl {
 	public GruppenTableControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		this.turnier = this.mainControl.getTurnier();
-		daoFactory = DAOFactory.getDAOFactory();
+		daoFactory = DAOFactory.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 		mySQLGruppenDAO = daoFactory.getGruppenDAO();
 	}
 
@@ -51,7 +52,7 @@ public class GruppenTableControl {
 		boolean eintragGespeichert = false;
 		if (turnier.getGruppe()[gruppe].getGruppeId() == -1) {
 			String gruppenName = turnier.getGruppe()[gruppe].getGruppenName();
-			daoFactory = DAOFactory.getDAOFactory();
+			daoFactory = DAOFactory.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 			int turnierId = turnier.getTurnierId();
 			gruppenId = mySQLGruppenDAO.insertGruppe(gruppenName, turnierId);
 			turnier.getGruppe()[gruppe].setGruppeId(gruppenId);
@@ -64,7 +65,7 @@ public class GruppenTableControl {
 		this.turnier = mainControl.getTurnier();
 
 		boolean saved = false;
-		daoFactory = DAOFactory.getDAOFactory();
+		daoFactory = DAOFactory.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 		mySQLGruppenDAO = daoFactory.getGruppenDAO();
 		saved = mySQLGruppenDAO.updateGruppe(turnier.getGruppe()[gruppe]);
 		return saved;

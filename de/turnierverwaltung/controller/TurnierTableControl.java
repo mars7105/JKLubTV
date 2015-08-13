@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import de.turnierverwaltung.model.Turnier;
+import de.turnierverwaltung.model.TurnierKonstanten;
 import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.DatumDAO;
 import de.turnierverwaltung.mysql.TurnierDAO;
@@ -35,7 +36,7 @@ public class TurnierTableControl {
 
 	public TurnierTableControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		daoFactory = DAOFactory.getDAOFactory();
+		daoFactory = DAOFactory.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 		mySQLTurnierDao = daoFactory.getTurnierDAO();
 		mySQLDatumDAO = daoFactory.getDatumDAO();
 		turnier_has_spielerDAO = daoFactory.getTurnier_has_SpielerDAO();
@@ -77,7 +78,7 @@ public class TurnierTableControl {
 		Object[] options = { "Ja", "Abbrechen" };
 		int abfrage = JOptionPane.showOptionDialog(null,
 				"Wollen Sie wirklich das Turnier \n" + turnier.getTurnierName()
-						+ "\n" + "l�schen?", "Turnier l�schen?",
+						+ "\n" + "löschen?", "Turnier löschen?",
 				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
 				null, options, options[1]);
 		if (abfrage == 0) {

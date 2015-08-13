@@ -19,10 +19,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class MySQLDAOFactory extends DAOFactory {
+public class SQLiteDSBDAOFactory extends DAODSBFactory {
 
-	private static String classNameMySQL = "com.mysql.jdbc.Driver";
-	private static String dbStringMySQL = "jdbc:mysql://localhost:3306/Schachturnier?user=root&password=";
+	private static String classNameSQLite = "org.sqlite.JDBC";
+	// private static String DB_PATH = System.getProperty("user.home") + "/"
+	// + "Schachturnier.sqlite";
+	private static String DB_PATH;
+	private static String dbStringSQLite;
 
 	private static Connection connection;
 
@@ -33,8 +36,8 @@ public class MySQLDAOFactory extends DAOFactory {
 
 				try {
 
-					Class.forName(classNameMySQL);
-					return (DriverManager.getConnection(dbStringMySQL));
+					Class.forName(classNameSQLite);
+					return (DriverManager.getConnection(dbStringSQLite));
 
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
@@ -51,44 +54,32 @@ public class MySQLDAOFactory extends DAOFactory {
 		return null;
 	}
 
-	public MySQLDAOFactory() {
+	public static void setDB_PATH(String dbPath) {
+		SQLiteDSBDAOFactory.DB_PATH = dbPath;
+		SQLiteDSBDAOFactory.dbStringSQLite = "jdbc:sqlite:" + DB_PATH;
+
+	}
+
+	public SQLiteDSBDAOFactory() {
 
 	}
 
 	@Override
-	public DatumDAO getDatumDAO() {
-		DatumDAO datumDAO = new MySQLDatumDAO();
-		return datumDAO;
+	public DSBVerbaendeDAO getDSBVerbaendeDAO() {
+		DSBVerbaendeDAO dsbVerbaendeDAO = new SQLiteDSBVerbaendeDAO();
+		return dsbVerbaendeDAO;
 	}
 
 	@Override
-	public GruppenDAO getGruppenDAO() {
-		GruppenDAO gruppenDAO = new MySQLGruppenDAO();
-		return gruppenDAO;
+	public DSBVereineDAO getDSBVereineDAO() {
+		DSBVereineDAO dsbVereineDAO = new SQLiteDSBVereineDAO();
+		return dsbVereineDAO;
 	}
 
 	@Override
-	public PartienDAO getPartienDAO() {
-		PartienDAO partienDAO = new MySQLPartienDAO();
-		return partienDAO;
-	}
-
-	@Override
-	public SpielerDAO getSpielerDAO() {
-		SpielerDAO spielerDAO = new MySQLSpielerDAO();
-		return spielerDAO;
-	}
-
-	@Override
-	public Turnier_has_SpielerDAO getTurnier_has_SpielerDAO() {
-		Turnier_has_SpielerDAO turnier_has_SpielerDAO = new MySQLTurnier_has_SpielerDAO();
-		return turnier_has_SpielerDAO;
-	}
-
-	@Override
-	public TurnierDAO getTurnierDAO() {
-		TurnierDAO turnierDAO = new MySQLTurnierDAO();
-		return turnierDAO;
+	public DSBSpielerDAO getDSBSpielerDAO() {
+		DSBSpielerDAO dsbSpielerDAO = new SQLiteDSBSpielerDAO();
+		return dsbSpielerDAO;
 	}
 
 }

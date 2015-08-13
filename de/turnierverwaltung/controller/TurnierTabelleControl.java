@@ -33,7 +33,6 @@ import javax.swing.event.TableModelListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import de.dwzberechnung.model.MainModel;
 import de.turnierverwaltung.model.SimpleTurnierTabelle;
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.model.Turnier;

@@ -41,9 +41,10 @@ public class SpielerEingabeView extends JPanel {
 	private JTextField[] spielerTextfield;
 	private JTextField[] dwzTextfield;
 	private JTextField[] kuerzelTextfield;
-	private JComboBox[] spielerSuche;
+	private JComboBox<String>[] spielerSuche;
 	private int spielerAnzahl;
 	private int[] spielerID;
+	private JComboBox<String>[] textComboBoxAge;
 
 	/**
 	 * Create the panel.
@@ -57,6 +58,7 @@ public class SpielerEingabeView extends JPanel {
 		spielerTextfield = new JTextField[this.spielerAnzahl];
 		dwzTextfield = new JTextField[this.spielerAnzahl];
 		kuerzelTextfield = new JTextField[this.spielerAnzahl];
+		textComboBoxAge = new JComboBox[this.spielerAnzahl];
 		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
 		contentPanel = new JPanel();
@@ -111,6 +113,11 @@ public class SpielerEingabeView extends JPanel {
 			dwzTextfield[i] = new JTextField(10);
 			line.add(label3);
 			line.add(dwzTextfield[i]);
+			
+			String[] ageStrings = { "unter 20", "20 bis 25", "über 25" };
+			textComboBoxAge[i] = new JComboBox<String>(ageStrings);
+			line.add(new JLabel("Alter: "));
+			line.add(textComboBoxAge[i]);
 
 			centerPane.add(line);
 

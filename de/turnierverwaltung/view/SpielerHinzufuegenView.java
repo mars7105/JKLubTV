@@ -1,4 +1,5 @@
 package de.turnierverwaltung.view;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -20,6 +21,7 @@ import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -38,7 +40,7 @@ public class SpielerHinzufuegenView extends JDialog {
 	private JPanel buttonPane;
 	private JPanel centerPane;
 	private JPanel contentPanel;
-
+	private JComboBox<String> textComboBoxAge;
 	// private JButton addSpielerButton;
 
 	public SpielerHinzufuegenView() {
@@ -113,6 +115,14 @@ public class SpielerHinzufuegenView extends JDialog {
 		this.textFieldName = name;
 	}
 
+	public JComboBox<String> getTextComboBoxAge() {
+		return textComboBoxAge;
+	}
+
+	public void setTextComboBoxAge(JComboBox<String> textComboBoxAge) {
+		this.textComboBoxAge = textComboBoxAge;
+	}
+
 	public void spielerPanel() {
 		centerPane = new JPanel();
 		this.textFieldName = new JTextField(15);
@@ -128,6 +138,10 @@ public class SpielerHinzufuegenView extends JDialog {
 
 		centerPane.add(new JLabel("DWZ: "));
 		centerPane.add(textFieldDwz);
+		String[] ageStrings = { "unter 20", "20 bis 25", "über 25" };
+		this.textComboBoxAge = new JComboBox<String>(ageStrings);
+		centerPane.add(new JLabel("Alter: "));
+		centerPane.add(textComboBoxAge);
 		contentPanel.add(centerPane);
 		contentPanel.add(buttonPane);
 		add(contentPanel);

@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -17,6 +18,7 @@ package de.turnierverwaltung.controller;
 import de.turnierverwaltung.model.Gruppe;
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.model.Turnier;
+import de.turnierverwaltung.model.TurnierKonstanten;
 import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.Turnier_has_SpielerDAO;
 
@@ -37,7 +39,8 @@ public class Turnier_has_SpielerTableControl {
 		int spielerId = 0;
 		this.turnier = mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
-		daoFactory = DAOFactory.getDAOFactory();
+		daoFactory = DAOFactory
+				.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 		Turnier_has_SpielerDAO turnier_has_SpielerDAO = daoFactory
 				.getTurnier_has_SpielerDAO();
 		gruppeId = gruppe[gruppenNr].getGruppeId();
@@ -51,7 +54,8 @@ public class Turnier_has_SpielerTableControl {
 	}
 
 	public void updateTurnier_has_Spieler(int gruppe) {
-		daoFactory = DAOFactory.getDAOFactory();
+		daoFactory = DAOFactory
+				.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 		Turnier_has_SpielerDAO mySQLTurnier_has_SpielerDAO = daoFactory
 				.getTurnier_has_SpielerDAO();
 		for (int i = 0; i < turnier.getGruppe()[gruppe].getSpielerAnzahl(); i++) {

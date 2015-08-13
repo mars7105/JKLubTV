@@ -23,22 +23,21 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import de.turnierverwaltung.model.Partie;
-import de.turnierverwaltung.model.Spieler;
+import de.turnierverwaltung.model.Gruppe;
 
-public class MySQLPartienDAO implements PartienDAO {
+public class SQLiteGruppenDAO implements GruppenDAO {
 	private Connection dbConnect;
 
-	public MySQLPartienDAO() {
+	public SQLiteGruppenDAO() {
 		this.dbConnect = null;
-		this.dbConnect = MySQLDAOFactory.createConnection();
 
+		this.dbConnect = SQLiteDAOFactory.createConnection();
 	}
 
 	@Override
-	public void createPartienTable() {
-		String sql = "CREATE TABLE partien (idPartie INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-				+ " idSpielerWeiss INTEGER NOT NULL , idSpielerSchwarz INTEGER, Runde INTEGER, Spieldatum VARCHAR, idGruppe INTEGER, Ergebnis INTEGER)";
+	public void createGruppenTable() {
+		String sql = "CREATE TABLE gruppen (idGruppe INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
+				+ " TurnierId INTEGER, Gruppenname VARCHAR)";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -57,9 +56,9 @@ public class MySQLPartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public boolean deletePartien(int id) {
+	public boolean deleteGruppe(int id) {
 		boolean ok = false;
-		String sql = "delete from partien where idPartie=?";
+		String sql = "delete from gruppen where idGruppe=?";
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
@@ -77,32 +76,49 @@ public class MySQLPartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public String[] findPartien(int id) {
-		// TODO Automatisch generierter Methodenstub
-		return null;
+	public Gruppe findGruppe(int id) {
+		String sql = "Select Gruppenname, TurnierId " + "from gruppen "
+				+ "where idGruppe=" + id;
+
+		Gruppe gruppe = null;
+
+		Statement stmt;
+		if (this.dbConnect != null) {
+			try {
+				stmt = this.dbConnect.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+
+				while (rs.next()) {
+
+					String gruppenName = rs.getString("Gruppenname");
+					gruppe = new Gruppe(id, gruppenName);
+
+				}
+				stmt.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, e.getMessage());
+
+			}
+		}
+		return gruppe;
 	}
 
 	@Override
-	public int insertPartien(int idGruppe, String spielDatum, int Runde,
-			int ergebnis, int spielerIdweiss, int spielerIdschwarz) {
-
+	public int insertGruppe(String gruppenName, int turnierId) {
 		String sql;
 		int id = -1;
 
-		sql = "Insert into partien (idGruppe, Spieldatum, Runde, Ergebnis, idSpielerWeiss"
-				+ ", idSpielerSchwarz) values (?,?,?,?,?,?)";
-
+		sql = "Insert into gruppen (Gruppenname, TurnierId) values (?,?)";
+		id = -1;
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
 						Statement.RETURN_GENERATED_KEYS);
 
-				preStm.setInt(1, idGruppe);
-				preStm.setString(2, spielDatum);
-				preStm.setInt(3, Runde);
-				preStm.setInt(4, ergebnis);
-				preStm.setInt(5, spielerIdweiss);
-				preStm.setInt(6, spielerIdschwarz);
+				preStm.setString(1, gruppenName);
+				preStm.setInt(2, turnierId);
 
 				preStm.executeUpdate();
 				ResultSet rs = preStm.getGeneratedKeys();
@@ -116,36 +132,26 @@ public class MySQLPartienDAO implements PartienDAO {
 				JOptionPane.showMessageDialog(null, e.getMessage());
 
 			}
+
 		}
 		return id;
 	}
 
 	@Override
-	public ArrayList<Partie> selectAllPartien(int idGruppe) {
-		String sql = "Select idPartie,idSpielerWeiss,"
-				+ "idSpielerSchwarz, Runde, Spieldatum, Ergebnis  "
-				+ "from partien where idGruppe=" + idGruppe;
-		ArrayList<Partie> partieListe = new ArrayList<Partie>();
+	public ArrayList<Gruppe> selectAllGruppen(int idTurnier) {
+		String sql = "Select * from gruppen where TurnierId=" + idTurnier;
+		ArrayList<Gruppe> gruppenListe = new ArrayList<Gruppe>();
+
 		Statement stmt;
 		if (this.dbConnect != null) {
 			try {
 				stmt = this.dbConnect.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
+
 				while (rs.next()) {
-					int idPartie = rs.getInt("idPartie");
-					int idSpielerWeiss = rs.getInt("idSpielerWeiss");
-					int idSpielerSchwarz = rs.getInt("idSpielerSchwarz");
-					int runde = rs.getInt("Runde");
-					String spielDatum = rs.getString("Spieldatum");
-					int ergebnis = rs.getInt("Ergebnis");
-					Spieler spielerWeiss = new Spieler();
-					spielerWeiss.setSpielerId(idSpielerWeiss);
-					Spieler spielerSchwarz = new Spieler();
-					spielerSchwarz.setSpielerId(idSpielerSchwarz);
-
-					partieListe.add(new Partie(idPartie, spielDatum, ergebnis,
-							runde, spielerWeiss, spielerSchwarz));
-
+					int idGruppe = rs.getInt("idGruppe");
+					String gruppenName = rs.getString("Gruppenname");
+					gruppenListe.add(new Gruppe(idGruppe, gruppenName));
 				}
 				stmt.close();
 
@@ -153,38 +159,27 @@ public class MySQLPartienDAO implements PartienDAO {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
-
 		}
-		return partieListe;
+		return gruppenListe;
 	}
 
 	@Override
-	public boolean updatePartien(Partie partie) {
-
+	public boolean updateGruppe(Gruppe gruppe) {
 		boolean ok = false;
-		String sql = "update partien set idSpielerWeiss = ?, idSpielerSchwarz = ?"
-				+ ", Runde = ?, Ergebnis = ?, Spieldatum = ? where idPartie="
-				+ partie.getPartieId();
-
+		String sql = "update gruppen set Gruppenname = ? where idGruppe="
+				+ gruppe.getGruppeId();
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
-				preStm.setInt(1, partie.getSpielerWeiss().getSpielerId());
-				preStm.setInt(2, partie.getSpielerSchwarz().getSpielerId());
-				preStm.setInt(3, partie.getRunde());
-				preStm.setInt(4, partie.getErgebnis());
-				preStm.setString(5, partie.getSpielDatum());
+				preStm.setString(1, gruppe.getGruppenName());
 				preStm.executeUpdate();
 				preStm.close();
 				ok = true;
-
 			} catch (SQLException e) {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, e.getMessage());
-
 			}
 		}
 		return ok;
 	}
-
 }

@@ -26,12 +26,12 @@ import javax.swing.JOptionPane;
 import de.turnierverwaltung.model.Partie;
 import de.turnierverwaltung.model.Spieler;
 
-public class MySQLPartienDAO implements PartienDAO {
+public class SQLitePartienDAO implements PartienDAO {
 	private Connection dbConnect;
 
-	public MySQLPartienDAO() {
+	public SQLitePartienDAO() {
 		this.dbConnect = null;
-		this.dbConnect = MySQLDAOFactory.createConnection();
+		this.dbConnect = SQLiteDAOFactory.createConnection();
 
 	}
 

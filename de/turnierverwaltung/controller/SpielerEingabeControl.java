@@ -189,8 +189,6 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 							.removeActionListener(this);
 					spielerEingabeView[i].getSpielerSuche()[s].removeAllItems();
 
-					int anzahlZeichen = spielerEingabeView[i]
-							.getSpielerTextfield()[s].getText().length();
 					Spieler temp = null;
 
 					ListIterator<Spieler> li = alleSpieler.listIterator();
@@ -225,13 +223,11 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void keyTyped(KeyEvent e) {
 
 	}
 
-	@SuppressWarnings("unchecked")
 	public void makeTabbedPane(int index) {
 
 		if (spielerAnzahlView[index].getAnzahlSpielerTextField().getText()

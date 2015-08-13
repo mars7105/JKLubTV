@@ -30,6 +30,8 @@ public class Turnierverwaltung {
 
 	public static void main(String args[]) {
 		EventQueue.invokeLater(new Runnable() {
+			private MainControl mainControl;
+
 			@Override
 			public void run() {
 				try {
@@ -46,11 +48,20 @@ public class Turnierverwaltung {
 					// handle exception
 				}
 				try {
-					MainControl mainControl = new MainControl();
+					setMainControl(new MainControl());
 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+			}
+
+			@SuppressWarnings("unused")
+			public MainControl getMainControl() {
+				return mainControl;
+			}
+
+			public void setMainControl(MainControl mainControl) {
+				this.mainControl = mainControl;
 			}
 		});
 	}

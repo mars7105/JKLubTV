@@ -21,11 +21,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import de.turnierverwaltung.model.Spieler;
-import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.view.SpielerEditierenView;
 import de.turnierverwaltung.view.SpielerHinzufuegenView;
 import de.turnierverwaltung.view.SpielerLadenView;
@@ -33,12 +31,10 @@ import de.turnierverwaltung.view.TabAnzeigeView;
 
 public class SpielerLadenControl implements ActionListener {
 	private MainControl mainControl;
-	private Turnier turnier;
 	private TabAnzeigeView tabbedPaneView;
 	private JPanel hauptPanel;
 	private int spielerAnzahl;
 	private SpielerLadenView spielerLadenView;
-	private JButton[] okButton;
 	private ArrayList<Spieler> spieler;
 	private SpielerTableControl spielerTableControl;
 	private SpielerEditierenView spielerEditierenView;
@@ -134,7 +130,7 @@ public class SpielerLadenControl implements ActionListener {
 	}
 
 	public void makePanel() {
-		turnier = this.mainControl.getTurnier();
+		this.mainControl.getTurnier();
 
 		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(
 				this.mainControl));

@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -35,7 +36,8 @@ public class SpielerTableControl {
 
 	public SpielerTableControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		daoFactory = DAOFactory.getDAOFactory();
+		daoFactory = DAOFactory
+				.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 		mySQLSpielerDAO = daoFactory.getSpielerDAO();
 	}
 
@@ -118,7 +120,6 @@ public class SpielerTableControl {
 
 	public boolean loescheSpieler(Spieler spieler) {
 		boolean geloescht = false;
-		daoFactory = DAOFactory.getDAOFactory();
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
 		Turnier_has_SpielerDAO turnier_has_spielerDAO = daoFactory
 				.getTurnier_has_SpielerDAO();
@@ -129,17 +130,17 @@ public class SpielerTableControl {
 			JOptionPane.showMessageDialog(
 					null,
 					"Spieler " + spieler.getName() + "\n"
-							+ "kann nicht gel�scht werden, da "
+							+ "kann nicht gelöscht werden, da "
 							+ spieler.getName() + " \n" + "in " + tId.size()
 							+ " Turnier(en) mitspielt!");
 
 			abfrage = -1;
 		} else {
 			Object[] options = { "Ja", "Nein" };
-			abfrage = JOptionPane.showOptionDialog(null, "Spieler l�schen?\n"
-					+ "Dieser Spieler kann problemlos gel�scht werden,\n "
+			abfrage = JOptionPane.showOptionDialog(null, "Spieler löschen?\n"
+					+ "Dieser Spieler kann problemlos gelöscht werden,\n "
 					+ "da " + spieler.getName()
-					+ " an keinem Turnier teilnimmt.", "Spieler l�schen?",
+					+ " an keinem Turnier teilnimmt.", "Spieler löschen?",
 					JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 		}
@@ -153,7 +154,6 @@ public class SpielerTableControl {
 
 	public void updateOneSpieler(Spieler spieler) {
 		boolean saved = false;
-		daoFactory = DAOFactory.getDAOFactory();
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
 
 		saved = mySQLSpielerDAO.updateSpieler(spieler);
@@ -164,7 +164,6 @@ public class SpielerTableControl {
 		this.turnier = mainControl.getTurnier();
 
 		boolean saved = false;
-		daoFactory = DAOFactory.getDAOFactory();
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
 		for (int i = 0; i < turnier.getGruppe()[gruppe].getSpielerAnzahl(); i++) {
 			saved = mySQLSpielerDAO.updateSpieler(turnier.getGruppe()[gruppe]
