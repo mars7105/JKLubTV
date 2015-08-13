@@ -97,6 +97,8 @@ public class SpielerLadenView extends JPanel {
 		line.add(nkuerzel);
 		JLabel dwz = new JLabel("  DWZ: " + spieler.getDwz());
 		line.add(dwz);
+//		JLabel age = new JLabel("  Alter: " + spieler.getAge());
+//		line.add(age);
 
 		centerPane.add(line);
 		centerPane.add(new JSeparator());

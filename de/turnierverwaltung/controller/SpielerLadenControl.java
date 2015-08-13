@@ -62,17 +62,19 @@ public class SpielerLadenControl implements ActionListener {
 				String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel()
 						.getText();
 				String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
+				int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
 				Spieler neuerSpieler = new Spieler();
 				neuerSpieler.setName(name);
 				neuerSpieler.setKuerzel(kuerzel);
 				neuerSpieler.setDwz(dwz);
-
+				neuerSpieler.setAge(age);
 				SpielerTableControl stc = new SpielerTableControl(mainControl);
 				neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
 				spieler.add(neuerSpieler);
 				spielerHinzufuegenView.getTextFieldName().setEditable(false);
 				spielerHinzufuegenView.getTextFieldKuerzel().setEditable(false);
 				spielerHinzufuegenView.getTextFieldDwz().setEditable(false);
+				spielerHinzufuegenView.getTextComboBoxAge().setEnabled(false);
 				spielerHinzufuegenView.spielerPanel();
 
 			}
@@ -89,11 +91,11 @@ public class SpielerLadenControl implements ActionListener {
 				String kuerzel = spielerEditierenView.getTextFieldKuerzel()
 						.getText();
 				String dwz = spielerEditierenView.getTextFieldDwz().getText();
-
+				int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
 				spieler.get(spielerIndex).setName(name);
 				spieler.get(spielerIndex).setKuerzel(kuerzel);
 				spieler.get(spielerIndex).setDwz(dwz);
-
+				spieler.get(spielerIndex).setAge(age);
 				SpielerTableControl stc = new SpielerTableControl(mainControl);
 				stc.updateOneSpieler(spieler.get(spielerIndex));
 				mainControl.setEnabled(true);

@@ -91,6 +91,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 		String name = "";
 		String kuerzel = "";
 		String dwz = "";
+		int age = 0;
 		int spielerID = 0;
 		int sAnzahl = 0;
 		for (int i = 0; i < gruppenAnzahl; i++) {
@@ -107,9 +108,11 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 							.getText();
 					dwz = spielerEingabeView[i].getDwzTextfield()[y].getText();
 					spielerID = spielerEingabeView[i].getSpielerID()[y];
+					age = spielerEingabeView[i].getTextComboBoxAge()[y].getSelectedIndex();
 					spieler[y].setName(name);
 					spieler[y].setKuerzel(kuerzel);
 					spieler[y].setDwz(dwz);
+					spieler[y].setAge(age);
 					if (spielerID >= 0) {
 						spieler[y].setSpielerId(spielerID);
 						SpielerTableControl stc = new SpielerTableControl(
@@ -164,11 +167,13 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 							dwz = temp.getDwz();
 							kuerzel = temp.getKuerzel();
 							spielerID = temp.getSpielerId();
+							age = temp.getAge();
 							spielerEingabeView[i].getKuerzelTextfield()[s]
 									.setText(kuerzel);
 							spielerEingabeView[i].getDwzTextfield()[s]
 									.setText(dwz);
 							spielerEingabeView[i].getSpielerID()[s] = spielerID;
+							spielerEingabeView[i].getTextComboBoxAge()[s].setSelectedIndex(age);
 						}
 
 					}

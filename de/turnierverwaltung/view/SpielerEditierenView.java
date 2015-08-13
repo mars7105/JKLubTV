@@ -78,6 +78,7 @@ public class SpielerEditierenView extends JDialog {
 
 		String[] ageStrings = { "unter 20", "20 bis 25", "über 25" };
 		this.textComboBoxAge = new JComboBox<String>(ageStrings);
+		this.textComboBoxAge.setSelectedIndex(spieler.getAge());
 		centerPane.add(new JLabel("Alter: "));
 		centerPane.add(textComboBoxAge);
 		
@@ -147,4 +148,13 @@ public class SpielerEditierenView extends JDialog {
 	public void setTextFieldName(JTextField name) {
 		this.textFieldName = name;
 	}
+
+	public JComboBox<String> getTextComboBoxAge() {
+		return textComboBoxAge;
+	}
+
+	public void setTextComboBoxAge(JComboBox<String> textComboBoxAge) {
+		this.textComboBoxAge = textComboBoxAge;
+	}
+	
 }

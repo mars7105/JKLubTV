@@ -91,7 +91,7 @@ public class FolgeDWZController {
 						}
 					}
 				}
-				PlayerModel playerdwz = new PlayerModel(2, player.getDWZ(), opponents.size());
+				PlayerModel playerdwz = new PlayerModel(player.getAge(), player.getDWZ(), opponents.size());
 				playerdwz.setPunkte(gesamtpunkte);
 				MainModel mainModel = new MainModel(playerdwz, opponents);
 				player.setFolgeDWZ((int) playerdwz.getFolgeDWZ());

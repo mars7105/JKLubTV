@@ -29,7 +29,7 @@ public interface SpielerDAO {
 	public ArrayList<Spieler> getAllSpieler();
 
 	public int insertSpieler(String spielerName, String spielerDWZ,
-			String spielerKuerzel);
+			String spielerKuerzel, int age);
 
 	public ArrayList<Spieler> selectAllSpieler(int idGruppe);
 

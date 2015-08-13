@@ -189,4 +189,12 @@ public class SpielerEingabeView extends JPanel {
 		this.spielerTextfield = spielerTextfield;
 	}
 
+	public JComboBox<String>[] getTextComboBoxAge() {
+		return textComboBoxAge;
+	}
+
+	public void setTextComboBoxAge(JComboBox<String>[] textComboBoxAge) {
+		this.textComboBoxAge = textComboBoxAge;
+	}
+
 }

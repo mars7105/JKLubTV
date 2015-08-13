@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -38,7 +39,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public void createSpielerTable() {
 		String sql = "CREATE TABLE spieler (idSpieler INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-				+ " Name VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR)";
+				+ " Name VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, Age INTEGER)";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -79,8 +80,8 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 	@Override
 	public ArrayList<Gruppe> findSpieler(int id) {
-		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe ="
-				+ id + " AND Spieler_idSpieler = idSpieler";
+		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe =" + id
+				+ " AND Spieler_idSpieler = idSpieler";
 		ArrayList<Gruppe> gruppenListe = new ArrayList<Gruppe>();
 
 		Statement stmt;
@@ -116,12 +117,21 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				ResultSet rs = stmt.executeQuery(sql);
 
 				while (rs.next()) {
+
 					int idSpieler = rs.getInt("idSpieler");
 					String name = rs.getString("Name");
 					String kuerzel = rs.getString("kuerzel");
 					String dwz = rs.getString("dwz");
-					spielerListe
-							.add(new Spieler(idSpieler, name, kuerzel, dwz));
+					int age = 2;
+					try {
+						age = rs.getInt("Age");
+					} catch (SQLException e) {
+
+						alterTableAge();
+
+					}
+
+					spielerListe.add(new Spieler(idSpieler, name, kuerzel, dwz, age));
 				}
 				stmt.close();
 
@@ -135,21 +145,26 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	}
 
 	@Override
-	public int insertSpieler(String name, String dwz, String kuerzel) {
+	public int insertSpieler(String name, String dwz, String kuerzel, int age) {
 
 		String sql;
 		int id = -1;
 
-		sql = "Insert into spieler (DWZ, Kuerzel, Name) values (?,?,?)";
+		sql = "Insert into spieler (DWZ, Kuerzel, Name, Age) values (?,?,?,?)";
 
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
-						Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 				preStm.setString(1, dwz);
 				preStm.setString(2, kuerzel);
 				preStm.setString(3, name);
+				try {
+					preStm.setInt(4, age);
+				} catch (SQLException e) {
+					alterTableAge();
+					preStm.setInt(4, age);
+				}
 				preStm.executeUpdate();
 				ResultSet rs = preStm.getGeneratedKeys();
 				if (rs.next()) {
@@ -168,8 +183,8 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 	@Override
 	public ArrayList<Spieler> selectAllSpieler(int idGruppe) {
-		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe = "
-				+ idGruppe + " AND Spieler_idSpieler = idSpieler";
+		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe = " + idGruppe
+				+ " AND Spieler_idSpieler = idSpieler";
 		ArrayList<Spieler> spielerListe = new ArrayList<Spieler>();
 
 		Statement stmt;
@@ -183,8 +198,13 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 					String name = rs.getString("Name");
 					String kuerzel = rs.getString("kuerzel");
 					String dwz = rs.getString("dwz");
-					spielerListe
-							.add(new Spieler(idSpieler, name, kuerzel, dwz));
+					int age = 2;
+					try {
+						age = rs.getInt("Age");
+					} catch (SQLException e) {
+						alterTableAge();
+					}
+					spielerListe.add(new Spieler(idSpieler, name, kuerzel, dwz, age));
 				}
 				stmt.close();
 
@@ -200,14 +220,19 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public boolean updateSpieler(Spieler spieler) {
 		boolean ok = false;
-		String sql = "update spieler set Name = ?, Kuerzel = ?"
-				+ ", DWZ = ? where idSpieler=" + spieler.getSpielerId();
+		String sql = "update spieler set Name = ?, Kuerzel = ?" + ", DWZ = ?, Age = ? where idSpieler="
+				+ spieler.getSpielerId();
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
 				preStm.setString(1, spieler.getName());
 				preStm.setString(2, spieler.getKuerzel());
 				preStm.setString(3, spieler.getDwz());
+				try {
+					preStm.setInt(4, spieler.getAge());
+				} catch (SQLException e) {
+					alterTableAge();
+				}
 				preStm.executeUpdate();
 				preStm.close();
 				ok = true;
@@ -217,5 +242,28 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 			}
 		}
 		return ok;
+	}
+
+	private void alterTableAge() {
+		// String sql = "IF NOT EXISTS (SELECT * FROM spieler " +
+		// "WHERE COLUMN_NAME = Age) " +
+		// "BEGIN" +
+		// "ALTER TABLE spieler ADD Age INTEGER DEFAULT(2)" +
+		// "END";
+
+		String sql = "ALTER TABLE spieler ADD Age INTEGER  DEFAULT(2)";
+		Statement stmt;
+		if (this.dbConnect != null) {
+			try {
+				// create a database connection
+				stmt = this.dbConnect.createStatement();
+				stmt.setQueryTimeout(30); // set timeout to 30 sec.
+				stmt.executeUpdate(sql);
+				stmt.close();
+
+			} catch (SQLException e) {
+
+			}
+		}
 	}
 }

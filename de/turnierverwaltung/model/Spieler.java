@@ -30,6 +30,7 @@ public class Spieler implements Comparable<Object> {
 	private double soberg;
 	private int platz;
 	private int folgeDWZ;
+	private int age;
 
 	public Spieler() {
 		this.punkte = 0;
@@ -38,11 +39,12 @@ public class Spieler implements Comparable<Object> {
 		spielerId = -1;
 	}
 
-	public Spieler(int id, String name, String kuerzel, String dwz) {
+	public Spieler(int id, String name, String kuerzel, String dwz, int age) {
 		this.spielerId = id;
 		this.name = name;
 		this.kuerzel = kuerzel;
 		this.dwz = dwz;
+		this.age = age;
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 0;
@@ -102,8 +104,7 @@ public class Spieler implements Comparable<Object> {
 
 			try {
 				loop = false;
-				sort = (int) (this.punkte * 1000000 + this.soberg * 100000 + Integer
-						.parseInt(this.dwz));
+				sort = (int) (this.punkte * 1000000 + this.soberg * 100000 + Integer.parseInt(this.dwz));
 			} catch (NumberFormatException e) {
 				loop = true;
 				this.dwz = TurnierKonstanten.KEINE_DWZ;
@@ -157,7 +158,7 @@ public class Spieler implements Comparable<Object> {
 	}
 
 	public String getNeueDWZ() {
-		
+
 		return neueDWZ;
 	}
 
@@ -171,6 +172,14 @@ public class Spieler implements Comparable<Object> {
 
 	public void setFolgeDWZ(int folgeDWZ) {
 		this.folgeDWZ = folgeDWZ;
+	}
+
+	public int getAge() {
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 }
