@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import de.turnierverwaltung.model.Turnier;
@@ -238,7 +239,23 @@ public class TurnierListeLadenControl implements ActionListener {
 				mainControl.setEnabled(false);
 
 			}
-
+			if (arg0.getSource() == turnierListeLadenView.getTurnierAddButton()) {
+				Turnier turnier = this.mainControl.getTurnier();
+				if (turnier == null) {
+					mainControl.setTurnierControl(new TurnierControl(mainControl));
+				} else {
+					// Custom button text
+					Object[] options = { "Ja", "Abbrechen" };
+					int abfrage = JOptionPane.showOptionDialog(null,
+							"Wollen Sie wirklich ein neues Turnier erstellen? " + "Alle eingegebenen Daten gehen verloren.",
+							"A Silly Question", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null,
+							options, options[1]);
+					if (abfrage == 0) {
+						mainControl.resetApp();
+						mainControl.setTurnierControl(new TurnierControl(mainControl));
+					}
+				}
+			}
 			// Wichtig:
 			// Diese Abfrage muss an letzter Stelle stehen,
 			// da ansonsten eine ArraOutOfBounds Exception auftritt!
@@ -278,6 +295,7 @@ public class TurnierListeLadenControl implements ActionListener {
 					.addActionListener(this);
 			turnierListeLadenView.getGruppenBearbeitenButton()[i]
 					.addActionListener(this);
+			turnierListeLadenView.getTurnierAddButton().addActionListener(this);
 		}
 		hauptPanel.removeAll();
 		hauptPanel.add(turnierListeLadenView);

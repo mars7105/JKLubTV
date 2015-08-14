@@ -1,4 +1,5 @@
 package de.turnierverwaltung.view;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -18,8 +19,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -38,13 +41,18 @@ public class TurnierListeLadenView extends JPanel {
 	private JButton[] turnierLoeschenButton;
 	private JButton[] turnierBearbeitenButton;
 	private JButton[] gruppenBearbeitenButton;
+	private ImageIcon turnierNew = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-new.png")));
+	private ImageIcon turnierDelete = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-close-4.png")));
+	private ImageIcon turnierProperties = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-edit.png")));
+	private ImageIcon turnierLaden = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-preview.png")));
+	private JButton turnierAddButton;
 
 	public TurnierListeLadenView(int anzahlTurniere) {
 
 		anzahlElemente = 0;
 
 		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 100;
-		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 100;
+		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 175;
 
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
@@ -53,6 +61,18 @@ public class TurnierListeLadenView extends JPanel {
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
 		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));
+		turnierAddButton = new JButton("Neu", turnierNew);
+		JLabel titleLabel = new JLabel("Turnierliste");
+		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel newTurnierPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		titlepanel.add(titleLabel);
+		newTurnierPanel.add(turnierAddButton);
+		JPanel mainPane = new JPanel();
+		mainPane.setLayout(new BorderLayout());
+		mainPane.add(titlepanel, BorderLayout.NORTH);
+		mainPane.add(newTurnierPanel, BorderLayout.CENTER);
+
+		add(mainPane);
 		add(scrollPane, BorderLayout.CENTER);
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
@@ -61,6 +81,14 @@ public class TurnierListeLadenView extends JPanel {
 		turnierLoeschenButton = new JButton[anzahlTurniere];
 		turnierBearbeitenButton = new JButton[anzahlTurniere];
 		gruppenBearbeitenButton = new JButton[anzahlTurniere];
+	}
+
+	public JButton getTurnierAddButton() {
+		return turnierAddButton;
+	}
+
+	public void setTurnierAddButton(JButton turnierAddButton) {
+		this.turnierAddButton = turnierAddButton;
 	}
 
 	public JButton[] getGruppenBearbeitenButton() {
@@ -79,28 +107,28 @@ public class TurnierListeLadenView extends JPanel {
 		return turnierLoeschenButton;
 	}
 
-	public void makeTurnierZeile(String turnierName, String startDatum,
-			String endDatum) {
+	public void makeTurnierZeile(String turnierName, String startDatum, String endDatum) {
+		JPanel turnierLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		line = new JPanel();
-		line.setLayout(new FlowLayout(FlowLayout.LEFT));
+		line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
 		line.setBackground(new Color(249, 222, 112));
-		turnierLadeButton[anzahlElemente] = new JButton("Turnier laden");
-		line.add(turnierLadeButton[anzahlElemente]);
-		turnierBearbeitenButton[anzahlElemente] = new JButton(
-				"Turnier bearbeiten");
-		line.add(turnierBearbeitenButton[anzahlElemente]);
-		turnierLoeschenButton[anzahlElemente] = new JButton("Turnier löschen");
-		line.add(turnierLoeschenButton[anzahlElemente]);
-		gruppenBearbeitenButton[anzahlElemente] = new JButton(
-				"Gruppen bearbeiten");
-		line.add(gruppenBearbeitenButton[anzahlElemente]);
+		turnierLadeButton[anzahlElemente] = new JButton("Laden", turnierLaden);
+		buttonLine.add(turnierLadeButton[anzahlElemente]);
+		turnierBearbeitenButton[anzahlElemente] = new JButton("Bearbeiten", turnierProperties);
+		buttonLine.add(turnierBearbeitenButton[anzahlElemente]);
+		turnierLoeschenButton[anzahlElemente] = new JButton("Löschen", turnierDelete);
+		buttonLine.add(turnierLoeschenButton[anzahlElemente]);
+		gruppenBearbeitenButton[anzahlElemente] = new JButton("Gruppen", turnierProperties);
+		buttonLine.add(gruppenBearbeitenButton[anzahlElemente]);
 		JLabel tName = new JLabel("  Turnier: " + turnierName);
-		line.add(tName);
-		JLabel sDatum = new JLabel(" Datum: " + startDatum);
-		line.add(sDatum);
-		JLabel eDatum = new JLabel(" - " + endDatum);
-		line.add(eDatum);
-
+		turnierLine.add(tName);
+		// JLabel sDatum = new JLabel(" Datum: " + startDatum);
+		// turnierLine.add(sDatum);
+		// JLabel eDatum = new JLabel(" - " + endDatum);
+		// turnierLine.add(eDatum);
+		line.add(turnierLine);
+		line.add(buttonLine);
 		centerPane.add(line);
 		centerPane.add(new JSeparator());
 		anzahlElemente++;

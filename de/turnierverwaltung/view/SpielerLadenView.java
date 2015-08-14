@@ -1,4 +1,5 @@
 package de.turnierverwaltung.view;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -18,8 +19,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,7 +42,15 @@ public class SpielerLadenView extends JPanel {
 	private JButton spielerAddButton;
 	private int anzahlElemente;
 	private JPanel line;
+	private ImageIcon userNew = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-new-3.png")));
+	private ImageIcon userDelete = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-delete-2.png")));
+	private ImageIcon userProperties = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-properties.png")));
+	private ImageIcon userImport = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-open-4.png")));
+	private ImageIcon userExport = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-export.png")));
+
 	int spielerAnzahl;
+	private JButton spielerImport;
+	private JButton spielerExport;
 
 	public SpielerLadenView(int spielerAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
@@ -48,10 +59,21 @@ public class SpielerLadenView extends JPanel {
 		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 100;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 100;
 		setPreferredSize(new Dimension(windowWidth, windowHeight));
-		spielerAddButton = new JButton("neue Spieler");
+		spielerAddButton = new JButton("Neu", userNew);
+		spielerImport = new JButton("Import Spielerliste", userImport);
+		spielerExport = new JButton("Export Spielerliste", userExport);
+		JLabel titleLabel = new JLabel("Spielerliste");
+		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		JPanel newPlayerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		titlepanel.add(titleLabel);
+		newPlayerPanel.add(spielerAddButton);
+		newPlayerPanel.add(spielerImport);
+		newPlayerPanel.add(spielerExport);
 		mainPane = new JPanel();
-		mainPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		mainPane.add(spielerAddButton);
+		mainPane.setLayout(new BorderLayout());
+		mainPane.add(titlepanel, BorderLayout.NORTH);
+		mainPane.add(newPlayerPanel, BorderLayout.CENTER);
+
 		add(mainPane);
 		spielerBearbeitenButton = new JButton[this.spielerAnzahl];
 		spielerLoeschenButton = new JButton[this.spielerAnzahl];
@@ -69,6 +91,22 @@ public class SpielerLadenView extends JPanel {
 
 	}
 
+	public JButton getSpielerImport() {
+		return spielerImport;
+	}
+
+	public void setSpielerImport(JButton spielerImport) {
+		this.spielerImport = spielerImport;
+	}
+
+	public JButton getSpielerExport() {
+		return spielerExport;
+	}
+
+	public void setSpielerExport(JButton spielerExport) {
+		this.spielerExport = spielerExport;
+	}
+
 	public JButton getSpielerAddButton() {
 		return spielerAddButton;
 	}
@@ -83,23 +121,24 @@ public class SpielerLadenView extends JPanel {
 
 	public void makeSpielerZeile(Spieler spieler) {
 		line = new JPanel();
-		line.setLayout(new FlowLayout(FlowLayout.LEFT));
+		
+		line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
 		line.setBackground(new Color(249, 222, 112));
-		spielerBearbeitenButton[anzahlElemente] = new JButton(
-				"Spieler bearbeiten");
-
-		line.add(spielerBearbeitenButton[anzahlElemente]);
-		spielerLoeschenButton[anzahlElemente] = new JButton("Spieler löschen");
-		line.add(spielerLoeschenButton[anzahlElemente]);
+		JPanel playerLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JLabel sname = new JLabel("  Spielername: " + spieler.getName());
-		line.add(sname);
-		JLabel nkuerzel = new JLabel(" Namenskürzel " + spieler.getKuerzel());
-		line.add(nkuerzel);
+		playerLine.add(sname);
+//		JLabel nkuerzel = new JLabel(" Namenskürzel " + spieler.getKuerzel());
+//		playerLine.add(nkuerzel);
 		JLabel dwz = new JLabel("  DWZ: " + spieler.getDwz());
-		line.add(dwz);
-//		JLabel age = new JLabel("  Alter: " + spieler.getAge());
-//		line.add(age);
+		playerLine.add(dwz);
+		line.add(playerLine);
+		spielerBearbeitenButton[anzahlElemente] = new JButton("Bearbeiten", userProperties);
 
+		buttonLine.add(spielerBearbeitenButton[anzahlElemente]);
+		spielerLoeschenButton[anzahlElemente] = new JButton("Löschen", userDelete);
+		buttonLine.add(spielerLoeschenButton[anzahlElemente]);
+		line.add(buttonLine);
 		centerPane.add(line);
 		centerPane.add(new JSeparator());
 

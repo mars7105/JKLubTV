@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -21,9 +22,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import de.turnierverwaltung.model.Spieler;
+import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.view.SpielerEditierenView;
 import de.turnierverwaltung.view.SpielerHinzufuegenView;
 import de.turnierverwaltung.view.SpielerLadenView;
@@ -48,6 +51,7 @@ public class SpielerLadenControl implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+
 		if (arg0.getSource() == spielerLadenView.getSpielerAddButton()) {
 			spielerHinzufuegenView = new SpielerHinzufuegenView();
 
@@ -57,10 +61,8 @@ public class SpielerLadenControl implements ActionListener {
 		}
 		if (spielerHinzufuegenView != null) {
 			if (arg0.getSource() == spielerHinzufuegenView.getOkButton()) {
-				String name = spielerHinzufuegenView.getTextFieldName()
-						.getText();
-				String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel()
-						.getText();
+				String name = spielerHinzufuegenView.getTextFieldName().getText();
+				String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
 				String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
 				int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
 				Spieler neuerSpieler = new Spieler();
@@ -88,8 +90,7 @@ public class SpielerLadenControl implements ActionListener {
 		if (spielerEditierenView != null) {
 			if (arg0.getSource() == spielerEditierenView.getOkButton()) {
 				String name = spielerEditierenView.getTextFieldName().getText();
-				String kuerzel = spielerEditierenView.getTextFieldKuerzel()
-						.getText();
+				String kuerzel = spielerEditierenView.getTextFieldKuerzel().getText();
 				String dwz = spielerEditierenView.getTextFieldDwz().getText();
 				int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
 				spieler.get(spielerIndex).setName(name);
@@ -113,8 +114,7 @@ public class SpielerLadenControl implements ActionListener {
 			}
 		}
 		for (int i = 0; i < spielerAnzahl; i++) {
-			if (arg0.getSource() == spielerLadenView
-					.getSpielerBearbeitenButton()[i]) {
+			if (arg0.getSource() == spielerLadenView.getSpielerBearbeitenButton()[i]) {
 				spielerIndex = i;
 				spielerEditierenView = new SpielerEditierenView(spieler.get(i));
 				spielerEditierenView.getOkButton().addActionListener(this);
@@ -134,8 +134,7 @@ public class SpielerLadenControl implements ActionListener {
 	public void makePanel() {
 		this.mainControl.getTurnier();
 
-		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(
-				this.mainControl));
+		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(this.mainControl));
 		this.mainControl.setTabAnzeigeView(new TabAnzeigeView());
 		tabbedPaneView = this.mainControl.getTabAnzeigeView();
 		int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width - 275;
@@ -171,10 +170,8 @@ public class SpielerLadenControl implements ActionListener {
 		while (li.hasNext()) {
 
 			spielerLadenView.makeSpielerZeile(li.next());
-			spielerLadenView.getSpielerBearbeitenButton()[index]
-					.addActionListener(this);
-			spielerLadenView.getSpielerLoeschenButton()[index]
-					.addActionListener(this);
+			spielerLadenView.getSpielerBearbeitenButton()[index].addActionListener(this);
+			spielerLadenView.getSpielerLoeschenButton()[index].addActionListener(this);
 			index++;
 		}
 		spielerLadenView.getSpielerAddButton().addActionListener(this);
