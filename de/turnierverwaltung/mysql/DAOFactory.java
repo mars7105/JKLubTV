@@ -19,7 +19,7 @@ public abstract class DAOFactory {
 	public static final int SQLITE = 3;
 
 	public static DAOFactory getDAOFactory(int database) {
-		switch (database) {
+		switch (SQLITE) {
 		case DAOFactory.MYSQL:
 			return new MySQLDAOFactory();
 		case DAOFactory.ORACLE:

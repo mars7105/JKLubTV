@@ -30,7 +30,7 @@ public class SQLiteDAOFactory extends DAOFactory {
 	private static Connection connection;
 
 	public static Connection createConnection() {
-
+		classNameSQLite = "org.sqlite.JDBC";
 		try {
 			if (connection == null || connection.isClosed()) {
 
@@ -56,7 +56,7 @@ public class SQLiteDAOFactory extends DAOFactory {
 
 	public static void setDB_PATH(String dbPath) {
 		SQLiteDAOFactory.DB_PATH = dbPath;
-		SQLiteDAOFactory.dbStringSQLite = "jdbc:sqlite:" + DB_PATH;
+		SQLiteDAOFactory.dbStringSQLite = "jdbc:sqlite:" + SQLiteDAOFactory.DB_PATH;
 
 	}
 

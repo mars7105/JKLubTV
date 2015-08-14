@@ -20,23 +20,21 @@ import javax.swing.JOptionPane;
 
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.model.TurnierKonstanten;
-import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.DatumDAO;
-import de.turnierverwaltung.mysql.TurnierDAO;
-import de.turnierverwaltung.mysql.Turnier_has_SpielerDAO;
+import de.turnierverwaltung.mysql.*;
+
 
 public class TurnierTableControl {
 	private MainControl mainControl;
 	private Turnier turnier;
-	DAOFactory daoFactory;
-	TurnierDAO mySQLTurnierDao;
-	DatumDAO mySQLDatumDAO;
-	Turnier_has_SpielerDAO turnier_has_spielerDAO;
+	private DAOFactory daoFactory;
+	private TurnierDAO mySQLTurnierDao;
+	private DatumDAO mySQLDatumDAO;
+	private Turnier_has_SpielerDAO turnier_has_spielerDAO;
 	int turnierId;
 
 	public TurnierTableControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		daoFactory = DAOFactory.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
+		daoFactory = DAOFactory.getDAOFactory(3);
 		mySQLTurnierDao = daoFactory.getTurnierDAO();
 		mySQLDatumDAO = daoFactory.getDatumDAO();
 		turnier_has_spielerDAO = daoFactory.getTurnier_has_SpielerDAO();

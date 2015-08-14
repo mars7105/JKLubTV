@@ -122,16 +122,19 @@ public class MenueControl implements ActionListener {
 					// This is where a real application would open the file.
 					SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
 					mainControl.datenbankMenueView(true);
-					abfrage = warnHinweis(
-							"Wollen Sie wirklich die Seite verlassen? \n" + "Alle eingegebenen Daten gehen verloren.");
-					if (abfrage == 0) {
+					if (mainControl.getTurnierTableControl() == null) {
+						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
+						mainControl.getTurnierTableControl().loadTurnierListe();
+						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
+						mainControl.getTurnierListeLadenControl().loadTurnier();
+					} else {
 						mainControl.resetApp();
 						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 						mainControl.getTurnierTableControl().loadTurnierListe();
 						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
 						mainControl.getTurnierListeLadenControl().loadTurnier();
-
 					}
+
 				} else {
 					JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
 				}
@@ -149,7 +152,6 @@ public class MenueControl implements ActionListener {
 				mainControl.getSpielerEditierenControl().makePanel();
 			}
 		}
-
 
 		if (arg0.getSource() == turnierMenue.getMntmSpeichern()) {
 
@@ -208,17 +210,19 @@ public class MenueControl implements ActionListener {
 					// This is where a real application would open the file.
 					SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
 					mainControl.datenbankMenueView(true);
-					abfrage = warnHinweis(
-							"Wollen Sie wirklich die Seite verlassen? \n" + "Alle eingegebenen Daten gehen verloren.");
-					if (abfrage == 0) {
+					if (mainControl.getTurnierTableControl() == null) {
+						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
+						mainControl.getTurnierTableControl().loadTurnierListe();
+						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
+						mainControl.getTurnierListeLadenControl().loadTurnier();
+					} else {
 						mainControl.resetApp();
 						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 						mainControl.getTurnierTableControl().loadTurnierListe();
 						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
 						mainControl.getTurnierListeLadenControl().loadTurnier();
-
 					}
-				
+
 				} else {
 					JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
 				}
