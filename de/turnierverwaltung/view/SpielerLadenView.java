@@ -47,10 +47,12 @@ public class SpielerLadenView extends JPanel {
 	private ImageIcon userProperties = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-properties.png")));
 	private ImageIcon userImport = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-open-4.png")));
 	private ImageIcon userExport = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-export.png")));
+	private ImageIcon turnierListeIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/arrow-right-3.png")));
 
 	int spielerAnzahl;
 	private JButton spielerImport;
 	private JButton spielerExport;
+	private JButton turnierListe;
 
 	public SpielerLadenView(int spielerAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
@@ -59,16 +61,21 @@ public class SpielerLadenView extends JPanel {
 		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 100;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 100;
 		setPreferredSize(new Dimension(windowWidth, windowHeight));
-		spielerAddButton = new JButton("Neu", userNew);
+		spielerAddButton = new JButton("Neuer Spieler", userNew);
 		spielerImport = new JButton("Import Spielerliste", userImport);
+		spielerImport.setEnabled(false);
 		spielerExport = new JButton("Export Spielerliste", userExport);
+		spielerExport.setEnabled(false);
+		turnierListe = new JButton("Turnierliste", turnierListeIcon);
 		JLabel titleLabel = new JLabel("Spielerliste");
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel newPlayerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		titlepanel.add(titleLabel);
+		newPlayerPanel.add(turnierListe);
 		newPlayerPanel.add(spielerAddButton);
 		newPlayerPanel.add(spielerImport);
 		newPlayerPanel.add(spielerExport);
+		
 		mainPane = new JPanel();
 		mainPane.setLayout(new BorderLayout());
 		mainPane.add(titlepanel, BorderLayout.NORTH);
@@ -155,6 +162,14 @@ public class SpielerLadenView extends JPanel {
 
 	public void setSpielerLoeschenButton(JButton[] spielerLoeschenButton) {
 		this.spielerLoeschenButton = spielerLoeschenButton;
+	}
+
+	public JButton getTurnierListe() {
+		return turnierListe;
+	}
+
+	public void setTurnierListe(JButton turnierListe) {
+		this.turnierListe = turnierListe;
 	}
 
 }

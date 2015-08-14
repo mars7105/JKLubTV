@@ -36,6 +36,7 @@ import de.turnierverwaltung.view.SimpleTerminTabelleView;
 import de.turnierverwaltung.view.SimpleTurnierTabelleView;
 import de.turnierverwaltung.view.SpielerAnzahlView;
 import de.turnierverwaltung.view.SpielerEingabeView;
+import de.turnierverwaltung.view.StandardView;
 import de.turnierverwaltung.view.TabAnzeigeView;
 import de.turnierverwaltung.view.TurnierListeLadenView;
 import de.turnierverwaltung.view.TurnierView;
@@ -84,6 +85,7 @@ public class MainControl extends JFrame {
 	private TurnierListeLadenControl turnierListeLadenControl;
 	private TurnierListeLadenView turnierListeLadenView;
 	private SpielerLadenControl spielerLadenControl;
+	private StandardView standardView;
 
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
@@ -250,11 +252,15 @@ public class MainControl extends JFrame {
 
 		this.hauptPanel = new JPanel();
 		hauptPanel.setBackground(new Color(126, 201, 208));
+		
 		mainView = new MainView();
+		standardView = new StandardView();
 		menueView = new MenueView();
 		menueControl = new MenueControl(this);
 		setJMenuBar(menueView.getJMenuBar());
 		setContentPane(hauptPanel);
+		
+		hauptPanel.add(standardView);
 		hauptPanel.updateUI();
 		setEnabled(true);
 		setVisible(true);
@@ -443,6 +449,14 @@ public class MainControl extends JFrame {
 
 	public void setWindowWidth(int windowWidth) {
 		this.windowWidth = windowWidth;
+	}
+
+	public StandardView getStandardView() {
+		return standardView;
+	}
+
+	public void setStandardView(StandardView standardView) {
+		this.standardView = standardView;
 	}
 
 }

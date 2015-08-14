@@ -64,11 +64,11 @@ public class MenueView extends JMenu {
 		mntmSpielerLaden = new JMenuItem("Spielerliste");
 		mnEditMenu.add(mntmSpielerLaden);
 
-		mntmNeu = new JMenuItem("Neues Turnier");
-		mnEditMenu.add(mntmNeu);
-
-		mntmNeueSpieler = new JMenuItem("Neue Spieler");
-		mnEditMenu.add(mntmNeueSpieler);
+//		mntmNeu = new JMenuItem("Neues Turnier");
+//		mnEditMenu.add(mntmNeu);
+//
+//		mntmNeueSpieler = new JMenuItem("Neue Spieler");
+//		mnEditMenu.add(mntmNeueSpieler);
 
 		mntmSpeichern = new JMenuItem("Turnier speichern");
 		mnEditMenu.add(mntmSpeichern);

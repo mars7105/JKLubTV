@@ -59,6 +59,10 @@ public class SpielerLadenControl implements ActionListener {
 			spielerHinzufuegenView.getCancelButton().addActionListener(this);
 			mainControl.setEnabled(false);
 		}
+		if (arg0.getSource() == spielerLadenView.getTurnierListe()) {
+			mainControl.getTurnierListeLadenControl().loadTurnier();
+			
+		}
 		if (spielerHinzufuegenView != null) {
 			if (arg0.getSource() == spielerHinzufuegenView.getOkButton()) {
 				String name = spielerHinzufuegenView.getTextFieldName().getText();
@@ -175,6 +179,7 @@ public class SpielerLadenControl implements ActionListener {
 			index++;
 		}
 		spielerLadenView.getSpielerAddButton().addActionListener(this);
+		spielerLadenView.getTurnierListe().addActionListener(this);
 
 	}
 }
