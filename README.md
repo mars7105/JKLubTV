@@ -12,3 +12,20 @@ benötigte Java Librarys:
 JDatePicker 1.3.4
 mysql-connector-java 5.1.35
 sqlite-jdbc 3.7.15 Snapshot 
+
+Dieses Programm nutzt verschiedene freie Bibliotheken:
+	1. JDatePicker -> jdatepicker-1.3.4.jar
+		für die Auswahl des Datum.
+		http://jdatepicker.org/
+		
+	2. SQLite JDBC -> sqlite-jdbc-3.7.15-SNAPSHOT.jar
+		für die Speicherung im SQLite Format.
+		https://bitbucket.org/xerial/sqlite-jdbc/downloads
+		
+	3. MySQL Connector -> mysql-connector-java-5.1.35-bin.jar
+		für zukünftige Änderungen.
+		http://mvnrepository.com/artifact/mysql/mysql-connector-java
+		
+	4. Bilder: Open Icon Library
+		http://sourceforge.net/projects/openiconlibrary/
+				

@@ -39,7 +39,7 @@ public class MenueControl implements ActionListener {
 	private StandardView standardView;
 	private Turnier turnier;
 	private Boolean warnHinweis;
-	private String fileName;
+	private String fileName = " ";
 	public MenueControl(MainControl mainControl) {
 		warnHinweis = false;
 		this.mainControl = mainControl;

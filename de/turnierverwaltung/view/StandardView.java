@@ -21,25 +21,20 @@ public class StandardView extends JPanel{
 	private JPanel contentPanel;
 	private JScrollPane scrollPane;
 	private JPanel centerPane;
-//	private ImageIcon dbNew = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-new.png")));
-//	private ImageIcon dbLoad = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-open-4.png")));
-//	private JButton newDatabse;
-//	private JButton loadDatabase;
+
 
 	public StandardView() {
 		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 100;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 100;
 		setPreferredSize(new Dimension(windowWidth, windowHeight));
-//		newDatabse = new JButton("Neue Datenbank", dbNew);
-//		loadDatabase = new JButton("Datenbank laden", dbLoad);
+
 		JLabel titleLabel = new JLabel("JKlubTV");
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel newStandardPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
 		titlepanel.add(titleLabel);
 		
-//		newStandardPanel.add(newDatabse);
-//		newStandardPanel.add(loadDatabase);
+
 		mainPane = new JPanel();
 		mainPane.setLayout(new BorderLayout());
 		mainPane.add(titlepanel, BorderLayout.NORTH);

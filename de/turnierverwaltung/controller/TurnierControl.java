@@ -60,6 +60,7 @@ public class TurnierControl implements ActionListener {
 		turnierOkButton.addActionListener(this);
 
 		hauptPanel.removeAll();
+		mainControl.getNaviController().makeNaviPanel();
 		hauptPanel.add(turnierView);
 		mainControl.getMenueControl().setWarnHinweis(true);
 		hauptPanel.updateUI();
@@ -138,6 +139,7 @@ public class TurnierControl implements ActionListener {
 	private void turnierCancelButton() {
 		mainControl.getMenueView().getMnDateiMenu().setEnabled(true);
 		turnierView.getHauptPanel().removeAll();
+		mainControl.getNaviController().makeNaviPanel();
 		turnierView.getHauptPanel().updateUI();
 	}
 

@@ -89,6 +89,7 @@ public class MainControl extends JFrame {
 	private StandardView standardView;
 	private NaviView naviView;
 	private NaviController naviController;
+	private InfoController infoController;
 
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
@@ -152,6 +153,14 @@ public class MainControl extends JFrame {
 
 	public SaveTurnierControl getSaveTurnierControl() {
 		return saveTurnierControl;
+	}
+
+	public InfoController getInfoController() {
+		return infoController;
+	}
+
+	public void setInfoController(InfoController infoController) {
+		this.infoController = infoController;
 	}
 
 	public SimpleTurnierTabelle[] getSimpleTableModel() {

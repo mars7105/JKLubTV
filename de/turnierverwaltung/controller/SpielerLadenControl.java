@@ -149,7 +149,7 @@ public class SpielerLadenControl implements ActionListener {
 		hauptPanel = this.mainControl.getHauptPanel();
 		updateSpielerListe();
 		hauptPanel.removeAll();
-		NaviController naviViewController = new NaviController(this.mainControl);
+		mainControl.getNaviController().makeNaviPanel();
 		hauptPanel.add(spielerLadenView);
 		hauptPanel.updateUI();
 

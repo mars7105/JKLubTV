@@ -190,7 +190,7 @@ public class TurnierListeLadenControl implements ActionListener {
 				}
 
 				hauptPanel.removeAll();
-				NaviController naviViewController = new NaviController(this.mainControl);
+				mainControl.getNaviController().makeNaviPanel();
 				hauptPanel.add(tabbedPaneView,BorderLayout.CENTER);
 				hauptPanel.updateUI();
 
@@ -275,7 +275,7 @@ public class TurnierListeLadenControl implements ActionListener {
 		}
 		turnierListeLadenView.getTurnierAddButton().addActionListener(this);
 		hauptPanel.removeAll();
-		NaviController naviViewController = new NaviController(this.mainControl);
+		mainControl.getNaviController().makeNaviPanel();
 		hauptPanel.add(turnierListeLadenView,BorderLayout.CENTER);
 		hauptPanel.updateUI();
 	}

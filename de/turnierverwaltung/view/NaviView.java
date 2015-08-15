@@ -30,7 +30,9 @@ public class NaviView extends JPanel {
 	private JButton newDatabseButton;
 	private JButton loadDatabaseButton;
 	private JLabel pathToDatabase;
-
+	private JButton infoButton;
+	private ImageIcon infoIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png")));
 	public NaviView() {
 		BorderLayout borderLayout = new BorderLayout();
 		// this.setLayout(borderLayout);
@@ -45,6 +47,8 @@ public class NaviView extends JPanel {
 		turnierListeButton.setPreferredSize(new Dimension(200, 40));
 		spielerListeButton = new JButton("Spielerliste", spielerListeIcon);
 		spielerListeButton.setPreferredSize(new Dimension(200, 40));
+		infoButton = new JButton("Info", infoIcon);
+		infoButton.setPreferredSize(new Dimension(200, 40));
 		JPanel panel = new JPanel();
 		FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
 		flowLayout.setVgap(1);
@@ -68,12 +72,17 @@ public class NaviView extends JPanel {
 		panel4.setLayout(flowLayout);
 		panel4.setBackground(Color.LIGHT_GRAY);
 		panel4.add(spielerListeButton);
+		JPanel panel4b = new JPanel();
+		panel4b.setLayout(flowLayout);
+		panel4b.setBackground(Color.LIGHT_GRAY);
+		panel4b.add(infoButton);
 		JPanel panel5 = new JPanel();
 		BoxLayout boxLayout = new BoxLayout(panel5, BoxLayout.PAGE_AXIS);
 		panel5.setLayout(boxLayout);
 		panel5.setBackground(Color.LIGHT_GRAY);
 		panel5.add(panel);
 		panel5.add(panel2);
+		panel5.add(panel4b);
 		panel5.add(panelLabel);
 		panel5.add(panel3);
 		panel5.add(panel4);
@@ -120,6 +129,14 @@ public class NaviView extends JPanel {
 
 	public void setLoadDatabaseButton(JButton loadDatabaseButton) {
 		this.loadDatabaseButton = loadDatabaseButton;
+	}
+
+	public JButton getInfoButton() {
+		return infoButton;
+	}
+
+	public void setInfoButton(JButton infoButton) {
+		this.infoButton = infoButton;
 	}
 
 }

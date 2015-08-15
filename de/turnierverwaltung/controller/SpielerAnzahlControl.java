@@ -93,7 +93,7 @@ public class SpielerAnzahlControl implements ActionListener {
 		}
 		tabbedPaneView.updateUI();
 		hauptPanel.removeAll();
-
+		this.mainControl.getNaviController().makeNaviPanel();
 		hauptPanel.add(tabbedPaneView);
 		hauptPanel.setMinimumSize(new Dimension(800, 600));
 		hauptPanel.setMaximumSize(new Dimension(windowWidth, windowHeight));

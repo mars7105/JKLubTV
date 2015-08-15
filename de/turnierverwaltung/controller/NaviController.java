@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileFilter;
@@ -25,12 +26,14 @@ public class NaviController implements ActionListener {
 	private JButton turnierListeButton;
 	private JButton newdbButton;
 	private JButton loaddbButton;
+	private JButton infoButton;
+	private NaviView naviView;
 
 	public NaviController(MainControl mainControl) {
 		this.mainControl = mainControl;
-		NaviView naviView = new NaviView();
+		naviView = new NaviView();
 		mainControl.setNaviView(naviView);
-		JPanel hauptPanel = this.mainControl.getHauptPanel();
+
 		newdbButton = naviView.getNewDatabseButton();
 		newdbButton.addActionListener(this);
 		loaddbButton = naviView.getLoadDatabaseButton();
@@ -39,14 +42,27 @@ public class NaviController implements ActionListener {
 		turnierListeButton.addActionListener(this);
 		spielerListeButton = naviView.getSpielerListeButton();
 		spielerListeButton.addActionListener(this);
+		infoButton = naviView.getInfoButton();
+		infoButton.addActionListener(this);
+		makeNaviPanel();
 
+	}
+
+	public void makeNaviPanel() {
+		JPanel hauptPanel = this.mainControl.getHauptPanel();
 		hauptPanel.add(naviView, BorderLayout.WEST);
 		hauptPanel.updateUI();
-
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == infoButton) {
+			if (mainControl.getInfoController() == null) {
+				mainControl.setInfoController(new InfoController(this.mainControl));
+			} else {
+				mainControl.getInfoController().makeInfoPanel();
+			}
+		}
 		if (arg0.getSource() == newdbButton) {
 			int abfrage = warnHinweis(
 					"Wollen Sie wirklich die Seite verlassen? \n" + "Alle eingegebenen Daten gehen verloren.");
@@ -124,12 +140,15 @@ public class NaviController implements ActionListener {
 						mainControl.getTurnierTableControl().loadTurnierListe();
 						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
 						mainControl.getTurnierListeLadenControl().loadTurnier();
+						naviView.setPathToDatabase(new JLabel(file.getName()));
+
 					} else {
 						mainControl.resetApp();
 						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 						mainControl.getTurnierTableControl().loadTurnierListe();
 						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
 						mainControl.getTurnierListeLadenControl().loadTurnier();
+						naviView.setPathToDatabase(new JLabel(file.getPath()));
 					}
 
 				} else {
@@ -157,6 +176,7 @@ public class NaviController implements ActionListener {
 			}
 		}
 	}
+
 	private int warnHinweis(String hinweisText) {
 		int abfrage = 0;
 		if (mainControl.getMenueControl().getWarnHinweis()) {
