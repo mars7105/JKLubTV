@@ -39,7 +39,7 @@ public class MenueControl implements ActionListener {
 	private StandardView standardView;
 	private Turnier turnier;
 	private Boolean warnHinweis;
-
+	private String fileName;
 	public MenueControl(MainControl mainControl) {
 		warnHinweis = false;
 		this.mainControl = mainControl;
@@ -54,94 +54,13 @@ public class MenueControl implements ActionListener {
 		turnierMenue.getMntmDBNeu().addActionListener(this);
 		turnierMenue.getMntmDBLaden().addActionListener(this);
 		standardView = this.mainControl.getStandardView();
-		standardView.getNewDatabse().addActionListener(this);
-		standardView.getLoadDatabase().addActionListener(this);
+		
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		// TODO Automatisch generierter Methodenstub
-		if (arg0.getSource() == standardView.getNewDatabse()) {
-			int abfrage = warnHinweis(
-					"Wollen Sie wirklich die Seite verlassen? \n" + "Alle eingegebenen Daten gehen verloren.");
-			if (abfrage == 0) {
-				mainControl.resetApp();
-				mainControl.datenbankMenueView(false);
-				String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
-						JOptionPane.PLAIN_MESSAGE);
-				if (filename != null) {
-					filename += ".ktv";
-
-					JFileChooser savefile = new JFileChooser();
-					FileFilter filter = new FileNameExtensionFilter("Turnier Datenbank", "ktv");
-					savefile.addChoosableFileFilter(filter);
-					savefile.setFileFilter(filter);
-					savefile.setDialogType(JFileChooser.SAVE_DIALOG);
-					savefile.setSelectedFile(new File(filename));
-					BufferedWriter writer;
-					int sf = savefile.showSaveDialog(null);
-					if (sf == JFileChooser.APPROVE_OPTION) {
-						try {
-							File file = savefile.getSelectedFile();
-							writer = new BufferedWriter(new FileWriter(savefile.getSelectedFile()));
-							writer.write("");
-							writer.close();
-
-							// true for rewrite, false for override
-							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-							SQLiteControl sqlC = new SQLiteControl(mainControl);
-							sqlC.createAllTables();
-							mainControl.datenbankMenueView(true);
-							JOptionPane.showMessageDialog(null, "Datei wurde gespeichert.", "File Saved",
-									JOptionPane.INFORMATION_MESSAGE);
-
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-					} else if (sf == JFileChooser.CANCEL_OPTION) {
-						JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
-					}
-				}
-			}
-		}
-		if (arg0.getSource() == standardView.getLoadDatabase()) {
-			int abfrage = warnHinweis(
-					"Wollen Sie wirklich die Seite verlassen? \n" + "Alle eingegebenen Daten gehen verloren.");
-			if (abfrage == 0) {
-				mainControl.resetApp();
-				mainControl.datenbankMenueView(false);
-				// Create a file chooser
-				JFileChooser fc = new JFileChooser();
-				FileFilter filter = new FileNameExtensionFilter("Turnier Datenbank", "ktv");
-				fc.addChoosableFileFilter(filter);
-				fc.setFileFilter(filter);
-				int returnVal = fc.showOpenDialog(null);
-
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = fc.getSelectedFile();
-					// This is where a real application would open the file.
-					SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-					mainControl.datenbankMenueView(true);
-					if (mainControl.getTurnierTableControl() == null) {
-						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
-						mainControl.getTurnierTableControl().loadTurnierListe();
-						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-						mainControl.getTurnierListeLadenControl().loadTurnier();
-					} else {
-						mainControl.resetApp();
-						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
-						mainControl.getTurnierTableControl().loadTurnierListe();
-						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-						mainControl.getTurnierListeLadenControl().loadTurnier();
-					}
-
-				} else {
-					JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
-				}
-
-			}
-
-		}
 
 		if (arg0.getSource() == turnierMenue.getMntmSpielerLaden()) {
 			int abfrage = warnHinweis(
@@ -207,6 +126,7 @@ public class MenueControl implements ActionListener {
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
+					fileName = file.getPath();
 					// This is where a real application would open the file.
 					SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
 					mainControl.datenbankMenueView(true);
@@ -239,6 +159,7 @@ public class MenueControl implements ActionListener {
 						JOptionPane.PLAIN_MESSAGE);
 				if (filename != null) {
 					filename += ".ktv";
+					fileName = filename;
 
 					JFileChooser savefile = new JFileChooser();
 					FileFilter filter = new FileNameExtensionFilter("Turnier Datenbank", "ktv");
@@ -318,6 +239,14 @@ public class MenueControl implements ActionListener {
 		}
 
 		return abfrage;
+	}
+
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 }

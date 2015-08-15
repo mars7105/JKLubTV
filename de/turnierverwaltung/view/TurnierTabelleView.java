@@ -56,7 +56,7 @@ public class TurnierTabelleView extends JPanel {
 
 	public void makePanel() {
 		anzahlElemente = 0;
-		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
+		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 200;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
 		setBounds(0, 0, windowWidth, windowHeight);
 		setBackground(new Color(249, 222, 112));

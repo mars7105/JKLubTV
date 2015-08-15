@@ -21,6 +21,7 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import de.turnierverwaltung.model.PaarungsTafeln;
@@ -33,6 +34,7 @@ import de.turnierverwaltung.model.TurnierTabelle;
 import de.turnierverwaltung.view.GruppenView;
 import de.turnierverwaltung.view.MainView;
 import de.turnierverwaltung.view.MenueView;
+import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.SimpleTerminTabelleView;
 import de.turnierverwaltung.view.SimpleTurnierTabelleView;
 import de.turnierverwaltung.view.SpielerAnzahlView;
@@ -41,8 +43,6 @@ import de.turnierverwaltung.view.StandardView;
 import de.turnierverwaltung.view.TabAnzeigeView;
 import de.turnierverwaltung.view.TurnierListeLadenView;
 import de.turnierverwaltung.view.TurnierView;
-
-
 
 public class MainControl extends JFrame {
 
@@ -87,6 +87,8 @@ public class MainControl extends JFrame {
 	private TurnierListeLadenView turnierListeLadenView;
 	private SpielerLadenControl spielerLadenControl;
 	private StandardView standardView;
+	private NaviView naviView;
+	private NaviController naviController;
 
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
@@ -103,6 +105,13 @@ public class MainControl extends JFrame {
 
 	public void datenbankMenueView(Boolean enable) {
 		menueControl.setDatenbankMenue(enable);
+		naviView.getSpielerListeButton().setEnabled(enable);
+		naviView.getTurnierListeButton().setEnabled(enable);
+		naviView.getSpielerListeButton().setVisible(enable);
+		naviView.getTurnierListeButton().setVisible(enable);
+		//naviView.getPathToDatabase().setText(menueControl.getFileName())
+		naviView.setPathToDatabase(new JLabel(menueControl.getFileName()));
+		naviView.updateUI();
 	}
 
 	public GruppenControl getGruppenControl() {
@@ -254,14 +263,15 @@ public class MainControl extends JFrame {
 		this.hauptPanel = new JPanel();
 		this.hauptPanel.setLayout(new BorderLayout());
 		hauptPanel.setBackground(new Color(126, 201, 208));
-		
+
 		mainView = new MainView();
 		standardView = new StandardView();
+		naviController = new NaviController(this);
 		menueView = new MenueView();
 		menueControl = new MenueControl(this);
 		setJMenuBar(menueView.getJMenuBar());
 		setContentPane(hauptPanel);
-		hauptPanel.add(standardView,BorderLayout.CENTER);
+		hauptPanel.add(standardView, BorderLayout.CENTER);
 		hauptPanel.updateUI();
 		setEnabled(true);
 		setVisible(true);
@@ -458,6 +468,22 @@ public class MainControl extends JFrame {
 
 	public void setStandardView(StandardView standardView) {
 		this.standardView = standardView;
+	}
+
+	public NaviView getNaviView() {
+		return naviView;
+	}
+
+	public void setNaviView(NaviView naviView) {
+		this.naviView = naviView;
+	}
+
+	public NaviController getNaviController() {
+		return naviController;
+	}
+
+	public void setNaviController(NaviController naviController) {
+		this.naviController = naviController;
 	}
 
 }

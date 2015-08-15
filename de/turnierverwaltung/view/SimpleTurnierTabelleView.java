@@ -39,7 +39,8 @@ public class SimpleTurnierTabelleView extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final int small = 60;
+	private final int small = 45;
+	private final int medium = 75;
 	private final int big = 130;
 	private JButton okButton;
 	private JButton saveButton;
@@ -48,7 +49,7 @@ public class SimpleTurnierTabelleView extends JPanel {
 	private JComboBox<String> comboBox;
 
 	public SimpleTurnierTabelleView(SimpleTurnierTabelle simpleTableModel) {
-		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 100;
+		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 150;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 200;
 		setPreferredSize(new Dimension(windowWidth, windowHeight));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -123,7 +124,7 @@ public class SimpleTurnierTabelleView extends JPanel {
 		for (int x = 0; x < columnCount; x++) {
 			for (int y = 0; y < rowCount; y++) {
 				TableColumn c = table.getColumnModel().getColumn(x);
-				if (x >= 4 && x < punkte ) {
+				if (x >= 4 && x < punkte) {
 					temp = table.getModel().getValueAt(y, x);
 
 					c.setCellEditor(new DefaultCellEditor(comboBox));
@@ -141,15 +142,18 @@ public class SimpleTurnierTabelleView extends JPanel {
 		int platz = columnCount - 1;
 		for (int i = 0; i < columnCount; i++) {
 			TableColumn c = table.getColumnModel().getColumn(i);
-			if (i < 4) {
+			if (i < 1) {
 				c.setPreferredWidth(big);
+			}
+			if (i >= 1 && i < 4) {
+				c.setPreferredWidth(medium);
 			}
 			if (i >= 4 && i < punkte) {
 				c.setCellEditor(new DefaultCellEditor(comboBox));
-				// c.setPreferredWidth(small);
+				c.setPreferredWidth(small);
 			}
 			if (i >= punkte) {
-				// c.setPreferredWidth(big);
+				 c.setPreferredWidth(medium);
 			}
 
 		}
