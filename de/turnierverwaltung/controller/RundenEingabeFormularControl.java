@@ -1,5 +1,6 @@
 package de.turnierverwaltung.controller;
 
+import java.awt.BorderLayout;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -29,6 +30,7 @@ import de.turnierverwaltung.model.Partie;
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.model.TerminTabelle;
 import de.turnierverwaltung.model.Turnier;
+import de.turnierverwaltung.model.TurnierKonstanten;
 import de.turnierverwaltung.view.RundenEingabeFormularView;
 import de.turnierverwaltung.view.TabAnzeigeView;
 
@@ -114,6 +116,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 										.getRundenNummer()[i].getSelectedItem()));
 						partien[i].setSpielDatum(datum);
 						partien[i].setRunde(runde);
+						partien[i].setErgebnis(TurnierKonstanten.MYSQL_KEIN_ERGEBNIS);
 					} catch (NumberFormatException e) {
 						JOptionPane.showMessageDialog(null,
 								"Gruppenanzahl ist fehlerhaft!");
@@ -248,7 +251,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 				});
 		tabAnzeigeView.setComponentAt(index, rundenEingabeFormularView[index]);
-		hauptPanel.add(tabAnzeigeView);
+		hauptPanel.add(tabAnzeigeView,BorderLayout.CENTER);
 		hauptPanel.updateUI();
 	}
 
@@ -282,7 +285,8 @@ public class RundenEingabeFormularControl implements ActionListener {
 		rundenEingabeFormularView[index].getOkButton().addActionListener(this);
 
 		tabAnzeigeView.setComponentAt(index, rundenEingabeFormularView[index]);
-		hauptPanel.add(tabAnzeigeView);
+		hauptPanel.add(tabAnzeigeView,BorderLayout.CENTER);
+		
 		hauptPanel.updateUI();
 	}
 

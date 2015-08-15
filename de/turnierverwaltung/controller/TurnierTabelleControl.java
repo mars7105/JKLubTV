@@ -70,7 +70,6 @@ public class TurnierTabelleControl implements ActionListener {
 			this.mainControl.setTabAnzeigeView(new TabAnzeigeView());
 		}
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
-
 		tabAnzeigeView.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		tabAnzeigeView.setBackground(new Color(249, 222, 112));
 		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
@@ -87,6 +86,7 @@ public class TurnierTabelleControl implements ActionListener {
 		this.mainControl.setSaveTurnierControl(saveTurnierControl);
 		htmlTabelleView = new HTMLTabelleView();
 		spielerAnzahl = new int[anzahlGruppen];
+		NaviController naviViewController = new NaviController(this.mainControl);
 
 	}
 
@@ -173,6 +173,7 @@ public class TurnierTabelleControl implements ActionListener {
 		}
 
 		this.mainControl.getMenueView().getMntmSpeichern().setEnabled(enableSaveMenu);
+		
 		// mainControl.datenbankMenueView(enableSaveMenu);
 	}
 
@@ -223,6 +224,7 @@ public class TurnierTabelleControl implements ActionListener {
 
 		mainControl.setSimpleTableView(simpleTableView);
 		tabAnzeigeView.setComponentAt(gruppenNummer, tabAnzeigeView2[gruppenNummer]);
+		
 		hauptPanel.updateUI();
 		enableDatenbankMenu();
 	}

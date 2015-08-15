@@ -1,5 +1,6 @@
 package de.turnierverwaltung.controller;
 
+import java.awt.BorderLayout;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -25,6 +26,7 @@ import javax.swing.JPanel;
 
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.view.GruppenEditierenView;
+import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.TabAnzeigeView;
 import de.turnierverwaltung.view.TurnierEditierenView;
 import de.turnierverwaltung.view.TurnierListeLadenView;
@@ -151,14 +153,7 @@ public class TurnierListeLadenControl implements ActionListener {
 				}
 			}
 		}
-		if (arg0.getSource() == turnierListeLadenView.getSpielerListeView()) {
-			if (mainControl.getSpielerEditierenControl() != null) {
-				mainControl.getSpielerEditierenControl().makePanel();
-			} else {
-				mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
-				mainControl.getSpielerEditierenControl().makePanel();
-			}
-		}
+
 		for (int i = 0; i < anzahlTurniere; i++) {
 
 			if (arg0.getSource() == turnierListeLadenView.getTurnierLadeButton()[i]) {
@@ -195,7 +190,8 @@ public class TurnierListeLadenControl implements ActionListener {
 				}
 
 				hauptPanel.removeAll();
-				hauptPanel.add(tabbedPaneView);
+				NaviController naviViewController = new NaviController(this.mainControl);
+				hauptPanel.add(tabbedPaneView,BorderLayout.CENTER);
 				hauptPanel.updateUI();
 
 			}
@@ -252,7 +248,14 @@ public class TurnierListeLadenControl implements ActionListener {
 		String turnierName = "";
 		String startDatum = "";
 		String endDatum = "";
-		turnierListe = turnierTableControl.loadTurnierListe();
+		if (turnierTableControl != null) {
+			turnierListe = turnierTableControl.loadTurnierListe();
+		} else {
+			mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
+			turnierTableControl = mainControl.getTurnierTableControl();
+			turnierListe = turnierTableControl.loadTurnierListe();
+
+		}
 		anzahlTurniere = turnierListe.size();
 		this.turnierListeLadenView = new TurnierListeLadenView(anzahlTurniere);
 		ListIterator<Turnier> li = turnierListe.listIterator();
@@ -271,9 +274,9 @@ public class TurnierListeLadenControl implements ActionListener {
 
 		}
 		turnierListeLadenView.getTurnierAddButton().addActionListener(this);
-		turnierListeLadenView.getSpielerListeView().addActionListener(this);
 		hauptPanel.removeAll();
-		hauptPanel.add(turnierListeLadenView);
+		NaviController naviViewController = new NaviController(this.mainControl);
+		hauptPanel.add(turnierListeLadenView,BorderLayout.CENTER);
 		hauptPanel.updateUI();
 	}
 }

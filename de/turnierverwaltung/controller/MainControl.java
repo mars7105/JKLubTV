@@ -1,5 +1,6 @@
 package de.turnierverwaltung.controller;
 
+import java.awt.BorderLayout;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -251,6 +252,7 @@ public class MainControl extends JFrame {
 	private void init() {
 
 		this.hauptPanel = new JPanel();
+		this.hauptPanel.setLayout(new BorderLayout());
 		hauptPanel.setBackground(new Color(126, 201, 208));
 		
 		mainView = new MainView();
@@ -259,8 +261,7 @@ public class MainControl extends JFrame {
 		menueControl = new MenueControl(this);
 		setJMenuBar(menueView.getJMenuBar());
 		setContentPane(hauptPanel);
-		
-		hauptPanel.add(standardView);
+		hauptPanel.add(standardView,BorderLayout.CENTER);
 		hauptPanel.updateUI();
 		setEnabled(true);
 		setVisible(true);

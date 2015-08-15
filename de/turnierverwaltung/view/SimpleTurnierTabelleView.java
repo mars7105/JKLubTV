@@ -48,7 +48,7 @@ public class SimpleTurnierTabelleView extends JPanel {
 	private JComboBox<String> comboBox;
 
 	public SimpleTurnierTabelleView(SimpleTurnierTabelle simpleTableModel) {
-		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
+		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 100;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 200;
 		setPreferredSize(new Dimension(windowWidth, windowHeight));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

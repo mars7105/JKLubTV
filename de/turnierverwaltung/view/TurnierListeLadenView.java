@@ -41,13 +41,15 @@ public class TurnierListeLadenView extends JPanel {
 	private JButton[] turnierLoeschenButton;
 	private JButton[] turnierBearbeitenButton;
 	private JButton[] gruppenBearbeitenButton;
-	private ImageIcon turnierNew = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-new.png")));
-	private ImageIcon turnierDelete = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-close-4.png")));
-	private ImageIcon turnierProperties = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-edit.png")));
-	private ImageIcon turnierLaden = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-preview.png")));
-	private ImageIcon spielerListeIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/arrow-right-3.png")));
+	private ImageIcon turnierNew = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-new.png")));
+	private ImageIcon turnierDelete = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-close-4.png")));
+	private ImageIcon turnierProperties = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-edit.png")));
+	private ImageIcon turnierLaden = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-preview.png")));
 	private JButton turnierAddButton;
-	private JButton spielerListeView;
 
 	public TurnierListeLadenView(int anzahlTurniere) {
 
@@ -59,25 +61,22 @@ public class TurnierListeLadenView extends JPanel {
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBackground(new Color(249, 222, 112));
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new BorderLayout());
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
 		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		turnierAddButton = new JButton("Neues Turnier", turnierNew);
-		spielerListeView = new JButton("Spielerliste",spielerListeIcon);
 		JLabel titleLabel = new JLabel("Turnierliste");
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel newTurnierPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel northPanel = new JPanel();
+		northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.PAGE_AXIS));
 		titlepanel.add(titleLabel);
-		newTurnierPanel.add(spielerListeView);
 		newTurnierPanel.add(turnierAddButton);
-		
-		JPanel mainPane = new JPanel();
-		mainPane.setLayout(new BorderLayout());
-		mainPane.add(titlepanel, BorderLayout.NORTH);
-		mainPane.add(newTurnierPanel, BorderLayout.CENTER);
+		northPanel.add(titlepanel);
+		northPanel.add(newTurnierPanel);
 
-		add(mainPane);
+		add(northPanel, BorderLayout.NORTH);
 		add(scrollPane, BorderLayout.CENTER);
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
@@ -155,12 +154,6 @@ public class TurnierListeLadenView extends JPanel {
 		this.turnierLoeschenButton = turnierLoeschenButton;
 	}
 
-	public JButton getSpielerListeView() {
-		return spielerListeView;
-	}
 
-	public void setSpielerListeView(JButton spielerListeView) {
-		this.spielerListeView = spielerListeView;
-	}
 
 }

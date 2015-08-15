@@ -1,5 +1,6 @@
 package de.turnierverwaltung.controller;
 
+import java.awt.BorderLayout;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -27,6 +28,7 @@ import javax.swing.JPanel;
 
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.model.Turnier;
+import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.SpielerEditierenView;
 import de.turnierverwaltung.view.SpielerHinzufuegenView;
 import de.turnierverwaltung.view.SpielerLadenView;
@@ -59,10 +61,7 @@ public class SpielerLadenControl implements ActionListener {
 			spielerHinzufuegenView.getCancelButton().addActionListener(this);
 			mainControl.setEnabled(false);
 		}
-		if (arg0.getSource() == spielerLadenView.getTurnierListe()) {
-			mainControl.getTurnierListeLadenControl().loadTurnier();
-			
-		}
+
 		if (spielerHinzufuegenView != null) {
 			if (arg0.getSource() == spielerHinzufuegenView.getOkButton()) {
 				String name = spielerHinzufuegenView.getTextFieldName().getText();
@@ -137,7 +136,7 @@ public class SpielerLadenControl implements ActionListener {
 
 	public void makePanel() {
 		this.mainControl.getTurnier();
-
+		
 		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(this.mainControl));
 		this.mainControl.setTabAnzeigeView(new TabAnzeigeView());
 		tabbedPaneView = this.mainControl.getTabAnzeigeView();
@@ -150,6 +149,7 @@ public class SpielerLadenControl implements ActionListener {
 		hauptPanel = this.mainControl.getHauptPanel();
 		updateSpielerListe();
 		hauptPanel.removeAll();
+		NaviController naviViewController = new NaviController(this.mainControl);
 		hauptPanel.add(spielerLadenView);
 		hauptPanel.updateUI();
 
@@ -179,7 +179,6 @@ public class SpielerLadenControl implements ActionListener {
 			index++;
 		}
 		spielerLadenView.getSpielerAddButton().addActionListener(this);
-		spielerLadenView.getTurnierListe().addActionListener(this);
 
 	}
 }

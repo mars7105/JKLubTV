@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -49,70 +50,48 @@ public class SaveTurnierControl {
 		boolean saveOK4 = false;
 		// ladebalkenView.iterate();
 
-		this.mainControl.setTurnierTableControl(new TurnierTableControl(
-				this.mainControl));
+		this.mainControl.setTurnierTableControl(new TurnierTableControl(this.mainControl));
 
-		this.mainControl.setGruppenTableControl(new GruppenTableControl(
-				this.mainControl));
+		this.mainControl.setGruppenTableControl(new GruppenTableControl(this.mainControl));
 
-		this.mainControl.setSpielerTableControl(new SpielerTableControl(
-				this.mainControl));
+		this.mainControl.setSpielerTableControl(new SpielerTableControl(this.mainControl));
 
-		this.mainControl.setPartienTableControl(new PartienTableControl(
-				this.mainControl));
+		this.mainControl.setPartienTableControl(new PartienTableControl(this.mainControl));
 
-		this.mainControl
-				.setTurnier_has_SpielerTableControl(new Turnier_has_SpielerTableControl(
-						this.mainControl));
+		this.mainControl.setTurnier_has_SpielerTableControl(new Turnier_has_SpielerTableControl(this.mainControl));
 		ladebalkenView.iterate();
 		if (mainControl.getTurnier().getTurnierId() < 0) {
 			saveOK1 = this.mainControl.getTurnierTableControl().insertTurnier();
 		} else {
-			this.mainControl.getTurnierTableControl().updateTurnier(
-					this.mainControl.getTurnier());
+			this.mainControl.getTurnierTableControl().updateTurnier(this.mainControl.getTurnier());
 			saveOK1 = true;
 		}
 		ladebalkenView.iterate();
 		if (mainControl.getTurnier().getGruppe()[index].getGruppeId() < 0) {
-			saveOK2 = this.mainControl.getGruppenTableControl().insertGruppe(
-					index);
+			saveOK2 = this.mainControl.getGruppenTableControl().insertGruppe(index);
 			ladebalkenView.iterate();
-			saveOK3 = this.mainControl.getSpielerTableControl().insertSpieler(
-					index);
+			saveOK3 = this.mainControl.getSpielerTableControl().insertSpieler(index);
 			ladebalkenView.iterate();
-			saveOK4 = this.mainControl.getPartienTableControl().insertPartien(
-					index);
-			this.mainControl.getTurnier_has_SpielerTableControl()
-					.insertTurnier_has_Spieler(index);
+			saveOK4 = this.mainControl.getPartienTableControl().insertPartien(index);
+			this.mainControl.getTurnier_has_SpielerTableControl().insertTurnier_has_Spieler(index);
 		} else {
-			saveOK2 = this.mainControl.getGruppenTableControl().updateGruppe(
-					index);
+			saveOK2 = this.mainControl.getGruppenTableControl().updateGruppe(index);
 			ladebalkenView.iterate();
-			saveOK3 = this.mainControl.getSpielerTableControl().updateSpieler(
-					index);
+			saveOK3 = this.mainControl.getSpielerTableControl().updateSpieler(index);
 			ladebalkenView.iterate();
-			saveOK4 = this.mainControl.getPartienTableControl().updatePartien(
-					index);
+			saveOK4 = this.mainControl.getPartienTableControl().updatePartien(index);
 
 		}
 		ladebalkenView.iterate();
-		if (saveOK1 && saveOK2 && saveOK3 && saveOK4) {
-			JOptionPane.showMessageDialog(
-					null,
-					"Turnier "
-							+ this.mainControl.getTurnier().getTurnierName()
-							+ ", Gruppe "
-							+ this.mainControl.getTurnier().getGruppe()[index]
-									.getGruppenName()
+		if (saveOK1 && saveOK2 && saveOK4) {
+			JOptionPane.showMessageDialog(null,
+					"Turnier " + this.mainControl.getTurnier().getTurnierName() + ", Gruppe "
+							+ this.mainControl.getTurnier().getGruppe()[index].getGruppenName()
 							+ " wurde gespeichert! \n");
 		} else {
-			JOptionPane.showMessageDialog(
-					null,
-					"Fehler: Turnier "
-							+ this.mainControl.getTurnier().getTurnierName()
-							+ ", Gruppe "
-							+ this.mainControl.getTurnier().getGruppe()[index]
-									.getGruppenName()
+			JOptionPane.showMessageDialog(null,
+					"Fehler: Turnier " + this.mainControl.getTurnier().getTurnierName() + ", Gruppe "
+							+ this.mainControl.getTurnier().getGruppe()[index].getGruppenName()
 							+ " wurde nicht gespeichert!");
 		}
 	}

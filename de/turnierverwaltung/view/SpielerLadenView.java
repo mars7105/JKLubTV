@@ -42,22 +42,25 @@ public class SpielerLadenView extends JPanel {
 	private JButton spielerAddButton;
 	private int anzahlElemente;
 	private JPanel line;
-	private ImageIcon userNew = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-new-3.png")));
-	private ImageIcon userDelete = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-delete-2.png")));
-	private ImageIcon userProperties = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-properties.png")));
-	private ImageIcon userImport = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-open-4.png")));
-	private ImageIcon userExport = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-export.png")));
-	private ImageIcon turnierListeIcon = new ImageIcon(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/arrow-right-3.png")));
+	private ImageIcon userNew = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-new-3.png")));
+	private ImageIcon userDelete = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-delete-2.png")));
+	private ImageIcon userProperties = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-properties.png")));
+	private ImageIcon userImport = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-open-4.png")));
+	private ImageIcon userExport = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-export.png")));
 
 	int spielerAnzahl;
 	private JButton spielerImport;
 	private JButton spielerExport;
-	private JButton turnierListe;
 
 	public SpielerLadenView(int spielerAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
 		anzahlElemente = 0;
-
+		setLayout(new BorderLayout());
 		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 100;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 100;
 		setPreferredSize(new Dimension(windowWidth, windowHeight));
@@ -66,28 +69,26 @@ public class SpielerLadenView extends JPanel {
 		spielerImport.setEnabled(false);
 		spielerExport = new JButton("Export Spielerliste", userExport);
 		spielerExport.setEnabled(false);
-		turnierListe = new JButton("Turnierliste", turnierListeIcon);
 		JLabel titleLabel = new JLabel("Spielerliste");
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel newPlayerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		titlepanel.add(titleLabel);
-		newPlayerPanel.add(turnierListe);
 		newPlayerPanel.add(spielerAddButton);
 		newPlayerPanel.add(spielerImport);
 		newPlayerPanel.add(spielerExport);
 		
 		mainPane = new JPanel();
-		mainPane.setLayout(new BorderLayout());
-		mainPane.add(titlepanel, BorderLayout.NORTH);
-		mainPane.add(newPlayerPanel, BorderLayout.CENTER);
+		mainPane.setLayout(new BoxLayout(mainPane,BoxLayout.PAGE_AXIS));
+		mainPane.add(titlepanel);
+		mainPane.add(newPlayerPanel);
 
-		add(mainPane);
+		add(mainPane,BorderLayout.NORTH);
 		spielerBearbeitenButton = new JButton[this.spielerAnzahl];
 		spielerLoeschenButton = new JButton[this.spielerAnzahl];
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBackground(new Color(249, 222, 112));
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
 		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));
@@ -128,15 +129,16 @@ public class SpielerLadenView extends JPanel {
 
 	public void makeSpielerZeile(Spieler spieler) {
 		line = new JPanel();
-		
+
 		line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
 		line.setBackground(new Color(249, 222, 112));
 		JPanel playerLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		JLabel sname = new JLabel("  Spielername: " + spieler.getName());
 		playerLine.add(sname);
-//		JLabel nkuerzel = new JLabel(" Namenskürzel " + spieler.getKuerzel());
-//		playerLine.add(nkuerzel);
+		// JLabel nkuerzel = new JLabel(" Namenskürzel " +
+		// spieler.getKuerzel());
+		// playerLine.add(nkuerzel);
 		JLabel dwz = new JLabel("  DWZ: " + spieler.getDwz());
 		playerLine.add(dwz);
 		line.add(playerLine);
@@ -162,14 +164,6 @@ public class SpielerLadenView extends JPanel {
 
 	public void setSpielerLoeschenButton(JButton[] spielerLoeschenButton) {
 		this.spielerLoeschenButton = spielerLoeschenButton;
-	}
-
-	public JButton getTurnierListe() {
-		return turnierListe;
-	}
-
-	public void setTurnierListe(JButton turnierListe) {
-		this.turnierListe = turnierListe;
 	}
 
 }

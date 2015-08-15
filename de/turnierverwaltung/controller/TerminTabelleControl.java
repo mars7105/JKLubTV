@@ -224,7 +224,7 @@ public class TerminTabelleControl implements ActionListener {
 									.getTable().getModel().getValueAt(y, 0) == spielerSchwarz) {
 								simpleTurnierTabelleView[gruppenNummer]
 										.getTable().getModel()
-										.setValueAt(ergebnissSet, i, y + 3);
+										.setValueAt(ergebnissSet, i, y + 4);
 							}
 						}
 
