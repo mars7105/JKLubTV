@@ -1,10 +1,15 @@
 package de.turnierverwaltung.controller;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import de.turnierverwaltung.view.InfoView;
@@ -38,8 +43,14 @@ public class InfoController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == lizenzButton) {
-			String ausgabe = "AHHH!";
-			infoView.getTextArea().setText(infoTexteView.getLizenzText());
+			//infoView.getTextArea().setText(infoTexteView.getLizenzText());
+			//custom title, custom icon
+			JOptionPane.showMessageDialog(new JFrame(),
+					infoTexteView.getLizenzText(),
+			    "Lizenzen",
+			    JOptionPane.INFORMATION_MESSAGE,
+			    new ImageIcon(
+						Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png"))));
 		}
 
 	}

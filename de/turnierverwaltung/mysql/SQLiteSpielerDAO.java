@@ -39,7 +39,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public void createSpielerTable() {
 		String sql = "CREATE TABLE spieler (idSpieler INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-				+ " Name VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, Age INTEGER)";
+				+ " Name VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, Age INTEGER)" + ";";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -61,12 +61,15 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public boolean deleteSpieler(int id) {
 		boolean ok = false;
-		String sql = "delete from spieler where idSpieler=?";
+		String sql = "delete from spieler where idSpieler=?" + ";";
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
 				preStm.setInt(1, id);
-				preStm.executeUpdate();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
 				preStm.close();
 				ok = true;
 			} catch (SQLException e) {
@@ -81,7 +84,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public ArrayList<Gruppe> findSpieler(int id) {
 		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe =" + id
-				+ " AND Spieler_idSpieler = idSpieler";
+				+ " AND Spieler_idSpieler = idSpieler" + ";";
 		ArrayList<Gruppe> gruppenListe = new ArrayList<Gruppe>();
 
 		Statement stmt;
@@ -107,7 +110,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 	@Override
 	public ArrayList<Spieler> getAllSpieler() {
-		String sql = "Select * from spieler";
+		String sql = "Select * from spieler" + ";";
 		ArrayList<Spieler> spielerListe = new ArrayList<Spieler>();
 
 		Statement stmt;
@@ -150,7 +153,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 		String sql;
 		int id = -1;
 
-		sql = "Insert into spieler (DWZ, Kuerzel, Name, Age) values (?,?,?,?)";
+		sql = "Insert into spieler (DWZ, Kuerzel, Name, Age) values (?,?,?,?)" + ";";
 
 		if (this.dbConnect != null) {
 			try {
@@ -165,7 +168,10 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 					alterTableAge();
 					preStm.setInt(4, age);
 				}
-				preStm.executeUpdate();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
 				ResultSet rs = preStm.getGeneratedKeys();
 				if (rs.next()) {
 					id = rs.getInt(1);
@@ -184,7 +190,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public ArrayList<Spieler> selectAllSpieler(int idGruppe) {
 		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe = " + idGruppe
-				+ " AND Spieler_idSpieler = idSpieler";
+				+ " AND Spieler_idSpieler = idSpieler" + ";";
 		ArrayList<Spieler> spielerListe = new ArrayList<Spieler>();
 
 		Statement stmt;
@@ -221,7 +227,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	public boolean updateSpieler(Spieler spieler) {
 		boolean ok = false;
 		String sql = "update spieler set Name = ?, Kuerzel = ?" + ", DWZ = ?, Age = ? where idSpieler="
-				+ spieler.getSpielerId();
+				+ spieler.getSpielerId() + ";";
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
@@ -233,7 +239,10 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				} catch (SQLException e) {
 					alterTableAge();
 				}
-				preStm.executeUpdate();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
 				preStm.close();
 				ok = true;
 			} catch (SQLException e) {
@@ -245,13 +254,9 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	}
 
 	private void alterTableAge() {
-		// String sql = "IF NOT EXISTS (SELECT * FROM spieler " +
-		// "WHERE COLUMN_NAME = Age) " +
-		// "BEGIN" +
-		// "ALTER TABLE spieler ADD Age INTEGER DEFAULT(2)" +
-		// "END";
+		
 
-		String sql = "ALTER TABLE spieler ADD Age INTEGER  DEFAULT(2)";
+		String sql = "ALTER TABLE spieler ADD Age INTEGER  DEFAULT(2)" + ";";
 		Statement stmt;
 		if (this.dbConnect != null) {
 			try {

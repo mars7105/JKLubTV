@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -38,7 +39,8 @@ public class SQLitePartienDAO implements PartienDAO {
 	@Override
 	public void createPartienTable() {
 		String sql = "CREATE TABLE partien (idPartie INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-				+ " idSpielerWeiss INTEGER NOT NULL , idSpielerSchwarz INTEGER, Runde INTEGER, Spieldatum VARCHAR, idGruppe INTEGER, Ergebnis INTEGER)";
+				+ " idSpielerWeiss INTEGER NOT NULL , idSpielerSchwarz INTEGER, Runde INTEGER, Spieldatum VARCHAR, idGruppe INTEGER, Ergebnis INTEGER)"
+				+ ";";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -59,12 +61,15 @@ public class SQLitePartienDAO implements PartienDAO {
 	@Override
 	public boolean deletePartien(int id) {
 		boolean ok = false;
-		String sql = "delete from partien where idPartie=?";
+		String sql = "delete from partien where idPartie=?" + ";";
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
 				preStm.setInt(1, id);
-				preStm.executeUpdate();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
 				preStm.close();
 				ok = true;
 			} catch (SQLException e) {
@@ -83,19 +88,18 @@ public class SQLitePartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public int insertPartien(int idGruppe, String spielDatum, int Runde,
-			int ergebnis, int spielerIdweiss, int spielerIdschwarz) {
+	public int insertPartien(int idGruppe, String spielDatum, int Runde, int ergebnis, int spielerIdweiss,
+			int spielerIdschwarz) {
 
 		String sql;
 		int id = -1;
 
 		sql = "Insert into partien (idGruppe, Spieldatum, Runde, Ergebnis, idSpielerWeiss"
-				+ ", idSpielerSchwarz) values (?,?,?,?,?,?)";
+				+ ", idSpielerSchwarz) values (?,?,?,?,?,?)" + ";";
 
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
-						Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 				preStm.setInt(1, idGruppe);
 				preStm.setString(2, spielDatum);
@@ -104,7 +108,10 @@ public class SQLitePartienDAO implements PartienDAO {
 				preStm.setInt(5, spielerIdweiss);
 				preStm.setInt(6, spielerIdschwarz);
 
-				preStm.executeUpdate();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
 				ResultSet rs = preStm.getGeneratedKeys();
 				if (rs.next()) {
 					id = rs.getInt(1);
@@ -122,9 +129,8 @@ public class SQLitePartienDAO implements PartienDAO {
 
 	@Override
 	public ArrayList<Partie> selectAllPartien(int idGruppe) {
-		String sql = "Select idPartie,idSpielerWeiss,"
-				+ "idSpielerSchwarz, Runde, Spieldatum, Ergebnis  "
-				+ "from partien where idGruppe=" + idGruppe;
+		String sql = "Select idPartie,idSpielerWeiss," + "idSpielerSchwarz, Runde, Spieldatum, Ergebnis  "
+				+ "from partien where idGruppe=" + idGruppe + ";";
 		ArrayList<Partie> partieListe = new ArrayList<Partie>();
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -143,8 +149,7 @@ public class SQLitePartienDAO implements PartienDAO {
 					Spieler spielerSchwarz = new Spieler();
 					spielerSchwarz.setSpielerId(idSpielerSchwarz);
 
-					partieListe.add(new Partie(idPartie, spielDatum, ergebnis,
-							runde, spielerWeiss, spielerSchwarz));
+					partieListe.add(new Partie(idPartie, spielDatum, ergebnis, runde, spielerWeiss, spielerSchwarz));
 
 				}
 				stmt.close();
@@ -163,8 +168,8 @@ public class SQLitePartienDAO implements PartienDAO {
 
 		boolean ok = false;
 		String sql = "update partien set idSpielerWeiss = ?, idSpielerSchwarz = ?"
-				+ ", Runde = ?, Ergebnis = ?, Spieldatum = ? where idPartie="
-				+ partie.getPartieId();
+				+ ", Runde = ?, Ergebnis = ?, Spieldatum = ? where idPartie=" + partie.getPartieId() + ";";
+		// + "COMMIT;";
 
 		if (this.dbConnect != null) {
 			try {
@@ -174,7 +179,10 @@ public class SQLitePartienDAO implements PartienDAO {
 				preStm.setInt(3, partie.getRunde());
 				preStm.setInt(4, partie.getErgebnis());
 				preStm.setString(5, partie.getSpielDatum());
-				preStm.executeUpdate();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
 				preStm.close();
 				ok = true;
 

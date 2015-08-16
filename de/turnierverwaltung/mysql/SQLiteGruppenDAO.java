@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -37,7 +38,7 @@ public class SQLiteGruppenDAO implements GruppenDAO {
 	@Override
 	public void createGruppenTable() {
 		String sql = "CREATE TABLE gruppen (idGruppe INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-				+ " TurnierId INTEGER, Gruppenname VARCHAR)";
+				+ " TurnierId INTEGER, Gruppenname VARCHAR);";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -58,12 +59,15 @@ public class SQLiteGruppenDAO implements GruppenDAO {
 	@Override
 	public boolean deleteGruppe(int id) {
 		boolean ok = false;
-		String sql = "delete from gruppen where idGruppe=?";
+		String sql = "delete from gruppen where idGruppe=?;";
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
 				preStm.setInt(1, id);
-				preStm.executeUpdate();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
 				preStm.close();
 				ok = true;
 			} catch (SQLException e) {
@@ -77,8 +81,7 @@ public class SQLiteGruppenDAO implements GruppenDAO {
 
 	@Override
 	public Gruppe findGruppe(int id) {
-		String sql = "Select Gruppenname, TurnierId " + "from gruppen "
-				+ "where idGruppe=" + id;
+		String sql = "Select Gruppenname, TurnierId " + "from gruppen " + "where idGruppe=" + id + ";";
 
 		Gruppe gruppe = null;
 
@@ -110,17 +113,19 @@ public class SQLiteGruppenDAO implements GruppenDAO {
 		String sql;
 		int id = -1;
 
-		sql = "Insert into gruppen (Gruppenname, TurnierId) values (?,?)";
+		sql = "Insert into gruppen (Gruppenname, TurnierId) values (?,?);";
 		id = -1;
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
-						Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 				preStm.setString(1, gruppenName);
 				preStm.setInt(2, turnierId);
 
-				preStm.executeUpdate();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
 				ResultSet rs = preStm.getGeneratedKeys();
 				if (rs.next()) {
 					id = rs.getInt(1);
@@ -139,7 +144,7 @@ public class SQLiteGruppenDAO implements GruppenDAO {
 
 	@Override
 	public ArrayList<Gruppe> selectAllGruppen(int idTurnier) {
-		String sql = "Select * from gruppen where TurnierId=" + idTurnier;
+		String sql = "Select * from gruppen where TurnierId=" + idTurnier + ";";
 		ArrayList<Gruppe> gruppenListe = new ArrayList<Gruppe>();
 
 		Statement stmt;
@@ -166,13 +171,15 @@ public class SQLiteGruppenDAO implements GruppenDAO {
 	@Override
 	public boolean updateGruppe(Gruppe gruppe) {
 		boolean ok = false;
-		String sql = "update gruppen set Gruppenname = ? where idGruppe="
-				+ gruppe.getGruppeId();
+		String sql = "update gruppen set Gruppenname = ? where idGruppe=" + gruppe.getGruppeId() + ";";
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
 				preStm.setString(1, gruppe.getGruppenName());
-				preStm.executeUpdate();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
 				preStm.close();
 				ok = true;
 			} catch (SQLException e) {

@@ -40,7 +40,7 @@ public class SQLiteTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 	public void createTurnier_has_SpielerTable() {
 		String sql = "CREATE TABLE turnier_has_spieler (idturnier_has_spieler "
 				+ "INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "
-				+ "Gruppe_idGruppe INTEGER, Spieler_idSpieler INTEGER)";
+				+ "Gruppe_idGruppe INTEGER, Spieler_idSpieler INTEGER)" + ";";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -62,7 +62,7 @@ public class SQLiteTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 	@Override
 	public boolean deleteTurnier_has_Spieler(ArrayList<Integer> id) {
 		boolean ok = false;
-		String sql = "delete from turnier_has_spieler where Spieler_idSpieler=";
+		String sql = "delete from turnier_has_spieler where Spieler_idSpieler=" + ";";
 		ListIterator<Integer> li = id.listIterator();
 		int idSp = -1;
 		if (id.size() > 0) {
@@ -73,9 +73,10 @@ public class SQLiteTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 						idSp = li.next();
 						PreparedStatement preStm = this.dbConnect
 								.prepareStatement(sql + idSp);
-						// preStm.setInt(1, idSp);
-						preStm.executeUpdate();
-						preStm.close();
+						preStm.addBatch();
+						this.dbConnect.setAutoCommit(false);
+						preStm.executeBatch();
+						this.dbConnect.setAutoCommit(true);						preStm.close();
 						ok = true;
 					}
 				} catch (SQLException e) {
@@ -93,7 +94,7 @@ public class SQLiteTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 	public ArrayList<Integer> findSpielerisinTurnier_has_Spieler(Spieler spieler) {
 		ArrayList<Integer> findTurnier_has_Spieler = new ArrayList<Integer>();
 		String sql = "Select * " + "from turnier_has_spieler "
-				+ "where Spieler_idSpieler=" + spieler.getSpielerId();
+				+ "where Spieler_idSpieler=" + spieler.getSpielerId() + ";";
 		Statement stmt;
 		ResultSet rs;
 		if (this.dbConnect != null) {
@@ -126,7 +127,8 @@ public class SQLiteTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 	@Override
 	public int insertTurnier_has_Spieler(int idGruppe, int idSpieler) {
 		String sql;
-		sql = "Insert into turnier_has_spieler (Gruppe_idGruppe, Spieler_idSpieler) values (?,?)";
+		sql = "Insert into turnier_has_spieler (Gruppe_idGruppe, Spieler_idSpieler) values (?,?);";
+//				+ "COMMIT;";
 		int id = -1;
 		if (this.dbConnect != null) {
 			try {
@@ -134,8 +136,10 @@ public class SQLiteTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 						Statement.RETURN_GENERATED_KEYS);
 				preStm.setInt(1, idGruppe);
 				preStm.setInt(2, idSpieler);
-				preStm.executeUpdate();
-				ResultSet rs = preStm.getGeneratedKeys();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);				ResultSet rs = preStm.getGeneratedKeys();
 				if (rs.next()) {
 					id = rs.getInt(1);
 

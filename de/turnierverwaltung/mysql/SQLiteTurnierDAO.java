@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -37,7 +38,7 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 	@Override
 	public void createTurnierTable() {
 		String sql = "CREATE TABLE turnier (idTurnier INTEGER PRIMARY KEY "
-				+ "AUTOINCREMENT  NOT NULL , Datum_idDatum INTEGER, Turniername VARCHAR)";
+				+ "AUTOINCREMENT  NOT NULL , Datum_idDatum INTEGER, Turniername VARCHAR)" + ";";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -59,10 +60,9 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 	@Override
 	public boolean deleteTurnier(int id) {
 		boolean ok = false;
-		String datum = "Select Datum_idDatum from turnier where idTurnier="
-				+ id;
-		String gruppe = "Select idGruppe from gruppen where TurnierId=" + id;
-		String sql = "delete from turnier where idTurnier=?";
+		String datum = "Select Datum_idDatum from turnier where idTurnier=" + id + ";";
+		String gruppe = "Select idGruppe from gruppen where TurnierId=" + id + ";";
+		String sql = "delete from turnier where idTurnier=?" + ";";
 		Statement stmt;
 		int datumId = 0;
 		int gruppeId = 0;
@@ -76,10 +76,13 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				rs = stmt.executeQuery(datum);
 				while (rs.next()) {
 					datumId = rs.getInt("Datum_idDatum");
-					sql = "delete from datum where idDatum=?";
+					sql = "delete from datum where idDatum=?" + ";";
 					preStm = this.dbConnect.prepareStatement(sql);
 					preStm.setInt(1, datumId);
-					preStm.executeUpdate();
+					preStm.addBatch();
+					this.dbConnect.setAutoCommit(false);
+					preStm.executeBatch();
+					this.dbConnect.setAutoCommit(true);
 					preStm.close();
 				}
 				stmt.close();
@@ -90,28 +93,39 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				while (rs.next()) {
 					// Partien l�schen
 					gruppeId = rs.getInt("idGruppe");
-					sql = "delete from partien where idGruppe=?";
+					sql = "delete from partien where idGruppe=?" + ";";
 					preStm = this.dbConnect.prepareStatement(sql);
 					preStm.setInt(1, gruppeId);
-					preStm.executeUpdate();
-					// Gruppen l�schen
-					sql = "delete from gruppen where idGruppe=?";
+					preStm.addBatch();
+					this.dbConnect.setAutoCommit(false);
+					preStm.executeBatch();
+					this.dbConnect.setAutoCommit(true); // Gruppen l�schen
+					sql = "delete from gruppen where idGruppe=?" + ";";
 					preStm = this.dbConnect.prepareStatement(sql);
 					preStm.setInt(1, gruppeId);
-					preStm.executeUpdate();
-					// Turnier_has_Spieler l�schen
-					sql = "delete from turnier_has_spieler where Gruppe_idGruppe=?";
+					preStm.addBatch();
+					this.dbConnect.setAutoCommit(false);
+					preStm.executeBatch();
+					this.dbConnect.setAutoCommit(true); // Turnier_has_Spieler
+														// l�schen
+					sql = "delete from turnier_has_spieler where Gruppe_idGruppe=?" + ";";
 					preStm = this.dbConnect.prepareStatement(sql);
 					preStm.setInt(1, gruppeId);
-					preStm.executeUpdate();
+					preStm.addBatch();
+					this.dbConnect.setAutoCommit(false);
+					preStm.executeBatch();
+					this.dbConnect.setAutoCommit(true);
 					preStm.close();
 
 				}
 				// Turnier l�schen
-				sql = "delete from turnier where idTurnier=?";
+				sql = "delete from turnier where idTurnier=?" + ";";
 				preStm = this.dbConnect.prepareStatement(sql);
 				preStm.setInt(1, id);
-				preStm.executeUpdate();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
 				preStm.close();
 				stmt.close();
 				preStm.close();
@@ -127,11 +141,8 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 
 	@Override
 	public Turnier findTurnier(int id) {
-		String sql = "Select Startdatum, Enddatum, Turniername, Datum_idDatum, idDatum"
-				+ "from turnier,datum "
-				+ "where idTurnier="
-				+ id
-				+ " AND Datum_idDatum = idDatum";
+		String sql = "Select Startdatum, Enddatum, Turniername, Datum_idDatum, idDatum" + "from turnier,datum "
+				+ "where idTurnier=" + id + " AND Datum_idDatum = idDatum" + ";";
 		Turnier turnier = null;
 
 		Statement stmt;
@@ -145,8 +156,7 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 					String turnierName = rs.getString("Turniername");
 					String startDatum = rs.getString("Startdatum");
 					String endDatum = rs.getString("Enddatum");
-					turnier = new Turnier(turnierId, turnierName, startDatum,
-							endDatum);
+					turnier = new Turnier(turnierId, turnierName, startDatum, endDatum);
 
 				}
 				stmt.close();
@@ -164,16 +174,18 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 	public int insertTurnier(String turnierName, int datumId) {
 
 		String sql;
-		sql = "Insert into turnier (Turniername, Datum_idDatum) values (?,?)";
+		sql = "Insert into turnier (Turniername, Datum_idDatum) values (?,?);";
 		int id = -1;
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
-						Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 				preStm.setString(1, turnierName);
 				preStm.setInt(2, datumId);
-				preStm.executeUpdate();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
 				ResultSet rs = preStm.getGeneratedKeys();
 				if (rs.next()) {
 					id = rs.getInt(1);
@@ -193,7 +205,7 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 
 	@Override
 	public ArrayList<Turnier> selectAllTurnier() {
-		String sql = "Select * from turnier, datum where Datum_idDatum = idDatum";
+		String sql = "Select * from turnier, datum where Datum_idDatum = idDatum" + ";";
 		ArrayList<Turnier> turnierListe = new ArrayList<Turnier>();
 
 		Statement stmt;
@@ -207,8 +219,7 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 					String turnierName = rs.getString("Turniername");
 					String startDatum = rs.getString("Startdatum");
 					String endDatum = rs.getString("Enddatum");
-					turnierListe.add(new Turnier(id, turnierName, startDatum,
-							endDatum));
+					turnierListe.add(new Turnier(id, turnierName, startDatum, endDatum));
 				}
 				stmt.close();
 
@@ -223,8 +234,7 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 	@Override
 	public boolean updateTurnier(Turnier turnier) {
 		boolean ok = false;
-		String datum = "Select Datum_idDatum from turnier where idTurnier="
-				+ turnier.getTurnierId();
+		String datum = "Select Datum_idDatum from turnier where idTurnier=" + turnier.getTurnierId() + ";";
 		int datumId = -1;
 		if (this.dbConnect != null) {
 			// Datum l�schen
@@ -245,16 +255,18 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				e.printStackTrace();
 			}
 		}
-		String sql1 = "update turnier set Turniername = ?"
-				+ " where idTurnier = " + turnier.getTurnierId();
-		String sql2 = "update datum set Startdatum = ?, Enddatum = ?"
-				+ " where idDatum = " + datumId;
+		// String sql0 = "BEGIN;";
+		String sql1 = "update turnier set Turniername = ?" + " where idTurnier = " + turnier.getTurnierId() + ";";
+		String sql2 = "update datum set Startdatum = ?, Enddatum = ?" + " where idDatum = " + datumId + ";";
+
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect
-						.prepareStatement(sql1);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql1);
 				preStm.setString(1, turnier.getTurnierName());
-				preStm.executeUpdate();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
 				preStm.close();
 				ok = true;
 			} catch (SQLException e) {
@@ -264,12 +276,14 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 		}
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect
-						.prepareStatement(sql2);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql2);
 
 				preStm.setString(1, turnier.getStartDatum());
 				preStm.setString(2, turnier.getEndDatum());
-				preStm.executeUpdate();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
 				preStm.close();
 				ok = true;
 			} catch (SQLException e) {

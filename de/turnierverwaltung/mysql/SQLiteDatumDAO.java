@@ -35,7 +35,7 @@ public class SQLiteDatumDAO implements DatumDAO {
 	@Override
 	public void createDatumTable() {
 		String sql = "CREATE TABLE datum (idDatum INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL,"
-				+ "Startdatum VARCHAR, Enddatum VARCHAR)";
+				+ "Startdatum VARCHAR, Enddatum VARCHAR);";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -57,13 +57,15 @@ public class SQLiteDatumDAO implements DatumDAO {
 	@Override
 	public boolean deleteDatum(int id) {
 		boolean ok = false;
-		String sql = "delete from datum where idDatum=?"; 
+		String sql = "delete from datum where idDatum=?;"; 
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
 				preStm.setInt(1, id);
-				preStm.executeUpdate();
-				preStm.close();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);				preStm.close();
 				ok = true;
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -83,7 +85,7 @@ public class SQLiteDatumDAO implements DatumDAO {
 	@Override
 	public int insertDatum(String startDatum, String endDatum) {
 		String sql;
-		sql = "Insert into datum (Startdatum,Enddatum) values (?,?)";
+		sql = "Insert into datum (Startdatum,Enddatum) values (?,?);";
 		int id = -1;
 		if (this.dbConnect != null) {
 			try {
@@ -91,7 +93,10 @@ public class SQLiteDatumDAO implements DatumDAO {
 						Statement.RETURN_GENERATED_KEYS);
 				preStm.setString(1, startDatum);
 				preStm.setString(2, endDatum);
-				preStm.executeUpdate();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
 				ResultSet rs = preStm.getGeneratedKeys();
 				if (rs.next()) {
 					id = rs.getInt(1);
@@ -118,14 +123,16 @@ public class SQLiteDatumDAO implements DatumDAO {
 	public boolean updateDatum(int idDatum, String startDatum, String endDatum) {
 		boolean ok = false;
 		String sql = "update datum set Startdatum = ?, Enddatum = ? where idDatum="
-				+ idDatum;
+				+ idDatum + ";";
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
 				preStm.setString(1, startDatum);
 				preStm.setString(2, endDatum);
-				preStm.executeUpdate();
-				preStm.close();
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);				preStm.close();
 				ok = true;
 			} catch (SQLException e) {
 				e.printStackTrace();

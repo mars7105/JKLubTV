@@ -11,7 +11,7 @@ public class InfoTexteView {
 				+ "1. JDatePicker -> jdatepicker-1.3.4.jar\n"
 				+ "  für die Auswahl des Datum.\n"
 				+ "  http://jdatepicker.org/\n"
-				+ "2. SQLite JDBC -> sqlite-jdbc-3.7.15-SNAPSHOT.jar\n"
+				+ "2. SQLite JDBC -> sqlite-jdbc-3.8.11.1.jar\n"
 				+ "  für die Speicherung im SQLite Format.\n"
 				+ "  https://bitbucket.org/xerial/sqlite-jdbc/downloads\n"
 				+ "3. MySQL Connector -> mysql-connector-java-5.1.35-bin.jar\n"
@@ -20,5 +20,9 @@ public class InfoTexteView {
 				+ "4. Bilder: Open Icon Library\n"
 				+ "  http://sourceforge.net/projects/openiconlibrary/\n"
 				+ "";
+	}
+	public String getHelpText() {
+		return null;
+		
 	}
 }
