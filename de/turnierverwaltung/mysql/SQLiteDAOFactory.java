@@ -100,4 +100,8 @@ public class SQLiteDAOFactory extends DAOFactory {
 		return turnierDAO;
 	}
 
+	public static String getDB_PATH() {
+		return DB_PATH;
+	}
+
 }

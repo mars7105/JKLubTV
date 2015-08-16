@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -44,6 +45,7 @@ public class SpielerLadenControl implements ActionListener {
 	private SpielerTableControl spielerTableControl;
 	private SpielerEditierenView spielerEditierenView;
 	private SpielerHinzufuegenView spielerHinzufuegenView;
+	
 	private int spielerIndex;
 
 	public SpielerLadenControl(MainControl mainControl) {
@@ -53,7 +55,10 @@ public class SpielerLadenControl implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-
+		if (arg0.getSource() == spielerLadenView.getSpielerExport()) {
+			 SpielerTableExportController spielerExport = new SpielerTableExportController(this.mainControl);
+			 spielerExport.exportSpielerTable();
+		}
 		if (arg0.getSource() == spielerLadenView.getSpielerAddButton()) {
 			spielerHinzufuegenView = new SpielerHinzufuegenView();
 
@@ -179,6 +184,7 @@ public class SpielerLadenControl implements ActionListener {
 			index++;
 		}
 		spielerLadenView.getSpielerAddButton().addActionListener(this);
+		spielerLadenView.getSpielerExport().addActionListener(this);
 
 	}
 }

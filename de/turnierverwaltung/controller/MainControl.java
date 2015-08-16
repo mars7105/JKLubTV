@@ -31,6 +31,8 @@ import de.turnierverwaltung.model.TerminTabelle;
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.model.TurnierKonstanten;
 import de.turnierverwaltung.model.TurnierTabelle;
+import de.turnierverwaltung.mysql.DAOFactory;
+import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.GruppenView;
 import de.turnierverwaltung.view.MainView;
 import de.turnierverwaltung.view.MenueView;
@@ -110,9 +112,14 @@ public class MainControl extends JFrame {
 		naviView.getTurnierListeButton().setEnabled(enable);
 		naviView.getSpielerListeButton().setVisible(enable);
 		naviView.getTurnierListeButton().setVisible(enable);
-		//naviView.getPathToDatabase().setText(menueControl.getFileName())
+		// naviView.getPathToDatabase().setText(menueControl.getFileName())
 		naviView.setPathToDatabase(new JLabel(menueControl.getFileName()));
 		naviView.updateUI();
+		if (enable == true) {
+			this.setTitle("Klubturnierverwaltung - Datei:" + SQLiteDAOFactory.getDB_PATH());
+		} else {
+			this.setTitle("Klubturnierverwaltung ");
+		}
 	}
 
 	public GruppenControl getGruppenControl() {
