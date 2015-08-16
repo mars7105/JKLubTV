@@ -66,7 +66,7 @@ public class SpielerLadenView extends JPanel {
 		setPreferredSize(new Dimension(windowWidth, windowHeight));
 		spielerAddButton = new JButton("Neuer Spieler", userNew);
 		spielerImport = new JButton("Import Spielerliste", userImport);
-		spielerImport.setEnabled(false);
+//		spielerImport.setEnabled(false);
 		spielerExport = new JButton("Export Spielerliste", userExport);
 		//spielerExport.setEnabled(false);
 		JLabel titleLabel = new JLabel("Spielerliste");

@@ -55,6 +55,11 @@ public class SpielerLadenControl implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == spielerLadenView.getSpielerImport()) {
+			 SpielerTableImportController spielerImport = new SpielerTableImportController(this.mainControl);
+			 spielerImport.importSpielerTable();
+			 makePanel();
+		}
 		if (arg0.getSource() == spielerLadenView.getSpielerExport()) {
 			 SpielerTableExportController spielerExport = new SpielerTableExportController(this.mainControl);
 			 spielerExport.exportSpielerTable();
@@ -185,6 +190,7 @@ public class SpielerLadenControl implements ActionListener {
 		}
 		spielerLadenView.getSpielerAddButton().addActionListener(this);
 		spielerLadenView.getSpielerExport().addActionListener(this);
+		spielerLadenView.getSpielerImport().addActionListener(this);
 
 	}
 }
