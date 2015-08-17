@@ -39,9 +39,9 @@ public class SimpleTurnierTabelleView extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final int small = 45;
-	private final int medium = 75;
-	private final int big = 130;
+	private final int small = 50;
+	private final int medium = 100;
+	private final int big = 275;
 	private JButton okButton;
 	private JButton saveButton;
 	private JButton htmlButton;
@@ -49,9 +49,9 @@ public class SimpleTurnierTabelleView extends JPanel {
 	private JComboBox<String> comboBox;
 
 	public SimpleTurnierTabelleView(SimpleTurnierTabelle simpleTableModel) {
-		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 150;
-		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 200;
-		setPreferredSize(new Dimension(windowWidth, windowHeight));
+//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 150;
+//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 200;
+//		setPreferredSize(new Dimension(windowWidth, windowHeight));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBackground(new Color(249, 222, 112));
 		table = new JTable(simpleTableModel);
@@ -72,7 +72,7 @@ public class SimpleTurnierTabelleView extends JPanel {
 		JPanel haupt = new JPanel();
 		haupt.setLayout(new FlowLayout(FlowLayout.CENTER));
 		JPanel tabelPanel = new JPanel();
-		tabelPanel.setPreferredSize(new Dimension(windowWidth - 100, windowHeight - 100));
+//		tabelPanel.setPreferredSize(new Dimension(windowWidth - 100, windowHeight - 100));
 		tabelPanel.setLayout(new BoxLayout(tabelPanel, BoxLayout.PAGE_AXIS));
 		tabelPanel.add(sPane);
 		JPanel hinweis = new JPanel();

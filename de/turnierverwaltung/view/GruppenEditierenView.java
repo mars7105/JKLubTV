@@ -45,8 +45,8 @@ public class GruppenEditierenView extends JDialog {
 		this.setAlwaysOnTop(true);
 		setTitle("Gruppen editieren");
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 50;
-		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
+//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 50;
+//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
 
 		setLocationRelativeTo(null);
 

@@ -34,7 +34,7 @@ public class SaveTurnierControl {
 	 */
 	private void createAndShowGUI() {
 
-		ladebalkenView = new LadebalkenView();
+		ladebalkenView = new LadebalkenView("Speicher " + this.mainControl.getTurnier().getTurnierName());
 
 		// Display the window.
 		ladebalkenView.pack();

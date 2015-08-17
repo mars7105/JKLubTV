@@ -31,9 +31,9 @@ public class MainView extends JPanel {
 	private JButton okButton;
 
 	public MainView() {
-		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
-		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT;
-		setBounds(0, 0, windowWidth, windowHeight);
+//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
+//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT;
+//		setBounds(0, 0, windowWidth, windowHeight);
 		setLayout(new FlowLayout());
 		setBackground(new Color(249, 222, 112));
 		JPanel buttonPane = new JPanel();

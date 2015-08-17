@@ -27,17 +27,25 @@ public class NaviView extends JPanel {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-new.png")));
 	private ImageIcon dbLoadIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-open-4.png")));
+	private ImageIcon tabelleSpeichernIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-save-5.png")));
+
 	private JButton newDatabseButton;
 	private JButton loadDatabaseButton;
 	private JLabel pathToDatabase;
 	private JButton infoButton;
 	private ImageIcon infoIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png")));
+	private JButton tabelleSpeichernButton;
+	private JPanel tabellenPanel;
+	private JPanel datenbankPanel;
+	private JPanel dateiPanel;
+
 	public NaviView() {
 		BorderLayout borderLayout = new BorderLayout();
 		// this.setLayout(borderLayout);
 		this.setBackground(Color.LIGHT_GRAY);
-		EmptyBorder eBorder = new EmptyBorder(5,5,5,5);
+		EmptyBorder eBorder = new EmptyBorder(5, 5, 5, 5);
 		this.setBorder(eBorder);
 		newDatabseButton = new JButton("Neue Datenbank", dbNewIcon);
 		newDatabseButton.setPreferredSize(new Dimension(200, 40));
@@ -49,6 +57,22 @@ public class NaviView extends JPanel {
 		spielerListeButton.setPreferredSize(new Dimension(200, 40));
 		infoButton = new JButton("Info", infoIcon);
 		infoButton.setPreferredSize(new Dimension(200, 40));
+		tabelleSpeichernButton = new JButton("Speichern", tabelleSpeichernIcon);
+		tabelleSpeichernButton.setPreferredSize(new Dimension(200, 40));
+
+
+		dateiPanel = new JPanel();
+		dateiPanel.setBackground(Color.LIGHT_GRAY);
+		BoxLayout dateiPanelLayout = new BoxLayout(dateiPanel, BoxLayout.PAGE_AXIS);
+		dateiPanel.setLayout(dateiPanelLayout);
+		datenbankPanel = new JPanel();
+		datenbankPanel.setBackground(Color.LIGHT_GRAY);
+		BoxLayout datenbankPanelLayout = new BoxLayout(datenbankPanel, BoxLayout.PAGE_AXIS);
+		datenbankPanel.setLayout(datenbankPanelLayout);
+		tabellenPanel = new JPanel();
+		tabellenPanel.setBackground(Color.LIGHT_GRAY);
+		BoxLayout tabellenPanelLayout = new BoxLayout(tabellenPanel, BoxLayout.PAGE_AXIS);
+		tabellenPanel.setLayout(tabellenPanelLayout);
 		JPanel panel = new JPanel();
 		FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
 		flowLayout.setVgap(1);
@@ -76,16 +100,48 @@ public class NaviView extends JPanel {
 		panel4b.setLayout(flowLayout);
 		panel4b.setBackground(Color.LIGHT_GRAY);
 		panel4b.add(infoButton);
+		JPanel panel4c = new JPanel();
+		panel4c.setLayout(flowLayout);
+		panel4c.setBackground(Color.LIGHT_GRAY);
+		panel4c.add(tabelleSpeichernButton);
+		JPanel dateiPanelLabel = new JPanel();
+		dateiPanelLabel.setBackground(Color.LIGHT_GRAY);
+		JLabel dateiLabel = new JLabel("Datei");
+		dateiLabel.setBackground(Color.LIGHT_GRAY);
+		dateiPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		dateiPanelLabel.add(dateiLabel);
+		dateiPanel.add(dateiPanelLabel);
+		dateiPanel.add(panel);
+		dateiPanel.add(panel2);
+		dateiPanel.add(panel4b);
+		dateiPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		JPanel datenbankPanelLabel = new JPanel();
+		datenbankPanelLabel.setBackground(Color.LIGHT_GRAY);
+		JLabel datenbankLabel = new JLabel("Datenbank");
+		datenbankLabel.setBackground(Color.LIGHT_GRAY);
+		datenbankPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		datenbankPanelLabel.add(datenbankLabel);
+		datenbankPanel.add(datenbankPanelLabel);
+		datenbankPanel.add(panel3);
+		datenbankPanel.add(panel4);
+		datenbankPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		JPanel tabellenPanelLabel = new JPanel();
+		tabellenPanelLabel.setBackground(Color.LIGHT_GRAY);
+		JLabel tabellenLabel = new JLabel("Tabellen");
+		tabellenPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		tabellenPanelLabel.add(tabellenLabel);
+		tabellenPanel.add(tabellenPanelLabel);
+		tabellenPanel.add(panel4c);
+		tabellenPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		JPanel panel5 = new JPanel();
-		BoxLayout boxLayout = new BoxLayout(panel5, BoxLayout.PAGE_AXIS);
+		BoxLayout boxLayout = new BoxLayout(panel5, BoxLayout.Y_AXIS);
 		panel5.setLayout(boxLayout);
 		panel5.setBackground(Color.LIGHT_GRAY);
-		panel5.add(panel);
-		panel5.add(panel2);
-		panel5.add(panel4b);
-		panel5.add(panelLabel);
-		panel5.add(panel3);
-		panel5.add(panel4);
+		panel5.add(dateiPanel);
+		panel5.add(datenbankPanel);
+		panel5.add(tabellenPanel);
 		this.add(panel5);
 
 	}
@@ -137,6 +193,30 @@ public class NaviView extends JPanel {
 
 	public void setInfoButton(JButton infoButton) {
 		this.infoButton = infoButton;
+	}
+
+	public JPanel getTabellenPanel() {
+		return tabellenPanel;
+	}
+
+	public void setTabellenPanel(JPanel tabellenPanel) {
+		this.tabellenPanel = tabellenPanel;
+	}
+
+	public JPanel getDatenbankPanel() {
+		return datenbankPanel;
+	}
+
+	public void setDatenbankPanel(JPanel datenbankPanel) {
+		this.datenbankPanel = datenbankPanel;
+	}
+
+	public JPanel getDateiPanel() {
+		return dateiPanel;
+	}
+
+	public void setDateiPanel(JPanel dateiPanel) {
+		this.dateiPanel = dateiPanel;
 	}
 
 }

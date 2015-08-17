@@ -83,9 +83,9 @@ public class SimpleTerminTabelleView extends JPanel {
 	private Properties property;
 
 	public SimpleTerminTabelleView(SimpleTerminTabelle simpleTerminTabelle) {
-		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
-		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 200;
-		setPreferredSize(new Dimension(windowWidth, windowHeight));
+//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
+//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 200;
+//		setPreferredSize(new Dimension(windowWidth, windowHeight));
 		this.simpleTerminTabelle = simpleTerminTabelle;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		table = new JTable(this.simpleTerminTabelle);
@@ -112,8 +112,8 @@ public class SimpleTerminTabelleView extends JPanel {
 		JPanel haupt = new JPanel();
 		haupt.setLayout(new FlowLayout(FlowLayout.CENTER));
 		JPanel tabelPanel = new JPanel();
-		tabelPanel.setPreferredSize(new Dimension(windowWidth - 250,
-				windowHeight - 100));
+//		tabelPanel.setPreferredSize(new Dimension(windowWidth - 250,
+//				windowHeight - 100));
 		tabelPanel.setLayout(new BoxLayout(tabelPanel, BoxLayout.PAGE_AXIS));
 		tabelPanel.add(sPane);
 		JPanel hinweis = new JPanel();

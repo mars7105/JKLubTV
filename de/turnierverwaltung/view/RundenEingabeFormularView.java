@@ -146,15 +146,15 @@ public class RundenEingabeFormularView extends JPanel {
 	public void makePanel() {
 		setBackground(new Color(249, 222, 112));
 		anzahlElemente = 0;
-		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
-		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
+//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
+//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBackground(new Color(249, 222, 112));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
-		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));
+//		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		add(scrollPane, BorderLayout.CENTER);
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));

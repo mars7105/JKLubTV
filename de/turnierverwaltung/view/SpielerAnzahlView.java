@@ -39,13 +39,13 @@ public class SpielerAnzahlView extends JPanel {
 
 	public SpielerAnzahlView(String title) {
 		anzahlSpielerTextField = new JTextField();
-		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
-		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
+//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
+//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
 		setBackground(new Color(249, 222, 112));
 		setLayout(new FlowLayout());
 		contentPanel = new JPanel();
 		contentPanel.setBackground(new Color(249, 222, 112));
-		contentPanel.setBounds(0, 0, windowWidth, windowHeight);
+//		contentPanel.setBounds(0, 0, windowWidth, windowHeight);
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		add(contentPanel);

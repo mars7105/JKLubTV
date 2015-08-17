@@ -59,15 +59,15 @@ public class SpielerEingabeView extends JPanel {
 		dwzTextfield = new JTextField[this.spielerAnzahl];
 		kuerzelTextfield = new JTextField[this.spielerAnzahl];
 		textComboBoxAge = new JComboBox[this.spielerAnzahl];
-		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
-		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
+//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
+//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBackground(new Color(249, 222, 112));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
-		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));
+//		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		add(scrollPane, BorderLayout.CENTER);
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));

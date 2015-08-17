@@ -68,10 +68,10 @@ public class SpielerAnzahlControl implements ActionListener {
 				this.mainControl));
 		this.mainControl.setTabAnzeigeView(new TabAnzeigeView());
 		tabbedPaneView = this.mainControl.getTabAnzeigeView();
-		int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width - 275;
-		int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height - 275;
+//		int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width - 275;
+//		int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height - 275;
 
-		tabbedPaneView.setMaximumSize(new Dimension(windowWidth, windowHeight));
+//		tabbedPaneView.setMaximumSize(new Dimension(windowWidth, windowHeight));
 
 		hauptPanel = this.mainControl.getHauptPanel();
 		gruppenAnzahl = this.mainControl.getTurnier().getAnzahlGruppen();
@@ -96,7 +96,7 @@ public class SpielerAnzahlControl implements ActionListener {
 		this.mainControl.getNaviController().makeNaviPanel();
 		hauptPanel.add(tabbedPaneView);
 		hauptPanel.setMinimumSize(new Dimension(800, 600));
-		hauptPanel.setMaximumSize(new Dimension(windowWidth, windowHeight));
+//		hauptPanel.setMaximumSize(new Dimension(windowWidth, windowHeight));
 		hauptPanel.updateUI();
 	}
 

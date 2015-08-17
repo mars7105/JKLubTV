@@ -30,10 +30,11 @@ public class NaviController implements ActionListener {
 	private NaviView naviView;
 
 	public NaviController(MainControl mainControl) {
+		
 		this.mainControl = mainControl;
 		naviView = new NaviView();
 		mainControl.setNaviView(naviView);
-
+		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		newdbButton = naviView.getNewDatabseButton();
 		newdbButton.addActionListener(this);
 		loaddbButton = naviView.getLoadDatabaseButton();
@@ -62,8 +63,10 @@ public class NaviController implements ActionListener {
 			} else {
 				mainControl.getInfoController().makeInfoPanel();
 			}
+			this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		}
 		if (arg0.getSource() == newdbButton) {
+			this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 			int abfrage = warnHinweis(
 					"Wollen Sie wirklich die Seite verlassen? \n" + "Alle eingegebenen Daten gehen verloren.");
 			if (abfrage == 0) {
@@ -118,6 +121,7 @@ public class NaviController implements ActionListener {
 			}
 		}
 		if (arg0.getSource() == loaddbButton) {
+			this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 			int abfrage = warnHinweis(
 					"Wollen Sie wirklich die Seite verlassen? \n" + "Alle eingegebenen Daten gehen verloren.");
 			if (abfrage == 0) {
@@ -165,7 +169,7 @@ public class NaviController implements ActionListener {
 				mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(mainControl));
 				mainControl.getTurnierListeLadenControl().loadTurnier();
 			}
-
+			this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		}
 		if (arg0.getSource() == spielerListeButton) {
 			if (mainControl.getSpielerEditierenControl() != null) {
@@ -174,6 +178,7 @@ public class NaviController implements ActionListener {
 				mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
 				mainControl.getSpielerEditierenControl().makePanel();
 			}
+			this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		}
 	}
 

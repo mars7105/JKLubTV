@@ -29,8 +29,8 @@ public class InfoView extends JPanel {
 	private JPanel centerPane;
 	JTextArea textArea;
 	public InfoView() {
-		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 100;
-		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 175;
+//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 100;
+//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 175;
 
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
@@ -38,7 +38,7 @@ public class InfoView extends JPanel {
 		setLayout(new BorderLayout());
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
-		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));
+//		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		JLabel titleLabel = new JLabel("Informationen zum Programm");
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));

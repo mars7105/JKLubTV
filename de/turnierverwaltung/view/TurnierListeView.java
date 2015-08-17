@@ -36,9 +36,9 @@ public class TurnierListeView extends JPanel {
 	private JButton okButton;
 
 	public TurnierListeView() {
-		int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-		int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
-		setBounds(0, 0, windowWidth, windowHeight);
+//		int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+//		int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+//		setBounds(0, 0, windowWidth, windowHeight);
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

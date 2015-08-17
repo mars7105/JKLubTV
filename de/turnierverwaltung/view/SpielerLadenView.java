@@ -61,9 +61,9 @@ public class SpielerLadenView extends JPanel {
 		this.spielerAnzahl = spielerAnzahl;
 		anzahlElemente = 0;
 		setLayout(new BorderLayout());
-		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 100;
-		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 100;
-		setPreferredSize(new Dimension(windowWidth, windowHeight));
+//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 100;
+//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 100;
+//		setPreferredSize(new Dimension(windowWidth, windowHeight));
 		spielerAddButton = new JButton("Neuer Spieler", userNew);
 		spielerImport = new JButton("Import Spielerliste", userImport);
 //		spielerImport.setEnabled(false);
@@ -91,7 +91,7 @@ public class SpielerLadenView extends JPanel {
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
-		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));
+//		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		add(scrollPane, BorderLayout.CENTER);
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));

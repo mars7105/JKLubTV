@@ -1,4 +1,5 @@
 package de.turnierverwaltung.view;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -17,7 +18,9 @@ package de.turnierverwaltung.view;
 import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
@@ -30,11 +33,14 @@ public class LadebalkenView extends JDialog {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JProgressBar progressBar;
+	private JPanel panel;
+	private JLabel textLabel;
 	int num = 0;
 
-	public LadebalkenView() {
+	public LadebalkenView(String text) {
 		this.setAlwaysOnTop(true);
 		setTitle("Speichervorgang");
+		
 		progressBar = new JProgressBar(0, 100);
 
 		// Call setStringPainted now so that the progress bar height
@@ -43,9 +49,10 @@ public class LadebalkenView extends JDialog {
 		progressBar.setVisible(true);
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
-		JPanel panel = new JPanel();
-		panel.setLayout(new FlowLayout());
-
+		textLabel = new JLabel(text);
+		panel = new JPanel();
+		panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
+		panel.add(textLabel);
 		panel.add(progressBar);
 		// panel.setOpaque(true);
 		panel.setVisible(true);
@@ -67,6 +74,7 @@ public class LadebalkenView extends JDialog {
 		num += 20;
 		progressBar.setValue(num);
 		progressBar.paint(progressBar.getGraphics());
+		textLabel.paint(textLabel.getGraphics());
 		if (num >= 100) {
 			try {
 				Thread.sleep(250);

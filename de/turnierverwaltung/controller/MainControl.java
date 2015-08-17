@@ -18,8 +18,10 @@ import java.awt.BorderLayout;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -43,6 +45,7 @@ import de.turnierverwaltung.view.SpielerAnzahlView;
 import de.turnierverwaltung.view.SpielerEingabeView;
 import de.turnierverwaltung.view.StandardView;
 import de.turnierverwaltung.view.TabAnzeigeView;
+import de.turnierverwaltung.view.TitleView;
 import de.turnierverwaltung.view.TurnierListeLadenView;
 import de.turnierverwaltung.view.TurnierView;
 
@@ -92,6 +95,7 @@ public class MainControl extends JFrame {
 	private NaviView naviView;
 	private NaviController naviController;
 	private InfoController infoController;
+	private TitleView titleView;
 
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
@@ -108,11 +112,8 @@ public class MainControl extends JFrame {
 
 	public void datenbankMenueView(Boolean enable) {
 		menueControl.setDatenbankMenue(enable);
-		naviView.getSpielerListeButton().setEnabled(enable);
-		naviView.getTurnierListeButton().setEnabled(enable);
-		naviView.getSpielerListeButton().setVisible(enable);
-		naviView.getTurnierListeButton().setVisible(enable);
-		// naviView.getPathToDatabase().setText(menueControl.getFileName())
+		naviView.getDatenbankPanel().setVisible(enable);
+		
 		naviView.setPathToDatabase(new JLabel(menueControl.getFileName()));
 		naviView.updateUI();
 		if (enable == true) {
@@ -278,15 +279,16 @@ public class MainControl extends JFrame {
 
 		this.hauptPanel = new JPanel();
 		this.hauptPanel.setLayout(new BorderLayout());
-		hauptPanel.setBackground(new Color(126, 201, 208));
-
-		mainView = new MainView();
 		standardView = new StandardView();
+		titleView = new TitleView();
+		
 		naviController = new NaviController(this);
 		menueView = new MenueView();
 		menueControl = new MenueControl(this);
 		setJMenuBar(menueView.getJMenuBar());
 		setContentPane(hauptPanel);
+
+		standardView.add(titleView,BorderLayout.NORTH);
 		hauptPanel.add(standardView, BorderLayout.CENTER);
 		hauptPanel.updateUI();
 		setEnabled(true);

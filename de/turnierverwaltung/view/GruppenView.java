@@ -76,9 +76,9 @@ public class GruppenView extends JPanel {
 		gruppenName = new String[this.gruppenAnzahl];
 
 		gruppenNameTextField = new JTextField[this.gruppenAnzahl];
-		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
-		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
-		setBounds(0, 0, windowWidth, windowHeight);
+//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
+//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
+//		setBounds(0, 0, windowWidth, windowHeight);
 		setLayout(new FlowLayout());
 		setBackground(new Color(249, 222, 112));
 

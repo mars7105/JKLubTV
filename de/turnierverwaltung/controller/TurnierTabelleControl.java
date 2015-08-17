@@ -62,7 +62,7 @@ public class TurnierTabelleControl implements ActionListener {
 		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 25;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 75;
 		this.mainControl = mainControl;
-
+		
 		hauptPanel = this.mainControl.getHauptPanel();
 		hauptPanel.setBackground(new Color(126, 201, 208));
 
@@ -70,7 +70,7 @@ public class TurnierTabelleControl implements ActionListener {
 			this.mainControl.setTabAnzeigeView(new TabAnzeigeView());
 		}
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
-		tabAnzeigeView.setPreferredSize(new Dimension(windowWidth, windowHeight));
+//		tabAnzeigeView.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		tabAnzeigeView.setBackground(new Color(249, 222, 112));
 		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
 		tabAnzeigeView2 = new TabAnzeigeView[anzahlGruppen];
@@ -86,7 +86,8 @@ public class TurnierTabelleControl implements ActionListener {
 		this.mainControl.setSaveTurnierControl(saveTurnierControl);
 		htmlTabelleView = new HTMLTabelleView();
 		spielerAnzahl = new int[anzahlGruppen];
-		NaviController naviViewController = new NaviController(this.mainControl);
+		this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
+
 
 	}
 
@@ -173,7 +174,7 @@ public class TurnierTabelleControl implements ActionListener {
 		}
 
 		this.mainControl.getMenueView().getMntmSpeichern().setEnabled(enableSaveMenu);
-		
+
 		// mainControl.datenbankMenueView(enableSaveMenu);
 	}
 
@@ -220,21 +221,17 @@ public class TurnierTabelleControl implements ActionListener {
 		}
 		// tabAnzeigeView2[gruppenNummer].setComponentAt(0,
 		// simpleTableView[gruppenNummer]);
-		
 
 		mainControl.setSimpleTableView(simpleTableView);
 		tabAnzeigeView.setComponentAt(gruppenNummer, tabAnzeigeView2[gruppenNummer]);
-		
+
 		hauptPanel.updateUI();
 		enableDatenbankMenu();
 	}
 
 	private void berechneFolgeDWZ(int gruppenNummer) {
 		FolgeDWZController folgeDWZ = new FolgeDWZController(mainControl.getTurnier().getGruppe()[gruppenNummer]);
-		
-		
-		
-		
+
 	}
 
 	public void okAction(int index) {
