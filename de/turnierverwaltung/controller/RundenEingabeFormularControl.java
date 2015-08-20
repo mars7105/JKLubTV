@@ -18,6 +18,7 @@ import java.awt.BorderLayout;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -36,8 +37,7 @@ import de.turnierverwaltung.view.TabAnzeigeView;
 
 public class RundenEingabeFormularControl implements ActionListener {
 
-	private static int pruefeObZahlKleinerEinsIst(int zahl)
-			throws ZahlKleinerAlsN {
+	private static int pruefeObZahlKleinerEinsIst(int zahl) throws ZahlKleinerAlsN {
 		if (zahl <= 0) {
 			throw new ZahlKleinerAlsN();
 		}
@@ -70,15 +70,12 @@ public class RundenEingabeFormularControl implements ActionListener {
 		terminTabelle = new TerminTabelle[gruppenAnzahl];
 		rundenEingabeFormularView = new RundenEingabeFormularView[gruppenAnzahl];
 		for (int i = 0; i < gruppenAnzahl; i++) {
-			rundenEingabeFormularView[i] = new RundenEingabeFormularView(
-					gruppe[i].getSpielerAnzahl());
+			rundenEingabeFormularView[i] = new RundenEingabeFormularView(gruppe[i].getSpielerAnzahl());
 		}
 		changeColor = new JButton[gruppenAnzahl][];
 		spielerAnzahl = new int[gruppenAnzahl];
 		paarungsTafeln = new PaarungsTafeln[gruppenAnzahl];
 	}
-
-
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
@@ -88,77 +85,79 @@ public class RundenEingabeFormularControl implements ActionListener {
 			max = spielerAnzahl[index];
 			for (int i = 0; i < (max * (max - 1) / 2); i++) {
 				if (arg0.getSource() == changeColor[index][i]) {
+					changeWerte(index);
 					changeColor(index, i);
-					changeColor[index] = rundenEingabeFormularView[index]
-							.getChangeColor();
-					for (int y = 0; y < (spielerAnzahl[index]
-							* (spielerAnzahl[index] - 1) / 2); y++) {
+
+					changeColor[index] = rundenEingabeFormularView[index].getChangeColor();
+					for (int y = 0; y < (spielerAnzahl[index] * (spielerAnzahl[index] - 1) / 2); y++) {
 
 						changeColor[index][y].addActionListener(this);
 					}
 				}
 			}
-			if (arg0.getSource() == rundenEingabeFormularView[index]
-					.getOkButton()) {
-				String datum;
-
-				int runde;
+			if (arg0.getSource() == rundenEingabeFormularView[index].getOkButton()) {
 				partien = gruppe[index].getPartien();
 
-				for (int i = 0; i < mainControl.getTurnier().getGruppe()[index]
-						.getPartienAnzahl(); i++) {
-
-					try {
-						datum = rundenEingabeFormularView[index].getDatum()[i]
-								.getJFormattedTextField().getText();
-						runde = pruefeObZahlKleinerEinsIst(Integer
-								.parseInt((String) rundenEingabeFormularView[index]
-										.getRundenNummer()[i].getSelectedItem()));
-						partien[i].setSpielDatum(datum);
-						partien[i].setRunde(runde);
-						partien[i].setErgebnis(TurnierKonstanten.MYSQL_KEIN_ERGEBNIS);
-					} catch (NumberFormatException e) {
-						JOptionPane.showMessageDialog(null,
-								"Gruppenanzahl ist fehlerhaft!");
-
-					} catch (ZahlKleinerAlsN e) {
-						JOptionPane.showMessageDialog(null,
-								"Zahl darf nicht kleiner als 1 sein!");
-
-					}
-
-				}
-				if (neuesTurnier == true) {
-					if (mainControl.getTurnierTabelleControl() == null) {
-						TurnierTabelleControl turnierTabelleControl = new TurnierTabelleControl(
-								mainControl);
-						TerminTabelleControl terminTabelleControl = new TerminTabelleControl(
-								mainControl);
-						mainControl
-								.setTurnierTabelleControl(turnierTabelleControl);
-						mainControl
-								.setTerminTabelleControl(terminTabelleControl);
-						turnierTabelleControl.makeSimpleTableView(index);
-						terminTabelleControl.makeSimpleTableView(index);
-					} else {
-						mainControl.getTurnierTabelleControl()
-								.makeSimpleTableView(index);
-						mainControl.getTerminTabelleControl()
-								.makeSimpleTableView(index);
-
-					}
-				} else {
-					SaveTurnierControl stC = new SaveTurnierControl(mainControl);
-					stC.saveTurnier(index);
-					hauptPanel.removeAll();
-					TurnierListeLadenControl tllC = new TurnierListeLadenControl(
-							mainControl);
-					tllC.loadTurnier();
-
-				}
+				changeWerte(index);
+				saveTurnier(index);
+			}
+			if (arg0.getSource() == rundenEingabeFormularView[index].getCancelButton()) {
+				mainControl.resetApp();
+				mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
+				mainControl.getTurnierTableControl().loadTurnierListe();
+				mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(mainControl));
+				mainControl.getTurnierListeLadenControl().loadTurnier();
 			}
 		}
 
+	}
+
+	private void changeWerte(int index) {
+		String datum;
+		partien = gruppe[index].getPartien();
+		int runde;
+		for (int i = 0; i < mainControl.getTurnier().getGruppe()[index].getPartienAnzahl(); i++) {
+
+			try {
+				datum = rundenEingabeFormularView[index].getDatum()[i].getJFormattedTextField().getText();
+				runde = pruefeObZahlKleinerEinsIst(Integer
+						.parseInt((String) rundenEingabeFormularView[index].getRundenNummer()[i].getSelectedItem()));
+				partien[i].setSpielDatum(datum);
+				partien[i].setRunde(runde);
+				partien[i].setErgebnis(TurnierKonstanten.MYSQL_KEIN_ERGEBNIS);
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(null, "Gruppenanzahl ist fehlerhaft!");
+
+			} catch (ZahlKleinerAlsN e) {
+				JOptionPane.showMessageDialog(null, "Zahl darf nicht kleiner als 1 sein!");
+
+			}
+
+		}
+	}
+
+	private void saveTurnier(int index) {
+		if (neuesTurnier == true) {
+			if (mainControl.getTurnierTabelleControl() == null) {
+				TurnierTabelleControl turnierTabelleControl = new TurnierTabelleControl(mainControl);
+				TerminTabelleControl terminTabelleControl = new TerminTabelleControl(mainControl);
+				mainControl.setTurnierTabelleControl(turnierTabelleControl);
+				mainControl.setTerminTabelleControl(terminTabelleControl);
+				turnierTabelleControl.makeSimpleTableView(index);
+				terminTabelleControl.makeSimpleTableView(index);
+			} else {
+				mainControl.getTurnierTabelleControl().makeSimpleTableView(index);
+				mainControl.getTerminTabelleControl().makeSimpleTableView(index);
+
+			}
+		} else {
+			SaveTurnierControl stC = new SaveTurnierControl(mainControl);
+			stC.saveTurnier(index);
+			hauptPanel.removeAll();
+			TurnierListeLadenControl tllC = new TurnierListeLadenControl(mainControl);
+			tllC.loadTurnier();
+
+		}
 	}
 
 	private void changeColor(int index, int nummer) {
@@ -174,12 +173,9 @@ public class RundenEingabeFormularControl implements ActionListener {
 		int spaltenAnzahl = terminTabelle[index].getSpaltenAnzahl();
 		String[][] terminMatrix = terminTabelle[index].getTabellenMatrix();
 		String[] zeile = new String[spaltenAnzahl];
-		rundenEingabeFormularView[index].getWeissSpieler()[nummer]
-				.setText(tauscheFarbe2.getName());
-		rundenEingabeFormularView[index].getSchwarzSpieler()[nummer]
-				.setText(tauscheFarbe1.getName());
-		rundenEingabeFormularView[index] = new RundenEingabeFormularView(
-				spielerAnzahl[index]);
+		rundenEingabeFormularView[index].getWeissSpieler()[nummer].setText(tauscheFarbe2.getName());
+		rundenEingabeFormularView[index].getSchwarzSpieler()[nummer].setText(tauscheFarbe1.getName());
+		rundenEingabeFormularView[index] = new RundenEingabeFormularView(spielerAnzahl[index]);
 
 		for (int i = 0; i < (spielerAnzahl[index] * (spielerAnzahl[index] - 1) / 2) + 1; i++) {
 			zeile[0] = terminMatrix[0][i];
@@ -198,14 +194,16 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 		rundenEingabeFormularView[index].getOkButton().addActionListener(this);
 
-		gruppe[index].setPartien(partien);
+		// gruppe[index].setPartien(partien);
 		tabAnzeigeView.setComponentAt(index, rundenEingabeFormularView[index]);
 		rundenEingabeFormularView[index].updateUI();
 		hauptPanel.updateUI();
 	}
 
 	public void makeRundenEditView(int index) {
+		Arrays.sort(gruppe[index].getPartien());
 		partien = gruppe[index].getPartien();
+
 		neuesTurnier = false;
 		// paarungsTafeln[index] = new PaarungsTafeln(gruppe[index]);
 		// gruppe[index] = paarungsTafeln[index].getGruppe();
@@ -216,8 +214,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 		String[][] terminMatrix = terminTabelle[index].getTabellenMatrix();
 		String[] zeile = new String[spaltenAnzahl];
 
-		rundenEingabeFormularView[index] = new RundenEingabeFormularView(
-				spielerAnzahl[index]);
+		rundenEingabeFormularView[index] = new RundenEingabeFormularView(spielerAnzahl[index]);
 		for (int i = 0; i < (spielerAnzahl[index] * (spielerAnzahl[index] - 1) / 2) + 1; i++) {
 			zeile[0] = terminMatrix[0][i];
 			zeile[1] = terminMatrix[1][i];
@@ -233,25 +230,9 @@ public class RundenEingabeFormularControl implements ActionListener {
 			changeColor[index][i].addActionListener(this);
 		}
 		rundenEingabeFormularView[index].getOkButton().addActionListener(this);
-		rundenEingabeFormularView[index].getCancelButton().addActionListener(
-				new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						mainControl.resetApp();
-						mainControl
-								.setTurnierTableControl(new TurnierTableControl(
-										mainControl));
-						mainControl.getTurnierTableControl().loadTurnierListe();
-						mainControl
-								.setTurnierListeLadenControl(new TurnierListeLadenControl(
-										mainControl));
-						mainControl.getTurnierListeLadenControl().loadTurnier();
-					}
-
-				});
+		rundenEingabeFormularView[index].getCancelButton().addActionListener(this);
 		tabAnzeigeView.setComponentAt(index, rundenEingabeFormularView[index]);
-		hauptPanel.add(tabAnzeigeView,BorderLayout.CENTER);
+		hauptPanel.add(tabAnzeigeView, BorderLayout.CENTER);
 		hauptPanel.updateUI();
 	}
 
@@ -266,8 +247,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 		String[][] terminMatrix = terminTabelle[index].getTabellenMatrix();
 		String[] zeile = new String[spaltenAnzahl];
 
-		rundenEingabeFormularView[index] = new RundenEingabeFormularView(
-				spielerAnzahl[index]);
+		rundenEingabeFormularView[index] = new RundenEingabeFormularView(spielerAnzahl[index]);
 		for (int i = 0; i < (spielerAnzahl[index] * (spielerAnzahl[index] - 1) / 2) + 1; i++) {
 			zeile[0] = terminMatrix[0][i];
 			zeile[1] = terminMatrix[1][i];
@@ -283,10 +263,10 @@ public class RundenEingabeFormularControl implements ActionListener {
 			changeColor[index][i].addActionListener(this);
 		}
 		rundenEingabeFormularView[index].getOkButton().addActionListener(this);
-
+		rundenEingabeFormularView[index].getCancelButton().addActionListener(this);
 		tabAnzeigeView.setComponentAt(index, rundenEingabeFormularView[index]);
-		hauptPanel.add(tabAnzeigeView,BorderLayout.CENTER);
-		
+		hauptPanel.add(tabAnzeigeView, BorderLayout.CENTER);
+
 		hauptPanel.updateUI();
 	}
 

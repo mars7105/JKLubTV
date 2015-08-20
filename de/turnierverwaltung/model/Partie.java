@@ -1,4 +1,5 @@
 package de.turnierverwaltung.model;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -34,8 +35,8 @@ public class Partie implements Comparable<Object> {
 		partieId = -1;
 	}
 
-	public Partie(int idPartie, String spielDatum, int ergebnis, int runde,
-			Spieler spielerWeiss, Spieler spielerSchwarz) {
+	public Partie(int idPartie, String spielDatum, int ergebnis, int runde, Spieler spielerWeiss,
+			Spieler spielerSchwarz) {
 		this.partieId = idPartie;
 		this.spielDatum = spielDatum;
 		this.spielerWeiss = spielerWeiss;
@@ -77,10 +78,14 @@ public class Partie implements Comparable<Object> {
 	}
 
 	public int getSort() {
-
-		sort = this.runde;
-
+		if (this.spielerWeiss.getSpielerId() == TurnierKonstanten.SPIELFREI_ID
+				|| this.spielerSchwarz.getSpielerId() == TurnierKonstanten.SPIELFREI_ID) {
+			sort = this.runde * 10;
+		} else {
+			sort = this.runde * 11;
+		}
 		return sort;
+
 	}
 
 	public String getSpielDatum() {

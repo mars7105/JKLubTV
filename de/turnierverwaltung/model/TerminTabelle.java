@@ -18,11 +18,9 @@ public class TerminTabelle {
 
 	private Turnier turnier;
 	private Gruppe gruppe;
-	private Spieler[] spieler;
 	private Partie[] partien;
 	private int spielerAnzahl;
 	private int partienAnzahl;
-	private int runden;
 	private int spaltenAnzahl;
 	private int zeilenAnzahl;
 	private String tabellenMatrix[][];
@@ -31,7 +29,7 @@ public class TerminTabelle {
 	public TerminTabelle(Turnier turnier, Gruppe gruppe) {
 		this.turnier = turnier;
 		this.gruppe = gruppe;
-		this.spieler = this.gruppe.getSpieler();
+		this.gruppe.getSpieler();
 		this.spielerAnzahl = this.gruppe.getSpielerAnzahl();
 		this.partien = gruppe.getPartien();
 		calcRunden();
@@ -48,9 +46,7 @@ public class TerminTabelle {
 
 	private void calcRunden() {
 		if (spielerAnzahl % 2 == 0) {
-			runden = spielerAnzahl - 1;
 		} else {
-			runden = spielerAnzahl;
 		}
 		partienAnzahl = (spielerAnzahl * (spielerAnzahl - 1) / 2);
 

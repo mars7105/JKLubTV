@@ -56,7 +56,7 @@ public class TabelleToHTML {
 			htmlString += "      <tr>\n";
 
 			for (int x = 0; x < col; x++) {
-				if (x != 1) {
+				if (x != 1 || col == 5) {
 					String bgcolor = "";
 					if (this.tabellenMatrix[x][0] == "Folge-DWZ" && y > 0) {
 						String s1 = this.tabellenMatrix[x - 1][y];

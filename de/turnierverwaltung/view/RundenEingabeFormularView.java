@@ -146,34 +146,26 @@ public class RundenEingabeFormularView extends JPanel {
 	public void makePanel() {
 		setBackground(new Color(249, 222, 112));
 		anzahlElemente = 0;
-//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
-//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBackground(new Color(249, 222, 112));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
-//		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		add(scrollPane, BorderLayout.CENTER);
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
 		centerPane.setBackground(new Color(249, 222, 112));
-		JPanel bottomPane = new JPanel();
-		bottomPane.setLayout(new BoxLayout(bottomPane, BoxLayout.Y_AXIS));
-		bottomPane.setBackground(new Color(249, 222, 112));
 		JPanel buttonPane = new JPanel();
-		buttonPane.setBackground(new Color(249, 222, 112));
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		bottomPane.add(centerPane);
-		bottomPane.add(buttonPane);
-		contentPanel.add(bottomPane, BorderLayout.SOUTH);
-		okButton = new JButton("Übernehmen");
+		contentPanel.add(centerPane, BorderLayout.SOUTH);
+		okButton = new JButton("Speichern");
 		okButton.setActionCommand("OK");
 		buttonPane.add(okButton);
 		cancelButton = new JButton("Abbruch");
 		cancelButton.setActionCommand("Cancel");
 		buttonPane.add(cancelButton);
+		add(buttonPane, BorderLayout.SOUTH);
 	}
 
 	public void makeZeile(String[] zeile) {

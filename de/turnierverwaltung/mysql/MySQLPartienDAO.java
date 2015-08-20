@@ -124,7 +124,7 @@ public class MySQLPartienDAO implements PartienDAO {
 	public ArrayList<Partie> selectAllPartien(int idGruppe) {
 		String sql = "Select idPartie,idSpielerWeiss,"
 				+ "idSpielerSchwarz, Runde, Spieldatum, Ergebnis  "
-				+ "from partien where idGruppe=" + idGruppe;
+				+ "from partien where idGruppe=" + idGruppe + " ORDER BY Runde ASC";
 		ArrayList<Partie> partieListe = new ArrayList<Partie>();
 		Statement stmt;
 		if (this.dbConnect != null) {

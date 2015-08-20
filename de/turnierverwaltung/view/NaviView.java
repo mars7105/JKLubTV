@@ -141,7 +141,7 @@ public class NaviView extends JPanel {
 		panel5.setBackground(Color.LIGHT_GRAY);
 		panel5.add(dateiPanel);
 		panel5.add(datenbankPanel);
-		panel5.add(tabellenPanel);
+		//panel5.add(tabellenPanel);
 		this.add(panel5);
 
 	}
