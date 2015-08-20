@@ -193,7 +193,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 		}
 
 		rundenEingabeFormularView[index].getOkButton().addActionListener(this);
-
+		rundenEingabeFormularView[index].getCancelButton().addActionListener(this);
 		// gruppe[index].setPartien(partien);
 		tabAnzeigeView.setComponentAt(index, rundenEingabeFormularView[index]);
 		rundenEingabeFormularView[index].updateUI();

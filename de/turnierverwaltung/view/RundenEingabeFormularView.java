@@ -72,7 +72,6 @@ public class RundenEingabeFormularView extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPanel;
-	private JPanel centerPane;
 	private JPanel flowPane;
 	private JPanel downPane;
 	private JButton okButton;
@@ -147,18 +146,14 @@ public class RundenEingabeFormularView extends JPanel {
 		setBackground(new Color(249, 222, 112));
 		anzahlElemente = 0;
 		contentPanel = new JPanel();
-		contentPanel.setLayout(new FlowLayout());
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		contentPanel.setBackground(new Color(249, 222, 112));
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
 		add(scrollPane, BorderLayout.CENTER);
-		centerPane = new JPanel();
-		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
-		centerPane.setBackground(new Color(249, 222, 112));
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		contentPanel.add(centerPane, BorderLayout.SOUTH);
 		okButton = new JButton("Speichern");
 		okButton.setActionCommand("OK");
 		buttonPane.add(okButton);
@@ -219,7 +214,7 @@ public class RundenEingabeFormularView extends JPanel {
 		flowPane.updateUI();
 
 		flowPane.add(downPane);
-		centerPane.add(flowPane);
+		contentPanel.add(flowPane);
 
 	}
 
