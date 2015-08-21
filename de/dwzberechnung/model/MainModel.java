@@ -28,29 +28,30 @@ public class MainModel {
 		this.player = player;
 		this.opponents = opponents;
 		this.player.setNumberOfOpponents(this.opponents.size());
-
-		calcWahrscheinlichkeit = new CalculateWahrscheinlichkeitModel(this.player, this.opponents);
-		double durchschnittsDWZ = 0;
-		double punkte = 0;
-		for (OpponentModel oppmod : this.opponents) {
-			durchschnittsDWZ += oppmod.getDwz();
-			punkte += oppmod.getErgebnis();
-		}
-		durchschnittsDWZ = Math.round(durchschnittsDWZ / opponents.size());
-		this.player.setDurchschnittderGegnerDWZ(durchschnittsDWZ);
-		this.player.setPunkte(punkte);
-		TurnierleistungModel turnierleistungModel = new TurnierleistungModel();
-		this.player.setLeistungsDWZ(turnierleistungModel.calcTurnierLeistung(this.player, this.opponents));
-		EntwicklungskoeffizientModel ekM = new EntwicklungskoeffizientModel(this.player.getAge(),
-				this.player.getOldDWZ(), this.player.getPunkte(), this.player.getPunkterwartung());
-		double entwicklungskoeffizient = ekM.getEntwicklungskoeffizient();
-		this.player.setEntwicklungskoeffizient(entwicklungskoeffizient);
-		if (player.getOldDWZ() == 0) {
-			this.player.setFolgeDWZ(this.player.getLeistungsDWZ());
-		} else {
-			FolgeDWZModel fDWZ = new FolgeDWZModel(this.player.getOldDWZ(), this.player.getPunkte(),
-					this.player.getPunkterwartung(), entwicklungskoeffizient, this.player.getNumberOfOpponents());
-			this.player.setFolgeDWZ(fDWZ.getFolgeDWZ());
+		if (this.opponents.size() > 0) {
+			calcWahrscheinlichkeit = new CalculateWahrscheinlichkeitModel(this.player, this.opponents);
+			double durchschnittsDWZ = 0;
+			double punkte = 0;
+			for (OpponentModel oppmod : this.opponents) {
+				durchschnittsDWZ += oppmod.getDwz();
+				punkte += oppmod.getErgebnis();
+			}
+			durchschnittsDWZ = Math.round(durchschnittsDWZ / opponents.size());
+			this.player.setDurchschnittderGegnerDWZ(durchschnittsDWZ);
+			this.player.setPunkte(punkte);
+			TurnierleistungModel turnierleistungModel = new TurnierleistungModel();
+			this.player.setLeistungsDWZ(turnierleistungModel.calcTurnierLeistung(this.player, this.opponents));
+			EntwicklungskoeffizientModel ekM = new EntwicklungskoeffizientModel(this.player.getAge(),
+					this.player.getOldDWZ(), this.player.getPunkte(), this.player.getPunkterwartung());
+			double entwicklungskoeffizient = ekM.getEntwicklungskoeffizient();
+			this.player.setEntwicklungskoeffizient(entwicklungskoeffizient);
+			if (player.getOldDWZ() == 0) {
+				this.player.setFolgeDWZ(this.player.getLeistungsDWZ());
+			} else {
+				FolgeDWZModel fDWZ = new FolgeDWZModel(this.player.getOldDWZ(), this.player.getPunkte(),
+						this.player.getPunkterwartung(), entwicklungskoeffizient, this.player.getNumberOfOpponents());
+				this.player.setFolgeDWZ(fDWZ.getFolgeDWZ());
+			}
 		}
 	}
 

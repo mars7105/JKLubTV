@@ -37,13 +37,6 @@ public class TurnierTabelle {
 		this.partienAnzahl = gruppe.getPartienAnzahl();
 		spielfrei = false;
 		checkForSpielfrei();
-		// if (spielfrei) {
-		// tabellenMatrix = new String[this.spielerAnzahl +
-		// 5][this.spielerAnzahl];
-		// } else {
-		// tabellenMatrix = new String[this.spielerAnzahl +
-		// 6][this.spielerAnzahl + 1];
-		// }
 		if (spielfrei) {
 			tabellenMatrix = new String[this.spielerAnzahl + 6][this.spielerAnzahl];
 		} else {
@@ -90,8 +83,16 @@ public class TurnierTabelle {
 		for (int i = 0; i < sp; i++) {
 			tabellenMatrix[0][i + 1] = spieler[i].getName();
 			tabellenMatrix[1][i + 1] = spieler[i].getKuerzel();
-			tabellenMatrix[2][i + 1] = spieler[i].getDwz();
-			tabellenMatrix[3][i + 1] = new Integer(spieler[i].getFolgeDWZ()).toString();
+			if (spieler[i].getDwz() != TurnierKonstanten.KEINE_DWZ) {
+				tabellenMatrix[2][i + 1] = spieler[i].getDwz();
+			} else {
+				tabellenMatrix[2][i + 1] = "";
+			}
+			if (spieler[i].getFolgeDWZ() > 0) {
+				tabellenMatrix[3][i + 1] = new Integer(spieler[i].getFolgeDWZ()).toString();
+			} else {
+				tabellenMatrix[3][i + 1] = "";
+			}
 		}
 		for (int x = 4; x < sp + 4; x++) {
 			for (int y = 1; y < sp + 1; y++) {
