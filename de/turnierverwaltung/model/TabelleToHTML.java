@@ -76,11 +76,15 @@ public class TabelleToHTML {
 					// }
 
 					if (this.tabellenMatrix[x][y] != null && this.tabellenMatrix[x][y] != ""
-							&& this.tabellenMatrix[x][y] != " ") {
+							&& this.tabellenMatrix[x][y] != " ") {  
+						String ausgabeWert = this.tabellenMatrix[x][y];
+						if (ausgabeWert == TurnierKonstanten.REMIS) {
+							ausgabeWert = "&frac12;";
+						}
 						if (y == 0) {
-							htmlString += "        <th>" + this.tabellenMatrix[x][y] + "</th>\n";
+							htmlString += "        <th>" + ausgabeWert + "</th>\n";
 						} else {
-							htmlString += "        <td" /* + bgcolor */ + ">" + this.tabellenMatrix[x][y] + "</td>\n";
+							htmlString += "        <td" /* + bgcolor */ + ">" + ausgabeWert + "</td>\n";
 						}
 					} else {
 						if (y == 0) {
