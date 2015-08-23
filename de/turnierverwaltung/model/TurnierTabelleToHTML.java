@@ -1,4 +1,5 @@
 package de.turnierverwaltung.model;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -16,9 +17,11 @@ package de.turnierverwaltung.model;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 public class TurnierTabelleToHTML extends TabelleToHTML {
 
-	public TurnierTabelleToHTML(String[][] tabellenMatrix, String turnierName,
-			String startDatum, String endDatum, String gruppenName) {
-		super(tabellenMatrix, turnierName, startDatum, endDatum, gruppenName);
+	public TurnierTabelleToHTML(String[][] tabellenMatrix, String turnierName, String startDatum, String endDatum,
+			String gruppenName) {
+
+		super(tabellenMatrix, turnierName, startDatum, endDatum, gruppenName,
+				"P* = Punkte<br />S* = Sonnebornberger<br />R* = Rang<br />a.DWZ = aktuelle DWZ<br />n.DWZ = Folge DWZ");
 		// TODO Auto-generated constructor stub
 	}
 

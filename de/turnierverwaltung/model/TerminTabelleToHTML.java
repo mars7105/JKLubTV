@@ -18,7 +18,7 @@ public class TerminTabelleToHTML extends TabelleToHTML {
 
 	public TerminTabelleToHTML(String[][] tabellenMatrix, String turnierName,
 			String startDatum, String endDatum, String gruppenName) {
-		super(tabellenMatrix, turnierName, startDatum, endDatum, gruppenName);
+		super(tabellenMatrix, turnierName, startDatum, endDatum, gruppenName,"");
 		// TODO Auto-generated constructor stub
 	}
 

@@ -22,15 +22,17 @@ public class TabelleToHTML {
 	private String endDatum;
 	private String gruppenName;
 	private String htmlString;
+	private String infoString;
 
 	public TabelleToHTML(String[][] tabellenMatrix, String turnierName, String startDatum, String endDatum,
-			String gruppenName) {
+			String gruppenName, String infoString) {
 		super();
 		this.tabellenMatrix = tabellenMatrix;
 		this.turnierName = turnierName;
 		this.startDatum = startDatum;
 		this.endDatum = endDatum;
 		this.gruppenName = gruppenName;
+		this.infoString = infoString;
 	}
 
 	private String getHTMLFooter() {
@@ -56,32 +58,45 @@ public class TabelleToHTML {
 			htmlString += "      <tr>\n";
 
 			for (int x = 0; x < col; x++) {
-				if (x != 1 || col == 5) {
-					String bgcolor = "";
-					if (this.tabellenMatrix[x][0] == "Folge-DWZ" && y > 0) {
-						String s1 = this.tabellenMatrix[x - 1][y];
-						String s2 = this.tabellenMatrix[x][y];
-						int sz1 = Integer.parseInt(s1);
-						int sz2 = Integer.parseInt(s2);
-						if (sz1 > sz2) {
-							bgcolor = " bgcolor=#F5D0A9";
-						}
-						if (sz2 > sz1) {
-							bgcolor = " bgcolor=#D0F5A9";
-						}
 
-					}
+				if (x != 1 || col == 5) {
+					// String bgcolor = "";
+					// if (this.tabellenMatrix[x][0] == "Folge-DWZ" && y > 0) {
+					// String s1 = this.tabellenMatrix[x - 1][y];
+					// String s2 = this.tabellenMatrix[x][y];
+					// int sz1 = Integer.parseInt(s1);
+					// int sz2 = Integer.parseInt(s2);
+					// if (sz1 > sz2) {
+					// bgcolor = " bgcolor=#F5D0A9";
+					// }
+					// if (sz2 > sz1) {
+					// bgcolor = " bgcolor=#D0F5A9";
+					// }
+					//
+					// }
+
 					if (this.tabellenMatrix[x][y] != null && this.tabellenMatrix[x][y] != ""
 							&& this.tabellenMatrix[x][y] != " ") {
-						htmlString += "        <td" + bgcolor + ">" + this.tabellenMatrix[x][y] + "</td>\n";
+						if (y == 0) {
+							htmlString += "        <th>" + this.tabellenMatrix[x][y] + "</th>\n";
+						} else {
+							htmlString += "        <td" /* + bgcolor */ + ">" + this.tabellenMatrix[x][y] + "</td>\n";
+						}
 					} else {
-						htmlString += "        <td>" + TurnierKonstanten.HTML_LEERZEICHEN + "</td>\n";
+						if (y == 0) {
+							htmlString += "        <th>" + TurnierKonstanten.HTML_LEERZEICHEN + "</th>\n";
+						} else {
+							htmlString += "        <td>" + TurnierKonstanten.HTML_LEERZEICHEN + "</td>\n";
+						}
 					}
 				}
 			}
 			htmlString += "      </tr>\n";
 		}
 		htmlString += "    </tbody>\n  </table>\n";
+		if (infoString != "") {
+			htmlString += "  <p>" + infoString + "</p>\n";
+		}
 		htmlString += getHTMLFooter();
 		return htmlString;
 

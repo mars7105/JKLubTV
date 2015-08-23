@@ -67,18 +67,18 @@ public class TurnierTabelle {
 		}
 		tabellenMatrix[0][0] = "Spieler";
 		tabellenMatrix[1][0] = "Kürzel";
-		tabellenMatrix[2][0] = "aDWZ";
+		tabellenMatrix[2][0] = "a.<br />DWZ";
 
-		tabellenMatrix[3][0] = "nDWZ";
+		tabellenMatrix[3][0] = "n.<br />DWZ";
 		for (int i = 4; i < sp + 4; i++) {
 			tabellenMatrix[i][0] = spieler[i - 4].getKuerzel();
 		}
 		// for (int i = 3; i < sp + 3; i++) {
 		// tabellenMatrix[i][0] = spieler[i - 3].getKuerzel();
 		// }
-		tabellenMatrix[4 + sp][0] = "Punkte";
-		tabellenMatrix[5 + sp][0] = "SoBerg";
-		tabellenMatrix[6 + sp][0] = "Platz";
+		tabellenMatrix[4 + sp][0] = "P*";
+		tabellenMatrix[5 + sp][0] = "S*";
+		tabellenMatrix[6 + sp][0] = "R*";
 
 		for (int i = 0; i < sp; i++) {
 			tabellenMatrix[0][i + 1] = spieler[i].getName();
