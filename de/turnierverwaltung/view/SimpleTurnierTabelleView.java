@@ -49,9 +49,7 @@ public class SimpleTurnierTabelleView extends JPanel {
 	private JComboBox<String> comboBox;
 
 	public SimpleTurnierTabelleView(SimpleTurnierTabelle simpleTableModel) {
-//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 150;
-//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 200;
-//		setPreferredSize(new Dimension(windowWidth, windowHeight));
+
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setBackground(new Color(249, 222, 112));
 		table = new JTable(simpleTableModel);
@@ -61,7 +59,7 @@ public class SimpleTurnierTabelleView extends JPanel {
 		comboBox = new JComboBox<String>();
 		comboBox.addItem(" ");
 		comboBox.addItem("0");
-		comboBox.addItem("0,5");
+		comboBox.addItem(TurnierKonstanten.REMIS);
 		comboBox.addItem("1");
 		comboBox.addItem("-");
 		comboBox.addItem("+");
@@ -81,15 +79,15 @@ public class SimpleTurnierTabelleView extends JPanel {
 		tabelPanel.add(hinweis);
 		haupt.add(tabelPanel);
 		add(haupt);
-		JPanel buttonLeiste = new JPanel();
-		buttonLeiste.setLayout(new FlowLayout(FlowLayout.LEFT));
-		okButton = new JButton("Aktualisieren");
-		buttonLeiste.add(okButton);
-		saveButton = new JButton("Speichern");
-		buttonLeiste.add(saveButton);
-		htmlButton = new JButton("HTML Ausgabe");
-		buttonLeiste.add(htmlButton);
-		add(buttonLeiste);
+//		JPanel buttonLeiste = new JPanel();
+//		buttonLeiste.setLayout(new FlowLayout(FlowLayout.LEFT));
+//		okButton = new JButton("Aktualisieren");
+//		buttonLeiste.add(okButton);
+//		saveButton = new JButton("Speichern");
+//		buttonLeiste.add(saveButton);
+//		htmlButton = new JButton("HTML Ausgabe");
+//		buttonLeiste.add(htmlButton);
+//		add(buttonLeiste);
 
 		this.setVisible(true);
 

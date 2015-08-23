@@ -56,9 +56,7 @@ public class TurnierTabelleView extends JPanel {
 
 	public void makePanel() {
 		anzahlElemente = 0;
-//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 200;
-//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
-//		setBounds(0, 0, windowWidth, windowHeight);
+
 		setBackground(new Color(249, 222, 112));
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
@@ -66,8 +64,7 @@ public class TurnierTabelleView extends JPanel {
 		setLayout(new BorderLayout());
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
-//		scrollPane.setPreferredSize(new Dimension(windowWidth - 25,
-//				windowHeight - 25));
+
 		add(scrollPane, BorderLayout.CENTER);
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));

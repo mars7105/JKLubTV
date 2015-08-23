@@ -4,19 +4,21 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Insets;
 import java.awt.Toolkit;
 
 import javax.swing.BoxLayout;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 public class NaviView extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton turnierListeButton;
 	private ImageIcon spielerListeIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/arrow-right-3.png")));
@@ -29,7 +31,10 @@ public class NaviView extends JPanel {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-open-4.png")));
 	private ImageIcon tabelleSpeichernIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-save-5.png")));
-
+	private ImageIcon tabelleAktualisierenIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-refresh-6.png")));
+	private ImageIcon tabelleHTMLAusgabeIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/homepage.png")));
 	private JButton newDatabseButton;
 	private JButton loadDatabaseButton;
 	private JLabel pathToDatabase;
@@ -40,6 +45,8 @@ public class NaviView extends JPanel {
 	private JPanel tabellenPanel;
 	private JPanel datenbankPanel;
 	private JPanel dateiPanel;
+	private JButton tabelleAktualisierenButton;
+	private JButton tabelleHTMLAusgabeButton;
 
 	public NaviView() {
 		BorderLayout borderLayout = new BorderLayout();
@@ -49,18 +56,28 @@ public class NaviView extends JPanel {
 		this.setBorder(eBorder);
 		newDatabseButton = new JButton("Neue Datenbank", dbNewIcon);
 		newDatabseButton.setPreferredSize(new Dimension(200, 40));
+		newDatabseButton.setHorizontalAlignment(SwingConstants.LEFT);
 		loadDatabaseButton = new JButton("Datenbank laden", dbLoadIcon);
 		loadDatabaseButton.setPreferredSize(new Dimension(200, 40));
+		loadDatabaseButton.setHorizontalAlignment(SwingConstants.LEFT);
 		turnierListeButton = new JButton("Turnierliste", turnierListeIcon);
 		turnierListeButton.setPreferredSize(new Dimension(200, 40));
+		turnierListeButton.setHorizontalAlignment(SwingConstants.LEFT);
 		spielerListeButton = new JButton("Spielerliste", spielerListeIcon);
 		spielerListeButton.setPreferredSize(new Dimension(200, 40));
+		spielerListeButton.setHorizontalAlignment(SwingConstants.LEFT);
 		infoButton = new JButton("Info", infoIcon);
 		infoButton.setPreferredSize(new Dimension(200, 40));
+		infoButton.setHorizontalAlignment(SwingConstants.LEFT);
 		tabelleSpeichernButton = new JButton("Speichern", tabelleSpeichernIcon);
 		tabelleSpeichernButton.setPreferredSize(new Dimension(200, 40));
-
-
+		tabelleSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
+		tabelleAktualisierenButton = new JButton("Aktualisieren", tabelleAktualisierenIcon);
+		tabelleAktualisierenButton.setPreferredSize(new Dimension(200, 40));
+		tabelleAktualisierenButton.setHorizontalAlignment(SwingConstants.LEFT);
+		tabelleHTMLAusgabeButton = new JButton("HTML Ausgabe", tabelleHTMLAusgabeIcon);
+		tabelleHTMLAusgabeButton.setPreferredSize(new Dimension(200, 40));
+		tabelleHTMLAusgabeButton.setHorizontalAlignment(SwingConstants.LEFT);
 		dateiPanel = new JPanel();
 		dateiPanel.setBackground(Color.LIGHT_GRAY);
 		BoxLayout dateiPanelLayout = new BoxLayout(dateiPanel, BoxLayout.PAGE_AXIS);
@@ -103,7 +120,15 @@ public class NaviView extends JPanel {
 		JPanel panel4c = new JPanel();
 		panel4c.setLayout(flowLayout);
 		panel4c.setBackground(Color.LIGHT_GRAY);
-		panel4c.add(tabelleSpeichernButton);
+		panel4c.add(tabelleAktualisierenButton);
+		JPanel panel4d = new JPanel();
+		panel4d.setLayout(flowLayout);
+		panel4d.setBackground(Color.LIGHT_GRAY);
+		panel4d.add(tabelleSpeichernButton);
+		JPanel panel4e = new JPanel();
+		panel4e.setLayout(flowLayout);
+		panel4e.setBackground(Color.LIGHT_GRAY);
+		panel4e.add(tabelleHTMLAusgabeButton);
 		JPanel dateiPanelLabel = new JPanel();
 		dateiPanelLabel.setBackground(Color.LIGHT_GRAY);
 		JLabel dateiLabel = new JLabel("Datei");
@@ -134,6 +159,8 @@ public class NaviView extends JPanel {
 		tabellenPanelLabel.add(tabellenLabel);
 		tabellenPanel.add(tabellenPanelLabel);
 		tabellenPanel.add(panel4c);
+		tabellenPanel.add(panel4d);
+		tabellenPanel.add(panel4e);
 		tabellenPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		JPanel panel5 = new JPanel();
 		BoxLayout boxLayout = new BoxLayout(panel5, BoxLayout.Y_AXIS);
@@ -141,7 +168,8 @@ public class NaviView extends JPanel {
 		panel5.setBackground(Color.LIGHT_GRAY);
 		panel5.add(dateiPanel);
 		panel5.add(datenbankPanel);
-		//panel5.add(tabellenPanel);
+		panel5.add(tabellenPanel);
+		
 		this.add(panel5);
 
 	}
@@ -217,6 +245,30 @@ public class NaviView extends JPanel {
 
 	public void setDateiPanel(JPanel dateiPanel) {
 		this.dateiPanel = dateiPanel;
+	}
+
+	public JButton getTabelleSpeichernButton() {
+		return tabelleSpeichernButton;
+	}
+
+	public void setTabelleSpeichernButton(JButton tabelleSpeichernButton) {
+		this.tabelleSpeichernButton = tabelleSpeichernButton;
+	}
+
+	public JButton getTabelleAktualisierenButton() {
+		return tabelleAktualisierenButton;
+	}
+
+	public void setTabelleAktualisierenButton(JButton tabelleAktualisierenButton) {
+		this.tabelleAktualisierenButton = tabelleAktualisierenButton;
+	}
+
+	public JButton getTabelleHTMLAusgabeButton() {
+		return tabelleHTMLAusgabeButton;
+	}
+
+	public void setTabelleHTMLAusgabeButton(JButton tabelleHTMLAusgabeButton) {
+		this.tabelleHTMLAusgabeButton = tabelleHTMLAusgabeButton;
 	}
 
 }

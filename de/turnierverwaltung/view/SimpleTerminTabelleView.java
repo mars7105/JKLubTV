@@ -83,9 +83,7 @@ public class SimpleTerminTabelleView extends JPanel {
 	private Properties property;
 
 	public SimpleTerminTabelleView(SimpleTerminTabelle simpleTerminTabelle) {
-//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
-//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 200;
-//		setPreferredSize(new Dimension(windowWidth, windowHeight));
+
 		this.simpleTerminTabelle = simpleTerminTabelle;
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		table = new JTable(this.simpleTerminTabelle);
@@ -94,7 +92,7 @@ public class SimpleTerminTabelleView extends JPanel {
 		comboBox = new JComboBox<String>();
 		comboBox.addItem(" ");
 		comboBox.addItem("0 - 1");
-		comboBox.addItem("0,5 - 0,5");
+		comboBox.addItem(TurnierKonstanten.PARTIE_REMIS);
 		comboBox.addItem("1 - 0");
 		comboBox.addItem("- / +");
 		comboBox.addItem("+ / -");
@@ -112,8 +110,6 @@ public class SimpleTerminTabelleView extends JPanel {
 		JPanel haupt = new JPanel();
 		haupt.setLayout(new FlowLayout(FlowLayout.CENTER));
 		JPanel tabelPanel = new JPanel();
-//		tabelPanel.setPreferredSize(new Dimension(windowWidth - 250,
-//				windowHeight - 100));
 		tabelPanel.setLayout(new BoxLayout(tabelPanel, BoxLayout.PAGE_AXIS));
 		tabelPanel.add(sPane);
 		JPanel hinweis = new JPanel();
@@ -123,15 +119,15 @@ public class SimpleTerminTabelleView extends JPanel {
 		tabelPanel.add(hinweis);
 		haupt.add(tabelPanel);
 		add(haupt);
-		JPanel buttonLeiste = new JPanel();
-		buttonLeiste.setLayout(new FlowLayout(FlowLayout.LEFT));
-		okButton = new JButton("Aktualisieren");
-		buttonLeiste.add(okButton);
-		saveButton = new JButton("Speichern");
-		buttonLeiste.add(saveButton);
-		htmlButton = new JButton("HTML Ausgabe");
-		buttonLeiste.add(htmlButton);
-		add(buttonLeiste);
+//		JPanel buttonLeiste = new JPanel();
+//		buttonLeiste.setLayout(new FlowLayout(FlowLayout.LEFT));
+//		okButton = new JButton("Aktualisieren");
+//		buttonLeiste.add(okButton);
+//		saveButton = new JButton("Speichern");
+//		buttonLeiste.add(saveButton);
+//		htmlButton = new JButton("HTML Ausgabe");
+//		buttonLeiste.add(htmlButton);
+//		add(buttonLeiste);
 		setBackground(new Color(249, 222, 112));
 
 		this.setVisible(true);

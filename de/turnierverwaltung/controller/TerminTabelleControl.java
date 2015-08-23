@@ -39,7 +39,7 @@ import de.turnierverwaltung.view.SimpleTerminTabelleView;
 import de.turnierverwaltung.view.SimpleTurnierTabelleView;
 import de.turnierverwaltung.view.TabAnzeigeView;
 
-public class TerminTabelleControl implements ActionListener {
+public class TerminTabelleControl  {
 
 	private MainControl mainControl;
 	private TerminTabelle[] terminTabelle;
@@ -60,6 +60,7 @@ public class TerminTabelleControl implements ActionListener {
 		this.tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
 		simpleTableView = new SimpleTerminTabelleView[anzahlGruppen];
+		this.mainControl.setSimpleTerminTabelleView(simpleTableView);
 		this.terminTabelle = new TerminTabelle[anzahlGruppen];
 		hauptPanel = mainControl.getHauptPanel();
 		tml = new MyTableModelListener[anzahlGruppen];
@@ -67,81 +68,81 @@ public class TerminTabelleControl implements ActionListener {
 
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		for (int i = 0; i < turnier.getAnzahlGruppen(); i++) {
-			if (simpleTableView[i] != null) {
-				if (arg0.getSource() == simpleTableView[i].getOkButton()) {
-					mainControl.getTurnierTabelleControl().okAction(i);
-				}
-				if (arg0.getSource() == simpleTableView[i].getHtmlButton()) {
-					aktiveGruppe = i;
-					int spalte = simpleTableView[i].getTable().getModel()
-							.getColumnCount();
-					int zeile = simpleTableView[i].getTable().getModel()
-							.getRowCount();
-					for (int x = 0; x < spalte; x++) {
-						for (int y = 0; y < zeile; y++) {
+//	@Override
+//	public void actionPerformed(ActionEvent arg0) {
+//		for (int i = 0; i < turnier.getAnzahlGruppen(); i++) {
+//			if (simpleTableView[i] != null) {
+//				if (arg0.getSource() == simpleTableView[i].getOkButton()) {
+//					mainControl.getTurnierTabelleControl().okAction(i);
+//				}
+//				if (arg0.getSource() == simpleTableView[i].getHtmlButton()) {
+//					aktiveGruppe = i;
+//					int spalte = simpleTableView[i].getTable().getModel()
+//							.getColumnCount();
+//					int zeile = simpleTableView[i].getTable().getModel()
+//							.getRowCount();
+//					for (int x = 0; x < spalte; x++) {
+//						for (int y = 0; y < zeile; y++) {
+//
+//							terminTabelle[i].getTabellenMatrix()[x][y + 1] = (String) simpleTableView[i]
+//									.getTable().getValueAt(y, x);
+//
+//						}
+//					}
+//
+//					htmlTabelleView.makeHTMLFrame(
+//							terminTabelle[i].getHTMLTable(),
+//							"Termintabelle Gruppe "
+//									+ turnier.getGruppe()[i].getGruppenName());
+//					htmlTabelleView.getCloseButton().addActionListener(this);
+//					htmlTabelleView.getSaveButton().addActionListener(this);
+//				}
+//				if (arg0.getSource() == simpleTableView[i].getSaveButton()) {
+//					saveTurnierControl = mainControl.getSaveTurnierControl();
+//					saveTurnierControl.saveTurnier(i);
+//				}
+//
+//			}
+//		}
+//		if (arg0.getSource() == htmlTabelleView.getCloseButton()) {
+//			htmlTabelleView.closeWindow();
+//		}
+//		if (arg0.getSource() == htmlTabelleView.getSaveButton()) {
+//
+//			String filename = JOptionPane.showInputDialog(null, "Dateiname : ",
+//					"Eine Eingabeaufforderung", JOptionPane.PLAIN_MESSAGE);
+//			if (filename != null) {
+//				filename += ".html";
+//				FileFilter filter = new FileNameExtensionFilter("HTML", "html");
+//				JFileChooser savefile = new JFileChooser();
+//				savefile.addChoosableFileFilter(filter);
+//				savefile.setFileFilter(filter);
+//				savefile.setDialogType(JFileChooser.SAVE_DIALOG);
+//				savefile.setSelectedFile(new File(filename));
+//				BufferedWriter writer;
+//				int sf = savefile.showSaveDialog(null);
+//				if (sf == JFileChooser.APPROVE_OPTION) {
+//					try {
+//						writer = new BufferedWriter(new FileWriter(
+//								savefile.getSelectedFile()));
+//						writer.write(terminTabelle[aktiveGruppe].getHTMLTable());
+//						writer.close();
+//						JOptionPane.showMessageDialog(null,
+//								"Datei wurde gespeichert.", "File Saved",
+//								JOptionPane.INFORMATION_MESSAGE);
+//
+//					} catch (IOException e) {
+//						e.printStackTrace();
+//					}
+//				} else if (sf == JFileChooser.CANCEL_OPTION) {
+//					JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
+//				}
+//
+//			}
+//
+//		}
 
-							terminTabelle[i].getTabellenMatrix()[x][y + 1] = (String) simpleTableView[i]
-									.getTable().getValueAt(y, x);
-
-						}
-					}
-
-					htmlTabelleView.makeHTMLFrame(
-							terminTabelle[i].getHTMLTable(),
-							"Termintabelle Gruppe "
-									+ turnier.getGruppe()[i].getGruppenName());
-					htmlTabelleView.getCloseButton().addActionListener(this);
-					htmlTabelleView.getSaveButton().addActionListener(this);
-				}
-				if (arg0.getSource() == simpleTableView[i].getSaveButton()) {
-					saveTurnierControl = mainControl.getSaveTurnierControl();
-					saveTurnierControl.saveTurnier(i);
-				}
-
-			}
-		}
-		if (arg0.getSource() == htmlTabelleView.getCloseButton()) {
-			htmlTabelleView.closeWindow();
-		}
-		if (arg0.getSource() == htmlTabelleView.getSaveButton()) {
-
-			String filename = JOptionPane.showInputDialog(null, "Dateiname : ",
-					"Eine Eingabeaufforderung", JOptionPane.PLAIN_MESSAGE);
-			if (filename != null) {
-				filename += ".html";
-				FileFilter filter = new FileNameExtensionFilter("HTML", "html");
-				JFileChooser savefile = new JFileChooser();
-				savefile.addChoosableFileFilter(filter);
-				savefile.setFileFilter(filter);
-				savefile.setDialogType(JFileChooser.SAVE_DIALOG);
-				savefile.setSelectedFile(new File(filename));
-				BufferedWriter writer;
-				int sf = savefile.showSaveDialog(null);
-				if (sf == JFileChooser.APPROVE_OPTION) {
-					try {
-						writer = new BufferedWriter(new FileWriter(
-								savefile.getSelectedFile()));
-						writer.write(terminTabelle[aktiveGruppe].getHTMLTable());
-						writer.close();
-						JOptionPane.showMessageDialog(null,
-								"Datei wurde gespeichert.", "File Saved",
-								JOptionPane.INFORMATION_MESSAGE);
-
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				} else if (sf == JFileChooser.CANCEL_OPTION) {
-					JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
-				}
-
-			}
-
-		}
-
-	}
+//	}
 
 	public void makeSimpleTableView(int gruppenNummer) {
 
@@ -158,9 +159,9 @@ public class TerminTabelleControl implements ActionListener {
 
 		simpleTableView[gruppenNummer].getTable().getModel()
 				.addTableModelListener(tml[gruppenNummer]);
-		simpleTableView[gruppenNummer].getOkButton().addActionListener(this);
-		simpleTableView[gruppenNummer].getSaveButton().addActionListener(this);
-		simpleTableView[gruppenNummer].getHtmlButton().addActionListener(this);
+//		simpleTableView[gruppenNummer].getOkButton().addActionListener(this);
+//		simpleTableView[gruppenNummer].getSaveButton().addActionListener(this);
+//		simpleTableView[gruppenNummer].getHtmlButton().addActionListener(this);
 
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() == 1) {
 			tabAnzeigeView2[gruppenNummer].insertTab("Termintabelle", null,
@@ -172,6 +173,14 @@ public class TerminTabelleControl implements ActionListener {
 		}
 
 		hauptPanel.updateUI();
+	}
+
+	public TerminTabelle[] getTerminTabelle() {
+		return terminTabelle;
+	}
+
+	public void setTerminTabelle(TerminTabelle[] terminTabelle) {
+		this.terminTabelle = terminTabelle;
 	}
 
 	class MyTableModelListener implements TableModelListener {

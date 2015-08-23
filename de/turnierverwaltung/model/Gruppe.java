@@ -110,7 +110,7 @@ public class Gruppe {
 
 	private double convertErgebnisStringToDouble(String erg) {
 		double ergebniss = 0;
-		if (erg == "0,5") {
+		if (erg == TurnierKonstanten.REMIS) {
 			ergebniss = 0.5;
 		}
 		if (erg == "1") {

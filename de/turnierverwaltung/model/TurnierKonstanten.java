@@ -22,14 +22,14 @@ public class TurnierKonstanten {
 	public static final String KEIN_ERGEBNIS = " ";
 	public static final String GEWINN = "1";
 	public static final String VERLUST = "0";
-	public static final String REMIS = "0,5";
+	public static final String REMIS = "\u00BD";
 	public static final String TRENNZEICHEN = " - ";
 	public static final String GEWINN_KAMPFLOS = "+";
 	public static final String VERLUST_KAMPFLOS = "-";
 	public static final String TRENNZEICHEN_KAMPFLOS = " / ";
 	public static final String PARTIE_GEWINN_WEISS = "1 - 0";
 	public static final String PARTIE_GEWINN_SCHWARZ = "0 - 1";
-	public static final String PARTIE_REMIS = "0,5 - 0,5";
+	public static final String PARTIE_REMIS = "\u00BD - \u00BD";
 	public static final String PARTIE_GEWINN_KAMPFLOS_WEISS = "+ / -";
 	public static final String PARTIE_GEWINN_KAMPFLOS_SCHWARZ = "- / +";
 	public static final String KEINE_DWZ = "0000";
