@@ -1,4 +1,5 @@
 package de.turnierverwaltung.model;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -14,12 +15,95 @@ package de.turnierverwaltung.model;
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
-public class TerminTabelleToHTML extends TabelleToHTML {
+public class TerminTabelleToHTML {
 
-	public TerminTabelleToHTML(String[][] tabellenMatrix, String turnierName,
-			String startDatum, String endDatum, String gruppenName) {
-		super(tabellenMatrix, turnierName, startDatum, endDatum, gruppenName,"");
-		// TODO Auto-generated constructor stub
+	private String[][] tabellenMatrix;
+	private String turnierName;
+	private String startDatum;
+	private String endDatum;
+	private String gruppenName;
+	private String htmlString;
+	private int[] reihenfolge;
+
+	public TerminTabelleToHTML(String[][] tabellenMatrix, String turnierName, String startDatum, String endDatum,
+			String gruppenName) {
+		super();
+		this.tabellenMatrix = tabellenMatrix;
+		this.turnierName = turnierName;
+		this.startDatum = startDatum;
+		this.endDatum = endDatum;
+		this.gruppenName = gruppenName;
+
 	}
+
+	private String getHTMLFooter() {
+		String footerString = "</body>\n</html>\n";
+		return footerString;
+	}
+
+	private String getHTMLHeader() {
+		String headerString = "<!doctype html>\n" + "<head>\n" + "  <meta charset='utf-8'>\n"
+				+ "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n"
+				+ "  <link rel='stylesheet' href='style.css'>\n" + "  <title>" + turnierName + startDatum + " bis "
+				+ endDatum + "</title>\n" + "</head>\n" + "<body>\n" + "  <h1>" + turnierName + " " + startDatum
+				+ " bis " + endDatum + "</h1>\n" + "  <h2>" + gruppenName + "</h2>\n";
+		return headerString;
+	}
+
+	public String getHTMLTable() {
+		int col = this.tabellenMatrix.length;
+		reihenfolge = new int[col];
+
+		reihenfolge[0] = col - 1;
+		int x = 0;
+		for (int i = 1; i < col - 1; i++) {
+			if (x == 1) {
+				x++;
+			}
+			reihenfolge[i] = x;
+			x++;
+
+		}
+		return makeTerminTabelle();
+
+	}
+
+	private String makeTerminTabelle() {
+		int col = this.tabellenMatrix.length;
+		int row = this.tabellenMatrix[0].length;
+		htmlString = getHTMLHeader();
+		htmlString += "  <table border='1'>\n    <tbody>\n";
+		for (int y = 0; y < row; y++) {
+			htmlString += "      <tr>\n";
+
+			for (int x = 0; x < col; x++) {
+				String ausgabeWert = this.tabellenMatrix[x][y];
+				if (ausgabeWert != null && ausgabeWert != "" && ausgabeWert != " ") {
+
+					if (y == 0) {
+						htmlString += "        <th>" + ausgabeWert + "</th>\n";
+					} else {
+						htmlString += "        <td>" + ausgabeWert + "</td>\n";
+					}
+				} else {
+					if (y == 0) {
+						htmlString += "        <th>" + TurnierKonstanten.HTML_LEERZEICHEN + "</th>\n";
+					} else {
+						htmlString += "        <td>" + TurnierKonstanten.HTML_LEERZEICHEN + "</td>\n";
+					}
+				}
+
+			}
+			htmlString += "      </tr>\n";
+
+		}
+		htmlString += "    </tbody>\n  </table>\n";
+
+		htmlString += getHTMLFooter();
+		return htmlString;
+
+	}
+
+
 
 }

@@ -82,7 +82,7 @@ public class TurnierTabelle {
 
 		tabellenMatrix[4 + sp][0] = "P*";
 		tabellenMatrix[5 + sp][0] = "S*";
-		tabellenMatrix[6 + sp][0] = "R*";
+		tabellenMatrix[6 + sp][0] = "R";
 
 		for (int i = 0; i < sp; i++) {
 			tabellenMatrix[0][i + 1] = spieler[i].getName();
