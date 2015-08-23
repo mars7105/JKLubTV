@@ -71,11 +71,15 @@ public class TurnierTabelle {
 
 		tabellenMatrix[3][0] = "n.<br />DWZ";
 		for (int i = 4; i < sp + 4; i++) {
-			tabellenMatrix[i][0] = spieler[i - 4].getKuerzel();
+			if (spieler[i - 4].getKuerzel().length() >= 2) {
+				tabellenMatrix[i][0] = spieler[i - 4].getKuerzel().substring(0, 1) + "<br />"
+						+ spieler[i - 4].getKuerzel().substring(1);
+			} else {
+				tabellenMatrix[i][0] = spieler[i - 4].getKuerzel();
+			}
+
 		}
-		// for (int i = 3; i < sp + 3; i++) {
-		// tabellenMatrix[i][0] = spieler[i - 3].getKuerzel();
-		// }
+
 		tabellenMatrix[4 + sp][0] = "P*";
 		tabellenMatrix[5 + sp][0] = "S*";
 		tabellenMatrix[6 + sp][0] = "R*";

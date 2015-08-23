@@ -50,7 +50,8 @@ public class SimpleTurnierTabelle extends DefaultTableModel {
 	private void initModelData() {
 
 		for (int i = 0; i < spalte; i++) {
-			this.addColumn(tabellenMatrix[i][0]);
+			String replacedStr = tabellenMatrix[i][0].replaceAll("<br />", "");
+			this.addColumn(replacedStr);
 		}
 
 		for (int j = 1; j < zeile; j++) {

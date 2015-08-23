@@ -59,18 +59,16 @@ public class TurnierTabelleControl implements ActionListener {
 	private int aktiveGruppe;
 
 	public TurnierTabelleControl(MainControl mainControl) {
-		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 25;
-		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 75;
+		
 		this.mainControl = mainControl;
 		
 		hauptPanel = this.mainControl.getHauptPanel();
-		hauptPanel.setBackground(new Color(126, 201, 208));
+		//hauptPanel.setBackground(new Color(126, 201, 208));
 
 		if (this.mainControl.getTabAnzeigeView() == null) {
 			this.mainControl.setTabAnzeigeView(new TabAnzeigeView());
 		}
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
-//		tabAnzeigeView.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		tabAnzeigeView.setBackground(new Color(249, 222, 112));
 		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
 		tabAnzeigeView2 = new TabAnzeigeView[anzahlGruppen];
