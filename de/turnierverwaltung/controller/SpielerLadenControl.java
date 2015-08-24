@@ -1,6 +1,5 @@
 package de.turnierverwaltung.controller;
 
-import java.awt.BorderLayout;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -23,13 +22,9 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import de.turnierverwaltung.model.Spieler;
-import de.turnierverwaltung.model.Turnier;
-import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.SpielerEditierenView;
 import de.turnierverwaltung.view.SpielerHinzufuegenView;
 import de.turnierverwaltung.view.SpielerLadenView;
@@ -56,7 +51,7 @@ public class SpielerLadenControl implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == spielerLadenView.getSpielerImport()) {
-			 SpielerTableImportController spielerImport = new SpielerTableImportController(this.mainControl);
+			 SpielerTableImportController spielerImport = new SpielerTableImportController();
 			 spielerImport.importSpielerTable();
 			 makePanel();
 		}

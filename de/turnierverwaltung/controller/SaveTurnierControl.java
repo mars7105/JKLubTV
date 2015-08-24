@@ -46,7 +46,6 @@ public class SaveTurnierControl {
 		createAndShowGUI();
 		boolean saveOK1 = false;
 		boolean saveOK2 = false;
-		boolean saveOK3 = false;
 		boolean saveOK4 = false;
 		// ladebalkenView.iterate();
 
@@ -70,14 +69,12 @@ public class SaveTurnierControl {
 		if (mainControl.getTurnier().getGruppe()[index].getGruppeId() < 0) {
 			saveOK2 = this.mainControl.getGruppenTableControl().insertGruppe(index);
 			ladebalkenView.iterate();
-			saveOK3 = this.mainControl.getSpielerTableControl().insertSpieler(index);
 			ladebalkenView.iterate();
 			saveOK4 = this.mainControl.getPartienTableControl().insertPartien(index);
 			this.mainControl.getTurnier_has_SpielerTableControl().insertTurnier_has_Spieler(index);
 		} else {
 			saveOK2 = this.mainControl.getGruppenTableControl().updateGruppe(index);
 			ladebalkenView.iterate();
-			saveOK3 = this.mainControl.getSpielerTableControl().updateSpieler(index);
 			ladebalkenView.iterate();
 			saveOK4 = this.mainControl.getPartienTableControl().updatePartien(index);
 

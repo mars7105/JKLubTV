@@ -79,7 +79,9 @@ public class TerminTabelleToHTML {
 			for (int x = 0; x < col; x++) {
 				String ausgabeWert = this.tabellenMatrix[x][y];
 				if (ausgabeWert != null && ausgabeWert != "" && ausgabeWert != " ") {
-
+					if (ausgabeWert == TurnierKonstanten.PARTIE_REMIS) {
+						ausgabeWert = "&frac12; - &frac12;";
+					}
 					if (y == 0) {
 						htmlString += "        <th>" + ausgabeWert + "</th>\n";
 					} else {

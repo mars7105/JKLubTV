@@ -137,11 +137,9 @@ public class SpielerTableControl {
 	}
 
 	public void updateOneSpieler(Spieler spieler) {
-		boolean saved = false;
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
 
-		saved = mySQLSpielerDAO.updateSpieler(spieler);
-
+		mySQLSpielerDAO.updateSpieler(spieler);
 	}
 
 	public boolean updateSpieler(int gruppe) {

@@ -28,6 +28,10 @@ public class MainModel {
 		this.player = player;
 		this.opponents = opponents;
 		this.player.setNumberOfOpponents(this.opponents.size());
+
+	}
+
+	public void calculateDWZ() {
 		if (this.opponents.size() > 0) {
 			calcWahrscheinlichkeit = new CalculateWahrscheinlichkeitModel(this.player, this.opponents);
 			double durchschnittsDWZ = 0;

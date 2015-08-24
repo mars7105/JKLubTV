@@ -17,7 +17,6 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,8 +34,6 @@ import javax.swing.JScrollPane;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
-
-import de.turnierverwaltung.model.TurnierKonstanten;
 
 public class RundenEingabeFormularView extends JPanel {
 	public class DateLabelFormatter extends AbstractFormatter {
@@ -88,6 +85,7 @@ public class RundenEingabeFormularView extends JPanel {
 
 	private int anzahlElemente;
 
+	@SuppressWarnings("unchecked")
 	public RundenEingabeFormularView(int spielerAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
 		changeColor = new JButton[this.spielerAnzahl * (this.spielerAnzahl - 1) / 2];
@@ -126,6 +124,7 @@ public class RundenEingabeFormularView extends JPanel {
 		return okButton;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public JComboBox[] getRundenNummer() {
 		return rundenNummer;
 	}
@@ -252,7 +251,8 @@ public class RundenEingabeFormularView extends JPanel {
 		this.okButton = okButton;
 	}
 
-	public void setRundenNummer(JComboBox[] rundenNummer) {
+	@SuppressWarnings("unchecked")
+	public void setRundenNummer(@SuppressWarnings("rawtypes") JComboBox[] rundenNummer) {
 		this.rundenNummer = rundenNummer;
 	}
 
@@ -260,6 +260,7 @@ public class RundenEingabeFormularView extends JPanel {
 		this.schwarzSpieler = schwarzSpieler;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void setSpielerAnzahl(int spielerAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
 		changeColor = new JButton[this.spielerAnzahl * (this.spielerAnzahl - 1) / 2];

@@ -16,7 +16,6 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
@@ -26,8 +25,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-
-import de.turnierverwaltung.model.TurnierKonstanten;
 
 public class SpielerEingabeView extends JPanel {
 	/**
@@ -51,6 +48,7 @@ public class SpielerEingabeView extends JPanel {
 	 * 
 	 * @param spielerAnzahl
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public SpielerEingabeView(int spielerAnzahl) {
 
 		this.spielerAnzahl = spielerAnzahl;
@@ -59,8 +57,7 @@ public class SpielerEingabeView extends JPanel {
 		dwzTextfield = new JTextField[this.spielerAnzahl];
 		kuerzelTextfield = new JTextField[this.spielerAnzahl];
 		textComboBoxAge = new JComboBox[this.spielerAnzahl];
-//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
-//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
+
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBackground(new Color(249, 222, 112));
@@ -149,6 +146,7 @@ public class SpielerEingabeView extends JPanel {
 		return spielerID;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public JComboBox[] getSpielerSuche() {
 		return spielerSuche;
 	}
@@ -181,6 +179,7 @@ public class SpielerEingabeView extends JPanel {
 		this.spielerID = spielerID;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void setSpielerSuche(JComboBox[] spielerSuche) {
 		this.spielerSuche = spielerSuche;
 	}

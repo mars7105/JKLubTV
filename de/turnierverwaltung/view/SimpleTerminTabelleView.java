@@ -16,8 +16,6 @@ import java.awt.BorderLayout;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -34,8 +32,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
-
-import org.jdatepicker.impl.JDatePickerImpl;
 
 import de.turnierverwaltung.model.SimpleTerminTabelle;
 import de.turnierverwaltung.model.TurnierKonstanten;
@@ -72,15 +68,12 @@ public class SimpleTerminTabelleView extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private final int big = 75;
 	private JButton okButton;
 	private JButton saveButton;
 	private JButton htmlButton;
 	private JTable table;
 	private JComboBox<String> comboBox;
 	private SimpleTerminTabelle simpleTerminTabelle;
-	private JDatePickerImpl datumTextField;
-
 	private Properties property;
 
 	public SimpleTerminTabelleView(SimpleTerminTabelle simpleTerminTabelle) {
@@ -127,6 +120,7 @@ public class SimpleTerminTabelleView extends JPanel {
 
 	}
 
+	@SuppressWarnings("unused")
 	private int[] dateStringToInt(String datum) {
 		int[] dateInt = new int[3];
 
@@ -164,18 +158,10 @@ public class SimpleTerminTabelleView extends JPanel {
 		int columnCount = table.getColumnCount();
 		for (int i = 0; i < columnCount; i++) {
 			TableColumn c = table.getColumnModel().getColumn(i);
-			// c.setPreferredWidth(big);
 			if (i == 3) {
 				c.setCellEditor(new DefaultCellEditor(comboBox));
 			}
-			// if (i == 4) {
-			// UtilDateModel um1 = new UtilDateModel();
-			// datumTextField = new JDatePickerImpl(new JDatePanelImpl(um1,
-			// property), new DateLabelFormatter());
-			// c.setCellEditor();
-			//
-			//
-			// }
+			
 
 		}
 

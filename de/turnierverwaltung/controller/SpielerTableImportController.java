@@ -1,7 +1,5 @@
 package de.turnierverwaltung.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -19,10 +17,8 @@ import de.turnierverwaltung.mysql.SpielerDAO;
 
 public class SpielerTableImportController {
 
-	private Object mainControl;
 
-	public SpielerTableImportController(MainControl mainControl) {
-		this.mainControl = mainControl;
+	public SpielerTableImportController() {
 	}
 
 	public void importSpielerTable() {

@@ -26,9 +26,12 @@ import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
 import de.turnierverwaltung.model.Turnier;
-import de.turnierverwaltung.model.TurnierKonstanten;
 
 public class GruppenEditierenView extends JDialog {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton saveButton;
 	private JButton cancelButton;
 	private JTextField[] textFieldGruppenName;
@@ -45,8 +48,6 @@ public class GruppenEditierenView extends JDialog {
 		this.setAlwaysOnTop(true);
 		setTitle("Gruppen editieren");
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 50;
-//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
 
 		setLocationRelativeTo(null);
 

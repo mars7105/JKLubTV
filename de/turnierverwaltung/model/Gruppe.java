@@ -122,17 +122,6 @@ public class Gruppe {
 		return ergebniss;
 	}
 
-	private Partie findePartie(Spieler weiss, Spieler schwarz) {
-		Partie temp = null;
-		for (int p = 0; p < partienAnzahl; p++) {
-			if (partien[p].getSpielerWeiss() == weiss
-					&& partien[p].getSpielerSchwarz() == schwarz) {
-				temp = partien[p];
-			}
-		}
-		return temp;
-	}
-
 	public int getGruppeId() {
 		return gruppeId;
 	}

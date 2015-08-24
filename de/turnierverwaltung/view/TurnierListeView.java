@@ -17,8 +17,6 @@ package de.turnierverwaltung.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Toolkit;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -36,9 +34,7 @@ public class TurnierListeView extends JPanel {
 	private JButton okButton;
 
 	public TurnierListeView() {
-//		int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-//		int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
-//		setBounds(0, 0, windowWidth, windowHeight);
+
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -52,7 +48,6 @@ public class TurnierListeView extends JPanel {
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		add(buttonPane, BorderLayout.SOUTH);
 
-		JPanel line;
 		centerPane = new JPanel();
 		contentPanel.add(centerPane);
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));

@@ -31,12 +31,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.MenueView;
-import de.turnierverwaltung.view.StandardView;
 
 public class MenueControl implements ActionListener {
 	private MainControl mainControl;
 	private MenueView turnierMenue;
-	private StandardView standardView;
 	private Turnier turnier;
 	private Boolean warnHinweis;
 	private String fileName = " ";
@@ -53,14 +51,13 @@ public class MenueControl implements ActionListener {
 		turnierMenue.getMntmSpielerLaden().addActionListener(this);
 		turnierMenue.getMntmDBNeu().addActionListener(this);
 		turnierMenue.getMntmDBLaden().addActionListener(this);
-		standardView = this.mainControl.getStandardView();
+		this.mainControl.getStandardView();
 		
 		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		// TODO Automatisch generierter Methodenstub
 
 		if (arg0.getSource() == turnierMenue.getMntmSpielerLaden()) {
 			int abfrage = warnHinweis(
@@ -178,7 +175,7 @@ public class MenueControl implements ActionListener {
 
 							// true for rewrite, false for override
 							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-							SQLiteControl sqlC = new SQLiteControl(mainControl);
+							SQLiteControl sqlC = new SQLiteControl();
 							sqlC.createAllTables();
 							mainControl.datenbankMenueView(true);
 							JOptionPane.showMessageDialog(null, "Datei wurde gespeichert.", "File Saved",

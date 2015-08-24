@@ -48,7 +48,7 @@ public class SpielerTableExportController {
 
 				// true for rewrite, false for override
 				SQLiteDAOFactory.setDB_PATH(newFile);
-				SQLiteControl sqlC = new SQLiteControl(this.mainControl);
+				SQLiteControl sqlC = new SQLiteControl();
 				daoFactory = DAOFactory.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 				mySQLSpielerDAO = daoFactory.getSpielerDAO();
 				sqlC.createSpielerTables();

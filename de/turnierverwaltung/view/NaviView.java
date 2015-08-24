@@ -1,6 +1,5 @@
 package de.turnierverwaltung.view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -49,8 +48,6 @@ public class NaviView extends JPanel {
 	private JButton tabelleHTMLAusgabeButton;
 
 	public NaviView() {
-		BorderLayout borderLayout = new BorderLayout();
-		// this.setLayout(borderLayout);
 		this.setBackground(Color.LIGHT_GRAY);
 		EmptyBorder eBorder = new EmptyBorder(5, 5, 5, 5);
 		this.setBorder(eBorder);

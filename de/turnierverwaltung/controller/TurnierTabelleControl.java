@@ -17,22 +17,10 @@ package de.turnierverwaltung.controller;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Arrays;
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import de.turnierverwaltung.model.SimpleTurnierTabelle;
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.model.Turnier;
@@ -53,17 +41,13 @@ public class TurnierTabelleControl {
 	private TabAnzeigeView[] tabAnzeigeView2;
 	private Turnier turnier;
 	private MyTableModelListener tml[];
-	private HTMLTabelleView htmlTabelleView;
 	private Dimension dimension[];
 	private int[] spielerAnzahl;
-	private int aktiveGruppe;
-
 	public TurnierTabelleControl(MainControl mainControl) {
 		
 		this.mainControl = mainControl;
 		
 		hauptPanel = this.mainControl.getHauptPanel();
-		//hauptPanel.setBackground(new Color(126, 201, 208));
 
 		if (this.mainControl.getTabAnzeigeView() == null) {
 			this.mainControl.setTabAnzeigeView(new TabAnzeigeView());
@@ -84,7 +68,7 @@ public class TurnierTabelleControl {
 		this.mainControl.setTurnierTabelle(turnierTabelle);
 		this.saveTurnierControl = new SaveTurnierControl(this.mainControl);
 		this.mainControl.setSaveTurnierControl(saveTurnierControl);
-		htmlTabelleView = new HTMLTabelleView();
+		new HTMLTabelleView();
 		spielerAnzahl = new int[anzahlGruppen];
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
 
@@ -235,6 +219,7 @@ public class TurnierTabelleControl {
 
 	private void berechneFolgeDWZ(int gruppenNummer) {
 		FolgeDWZController folgeDWZ = new FolgeDWZController(mainControl.getTurnier().getGruppe()[gruppenNummer]);
+		folgeDWZ.caculateDWZ();
 
 	}
 

@@ -16,16 +16,11 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTextField;
-
-import de.turnierverwaltung.model.TurnierKonstanten;
 
 public class TurnierTabelleView extends JPanel {
 	/**
@@ -33,21 +28,12 @@ public class TurnierTabelleView extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPanel;
-	// private JPanel centerPane;
-	private JPanel downPane;
 	private JButton okButton;
 	private JButton saveButton;
 
 	private JButton cancelButton;
 	private JScrollPane scrollPane;
-	private JTextField[] rundenNummer;
-	private int spielerAnzahl;
-	private JLabel[] weissSpieler;
-	private JLabel[] schwarzSpieler;
-	private JLabel[] ergebniss;
-	private JTextField[] datum;
-	private JButton[] changeColor;
-	private int anzahlElemente;
+
 
 	public TurnierTabelleView() {
 		makePanel();
@@ -55,8 +41,6 @@ public class TurnierTabelleView extends JPanel {
 	}
 
 	public void makePanel() {
-		anzahlElemente = 0;
-
 		setBackground(new Color(249, 222, 112));
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());

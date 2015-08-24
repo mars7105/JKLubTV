@@ -17,8 +17,6 @@ import java.awt.BorderLayout;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Font;
 
 import javax.swing.BoxLayout;
@@ -109,31 +107,9 @@ public class SimpleTurnierTabelleView extends JPanel {
 		return table;
 	}
 
-	private void setCellEditor() {
-		int columnCount = table.getColumnCount();
-		int rowCount = table.getRowCount();
-		int punkte = columnCount - 3;
-
-		Object temp;
-		for (int x = 0; x < columnCount; x++) {
-			for (int y = 0; y < rowCount; y++) {
-				TableColumn c = table.getColumnModel().getColumn(x);
-				if (x >= 4 && x < punkte) {
-					temp = table.getModel().getValueAt(y, x);
-
-					c.setCellEditor(new DefaultCellEditor(comboBox));
-
-				}
-			}
-		}
-	}
-
 	private void setColumnWidth() {
 		int columnCount = table.getColumnCount();
-		int rowCount = table.getRowCount();
 		int punkte = columnCount - 3;
-		int soberg = columnCount - 2;
-		int platz = columnCount - 1;
 		for (int i = 0; i < columnCount; i++) {
 			TableColumn c = table.getColumnModel().getColumn(i);
 			if (i < 1) {

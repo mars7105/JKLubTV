@@ -1,9 +1,5 @@
 package de.turnierverwaltung.controller;
 
-import java.util.ArrayList;
-import java.util.ListIterator;
-
-import de.turnierverwaltung.model.Spieler;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -27,10 +23,8 @@ import de.turnierverwaltung.mysql.PartienDAO;
 import de.turnierverwaltung.mysql.SpielerDAO;
 import de.turnierverwaltung.mysql.TurnierDAO;
 import de.turnierverwaltung.mysql.Turnier_has_SpielerDAO;
-import de.turnierverwaltung.view.SpielerLadenView;
 
 public class SQLiteControl {
-	private MainControl mainControl;
 	private DAOFactory daoFactory;
 	private SpielerDAO mySQLSpielerDAO;
 	private TurnierDAO mySQLTurnierDAO;
@@ -38,11 +32,7 @@ public class SQLiteControl {
 	private PartienDAO mySQLPartienDAO;
 	private GruppenDAO mySQLGruppenDAO;
 	private Turnier_has_SpielerDAO mySQLTurnier_has_SpielerDAO;
-	private SpielerTableControl spielerTableControl;
-	private ArrayList<Spieler> spieler;
-
-	public SQLiteControl(MainControl mainControl) {
-		this.mainControl = mainControl;
+	public SQLiteControl() {
 		daoFactory = DAOFactory.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 		mySQLTurnierDAO = daoFactory.getTurnierDAO();
 		mySQLSpielerDAO = daoFactory.getSpielerDAO();

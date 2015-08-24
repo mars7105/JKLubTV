@@ -20,20 +20,14 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import de.turnierverwaltung.model.TurnierKonstanten;
-
 public class MainView extends JPanel {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private JButton cancelButton;
-	private JButton okButton;
-
 	public MainView() {
-//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
-//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT;
-//		setBounds(0, 0, windowWidth, windowHeight);
+
 		setLayout(new FlowLayout());
 		setBackground(new Color(249, 222, 112));
 		JPanel buttonPane = new JPanel();

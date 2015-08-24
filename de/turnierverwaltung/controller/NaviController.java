@@ -104,7 +104,7 @@ public class NaviController implements ActionListener {
 
 							// true for rewrite, false for override
 							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-							SQLiteControl sqlC = new SQLiteControl(mainControl);
+							SQLiteControl sqlC = new SQLiteControl();
 							sqlC.createAllTables();
 							mainControl.datenbankMenueView(true);
 							JOptionPane.showMessageDialog(null, "Datei wurde gespeichert.", "File Saved",
@@ -190,7 +190,8 @@ public class NaviController implements ActionListener {
 			}
 			this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		}
-		if (this.mainControl.getTurnierTabelleControl() != null) {
+		aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
+		if (this.mainControl.getTurnierTabelleControl() != null && aktiveGruppe >= 0) {
 			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
 			aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
 			if (arg0.getSource() == naviView.getTabelleAktualisierenButton()) {
@@ -268,7 +269,6 @@ public class NaviController implements ActionListener {
 						int sf = savefile.showSaveDialog(null);
 						if (sf == JFileChooser.APPROVE_OPTION) {
 							try {
-								File file = savefile.getSelectedFile();
 								writer = new BufferedWriter(new FileWriter(savefile.getSelectedFile()));
 								if (aktiveTabelle == 0) {
 									writer.write(this.mainControl.getTurnierTabelle()[aktiveGruppe].getHTMLTable());

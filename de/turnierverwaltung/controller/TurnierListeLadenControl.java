@@ -26,7 +26,6 @@ import javax.swing.JPanel;
 
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.view.GruppenEditierenView;
-import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.TabAnzeigeView;
 import de.turnierverwaltung.view.TurnierEditierenView;
 import de.turnierverwaltung.view.TurnierListeLadenView;
@@ -43,7 +42,6 @@ public class TurnierListeLadenControl implements ActionListener {
 	private TabAnzeigeView tabbedPaneView;
 	private TabAnzeigeView[] tabbedPaneView2;
 	private ArrayList<Turnier> turnierListe;
-	private RundenEingabeFormularControl rundenEingabeControl;
 	private int turnierIndex;
 
 	public TurnierListeLadenControl(MainControl mainControl) {

@@ -136,13 +136,6 @@ public class TurnierControl implements ActionListener {
 		this.turnierOkButton = turnierOkButton;
 	}
 
-	private void turnierCancelButton() {
-		mainControl.getMenueView().getMnDateiMenu().setEnabled(true);
-		turnierView.getHauptPanel().removeAll();
-		mainControl.getNaviController().makeNaviPanel();
-		turnierView.getHauptPanel().updateUI();
-	}
-
 	private void turnierOkButton() {
 		gruppenAnzahl = 0;
 		turnierName = turnierView.getTurnierNameTextField().getText();

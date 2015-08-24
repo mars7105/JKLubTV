@@ -17,7 +17,6 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
@@ -30,9 +29,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 
 import de.turnierverwaltung.model.Spieler;
-import de.turnierverwaltung.model.TurnierKonstanten;
 
 public class SpielerLadenView extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JPanel contentPanel;
 	private JPanel mainPane;
 	private JScrollPane scrollPane;

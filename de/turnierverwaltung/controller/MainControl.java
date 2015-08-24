@@ -18,10 +18,8 @@ import java.awt.BorderLayout;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,7 +31,6 @@ import de.turnierverwaltung.model.TerminTabelle;
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.model.TurnierKonstanten;
 import de.turnierverwaltung.model.TurnierTabelle;
-import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.GruppenView;
 import de.turnierverwaltung.view.MainView;

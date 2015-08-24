@@ -13,17 +13,21 @@ import de.turnierverwaltung.model.TurnierKonstanten;
 public class FolgeDWZController {
 	private Gruppe gruppe;
 	private Partie[] partien;
-	private Spieler[] spieler;
 	private int spielerAnzahl;
 	private int partienanzahl;
 
 	public FolgeDWZController(Gruppe gruppe) {
 		this.gruppe = gruppe;
 		this.partien = this.gruppe.getPartien();
-		this.spieler = this.gruppe.getSpieler();
-		int spielfrei = -1;
+		this.gruppe.getSpieler();
 		this.spielerAnzahl = this.gruppe.getSpielerAnzahl();
 		this.partienanzahl = this.gruppe.getPartienAnzahl();
+
+	}
+
+	public void caculateDWZ() {
+		int spielfrei = -1;
+
 		for (int i = 0; i < spielerAnzahl; i++) {
 			if (this.gruppe.getSpieler()[i].getSpielerId() == TurnierKonstanten.SPIELFREI_ID) {
 				spielfrei = i;
@@ -94,6 +98,7 @@ public class FolgeDWZController {
 				PlayerModel playerdwz = new PlayerModel(player.getAge(), player.getDWZ(), opponents.size());
 				playerdwz.setPunkte(gesamtpunkte);
 				MainModel mainModel = new MainModel(playerdwz, opponents);
+				mainModel.calculateDWZ();
 				player.setFolgeDWZ((int) playerdwz.getFolgeDWZ());
 
 			}

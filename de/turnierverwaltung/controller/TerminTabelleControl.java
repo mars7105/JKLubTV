@@ -1,35 +1,8 @@
 package de.turnierverwaltung.controller;
 
-//JKlubTV - Ein Programm zum verwalten von Schach Turnieren
-//Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
-//
-//This program is free software: you can redistribute it and/or modify
-//it under the terms of the GNU General Public License as published by
-//the Free Software Foundation, either version 3 of the License, or
-//(at your option) any later version.
-//
-//This program is distributed in the hope that it will be useful,
-//but WITHOUT ANY WARRANTY; without even the implied warranty of
-//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//GNU General Public License for more details.
-//
-//You should have received a copy of the GNU General Public License
-//along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-
-import javax.swing.JFileChooser;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.filechooser.FileFilter;
-import javax.swing.filechooser.FileNameExtensionFilter;
-
 import de.turnierverwaltung.model.SimpleTerminTabelle;
 import de.turnierverwaltung.model.TerminTabelle;
 import de.turnierverwaltung.model.Turnier;
@@ -49,11 +22,6 @@ public class TerminTabelleControl  {
 	private JPanel hauptPanel;
 	private Turnier turnier;
 	private MyTableModelListener tml[];
-	private HTMLTabelleView htmlTabelleView;
-
-	private SaveTurnierControl saveTurnierControl;
-	private int aktiveGruppe;
-
 	public TerminTabelleControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		this.turnier = mainControl.getTurnier();
@@ -64,7 +32,7 @@ public class TerminTabelleControl  {
 		this.terminTabelle = new TerminTabelle[anzahlGruppen];
 		hauptPanel = mainControl.getHauptPanel();
 		tml = new MyTableModelListener[anzahlGruppen];
-		htmlTabelleView = new HTMLTabelleView();
+		new HTMLTabelleView();
 
 	}
 

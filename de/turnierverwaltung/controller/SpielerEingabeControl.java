@@ -184,6 +184,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void keyPressed(KeyEvent e) {
 		for (int i = 0; i < gruppenAnzahl; i++) {

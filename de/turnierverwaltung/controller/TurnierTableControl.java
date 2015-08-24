@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import de.turnierverwaltung.model.Turnier;
-import de.turnierverwaltung.model.TurnierKonstanten;
 import de.turnierverwaltung.mysql.*;
 
 
@@ -29,7 +28,6 @@ public class TurnierTableControl {
 	private DAOFactory daoFactory;
 	private TurnierDAO mySQLTurnierDao;
 	private DatumDAO mySQLDatumDAO;
-	private Turnier_has_SpielerDAO turnier_has_spielerDAO;
 	int turnierId;
 
 	public TurnierTableControl(MainControl mainControl) {
@@ -37,7 +35,6 @@ public class TurnierTableControl {
 		daoFactory = DAOFactory.getDAOFactory(3);
 		mySQLTurnierDao = daoFactory.getTurnierDAO();
 		mySQLDatumDAO = daoFactory.getDatumDAO();
-		turnier_has_spielerDAO = daoFactory.getTurnier_has_SpielerDAO();
 	}
 
 	public void getTurnier(int tID) {
