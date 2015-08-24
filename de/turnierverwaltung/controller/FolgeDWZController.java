@@ -16,10 +16,10 @@ public class FolgeDWZController {
 	private int spielerAnzahl;
 	private int partienanzahl;
 
+
 	public FolgeDWZController(Gruppe gruppe) {
 		this.gruppe = gruppe;
 		this.partien = this.gruppe.getPartien();
-		this.gruppe.getSpieler();
 		this.spielerAnzahl = this.gruppe.getSpielerAnzahl();
 		this.partienanzahl = this.gruppe.getPartienAnzahl();
 
