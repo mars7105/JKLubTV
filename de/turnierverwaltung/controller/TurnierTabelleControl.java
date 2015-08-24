@@ -54,7 +54,7 @@ public class TurnierTabelleControl {
 	private Turnier turnier;
 	private MyTableModelListener tml[];
 	private HTMLTabelleView htmlTabelleView;
-
+	private Dimension dimension[];
 	private int[] spielerAnzahl;
 	private int aktiveGruppe;
 
@@ -72,8 +72,10 @@ public class TurnierTabelleControl {
 		tabAnzeigeView.setBackground(new Color(249, 222, 112));
 		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
 		tabAnzeigeView2 = new TabAnzeigeView[anzahlGruppen];
+		dimension = new Dimension[anzahlGruppen];
 		for (int i = 0; i < anzahlGruppen; i++) {
 			tabAnzeigeView2[i] = new TabAnzeigeView();
+			dimension[i] = tabAnzeigeView2[i].getPreferredSize();
 		}
 		this.mainControl.setTabAnzeigeView2(tabAnzeigeView2);
 		simpleTableView = new SimpleTurnierTabelleView[anzahlGruppen];
@@ -89,76 +91,79 @@ public class TurnierTabelleControl {
 
 	}
 
-//	@Override
-//	public void actionPerformed(ActionEvent arg0) {
-//		for (int i = 0; i < turnier.getAnzahlGruppen(); i++) {
-//			if (simpleTableView[i] != null) {
-//				if (arg0.getSource() == simpleTableView[i].getOkButton()) {
-//					okAction(i);
-//
-//				}
-//				if (arg0.getSource() == simpleTableView[i].getHtmlButton()) {
-//					aktiveGruppe = i;
-//					int spalte = simpleTableView[i].getTable().getModel().getColumnCount();
-//					int zeile = simpleTableView[i].getTable().getModel().getRowCount();
-//					for (int x = 0; x < spalte; x++) {
-//						for (int y = 0; y < zeile; y++) {
-//
-//							turnierTabelle[i].getTabellenMatrix()[x][y + 1] = (String) simpleTableView[i].getTable()
-//									.getValueAt(y, x);
-//
-//						}
-//					}
-//					htmlTabelleView.makeHTMLFrame(turnierTabelle[i].getHTMLTable(),
-//							"Turniertabelle Gruppe " + turnier.getGruppe()[i].getGruppenName());
-//					htmlTabelleView.getCloseButton().addActionListener(this);
-//					htmlTabelleView.getSaveButton().addActionListener(this);
-//				}
-//
-//				if (arg0.getSource() == simpleTableView[i].getSaveButton()) {
-//					saveTurnierControl.saveTurnier(i);
-//				}
-//
-//			}
-//		}
-//		if (htmlTabelleView != null) {
-//			if (arg0.getSource() == htmlTabelleView.getSaveButton()) {
-//
-//				String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
-//						JOptionPane.PLAIN_MESSAGE);
-//				if (filename != null) {
-//					filename += ".html";
-//
-//					JFileChooser savefile = new JFileChooser();
-//					FileFilter filter = new FileNameExtensionFilter("HTML", "html");
-//					savefile.addChoosableFileFilter(filter);
-//					savefile.setFileFilter(filter);
-//					savefile.setDialogType(JFileChooser.SAVE_DIALOG);
-//					savefile.setSelectedFile(new File(filename));
-//					BufferedWriter writer;
-//					int sf = savefile.showSaveDialog(null);
-//					if (sf == JFileChooser.APPROVE_OPTION) {
-//						try {
-//							File file = savefile.getSelectedFile();
-//							writer = new BufferedWriter(new FileWriter(savefile.getSelectedFile()));
-//							writer.write(turnierTabelle[aktiveGruppe].getHTMLTable());
-//							writer.close();
-//							JOptionPane.showMessageDialog(null, "Datei wurde gespeichert.", "File Saved",
-//									JOptionPane.INFORMATION_MESSAGE);
-//
-//						} catch (IOException e) {
-//							e.printStackTrace();
-//						}
-//					} else if (sf == JFileChooser.CANCEL_OPTION) {
-//						JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
-//					}
-//				}
-//			}
-//			if (arg0.getSource() == htmlTabelleView.getCloseButton()) {
-//				htmlTabelleView.closeWindow();
-//			}
-//		}
-//	}
+	// @Override
+	// public void actionPerformed(ActionEvent arg0) {
+	// for (int i = 0; i < turnier.getAnzahlGruppen(); i++) {
+	// if (simpleTableView[i] != null) {
+	// if (arg0.getSource() == simpleTableView[i].getOkButton()) {
+	// okAction(i);
+	//
+	// }
+	// if (arg0.getSource() == simpleTableView[i].getHtmlButton()) {
+	// aktiveGruppe = i;
+	// int spalte = simpleTableView[i].getTable().getModel().getColumnCount();
+	// int zeile = simpleTableView[i].getTable().getModel().getRowCount();
+	// for (int x = 0; x < spalte; x++) {
+	// for (int y = 0; y < zeile; y++) {
+	//
+	// turnierTabelle[i].getTabellenMatrix()[x][y + 1] = (String)
+	// simpleTableView[i].getTable()
+	// .getValueAt(y, x);
+	//
+	// }
+	// }
+	// htmlTabelleView.makeHTMLFrame(turnierTabelle[i].getHTMLTable(),
+	// "Turniertabelle Gruppe " + turnier.getGruppe()[i].getGruppenName());
+	// htmlTabelleView.getCloseButton().addActionListener(this);
+	// htmlTabelleView.getSaveButton().addActionListener(this);
+	// }
+	//
+	// if (arg0.getSource() == simpleTableView[i].getSaveButton()) {
+	// saveTurnierControl.saveTurnier(i);
+	// }
+	//
+	// }
+	// }
+	// if (htmlTabelleView != null) {
+	// if (arg0.getSource() == htmlTabelleView.getSaveButton()) {
+	//
+	// String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine
+	// Eingabeaufforderung",
+	// JOptionPane.PLAIN_MESSAGE);
+	// if (filename != null) {
+	// filename += ".html";
+	//
+	// JFileChooser savefile = new JFileChooser();
+	// FileFilter filter = new FileNameExtensionFilter("HTML", "html");
+	// savefile.addChoosableFileFilter(filter);
+	// savefile.setFileFilter(filter);
+	// savefile.setDialogType(JFileChooser.SAVE_DIALOG);
+	// savefile.setSelectedFile(new File(filename));
+	// BufferedWriter writer;
+	// int sf = savefile.showSaveDialog(null);
+	// if (sf == JFileChooser.APPROVE_OPTION) {
+	// try {
+	// File file = savefile.getSelectedFile();
+	// writer = new BufferedWriter(new FileWriter(savefile.getSelectedFile()));
+	// writer.write(turnierTabelle[aktiveGruppe].getHTMLTable());
+	// writer.close();
+	// JOptionPane.showMessageDialog(null, "Datei wurde gespeichert.", "File
+	// Saved",
+	// JOptionPane.INFORMATION_MESSAGE);
+	//
+	// } catch (IOException e) {
+	// e.printStackTrace();
+	// }
+	// } else if (sf == JFileChooser.CANCEL_OPTION) {
+	// JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
+	// }
+	// }
+	// }
+	// if (arg0.getSource() == htmlTabelleView.getCloseButton()) {
+	// htmlTabelleView.closeWindow();
+	// }
+	// }
+	// }
 
 	public void enableDatenbankMenu() {
 		boolean enableSaveMenu = false;
@@ -207,10 +212,11 @@ public class TurnierTabelleControl {
 		updatePunkteCol(this.turnierTabelle[gruppenNummer].getSpalte() - 3, gruppenNummer);
 		updateSoBergCol(this.turnierTabelle[gruppenNummer].getSpalte() - 2, gruppenNummer);
 		updatePlatzCol(this.turnierTabelle[gruppenNummer].getSpalte() - 1, gruppenNummer);
-//		simpleTableView[gruppenNummer].getOkButton().addActionListener(this);
-//		simpleTableView[gruppenNummer].getSaveButton().addActionListener(this);
-//		simpleTableView[gruppenNummer].getHtmlButton().addActionListener(this);
+		// simpleTableView[gruppenNummer].getOkButton().addActionListener(this);
+		// simpleTableView[gruppenNummer].getSaveButton().addActionListener(this);
+		// simpleTableView[gruppenNummer].getHtmlButton().addActionListener(this);
 		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
+		simpleTableView[gruppenNummer].setPreferredSize(dimension[gruppenNummer]);
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() < 1) {
 			tabAnzeigeView2[gruppenNummer].insertTab("Turniertabelle", null, simpleTableView[gruppenNummer], null, 0);
 		} else {

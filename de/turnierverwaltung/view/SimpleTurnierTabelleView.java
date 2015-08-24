@@ -1,5 +1,6 @@
 package de.turnierverwaltung.view;
 
+import java.awt.BorderLayout;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -50,9 +51,11 @@ public class SimpleTurnierTabelleView extends JPanel {
 
 	public SimpleTurnierTabelleView(SimpleTurnierTabelle simpleTableModel) {
 
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		//setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));#
+		setLayout(new BorderLayout());
 		setBackground(new Color(249, 222, 112));
 		table = new JTable(simpleTableModel);
+		
 		Font fnt = new Font("Arial", Font.PLAIN, 16);
 		table.setFont(fnt);
 
@@ -65,29 +68,22 @@ public class SimpleTurnierTabelleView extends JPanel {
 		comboBox.addItem("+");
 		setColumnWidth();
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+//		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.setRowHeight(20);
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
 		JPanel haupt = new JPanel();
-		haupt.setLayout(new FlowLayout(FlowLayout.CENTER));
+		haupt.setLayout(new BorderLayout());
 		JPanel tabelPanel = new JPanel();
-//		tabelPanel.setPreferredSize(new Dimension(windowWidth - 100, windowHeight - 100));
 		tabelPanel.setLayout(new BoxLayout(tabelPanel, BoxLayout.PAGE_AXIS));
 		tabelPanel.add(sPane);
 		JPanel hinweis = new JPanel();
 		hinweis.add(new JLabel(
 				"Geben Sie die Ergebnisse direkt in die Zellen ein " + "und klicken Sie dann auf \"Aktualisieren\"."));
 		tabelPanel.add(hinweis);
-		haupt.add(tabelPanel);
-		add(haupt);
-//		JPanel buttonLeiste = new JPanel();
-//		buttonLeiste.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		okButton = new JButton("Aktualisieren");
-//		buttonLeiste.add(okButton);
-//		saveButton = new JButton("Speichern");
-//		buttonLeiste.add(saveButton);
-//		htmlButton = new JButton("HTML Ausgabe");
-//		buttonLeiste.add(htmlButton);
-//		add(buttonLeiste);
+		haupt.add(tabelPanel,BorderLayout.CENTER);
+		add(haupt,BorderLayout.CENTER);
+
 
 		this.setVisible(true);
 

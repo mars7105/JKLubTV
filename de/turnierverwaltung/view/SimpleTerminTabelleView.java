@@ -1,4 +1,5 @@
 package de.turnierverwaltung.view;
+import java.awt.BorderLayout;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -104,11 +105,11 @@ public class SimpleTerminTabelleView extends JPanel {
 
 		setColumnWidth();
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-
+		table.setRowHeight(20);
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
 		JPanel haupt = new JPanel();
-		haupt.setLayout(new FlowLayout(FlowLayout.CENTER));
+		haupt.setLayout(new BorderLayout());
 		JPanel tabelPanel = new JPanel();
 		tabelPanel.setLayout(new BoxLayout(tabelPanel, BoxLayout.PAGE_AXIS));
 		tabelPanel.add(sPane);
@@ -119,15 +120,7 @@ public class SimpleTerminTabelleView extends JPanel {
 		tabelPanel.add(hinweis);
 		haupt.add(tabelPanel);
 		add(haupt);
-//		JPanel buttonLeiste = new JPanel();
-//		buttonLeiste.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		okButton = new JButton("Aktualisieren");
-//		buttonLeiste.add(okButton);
-//		saveButton = new JButton("Speichern");
-//		buttonLeiste.add(saveButton);
-//		htmlButton = new JButton("HTML Ausgabe");
-//		buttonLeiste.add(htmlButton);
-//		add(buttonLeiste);
+
 		setBackground(new Color(249, 222, 112));
 
 		this.setVisible(true);
