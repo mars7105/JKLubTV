@@ -233,7 +233,9 @@ public class NaviController implements ActionListener {
 			}
 			this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		}
-		aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
+		if (this.mainControl.getTabAnzeigeView() != null) {
+			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
+		}
 		if (this.mainControl.getTurnierTabelleControl() != null && aktiveGruppe >= 0) {
 			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
 			aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
