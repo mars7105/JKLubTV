@@ -32,6 +32,7 @@ public class NaviController implements ActionListener {
 	private HTMLTabelleView htmlTabelleView;
 	private int aktiveGruppe;
 	private int aktiveTabelle;
+	private JButton pdfButton;
 
 	public NaviController(MainControl mainControl) {
 
@@ -50,6 +51,8 @@ public class NaviController implements ActionListener {
 		spielerListeButton.addActionListener(this);
 		infoButton = naviView.getInfoButton();
 		infoButton.addActionListener(this);
+		pdfButton = naviView.getPdfSpeichernButton();
+		pdfButton.addActionListener(this);
 		naviView.getTabelleAktualisierenButton().addActionListener(this);
 		naviView.getTabelleSpeichernButton().addActionListener(this);
 		naviView.getTabelleHTMLAusgabeButton().addActionListener(this);
@@ -67,6 +70,46 @@ public class NaviController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == pdfButton) {
+			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
+			aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
+			PDFTabellenAusgabe mft = new PDFTabellenAusgabe();
+			String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
+					JOptionPane.PLAIN_MESSAGE);
+			if (filename != null) {
+				filename += ".pdf";
+
+				JFileChooser savefile = new JFileChooser();
+				FileFilter filter = new FileNameExtensionFilter("PDF Datei", "pdf");
+				savefile.addChoosableFileFilter(filter);
+				savefile.setFileFilter(filter);
+				savefile.setDialogType(JFileChooser.SAVE_DIALOG);
+				savefile.setSelectedFile(new File(filename));
+				int sf = savefile.showSaveDialog(null);
+				if (sf == JFileChooser.APPROVE_OPTION) {
+
+					if (aktiveTabelle == 0) {
+						String titel = "Kreuztabelle " + mainControl.getTurnier().getTurnierName() + " - "
+								+ mainControl.getTurnier().getGruppe()[aktiveGruppe].getGruppenName();
+						String pathName = savefile.getSelectedFile().getAbsolutePath();
+						mft.createTurnierPdf(titel, pathName,
+								mainControl.getTurnierTabelle()[aktiveGruppe].getTabellenMatrix());
+						JOptionPane.showMessageDialog(null, "Datei gespeichert.");
+					} else {
+						String titel = "Termintabelle " + mainControl.getTurnier().getTurnierName() + " - "
+								+ mainControl.getTurnier().getGruppe()[aktiveGruppe].getGruppenName();
+						String pathName = savefile.getSelectedFile().getAbsolutePath();
+						mft.createTerminPdf(titel, pathName,
+								mainControl.getTerminTabelle()[aktiveGruppe].getTabellenMatrix());
+						JOptionPane.showMessageDialog(null, "Datei gespeichert.");
+					}
+
+				} else if (sf == JFileChooser.CANCEL_OPTION) {
+					JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
+				}
+			}
+
+		}
 		if (arg0.getSource() == infoButton) {
 			if (mainControl.getInfoController() == null) {
 				mainControl.setInfoController(new InfoController(this.mainControl));

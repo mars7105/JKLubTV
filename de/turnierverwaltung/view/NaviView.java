@@ -40,12 +40,15 @@ public class NaviView extends JPanel {
 	private JButton infoButton;
 	private ImageIcon infoIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png")));
+	private ImageIcon pdfIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/acroread-2.png")));
 	private JButton tabelleSpeichernButton;
 	private JPanel tabellenPanel;
 	private JPanel datenbankPanel;
 	private JPanel dateiPanel;
 	private JButton tabelleAktualisierenButton;
 	private JButton tabelleHTMLAusgabeButton;
+	private JButton pdfSpeichernButton;
 
 	public NaviView() {
 		this.setBackground(Color.LIGHT_GRAY);
@@ -72,6 +75,9 @@ public class NaviView extends JPanel {
 		tabelleAktualisierenButton = new JButton("Aktualisieren", tabelleAktualisierenIcon);
 		tabelleAktualisierenButton.setPreferredSize(new Dimension(200, 40));
 		tabelleAktualisierenButton.setHorizontalAlignment(SwingConstants.LEFT);
+		pdfSpeichernButton = new JButton("PDF Ausgabe", pdfIcon);
+		pdfSpeichernButton.setPreferredSize(new Dimension(200, 40));
+		pdfSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
 		tabelleHTMLAusgabeButton = new JButton("HTML Ausgabe", tabelleHTMLAusgabeIcon);
 		tabelleHTMLAusgabeButton.setPreferredSize(new Dimension(200, 40));
 		tabelleHTMLAusgabeButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -126,6 +132,10 @@ public class NaviView extends JPanel {
 		panel4e.setLayout(flowLayout);
 		panel4e.setBackground(Color.LIGHT_GRAY);
 		panel4e.add(tabelleHTMLAusgabeButton);
+		JPanel panel4f = new JPanel();
+		panel4f.setLayout(flowLayout);
+		panel4f.setBackground(Color.LIGHT_GRAY);
+		panel4f.add(pdfSpeichernButton);
 		JPanel dateiPanelLabel = new JPanel();
 		dateiPanelLabel.setBackground(Color.LIGHT_GRAY);
 		JLabel dateiLabel = new JLabel("Datei");
@@ -158,6 +168,7 @@ public class NaviView extends JPanel {
 		tabellenPanel.add(panel4c);
 		tabellenPanel.add(panel4d);
 		tabellenPanel.add(panel4e);
+		tabellenPanel.add(panel4f);
 		tabellenPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		JPanel panel5 = new JPanel();
 		BoxLayout boxLayout = new BoxLayout(panel5, BoxLayout.Y_AXIS);
@@ -266,6 +277,14 @@ public class NaviView extends JPanel {
 
 	public void setTabelleHTMLAusgabeButton(JButton tabelleHTMLAusgabeButton) {
 		this.tabelleHTMLAusgabeButton = tabelleHTMLAusgabeButton;
+	}
+
+	public JButton getPdfSpeichernButton() {
+		return pdfSpeichernButton;
+	}
+
+	public void setPdfSpeichernButton(JButton pdfSpeichernButton) {
+		this.pdfSpeichernButton = pdfSpeichernButton;
 	}
 
 }

@@ -76,7 +76,7 @@ public class MainControl extends JFrame {
 	private PartienTableControl partienTableControl;
 	private Turnier_has_SpielerTableControl turnier_has_SpielerTableControl;
 	private TurnierTabelle[] turnierTabelle;
-	private TerminTabelle terminTabelle;
+	private TerminTabelle[] terminTabelle;
 	private PaarungsTafeln paarungsTafeln;
 	private SimpleTurnierTabelle[] simpleTableModel;
 	private SimpleTurnierTabelleView[] simpleTableView;
@@ -220,7 +220,7 @@ public class MainControl extends JFrame {
 		return tabAnzeigeView2;
 	}
 
-	public TerminTabelle getTerminTabelle() {
+	public TerminTabelle[] getTerminTabelle() {
 		return terminTabelle;
 	}
 
@@ -425,8 +425,8 @@ public class MainControl extends JFrame {
 		this.tabAnzeigeView2 = tabAnzeigeView2;
 	}
 
-	public void setTerminTabelle(TerminTabelle terminTabelle) {
-		this.terminTabelle = terminTabelle;
+	public void setTerminTabelle(TerminTabelle[] terminTabelle2) {
+		this.terminTabelle = terminTabelle2;
 	}
 
 	public void setTerminTabelleControl(TerminTabelleControl terminTabelleControl) {
