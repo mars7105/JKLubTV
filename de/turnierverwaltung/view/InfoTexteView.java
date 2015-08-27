@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class InfoTexteView {
+
 	private URI datepickerUri;
 	private JButton buttonDatePicker;
 	private URI sqLiteUri;
