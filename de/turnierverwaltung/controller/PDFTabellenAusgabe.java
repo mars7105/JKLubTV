@@ -96,7 +96,7 @@ public class PDFTabellenAusgabe {
 		fl[2] = 2;
 		for (int i = 0; i < zeilen; i++) {
 			if (i > 2 && i < zeilen - 3) {
-				fl[i] = 1;
+				fl[i ] = 1;
 			}
 			if (i >= zeilen - 3) {
 				fl[i - 1] = 2;

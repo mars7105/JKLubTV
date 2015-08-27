@@ -124,9 +124,7 @@ public class TurnierTabelleControl {
 		updatePunkteCol(this.turnierTabelle[gruppenNummer].getSpalte() - 3, gruppenNummer);
 		updateSoBergCol(this.turnierTabelle[gruppenNummer].getSpalte() - 2, gruppenNummer);
 		updatePlatzCol(this.turnierTabelle[gruppenNummer].getSpalte() - 1, gruppenNummer);
-		// simpleTableView[gruppenNummer].getOkButton().addActionListener(this);
-		// simpleTableView[gruppenNummer].getSaveButton().addActionListener(this);
-		// simpleTableView[gruppenNummer].getHtmlButton().addActionListener(this);
+		
 		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
 		simpleTableView[gruppenNummer].setPreferredSize(dimension[gruppenNummer]);
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() < 1) {
@@ -135,9 +133,7 @@ public class TurnierTabelleControl {
 
 			tabAnzeigeView2[gruppenNummer].setComponentAt(0, simpleTableView[gruppenNummer]);
 		}
-		// tabAnzeigeView2[gruppenNummer].setComponentAt(0,
-		// simpleTableView[gruppenNummer]);
-
+		
 		mainControl.setSimpleTableView(simpleTableView);
 		tabAnzeigeView.setComponentAt(gruppenNummer, tabAnzeigeView2[gruppenNummer]);
 
