@@ -14,6 +14,7 @@ mysql-connector-java 5.1.35
 sqlite-jdbc 3.7.15 Snapshot 
 
 Dieses Programm nutzt verschiedene freie Bibliotheken:
+
 	1. JDatePicker -> jdatepicker-1.3.4.jar
 		für die Auswahl des Datum.
 		http://jdatepicker.org/
