@@ -31,7 +31,6 @@ import de.turnierverwaltung.model.Partie;
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.model.TerminTabelle;
 import de.turnierverwaltung.model.Turnier;
-import de.turnierverwaltung.model.TurnierKonstanten;
 import de.turnierverwaltung.view.RundenEingabeFormularView;
 import de.turnierverwaltung.view.TabAnzeigeView;
 
@@ -124,7 +123,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 						.parseInt((String) rundenEingabeFormularView[index].getRundenNummer()[i].getSelectedItem()));
 				partien[i].setSpielDatum(datum);
 				partien[i].setRunde(runde);
-				partien[i].setErgebnis(TurnierKonstanten.MYSQL_KEIN_ERGEBNIS);
+				//partien[i].setErgebnis(TurnierKonstanten.MYSQL_KEIN_ERGEBNIS);
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(null, "Gruppenanzahl ist fehlerhaft!");
 

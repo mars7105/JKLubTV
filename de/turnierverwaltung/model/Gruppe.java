@@ -18,6 +18,7 @@ import java.util.Arrays;
 
 public class Gruppe {
 
+	
 	private int spielerAnzahl;
 	private int partienAnzahl;
 	private int rundenAnzahl;
