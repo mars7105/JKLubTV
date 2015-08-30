@@ -19,11 +19,9 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-
 import de.turnierverwaltung.ZahlKleinerAlsN;
 import de.turnierverwaltung.model.Gruppe;
 import de.turnierverwaltung.model.PaarungsTafeln;
