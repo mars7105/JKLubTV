@@ -10,8 +10,9 @@ Die Software ist kostenlos (Opensource).
 benötigte Java Librarys:
 
 JDatePicker 1.3.4
-mysql-connector-java 5.1.35
-sqlite-jdbc 3.7.15 Snapshot 
+mysql-connector-java-5.1.36-bin.jar
+sqlite-jdbc-3.8.11.1.jar
+itextpdf-5.5.6.jar
 
 Dieses Programm nutzt verschiedene freie Bibliotheken:
 
