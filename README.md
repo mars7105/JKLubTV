@@ -10,22 +10,28 @@ Die Software ist kostenlos (Opensource).
 benötigte Java Librarys:
 
 JDatePicker 1.3.4
-mysql-connector-java 5.1.35
-sqlite-jdbc 3.7.15 Snapshot 
+mysql-connector-java-5.1.36-bin.jar
+sqlite-jdbc-3.8.11.1.jar
+itextpdf-5.5.6.jar
 
 Dieses Programm nutzt verschiedene freie Bibliotheken:
+
 	1. JDatePicker -> jdatepicker-1.3.4.jar
 		für die Auswahl des Datum.
 		http://jdatepicker.org/
 		
-	2. SQLite JDBC -> sqlite-jdbc-3.7.15-SNAPSHOT.jar
+	2. SQLite JDBC -> sqlite-jdbc-3.8.11.1.jar
 		für die Speicherung im SQLite Format.
 		https://bitbucket.org/xerial/sqlite-jdbc/downloads
 		
-	3. MySQL Connector -> mysql-connector-java-5.1.35-bin.jar
+	3. MySQL Connector -> mysql-connector-java-5.1.36-bin.jar
 		für zukünftige Änderungen.
 		http://mvnrepository.com/artifact/mysql/mysql-connector-java
 		
-	4. Bilder: Open Icon Library
+	4. IText 5.5.6 
+		für die Erstellung der PDF Dateien
+		http://itextpdf.com/
+		
+	5. Bilder: Open Icon Library
 		http://sourceforge.net/projects/openiconlibrary/
 				
