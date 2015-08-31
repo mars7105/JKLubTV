@@ -55,7 +55,6 @@ public class SpielerEditierenView extends JDialog {
 		// int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
 		// setBounds(TurnierKonstanten.WINDOW_WIDTH / 3,
 		// TurnierKonstanten.WINDOW_HEIGHT / 3, windowWidth, windowHeight);
-		setLocationRelativeTo(null);
 
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
@@ -92,9 +91,12 @@ public class SpielerEditierenView extends JDialog {
 		contentPanel.add(buttonPane);
 		add(contentPanel);
 		contentPanel.updateUI();
+		pack();
+
+		setLocationRelativeTo(null);
+
 		setEnabled(true);
 		setVisible(true);
-		pack();
 	}
 
 	public void closeWindow() {

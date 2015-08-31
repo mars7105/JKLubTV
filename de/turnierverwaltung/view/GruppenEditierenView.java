@@ -1,4 +1,5 @@
 package de.turnierverwaltung.view;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -49,8 +50,6 @@ public class GruppenEditierenView extends JDialog {
 		setTitle("Gruppen editieren");
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
-		setLocationRelativeTo(null);
-
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		contentPanel.setBackground(new Color(249, 222, 112));
@@ -59,8 +58,7 @@ public class GruppenEditierenView extends JDialog {
 			centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 			centerPane.setBackground(new Color(249, 222, 112));
 			this.textFieldGruppenName[i] = new JTextField(15);
-			textFieldGruppenName[i].setText(turnier.getGruppe()[i]
-					.getGruppenName());
+			textFieldGruppenName[i].setText(turnier.getGruppe()[i].getGruppenName());
 			centerPane.add(new JLabel("Gruppenname: "));
 			centerPane.add(textFieldGruppenName[i]);
 
@@ -76,9 +74,13 @@ public class GruppenEditierenView extends JDialog {
 		contentPanel.add(buttonPane);
 		add(contentPanel);
 		contentPanel.updateUI();
+
+		pack();
+		setLocationRelativeTo(null);
+
 		setEnabled(true);
 		setVisible(true);
-		pack();
+
 	}
 
 	public JButton getCancelButton() {

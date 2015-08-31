@@ -131,10 +131,11 @@ public class TurnierEditierenView extends JDialog {
 		contentPanel.add(buttonPane);
 		add(contentPanel);
 		contentPanel.updateUI();
+		pack();
+
 		setLocationRelativeTo(null);
 		setEnabled(true);
 		setVisible(true);
-		pack();
 	}
 
 	private int[] dateStringToInt(String datum) {
