@@ -73,6 +73,7 @@ public class NaviController implements ActionListener {
 		if (arg0.getSource() == pdfButton) {
 			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
 			aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
+
 			int spalte = this.mainControl.getSimpleTableView()[aktiveGruppe].getTable().getModel().getColumnCount();
 			int zeile = this.mainControl.getSimpleTableView()[aktiveGruppe].getTable().getModel().getRowCount();
 			for (int x = 0; x < spalte; x++) {
@@ -84,8 +85,9 @@ public class NaviController implements ActionListener {
 
 				}
 			}
-			
+
 			PDFTabellenAusgabe mft = new PDFTabellenAusgabe();
+
 			String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
 					JOptionPane.PLAIN_MESSAGE);
 			if (filename != null) {
@@ -108,6 +110,7 @@ public class NaviController implements ActionListener {
 						mft.createTurnierPdf(titel, pathName,
 								mainControl.getTurnierTabelle()[aktiveGruppe].getTabellenMatrix());
 						JOptionPane.showMessageDialog(null, "Datei gespeichert.");
+
 					} else {
 						mainControl.getTerminTabelle()[aktiveGruppe].createMatrix();
 						String titel = "Termintabelle " + mainControl.getTurnier().getTurnierName() + " - "

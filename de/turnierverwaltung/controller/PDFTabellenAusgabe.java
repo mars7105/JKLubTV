@@ -16,10 +16,6 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 public class PDFTabellenAusgabe {
 
-	
-	
-
-
 	/**
 	 * Creates a PDF with information about the movies
 	 * 
@@ -56,7 +52,7 @@ public class PDFTabellenAusgabe {
 		document.close();
 	}
 
-	public void createTerminPdf(String titel ,String absolutePath, String[][] tabellenMatrix) {
+	public void createTerminPdf(String titel, String absolutePath, String[][] tabellenMatrix) {
 		// step 1
 		Document document = new Document();
 		// step 2
@@ -96,7 +92,7 @@ public class PDFTabellenAusgabe {
 		fl[2] = 2;
 		for (int i = 0; i < zeilen; i++) {
 			if (i > 2 && i < zeilen - 3) {
-				fl[i ] = 1;
+				fl[i] = 1;
 			}
 			if (i >= zeilen - 3) {
 				fl[i - 1] = 2;
@@ -131,20 +127,20 @@ public class PDFTabellenAusgabe {
 			stringTable[i][0] = replacedStr;
 		}
 
-		PdfPTable table = new PdfPTable(zeilen - 1);
+		PdfPTable table = new PdfPTable(zeilen);
 
 		Font font = new Font(FontFamily.HELVETICA, 8);
 
 		for (int x = 0; x < spalten; x++) {
 
 			for (int y = 0; y < zeilen; y++) {
-				if (y != 1) {
-					Phrase ph = new Phrase(stringTable[y][x]);
-					ph.setFont(font);
-					PdfPCell cell = new PdfPCell(ph);
 
-					table.addCell(cell);
-				}
+				Phrase ph = new Phrase(stringTable[y][x]);
+				ph.setFont(font);
+				PdfPCell cell = new PdfPCell(ph);
+
+				table.addCell(cell);
+
 			}
 
 		}
