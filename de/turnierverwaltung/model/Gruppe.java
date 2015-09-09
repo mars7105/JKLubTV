@@ -46,7 +46,7 @@ public class Gruppe {
 		}
 		for (int i = 0; i < getSpielerAnzahl() - 1; i++) {
 			if (spieler[i].getPunkte() == spieler[i + 1].getPunkte()
-					//&& spieler[i].getSoberg() == spieler[i + 1].getSoberg()
+					&& spieler[i].getSoberg() == spieler[i + 1].getSoberg()
 					) {
 				
 				spieler[i + 1].setPlatz(spieler[i].getPlatz());
