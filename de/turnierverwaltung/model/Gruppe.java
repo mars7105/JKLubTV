@@ -15,7 +15,11 @@ package de.turnierverwaltung.model;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.util.Arrays;
-
+/**
+ * 
+ * @author mars
+ *
+ */
 public class Gruppe {
 
 	
@@ -29,16 +33,24 @@ public class Gruppe {
 
 	private TerminTabelle teminTabelle;
 	private TurnierTabelle turnierTabelle;
-
+/**
+ * 
+ */
 	public Gruppe() {
 		this.gruppeId = -1;
 	}
-
+	/**
+	 * 
+	 * @param idGruppe
+	 * @param gruppenName
+	 */
 	public Gruppe(int idGruppe, String gruppenName) {
 		this.gruppeId = idGruppe;
 		this.gruppenName = gruppenName;
 	}
-
+	/**
+	 * 
+	 */
 	private void berechnePlatz() {
 		Arrays.sort(spieler);
 		for (int i = 0; i < getSpielerAnzahl(); i++) {
@@ -54,7 +66,9 @@ public class Gruppe {
 		}
 
 	}
-
+	/**
+	 * 
+	 */
 	public void berechnePunkte() {
 		Spieler weiss;
 		Spieler schwarz;
@@ -81,7 +95,9 @@ public class Gruppe {
 		berechneSoBerg();
 		berechnePlatz();
 	}
-
+	/**
+	 * 
+	 */
 	private void berechneSoBerg() {
 		double soberg = 0;
 		for (int s = 0; s < getSpielerAnzahl(); s++) {
@@ -110,7 +126,11 @@ public class Gruppe {
 
 		}
 	}
-
+	/**
+	 * 
+	 * @param erg
+	 * @return
+	 */
 	private double convertErgebnisStringToDouble(String erg) {
 		double ergebniss = 0;
 		if (erg == TurnierKonstanten.REMIS) {

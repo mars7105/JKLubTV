@@ -1,6 +1,7 @@
 package de.dwzberechnung.model;
 
 import java.util.ArrayList;
+
 //DWZ Rechner - Ein Programm zum Berechnen von DWZ Zahlen von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -16,6 +17,10 @@ import java.util.ArrayList;
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
+/**
+ * @author mars
+ *
+ */
 public class CalculateWahrscheinlichkeitModel {
 	private double[][] wahrscheinlichkeitsTabelle;
 	private PlayerModel player;
@@ -28,6 +33,10 @@ public class CalculateWahrscheinlichkeitModel {
 	 * @param wahrscheinlichkeitsTabelle
 	 */
 
+	/**
+	 * @param player
+	 * @param opponents
+	 */
 	public CalculateWahrscheinlichkeitModel(PlayerModel player, ArrayList<OpponentModel> opponents) {
 		super();
 		this.player = player;
@@ -45,7 +54,7 @@ public class CalculateWahrscheinlichkeitModel {
 
 		}
 		this.player.setPunkterwartung(punkterwartung);
-//		this.player.setNumberOfOpponents(this.opponents.size());
+		// this.player.setNumberOfOpponents(this.opponents.size());
 	}
 
 	/**
@@ -105,7 +114,7 @@ public class CalculateWahrscheinlichkeitModel {
 			// Wenn die DWZ Differenz größer als 735 ist, dann ist die
 			// Wahrscheinlichkeit gleich eins (100%)
 			if (spielerStaerke == KonstantenModel.DWZ_IST_BESSER) {
-			gewinnErwartungPD = 1.0;
+				gewinnErwartungPD = 1.0;
 			} else {
 				gewinnErwartungPD = 0.0;
 			}

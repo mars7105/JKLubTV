@@ -22,6 +22,9 @@ public class InfoController implements ActionListener {
 	private JButton lizenzButton;
 	private InfoTexteView infoTexteView;
 
+	/**
+	 * @param mainControl
+	 */
 	public InfoController(MainControl mainControl) {
 		this.mainControl = mainControl;
 		infoView = new InfoView();
@@ -32,6 +35,9 @@ public class InfoController implements ActionListener {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void makeInfoPanel() {
 		JPanel hauptPanel = this.mainControl.getHauptPanel();
 		hauptPanel.removeAll();
@@ -41,6 +47,9 @@ public class InfoController implements ActionListener {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == lizenzButton) {

@@ -24,10 +24,19 @@ import javax.swing.UnsupportedLookAndFeelException;
 import de.turnierverwaltung.controller.MainControl;
 
 /**
- * Class Turnierverwaltung
+ * 
+ * @author mars
+ *
  */
 public class Turnierverwaltung {
+	
+	public Turnierverwaltung() {
 
+	}
+/**
+ * 
+ * @param args
+ */
 	public static void main(String args[]) {
 		EventQueue.invokeLater(new Runnable() {
 			private MainControl mainControl;
@@ -66,15 +75,7 @@ public class Turnierverwaltung {
 		});
 	}
 
-	//
-	// Methods
-	//
 
-	//
-	// Accessor methods
-	//
 
-	public Turnierverwaltung() {
 
-	}
 }
