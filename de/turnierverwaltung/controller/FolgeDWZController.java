@@ -26,7 +26,6 @@ public class FolgeDWZController {
 
 	public void caculateDWZ() {
 		int spielfrei = -1;
-
 		for (int i = 0; i < spielerAnzahl; i++) {
 			if (this.gruppe.getSpieler()[i].getSpielerId() == TurnierKonstanten.SPIELFREI_ID) {
 				spielfrei = i;
@@ -54,16 +53,18 @@ public class FolgeDWZController {
 						if (this.partien[i].getErgebnisWeiss() == TurnierKonstanten.REMIS) {
 							ergebnis = 0.5;
 						}
-						if (this.partien[i].getErgebnisWeiss() == TurnierKonstanten.GEWINN_KAMPFLOS) {
-							ergebnis = 1;
-						}
-						if (this.partien[i].getErgebnisWeiss() == TurnierKonstanten.VERLUST_KAMPFLOS) {
-							ergebnis = 0;
-						}
+
 						if (this.partien[i].getErgebnisWeiss() != TurnierKonstanten.KEIN_ERGEBNIS
 								&& this.partien[i].getErgebnisWeiss() != TurnierKonstanten.GEWINN_KAMPFLOS
 								&& this.partien[i].getErgebnisWeiss() != TurnierKonstanten.VERLUST_KAMPFLOS) {
-							if (this.partien[i].getSpielerSchwarz().getDwz() != TurnierKonstanten.KEINE_DWZ) {
+							if (this.partien[i].getSpielerSchwarz().getDWZ() == 0) {
+								if (this.partien[i].getSpielerSchwarz().getFolgeDWZ() > 0) {
+									opponents.add(new OpponentModel(this.partien[i].getSpielerSchwarz().getFolgeDWZ(),
+											ergebnis));
+									gesamtpunkte += ergebnis;
+								}
+							} else {
+
 								opponents
 										.add(new OpponentModel(this.partien[i].getSpielerSchwarz().getDWZ(), ergebnis));
 								gesamtpunkte += ergebnis;
@@ -82,28 +83,34 @@ public class FolgeDWZController {
 						if (this.partien[i].getErgebnisSchwarz() == TurnierKonstanten.REMIS) {
 							ergebnis = 0.5;
 						}
-						if (this.partien[i].getErgebnisSchwarz() == TurnierKonstanten.GEWINN_KAMPFLOS) {
-							ergebnis = 1;
-						}
-						if (this.partien[i].getErgebnisSchwarz() == TurnierKonstanten.VERLUST_KAMPFLOS) {
-							ergebnis = 0;
-						}
+
 						if (this.partien[i].getErgebnisSchwarz() != TurnierKonstanten.KEIN_ERGEBNIS
 								&& this.partien[i].getErgebnisSchwarz() != TurnierKonstanten.GEWINN_KAMPFLOS
 								&& this.partien[i].getErgebnisSchwarz() != TurnierKonstanten.VERLUST_KAMPFLOS) {
-							if (this.partien[i].getSpielerWeiss().getDwz() != TurnierKonstanten.KEINE_DWZ) {
+							if (this.partien[i].getSpielerWeiss().getDWZ() == 0) {
+								if (this.partien[i].getSpielerWeiss().getFolgeDWZ() > 0) {
+									opponents.add(new OpponentModel(this.partien[i].getSpielerWeiss().getFolgeDWZ(),
+											ergebnis));
+									gesamtpunkte += ergebnis;
+									
+								}
+							} else {
+
 								opponents.add(new OpponentModel(this.partien[i].getSpielerWeiss().getDWZ(), ergebnis));
 								gesamtpunkte += ergebnis;
 							}
 						}
 					}
 				}
-				PlayerModel playerdwz = new PlayerModel(player.getAge(), player.getDWZ(), opponents.size());
-				playerdwz.setPunkte(gesamtpunkte);
-				MainModel mainModel = new MainModel(playerdwz, opponents);
-				mainModel.calculateDWZ();
-				player.setFolgeDWZ((int) playerdwz.getFolgeDWZ());
-
+				// Berechne erst eine Folge-DWZ wenn DWZlose Spieler midestens 5
+				// Gegner mit DWZ haben
+				if (player.getDWZ() > 0 || opponents.size() >= 5) {
+					PlayerModel playerdwz = new PlayerModel(player.getAge(), player.getDWZ(), opponents.size());
+					playerdwz.setPunkte(gesamtpunkte);
+					MainModel mainModel = new MainModel(playerdwz, opponents);
+					mainModel.calculateDWZ();
+					player.setFolgeDWZ((int) playerdwz.getFolgeDWZ());
+				}
 			}
 		}
 	}
