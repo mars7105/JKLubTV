@@ -174,6 +174,10 @@ public class Spieler implements Comparable<Object> {
 		this.folgeDWZ = folgeDWZ;
 	}
 
+	public void setFolgeDWZ(double folgeDWZ) {
+		this.folgeDWZ = (int)folgeDWZ;
+	}
+	
 	public int getAge() {
 		return age;
 	}

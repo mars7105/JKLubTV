@@ -25,25 +25,19 @@ public class FolgeDWZController {
 	}
 
 	public void caculateDWZ() {
-		int spielfrei = -1;
-		for (int i = 0; i < spielerAnzahl; i++) {
-			if (this.gruppe.getSpieler()[i].getSpielerId() == TurnierKonstanten.SPIELFREI_ID) {
-				spielfrei = i;
 
-			}
-		}
 		for (int s = 0; s < this.spielerAnzahl; s++) {
-			if (s != spielfrei) {
+			if (this.gruppe.getSpieler()[s].getSpielerId() != TurnierKonstanten.SPIELFREI_ID) {
 
 				ArrayList<OpponentModel> opponents = new ArrayList<OpponentModel>();
 				Spieler player = this.gruppe.getSpieler()[s];
-				int gesamtpunkte = 0;
-
+				double gesamtpunkte = 0;
+				double ergebnis = 0;
 				for (int i = 0; i < this.partienanzahl; i++) {
 
 					if (partien[i].getSpielerWeiss() == player
 							&& partien[i].getSpielerSchwarz().getSpielerId() != TurnierKonstanten.SPIELFREI_ID) {
-						double ergebnis = 0;
+						ergebnis = 0;
 						if (this.partien[i].getErgebnisWeiss() == TurnierKonstanten.GEWINN) {
 							ergebnis = 1;
 						}
@@ -73,7 +67,7 @@ public class FolgeDWZController {
 					}
 					if (partien[i].getSpielerSchwarz() == player
 							&& partien[i].getSpielerWeiss().getSpielerId() != TurnierKonstanten.SPIELFREI_ID) {
-						double ergebnis = 0;
+						ergebnis = 0;
 						if (this.partien[i].getErgebnisSchwarz() == TurnierKonstanten.GEWINN) {
 							ergebnis = 1;
 						}
@@ -92,7 +86,7 @@ public class FolgeDWZController {
 									opponents.add(new OpponentModel(this.partien[i].getSpielerWeiss().getFolgeDWZ(),
 											ergebnis));
 									gesamtpunkte += ergebnis;
-									
+
 								}
 							} else {
 
@@ -104,12 +98,12 @@ public class FolgeDWZController {
 				}
 				// Berechne erst eine Folge-DWZ wenn DWZlose Spieler midestens 5
 				// Gegner mit DWZ haben
-				if (player.getDWZ() > 0 || opponents.size() >= 5) {
+				if (player.getDWZ() > 0 || (opponents.size() >= 5 && gesamtpunkte >= 0.5)) {
 					PlayerModel playerdwz = new PlayerModel(player.getAge(), player.getDWZ(), opponents.size());
 					playerdwz.setPunkte(gesamtpunkte);
 					MainModel mainModel = new MainModel(playerdwz, opponents);
 					mainModel.calculateDWZ();
-					player.setFolgeDWZ((int) playerdwz.getFolgeDWZ());
+					player.setFolgeDWZ(playerdwz.getFolgeDWZ());
 				}
 			}
 		}
