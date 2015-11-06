@@ -50,7 +50,7 @@ public class TurnierTabelleControl {
 		hauptPanel = this.mainControl.getHauptPanel();
 
 		if (this.mainControl.getTabAnzeigeView() == null) {
-			this.mainControl.setTabAnzeigeView(new TabAnzeigeView());
+			this.mainControl.setTabAnzeigeView(new TabAnzeigeView(mainControl,true));
 		}
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
 		tabAnzeigeView.setBackground(new Color(249, 222, 112));
@@ -58,7 +58,7 @@ public class TurnierTabelleControl {
 		tabAnzeigeView2 = new TabAnzeigeView[anzahlGruppen];
 		dimension = new Dimension[anzahlGruppen];
 		for (int i = 0; i < anzahlGruppen; i++) {
-			tabAnzeigeView2[i] = new TabAnzeigeView();
+			tabAnzeigeView2[i] = new TabAnzeigeView(mainControl,false);
 			dimension[i] = tabAnzeigeView2[i].getPreferredSize();
 		}
 		this.mainControl.setTabAnzeigeView2(tabAnzeigeView2);

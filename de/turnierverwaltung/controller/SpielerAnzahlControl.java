@@ -64,13 +64,10 @@ public class SpielerAnzahlControl implements ActionListener {
 		gruppe = turnier.getGruppe();
 
 		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(
-				this.mainControl));
-		this.mainControl.setTabAnzeigeView(new TabAnzeigeView());
+				this.mainControl,true));
+		this.mainControl.setTabAnzeigeView(new TabAnzeigeView(mainControl,true));
 		tabbedPaneView = this.mainControl.getTabAnzeigeView();
-//		int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width - 275;
-//		int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height - 275;
 
-//		tabbedPaneView.setMaximumSize(new Dimension(windowWidth, windowHeight));
 
 		hauptPanel = this.mainControl.getHauptPanel();
 		gruppenAnzahl = this.mainControl.getTurnier().getAnzahlGruppen();

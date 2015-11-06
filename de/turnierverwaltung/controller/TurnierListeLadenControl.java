@@ -51,7 +51,7 @@ public class TurnierListeLadenControl implements ActionListener {
 		this.mainControl.setTurnierListeLadenView(turnierListeLadenView);
 		turnierTableControl = mainControl.getTurnierTableControl();
 
-		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(this.mainControl));
+		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(this.mainControl,true));
 
 		hauptPanel = this.mainControl.getHauptPanel();
 
@@ -67,7 +67,7 @@ public class TurnierListeLadenControl implements ActionListener {
 				turnierEditierenView.dispose();
 				hauptPanel.removeAll();
 
-				tabbedPaneView = new TabAnzeigeView();
+				tabbedPaneView = new TabAnzeigeView(mainControl,true);
 
 				mainControl.setTabAnzeigeView(tabbedPaneView);
 				turnier = turnierListe.get(turnierIndex);
@@ -145,7 +145,7 @@ public class TurnierListeLadenControl implements ActionListener {
 
 			if (arg0.getSource() == turnierListeLadenView.getTurnierLadeButton()[i]) {
 
-				tabbedPaneView = new TabAnzeigeView();
+				tabbedPaneView = new TabAnzeigeView(mainControl,true);
 
 				mainControl.setTabAnzeigeView(tabbedPaneView);
 				turnier = turnierListe.get(i);
@@ -168,7 +168,7 @@ public class TurnierListeLadenControl implements ActionListener {
 				mainControl.setTerminTabelleControl(terminTabelleControl);
 
 				for (int z = 0; z < turnier.getAnzahlGruppen(); z++) {
-					tabbedPaneView2[z] = new TabAnzeigeView();
+					tabbedPaneView2[z] = new TabAnzeigeView(mainControl,true);
 					tabbedPaneView.insertTab(turnier.getGruppe()[z].getGruppenName(), null, tabbedPaneView2[z], null,
 							z);
 					mainControl.getTurnierTabelleControl().makeSimpleTableView(z);
@@ -185,7 +185,7 @@ public class TurnierListeLadenControl implements ActionListener {
 
 			if (arg0.getSource() == turnierListeLadenView.getTurnierBearbeitenButton()[i]) {
 				turnierIndex = i;
-				tabbedPaneView = new TabAnzeigeView();
+				tabbedPaneView = new TabAnzeigeView(mainControl,true);
 
 				mainControl.setTabAnzeigeView(tabbedPaneView);
 				turnier = turnierListe.get(i);

@@ -41,11 +41,10 @@ public class SpielerHinzufuegenView extends JDialog {
 	private JPanel centerPane;
 	private JPanel contentPanel;
 	private JComboBox<String> textComboBoxAge;
-	// private JButton addSpielerButton;
 
 	public SpielerHinzufuegenView() {
 		this.okButton = new JButton("Speichern");
-		this.cancelButton = new JButton("Fertig");
+		this.cancelButton = new JButton("Beenden");
 
 		setTitle("Spieler hinzufügen");
 		this.setAlwaysOnTop(true);

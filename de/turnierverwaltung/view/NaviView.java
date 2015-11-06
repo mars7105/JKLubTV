@@ -18,6 +18,10 @@ public class NaviView extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private String tabellenname;
+	private JLabel tabellenLabel;
+	private String gruppenname;
+	private JLabel gruppenLabel;	
 	private JButton turnierListeButton;
 	private ImageIcon spielerListeIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/arrow-right-3.png")));
@@ -161,9 +165,17 @@ public class NaviView extends JPanel {
 
 		JPanel tabellenPanelLabel = new JPanel();
 		tabellenPanelLabel.setBackground(Color.LIGHT_GRAY);
-		JLabel tabellenLabel = new JLabel("Tabellen");
+		tabellenLabel = new JLabel(tabellenname);
 		tabellenPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		tabellenPanelLabel.add(tabellenLabel);
+
+		JPanel gruppenPanelLabel = new JPanel();
+		gruppenPanelLabel.setBackground(Color.LIGHT_GRAY);
+		gruppenLabel = new JLabel(gruppenname);
+		gruppenPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		gruppenPanelLabel.add(gruppenLabel);
+	
+		tabellenPanel.add(gruppenPanelLabel);
 		tabellenPanel.add(tabellenPanelLabel);
 		tabellenPanel.add(panel4c);
 		tabellenPanel.add(panel4d);
@@ -180,6 +192,26 @@ public class NaviView extends JPanel {
 		
 		this.add(panel5);
 
+	}
+
+	public String getGruppenname() {
+		return gruppenname;
+	}
+
+	public void setGruppenname(String gruppenname) {
+		this.gruppenname = gruppenname;
+		gruppenLabel.setText(gruppenname);
+		gruppenLabel.updateUI();
+	}
+
+	public String getTabellenname() {
+		return tabellenname;
+	}
+
+	public void setTabellenname(String tabellenname) {
+		this.tabellenname = tabellenname;
+		tabellenLabel.setText(tabellenname);
+		tabellenLabel.updateUI();
 	}
 
 	public JLabel getPathToDatabase() {

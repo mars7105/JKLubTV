@@ -1,4 +1,5 @@
 package de.turnierverwaltung.view;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -15,15 +16,35 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
+import de.turnierverwaltung.controller.MainControl;
 
 public class TabAnzeigeView extends JTabbedPane {
-
+	private MainControl mainControl;
+	private Boolean gruppenTab;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public TabAnzeigeView() {
+	public TabAnzeigeView(MainControl mainCtrl, Boolean gruppenTb) {
+		this.mainControl = mainCtrl;
+this.gruppenTab = gruppenTb;
+		ChangeListener changeListener = new ChangeListener() {
+			public void stateChanged(ChangeEvent changeEvent) {
+				JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
+				int index = sourceTabbedPane.getSelectedIndex();
+				String name =  sourceTabbedPane.getTitleAt(index);
+				if (gruppenTab == true) {
+					mainControl.getNaviView().setGruppenname(name);
+				} else {
+					mainControl.getNaviView().setTabellenname(name);
 
+				}
+			}
+		};
+		this.addChangeListener(changeListener);
 	}
 }
