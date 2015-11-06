@@ -13,8 +13,6 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -35,8 +33,6 @@ public class NaviController implements ActionListener {
 	private int aktiveGruppe;
 	private int aktiveTabelle;
 	private JButton pdfButton;
-	private String gruppenName;
-
 	public NaviController(MainControl mainControl) {
 
 		this.mainControl = mainControl;
@@ -259,43 +255,14 @@ public class NaviController implements ActionListener {
 			if (this.mainControl.getTabAnzeigeView2() != null) {
 				aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
 
-				// if (aktiveTabelle == 0) {
-				// gruppenName = "Kreuztabelle - " +
-				// this.mainControl.getTurnier().getGruppe()[aktiveGruppe].getGruppenName();
-				// ChangeListener changeListener = new ChangeListener() {
-				// public void stateChanged(ChangeEvent changeEvent) {
-				// naviView.setTabellenname(gruppenName);
-				// }
-				// };
-				// this.mainControl.getTabAnzeigeView2()[aktiveGruppe].addChangeListener(changeListener);
-				// }
-				// if (aktiveTabelle == 1) {
-				// gruppenName = "Termintabelle - " +
-				// this.mainControl.getTurnier().getGruppe()[aktiveGruppe].getGruppenName();
-				// ChangeListener changeListener = new ChangeListener() {
-				// public void stateChanged(ChangeEvent changeEvent) {
-				// naviView.setTabellenname(gruppenName);
-				// }
-				// };
-				// this.mainControl.getTabAnzeigeView2()[aktiveGruppe].addChangeListener(changeListener);
-				//
-				// }
+			
 			}
 		}
 		if (this.mainControl.getTurnierTabelleControl() != null && aktiveGruppe >= 0) {
 
 			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
 			aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
-			if (aktiveTabelle == 0) {
-				gruppenName = "Kreuztabelle - "
-						+ this.mainControl.getTurnier().getGruppe()[aktiveGruppe].getGruppenName();
-				naviView.setTabellenname(gruppenName);
-			}
-			if (aktiveTabelle == 1) {
-				gruppenName = "Termintabelle - "
-						+ this.mainControl.getTurnier().getGruppe()[aktiveGruppe].getGruppenName();
-				naviView.setTabellenname(gruppenName);
-			}
+
 			if (arg0.getSource() == naviView.getTabelleAktualisierenButton()) {
 				this.mainControl.getTurnierTabelleControl().okAction(aktiveGruppe);
 
