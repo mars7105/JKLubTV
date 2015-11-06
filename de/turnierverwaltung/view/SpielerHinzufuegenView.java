@@ -47,14 +47,10 @@ public class SpielerHinzufuegenView extends JDialog {
 		this.okButton = new JButton("Speichern");
 		this.cancelButton = new JButton("Fertig");
 
-		// this.addSpielerButton = new JButton("Spieler hinzuf�gen");
 		setTitle("Spieler hinzufügen");
 		this.setAlwaysOnTop(true);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		// int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 50;
-		// int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
-		// setBounds(TurnierKonstanten.WINDOW_WIDTH / 3,
-		// TurnierKonstanten.WINDOW_HEIGHT / 3, windowWidth, windowHeight);
+		
 
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
@@ -63,7 +59,6 @@ public class SpielerHinzufuegenView extends JDialog {
 		buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout());
 		buttonPane.setBackground(new Color(249, 222, 112));
-		// buttonPane.add(addSpielerButton);
 		buttonPane.add(okButton);
 		buttonPane.add(cancelButton);
 		spielerPanel();

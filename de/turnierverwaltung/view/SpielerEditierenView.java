@@ -15,6 +15,7 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
@@ -51,10 +52,7 @@ public class SpielerEditierenView extends JDialog {
 		this.textFieldDwz = new JTextField(15);
 		setTitle("Spieler editieren");
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		// int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 50;
-		// int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
-		// setBounds(TurnierKonstanten.WINDOW_WIDTH / 3,
-		// TurnierKonstanten.WINDOW_HEIGHT / 3, windowWidth, windowHeight);
+	
 
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
@@ -64,30 +62,57 @@ public class SpielerEditierenView extends JDialog {
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		centerPane.setBackground(new Color(249, 222, 112));
 		textFieldName.setText(spieler.getName());
-		centerPane.add(new JLabel("Name: "));
+		JLabel label = new JLabel();
+		label.setPreferredSize(new Dimension(120,10));
+		label.setText("Name: ");
+		centerPane = new JPanel();
+		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+		centerPane.setBackground(new Color(249, 222, 112));
+		centerPane.add(label);
 		centerPane.add(textFieldName);
-
+		contentPanel.add(centerPane);
 		textFieldKuerzel.setText(spieler.getKuerzel());
-		centerPane.add(new JLabel("Kürzel: "));
+		label = new JLabel();
+		label.setPreferredSize(new Dimension(120,10));
+		label.setText("Kürzel: ");
+		centerPane = new JPanel();
+		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+		centerPane.setBackground(new Color(249, 222, 112));
+		centerPane.add(label);
 		centerPane.add(textFieldKuerzel);
+		contentPanel.add(centerPane);
 
 		textFieldDwz.setText(spieler.getDwz());
-		centerPane.add(new JLabel("DWZ: "));
+		label = new JLabel();
+		label.setPreferredSize(new Dimension(120,10));
+		label.setText("DWZ: ");
+		centerPane = new JPanel();
+		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+		centerPane.setBackground(new Color(249, 222, 112));
+		centerPane.add(label);
 		centerPane.add(textFieldDwz);
+		contentPanel.add(centerPane);
 
 		String[] ageStrings = { "unter 20", "20 bis 25", "über 25" };
 		this.textComboBoxAge = new JComboBox<String>(ageStrings);
 		this.textComboBoxAge.setSelectedIndex(spieler.getAge());
-		centerPane.add(new JLabel("Alter: "));
+		label = new JLabel();
+		label.setPreferredSize(new Dimension(120,10));
+		label.setText("Alter: ");
+		centerPane = new JPanel();
+		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+		centerPane.setBackground(new Color(249, 222, 112));
+		centerPane.add(label);
 		centerPane.add(textComboBoxAge);
-		
+		contentPanel.add(centerPane);
+	
 		buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout());
 		buttonPane.setBackground(new Color(249, 222, 112));
 		buttonPane.add(okButton);
 		buttonPane.add(cancelButton);
 
-		contentPanel.add(centerPane);
+		
 		contentPanel.add(buttonPane);
 		add(contentPanel);
 		contentPanel.updateUI();

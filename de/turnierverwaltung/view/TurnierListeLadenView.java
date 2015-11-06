@@ -41,7 +41,6 @@ public class TurnierListeLadenView extends JPanel {
 	private int anzahlElemente;
 	private JButton[] turnierLoeschenButton;
 	private JButton[] turnierBearbeitenButton;
-	private JButton[] gruppenBearbeitenButton;
 	private ImageIcon turnierNew = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-new.png")));
 	private ImageIcon turnierDelete = new ImageIcon(
@@ -81,7 +80,6 @@ public class TurnierListeLadenView extends JPanel {
 		turnierLadeButton = new JButton[anzahlTurniere];
 		turnierLoeschenButton = new JButton[anzahlTurniere];
 		turnierBearbeitenButton = new JButton[anzahlTurniere];
-		gruppenBearbeitenButton = new JButton[anzahlTurniere];
 	}
 
 	public JButton getTurnierAddButton() {
@@ -92,9 +90,7 @@ public class TurnierListeLadenView extends JPanel {
 		this.turnierAddButton = turnierAddButton;
 	}
 
-	public JButton[] getGruppenBearbeitenButton() {
-		return gruppenBearbeitenButton;
-	}
+	
 
 	public JButton[] getTurnierBearbeitenButton() {
 		return turnierBearbeitenButton;
@@ -119,8 +115,6 @@ public class TurnierListeLadenView extends JPanel {
 		turnierBearbeitenButton[anzahlElemente] = new JButton("Bearbeiten", turnierProperties);
 		buttonLine.add(turnierBearbeitenButton[anzahlElemente]);
 
-		gruppenBearbeitenButton[anzahlElemente] = new JButton("Gruppen", turnierProperties);
-		buttonLine.add(gruppenBearbeitenButton[anzahlElemente]);
 		turnierLoeschenButton[anzahlElemente] = new JButton("Löschen", turnierDelete);
 		buttonLine.add(turnierLoeschenButton[anzahlElemente]);
 		JLabel tName = new JLabel("  Turnier: " + turnierName);
@@ -133,9 +127,7 @@ public class TurnierListeLadenView extends JPanel {
 		anzahlElemente++;
 	}
 
-	public void setGruppenBearbeitenButton(JButton[] gruppenBearbeitenButton) {
-		this.gruppenBearbeitenButton = gruppenBearbeitenButton;
-	}
+	
 
 	public void setTurnierBearbeitenButton(JButton[] turnierBearbeitenButton) {
 		this.turnierBearbeitenButton = turnierBearbeitenButton;
