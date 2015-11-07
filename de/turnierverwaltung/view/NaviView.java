@@ -176,9 +176,10 @@ public class NaviView extends JPanel {
 		gruppenPanelLabel.add(gruppenLabel);
 	
 		tabellenPanel.add(gruppenPanelLabel);
-		tabellenPanel.add(tabellenPanelLabel);
+		
 		tabellenPanel.add(panel4c);
 		tabellenPanel.add(panel4d);
+		tabellenPanel.add(tabellenPanelLabel);
 		tabellenPanel.add(panel4e);
 		tabellenPanel.add(panel4f);
 		tabellenPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

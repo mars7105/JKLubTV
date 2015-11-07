@@ -31,14 +31,27 @@ public class TabAnzeigeView extends JTabbedPane {
 
 	public TabAnzeigeView(MainControl mainCtrl, Boolean gruppenTb) {
 		this.mainControl = mainCtrl;
-this.gruppenTab = gruppenTb;
+		this.gruppenTab = gruppenTb;
 		ChangeListener changeListener = new ChangeListener() {
 			public void stateChanged(ChangeEvent changeEvent) {
 				JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
 				int index = sourceTabbedPane.getSelectedIndex();
-				String name =  sourceTabbedPane.getTitleAt(index);
+				String name = sourceTabbedPane.getTitleAt(index);
+				int tabellennummer = -1;
+				String tabellenname = "";
+				if (mainControl.getTabAnzeigeView2() != null) {
+					if (mainControl.getTabAnzeigeView2()[index].getTabCount() > 0) {
+						tabellennummer = mainControl.getTabAnzeigeView2()[index].getSelectedIndex();
+
+						tabellenname = mainControl.getTabAnzeigeView2()[index].getTitleAt(tabellennummer);
+					}
+				}
 				if (gruppenTab == true) {
 					mainControl.getNaviView().setGruppenname(name);
+					if (tabellennummer >= 0) {
+						mainControl.getNaviView().setTabellenname(tabellenname);
+					}
+
 				} else {
 					mainControl.getNaviView().setTabellenname(name);
 
