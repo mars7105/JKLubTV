@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -83,8 +84,8 @@ public class MySQLPartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public int insertPartien(int idGruppe, String spielDatum, int Runde,
-			int ergebnis, int spielerIdweiss, int spielerIdschwarz) {
+	public int insertPartien(int idGruppe, String spielDatum, int Runde, int ergebnis, int spielerIdweiss,
+			int spielerIdschwarz) {
 
 		String sql;
 		int id = -1;
@@ -94,8 +95,7 @@ public class MySQLPartienDAO implements PartienDAO {
 
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
-						Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 				preStm.setInt(1, idGruppe);
 				preStm.setString(2, spielDatum);
@@ -122,8 +122,7 @@ public class MySQLPartienDAO implements PartienDAO {
 
 	@Override
 	public ArrayList<Partie> selectAllPartien(int idGruppe) {
-		String sql = "Select idPartie,idSpielerWeiss,"
-				+ "idSpielerSchwarz, Runde, Spieldatum, Ergebnis  "
+		String sql = "Select idPartie,idSpielerWeiss," + "idSpielerSchwarz, Runde, Spieldatum, Ergebnis  "
 				+ "from partien where idGruppe=" + idGruppe + " ORDER BY Runde ASC";
 		ArrayList<Partie> partieListe = new ArrayList<Partie>();
 		Statement stmt;
@@ -143,8 +142,7 @@ public class MySQLPartienDAO implements PartienDAO {
 					Spieler spielerSchwarz = new Spieler();
 					spielerSchwarz.setSpielerId(idSpielerSchwarz);
 
-					partieListe.add(new Partie(idPartie, spielDatum, ergebnis,
-							runde, spielerWeiss, spielerSchwarz));
+					partieListe.add(new Partie(idPartie, spielDatum, ergebnis, runde, spielerWeiss, spielerSchwarz));
 
 				}
 				stmt.close();
@@ -159,25 +157,27 @@ public class MySQLPartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public boolean updatePartien(Partie partie) {
-
+	public boolean updatePartien(Partie[] partien) {
+		int anzahl = partien.length;
 		boolean ok = false;
-		String sql = "update partien set idSpielerWeiss = ?, idSpielerSchwarz = ?"
-				+ ", Runde = ?, Ergebnis = ?, Spieldatum = ? where idPartie="
-				+ partie.getPartieId();
-
+		Partie partie;
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
-				preStm.setInt(1, partie.getSpielerWeiss().getSpielerId());
-				preStm.setInt(2, partie.getSpielerSchwarz().getSpielerId());
-				preStm.setInt(3, partie.getRunde());
-				preStm.setInt(4, partie.getErgebnis());
-				preStm.setString(5, partie.getSpielDatum());
-				preStm.executeUpdate();
-				preStm.close();
-				ok = true;
+				for (int i = 0; i < anzahl; i++) {
+					partie = partien[i];
+					String sql = "update partien set idSpielerWeiss = ?, idSpielerSchwarz = ?"
+							+ ", Runde = ?, Ergebnis = ?, Spieldatum = ? where idPartie=" + partie.getPartieId();
 
+					PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+					preStm.setInt(1, partie.getSpielerWeiss().getSpielerId());
+					preStm.setInt(2, partie.getSpielerSchwarz().getSpielerId());
+					preStm.setInt(3, partie.getRunde());
+					preStm.setInt(4, partie.getErgebnis());
+					preStm.setString(5, partie.getSpielDatum());
+					preStm.executeUpdate();
+					preStm.close();
+					ok = true;
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 				JOptionPane.showMessageDialog(null, e.getMessage());

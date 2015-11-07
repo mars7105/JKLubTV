@@ -114,10 +114,11 @@ public class PartienTableControl {
 		daoFactory = DAOFactory
 				.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 		PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
-		for (int i = 0; i < turnier.getGruppe()[gruppe].getPartienAnzahl(); i++) {
+		// for (int i = 0; i < turnier.getGruppe()[gruppe].getPartienAnzahl();
+		// i++) {
 			saved = mySQLPartienDAO.updatePartien(turnier.getGruppe()[gruppe]
-					.getPartien()[i]);
-		}
+					.getPartien());
+//		}
 		return saved;
 	}
 }
