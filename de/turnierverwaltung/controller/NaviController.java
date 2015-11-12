@@ -309,6 +309,7 @@ public class NaviController implements ActionListener {
 			}
 
 			if (arg0.getSource() == naviView.getTabelleHTMLAusgabeButton()) {
+				this.mainControl.getTurnierTabelle()[aktiveGruppe].createMatrix();
 				int spalte = this.mainControl.getSimpleTableView()[aktiveGruppe].getTable().getModel().getColumnCount();
 				int zeile = this.mainControl.getSimpleTableView()[aktiveGruppe].getTable().getModel().getRowCount();
 				for (int x = 0; x < spalte; x++) {
@@ -389,148 +390,7 @@ public class NaviController implements ActionListener {
 				}
 			}
 		}
-		// if (aktiveTabelle == 0) {
-		//
-		// if (arg0.getSource() == naviView.getTabelleHTMLAusgabeButton()) {
 
-		// int spalte =
-		// this.mainControl.getSimpleTableView()[aktiveGruppe].getTable().getModel()
-		// .getColumnCount();
-		// int zeile =
-		// this.mainControl.getSimpleTableView()[aktiveGruppe].getTable().getModel().getRowCount();
-		// for (int x = 0; x < spalte; x++) {
-		// for (int y = 0; y < zeile; y++) {
-		//
-		// this.mainControl.getTurnierTabelle()[aktiveGruppe].getTabellenMatrix()[x][y
-		// + 1] = (String)
-		// this.mainControl.getSimpleTableView()[aktiveGruppe].getTable()
-		// .getValueAt(y, x);
-		//
-		// }
-		// }
-		// htmlTabelleView = new HTMLTabelleView();
-		// htmlTabelleView.makeHTMLFrame(this.mainControl.getTurnierTabelle()[aktiveGruppe].getHTMLTable(),
-		// "Turniertabelle Gruppe "
-		// +
-		// this.mainControl.getTurnier().getGruppe()[aktiveGruppe].getGruppenName());
-		// htmlTabelleView.getCloseButton().addActionListener(this);
-		// htmlTabelleView.getSaveButton().addActionListener(this);
-
-		// } else {
-		// if (arg0.getSource() == naviView.getTabelleHTMLAusgabeButton()) {
-		// int spalte =
-		// this.mainControl.getSimpleTerminTabelleView()[aktiveGruppe].getTable().getModel()
-		// .getColumnCount();
-		// int zeile =
-		// this.mainControl.getSimpleTerminTabelleView()[aktiveGruppe].getTable().getModel()
-		// .getRowCount();
-		// for (int x = 0; x < spalte; x++) {
-		// for (int y = 0; y < zeile; y++) {
-		//
-		// this.mainControl.getTerminTabelleControl().getTerminTabelle()[aktiveGruppe]
-		// .getTabellenMatrix()[x][y
-		// + 1] = (String)
-		// this.mainControl.getSimpleTerminTabelleView()[aktiveGruppe]
-		// .getTable().getValueAt(y, x);
-		//
-		// }
-		// }
-		// htmlTabelleView = new HTMLTabelleView();
-		// htmlTabelleView.makeHTMLFrame(
-		// this.mainControl.getTerminTabelleControl().getTerminTabelle()[aktiveGruppe].getHTMLTable(),
-		// "Termintabelle Gruppe "
-		// +
-		// this.mainControl.getTurnier().getGruppe()[aktiveGruppe].getGruppenName());
-		// htmlTabelleView.getCloseButton().addActionListener(this);
-		// htmlTabelleView.getSaveButton().addActionListener(this);
-		// }
-		// }
-
-		// if (htmlTabelleView != null) {
-		// if (arg0.getSource() == htmlTabelleView.getSaveButton()) {
-		//
-		// String filename = JOptionPane.showInputDialog(null,
-		// "Dateiname : ", "Eine Eingabeaufforderung",
-		// JOptionPane.PLAIN_MESSAGE);
-		// if (filename != null) {
-		// filename += ".html";
-		//
-		// JFileChooser savefile = new JFileChooser();
-		// FileFilter filter = new FileNameExtensionFilter("HTML",
-		// "html");
-		// savefile.addChoosableFileFilter(filter);
-		// savefile.setFileFilter(filter);
-		// savefile.setDialogType(JFileChooser.SAVE_DIALOG);
-		// savefile.setSelectedFile(new File(filename));
-		// BufferedWriter writer;
-		// int sf = savefile.showSaveDialog(null);
-		// if (sf == JFileChooser.APPROVE_OPTION) {
-		// try {
-		// writer = new BufferedWriter(new
-		// FileWriter(savefile.getSelectedFile()));
-		// if (aktiveTabelle == 0) {
-		// writer.write(this.mainControl.getTurnierTabelle()[aktiveGruppe].getHTMLTable());
-		// } else {
-		// writer.write(
-		// this.mainControl.getTerminTabelleControl().getTerminTabelle()[aktiveGruppe]
-		// .getHTMLTable());
-		// }
-		//
-		// writer.close();
-		// try {
-		// InputStreamReader isReader = new InputStreamReader(
-		// this.getClass().getResourceAsStream("/files/style.css"));
-		// BufferedReader br = new BufferedReader(isReader);
-		//
-		// PrintWriter writer1 = new PrintWriter(
-		// new File(savefile.getCurrentDirectory() + "/style.css"));
-		//
-		// String Bs;
-		// while ((Bs = br.readLine()) != null) {
-		// writer1.println(Bs);
-		// }
-		//
-		// writer1.close();
-		// br.close();
-		//
-		// } catch (FileNotFoundException fnfe) {
-		// JOptionPane.showMessageDialog(null, "Vorgang
-		// abgebrochen!");
-		// } catch (IOException ioe) {
-		// JOptionPane.showMessageDialog(null, "Vorgang
-		// abgebrochen!");
-		// }
-		// File file = savefile.getSelectedFile();
-		// // first check if Desktop is supported by
-		// // Platform or not
-		// if (!Desktop.isDesktopSupported()) {
-		// JOptionPane.showMessageDialog(null, "Desktop is not
-		// supported.", "File not opened",
-		// JOptionPane.INFORMATION_MESSAGE);
-		// } else {
-		//
-		// Desktop desktop = Desktop.getDesktop();
-		// if (file.exists()) {
-		// desktop.open(file);
-		// }
-		//
-		// }
-		//
-		// } catch (IOException e) {
-		// JOptionPane.showMessageDialog(null, "Vorgang
-		// abgebrochen!");
-		// }
-		// } else if (sf == JFileChooser.CANCEL_OPTION) {
-		// JOptionPane.showMessageDialog(null, "Vorgang
-		// abgebrochen!");
-		// }
-		// }
-		// }
-		// if (arg0.getSource() == htmlTabelleView.getCloseButton()) {
-		// htmlTabelleView.closeWindow();
-		// }
-		// }
-		// }
 	}
 
 	private int warnHinweis() {
