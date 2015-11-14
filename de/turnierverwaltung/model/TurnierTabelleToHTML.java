@@ -28,7 +28,7 @@ public class TurnierTabelleToHTML {
 	}
 
 	private String getHTMLHeader() {
-		String headerString = "<!doctype html>\n" + "<head>\n" + "  <meta charset='utf-8'>\n"
+		String headerString = "<!DOCTYPE html>\n" + "<html lang='de'>\n" + "<head>\n" + "  <meta charset='utf-8'>\n"
 				+ "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n"
 				+ "  <link rel='stylesheet' href='style.css'>\n" + "  <title>" + turnierName + startDatum + " bis "
 				+ endDatum + "</title>\n" + "</head>\n" + "<body>\n" + "  <h1>" + turnierName + " " + startDatum

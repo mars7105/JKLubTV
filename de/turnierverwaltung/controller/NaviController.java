@@ -8,10 +8,13 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.io.Writer;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -332,18 +335,27 @@ public class NaviController implements ActionListener {
 					savefile.setFileFilter(filter);
 					savefile.setDialogType(JFileChooser.SAVE_DIALOG);
 					savefile.setSelectedFile(new File(filename));
-					BufferedWriter writer;
+					// BufferedWriter writer;
+					Writer writer;
 					int sf = savefile.showSaveDialog(null);
 					if (sf == JFileChooser.APPROVE_OPTION) {
 						try {
-							writer = new BufferedWriter(new FileWriter(savefile.getSelectedFile()));
+							// Construct a writer for a specific encoding
+							writer = new OutputStreamWriter(new FileOutputStream(savefile.getSelectedFile()), "UTF8");
+
+			
+							// writer = new BufferedWriter(new
+							// FileWriter(savefile.getSelectedFile()));
 							if (aktiveTabelle == 0) {
+
 								writer.write(this.mainControl.getTurnierTabelle()[aktiveGruppe].getHTMLTable());
 							} else {
+
 								writer.write(this.mainControl.getTerminTabelleControl().getTerminTabelle()[aktiveGruppe]
 										.getHTMLTable());
 							}
 
+							writer.flush();
 							writer.close();
 							try {
 								InputStreamReader isReader = new InputStreamReader(
