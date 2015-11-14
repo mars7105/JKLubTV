@@ -1,4 +1,5 @@
 package de.turnierverwaltung.model;
+
 public class TurnierTabelleToHTML {
 
 	private String[][] tabellenMatrix;
@@ -53,14 +54,18 @@ public class TurnierTabelleToHTML {
 
 	}
 
-
-
 	private String makeTurnierTabelle() {
 		int col = this.tabellenMatrix.length - 1;
 		int row = this.tabellenMatrix[0].length;
 		htmlString = getHTMLHeader();
-		htmlString += "  <table>\n    <thead>\n";
+		htmlString += "  <table>\n";
 		for (int y = 0; y < row; y++) {
+			if (y == 0) {
+				htmlString += "    <thead>\n";
+			}
+			if (y == 1) {
+				htmlString += "    <tbody>\n";
+			}
 			htmlString += "      <tr>\n";
 
 			for (int x = 0; x < col; x++) {
@@ -86,7 +91,9 @@ public class TurnierTabelleToHTML {
 
 			}
 			htmlString += "      </tr>\n";
-
+			if (y == 0) {
+				htmlString += "    </thead>\n";
+			}
 		}
 		htmlString += "    </tbody>\n  </table>\n";
 		if (infoString != "") {

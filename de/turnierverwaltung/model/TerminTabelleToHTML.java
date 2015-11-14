@@ -72,8 +72,14 @@ public class TerminTabelleToHTML {
 		int col = this.tabellenMatrix.length;
 		int row = this.tabellenMatrix[0].length;
 		htmlString = getHTMLHeader();
-		htmlString += "  <table>\n    <tbody>\n";
+		htmlString += "  <table>\n";
 		for (int y = 0; y < row; y++) {
+			if (y == 0) {
+				htmlString += "    <thead>\n";
+			}
+			if (y == 1) {
+				htmlString += "    <tbody>\n";
+			}
 			htmlString += "      <tr>\n";
 
 			for (int x = 0; x < col; x++) {
@@ -97,7 +103,9 @@ public class TerminTabelleToHTML {
 
 			}
 			htmlString += "      </tr>\n";
-
+			if (y == 0) {
+				htmlString += "    <thead>\n";
+			}
 		}
 		htmlString += "    </tbody>\n  </table>\n";
 
@@ -105,7 +113,5 @@ public class TerminTabelleToHTML {
 		return htmlString;
 
 	}
-
-
 
 }
