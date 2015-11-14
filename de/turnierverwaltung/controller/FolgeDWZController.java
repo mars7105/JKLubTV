@@ -33,24 +33,27 @@ public class FolgeDWZController {
 				Spieler player = this.gruppe.getSpieler()[s];
 				double gesamtpunkte = 0;
 				double ergebnis = 0;
+				Boolean check = false;
 				for (int i = 0; i < this.partienanzahl; i++) {
-
+					
 					if (partien[i].getSpielerWeiss() == player
 							&& partien[i].getSpielerSchwarz().getSpielerId() != TurnierKonstanten.SPIELFREI_ID) {
 						ergebnis = 0;
+						check = false;
 						if (this.partien[i].getErgebnisWeiss() == TurnierKonstanten.GEWINN) {
 							ergebnis = 1;
+							check = true;
 						}
 						if (this.partien[i].getErgebnisWeiss() == TurnierKonstanten.VERLUST) {
 							ergebnis = 0;
+							check = true;
 						}
 						if (this.partien[i].getErgebnisWeiss() == TurnierKonstanten.REMIS) {
 							ergebnis = 0.5;
+							check = true;
 						}
 
-						if (this.partien[i].getErgebnisWeiss() != TurnierKonstanten.KEIN_ERGEBNIS
-								&& this.partien[i].getErgebnisWeiss() != TurnierKonstanten.GEWINN_KAMPFLOS
-								&& this.partien[i].getErgebnisWeiss() != TurnierKonstanten.VERLUST_KAMPFLOS) {
+						if (check == true) {
 							if (this.partien[i].getSpielerSchwarz().getDWZ() == 0) {
 								if (this.partien[i].getSpielerSchwarz().getFolgeDWZ() > 0) {
 									opponents.add(new OpponentModel(this.partien[i].getSpielerSchwarz().getFolgeDWZ(),
@@ -68,19 +71,21 @@ public class FolgeDWZController {
 					if (partien[i].getSpielerSchwarz() == player
 							&& partien[i].getSpielerWeiss().getSpielerId() != TurnierKonstanten.SPIELFREI_ID) {
 						ergebnis = 0;
+						check = false;
 						if (this.partien[i].getErgebnisSchwarz() == TurnierKonstanten.GEWINN) {
 							ergebnis = 1;
+							check = true;
 						}
 						if (this.partien[i].getErgebnisSchwarz() == TurnierKonstanten.VERLUST) {
 							ergebnis = 0;
+							check = true;
 						}
 						if (this.partien[i].getErgebnisSchwarz() == TurnierKonstanten.REMIS) {
 							ergebnis = 0.5;
+							check = true;
 						}
 
-						if (this.partien[i].getErgebnisSchwarz() != TurnierKonstanten.KEIN_ERGEBNIS
-								&& this.partien[i].getErgebnisSchwarz() != TurnierKonstanten.GEWINN_KAMPFLOS
-								&& this.partien[i].getErgebnisSchwarz() != TurnierKonstanten.VERLUST_KAMPFLOS) {
+						if (check == true) {
 							if (this.partien[i].getSpielerWeiss().getDWZ() == 0) {
 								if (this.partien[i].getSpielerWeiss().getFolgeDWZ() > 0) {
 									opponents.add(new OpponentModel(this.partien[i].getSpielerWeiss().getFolgeDWZ(),

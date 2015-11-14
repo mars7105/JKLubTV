@@ -69,7 +69,7 @@ public class Spieler implements Comparable<Object> {
 		try {
 			return Integer.parseInt(dwz);
 		} catch (NumberFormatException e) {
-			return -1;
+			return 0;
 		}
 	}
 
