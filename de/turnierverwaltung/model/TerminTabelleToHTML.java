@@ -104,7 +104,7 @@ public class TerminTabelleToHTML {
 			}
 			htmlString += "      </tr>\n";
 			if (y == 0) {
-				htmlString += "    <thead>\n";
+				htmlString += "    </thead>\n";
 			}
 		}
 		htmlString += "    </tbody>\n  </table>\n";
