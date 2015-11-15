@@ -1,5 +1,5 @@
-# JKLubTV
-JKLubTV
+# JKlubTV
+JKlubTV
 Schach Rundenturniere verwalten mit JKlubTV
 
 Diese Applikation speichert die zum Turnier gehörenden Daten in einer MySQL Datenbank oder als Datei auf der Festplatte.
