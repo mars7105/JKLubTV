@@ -23,39 +23,46 @@ import de.turnierverwaltung.controller.MainControl;
 
 public class TabAnzeigeView extends JTabbedPane {
 	private MainControl mainControl;
-	private Boolean gruppenTab;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public TabAnzeigeView(MainControl mainCtrl, Boolean gruppenTb) {
+	public TabAnzeigeView(MainControl mainCtrl) {
 		this.mainControl = mainCtrl;
-		this.gruppenTab = gruppenTb;
 		ChangeListener changeListener = new ChangeListener() {
 			public void stateChanged(ChangeEvent changeEvent) {
 				JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
+				
 				int index = sourceTabbedPane.getSelectedIndex();
 				String name = sourceTabbedPane.getTitleAt(index);
 				int tabellennummer = -1;
 				String tabellenname = "";
+				int aktiveGruppe = mainControl.getTabAnzeigeView().getSelectedIndex();
+				TabAnzeigeView tabAnzeigeView;
 				if (mainControl.getTabAnzeigeView2() != null) {
-					if (mainControl.getTabAnzeigeView2()[index].getTabCount() > 0) {
-						tabellennummer = mainControl.getTabAnzeigeView2()[index].getSelectedIndex();
+					tabAnzeigeView = mainControl.getTabAnzeigeView2()[aktiveGruppe];
+					if (tabAnzeigeView.getTabCount() > 0) {
+						
+						tabellennummer = tabAnzeigeView.getSelectedIndex();
 
-						tabellenname = mainControl.getTabAnzeigeView2()[index].getTitleAt(tabellennummer);
-					}
-				}
-				if (gruppenTab == true) {
-					mainControl.getNaviView().setGruppenname(name);
-					if (tabellennummer >= 0) {
+						tabellenname = tabAnzeigeView.getTitleAt(tabellennummer);
 						mainControl.getNaviView().setTabellenname(tabellenname);
+						if (tabellennummer == 2) {
+							mainControl.getNaviView().getTabellenPanel().setVisible(false);
+							mainControl.getNaviView().getPaarungsPanel().setVisible(true);
+							mainControl.getNaviView().setPaarungsname(tabellenname);
+						} else {
+							mainControl.getNaviView().getPaarungsPanel().setVisible(false);
+							mainControl.getNaviView().getTabellenPanel().setVisible(true);
+						}
 					}
-
-				} else {
-					mainControl.getNaviView().setTabellenname(name);
-
 				}
+				if (sourceTabbedPane == (JTabbedPane)mainControl.getTabAnzeigeView()) {
+					mainControl.getNaviView().setGruppenname(name);
+				}
+
+
 			}
 		};
 		this.addChangeListener(changeListener);

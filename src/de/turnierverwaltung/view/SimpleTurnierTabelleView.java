@@ -1,25 +1,8 @@
 package de.turnierverwaltung.view;
 
 import java.awt.BorderLayout;
-//JKlubTV - Ein Programm zum verwalten von Schach Turnieren
-//Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
-//
-//This program is free software: you can redistribute it and/or modify
-//it under the terms of the GNU General Public License as published by
-//the Free Software Foundation, either version 3 of the License, or
-//(at your option) any later version.
-//
-//This program is distributed in the hope that it will be useful,
-//but WITHOUT ANY WARRANTY; without even the implied warranty of
-//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//GNU General Public License for more details.
-//
-//You should have received a copy of the GNU General Public License
-//along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import java.awt.Color;
 import java.awt.Font;
 
-import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -51,7 +34,7 @@ public class SimpleTurnierTabelleView extends JPanel {
 
 		//setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));#
 		setLayout(new BorderLayout());
-		setBackground(new Color(249, 222, 112));
+//		setBackground(new Color(249, 222, 112));
 		table = new JTable(simpleTableModel);
 		
 		Font fnt = new Font("Arial", Font.PLAIN, 16);
@@ -70,17 +53,18 @@ public class SimpleTurnierTabelleView extends JPanel {
 		table.setRowHeight(20);
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
-		JPanel haupt = new JPanel();
-		haupt.setLayout(new BorderLayout());
+//		JPanel haupt = new JPanel();
+//		haupt.setLayout(new BorderLayout());
 		JPanel tabelPanel = new JPanel();
-		tabelPanel.setLayout(new BoxLayout(tabelPanel, BoxLayout.PAGE_AXIS));
-		tabelPanel.add(sPane);
+//		tabelPanel.setLayout(new BoxLayout(tabelPanel, BoxLayout.PAGE_AXIS));
+		tabelPanel.setLayout(new BorderLayout());
+		tabelPanel.add(sPane,BorderLayout.CENTER);
 		JPanel hinweis = new JPanel();
 		hinweis.add(new JLabel(
 				"Geben Sie die Ergebnisse direkt in die Zellen ein " + "und klicken Sie dann auf \"Aktualisieren\"."));
-		tabelPanel.add(hinweis);
-		haupt.add(tabelPanel,BorderLayout.CENTER);
-		add(haupt,BorderLayout.CENTER);
+		tabelPanel.add(hinweis,BorderLayout.SOUTH);
+//		haupt.add(tabelPanel,BorderLayout.CENTER);
+		add(tabelPanel,BorderLayout.CENTER);
 
 
 		this.setVisible(true);

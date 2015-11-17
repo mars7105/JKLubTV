@@ -21,12 +21,10 @@ import de.turnierverwaltung.view.TabAnzeigeView;
 public class TabAnzeigeControl {
 	private TabAnzeigeView tabAnzeigeView;
 	private MainControl mainControl;
-	private Boolean gruppenTab;
 
-	public TabAnzeigeControl(MainControl mainControl, Boolean gruppenTab) {
-		this.gruppenTab = gruppenTab;
+	public TabAnzeigeControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		this.mainControl.setTabAnzeigeView(new TabAnzeigeView(this.mainControl, this.gruppenTab));
+		this.mainControl.setTabAnzeigeView(new TabAnzeigeView(this.mainControl));
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
 	}
 

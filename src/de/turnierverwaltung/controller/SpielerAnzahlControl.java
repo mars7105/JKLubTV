@@ -64,8 +64,8 @@ public class SpielerAnzahlControl implements ActionListener {
 		gruppe = turnier.getGruppe();
 
 		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(
-				this.mainControl,true));
-		this.mainControl.setTabAnzeigeView(new TabAnzeigeView(mainControl,true));
+				this.mainControl));
+		this.mainControl.setTabAnzeigeView(new TabAnzeigeView(mainControl));
 		tabbedPaneView = this.mainControl.getTabAnzeigeView();
 
 

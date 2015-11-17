@@ -16,7 +16,8 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
-import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,9 +28,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField.AbstractFormatter;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.SwingConstants;
 
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
@@ -71,9 +75,9 @@ public class RundenEingabeFormularView extends JPanel {
 	private JPanel contentPanel;
 	private JPanel flowPane;
 	private JPanel downPane;
-	private JButton okButton;
+	// private JButton okButton;
 
-	private JButton cancelButton;
+	// private JButton cancelButton;
 	private JScrollPane scrollPane;
 	private JComboBox<String>[] rundenNummer;
 	private int spielerAnzahl;
@@ -82,18 +86,19 @@ public class RundenEingabeFormularView extends JPanel {
 	private JDatePickerImpl[] datum;
 	private Properties property;
 	private JButton[] changeColor;
-
+	private int anzahlZeilen;
 	private int anzahlElemente;
 
 	@SuppressWarnings("unchecked")
 	public RundenEingabeFormularView(int spielerAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
-		changeColor = new JButton[this.spielerAnzahl * (this.spielerAnzahl - 1) / 2];
-		rundenNummer = new JComboBox[this.spielerAnzahl * (this.spielerAnzahl - 1) / 2];
-		weissSpieler = new JLabel[this.spielerAnzahl * (this.spielerAnzahl - 1) / 2];
-		schwarzSpieler = new JLabel[this.spielerAnzahl * (this.spielerAnzahl - 1) / 2];
+		anzahlZeilen = this.spielerAnzahl * (this.spielerAnzahl - 1) / 2;
+		changeColor = new JButton[anzahlZeilen];
+		rundenNummer = new JComboBox[anzahlZeilen];
+		weissSpieler = new JLabel[anzahlZeilen];
+		schwarzSpieler = new JLabel[anzahlZeilen];
 
-		datum = new JDatePickerImpl[this.spielerAnzahl * (this.spielerAnzahl - 1) / 2];
+		datum = new JDatePickerImpl[anzahlZeilen];
 
 		property = new Properties();
 		property.put("text.today", "Heute");
@@ -108,9 +113,9 @@ public class RundenEingabeFormularView extends JPanel {
 		return anzahlElemente;
 	}
 
-	public JButton getCancelButton() {
-		return cancelButton;
-	}
+	// public JButton getCancelButton() {
+	// return cancelButton;
+	// }
 
 	public JButton[] getChangeColor() {
 		return changeColor;
@@ -120,9 +125,9 @@ public class RundenEingabeFormularView extends JPanel {
 		return datum;
 	}
 
-	public JButton getOkButton() {
-		return okButton;
-	}
+	// public JButton getOkButton() {
+	// return okButton;
+	// }
 
 	@SuppressWarnings("rawtypes")
 	public JComboBox[] getRundenNummer() {
@@ -142,80 +147,75 @@ public class RundenEingabeFormularView extends JPanel {
 	}
 
 	public void makePanel() {
-		setBackground(new Color(249, 222, 112));
+		// setBackground(new Color(249, 222, 112));
+		setLayout(new BorderLayout());
 		anzahlElemente = 0;
 		contentPanel = new JPanel();
-		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-		contentPanel.setBackground(new Color(249, 222, 112));
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		contentPanel.setLayout(new BorderLayout());
+		// contentPanel.setBackground(new Color(249, 222, 112));
+		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		// setLayout(new BorderLayout());
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
+		scrollPane.setAlignmentY(TOP_ALIGNMENT);
 		add(scrollPane, BorderLayout.CENTER);
-		JPanel buttonPane = new JPanel();
-		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		okButton = new JButton("Speichern");
-		okButton.setActionCommand("OK");
-		buttonPane.add(okButton);
-		cancelButton = new JButton("Abbruch");
-		cancelButton.setActionCommand("Cancel");
-		buttonPane.add(cancelButton);
-		add(buttonPane, BorderLayout.SOUTH);
+
+	
 	}
 
-	public void makeZeile(String[] zeile) {
-
-		flowPane = new JPanel();
-		flowPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		flowPane.setBackground(new Color(249, 222, 112));
-		downPane = new JPanel();
-		downPane.setLayout(new BoxLayout(downPane, BoxLayout.X_AXIS));
-		downPane.setBackground(new Color(249, 222, 112));
-
-		if (zeile[0] == "Runde") {
-
-		} else {
-			int[] dateInt;
-			UtilDateModel model = new UtilDateModel();
-			if (zeile[4].length() > 0) {
-
-				dateInt = getDatefromString(zeile[4]);
-				model.setDate(dateInt[2], dateInt[1] - 1, dateInt[0]);
-				model.setSelected(true);
-
-			}
-
-			datum[anzahlElemente] = new JDatePickerImpl(new JDatePanelImpl(model, property), new DateLabelFormatter());
-
-			downPane.add(new JLabel("Datum: "));
-			downPane.add(datum[anzahlElemente]);
-			downPane.add(new JLabel(" "));
-			changeColor[anzahlElemente] = new JButton("Farben vertauschen");
-			downPane.add(changeColor[anzahlElemente]);
-			rundenNummer[anzahlElemente] = new JComboBox<String>();
-			int ungerade = (this.spielerAnzahl + 1) % 2;
-			for (int i = 1; i <= this.spielerAnzahl - ungerade; i++) {
-				rundenNummer[anzahlElemente].addItem(Integer.toString(i));
-			}
-			rundenNummer[anzahlElemente].setSelectedIndex(Integer.parseInt(zeile[0]) - 1);
-			downPane.add(new JLabel("  Runde: "));
-			downPane.add(rundenNummer[anzahlElemente]);
-			downPane.add(new JLabel(" = "));
-			weissSpieler[anzahlElemente] = new JLabel();
-			weissSpieler[anzahlElemente].setText("Weiss:  " + zeile[1] + " - ");
-			schwarzSpieler[anzahlElemente] = new JLabel();
-			schwarzSpieler[anzahlElemente].setText("Schwarz:  " + zeile[2] + " ");
-			downPane.add(weissSpieler[anzahlElemente]);
-			downPane.add(schwarzSpieler[anzahlElemente]);
-
-			anzahlElemente++;
-		}
-		downPane.updateUI();
-		flowPane.updateUI();
-
-		flowPane.add(downPane);
-		contentPanel.add(flowPane);
-
-	}
+//	public void makeZeile(String[] zeile) {
+//
+//		flowPane = new JPanel();
+//		flowPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+//		// flowPane.setBackground(new Color(249, 222, 112));
+//		downPane = new JPanel();
+//		downPane.setLayout(new BoxLayout(downPane, BoxLayout.X_AXIS));
+//		// downPane.setBackground(new Color(249, 222, 112));
+//
+//		if (zeile[0] != "Runde") {
+//
+//			int[] dateInt;
+//			UtilDateModel model = new UtilDateModel();
+//			if (zeile[4].length() > 0) {
+//
+//				dateInt = getDatefromString(zeile[4]);
+//				model.setDate(dateInt[2], dateInt[1] - 1, dateInt[0]);
+//				model.setSelected(true);
+//
+//			}
+//
+//			datum[anzahlElemente] = new JDatePickerImpl(new JDatePanelImpl(model, property), new DateLabelFormatter());
+//
+//			downPane.add(new JLabel("Datum: "));
+//			downPane.add(datum[anzahlElemente]);
+//			downPane.add(new JLabel(" "));
+//			changeColor[anzahlElemente] = new JButton("Farben vertauschen");
+//			downPane.add(changeColor[anzahlElemente]);
+//			rundenNummer[anzahlElemente] = new JComboBox<String>();
+//			int ungerade = (this.spielerAnzahl + 1) % 2;
+//			for (int i = 1; i <= this.spielerAnzahl - ungerade; i++) {
+//				rundenNummer[anzahlElemente].addItem(Integer.toString(i));
+//			}
+//			rundenNummer[anzahlElemente].setSelectedIndex(Integer.parseInt(zeile[0]) - 1);
+//			downPane.add(new JLabel("  Runde: "));
+//			downPane.add(rundenNummer[anzahlElemente]);
+//			downPane.add(new JLabel(" = "));
+//			weissSpieler[anzahlElemente] = new JLabel();
+//			weissSpieler[anzahlElemente].setText("Weiss:  " + zeile[1] + " - ");
+//			schwarzSpieler[anzahlElemente] = new JLabel();
+//			schwarzSpieler[anzahlElemente].setText("Schwarz:  " + zeile[2] + " ");
+//			downPane.add(weissSpieler[anzahlElemente]);
+//			downPane.add(schwarzSpieler[anzahlElemente]);
+//
+//			anzahlElemente++;
+//		}
+//		downPane.updateUI();
+//		flowPane.updateUI();
+//
+//		flowPane.add(downPane);
+//		contentPanel.add(flowPane);
+//
+//	}
 
 	private int[] getDatefromString(String zeile) {
 		String[] splitDate = zeile.split("\\.");
@@ -235,9 +235,9 @@ public class RundenEingabeFormularView extends JPanel {
 		this.anzahlElemente = anzahlElemente;
 	}
 
-	public void setCancelButton(JButton cancelButton) {
-		this.cancelButton = cancelButton;
-	}
+	// public void setCancelButton(JButton cancelButton) {
+	// this.cancelButton = cancelButton;
+	// }
 
 	public void setChangeColor(JButton[] changeColor) {
 		this.changeColor = changeColor;
@@ -247,9 +247,9 @@ public class RundenEingabeFormularView extends JPanel {
 		this.datum = datum;
 	}
 
-	public void setOkButton(JButton okButton) {
-		this.okButton = okButton;
-	}
+	// public void setOkButton(JButton okButton) {
+	// this.okButton = okButton;
+	// }
 
 	@SuppressWarnings("unchecked")
 	public void setRundenNummer(@SuppressWarnings("rawtypes") JComboBox[] rundenNummer) {
@@ -263,15 +263,100 @@ public class RundenEingabeFormularView extends JPanel {
 	@SuppressWarnings("unchecked")
 	public void setSpielerAnzahl(int spielerAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
-		changeColor = new JButton[this.spielerAnzahl * (this.spielerAnzahl - 1) / 2];
-		rundenNummer = new JComboBox[this.spielerAnzahl * (this.spielerAnzahl - 1) / 2];
-		weissSpieler = new JLabel[this.spielerAnzahl * (this.spielerAnzahl - 1) / 2];
-		schwarzSpieler = new JLabel[this.spielerAnzahl * (this.spielerAnzahl - 1) / 2];
+		anzahlZeilen = this.spielerAnzahl * (this.spielerAnzahl - 1) / 2;
+		changeColor = new JButton[anzahlZeilen];
+		rundenNummer = new JComboBox[anzahlZeilen];
+		weissSpieler = new JLabel[anzahlZeilen];
+		schwarzSpieler = new JLabel[anzahlZeilen];
 
-		datum = new JDatePickerImpl[this.spielerAnzahl * (this.spielerAnzahl - 1) / 2];
+		datum = new JDatePickerImpl[anzahlZeilen];
 	}
 
 	public void setWeissSpieler(JLabel[] weissSpieler) {
 		this.weissSpieler = weissSpieler;
+	}
+
+	public void makeZeilen(String[][] terminMatrix) {
+		String[] zeile = new String[5];
+		int ungerade = (this.spielerAnzahl + 1) % 2;
+		int gerade = 1 - ungerade;
+		int rundenanzahl = this.spielerAnzahl - ungerade;
+		int partienanzahl = (this.spielerAnzahl + gerade) / 2;
+		JTabbedPane tabbedPane = new JTabbedPane();
+		FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
+		flowLayout.setVgap(1);
+		int index = 1;
+		for (int r = 0; r < rundenanzahl + 0; r++) {
+			JPanel panel = new JPanel();
+			panel.setLayout(new BorderLayout());
+			flowPane = new JPanel();
+			flowPane.setLayout(new BoxLayout(flowPane, BoxLayout.PAGE_AXIS));
+//			flowPane.setLayout(new BorderLayout());
+			flowPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+//			flowPane.setAlignmentY(Component.TOP_ALIGNMENT);
+
+			for (int i = 0; i < partienanzahl; i++) {
+				zeile[0] = terminMatrix[0][index];
+				zeile[1] = terminMatrix[1][index];
+				zeile[2] = terminMatrix[2][index];
+				zeile[3] = terminMatrix[3][index];
+				zeile[4] = terminMatrix[4][index];
+				downPane = new JPanel();
+				
+				downPane.setLayout(flowLayout);
+				downPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+//				downPane.setAlignmentY(Component.TOP_ALIGNMENT);
+				if (zeile[0] != "Runde") {
+
+					int[] dateInt;
+					UtilDateModel model = new UtilDateModel();
+					if (zeile[4].length() > 0) {
+
+						dateInt = getDatefromString(zeile[4]);
+						model.setDate(dateInt[2], dateInt[1] - 1, dateInt[0]);
+						model.setSelected(true);
+
+					}
+
+					datum[anzahlElemente] = new JDatePickerImpl(new JDatePanelImpl(model, property),
+							new DateLabelFormatter());
+
+					downPane.add(new JLabel("Datum: "));
+					downPane.add(datum[anzahlElemente]);
+					downPane.add(new JLabel(" "));
+					changeColor[anzahlElemente] = new JButton("Farben vertauschen");
+					downPane.add(changeColor[anzahlElemente]);
+					rundenNummer[anzahlElemente] = new JComboBox<String>();
+					// int ungerade = (this.spielerAnzahl + 1) % 2;
+					for (int x = 1; x <= this.spielerAnzahl - ungerade; x++) {
+						rundenNummer[anzahlElemente].addItem(Integer.toString(x));
+					}
+					rundenNummer[anzahlElemente].setSelectedIndex(Integer.parseInt(zeile[0]) - 1);
+					downPane.add(new JLabel("  Runde: "));
+					downPane.add(rundenNummer[anzahlElemente]);
+					downPane.add(new JLabel(" = "));
+					weissSpieler[anzahlElemente] = new JLabel();
+					weissSpieler[anzahlElemente].setText("Weiss:  " + zeile[1] + " - ");
+					schwarzSpieler[anzahlElemente] = new JLabel();
+					schwarzSpieler[anzahlElemente].setText("Schwarz:  " + zeile[2] + " ");
+					downPane.add(weissSpieler[anzahlElemente]);
+					downPane.add(schwarzSpieler[anzahlElemente]);
+
+					anzahlElemente++;
+				}
+
+				index++;
+				// downPane.
+
+				flowPane.add(downPane,BorderLayout.CENTER);
+				downPane.updateUI();
+				flowPane.updateUI();
+			}
+			
+			
+			panel.add(flowPane,BorderLayout.NORTH);
+			tabbedPane.add("Runde: " + zeile[0], panel);
+		}
+		contentPanel.add(tabbedPane, BorderLayout.CENTER);
 	}
 }

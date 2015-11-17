@@ -50,9 +50,13 @@ public class NaviView extends JPanel {
 	private JPanel tabellenPanel;
 	private JPanel datenbankPanel;
 	private JPanel dateiPanel;
+	private JPanel paarungsPanel;
 	private JButton tabelleAktualisierenButton;
 	private JButton tabelleHTMLAusgabeButton;
 	private JButton pdfSpeichernButton;
+	private String paarungsname;
+	private JLabel paarungsLabel;
+	private JButton paarungenSpeichernButton;
 
 	public NaviView() {
 		this.setBackground(Color.LIGHT_GRAY);
@@ -85,6 +89,10 @@ public class NaviView extends JPanel {
 		tabelleHTMLAusgabeButton = new JButton("HTML Ausgabe", tabelleHTMLAusgabeIcon);
 		tabelleHTMLAusgabeButton.setPreferredSize(new Dimension(200, 40));
 		tabelleHTMLAusgabeButton.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		paarungenSpeichernButton = new JButton("Speichern", tabelleSpeichernIcon);
+		paarungenSpeichernButton.setPreferredSize(new Dimension(200, 40));
+		paarungenSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
 		dateiPanel = new JPanel();
 		dateiPanel.setBackground(Color.LIGHT_GRAY);
 		BoxLayout dateiPanelLayout = new BoxLayout(dateiPanel, BoxLayout.PAGE_AXIS);
@@ -140,6 +148,10 @@ public class NaviView extends JPanel {
 		panel4f.setLayout(flowLayout);
 		panel4f.setBackground(Color.LIGHT_GRAY);
 		panel4f.add(pdfSpeichernButton);
+		JPanel panel4g = new JPanel();
+		panel4g.setLayout(flowLayout);
+		panel4g.setBackground(Color.LIGHT_GRAY);
+		panel4g.add(paarungenSpeichernButton);
 		JPanel dateiPanelLabel = new JPanel();
 		dateiPanelLabel.setBackground(Color.LIGHT_GRAY);
 		JLabel dateiLabel = new JLabel("Datei");
@@ -183,6 +195,21 @@ public class NaviView extends JPanel {
 		tabellenPanel.add(panel4e);
 		tabellenPanel.add(panel4f);
 		tabellenPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		
+		
+		paarungsPanel = new JPanel();
+		paarungsPanel.setBackground(Color.LIGHT_GRAY);
+		BoxLayout paarungsPanelLayout = new BoxLayout(paarungsPanel, BoxLayout.PAGE_AXIS);
+		paarungsPanel.setLayout(paarungsPanelLayout);
+
+		JPanel paarungsPanelLabel = new JPanel();
+		paarungsPanelLabel.setBackground(Color.LIGHT_GRAY);
+		paarungsLabel = new JLabel(paarungsname);
+		paarungsPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		paarungsPanelLabel.add(paarungsLabel);
+		paarungsPanel.add(paarungsPanelLabel);	
+		paarungsPanel.add(panel4g);
+		paarungsPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		JPanel panel5 = new JPanel();
 		BoxLayout boxLayout = new BoxLayout(panel5, BoxLayout.Y_AXIS);
 		panel5.setLayout(boxLayout);
@@ -190,9 +217,29 @@ public class NaviView extends JPanel {
 		panel5.add(dateiPanel);
 		panel5.add(datenbankPanel);
 		panel5.add(tabellenPanel);
+		panel5.add(paarungsPanel);
 		
 		this.add(panel5);
 
+	}
+
+	public JPanel getPaarungsPanel() {
+		return paarungsPanel;
+	}
+
+	public void setPaarungsPanel(JPanel paarungsPanel) {
+		this.paarungsPanel = paarungsPanel;
+		
+	}
+
+	public String getPaarungsname() {
+		return paarungsname;
+	}
+
+	public void setPaarungsname(String paarungsname) {
+		this.paarungsname = paarungsname;
+		paarungsLabel.setText(this.paarungsname);
+		paarungsLabel.updateUI();
 	}
 
 	public String getGruppenname() {
@@ -318,6 +365,14 @@ public class NaviView extends JPanel {
 
 	public void setPdfSpeichernButton(JButton pdfSpeichernButton) {
 		this.pdfSpeichernButton = pdfSpeichernButton;
+	}
+
+	public JButton getPaarungenSpeichernButton() {
+		return paarungenSpeichernButton;
+	}
+
+	public void setPaarungenSpeichernButton(JButton paarungenSpeichernButton) {
+		this.paarungenSpeichernButton = paarungenSpeichernButton;
 	}
 
 }

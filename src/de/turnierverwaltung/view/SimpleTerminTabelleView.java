@@ -22,7 +22,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Properties;
 
-import javax.swing.BoxLayout;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -79,7 +78,8 @@ public class SimpleTerminTabelleView extends JPanel {
 	public SimpleTerminTabelleView(SimpleTerminTabelle simpleTerminTabelle) {
 
 		this.simpleTerminTabelle = simpleTerminTabelle;
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+//		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new BorderLayout());
 		table = new JTable(this.simpleTerminTabelle);
 		Font fnt = new Font("Arial", Font.PLAIN, 16);
 		table.setFont(fnt);
@@ -101,18 +101,19 @@ public class SimpleTerminTabelleView extends JPanel {
 		table.setRowHeight(20);
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
-		JPanel haupt = new JPanel();
-		haupt.setLayout(new BorderLayout());
+//		JPanel haupt = new JPanel();
+//		haupt.setLayout(new BorderLayout());
 		JPanel tabelPanel = new JPanel();
-		tabelPanel.setLayout(new BoxLayout(tabelPanel, BoxLayout.PAGE_AXIS));
-		tabelPanel.add(sPane);
+//		tabelPanel.setLayout(new BoxLayout(tabelPanel, BoxLayout.PAGE_AXIS));
+		tabelPanel.setLayout(new BorderLayout());
+		tabelPanel.add(sPane,BorderLayout.CENTER);
 		JPanel hinweis = new JPanel();
 		hinweis.add(new JLabel(
 				"Geben Sie die Ergebnisse direkt in die Zellen ein "
 						+ "und klicken Sie dann auf \"Aktualisieren\"."));
-		tabelPanel.add(hinweis);
-		haupt.add(tabelPanel);
-		add(haupt);
+		tabelPanel.add(hinweis,BorderLayout.SOUTH);
+//		haupt.add(tabelPanel);
+		add(tabelPanel,BorderLayout.CENTER);
 
 		setBackground(new Color(249, 222, 112));
 

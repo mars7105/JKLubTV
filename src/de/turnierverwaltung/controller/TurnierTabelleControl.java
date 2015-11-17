@@ -43,6 +43,7 @@ public class TurnierTabelleControl {
 	private MyTableModelListener tml[];
 	private Dimension dimension[];
 	private int[] spielerAnzahl;
+	
 	public TurnierTabelleControl(MainControl mainControl) {
 		
 		this.mainControl = mainControl;
@@ -50,7 +51,7 @@ public class TurnierTabelleControl {
 		hauptPanel = this.mainControl.getHauptPanel();
 
 		if (this.mainControl.getTabAnzeigeView() == null) {
-			this.mainControl.setTabAnzeigeView(new TabAnzeigeView(mainControl,true));
+			this.mainControl.setTabAnzeigeView(new TabAnzeigeView(mainControl));
 		}
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
 		tabAnzeigeView.setBackground(new Color(249, 222, 112));
@@ -58,7 +59,7 @@ public class TurnierTabelleControl {
 		tabAnzeigeView2 = new TabAnzeigeView[anzahlGruppen];
 		dimension = new Dimension[anzahlGruppen];
 		for (int i = 0; i < anzahlGruppen; i++) {
-			tabAnzeigeView2[i] = new TabAnzeigeView(mainControl,false);
+			tabAnzeigeView2[i] = new TabAnzeigeView(mainControl);
 			dimension[i] = tabAnzeigeView2[i].getPreferredSize();
 		}
 		this.mainControl.setTabAnzeigeView2(tabAnzeigeView2);
@@ -129,6 +130,7 @@ public class TurnierTabelleControl {
 		simpleTableView[gruppenNummer].setPreferredSize(dimension[gruppenNummer]);
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() < 1) {
 			tabAnzeigeView2[gruppenNummer].insertTab("Turniertabelle", null, simpleTableView[gruppenNummer], null, 0);
+			
 		} else {
 
 			tabAnzeigeView2[gruppenNummer].setComponentAt(0, simpleTableView[gruppenNummer]);

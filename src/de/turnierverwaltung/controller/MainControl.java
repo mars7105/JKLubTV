@@ -83,6 +83,7 @@ public class MainControl extends JFrame {
 	private SaveTurnierControl saveTurnierControl;
 	private TurnierTabelleControl turnierTabelleControl;
 	private TerminTabelleControl terminTabelleControl;
+	private RundenEingabeFormularControl rundenEingabeFormularControl;
 	private SimpleTerminTabelle[] simpleTerminTabelle;
 	private SimpleTerminTabelleView[] simpleTerminTabelleView;
 	private TurnierListeLadenControl turnierListeLadenControl;
@@ -500,5 +501,15 @@ public class MainControl extends JFrame {
 	public void setNaviController(NaviController naviController) {
 		this.naviController = naviController;
 	}
+
+	public RundenEingabeFormularControl getRundenEingabeFormularControl() {
+		return rundenEingabeFormularControl;
+	}
+
+	public void setRundenEingabeFormularControl(RundenEingabeFormularControl rundenEingabeFormularControl) {
+		this.rundenEingabeFormularControl = rundenEingabeFormularControl;
+	}
+
+
 
 }

@@ -15,7 +15,6 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -41,10 +40,10 @@ public class TurnierTabelleView extends JPanel {
 	}
 
 	public void makePanel() {
-		setBackground(new Color(249, 222, 112));
+//		setBackground(new Color(249, 222, 112));
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBackground(new Color(249, 222, 112));
+//		contentPanel.setBackground(new Color(249, 222, 112));
 		setLayout(new BorderLayout());
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);

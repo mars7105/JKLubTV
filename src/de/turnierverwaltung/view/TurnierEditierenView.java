@@ -80,10 +80,10 @@ public class TurnierEditierenView extends JDialog {
 
 	private Properties property;
 	private JTextField[] textFieldGruppenName;
-	private JButton rundenEditierenButton;
+//	private JButton rundenEditierenButton;
 
 	public TurnierEditierenView(Turnier turnier) {
-		this.rundenEditierenButton = new JButton("Paarungen bearbeiten");
+//		this.rundenEditierenButton = new JButton("Paarungen bearbeiten");
 		this.textFieldGruppenName = new JTextField[turnier.getAnzahlGruppen()];
 		property = new Properties();
 		property.put("text.today", "Heute");
@@ -140,9 +140,9 @@ public class TurnierEditierenView extends JDialog {
 		centerPane.add(endDatumTextField);
 		contentPanel.add(centerPane);
 		buttonPane = new JPanel();
-		buttonPane.setLayout(new FlowLayout());
+		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		buttonPane.setBackground(new Color(249, 222, 112));
-		buttonPane.add(rundenEditierenButton);
+//		buttonPane.add(rundenEditierenButton);
 		buttonPane.add(okButton);
 		buttonPane.add(cancelButton);
 
@@ -226,17 +226,17 @@ public class TurnierEditierenView extends JDialog {
 		this.textFieldTurnierName = textFieldTurnierName;
 	}
 
-	public JButton getRundenEditierenButton() {
-		return rundenEditierenButton;
-	}
+//	public JButton getRundenEditierenButton() {
+//		return rundenEditierenButton;
+//	}
 
 	public JTextField[] getTextFieldGruppenName() {
 		return textFieldGruppenName;
 	}
 
-	public void setRundenEditierenButton(JButton rundenEditierenButton) {
-		this.rundenEditierenButton = rundenEditierenButton;
-	}
+//	public void setRundenEditierenButton(JButton rundenEditierenButton) {
+//		this.rundenEditierenButton = rundenEditierenButton;
+//	}
 
 	public void setTextFieldGruppenName(JTextField[] textFieldGruppenName) {
 		this.textFieldGruppenName = textFieldGruppenName;

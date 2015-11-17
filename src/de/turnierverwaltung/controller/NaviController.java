@@ -48,6 +48,7 @@ public class NaviController implements ActionListener {
 		naviView = new NaviView();
 		mainControl.setNaviView(naviView);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+		this.mainControl.getNaviView().getPaarungsPanel().setVisible(false);
 		newdbButton = naviView.getNewDatabseButton();
 		newdbButton.addActionListener(this);
 		loaddbButton = naviView.getLoadDatabaseButton();
@@ -63,6 +64,7 @@ public class NaviController implements ActionListener {
 		naviView.getTabelleAktualisierenButton().addActionListener(this);
 		naviView.getTabelleSpeichernButton().addActionListener(this);
 		naviView.getTabelleHTMLAusgabeButton().addActionListener(this);
+		naviView.getPaarungenSpeichernButton().addActionListener(this);
 		aktiveGruppe = 0;
 		aktiveTabelle = 0;
 		makeNaviPanel();
@@ -77,7 +79,21 @@ public class NaviController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == naviView.getPaarungenSpeichernButton()) {
+			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
+//			partien = gruppe[aktiveGruppe].getPartien();
 
+			mainControl.getRundenEingabeFormularControl().changeWerte(aktiveGruppe);
+			mainControl.getRundenEingabeFormularControl().saveTurnier(aktiveGruppe);
+		}
+//		if (arg0.getSource() == rundenEingabeFormularView[index].getCancelButton()) {
+//			mainControl.resetApp();
+//			mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
+//			mainControl.getTurnierTableControl().loadTurnierListe();
+//			mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(mainControl));
+//			mainControl.getTurnierListeLadenControl().loadTurnier();
+//		}
+		
 		if (arg0.getSource() == pdfButton) {
 			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
 			aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
@@ -172,6 +188,7 @@ public class NaviController implements ActionListener {
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
 				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+				mainControl.getNaviView().getTabellenPanel().setVisible(false);
 				mainControl.resetApp();
 				mainControl.datenbankMenueView(false);
 				String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
@@ -227,6 +244,7 @@ public class NaviController implements ActionListener {
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
 				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+				mainControl.getNaviView().getTabellenPanel().setVisible(false);
 				mainControl.resetApp();
 				mainControl.datenbankMenueView(false);
 				// Create a file chooser
@@ -274,6 +292,7 @@ public class NaviController implements ActionListener {
 					mainControl.getTurnierListeLadenControl().loadTurnier();
 				}
 				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+				mainControl.getNaviView().getTabellenPanel().setVisible(false);
 			}
 		}
 		if (arg0.getSource() == spielerListeButton) {
@@ -286,19 +305,20 @@ public class NaviController implements ActionListener {
 					mainControl.getSpielerEditierenControl().makePanel();
 				}
 				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+				mainControl.getNaviView().getTabellenPanel().setVisible(false);
 			}
 		}
 		if (this.mainControl.getTabAnzeigeView() != null) {
 
 			if (this.mainControl.getTabAnzeigeView2() != null) {
-				if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
+				if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true || mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
 					aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
 					aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
 				}
 			}
 		}
 		if (this.mainControl.getTurnierTabelleControl() != null && aktiveGruppe >= 0
-				&& this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
+				&& this.mainControl.getNaviView().getTabellenPanel().isVisible() == true || mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
 
 			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
 			aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();

@@ -142,8 +142,8 @@ public class SpielerLadenControl implements ActionListener {
 	public void makePanel() {
 		this.mainControl.getTurnier();
 		
-		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(this.mainControl,true));
-		this.mainControl.setTabAnzeigeView(new TabAnzeigeView(mainControl,true));
+		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(this.mainControl));
+		this.mainControl.setTabAnzeigeView(new TabAnzeigeView(mainControl));
 		tabbedPaneView = this.mainControl.getTabAnzeigeView();
 		int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width - 275;
 		int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height - 275;
