@@ -96,6 +96,7 @@ public class MainControl extends JFrame {
 	private NaviController naviController;
 	private InfoController infoController;
 	private TitleView titleView;
+	private Boolean neuesTurnier;
 
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
@@ -108,6 +109,7 @@ public class MainControl extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		init();
 		datenbankMenueView(false);
+		setNeuesTurnier(false);
 	}
 
 	public void datenbankMenueView(Boolean enable) {
@@ -121,6 +123,14 @@ public class MainControl extends JFrame {
 		} else {
 			this.setTitle("Klubturnierverwaltung ");
 		}
+	}
+
+	public Boolean getNeuesTurnier() {
+		return neuesTurnier;
+	}
+
+	public void setNeuesTurnier(Boolean neuesTurnier) {
+		this.neuesTurnier = neuesTurnier;
 	}
 
 	public RundenEingabeFormularView[] getRundenEingabeFormularView() {
@@ -340,7 +350,7 @@ public class MainControl extends JFrame {
 		turnierListeLadenView = null;
 		saveTurnierControl = null;
 		spielerLadenControl = null;
-
+		setNeuesTurnier(false);
 		init();
 	}
 

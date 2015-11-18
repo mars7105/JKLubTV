@@ -52,13 +52,14 @@ public class TurnierControl implements ActionListener {
 
 	public TurnierControl(MainControl mainControl) {
 		this.mainControl = mainControl;
+		
 		hauptPanel = this.mainControl.getHauptPanel();
 		this.mainControl.setTurnierView(new TurnierView());
 		this.turnierView = this.mainControl.getTurnierView();
 		this.turnierView.setVisible(true);
 		turnierOkButton = this.mainControl.getTurnierView().getOkButton();
 		turnierOkButton.addActionListener(this);
-
+		this.mainControl.setNeuesTurnier(true);
 		hauptPanel.removeAll();
 		mainControl.getNaviController().makeNaviPanel();
 		hauptPanel.add(turnierView);

@@ -1,4 +1,6 @@
 package de.turnierverwaltung.controller;
+
+import java.awt.BorderLayout;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -53,36 +55,34 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 	private Spieler[] spieler;
 	private RundenEingabeFormularControl rundenEingabeFormularControl;
 	private ArrayList<Spieler> alleSpieler;
+	private TabAnzeigeView tabbedPaneView;
+	private TabAnzeigeView[] tabbedPaneView2;
 
 	public SpielerEingabeControl(MainControl mainControl) {
 		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 25;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 75;
 		this.mainControl = mainControl;
-		SpielerTableControl spielerTableControl = new SpielerTableControl(
-				mainControl);
+		SpielerTableControl spielerTableControl = new SpielerTableControl(mainControl);
 		alleSpieler = spielerTableControl.getAllSpieler();
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
 		hauptPanel = this.mainControl.getHauptPanel();
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
-		tabAnzeigeView
-				.setPreferredSize(new Dimension(windowWidth, windowHeight));
-		spielerAnzahlView = this.mainControl.getSpielerAnzahlControl()
-				.getSpielerAnzahlView();
+		tabAnzeigeView.setPreferredSize(new Dimension(windowWidth, windowHeight));
+		spielerAnzahlView = this.mainControl.getSpielerAnzahlControl().getSpielerAnzahlView();
 		gruppenAnzahl = this.mainControl.getTurnier().getAnzahlGruppen();
 		spielerAnzahl = new int[gruppenAnzahl];
 
 		spielerEingabeView = new SpielerEingabeView[gruppenAnzahl];
 
-		this.mainControl
-				.setSpielerEingabeView(new SpielerEingabeView[gruppenAnzahl]);
+		this.mainControl.setSpielerEingabeView(new SpielerEingabeView[gruppenAnzahl]);
 		okButton = new JButton[gruppenAnzahl];
 		cancelButton = new JButton[gruppenAnzahl];
 		gruppenAnzahl = this.mainControl.getTurnierControl().getGruppenAnzahl();
 		spielerEingabeView = new SpielerEingabeView[gruppenAnzahl];
 		this.mainControl.setSpielerEingabeView(spielerEingabeView);
-		rundenEingabeFormularControl = new RundenEingabeFormularControl(
-				this.mainControl);
+		rundenEingabeFormularControl = new RundenEingabeFormularControl(this.mainControl);
+		this.mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
 
 	}
 
@@ -102,10 +102,8 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 				spieler = new Spieler[sAnzahl];
 				for (int y = 0; y < sAnzahl; y++) {
 					spieler[y] = new Spieler();
-					name = spielerEingabeView[i].getSpielerTextfield()[y]
-							.getText();
-					kuerzel = spielerEingabeView[i].getKuerzelTextfield()[y]
-							.getText();
+					name = spielerEingabeView[i].getSpielerTextfield()[y].getText();
+					kuerzel = spielerEingabeView[i].getKuerzelTextfield()[y].getText();
 					dwz = spielerEingabeView[i].getDwzTextfield()[y].getText();
 					spielerID = spielerEingabeView[i].getSpielerID()[y];
 					age = spielerEingabeView[i].getTextComboBoxAge()[y].getSelectedIndex();
@@ -115,8 +113,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 					spieler[y].setAge(age);
 					if (spielerID >= 0) {
 						spieler[y].setSpielerId(spielerID);
-						SpielerTableControl stc = new SpielerTableControl(
-								mainControl);
+						SpielerTableControl stc = new SpielerTableControl(mainControl);
 						stc.updateOneSpieler(spieler[y]);
 
 					}
@@ -125,32 +122,29 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 
 				gruppe[i].setSpieler(spieler);
 				Arrays.sort(spieler);
+				spielerEingabeView[i].removeAll();
+				
+//				rundenEingabeFormularControl.makeRundenEditView(i);
 				rundenEingabeFormularControl.makeTerminTabelle(i);
-
+				rundenEingabeFormularControl.saveTurnier(i);
+				
 			}
 			if (arg0.getSource() == cancelButton[i]) {
 				// Custom button text
 				Object[] options = { "Ja", "Abbrechen" };
-				int abfrage = JOptionPane
-						.showOptionDialog(
-								null,
-								"Wollen Sie wirklich abbrechen? "
-										+ "Alle eingegebenen Daten dieser Gruppe gehen verloren.",
-								"Meldung",
-								JOptionPane.YES_NO_CANCEL_OPTION,
-								JOptionPane.WARNING_MESSAGE, null, options,
-								options[1]);
+				int abfrage = JOptionPane.showOptionDialog(null,
+						"Wollen Sie wirklich abbrechen? " + "Alle eingegebenen Daten dieser Gruppe gehen verloren.",
+						"Meldung", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
+						options[1]);
 				if (abfrage == 0) {
 					this.mainControl.getSpielerAnzahlControl().makeNewTab(i);
 				}
 			}
 			for (int s = 0; s < spielerAnzahl[i]; s++) {
 				if (arg0.getSource() == spielerEingabeView[i].getSpielerSuche()[s]) {
-					JTextField field = spielerEingabeView[i]
-							.getSpielerTextfield()[s];
+					JTextField field = spielerEingabeView[i].getSpielerTextfield()[s];
 					@SuppressWarnings("unchecked")
-					JComboBox<String> box = spielerEingabeView[i]
-							.getSpielerSuche()[s];
+					JComboBox<String> box = spielerEingabeView[i].getSpielerSuche()[s];
 
 					field.setText((String) box.getSelectedItem());
 
@@ -162,16 +156,13 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 					textField = field.getText();
 					while (li.hasNext()) {
 						temp = li.next();
-						if (textField.regionMatches(true, 0, temp.getName(), 0,
-								textField.length())) {
+						if (textField.regionMatches(true, 0, temp.getName(), 0, textField.length())) {
 							dwz = temp.getDwz();
 							kuerzel = temp.getKuerzel();
 							spielerID = temp.getSpielerId();
 							age = temp.getAge();
-							spielerEingabeView[i].getKuerzelTextfield()[s]
-									.setText(kuerzel);
-							spielerEingabeView[i].getDwzTextfield()[s]
-									.setText(dwz);
+							spielerEingabeView[i].getKuerzelTextfield()[s].setText(kuerzel);
+							spielerEingabeView[i].getDwzTextfield()[s].setText(dwz);
 							spielerEingabeView[i].getSpielerID()[s] = spielerID;
 							spielerEingabeView[i].getTextComboBoxAge()[s].setSelectedIndex(age);
 						}
@@ -180,7 +171,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 				}
 			}
 		}
-		hauptPanel.updateUI();
+//		hauptPanel.updateUI();
 
 	}
 
@@ -189,10 +180,8 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			for (int s = 0; s < spielerAnzahl[i]; s++)
-				if (e.getSource() == spielerEingabeView[i]
-						.getSpielerTextfield()[s]) {
-					spielerEingabeView[i].getSpielerSuche()[s]
-							.removeActionListener(this);
+				if (e.getSource() == spielerEingabeView[i].getSpielerTextfield()[s]) {
+					spielerEingabeView[i].getSpielerSuche()[s].removeActionListener(this);
 					spielerEingabeView[i].getSpielerSuche()[s].removeAllItems();
 
 					Spieler temp = null;
@@ -201,24 +190,20 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 
 					String textField = "";
 					String labels = "";
-					textField = spielerEingabeView[i].getSpielerTextfield()[s]
-							.getText() + e.getKeyChar();
+					textField = spielerEingabeView[i].getSpielerTextfield()[s].getText() + e.getKeyChar();
 					while (li.hasNext()) {
 						temp = li.next();
 
-						if (textField.regionMatches(true, 0, temp.getName(), 0,
-								textField.length())) {
+						if (textField.regionMatches(true, 0, temp.getName(), 0, textField.length())) {
 							labels = temp.getName();
-							spielerEingabeView[i].getSpielerSuche()[s]
-									.addItem(labels);
+							spielerEingabeView[i].getSpielerSuche()[s].addItem(labels);
 						}
 
 					}
 					if (textField.length() == 0) {
 						suchAnzeige(i);
 					}
-					spielerEingabeView[i].getSpielerSuche()[s]
-							.addActionListener(this);
+					spielerEingabeView[i].getSpielerSuche()[s].addActionListener(this);
 
 				}
 		}
@@ -236,12 +221,9 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 
 	public void makeTabbedPane(int index) {
 
-		if (spielerAnzahlView[index].getAnzahlSpielerTextField().getText()
-				.length() > 0) {
-			spielerAnzahl[index] = this.mainControl.getSpielerAnzahlControl()
-					.getSpielerAnzahl(index);
-			spielerEingabeView[index] = new SpielerEingabeView(
-					spielerAnzahl[index]);
+		if (spielerAnzahlView[index].getAnzahlSpielerTextField().getText().length() > 0) {
+			spielerAnzahl[index] = this.mainControl.getSpielerAnzahlControl().getSpielerAnzahl(index);
+			spielerEingabeView[index] = new SpielerEingabeView(spielerAnzahl[index]);
 			okButton[index] = spielerEingabeView[index].getOkButton();
 			okButton[index].addActionListener(this);
 			cancelButton[index] = spielerEingabeView[index].getCancelButton();
@@ -264,10 +246,8 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 				labels = temp.getName();
 				spielerEingabeView[index].getSpielerSuche()[i].addItem(labels);
 			}
-			spielerEingabeView[index].getSpielerSuche()[i]
-					.addActionListener(this);
-			spielerEingabeView[index].getSpielerTextfield()[i]
-					.addKeyListener(this);
+			spielerEingabeView[index].getSpielerSuche()[i].addActionListener(this);
+			spielerEingabeView[index].getSpielerTextfield()[i].addKeyListener(this);
 		}
 	}
 }

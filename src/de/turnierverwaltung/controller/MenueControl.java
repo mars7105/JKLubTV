@@ -63,6 +63,7 @@ public class MenueControl implements ActionListener {
 			int abfrage = warnHinweis(
 					"Wollen Sie wirklich die Seite verlassen? \n" + "Alle eingegebenen Daten gehen verloren.");
 			if (abfrage == 0) {
+				
 				mainControl.resetApp();
 				mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
 				mainControl.getSpielerEditierenControl().makePanel();

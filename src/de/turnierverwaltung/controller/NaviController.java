@@ -83,6 +83,7 @@ public class NaviController implements ActionListener {
 		if (arg0.getSource() == naviView.getPaarungenSpeichernButton()) {
 			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
 			// partien = gruppe[aktiveGruppe].getPartien();
+
 			if (mainControl.getRundenEingabeFormularControl() == null) {
 				mainControl.setRundenEingabeFormularControl(new RundenEingabeFormularControl(mainControl));
 				mainControl.getRundenEingabeFormularControl().makeRundenEditView(aktiveGruppe);
@@ -97,6 +98,7 @@ public class NaviController implements ActionListener {
 				mainControl.getRundenEingabeFormularControl().makeRundenEditView(aktiveGruppe);
 				this.mainControl.getRundenEingabeFormularView()[aktiveGruppe].getTabbedPane()
 						.setSelectedIndex(selectedPaarungen);
+
 			}
 		}
 
@@ -187,6 +189,7 @@ public class NaviController implements ActionListener {
 					mainControl.getInfoController().makeInfoPanel();
 				}
 				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+				this.mainControl.setNeuesTurnier(false);
 			}
 		}
 		if (arg0.getSource() == newdbButton) {
@@ -225,6 +228,7 @@ public class NaviController implements ActionListener {
 							JOptionPane.showMessageDialog(null, "Datei wurde gespeichert.", "File Saved",
 									JOptionPane.INFORMATION_MESSAGE);
 							if (mainControl.getTurnierTableControl() == null) {
+								this.mainControl.setNeuesTurnier(false);
 								mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 								mainControl.getTurnierTableControl().loadTurnierListe();
 								mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
@@ -297,6 +301,7 @@ public class NaviController implements ActionListener {
 					mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(mainControl));
 					mainControl.getTurnierListeLadenControl().loadTurnier();
 				}
+				this.mainControl.setNeuesTurnier(false);
 				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 				mainControl.getNaviView().getTabellenPanel().setVisible(false);
 			}
@@ -310,6 +315,7 @@ public class NaviController implements ActionListener {
 					mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
 					mainControl.getSpielerEditierenControl().makePanel();
 				}
+				this.mainControl.setNeuesTurnier(false);
 				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 				mainControl.getNaviView().getTabellenPanel().setVisible(false);
 			}
