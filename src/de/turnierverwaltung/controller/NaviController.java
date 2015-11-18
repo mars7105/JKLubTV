@@ -80,6 +80,16 @@ public class NaviController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		if (this.mainControl.getTabAnzeigeView() != null) {
+
+			if (this.mainControl.getTabAnzeigeView2() != null) {
+				if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true
+						|| mainControl.getNaviView().getPaarungsPanel().isVisible() == true) {
+					aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
+					aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
+				}
+			}
+		}
 		if (arg0.getSource() == naviView.getPaarungenSpeichernButton()) {
 			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
 			// partien = gruppe[aktiveGruppe].getPartien();
@@ -320,120 +330,104 @@ public class NaviController implements ActionListener {
 				mainControl.getNaviView().getTabellenPanel().setVisible(false);
 			}
 		}
-		if (this.mainControl.getTabAnzeigeView() != null) {
 
-			if (this.mainControl.getTabAnzeigeView2() != null) {
-				if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true
-						|| mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
-					aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
-					aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
-				}
-			}
+		if (arg0.getSource() == naviView.getTabelleAktualisierenButton()) {
+			this.mainControl.getTurnierTabelleControl().okAction(aktiveGruppe);
+
 		}
-		if (this.mainControl.getTurnierTabelleControl() != null && aktiveGruppe >= 0
-				&& this.mainControl.getNaviView().getTabellenPanel().isVisible() == true
-				|| mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
+		if (arg0.getSource() == naviView.getTabelleSpeichernButton()) {
+			this.mainControl.getSaveTurnierControl().saveTurnier(aktiveGruppe);
+		}
 
-			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
-			aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
+		if (arg0.getSource() == naviView.getTabelleHTMLAusgabeButton()) {
+			this.mainControl.getTurnierTabelle()[aktiveGruppe].createMatrix();
+			int spalte = this.mainControl.getSimpleTableView()[aktiveGruppe].getTable().getModel().getColumnCount();
+			int zeile = this.mainControl.getSimpleTableView()[aktiveGruppe].getTable().getModel().getRowCount();
+			for (int x = 0; x < spalte; x++) {
+				for (int y = 0; y < zeile; y++) {
 
-			if (arg0.getSource() == naviView.getTabelleAktualisierenButton()) {
-				this.mainControl.getTurnierTabelleControl().okAction(aktiveGruppe);
+					this.mainControl.getTurnierTabelle()[aktiveGruppe].getTabellenMatrix()[x][y
+							+ 1] = (String) this.mainControl.getSimpleTableView()[aktiveGruppe].getTable().getValueAt(y,
+									x);
 
-			}
-			if (arg0.getSource() == naviView.getTabelleSpeichernButton()) {
-				this.mainControl.getSaveTurnierControl().saveTurnier(aktiveGruppe);
-			}
-
-			if (arg0.getSource() == naviView.getTabelleHTMLAusgabeButton()) {
-				this.mainControl.getTurnierTabelle()[aktiveGruppe].createMatrix();
-				int spalte = this.mainControl.getSimpleTableView()[aktiveGruppe].getTable().getModel().getColumnCount();
-				int zeile = this.mainControl.getSimpleTableView()[aktiveGruppe].getTable().getModel().getRowCount();
-				for (int x = 0; x < spalte; x++) {
-					for (int y = 0; y < zeile; y++) {
-
-						this.mainControl.getTurnierTabelle()[aktiveGruppe].getTabellenMatrix()[x][y
-								+ 1] = (String) this.mainControl.getSimpleTableView()[aktiveGruppe].getTable()
-										.getValueAt(y, x);
-
-					}
 				}
-				String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
-						JOptionPane.PLAIN_MESSAGE);
-				if (filename != null) {
-					filename += ".html";
+			}
+			String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
+					JOptionPane.PLAIN_MESSAGE);
+			if (filename != null) {
+				filename += ".html";
 
-					JFileChooser savefile = new JFileChooser();
-					FileFilter filter = new FileNameExtensionFilter("HTML", "html");
-					savefile.addChoosableFileFilter(filter);
-					savefile.setFileFilter(filter);
-					savefile.setDialogType(JFileChooser.SAVE_DIALOG);
-					savefile.setSelectedFile(new File(filename));
-					// BufferedWriter writer;
-					Writer writer;
-					int sf = savefile.showSaveDialog(null);
-					if (sf == JFileChooser.APPROVE_OPTION) {
+				JFileChooser savefile = new JFileChooser();
+				FileFilter filter = new FileNameExtensionFilter("HTML", "html");
+				savefile.addChoosableFileFilter(filter);
+				savefile.setFileFilter(filter);
+				savefile.setDialogType(JFileChooser.SAVE_DIALOG);
+				savefile.setSelectedFile(new File(filename));
+				// BufferedWriter writer;
+				Writer writer;
+				int sf = savefile.showSaveDialog(null);
+				if (sf == JFileChooser.APPROVE_OPTION) {
+					try {
+						// Construct a writer for a specific encoding
+						writer = new OutputStreamWriter(new FileOutputStream(savefile.getSelectedFile()), "UTF8");
+
+						// writer = new BufferedWriter(new
+						// FileWriter(savefile.getSelectedFile()));
+						if (aktiveTabelle == 0) {
+
+							writer.write(this.mainControl.getTurnierTabelle()[aktiveGruppe].getHTMLTable());
+						} else {
+
+							writer.write(this.mainControl.getTerminTabelleControl().getTerminTabelle()[aktiveGruppe]
+									.getHTMLTable());
+						}
+
+						writer.flush();
+						writer.close();
 						try {
-							// Construct a writer for a specific encoding
-							writer = new OutputStreamWriter(new FileOutputStream(savefile.getSelectedFile()), "UTF8");
+							InputStreamReader isReader = new InputStreamReader(
+									this.getClass().getResourceAsStream("/files/style.css"));
+							BufferedReader br = new BufferedReader(isReader);
 
-							// writer = new BufferedWriter(new
-							// FileWriter(savefile.getSelectedFile()));
-							if (aktiveTabelle == 0) {
+							PrintWriter writer1 = new PrintWriter(
+									new File(savefile.getCurrentDirectory() + "/style.css"));
 
-								writer.write(this.mainControl.getTurnierTabelle()[aktiveGruppe].getHTMLTable());
-							} else {
-
-								writer.write(this.mainControl.getTerminTabelleControl().getTerminTabelle()[aktiveGruppe]
-										.getHTMLTable());
+							String Bs;
+							while ((Bs = br.readLine()) != null) {
+								writer1.println(Bs);
 							}
 
-							writer.flush();
-							writer.close();
-							try {
-								InputStreamReader isReader = new InputStreamReader(
-										this.getClass().getResourceAsStream("/files/style.css"));
-								BufferedReader br = new BufferedReader(isReader);
+							writer1.close();
+							br.close();
 
-								PrintWriter writer1 = new PrintWriter(
-										new File(savefile.getCurrentDirectory() + "/style.css"));
-
-								String Bs;
-								while ((Bs = br.readLine()) != null) {
-									writer1.println(Bs);
-								}
-
-								writer1.close();
-								br.close();
-
-							} catch (FileNotFoundException fnfe) {
-								JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
-							} catch (IOException ioe) {
-								JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
-							}
-							File file = savefile.getSelectedFile();
-							// first check if Desktop is supported by
-							// Platform or not
-							if (!Desktop.isDesktopSupported()) {
-								JOptionPane.showMessageDialog(null, "Desktop is not supported.", "File not opened",
-										JOptionPane.INFORMATION_MESSAGE);
-							} else {
-
-								Desktop desktop = Desktop.getDesktop();
-								if (file.exists()) {
-									desktop.open(file);
-								}
-
-							}
-
-						} catch (IOException e) {
+						} catch (FileNotFoundException fnfe) {
+							JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
+						} catch (IOException ioe) {
 							JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
 						}
-					} else if (sf == JFileChooser.CANCEL_OPTION) {
+						File file = savefile.getSelectedFile();
+						// first check if Desktop is supported by
+						// Platform or not
+						if (!Desktop.isDesktopSupported()) {
+							JOptionPane.showMessageDialog(null, "Desktop is not supported.", "File not opened",
+									JOptionPane.INFORMATION_MESSAGE);
+						} else {
+
+							Desktop desktop = Desktop.getDesktop();
+							if (file.exists()) {
+								desktop.open(file);
+							}
+
+						}
+
+					} catch (IOException e) {
 						JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
 					}
+				} else if (sf == JFileChooser.CANCEL_OPTION) {
+					JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
 				}
 			}
+
 		}
 
 	}
@@ -443,7 +437,8 @@ public class NaviController implements ActionListener {
 		String hinweisText = "Alle Änderungen gehen eventuell verloren "
 				+ "\nwenn Sie die Tabellen nicht gespeichert haben." + "\nMöchten Sie den Menüpunkt trotzdem laden?";
 		if (mainControl.getMenueControl().getWarnHinweis()
-				&& this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
+				&& (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true ||
+						this.mainControl.getNaviView().getPaarungsPanel().isVisible() == true)) {
 			abfrage = 1;
 			// Custom button text
 			Object[] options = { "Ja", "Abbrechen" };
