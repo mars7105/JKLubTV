@@ -43,7 +43,7 @@ public class TerminTabelleControl  {
 
 		this.terminTabelle[gruppenNummer] = new TerminTabelle(turnier,
 				mainControl.getTurnier().getGruppe()[gruppenNummer]);
-		this.terminTabelle[gruppenNummer].createMatrix();
+		this.terminTabelle[gruppenNummer].createTerminTabelle();
 		simpleTableView[gruppenNummer] = new SimpleTerminTabelleView(
 				new SimpleTerminTabelle(this.terminTabelle[gruppenNummer]));
 		simpleTurnierTabelleView = mainControl.getSimpleTableView();

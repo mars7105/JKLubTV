@@ -52,10 +52,10 @@ public class TerminTabelle {
 
 	}
 
-	public void createMatrix() {
-		// TODO Auto-generated method stub
-
-	}
+//	public void createMatrix() {
+//		// TODO Auto-generated method stub
+//
+//	}
 
 	public void createTerminTabelle() {
 		tabellenMatrix[0][0] = "Runde";

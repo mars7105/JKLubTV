@@ -74,6 +74,7 @@ public class NaviController implements ActionListener {
 	public void makeNaviPanel() {
 		JPanel hauptPanel = this.mainControl.getHauptPanel();
 		hauptPanel.add(naviView, BorderLayout.WEST);
+
 		hauptPanel.updateUI();
 	}
 
@@ -81,19 +82,24 @@ public class NaviController implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == naviView.getPaarungenSpeichernButton()) {
 			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
-//			partien = gruppe[aktiveGruppe].getPartien();
-
-			mainControl.getRundenEingabeFormularControl().changeWerte(aktiveGruppe);
-			mainControl.getRundenEingabeFormularControl().saveTurnier(aktiveGruppe);
+			// partien = gruppe[aktiveGruppe].getPartien();
+			if (mainControl.getRundenEingabeFormularControl() == null) {
+				mainControl.setRundenEingabeFormularControl(new RundenEingabeFormularControl(mainControl));
+				mainControl.getRundenEingabeFormularControl().makeRundenEditView(aktiveGruppe);
+				mainControl.getRundenEingabeFormularControl().changeWerte(aktiveGruppe);
+				mainControl.getRundenEingabeFormularControl().saveTurnier(aktiveGruppe);
+				mainControl.getRundenEingabeFormularControl().makeRundenEditView(aktiveGruppe);
+			} else {
+				int selectedPaarungen = this.mainControl.getRundenEingabeFormularView()[aktiveGruppe].getTabbedPane()
+						.getSelectedIndex();
+				mainControl.getRundenEingabeFormularControl().changeWerte(aktiveGruppe);
+				mainControl.getRundenEingabeFormularControl().saveTurnier(aktiveGruppe);
+				mainControl.getRundenEingabeFormularControl().makeRundenEditView(aktiveGruppe);
+				this.mainControl.getRundenEingabeFormularView()[aktiveGruppe].getTabbedPane()
+						.setSelectedIndex(selectedPaarungen);
+			}
 		}
-//		if (arg0.getSource() == rundenEingabeFormularView[index].getCancelButton()) {
-//			mainControl.resetApp();
-//			mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
-//			mainControl.getTurnierTableControl().loadTurnierListe();
-//			mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(mainControl));
-//			mainControl.getTurnierListeLadenControl().loadTurnier();
-//		}
-		
+
 		if (arg0.getSource() == pdfButton) {
 			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
 			aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
@@ -137,7 +143,7 @@ public class NaviController implements ActionListener {
 						// gespeichert.");
 
 					} else {
-						mainControl.getTerminTabelle()[aktiveGruppe].createMatrix();
+						mainControl.getTerminTabelle()[aktiveGruppe].createTerminTabelle();
 						String titel = "Termintabelle " + mainControl.getTurnier().getTurnierName() + " - "
 								+ mainControl.getTurnier().getGruppe()[aktiveGruppe].getGruppenName();
 						String pathName = savefile.getSelectedFile().getAbsolutePath();
@@ -311,14 +317,16 @@ public class NaviController implements ActionListener {
 		if (this.mainControl.getTabAnzeigeView() != null) {
 
 			if (this.mainControl.getTabAnzeigeView2() != null) {
-				if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true || mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
+				if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true
+						|| mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
 					aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
 					aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
 				}
 			}
 		}
 		if (this.mainControl.getTurnierTabelleControl() != null && aktiveGruppe >= 0
-				&& this.mainControl.getNaviView().getTabellenPanel().isVisible() == true || mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
+				&& this.mainControl.getNaviView().getTabellenPanel().isVisible() == true
+				|| mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
 
 			aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
 			aktiveTabelle = this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
@@ -363,7 +371,6 @@ public class NaviController implements ActionListener {
 							// Construct a writer for a specific encoding
 							writer = new OutputStreamWriter(new FileOutputStream(savefile.getSelectedFile()), "UTF8");
 
-			
 							// writer = new BufferedWriter(new
 							// FileWriter(savefile.getSelectedFile()));
 							if (aktiveTabelle == 0) {

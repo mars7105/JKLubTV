@@ -36,6 +36,7 @@ import de.turnierverwaltung.view.GruppenView;
 import de.turnierverwaltung.view.MainView;
 import de.turnierverwaltung.view.MenueView;
 import de.turnierverwaltung.view.NaviView;
+import de.turnierverwaltung.view.RundenEingabeFormularView;
 import de.turnierverwaltung.view.SimpleTerminTabelleView;
 import de.turnierverwaltung.view.SimpleTurnierTabelleView;
 import de.turnierverwaltung.view.SpielerAnzahlView;
@@ -84,6 +85,7 @@ public class MainControl extends JFrame {
 	private TurnierTabelleControl turnierTabelleControl;
 	private TerminTabelleControl terminTabelleControl;
 	private RundenEingabeFormularControl rundenEingabeFormularControl;
+	private RundenEingabeFormularView[] rundenEingabeFormularView;
 	private SimpleTerminTabelle[] simpleTerminTabelle;
 	private SimpleTerminTabelleView[] simpleTerminTabelleView;
 	private TurnierListeLadenControl turnierListeLadenControl;
@@ -119,6 +121,14 @@ public class MainControl extends JFrame {
 		} else {
 			this.setTitle("Klubturnierverwaltung ");
 		}
+	}
+
+	public RundenEingabeFormularView[] getRundenEingabeFormularView() {
+		return rundenEingabeFormularView;
+	}
+
+	public void setRundenEingabeFormularView(RundenEingabeFormularView[] rundenEingabeFormularView) {
+		this.rundenEingabeFormularView = rundenEingabeFormularView;
 	}
 
 	public GruppenControl getGruppenControl() {

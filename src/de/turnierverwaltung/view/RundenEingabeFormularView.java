@@ -16,8 +16,6 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -73,9 +71,7 @@ public class RundenEingabeFormularView extends JPanel {
 	private JPanel contentPanel;
 	private JPanel flowPane;
 	private JPanel downPane;
-	// private JButton okButton;
-
-	// private JButton cancelButton;
+	private JTabbedPane tabbedPane;
 	private JScrollPane scrollPane;
 	private JComboBox<String>[] rundenNummer;
 	private int spielerAnzahl;
@@ -161,59 +157,7 @@ public class RundenEingabeFormularView extends JPanel {
 	
 	}
 
-//	public void makeZeile(String[] zeile) {
-//
-//		flowPane = new JPanel();
-//		flowPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		// flowPane.setBackground(new Color(249, 222, 112));
-//		downPane = new JPanel();
-//		downPane.setLayout(new BoxLayout(downPane, BoxLayout.X_AXIS));
-//		// downPane.setBackground(new Color(249, 222, 112));
-//
-//		if (zeile[0] != "Runde") {
-//
-//			int[] dateInt;
-//			UtilDateModel model = new UtilDateModel();
-//			if (zeile[4].length() > 0) {
-//
-//				dateInt = getDatefromString(zeile[4]);
-//				model.setDate(dateInt[2], dateInt[1] - 1, dateInt[0]);
-//				model.setSelected(true);
-//
-//			}
-//
-//			datum[anzahlElemente] = new JDatePickerImpl(new JDatePanelImpl(model, property), new DateLabelFormatter());
-//
-//			downPane.add(new JLabel("Datum: "));
-//			downPane.add(datum[anzahlElemente]);
-//			downPane.add(new JLabel(" "));
-//			changeColor[anzahlElemente] = new JButton("Farben vertauschen");
-//			downPane.add(changeColor[anzahlElemente]);
-//			rundenNummer[anzahlElemente] = new JComboBox<String>();
-//			int ungerade = (this.spielerAnzahl + 1) % 2;
-//			for (int i = 1; i <= this.spielerAnzahl - ungerade; i++) {
-//				rundenNummer[anzahlElemente].addItem(Integer.toString(i));
-//			}
-//			rundenNummer[anzahlElemente].setSelectedIndex(Integer.parseInt(zeile[0]) - 1);
-//			downPane.add(new JLabel("  Runde: "));
-//			downPane.add(rundenNummer[anzahlElemente]);
-//			downPane.add(new JLabel(" = "));
-//			weissSpieler[anzahlElemente] = new JLabel();
-//			weissSpieler[anzahlElemente].setText("Weiss:  " + zeile[1] + " - ");
-//			schwarzSpieler[anzahlElemente] = new JLabel();
-//			schwarzSpieler[anzahlElemente].setText("Schwarz:  " + zeile[2] + " ");
-//			downPane.add(weissSpieler[anzahlElemente]);
-//			downPane.add(schwarzSpieler[anzahlElemente]);
-//
-//			anzahlElemente++;
-//		}
-//		downPane.updateUI();
-//		flowPane.updateUI();
-//
-//		flowPane.add(downPane);
-//		contentPanel.add(flowPane);
-//
-//	}
+
 
 	private int[] getDatefromString(String zeile) {
 		String[] splitDate = zeile.split("\\.");
@@ -274,13 +218,21 @@ public class RundenEingabeFormularView extends JPanel {
 		this.weissSpieler = weissSpieler;
 	}
 
+	public JTabbedPane getTabbedPane() {
+		return tabbedPane;
+	}
+
+	public void setTabbedPane(JTabbedPane tabbedPane) {
+		this.tabbedPane = tabbedPane;
+	}
+
 	public void makeZeilen(String[][] terminMatrix) {
 		String[] zeile = new String[5];
 		int ungerade = (this.spielerAnzahl + 1) % 2;
 		int gerade = 1 - ungerade;
 		int rundenanzahl = this.spielerAnzahl - ungerade;
 		int partienanzahl = (this.spielerAnzahl + gerade) / 2;
-		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane = new JTabbedPane();
 		FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
 		flowLayout.setVgap(1);
 		int index = 1;
@@ -344,10 +296,10 @@ public class RundenEingabeFormularView extends JPanel {
 				}
 
 				index++;
-				// downPane.
+				downPane.updateUI();
 
 				flowPane.add(downPane,BorderLayout.CENTER);
-				downPane.updateUI();
+				
 				flowPane.updateUI();
 			}
 			
@@ -356,5 +308,6 @@ public class RundenEingabeFormularView extends JPanel {
 			tabbedPane.add("Runde: " + zeile[0], panel);
 		}
 		contentPanel.add(tabbedPane, BorderLayout.CENTER);
+		contentPanel.updateUI();
 	}
 }

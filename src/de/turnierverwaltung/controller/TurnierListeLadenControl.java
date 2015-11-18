@@ -176,8 +176,9 @@ public class TurnierListeLadenControl implements ActionListener {
 							z);
 					mainControl.getTurnierTabelleControl().makeSimpleTableView(z);
 					mainControl.getTerminTabelleControl().makeSimpleTableView(z);
+					
+					mainControl.getRundenEingabeFormularControl().makeRundenEditView(z);
 					mainControl.getTurnierTabelleControl().okAction(z);
-					mainControl.getRundenEingabeFormularControl().makeSimpleTableView(z);
 				}
 
 				hauptPanel.removeAll();
