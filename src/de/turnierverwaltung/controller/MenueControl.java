@@ -72,11 +72,10 @@ public class MenueControl implements ActionListener {
 
 		if (arg0.getSource() == turnierMenue.getMntmSpeichern()) {
 
-			for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
+			@SuppressWarnings("unused")
+			Boolean ok = this.mainControl.getSaveTurnierControl().saveTurnier();
+			
 
-				mainControl.getSaveTurnierControl().saveTurnier(i);
-
-			}
 
 		}
 		if (arg0.getSource() == turnierMenue.getMntmLaden()) {

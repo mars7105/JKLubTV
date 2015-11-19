@@ -48,14 +48,13 @@ public class TabAnzeigeView extends JTabbedPane {
 
 						tabellenname = tabAnzeigeView.getTitleAt(tabellennummer);
 						mainControl.getNaviView().setTabellenname(tabellenname);
-						if (tabellennummer == 2) {
-							mainControl.getNaviView().getTabellenPanel().setVisible(false);
-							mainControl.getNaviView().getPaarungsPanel().setVisible(true);
-							mainControl.getNaviView().setPaarungsname(tabellenname);
-						} else {
-							mainControl.getNaviView().getPaarungsPanel().setVisible(false);
-							mainControl.getNaviView().getTabellenPanel().setVisible(true);
-						}
+//						if (tabellennummer == 2) {
+//							mainControl.getNaviView().getPdfSpeichernButton().setVisible(false);
+//							mainControl.getNaviView().getTabelleHTMLAusgabeButton().setVisible(false);
+//						} else {
+//							mainControl.getNaviView().getPdfSpeichernButton().setVisible(true);
+//							mainControl.getNaviView().getTabelleHTMLAusgabeButton().setVisible(true);
+//						}
 					}
 				}
 				if (sourceTabbedPane == (JTabbedPane)mainControl.getTabAnzeigeView()) {

@@ -130,22 +130,23 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 	public void saveTurnier(int index) {
 		SaveTurnierControl stC = new SaveTurnierControl(mainControl);
-		stC.saveTurnier(index);
+		Boolean ok = stC.saveTurnier();
+		if (ok) {
 
-		if (mainControl.getTurnierTabelleControl() == null) {
-			TurnierTabelleControl turnierTabelleControl = new TurnierTabelleControl(mainControl);
-			TerminTabelleControl terminTabelleControl = new TerminTabelleControl(mainControl);
-			mainControl.setTurnierTabelleControl(turnierTabelleControl);
-			mainControl.setTerminTabelleControl(terminTabelleControl);
-			turnierTabelleControl.makeSimpleTableView(index);
-			terminTabelleControl.makeSimpleTableView(index);
-			makeRundenEditView(index);
-		} else {
-			mainControl.getTurnierTabelleControl().makeSimpleTableView(index);
-			mainControl.getTerminTabelleControl().makeSimpleTableView(index);
-			makeRundenEditView(index);
+			if (mainControl.getTurnierTabelleControl() == null) {
+				TurnierTabelleControl turnierTabelleControl = new TurnierTabelleControl(mainControl);
+				TerminTabelleControl terminTabelleControl = new TerminTabelleControl(mainControl);
+				mainControl.setTurnierTabelleControl(turnierTabelleControl);
+				mainControl.setTerminTabelleControl(terminTabelleControl);
+				turnierTabelleControl.makeSimpleTableView(index);
+				terminTabelleControl.makeSimpleTableView(index);
+				makeRundenEditView(index);
+			} else {
+				mainControl.getTurnierTabelleControl().makeSimpleTableView(index);
+				mainControl.getTerminTabelleControl().makeSimpleTableView(index);
+				makeRundenEditView(index);
+			}
 		}
-
 	}
 
 	private void changeColor(int index, int nummer) {

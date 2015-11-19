@@ -1,6 +1,5 @@
 package de.turnierverwaltung.controller;
 
-import java.awt.BorderLayout;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -55,9 +54,6 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 	private Spieler[] spieler;
 	private RundenEingabeFormularControl rundenEingabeFormularControl;
 	private ArrayList<Spieler> alleSpieler;
-	private TabAnzeigeView tabbedPaneView;
-	private TabAnzeigeView[] tabbedPaneView2;
-
 	public SpielerEingabeControl(MainControl mainControl) {
 		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 25;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 75;

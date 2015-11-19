@@ -42,8 +42,8 @@ public class SaveTurnierControl {
 		ladebalkenView.setVisible(true);
 	}
 
-	public void saveTurnier(int index) {
-		createAndShowGUI();
+	public Boolean saveTurnier() {
+		
 		boolean saveOK1 = false;
 		boolean saveOK2 = false;
 		boolean saveOK4 = false;
@@ -58,38 +58,52 @@ public class SaveTurnierControl {
 		this.mainControl.setPartienTableControl(new PartienTableControl(this.mainControl));
 
 		this.mainControl.setTurnier_has_SpielerTableControl(new Turnier_has_SpielerTableControl(this.mainControl));
-		ladebalkenView.iterate();
-		if (mainControl.getTurnier().getTurnierId() < 0) {
-			saveOK1 = this.mainControl.getTurnierTableControl().insertTurnier();
-		} else {
-			this.mainControl.getTurnierTableControl().updateTurnier(this.mainControl.getTurnier());
-			saveOK1 = true;
-		}
-		ladebalkenView.iterate();
-		if (mainControl.getTurnier().getGruppe()[index].getGruppeId() < 0) {
-			saveOK2 = this.mainControl.getGruppenTableControl().insertGruppe(index);
+		
+		for (int index = 0; index < this.mainControl.getTurnier().getAnzahlGruppen(); index++) {
+			createAndShowGUI();
 			ladebalkenView.iterate();
+			if (mainControl.getTurnier().getTurnierId() < 0) {
+				saveOK1 = this.mainControl.getTurnierTableControl().insertTurnier();
+			} else {
+				this.mainControl.getTurnierTableControl().updateTurnier(this.mainControl.getTurnier());
+				saveOK1 = true;
+			}
 			ladebalkenView.iterate();
-			saveOK4 = this.mainControl.getPartienTableControl().insertPartien(index);
-			this.mainControl.getTurnier_has_SpielerTableControl().insertTurnier_has_Spieler(index);
-		} else {
-			saveOK2 = this.mainControl.getGruppenTableControl().updateGruppe(index);
-			ladebalkenView.iterate();
-			ladebalkenView.iterate();
-			saveOK4 = this.mainControl.getPartienTableControl().updatePartien(index);
+			if (mainControl.getTurnier().getGruppe()[index].getGruppeId() < 0) {
+				saveOK2 = this.mainControl.getGruppenTableControl().insertGruppe(index);
+				ladebalkenView.iterate();
+				ladebalkenView.iterate();
+				saveOK4 = this.mainControl.getPartienTableControl().insertPartien(index);
+				this.mainControl.getTurnier_has_SpielerTableControl().insertTurnier_has_Spieler(index);
+			} else {
+				saveOK2 = this.mainControl.getGruppenTableControl().updateGruppe(index);
+				ladebalkenView.iterate();
+				ladebalkenView.iterate();
+				saveOK4 = this.mainControl.getPartienTableControl().updatePartien(index);
 
+			}
+			ladebalkenView.iterate();
+			if (saveOK1 && saveOK2 && saveOK4) {
+				
+
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Fehler: Turnier " + this.mainControl.getTurnier().getTurnierName() 
+								+ " wurde nicht gespeichert!");
+				return false;
+				
+			}
 		}
-		ladebalkenView.iterate();
 		if (saveOK1 && saveOK2 && saveOK4) {
 			JOptionPane.showMessageDialog(null,
-					"Turnier " + this.mainControl.getTurnier().getTurnierName() + ", Gruppe "
-							+ this.mainControl.getTurnier().getGruppe()[index].getGruppenName()
-							+ " wurde gespeichert! \n");
+					"Turnier " + this.mainControl.getTurnier().getTurnierName() + " wurde gespeichert! \n");
+			return true;
 		} else {
+
 			JOptionPane.showMessageDialog(null,
-					"Fehler: Turnier " + this.mainControl.getTurnier().getTurnierName() + ", Gruppe "
-							+ this.mainControl.getTurnier().getGruppe()[index].getGruppenName()
+					"Fehler: Turnier " + this.mainControl.getTurnier().getTurnierName() 
 							+ " wurde nicht gespeichert!");
+			return false;
 		}
 	}
 }
