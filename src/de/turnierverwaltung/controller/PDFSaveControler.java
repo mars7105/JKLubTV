@@ -25,9 +25,10 @@ public class PDFSaveControler {
 		savefile.addChoosableFileFilter(filter);
 		savefile.setFileFilter(filter);
 		savefile.setDialogType(JFileChooser.SAVE_DIALOG);
-		savefile.setSelectedFile(new File(filename));
 		int sf = savefile.showSaveDialog(null);
 		if (sf == JFileChooser.APPROVE_OPTION) {
+			savefile.setSelectedFile(new File(filename));
+
 			for (int i = 0; i < anzahlGruppen; i++) {
 
 				int spalte = this.mainControl.getSimpleTableView()[i].getTable().getModel().getColumnCount();
