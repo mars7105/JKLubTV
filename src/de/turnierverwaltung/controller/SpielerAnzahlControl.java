@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -32,8 +33,7 @@ import de.turnierverwaltung.view.SpielerAnzahlView;
 import de.turnierverwaltung.view.TabAnzeigeView;
 
 public class SpielerAnzahlControl implements ActionListener {
-	private static int pruefeObZahlKleinerDreiIst(int zahl)
-			throws ZahlKleinerAlsN, ZahlGroesserAlsN {
+	private static int pruefeObZahlKleinerDreiIst(int zahl) throws ZahlKleinerAlsN, ZahlGroesserAlsN {
 		if (zahl < 3) {
 			throw new ZahlKleinerAlsN();
 		}
@@ -63,11 +63,9 @@ public class SpielerAnzahlControl implements ActionListener {
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
 
-		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(
-				this.mainControl));
+		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(this.mainControl));
 		this.mainControl.setTabAnzeigeView(new TabAnzeigeView(mainControl));
 		tabbedPaneView = this.mainControl.getTabAnzeigeView();
-
 
 		hauptPanel = this.mainControl.getHauptPanel();
 		gruppenAnzahl = this.mainControl.getTurnier().getAnzahlGruppen();
@@ -80,8 +78,7 @@ public class SpielerAnzahlControl implements ActionListener {
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			spieler[i] = new Spieler[spielerAnzahl[i]];
 			spielerAnzahlView[i] = new SpielerAnzahlView(title[i]);
-			spielerAnzahlTextfield[i] = spielerAnzahlView[i]
-					.getAnzahlSpielerTextField();
+			spielerAnzahlTextfield[i] = spielerAnzahlView[i].getAnzahlSpielerTextField();
 			okButton[i] = spielerAnzahlView[i].getOkButton();
 			okButton[i].addActionListener(this);
 			tabbedPaneView.addTab(title[i], spielerAnzahlView[i]);
@@ -92,15 +89,16 @@ public class SpielerAnzahlControl implements ActionListener {
 		this.mainControl.getNaviController().makeNaviPanel();
 		hauptPanel.add(tabbedPaneView);
 		hauptPanel.setMinimumSize(new Dimension(800, 600));
-//		hauptPanel.setMaximumSize(new Dimension(windowWidth, windowHeight));
 		hauptPanel.updateUI();
+		
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		spielerEingabeControl = new SpielerEingabeControl(mainControl);
-		mainControl.setSpielerEingabeControl(spielerEingabeControl);
-
+		if (mainControl.getSpielerEingabeControl() == null) {
+			spielerEingabeControl = new SpielerEingabeControl(mainControl);
+			mainControl.setSpielerEingabeControl(spielerEingabeControl);
+		}
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			if (arg0.getSource() == okButton[i]) {
 				spielerAnzahl[i] = getSpielerAnzahl(i);
@@ -116,21 +114,19 @@ public class SpielerAnzahlControl implements ActionListener {
 		try {
 			if (spielerAnzahlTextfield[indexI].getText().length() > 0) {
 				try {
-					spielerAnzahl[indexI] = pruefeObZahlKleinerDreiIst(Integer
-							.parseInt(spielerAnzahlTextfield[indexI].getText()));
+					spielerAnzahl[indexI] = pruefeObZahlKleinerDreiIst(
+							Integer.parseInt(spielerAnzahlTextfield[indexI].getText()));
 				} catch (NumberFormatException e) {
 
 					JOptionPane.showMessageDialog(null, "Zahl ist fehlerhaft!");
 					spielerAnzahlTextfield[indexI].setText("");
 					spielerAnzahlTextfield[indexI].grabFocus();
 				} catch (ZahlKleinerAlsN e) {
-					JOptionPane.showMessageDialog(null,
-							"Zahl darf nicht kleiner als 3 sein!");
+					JOptionPane.showMessageDialog(null, "Zahl darf nicht kleiner als 3 sein!");
 					spielerAnzahlTextfield[indexI].setText("");
 					spielerAnzahlTextfield[indexI].grabFocus();
 				} catch (ZahlGroesserAlsN e) {
-					JOptionPane.showMessageDialog(null,
-							"Zahl darf nicht größer als 20 sein!");
+					JOptionPane.showMessageDialog(null, "Zahl darf nicht größer als 20 sein!");
 					spielerAnzahlTextfield[indexI].setText("");
 					spielerAnzahlTextfield[indexI].grabFocus();
 				}
@@ -149,8 +145,7 @@ public class SpielerAnzahlControl implements ActionListener {
 	public void makeNewTab(int indexI) {
 		spieler[indexI] = new Spieler[spielerAnzahl[indexI]];
 		spielerAnzahlView[indexI] = new SpielerAnzahlView(title[indexI]);
-		spielerAnzahlTextfield[indexI] = spielerAnzahlView[indexI]
-				.getAnzahlSpielerTextField();
+		spielerAnzahlTextfield[indexI] = spielerAnzahlView[indexI].getAnzahlSpielerTextField();
 		okButton[indexI] = spielerAnzahlView[indexI].getOkButton();
 		okButton[indexI].addActionListener(this);
 		tabbedPaneView.setComponentAt(indexI, spielerAnzahlView[indexI]);

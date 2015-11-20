@@ -7,7 +7,6 @@ import de.turnierverwaltung.model.SimpleTerminTabelle;
 import de.turnierverwaltung.model.TerminTabelle;
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.model.TurnierKonstanten;
-import de.turnierverwaltung.view.HTMLTabelleView;
 import de.turnierverwaltung.view.SimpleTerminTabelleView;
 import de.turnierverwaltung.view.SimpleTurnierTabelleView;
 import de.turnierverwaltung.view.TabAnzeigeView;
@@ -33,7 +32,6 @@ public class TerminTabelleControl  {
 		this.mainControl.setTerminTabelle(terminTabelle);
 		hauptPanel = mainControl.getHauptPanel();
 		tml = new MyTableModelListener[anzahlGruppen];
-		new HTMLTabelleView();
 
 	}
 

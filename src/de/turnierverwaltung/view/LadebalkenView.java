@@ -18,9 +18,11 @@ public class LadebalkenView extends JDialog {
 	private JProgressBar progressBar;
 	private JPanel panel;
 	private JLabel textLabel;
-	int num = 0;
+	double num = 0;
+	double addNumber;
 
-	public LadebalkenView(String text) {
+	public LadebalkenView(String text, int gruppenAnzahl) {
+		addNumber = 20 / (double)gruppenAnzahl;
 		this.setAlwaysOnTop(true);
 		setTitle("Speichervorgang");
 		
@@ -54,8 +56,10 @@ public class LadebalkenView extends JDialog {
 	}
 
 	public void iterate() {
-		num += 20;
-		progressBar.setValue(num);
+		num += addNumber;
+		
+		int value = (int) Math.round(num);
+		progressBar.setValue(value);
 		progressBar.paint(progressBar.getGraphics());
 		textLabel.paint(textLabel.getGraphics());
 		if (num >= 100) {

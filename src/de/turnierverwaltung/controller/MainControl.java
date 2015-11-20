@@ -351,6 +351,7 @@ public class MainControl extends JFrame {
 		saveTurnierControl = null;
 		spielerLadenControl = null;
 		setNeuesTurnier(false);
+		System.gc();
 		init();
 	}
 

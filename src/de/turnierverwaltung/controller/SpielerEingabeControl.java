@@ -54,6 +54,8 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 	private Spieler[] spieler;
 	private RundenEingabeFormularControl rundenEingabeFormularControl;
 	private ArrayList<Spieler> alleSpieler;
+	private Boolean[] readyToSave;
+
 	public SpielerEingabeControl(MainControl mainControl) {
 		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 25;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 75;
@@ -70,16 +72,17 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 		spielerAnzahl = new int[gruppenAnzahl];
 
 		spielerEingabeView = new SpielerEingabeView[gruppenAnzahl];
+		this.mainControl.setSpielerEingabeView(spielerEingabeView);
 
-		this.mainControl.setSpielerEingabeView(new SpielerEingabeView[gruppenAnzahl]);
 		okButton = new JButton[gruppenAnzahl];
 		cancelButton = new JButton[gruppenAnzahl];
-		gruppenAnzahl = this.mainControl.getTurnierControl().getGruppenAnzahl();
-		spielerEingabeView = new SpielerEingabeView[gruppenAnzahl];
-		this.mainControl.setSpielerEingabeView(spielerEingabeView);
 		rundenEingabeFormularControl = new RundenEingabeFormularControl(this.mainControl);
 		this.mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
+		readyToSave = new Boolean[gruppenAnzahl];
+		for (int i = 0; i < gruppenAnzahl; i++) {
+			readyToSave[i] = false;
 
+		}
 	}
 
 	@Override
@@ -90,11 +93,14 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 		int age = 0;
 		int spielerID = 0;
 		int sAnzahl = 0;
+
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			if (arg0.getSource() == okButton[i]) {
+				SpielerTableControl stc = new SpielerTableControl(mainControl);
+
 				sAnzahl = gruppe[i].getSpielerAnzahl();
 				gruppe[i].setRundenAnzahl(sAnzahl + ((sAnzahl % 2) - 1));
-
+				readyToSave[i] = true;
 				spieler = new Spieler[sAnzahl];
 				for (int y = 0; y < sAnzahl; y++) {
 					spieler[y] = new Spieler();
@@ -109,7 +115,6 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 					spieler[y].setAge(age);
 					if (spielerID >= 0) {
 						spieler[y].setSpielerId(spielerID);
-						SpielerTableControl stc = new SpielerTableControl(mainControl);
 						stc.updateOneSpieler(spieler[y]);
 
 					}
@@ -119,11 +124,11 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 				gruppe[i].setSpieler(spieler);
 				Arrays.sort(spieler);
 				spielerEingabeView[i].removeAll();
-				
-//				rundenEingabeFormularControl.makeRundenEditView(i);
+				// rundenEingabeFormularControl.makeRundenEditView(i);
+
 				rundenEingabeFormularControl.makeTerminTabelle(i);
-				rundenEingabeFormularControl.saveTurnier(i);
-				
+				// rundenEingabeFormularControl.saveTurnier(i);
+
 			}
 			if (arg0.getSource() == cancelButton[i]) {
 				// Custom button text
@@ -167,7 +172,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 				}
 			}
 		}
-//		hauptPanel.updateUI();
+		// hauptPanel.updateUI();
 
 	}
 
@@ -246,4 +251,13 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 			spielerEingabeView[index].getSpielerTextfield()[i].addKeyListener(this);
 		}
 	}
+
+	public Boolean[] getReadyToSave() {
+		return readyToSave;
+	}
+
+	public void setReadyToSave(Boolean[] readyToSave) {
+		this.readyToSave = readyToSave;
+	}
+
 }

@@ -26,7 +26,6 @@ import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.model.TurnierKonstanten;
 import de.turnierverwaltung.model.TurnierTabelle;
-import de.turnierverwaltung.view.HTMLTabelleView;
 import de.turnierverwaltung.view.SimpleTurnierTabelleView;
 import de.turnierverwaltung.view.TabAnzeigeView;
 
@@ -54,7 +53,7 @@ public class TurnierTabelleControl {
 			this.mainControl.setTabAnzeigeView(new TabAnzeigeView(mainControl));
 		}
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
-		tabAnzeigeView.setBackground(new Color(249, 222, 112));
+//		tabAnzeigeView.setBackground(new Color(249, 222, 112));
 		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
 		tabAnzeigeView2 = new TabAnzeigeView[anzahlGruppen];
 		dimension = new Dimension[anzahlGruppen];
@@ -69,7 +68,6 @@ public class TurnierTabelleControl {
 		this.mainControl.setTurnierTabelle(turnierTabelle);
 		this.saveTurnierControl = new SaveTurnierControl(this.mainControl);
 		this.mainControl.setSaveTurnierControl(saveTurnierControl);
-		new HTMLTabelleView();
 		spielerAnzahl = new int[anzahlGruppen];
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
 
