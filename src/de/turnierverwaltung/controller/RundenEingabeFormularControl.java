@@ -259,6 +259,8 @@ public class RundenEingabeFormularControl implements ActionListener {
 			mainControl.getTerminTabelleControl().makeSimpleTableView(index);
 			makeRundenEditView(index);
 		}
+		mainControl.getNaviView().setTabellenname("Turnier: " + mainControl.getTurnier().getTurnierName());
+
 	}
 
 	public Boolean[] getNeuesTurnier() {

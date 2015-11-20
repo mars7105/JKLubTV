@@ -85,7 +85,11 @@ public class NaviController implements ActionListener {
 		if (arg0.getSource() == infoButton) {
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
+
 				mainControl.resetApp();
+				if (SQLiteDAOFactory.getDB_PATH() == null) {
+					mainControl.datenbankMenueView(false);
+				}
 				if (mainControl.getInfoController() == null) {
 					mainControl.setInfoController(new InfoController(this.mainControl));
 				} else {
@@ -100,7 +104,6 @@ public class NaviController implements ActionListener {
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
 				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-				mainControl.getNaviView().getTabellenPanel().setVisible(false);
 				mainControl.resetApp();
 				mainControl.datenbankMenueView(false);
 				String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
