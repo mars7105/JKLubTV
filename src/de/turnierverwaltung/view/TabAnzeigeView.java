@@ -16,54 +16,51 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import de.turnierverwaltung.controller.MainControl;
 
 public class TabAnzeigeView extends JTabbedPane {
-	private MainControl mainControl;
+//	private MainControl mainControl;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
 	public TabAnzeigeView(MainControl mainCtrl) {
-		this.mainControl = mainCtrl;
-		ChangeListener changeListener = new ChangeListener() {
-			public void stateChanged(ChangeEvent changeEvent) {
-				JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
-				
-				int index = sourceTabbedPane.getSelectedIndex();
-				String name = sourceTabbedPane.getTitleAt(index);
-				int tabellennummer = -1;
-				String tabellenname = "";
-				int aktiveGruppe = mainControl.getTabAnzeigeView().getSelectedIndex();
-				TabAnzeigeView tabAnzeigeView;
-				if (mainControl.getTabAnzeigeView2() != null) {
-					tabAnzeigeView = mainControl.getTabAnzeigeView2()[aktiveGruppe];
-					if (tabAnzeigeView.getTabCount() > 0) {
-						
-						tabellennummer = tabAnzeigeView.getSelectedIndex();
-
-						tabellenname = tabAnzeigeView.getTitleAt(tabellennummer);
-						mainControl.getNaviView().setTabellenname(tabellenname);
-//						if (tabellennummer == 2) {
-//							mainControl.getNaviView().getPdfSpeichernButton().setVisible(false);
-//							mainControl.getNaviView().getTabelleHTMLAusgabeButton().setVisible(false);
-//						} else {
-//							mainControl.getNaviView().getPdfSpeichernButton().setVisible(true);
-//							mainControl.getNaviView().getTabelleHTMLAusgabeButton().setVisible(true);
-//						}
-					}
-				}
-				if (sourceTabbedPane == (JTabbedPane)mainControl.getTabAnzeigeView()) {
-					mainControl.getNaviView().setGruppenname(name);
-				}
-
-
-			}
-		};
-		this.addChangeListener(changeListener);
+//		this.mainControl = mainCtrl;
+//		ChangeListener changeListener = new ChangeListener() {
+//			public void stateChanged(ChangeEvent changeEvent) {
+//				JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
+//				
+//				int index = sourceTabbedPane.getSelectedIndex();
+//				String name = sourceTabbedPane.getTitleAt(index);
+//				int tabellennummer = -1;
+//				String tabellenname = "";
+//				int aktiveGruppe = mainControl.getTabAnzeigeView().getSelectedIndex();
+//				TabAnzeigeView tabAnzeigeView;
+//				if (mainControl.getTabAnzeigeView2() != null) {
+//					tabAnzeigeView = mainControl.getTabAnzeigeView2()[aktiveGruppe];
+//					if (tabAnzeigeView.getTabCount() > 0) {
+//						
+//						tabellennummer = tabAnzeigeView.getSelectedIndex();
+//
+//						tabellenname = tabAnzeigeView.getTitleAt(tabellennummer);
+//						mainControl.getNaviView().setTabellenname(tabellenname);
+////						if (tabellennummer == 2) {
+////							mainControl.getNaviView().getPdfSpeichernButton().setVisible(false);
+////							mainControl.getNaviView().getTabelleHTMLAusgabeButton().setVisible(false);
+////						} else {
+////							mainControl.getNaviView().getPdfSpeichernButton().setVisible(true);
+////							mainControl.getNaviView().getTabelleHTMLAusgabeButton().setVisible(true);
+////						}
+//					}
+//				}
+//				if (sourceTabbedPane == (JTabbedPane)mainControl.getTabAnzeigeView()) {
+//					mainControl.getNaviView().setGruppenname(name);
+//				}
+//
+//
+//			}
+//		};
+//		this.addChangeListener(changeListener);
 	}
 }

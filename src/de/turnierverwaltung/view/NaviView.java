@@ -146,6 +146,8 @@ public class NaviView extends JPanel {
 		
 		JPanel dateiPanelLabel = new JPanel();
 		dateiPanelLabel.setBackground(Color.LIGHT_GRAY);
+		dateiPanelLabel.setPreferredSize(new Dimension(200, 30));
+
 		JLabel dateiLabel = new JLabel("Datei");
 		dateiLabel.setBackground(Color.LIGHT_GRAY);
 		dateiPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -158,6 +160,7 @@ public class NaviView extends JPanel {
 
 		JPanel datenbankPanelLabel = new JPanel();
 		datenbankPanelLabel.setBackground(Color.LIGHT_GRAY);
+		datenbankPanelLabel.setPreferredSize(new Dimension(200, 30));
 		JLabel datenbankLabel = new JLabel("Datenbank");
 		datenbankLabel.setBackground(Color.LIGHT_GRAY);
 		datenbankPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -168,8 +171,10 @@ public class NaviView extends JPanel {
 		datenbankPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		JPanel tabellenPanelLabel = new JPanel();
+		tabellenPanelLabel.setPreferredSize(new Dimension(200, 30));
 		tabellenPanelLabel.setBackground(Color.LIGHT_GRAY);
 		tabellenLabel = new JLabel(tabellenname);
+		
 		tabellenPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		tabellenPanelLabel.add(tabellenLabel);
 
@@ -179,36 +184,18 @@ public class NaviView extends JPanel {
 		gruppenPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		gruppenPanelLabel.add(gruppenLabel);
 
-		JPanel turnierTabellenPanel = new JPanel();
-		turnierTabellenPanel.setBackground(Color.LIGHT_GRAY);
-		JLabel turnierTabellenLabel = new JLabel("Tabellen");
-		turnierTabellenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		turnierTabellenPanel.add(turnierTabellenLabel);
 		
-		tabellenPanel.add(turnierTabellenPanel);
+		tabellenPanel.add(tabellenPanelLabel);
 		
 		tabellenPanel.add(panel4c);
 		tabellenPanel.add(panel4d);
-//		tabellenPanel.add(gruppenPanelLabel);
-//		tabellenPanel.add(tabellenPanelLabel);
+
 		tabellenPanel.add(panel4e);
 		tabellenPanel.add(panel4f);
 		tabellenPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		
 		
-//		paarungsPanel = new JPanel();
-//		paarungsPanel.setBackground(Color.LIGHT_GRAY);
-//		BoxLayout paarungsPanelLayout = new BoxLayout(paarungsPanel, BoxLayout.PAGE_AXIS);
-//		paarungsPanel.setLayout(paarungsPanelLayout);
 
-//		JPanel paarungsPanelLabel = new JPanel();
-//		paarungsPanelLabel.setBackground(Color.LIGHT_GRAY);
-//		paarungsLabel = new JLabel(paarungsname);
-//		paarungsPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		paarungsPanelLabel.add(paarungsLabel);
-//		paarungsPanel.add(paarungsPanelLabel);	
-//		paarungsPanel.add(panel4g);
-//		paarungsPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		JPanel panel5 = new JPanel();
 		BoxLayout boxLayout = new BoxLayout(panel5, BoxLayout.Y_AXIS);
 		panel5.setLayout(boxLayout);
@@ -216,30 +203,12 @@ public class NaviView extends JPanel {
 		panel5.add(dateiPanel);
 		panel5.add(datenbankPanel);
 		panel5.add(tabellenPanel);
-//		panel5.add(paarungsPanel);
 		
 		this.add(panel5);
 
 	}
 
-//	public JPanel getPaarungsPanel() {
-//		return paarungsPanel;
-//	}
-//
-//	public void setPaarungsPanel(JPanel paarungsPanel) {
-//		this.paarungsPanel = paarungsPanel;
-//		
-//	}
 
-//	public String getPaarungsname() {
-//		return paarungsname;
-//	}
-//
-//	public void setPaarungsname(String paarungsname) {
-//		this.paarungsname = paarungsname;
-//		paarungsLabel.setText(this.paarungsname);
-//		paarungsLabel.updateUI();
-//	}
 
 	public String getGruppenname() {
 		return gruppenname;

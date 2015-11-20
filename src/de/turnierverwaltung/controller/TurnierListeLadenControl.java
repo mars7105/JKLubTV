@@ -59,39 +59,9 @@ public class TurnierListeLadenControl implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		
+
 		if (turnierEditierenView != null) {
-//			if (arg0.getSource() == turnierEditierenView.getRundenEditierenButton()) {
-//				turnier = turnierListe.get(turnierIndex);
-//				mainControl.setEnabled(true);
-//				turnierEditierenView.dispose();
-//				hauptPanel.removeAll();
-//
-//				tabbedPaneView = new TabAnzeigeView(mainControl);
-//
-//				mainControl.setTabAnzeigeView(tabbedPaneView);
-//				turnier = turnierListe.get(turnierIndex);
-//
-//				mainControl.setTurnier(turnier);
-//				mainControl.setGruppenTableControl(new GruppenTableControl(mainControl));
-//				mainControl.getGruppenTableControl().getGruppe();
-//				mainControl.setSpielerTableControl(new SpielerTableControl(mainControl));
-//				mainControl.getSpielerTableControl().getSpieler();
-//
-//				mainControl.setPartienTableControl(new PartienTableControl(mainControl));
-//				RundenEingabeFormularControl reC = new RundenEingabeFormularControl(mainControl);
-//				for (int p = 0; p < mainControl.getTurnier().getAnzahlGruppen(); p++) {
-//					mainControl.getPartienTableControl().getPartien(p);
-//					tabbedPaneView.insertTab(mainControl.getTurnier().getGruppe()[p].getGruppenName(), null,
-//							new JPanel(), null, p);
-//					reC.makeRundenEditView(p);
-//				}
-//
-//				hauptPanel.removeAll();
-//				hauptPanel.add(tabbedPaneView);
-//				hauptPanel.updateUI();
-//
-//			}
+
 			if (arg0.getSource() == turnierEditierenView.getOkButton()) {
 				String turnierName = turnierEditierenView.getTextFieldTurnierName().getText();
 				String startDatum = turnierEditierenView.getStartDatumTextField().getJFormattedTextField().getText();
@@ -102,7 +72,7 @@ public class TurnierListeLadenControl implements ActionListener {
 				turnierListe.get(turnierIndex).setEndDatum(endDatum);
 
 				turnierTableControl.updateTurnier(turnierListe.get(turnierIndex));
-				
+
 				GruppenTableControl gtC = new GruppenTableControl(mainControl);
 				gtC.getGruppe();
 
@@ -112,7 +82,6 @@ public class TurnierListeLadenControl implements ActionListener {
 					gtC.updateGruppe(i);
 				}
 
-				
 				mainControl.setEnabled(true);
 				turnierEditierenView.dispose();
 				loadTurnier();
@@ -164,8 +133,9 @@ public class TurnierListeLadenControl implements ActionListener {
 				mainControl.setTabAnzeigeView2(tabbedPaneView2);
 				TurnierTabelleControl turnierTabelleControl = new TurnierTabelleControl(mainControl);
 				TerminTabelleControl terminTabelleControl = new TerminTabelleControl(mainControl);
-				RundenEingabeFormularControl rundenEingabeFormularControl = new RundenEingabeFormularControl(mainControl);
-		
+				RundenEingabeFormularControl rundenEingabeFormularControl = new RundenEingabeFormularControl(
+						mainControl);
+
 				mainControl.setTurnierTabelleControl(turnierTabelleControl);
 				mainControl.setTerminTabelleControl(terminTabelleControl);
 				mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
@@ -176,14 +146,15 @@ public class TurnierListeLadenControl implements ActionListener {
 							z);
 					mainControl.getTurnierTabelleControl().makeSimpleTableView(z);
 					mainControl.getTerminTabelleControl().makeSimpleTableView(z);
-					
+
 					mainControl.getRundenEingabeFormularControl().makeRundenEditView(z);
 					mainControl.getTurnierTabelleControl().okAction(z);
 				}
 
 				hauptPanel.removeAll();
 				mainControl.getNaviController().makeNaviPanel();
-				hauptPanel.add(tabbedPaneView,BorderLayout.CENTER);
+				mainControl.getNaviView().setTabellenname("Turnier: " + mainControl.getTurnier().getTurnierName());
+				hauptPanel.add(tabbedPaneView, BorderLayout.CENTER);
 				hauptPanel.updateUI();
 
 			}
@@ -206,17 +177,13 @@ public class TurnierListeLadenControl implements ActionListener {
 					mainControl.getPartienTableControl().getPartien(z);
 				}
 
-
-
 				turnierEditierenView = new TurnierEditierenView(turnierListe.get(i));
 				turnierEditierenView.getOkButton().addActionListener(this);
 				turnierEditierenView.getCancelButton().addActionListener(this);
-//				turnierEditierenView.getRundenEditierenButton().addActionListener(this);
+				// turnierEditierenView.getRundenEditierenButton().addActionListener(this);
 				mainControl.setEnabled(false);
 
 			}
-
-
 
 			// Wichtig:
 			// Diese Abfrage muss an letzter Stelle stehen,
@@ -262,7 +229,7 @@ public class TurnierListeLadenControl implements ActionListener {
 		turnierListeLadenView.getTurnierAddButton().addActionListener(this);
 		hauptPanel.removeAll();
 		mainControl.getNaviController().makeNaviPanel();
-		hauptPanel.add(turnierListeLadenView,BorderLayout.CENTER);
+		hauptPanel.add(turnierListeLadenView, BorderLayout.CENTER);
 		hauptPanel.updateUI();
 	}
 }
