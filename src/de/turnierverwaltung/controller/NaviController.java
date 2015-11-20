@@ -105,6 +105,7 @@ public class NaviController implements ActionListener {
 				mainControl.datenbankMenueView(false);
 				String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
 						JOptionPane.PLAIN_MESSAGE);
+
 				if (filename != null) {
 					filename += ".ktv";
 
@@ -152,7 +153,9 @@ public class NaviController implements ActionListener {
 				}
 			}
 		}
-		if (arg0.getSource() == loaddbButton) {
+		if (arg0.getSource() == loaddbButton)
+
+		{
 
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
@@ -195,7 +198,9 @@ public class NaviController implements ActionListener {
 			}
 
 		}
-		if (arg0.getSource() == turnierListeButton) {
+		if (arg0.getSource() == turnierListeButton)
+
+		{
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
 				mainControl.resetApp();
@@ -210,7 +215,9 @@ public class NaviController implements ActionListener {
 				mainControl.getNaviView().getTabellenPanel().setVisible(false);
 			}
 		}
-		if (arg0.getSource() == spielerListeButton) {
+		if (arg0.getSource() == spielerListeButton)
+
+		{
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
 				mainControl.resetApp();
@@ -226,14 +233,18 @@ public class NaviController implements ActionListener {
 			}
 		}
 
-		if (arg0.getSource() == naviView.getTabelleAktualisierenButton()) {
+		if (arg0.getSource() == naviView.getTabelleAktualisierenButton())
+
+		{
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 			for (int i = 0; i < anzahlGruppen; i++) {
 				this.mainControl.getTurnierTabelleControl().okAction(i);
 			}
 
 		}
-		if (arg0.getSource() == naviView.getTabelleSpeichernButton()) {
+		if (arg0.getSource() == naviView.getTabelleSpeichernButton())
+
+		{
 
 			Boolean ok = this.mainControl.getSaveTurnierControl().saveTurnier();
 			if (ok) {
@@ -252,7 +263,9 @@ public class NaviController implements ActionListener {
 
 		}
 
-		if (arg0.getSource() == naviView.getTabelleHTMLAusgabeButton()) {
+		if (arg0.getSource() == naviView.getTabelleHTMLAusgabeButton())
+
+		{
 			HTMLSaveControler HTMLSave = new HTMLSaveControler(this.mainControl);
 			HTMLSave.saveHTMLFile();
 
