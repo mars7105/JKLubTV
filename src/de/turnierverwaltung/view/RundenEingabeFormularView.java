@@ -305,7 +305,7 @@ public class RundenEingabeFormularView extends JPanel {
 			
 			
 			panel.add(flowPane,BorderLayout.NORTH);
-			tabbedPane.add("Runde: " + zeile[0], panel);
+			tabbedPane.add("Runde: " + (r + 1), panel);
 		}
 		contentPanel.add(tabbedPane, BorderLayout.CENTER);
 		contentPanel.updateUI();

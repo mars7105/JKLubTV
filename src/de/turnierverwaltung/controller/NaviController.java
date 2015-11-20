@@ -76,11 +76,10 @@ public class NaviController implements ActionListener {
 				}
 			}
 		}
-		
+
 		if (arg0.getSource() == pdfButton) {
 			PDFSaveControler pdfsave = new PDFSaveControler(this.mainControl);
 			pdfsave.savePDFFile();
-
 
 		}
 		if (arg0.getSource() == infoButton) {
@@ -240,17 +239,14 @@ public class NaviController implements ActionListener {
 			if (ok) {
 
 				if (mainControl.getTurnierTabelleControl() == null) {
-					TurnierTabelleControl turnierTabelleControl = new TurnierTabelleControl(mainControl);
-					TerminTabelleControl terminTabelleControl = new TerminTabelleControl(mainControl);
-					mainControl.setTurnierTabelleControl(turnierTabelleControl);
-					mainControl.setTerminTabelleControl(terminTabelleControl);
-					turnierTabelleControl.makeSimpleTableView(aktiveGruppe);
-					terminTabelleControl.makeSimpleTableView(aktiveGruppe);
-					mainControl.getRundenEingabeFormularControl().makeRundenEditView(aktiveGruppe);
-				} else {
-					mainControl.getTurnierTabelleControl().makeSimpleTableView(aktiveGruppe);
-					mainControl.getTerminTabelleControl().makeSimpleTableView(aktiveGruppe);
-					mainControl.getRundenEingabeFormularControl().makeRundenEditView(aktiveGruppe);
+					mainControl.setTurnierTabelleControl(new TurnierTabelleControl(mainControl));
+					mainControl.setTerminTabelleControl(new TerminTabelleControl(mainControl));
+				}
+				mainControl.getTurnierTabelleControl().makeSimpleTableView(aktiveGruppe);
+				mainControl.getTerminTabelleControl().makeSimpleTableView(aktiveGruppe);
+				for (int x = 0; x < mainControl.getTurnier().getAnzahlGruppen(); x++) {
+					mainControl.getRundenEingabeFormularControl().changeWerte(x);
+					mainControl.getRundenEingabeFormularControl().makeRundenEditView(x);
 				}
 			}
 
