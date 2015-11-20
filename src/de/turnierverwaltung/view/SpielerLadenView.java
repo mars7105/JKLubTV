@@ -17,6 +17,7 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
@@ -27,6 +28,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+
 
 import de.turnierverwaltung.model.Spieler;
 
@@ -88,16 +90,17 @@ public class SpielerLadenView extends JPanel {
 		spielerBearbeitenButton = new JButton[this.spielerAnzahl];
 		spielerLoeschenButton = new JButton[this.spielerAnzahl];
 		contentPanel = new JPanel();
-		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBackground(new Color(249, 222, 112));
+		contentPanel.setLayout(new BorderLayout());
+//		contentPanel.setBackground(new Color(249, 222, 112));
+		centerPane = new JPanel();
+		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
+		contentPanel.add(centerPane,BorderLayout.NORTH);
 		
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
 //		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		add(scrollPane, BorderLayout.CENTER);
-		centerPane = new JPanel();
-		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
-		contentPanel.add(centerPane);
+
 
 	}
 
@@ -132,10 +135,15 @@ public class SpielerLadenView extends JPanel {
 	public void makeSpielerZeile(Spieler spieler) {
 		line = new JPanel();
 
-		line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
-		line.setBackground(new Color(249, 222, 112));
+//		line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
+		line.setLayout(new FlowLayout(FlowLayout.CENTER));
+		line.setPreferredSize(new Dimension(600,50));
+//		line.setBackground(new Color(249, 222, 112));
 		JPanel playerLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+		playerLine.setPreferredSize(new Dimension(300,50));
+		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		buttonLine.setPreferredSize(new Dimension(300,50));
+
 		JLabel sname = new JLabel("  Spielername: " + spieler.getName());
 		playerLine.add(sname);
 		// JLabel nkuerzel = new JLabel(" Namenskürzel " +

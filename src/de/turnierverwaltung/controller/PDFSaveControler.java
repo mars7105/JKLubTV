@@ -18,7 +18,7 @@ public class PDFSaveControler {
 
 	public void savePDFFile() {
 		int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
-		String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
+		String filename = JOptionPane.showInputDialog(null, "Anfangsname der Dateien : ", "Eine Eingabeaufforderung",
 				JOptionPane.PLAIN_MESSAGE);
 		if (filename != null) {
 			JFileChooser savefile = new JFileChooser();

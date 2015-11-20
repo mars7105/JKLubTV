@@ -17,6 +17,7 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
@@ -54,10 +55,11 @@ public class TurnierListeLadenView extends JPanel {
 	public TurnierListeLadenView(int anzahlTurniere) {
 
 		anzahlElemente = 0;
+		setLayout(new BorderLayout());
 
 		contentPanel = new JPanel();
-		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBackground(new Color(249, 222, 112));
+		contentPanel.setLayout(new BorderLayout());
+//		contentPanel.setBackground(new Color(249, 222, 112));
 		setLayout(new BorderLayout());
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
@@ -72,14 +74,15 @@ public class TurnierListeLadenView extends JPanel {
 		northPanel.add(titlepanel);
 		northPanel.add(newTurnierPanel);
 
-		add(northPanel, BorderLayout.NORTH);
-		add(scrollPane, BorderLayout.CENTER);
+
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
-		contentPanel.add(centerPane);
+		contentPanel.add(centerPane,BorderLayout.NORTH);
 		turnierLadeButton = new JButton[anzahlTurniere];
 		turnierLoeschenButton = new JButton[anzahlTurniere];
 		turnierBearbeitenButton = new JButton[anzahlTurniere];
+		add(northPanel, BorderLayout.NORTH);
+		add(scrollPane, BorderLayout.CENTER);
 	}
 
 	public JButton getTurnierAddButton() {
@@ -105,11 +108,17 @@ public class TurnierListeLadenView extends JPanel {
 	}
 
 	public void makeTurnierZeile(String turnierName, String startDatum, String endDatum) {
-		JPanel turnierLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 		line = new JPanel();
-		line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
-		line.setBackground(new Color(249, 222, 112));
+		line.setLayout(new FlowLayout(FlowLayout.CENTER));
+		line.setPreferredSize(new Dimension(600,50));
+		
+		JPanel turnierLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		turnierLine.setPreferredSize(new Dimension(300,50));
+
+		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		buttonLine.setPreferredSize(new Dimension(300,50));
+
+
 		turnierLadeButton[anzahlElemente] = new JButton("Laden", turnierLaden);
 		buttonLine.add(turnierLadeButton[anzahlElemente]);
 		turnierBearbeitenButton[anzahlElemente] = new JButton("Bearbeiten", turnierProperties);
