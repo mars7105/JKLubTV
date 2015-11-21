@@ -44,19 +44,22 @@ public class SaveTurnierControl {
 	}
 
 	public Boolean saveTurnier() {
-		Boolean ready = true;
-		if (mainControl.getSpielerEingabeControl() != null) {
-			for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
-				if (mainControl.getSpielerEingabeControl().getReadyToSave()[i] == false) {
-					ready = false;
-				}
-			}
-		}
+		// Boolean ready = true;
+		// if (mainControl.getSpielerEingabeControl() != null) {
+		// for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++)
+		// {
+		// if (mainControl.getSpielerEingabeControl().getReadyToSave()[i] ==
+		// false) {
+		// ready = false;
+		// }
+		// }
+		// }
+		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 		if (ready) {
 			for (int x = 0; x < mainControl.getTurnier().getAnzahlGruppen(); x++) {
 				mainControl.getRundenEingabeFormularControl().changeWerte(x);
 				mainControl.getRundenEingabeFormularControl().makeRundenEditView(x);
-			}			
+			}
 			createAndShowGUI();
 			boolean saveOK1 = false;
 			boolean saveOK2 = false;

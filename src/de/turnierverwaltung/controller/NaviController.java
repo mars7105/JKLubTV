@@ -239,9 +239,14 @@ public class NaviController implements ActionListener {
 		if (arg0.getSource() == naviView.getTabelleAktualisierenButton())
 
 		{
-			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
-			for (int i = 0; i < anzahlGruppen; i++) {
-				this.mainControl.getTurnierTabelleControl().okAction(i);
+			Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+			if (ready) {
+				int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
+				for (int i = 0; i < anzahlGruppen; i++) {
+					this.mainControl.getTurnierTabelleControl().okAction(i);
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Erst nach der Eingabe aller Gruppen\n" + "möglich.");
 			}
 
 		}

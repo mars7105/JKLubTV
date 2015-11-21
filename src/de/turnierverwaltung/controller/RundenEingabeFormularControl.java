@@ -103,7 +103,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 						changeColor[index][y].addActionListener(this);
 					}
 				}
-			
+
 			}
 
 		}
@@ -272,4 +272,15 @@ public class RundenEingabeFormularControl implements ActionListener {
 		this.neuesTurnier = neuesTurnier;
 	}
 
+	public Boolean checkNewTurnier() {
+		Boolean ready = true;
+		if (mainControl.getSpielerEingabeControl() != null) {
+			for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
+				if (mainControl.getSpielerEingabeControl().getReadyToSave()[i] == false) {
+					ready = false;
+				}
+			}
+		}
+		return ready;
+	}
 }
