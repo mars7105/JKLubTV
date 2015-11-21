@@ -53,6 +53,10 @@ public class SaveTurnierControl {
 			}
 		}
 		if (ready) {
+			for (int x = 0; x < mainControl.getTurnier().getAnzahlGruppen(); x++) {
+				mainControl.getRundenEingabeFormularControl().changeWerte(x);
+				mainControl.getRundenEingabeFormularControl().makeRundenEditView(x);
+			}			
 			createAndShowGUI();
 			boolean saveOK1 = false;
 			boolean saveOK2 = false;
