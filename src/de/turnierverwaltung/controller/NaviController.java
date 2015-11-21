@@ -248,7 +248,10 @@ public class NaviController implements ActionListener {
 		if (arg0.getSource() == naviView.getTabelleSpeichernButton())
 
 		{
-
+			for (int x = 0; x < mainControl.getTurnier().getAnzahlGruppen(); x++) {
+				mainControl.getRundenEingabeFormularControl().changeWerte(x);
+				mainControl.getRundenEingabeFormularControl().makeRundenEditView(x);
+			}
 			Boolean ok = this.mainControl.getSaveTurnierControl().saveTurnier();
 			if (ok) {
 
@@ -258,10 +261,7 @@ public class NaviController implements ActionListener {
 				}
 				mainControl.getTurnierTabelleControl().makeSimpleTableView(aktiveGruppe);
 				mainControl.getTerminTabelleControl().makeSimpleTableView(aktiveGruppe);
-				for (int x = 0; x < mainControl.getTurnier().getAnzahlGruppen(); x++) {
-					mainControl.getRundenEingabeFormularControl().changeWerte(x);
-					mainControl.getRundenEingabeFormularControl().makeRundenEditView(x);
-				}
+
 			}
 
 		}

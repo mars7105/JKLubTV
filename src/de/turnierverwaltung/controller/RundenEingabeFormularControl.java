@@ -103,6 +103,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 						changeColor[index][y].addActionListener(this);
 					}
 				}
+			
 			}
 
 		}
