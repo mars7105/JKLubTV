@@ -109,13 +109,13 @@ public class TurnierListeLadenView extends JPanel {
 	public void makeTurnierZeile(String turnierName, String startDatum, String endDatum) {
 		line = new JPanel();
 		line.setLayout(new FlowLayout(FlowLayout.CENTER));
-		line.setPreferredSize(new Dimension(600,50));
+		line.setPreferredSize(new Dimension(700,50));
 		
 		JPanel turnierLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		turnierLine.setPreferredSize(new Dimension(300,50));
 
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		buttonLine.setPreferredSize(new Dimension(300,50));
+//		buttonLine.setPreferredSize(new Dimension(300,50));
 
 
 		turnierLadeButton[anzahlElemente] = new JButton("Laden", turnierLaden);

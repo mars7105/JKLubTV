@@ -136,12 +136,12 @@ public class SpielerLadenView extends JPanel {
 
 //		line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
 		line.setLayout(new FlowLayout(FlowLayout.CENTER));
-		line.setPreferredSize(new Dimension(600,50));
+		line.setPreferredSize(new Dimension(700,50));
 //		line.setBackground(new Color(249, 222, 112));
 		JPanel playerLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		playerLine.setPreferredSize(new Dimension(300,50));
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		buttonLine.setPreferredSize(new Dimension(300,50));
+//		buttonLine.setPreferredSize(new Dimension(300,50));
 
 		JLabel sname = new JLabel("  Spielername: " + spieler.getName());
 		playerLine.add(sname);
