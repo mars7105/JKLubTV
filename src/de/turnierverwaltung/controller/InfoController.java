@@ -1,23 +1,13 @@
 package de.turnierverwaltung.controller;
 
 import java.awt.BorderLayout;
-import java.awt.HeadlessException;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+
 import java.net.URISyntaxException;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.text.html.parser.Element;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 
-import com.itextpdf.text.Document;
 
 import de.turnierverwaltung.view.InfoView;
 import de.turnierverwaltung.view.InfoTexteView;

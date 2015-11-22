@@ -1,8 +1,6 @@
 package de.turnierverwaltung.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-
 import javax.swing.JPanel;
 
 public class StandardView extends JPanel {
