@@ -1,8 +1,6 @@
 package de.turnierverwaltung.view;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
-
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -32,13 +30,14 @@ public class SimpleTurnierTabelleView extends JPanel {
 
 	public SimpleTurnierTabelleView(SimpleTurnierTabelle simpleTableModel) {
 
-		//setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));#
+		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));#
 		setLayout(new BorderLayout());
-//		setBackground(new Color(249, 222, 112));
+		// setBackground(new Color(249, 222, 112));
 		table = new JTable(simpleTableModel);
-		
-		Font fnt = new Font("Arial", Font.PLAIN, 16);
-		table.setFont(fnt);
+//		table.setPreferredSize(new Dimension(300, 300));
+//		table.setMinimumSize(new Dimension(200, 200));
+		// Font fnt = new Font("Arial", Font.PLAIN, 16);
+		// table.setFont(fnt);
 
 		comboBox = new JComboBox<String>();
 		comboBox.addItem(" ");
@@ -49,23 +48,23 @@ public class SimpleTurnierTabelleView extends JPanel {
 		comboBox.addItem("+");
 		setColumnWidth();
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-//		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		// table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setRowHeight(20);
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
-//		JPanel haupt = new JPanel();
-//		haupt.setLayout(new BorderLayout());
+		// JPanel haupt = new JPanel();
+		// haupt.setLayout(new BorderLayout());
 		JPanel tabelPanel = new JPanel();
-//		tabelPanel.setLayout(new BoxLayout(tabelPanel, BoxLayout.PAGE_AXIS));
+		// tabelPanel.setLayout(new BoxLayout(tabelPanel, BoxLayout.PAGE_AXIS));
 		tabelPanel.setLayout(new BorderLayout());
-		tabelPanel.add(sPane,BorderLayout.CENTER);
+		tabelPanel.add(sPane, BorderLayout.CENTER);
+
 		JPanel hinweis = new JPanel();
 		hinweis.add(new JLabel(
 				"Geben Sie die Ergebnisse direkt in die Zellen ein " + "und klicken Sie dann auf \"Aktualisieren\"."));
-		tabelPanel.add(hinweis,BorderLayout.SOUTH);
-//		haupt.add(tabelPanel,BorderLayout.CENTER);
-		add(tabelPanel,BorderLayout.CENTER);
-
+		tabelPanel.add(hinweis, BorderLayout.SOUTH);
+		// haupt.add(tabelPanel,BorderLayout.CENTER);
+		add(tabelPanel, BorderLayout.CENTER);
 
 		this.setVisible(true);
 
@@ -107,7 +106,7 @@ public class SimpleTurnierTabelleView extends JPanel {
 				c.setPreferredWidth(small);
 			}
 			if (i >= punkte) {
-				 c.setPreferredWidth(medium);
+				c.setPreferredWidth(medium);
 			}
 
 		}

@@ -135,11 +135,11 @@ public class SpielerLadenView extends JPanel {
 		line = new JPanel();
 
 //		line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
-		line.setLayout(new FlowLayout(FlowLayout.CENTER));
-		line.setPreferredSize(new Dimension(700,50));
+		line.setLayout(new FlowLayout(FlowLayout.LEFT));
+//		line.setPreferredSize(new Dimension(700,50));
 //		line.setBackground(new Color(249, 222, 112));
 		JPanel playerLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		playerLine.setPreferredSize(new Dimension(300,50));
+		playerLine.setPreferredSize(new Dimension(350,50));
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 //		buttonLine.setPreferredSize(new Dimension(300,50));
 

@@ -1,5 +1,6 @@
 package de.turnierverwaltung.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -59,6 +60,7 @@ public class NaviView extends JPanel {
 		this.setBackground(Color.LIGHT_GRAY);
 		EmptyBorder eBorder = new EmptyBorder(5, 5, 5, 5);
 		this.setBorder(eBorder);
+		this.setLayout(new BorderLayout());
 		newDatabseButton = new JButton("Neue Datenbank", dbNewIcon);
 		newDatabseButton.setPreferredSize(new Dimension(200, 40));
 		newDatabseButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -203,8 +205,9 @@ public class NaviView extends JPanel {
 		panel5.add(dateiPanel);
 		panel5.add(datenbankPanel);
 		panel5.add(tabellenPanel);
-		
-		this.add(panel5);
+//		JScrollPane scrollPane = new JScrollPane();
+//		scrollPane.setViewportView(panel5);
+		this.add(panel5,BorderLayout.NORTH);
 
 	}
 

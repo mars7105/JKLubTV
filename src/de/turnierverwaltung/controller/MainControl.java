@@ -102,9 +102,9 @@ public class MainControl extends JFrame {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
 		windowHeight = TurnierKonstanten.WINDOW_HEIGHT;
 		setBounds(TurnierKonstanten.WINDOW_BOUNDS_X, TurnierKonstanten.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
-		setMinimumSize(new Dimension(windowWidth, windowHeight));
-		setMaximumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
-		setBackground(new Color(126, 201, 208));
+		setMinimumSize(new Dimension(windowWidth / 2, windowHeight / 2));
+//		setMaximumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
+//		setBackground(new Color(126, 201, 208));
 		setTitle("Klubturnierverwaltung");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		init();

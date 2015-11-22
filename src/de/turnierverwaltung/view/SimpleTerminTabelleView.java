@@ -16,7 +16,6 @@ import java.awt.BorderLayout;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.Color;
-import java.awt.Font;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -31,6 +30,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
+
 
 import de.turnierverwaltung.model.SimpleTerminTabelle;
 import de.turnierverwaltung.model.TurnierKonstanten;
@@ -81,8 +81,9 @@ public class SimpleTerminTabelleView extends JPanel {
 //		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setLayout(new BorderLayout());
 		table = new JTable(this.simpleTerminTabelle);
-		Font fnt = new Font("Arial", Font.PLAIN, 16);
-		table.setFont(fnt);
+//		table.setMinimumSize(new Dimension(500,500));
+//		Font fnt = new Font("Arial", Font.PLAIN, 16);
+//		table.setFont(fnt);
 		comboBox = new JComboBox<String>();
 		comboBox.addItem(" ");
 		comboBox.addItem("0 - 1");
