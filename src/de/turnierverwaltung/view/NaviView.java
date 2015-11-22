@@ -58,8 +58,8 @@ public class NaviView extends JPanel {
 
 	public NaviView() {
 		this.setBackground(Color.LIGHT_GRAY);
-		EmptyBorder eBorder = new EmptyBorder(5, 5, 5, 5);
-		this.setBorder(eBorder);
+//		EmptyBorder eBorder = new EmptyBorder(5, 5, 5, 5);
+//		this.setBorder(eBorder);
 		this.setLayout(new BorderLayout());
 		newDatabseButton = new JButton("Neue Datenbank", dbNewIcon);
 		newDatabseButton.setPreferredSize(new Dimension(200, 40));
@@ -205,8 +205,7 @@ public class NaviView extends JPanel {
 		panel5.add(dateiPanel);
 		panel5.add(datenbankPanel);
 		panel5.add(tabellenPanel);
-//		JScrollPane scrollPane = new JScrollPane();
-//		scrollPane.setViewportView(panel5);
+	
 		this.add(panel5,BorderLayout.NORTH);
 
 	}

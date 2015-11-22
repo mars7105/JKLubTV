@@ -12,6 +12,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -60,7 +61,9 @@ public class NaviController implements ActionListener {
 
 	public void makeNaviPanel() {
 		JPanel hauptPanel = this.mainControl.getHauptPanel();
-		hauptPanel.add(naviView, BorderLayout.WEST);
+		JScrollPane scrollPane = new JScrollPane ();
+		scrollPane.setViewportView(naviView);
+		hauptPanel.add(scrollPane, BorderLayout.WEST);
 
 		hauptPanel.updateUI();
 	}
