@@ -189,4 +189,5 @@ public class SQLiteGruppenDAO implements GruppenDAO {
 		}
 		return ok;
 	}
+	
 }

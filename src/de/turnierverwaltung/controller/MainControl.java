@@ -2,11 +2,14 @@ package de.turnierverwaltung.controller;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import de.turnierverwaltung.model.PaarungsTafeln;
+import de.turnierverwaltung.model.Partie;
 import de.turnierverwaltung.model.SimpleTerminTabelle;
 import de.turnierverwaltung.model.SimpleTurnierTabelle;
 import de.turnierverwaltung.model.TerminTabelle;
@@ -79,7 +82,8 @@ public class MainControl extends JFrame {
 	private InfoController infoController;
 	private TitleView titleView;
 	private Boolean neuesTurnier;
-
+	private ArrayList<Partie> changedPartien;
+	
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
 		windowHeight = TurnierKonstanten.WINDOW_HEIGHT;
@@ -105,6 +109,14 @@ public class MainControl extends JFrame {
 		} else {
 			this.setTitle("Klubturnierverwaltung ");
 		}
+	}
+
+	public ArrayList<Partie> getChangedPartien() {
+		return changedPartien;
+	}
+
+	public void setChangedPartien(ArrayList<Partie> changedPartien) {
+		this.changedPartien = changedPartien;
 	}
 
 	public Boolean getNeuesTurnier() {

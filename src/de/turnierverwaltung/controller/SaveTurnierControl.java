@@ -1,5 +1,7 @@
 package de.turnierverwaltung.controller;
 
+import java.util.ArrayList;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -17,6 +19,10 @@ package de.turnierverwaltung.controller;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import javax.swing.JOptionPane;
 
+import de.turnierverwaltung.model.Partie;
+import de.turnierverwaltung.model.TurnierKonstanten;
+import de.turnierverwaltung.mysql.DAOFactory;
+import de.turnierverwaltung.mysql.PartienDAO;
 import de.turnierverwaltung.view.LadebalkenView;
 
 public class SaveTurnierControl {
@@ -43,23 +49,57 @@ public class SaveTurnierControl {
 		ladebalkenView.setVisible(true);
 	}
 
-	public Boolean saveTurnier() {
-		// Boolean ready = true;
-		// if (mainControl.getSpielerEingabeControl() != null) {
-		// for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++)
-		// {
-		// if (mainControl.getSpielerEingabeControl().getReadyToSave()[i] ==
-		// false) {
-		// ready = false;
-		// }
-		// }
-		// }
+	public Boolean saveChangedPartien() {
+		Boolean ready = false;
+
+		if (mainControl.getNeuesTurnier()) {
+			ready = saveNewTurnier();
+			mainControl.setNeuesTurnier(false);
+			return ready;
+		} else {
+			ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+			if (ready) {
+				ArrayList<Partie> changedPartien;
+				if (this.mainControl.getChangedPartien() == null) {
+					JOptionPane.showMessageDialog(null, "Fehler: Turnier "
+							+ this.mainControl.getTurnier().getTurnierName() + " wurde nicht gespeichert!");
+					return false;
+				} else {
+					changedPartien = this.mainControl.getChangedPartien();
+
+				}
+
+				this.mainControl.setPartienTableControl(new PartienTableControl(this.mainControl));
+
+				boolean saved = false;
+				DAOFactory daoFactory = DAOFactory.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
+				PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
+
+				saved = mySQLPartienDAO.updatePartien(changedPartien);
+				changedPartien.clear();
+				if (saved) {
+					JOptionPane.showMessageDialog(null,
+							"Turnier " + this.mainControl.getTurnier().getTurnierName() + " wurde gespeichert! \n");
+					return true;
+				} else {
+
+					JOptionPane.showMessageDialog(null, "Fehler: Turnier "
+							+ this.mainControl.getTurnier().getTurnierName() + " wurde nicht gespeichert!");
+					return false;
+				}
+			} else {
+				JOptionPane.showMessageDialog(null,
+						"Erst nach der Eingabe aller Gruppen\n" + "kann gespeichert werden.");
+				return false;
+			}
+		}
+	}
+
+	public Boolean saveNewTurnier() {
+
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 		if (ready) {
-			for (int x = 0; x < mainControl.getTurnier().getAnzahlGruppen(); x++) {
-				mainControl.getRundenEingabeFormularControl().changeWerte(x);
-				mainControl.getRundenEingabeFormularControl().makeRundenEditView(x);
-			}
+
 			createAndShowGUI();
 			boolean saveOK1 = false;
 			boolean saveOK2 = false;

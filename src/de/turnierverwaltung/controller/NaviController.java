@@ -256,8 +256,8 @@ public class NaviController implements ActionListener {
 		if (arg0.getSource() == naviView.getTabelleSpeichernButton())
 
 		{
-
-			Boolean ok = this.mainControl.getSaveTurnierControl().saveTurnier();
+			Boolean ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
+//			Boolean ok = this.mainControl.getSaveTurnierControl().saveTurnier();
 			if (ok) {
 
 				if (mainControl.getTurnierTabelleControl() == null) {
@@ -266,7 +266,7 @@ public class NaviController implements ActionListener {
 				}
 				mainControl.getTurnierTabelleControl().makeSimpleTableView(aktiveGruppe);
 				mainControl.getTerminTabelleControl().makeSimpleTableView(aktiveGruppe);
-
+				
 			}
 
 		}

@@ -17,10 +17,13 @@ package de.turnierverwaltung.controller;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JPanel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+
+import de.turnierverwaltung.model.Partie;
 import de.turnierverwaltung.model.SimpleTurnierTabelle;
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.model.Turnier;
@@ -42,6 +45,7 @@ public class TurnierTabelleControl {
 	private MyTableModelListener tml[];
 	private Dimension dimension[];
 	private int[] spielerAnzahl;
+	private ArrayList<Partie> changedPartien;
 	
 	public TurnierTabelleControl(MainControl mainControl) {
 		
@@ -70,7 +74,13 @@ public class TurnierTabelleControl {
 		this.mainControl.setSaveTurnierControl(saveTurnierControl);
 		spielerAnzahl = new int[anzahlGruppen];
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
-
+		if (this.mainControl.getChangedPartien() == null) {
+			changedPartien = new ArrayList<Partie>();
+			this.mainControl.setChangedPartien(changedPartien);
+		} else {
+			changedPartien = this.mainControl.getChangedPartien();
+			
+		}
 
 	}
 
@@ -276,6 +286,8 @@ public class TurnierTabelleControl {
 
 						updatePunkteCol(colCount - 3);
 						updateSoBergCol(colCount - 2);
+						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
+
 					}
 
 					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss() == spy
@@ -284,6 +296,8 @@ public class TurnierTabelleControl {
 
 						updatePunkteCol(colCount - 3);
 						updateSoBergCol(colCount - 2);
+						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
+
 					}
 				}
 			}
