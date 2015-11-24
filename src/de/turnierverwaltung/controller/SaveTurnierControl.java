@@ -54,7 +54,9 @@ public class SaveTurnierControl {
 
 		if (mainControl.getNeuesTurnier()) {
 			ready = saveNewTurnier();
-			mainControl.setNeuesTurnier(false);
+			if (ready) {
+				mainControl.setNeuesTurnier(false);
+			}
 			return ready;
 		} else {
 			ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
