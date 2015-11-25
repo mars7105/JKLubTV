@@ -7,6 +7,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -257,15 +259,14 @@ public class NaviController implements ActionListener {
 
 		{
 			Boolean ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
-			
+
 			if (ok) {
 				int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 				for (int i = 0; i < anzahlGruppen; i++) {
 					this.mainControl.getTurnierTabelleControl().okAction(i);
-				}
-				if (mainControl.getTurnierTabelleControl() == null) {
-					mainControl.setTurnierTabelleControl(new TurnierTabelleControl(mainControl));
-					mainControl.setTerminTabelleControl(new TerminTabelleControl(mainControl));
+
+					Arrays.sort(mainControl.getTurnier().getGruppe()[i].getPartien());
+					mainControl.getRundenEingabeFormularControl().makeNewFormular(i);
 				}
 				mainControl.getTurnierTabelleControl().makeSimpleTableView(aktiveGruppe);
 				mainControl.getTerminTabelleControl().makeSimpleTableView(aktiveGruppe);

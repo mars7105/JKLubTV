@@ -46,18 +46,18 @@ public class TurnierTabelleControl {
 	private Dimension dimension[];
 	private int[] spielerAnzahl;
 	private ArrayList<Partie> changedPartien;
-	
+
 	public TurnierTabelleControl(MainControl mainControl) {
-		
+
 		this.mainControl = mainControl;
-		
+
 		hauptPanel = this.mainControl.getHauptPanel();
 
 		if (this.mainControl.getTabAnzeigeView() == null) {
 			this.mainControl.setTabAnzeigeView(new TabAnzeigeView(mainControl));
 		}
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
-//		tabAnzeigeView.setBackground(new Color(249, 222, 112));
+		// tabAnzeigeView.setBackground(new Color(249, 222, 112));
 		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
 		tabAnzeigeView2 = new TabAnzeigeView[anzahlGruppen];
 		dimension = new Dimension[anzahlGruppen];
@@ -79,12 +79,10 @@ public class TurnierTabelleControl {
 			this.mainControl.setChangedPartien(changedPartien);
 		} else {
 			changedPartien = this.mainControl.getChangedPartien();
-			
+
 		}
 
 	}
-
-
 
 	public void enableDatenbankMenu() {
 		boolean enableSaveMenu = false;
@@ -133,19 +131,27 @@ public class TurnierTabelleControl {
 		updatePunkteCol(this.turnierTabelle[gruppenNummer].getSpalte() - 3, gruppenNummer);
 		updateSoBergCol(this.turnierTabelle[gruppenNummer].getSpalte() - 2, gruppenNummer);
 		updatePlatzCol(this.turnierTabelle[gruppenNummer].getSpalte() - 1, gruppenNummer);
-		
+
 		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
 		simpleTableView[gruppenNummer].setPreferredSize(dimension[gruppenNummer]);
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() < 1) {
 			tabAnzeigeView2[gruppenNummer].insertTab("Turniertabelle", null, simpleTableView[gruppenNummer], null, 0);
-			
+
 		} else {
 
 			tabAnzeigeView2[gruppenNummer].setComponentAt(0, simpleTableView[gruppenNummer]);
 		}
-		
+
 		mainControl.setSimpleTableView(simpleTableView);
-		tabAnzeigeView.setComponentAt(gruppenNummer, tabAnzeigeView2[gruppenNummer]);
+		if (tabAnzeigeView.getTabCount() < 1) {
+			tabAnzeigeView.insertTab(turnier.getGruppe()[gruppenNummer].getGruppenName(), null, tabAnzeigeView2[gruppenNummer], null, gruppenNummer);
+
+		} else {
+
+			tabAnzeigeView.setComponentAt(gruppenNummer, tabAnzeigeView2[gruppenNummer]);
+		}
+		// tabAnzeigeView.setComponentAt(gruppenNummer,
+		// tabAnzeigeView2[gruppenNummer]);
 
 		hauptPanel.updateUI();
 		enableDatenbankMenu();
