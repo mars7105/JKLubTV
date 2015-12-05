@@ -26,11 +26,12 @@ Dieses Programm nutzt verschiedene freie Bibliotheken:
     https://bitbucket.org/xerial/sqlite-jdbc/downloads
 
 3. IText 5.5.6 
-    für die Erstellung der PDF Dateien
+    für die Erstellung der PDF Dateien.
     http://itextpdf.com/
 
 4. Bilder: Open Icon Library
     http://sourceforge.net/projects/openiconlibrary/
 
-5. Java API von Peter Fahsel -> dewis.jar\n Zugriff auf DWZ-Listen mit Java.
+5. Java API von Peter Fahsel -> dewis.jar
+   Zugriff auf DWZ-Listen mit Java.
    http://www.schachbund.de/api.html
