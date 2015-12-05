@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import de.turnierverwaltung.model.PaarungsTafeln;
@@ -83,6 +84,7 @@ public class MainControl extends JFrame {
 	private TitleView titleView;
 	private Boolean neuesTurnier;
 	private ArrayList<Partie> changedPartien;
+	private PropertiesControl propertiesControl;
 
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
@@ -95,7 +97,8 @@ public class MainControl extends JFrame {
 		setTitle("Klubturnierverwaltung");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		init();
-		datenbankMenueView(false);
+		makeProperties();
+
 		setNeuesTurnier(false);
 	}
 
@@ -110,6 +113,14 @@ public class MainControl extends JFrame {
 		} else {
 			this.setTitle("Klubturnierverwaltung ");
 		}
+	}
+
+	public SpielerLadenControl getSpielerLadenControl() {
+		return spielerLadenControl;
+	}
+
+	public void setSpielerLadenControl(SpielerLadenControl spielerLadenControl) {
+		this.spielerLadenControl = spielerLadenControl;
 	}
 
 	public ArrayList<Partie> getChangedPartien() {
@@ -311,6 +322,40 @@ public class MainControl extends JFrame {
 		} else {
 			this.getInfoController().makeInfoPanel();
 		}
+
+	}
+
+	private void makeProperties() {
+		datenbankMenueView(false);
+		propertiesControl = new PropertiesControl();
+		if (propertiesControl.readProperties() == false) {
+			if (propertiesControl.writeProperties() == false) {
+				JOptionPane.showMessageDialog(null, "Einstellungen des Programms können nicht gespeichert werden.");
+			}
+		} else {
+			if (propertiesControl.checkPath() == true) {
+				datenbankMenueView(true);
+				String path = propertiesControl.getProperties("Path");
+				SQLiteDAOFactory.setDB_PATH(path);
+				this.datenbankMenueView(true);
+				if (this.getTurnierTableControl() == null) {
+					this.setTurnierTableControl(new TurnierTableControl(this));
+					this.getTurnierTableControl().loadTurnierListe();
+					this.setTurnierListeLadenControl(new TurnierListeLadenControl(this));
+					this.getTurnierListeLadenControl().loadTurnier();
+					naviView.setPathToDatabase(new JLabel(path));
+
+				} else {
+					this.resetApp();
+					this.setTurnierTableControl(new TurnierTableControl(this));
+					this.getTurnierTableControl().loadTurnierListe();
+					this.setTurnierListeLadenControl(new TurnierListeLadenControl(this));
+					this.getTurnierListeLadenControl().loadTurnier();
+					naviView.setPathToDatabase(new JLabel(path));
+				}
+
+			}
+		}
 	}
 
 	public void resetApp() {
@@ -353,6 +398,14 @@ public class MainControl extends JFrame {
 		setNeuesTurnier(false);
 		System.gc();
 		init();
+	}
+
+	public PropertiesControl getPropertiesControl() {
+		return propertiesControl;
+	}
+
+	public void setPropertiesControl(PropertiesControl propertiesControl) {
+		this.propertiesControl = propertiesControl;
 	}
 
 	public void setGruppenControl(GruppenControl gruppenControl) {

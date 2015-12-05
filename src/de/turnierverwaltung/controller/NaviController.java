@@ -152,6 +152,9 @@ public class NaviController implements ActionListener {
 								mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
 								mainControl.getTurnierListeLadenControl().loadTurnier();
 							}
+							mainControl.getPropertiesControl().setProperties("Path", SQLiteDAOFactory.getDB_PATH());
+							mainControl.getPropertiesControl().writeProperties();
+
 						} catch (IOException e) {
 							JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
 						}
@@ -198,7 +201,8 @@ public class NaviController implements ActionListener {
 						mainControl.getTurnierListeLadenControl().loadTurnier();
 						naviView.setPathToDatabase(new JLabel(file.getPath()));
 					}
-
+					mainControl.getPropertiesControl().setProperties("Path", SQLiteDAOFactory.getDB_PATH());
+					mainControl.getPropertiesControl().writeProperties();
 				} else {
 					JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
 				}
