@@ -19,7 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 
-public class InfoTexteView {
+public class InfoLizenzenView {
 
 	private URI datepickerUri;
 	private JButton buttonDatePicker;

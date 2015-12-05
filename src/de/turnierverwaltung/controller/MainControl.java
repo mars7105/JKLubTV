@@ -83,14 +83,15 @@ public class MainControl extends JFrame {
 	private TitleView titleView;
 	private Boolean neuesTurnier;
 	private ArrayList<Partie> changedPartien;
-	
+
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
 		windowHeight = TurnierKonstanten.WINDOW_HEIGHT;
 		setBounds(TurnierKonstanten.WINDOW_BOUNDS_X, TurnierKonstanten.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
 		setMinimumSize(new Dimension(windowWidth / 2, windowHeight / 2));
-//		setMaximumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
-//		setBackground(new Color(126, 201, 208));
+		// setMaximumSize(new
+		// Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
+		// setBackground(new Color(126, 201, 208));
 		setTitle("Klubturnierverwaltung");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		init();
@@ -101,7 +102,7 @@ public class MainControl extends JFrame {
 	public void datenbankMenueView(Boolean enable) {
 		menueControl.setDatenbankMenue(enable);
 		naviView.getDatenbankPanel().setVisible(enable);
-		
+
 		naviView.setPathToDatabase(new JLabel(menueControl.getFileName()));
 		naviView.updateUI();
 		if (enable == true) {
@@ -293,18 +294,23 @@ public class MainControl extends JFrame {
 		this.hauptPanel.setLayout(new BorderLayout());
 		standardView = new StandardView();
 		titleView = new TitleView();
-		
+
 		naviController = new NaviController(this);
 		menueView = new MenueView();
 		menueControl = new MenueControl(this);
 		setJMenuBar(menueView.getJMenuBar());
 		setContentPane(hauptPanel);
 
-		standardView.add(titleView,BorderLayout.NORTH);
+		standardView.add(titleView, BorderLayout.NORTH);
 		hauptPanel.add(standardView, BorderLayout.CENTER);
 		hauptPanel.updateUI();
 		setEnabled(true);
 		setVisible(true);
+		if (this.getInfoController() == null) {
+			this.setInfoController(new InfoController(this));
+		} else {
+			this.getInfoController().makeInfoPanel();
+		}
 	}
 
 	public void resetApp() {
@@ -524,7 +530,5 @@ public class MainControl extends JFrame {
 	public void setRundenEingabeFormularControl(RundenEingabeFormularControl rundenEingabeFormularControl) {
 		this.rundenEingabeFormularControl = rundenEingabeFormularControl;
 	}
-
-
 
 }
