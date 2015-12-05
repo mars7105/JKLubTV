@@ -73,8 +73,7 @@ public class MenueControl implements ActionListener {
 		if (arg0.getSource() == turnierMenue.getMntmSpeichern()) {
 
 			@SuppressWarnings("unused")
-			Boolean ok = this.mainControl.getSaveTurnierControl().saveTurnier();
-			
+			Boolean ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
 
 
 		}

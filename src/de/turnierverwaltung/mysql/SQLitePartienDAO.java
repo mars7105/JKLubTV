@@ -204,4 +204,44 @@ public class SQLitePartienDAO implements PartienDAO {
 		}
 		return ok;
 	}
+	public boolean updatePartien(ArrayList<Partie> partien) {
+		Partie partie;
+		boolean ok = false;
+		PreparedStatement preStm = null;
+		
+		if (this.dbConnect != null) {
+			try {
+				this.dbConnect.setAutoCommit(false);
+
+				String sql = "update partien set idSpielerWeiss = ?, idSpielerSchwarz = ?"
+						+ ", Runde = ?, Ergebnis = ?, Spieldatum = ? where idPartie = ?;";
+				// + "COMMIT;";
+
+				preStm = this.dbConnect.prepareStatement(sql);
+				for(Partie ausgabe : partien) {
+					partie = ausgabe;
+
+					preStm.setInt(1, partie.getSpielerWeiss().getSpielerId());
+					preStm.setInt(2, partie.getSpielerSchwarz().getSpielerId());
+					preStm.setInt(3, partie.getRunde());
+					preStm.setInt(4, partie.getErgebnis());
+					preStm.setString(5, partie.getSpielDatum());
+					preStm.setInt(6,partie.getPartieId());
+					preStm.addBatch();
+
+				}
+				
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
+				preStm.close();
+				ok = true;
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, e.getMessage());
+
+			}
+		}
+		return ok;
+	}
 }

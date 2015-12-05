@@ -40,6 +40,8 @@ public class TurnierTabelleView extends JPanel {
 	}
 
 	public void makePanel() {
+//		this.setMinimumSize(new Dimension(500,500));
+
 //		setBackground(new Color(249, 222, 112));
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());

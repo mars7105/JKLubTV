@@ -17,10 +17,13 @@ package de.turnierverwaltung.controller;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.Color;
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.Arrays;
 import javax.swing.JPanel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+
+import de.turnierverwaltung.model.Partie;
 import de.turnierverwaltung.model.SimpleTurnierTabelle;
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.model.Turnier;
@@ -42,18 +45,19 @@ public class TurnierTabelleControl {
 	private MyTableModelListener tml[];
 	private Dimension dimension[];
 	private int[] spielerAnzahl;
-	
+	private ArrayList<Partie> changedPartien;
+
 	public TurnierTabelleControl(MainControl mainControl) {
-		
+
 		this.mainControl = mainControl;
-		
+
 		hauptPanel = this.mainControl.getHauptPanel();
 
 		if (this.mainControl.getTabAnzeigeView() == null) {
 			this.mainControl.setTabAnzeigeView(new TabAnzeigeView(mainControl));
 		}
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
-//		tabAnzeigeView.setBackground(new Color(249, 222, 112));
+		// tabAnzeigeView.setBackground(new Color(249, 222, 112));
 		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
 		tabAnzeigeView2 = new TabAnzeigeView[anzahlGruppen];
 		dimension = new Dimension[anzahlGruppen];
@@ -70,11 +74,15 @@ public class TurnierTabelleControl {
 		this.mainControl.setSaveTurnierControl(saveTurnierControl);
 		spielerAnzahl = new int[anzahlGruppen];
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
+		if (this.mainControl.getChangedPartien() == null) {
+			changedPartien = new ArrayList<Partie>();
+			this.mainControl.setChangedPartien(changedPartien);
+		} else {
+			changedPartien = this.mainControl.getChangedPartien();
 
+		}
 
 	}
-
-
 
 	public void enableDatenbankMenu() {
 		boolean enableSaveMenu = false;
@@ -123,19 +131,27 @@ public class TurnierTabelleControl {
 		updatePunkteCol(this.turnierTabelle[gruppenNummer].getSpalte() - 3, gruppenNummer);
 		updateSoBergCol(this.turnierTabelle[gruppenNummer].getSpalte() - 2, gruppenNummer);
 		updatePlatzCol(this.turnierTabelle[gruppenNummer].getSpalte() - 1, gruppenNummer);
-		
+
 		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
 		simpleTableView[gruppenNummer].setPreferredSize(dimension[gruppenNummer]);
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() < 1) {
 			tabAnzeigeView2[gruppenNummer].insertTab("Turniertabelle", null, simpleTableView[gruppenNummer], null, 0);
-			
+
 		} else {
 
 			tabAnzeigeView2[gruppenNummer].setComponentAt(0, simpleTableView[gruppenNummer]);
 		}
-		
+
 		mainControl.setSimpleTableView(simpleTableView);
-		tabAnzeigeView.setComponentAt(gruppenNummer, tabAnzeigeView2[gruppenNummer]);
+		if (tabAnzeigeView.getTabCount() < 1) {
+			tabAnzeigeView.insertTab(turnier.getGruppe()[gruppenNummer].getGruppenName(), null, tabAnzeigeView2[gruppenNummer], null, gruppenNummer);
+
+		} else {
+
+			tabAnzeigeView.setComponentAt(gruppenNummer, tabAnzeigeView2[gruppenNummer]);
+		}
+		// tabAnzeigeView.setComponentAt(gruppenNummer,
+		// tabAnzeigeView2[gruppenNummer]);
 
 		hauptPanel.updateUI();
 		enableDatenbankMenu();
@@ -276,6 +292,8 @@ public class TurnierTabelleControl {
 
 						updatePunkteCol(colCount - 3);
 						updateSoBergCol(colCount - 2);
+						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
+
 					}
 
 					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss() == spy
@@ -284,6 +302,8 @@ public class TurnierTabelleControl {
 
 						updatePunkteCol(colCount - 3);
 						updateSoBergCol(colCount - 2);
+						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
+
 					}
 				}
 			}

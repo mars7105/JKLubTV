@@ -1,8 +1,12 @@
 package de.turnierverwaltung.controller;
 
+import java.util.ArrayList;
+
 import javax.swing.JPanel;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+
+import de.turnierverwaltung.model.Partie;
 import de.turnierverwaltung.model.SimpleTerminTabelle;
 import de.turnierverwaltung.model.TerminTabelle;
 import de.turnierverwaltung.model.Turnier;
@@ -21,6 +25,8 @@ public class TerminTabelleControl  {
 	private JPanel hauptPanel;
 	private Turnier turnier;
 	private MyTableModelListener tml[];
+	private ArrayList<Partie> changedPartien;
+	
 	public TerminTabelleControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		this.turnier = mainControl.getTurnier();
@@ -32,7 +38,13 @@ public class TerminTabelleControl  {
 		this.mainControl.setTerminTabelle(terminTabelle);
 		hauptPanel = mainControl.getHauptPanel();
 		tml = new MyTableModelListener[anzahlGruppen];
-
+		if (this.mainControl.getChangedPartien() == null) {
+			changedPartien = new ArrayList<Partie>();
+			this.mainControl.setChangedPartien(changedPartien);
+		} else {
+			changedPartien = this.mainControl.getChangedPartien();
+			
+		}
 	}
 
 

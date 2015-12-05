@@ -7,11 +7,14 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Arrays;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -60,7 +63,9 @@ public class NaviController implements ActionListener {
 
 	public void makeNaviPanel() {
 		JPanel hauptPanel = this.mainControl.getHauptPanel();
-		hauptPanel.add(naviView, BorderLayout.WEST);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportView(naviView);
+		hauptPanel.add(scrollPane, BorderLayout.WEST);
 
 		hauptPanel.updateUI();
 	}
@@ -85,7 +90,11 @@ public class NaviController implements ActionListener {
 		if (arg0.getSource() == infoButton) {
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
+
 				mainControl.resetApp();
+				if (SQLiteDAOFactory.getDB_PATH() == null) {
+					mainControl.datenbankMenueView(false);
+				}
 				if (mainControl.getInfoController() == null) {
 					mainControl.setInfoController(new InfoController(this.mainControl));
 				} else {
@@ -100,7 +109,6 @@ public class NaviController implements ActionListener {
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
 				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-				mainControl.getNaviView().getTabellenPanel().setVisible(false);
 				mainControl.resetApp();
 				mainControl.datenbankMenueView(false);
 				String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
@@ -236,29 +244,33 @@ public class NaviController implements ActionListener {
 		if (arg0.getSource() == naviView.getTabelleAktualisierenButton())
 
 		{
-			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
-			for (int i = 0; i < anzahlGruppen; i++) {
-				this.mainControl.getTurnierTabelleControl().okAction(i);
+			Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+			if (ready) {
+				int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
+				for (int i = 0; i < anzahlGruppen; i++) {
+					this.mainControl.getTurnierTabelleControl().okAction(i);
+				}
+			} else {
+				JOptionPane.showMessageDialog(null, "Erst nach der Eingabe aller Gruppen\n" + "möglich.");
 			}
 
 		}
 		if (arg0.getSource() == naviView.getTabelleSpeichernButton())
 
 		{
+			Boolean ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
 
-			Boolean ok = this.mainControl.getSaveTurnierControl().saveTurnier();
 			if (ok) {
+				int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
+				for (int i = 0; i < anzahlGruppen; i++) {
+					this.mainControl.getTurnierTabelleControl().okAction(i);
 
-				if (mainControl.getTurnierTabelleControl() == null) {
-					mainControl.setTurnierTabelleControl(new TurnierTabelleControl(mainControl));
-					mainControl.setTerminTabelleControl(new TerminTabelleControl(mainControl));
+					Arrays.sort(mainControl.getTurnier().getGruppe()[i].getPartien());
+					mainControl.getRundenEingabeFormularControl().makeNewFormular(i);
 				}
 				mainControl.getTurnierTabelleControl().makeSimpleTableView(aktiveGruppe);
 				mainControl.getTerminTabelleControl().makeSimpleTableView(aktiveGruppe);
-				for (int x = 0; x < mainControl.getTurnier().getAnzahlGruppen(); x++) {
-					mainControl.getRundenEingabeFormularControl().changeWerte(x);
-					mainControl.getRundenEingabeFormularControl().makeRundenEditView(x);
-				}
+
 			}
 
 		}
@@ -286,7 +298,10 @@ public class NaviController implements ActionListener {
 					JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
 		}
+		if (abfrage == 0) {
+			mainControl.setNeuesTurnier(false);
 
+		}
 		return abfrage;
 	}
 }

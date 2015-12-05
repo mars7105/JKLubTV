@@ -1,30 +1,15 @@
 package de.turnierverwaltung.controller;
 
 import java.awt.BorderLayout;
-//JKlubTV - Ein Programm zum verwalten von Schach Turnieren
-//Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
-//
-//This program is free software: you can redistribute it and/or modify
-//it under the terms of the GNU General Public License as published by
-//the Free Software Foundation, either version 3 of the License, or
-//(at your option) any later version.
-//
-//This program is distributed in the hope that it will be useful,
-//but WITHOUT ANY WARRANTY; without even the implied warranty of
-//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//GNU General Public License for more details.
-//
-//You should have received a copy of the GNU General Public License
-//along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import de.turnierverwaltung.model.PaarungsTafeln;
+import de.turnierverwaltung.model.Partie;
 import de.turnierverwaltung.model.SimpleTerminTabelle;
 import de.turnierverwaltung.model.SimpleTurnierTabelle;
 import de.turnierverwaltung.model.TerminTabelle;
@@ -97,14 +82,15 @@ public class MainControl extends JFrame {
 	private InfoController infoController;
 	private TitleView titleView;
 	private Boolean neuesTurnier;
-
+	private ArrayList<Partie> changedPartien;
+	
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
 		windowHeight = TurnierKonstanten.WINDOW_HEIGHT;
 		setBounds(TurnierKonstanten.WINDOW_BOUNDS_X, TurnierKonstanten.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
-		setMinimumSize(new Dimension(windowWidth, windowHeight));
-		setMaximumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
-		setBackground(new Color(126, 201, 208));
+		setMinimumSize(new Dimension(windowWidth / 2, windowHeight / 2));
+//		setMaximumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
+//		setBackground(new Color(126, 201, 208));
 		setTitle("Klubturnierverwaltung");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		init();
@@ -123,6 +109,14 @@ public class MainControl extends JFrame {
 		} else {
 			this.setTitle("Klubturnierverwaltung ");
 		}
+	}
+
+	public ArrayList<Partie> getChangedPartien() {
+		return changedPartien;
+	}
+
+	public void setChangedPartien(ArrayList<Partie> changedPartien) {
+		this.changedPartien = changedPartien;
 	}
 
 	public Boolean getNeuesTurnier() {

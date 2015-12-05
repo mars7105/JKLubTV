@@ -187,4 +187,10 @@ public class MySQLPartienDAO implements PartienDAO {
 		return ok;
 	}
 
+	@Override
+	public boolean updatePartien(ArrayList<Partie> changedPartien) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

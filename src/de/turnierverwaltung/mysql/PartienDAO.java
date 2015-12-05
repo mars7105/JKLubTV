@@ -31,5 +31,6 @@ public interface PartienDAO {
 	public ArrayList<Partie> selectAllPartien(int idGruppe);
 
 	public boolean updatePartien(Partie[] parties);
+	public boolean updatePartien(ArrayList<Partie> changedPartien);
 	
 }
