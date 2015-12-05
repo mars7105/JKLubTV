@@ -7,8 +7,6 @@ Die Software ist kostenlos (Opensource).
 benötigte Java Librarys:
 JDatePicker 1.3.4.jar http://jdatepicker.org/
 
-mysql-connector-java-5.1.36-bin.jar http://mvnrepository.com/artifact/mysql/mysql-connector-java
-
 sqlite-jdbc 3.8.11.1 https://bitbucket.org/xerial/sqlite-jdbc/downloads
 
 itextpdf-5.5.6.jar http://itextpdf.com/
@@ -27,16 +25,12 @@ Dieses Programm nutzt verschiedene freie Bibliotheken:
     für die Speicherung im SQLite Format.
     https://bitbucket.org/xerial/sqlite-jdbc/downloads
 
-3. MySQL Connector -> mysql-connector-java-5.1.36-bin.jar
-    für zukünftige Änderungen.
-    http://mvnrepository.com/artifact/mysql/mysql-connector-java
-
-4. IText 5.5.6 
+3. IText 5.5.6 
     für die Erstellung der PDF Dateien
     http://itextpdf.com/
 
-5. Bilder: Open Icon Library
+4. Bilder: Open Icon Library
     http://sourceforge.net/projects/openiconlibrary/
 
-6. Java API von Peter Fahsel -> dewis.jar\n Zugriff auf DWZ-Listen mit Java.
+5. Java API von Peter Fahsel -> dewis.jar\n Zugriff auf DWZ-Listen mit Java.
    http://www.schachbund.de/api.html
