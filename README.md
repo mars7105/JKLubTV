@@ -15,6 +15,8 @@ itextpdf-5.5.6.jar http://itextpdf.com/
 
 Open Icon Library http://sourceforge.net/projects/openiconlibrary/
 
+dewis.jar http://www.schachbund.de/api.html
+
 Dieses Programm nutzt verschiedene freie Bibliotheken:
 
 1. JDatePicker -> jdatepicker-1.3.4.jar
@@ -35,3 +37,6 @@ Dieses Programm nutzt verschiedene freie Bibliotheken:
 
 5. Bilder: Open Icon Library
     http://sourceforge.net/projects/openiconlibrary/
+
+6. Java API von Peter Fahsel -> dewis.jar\n Zugriff auf DWZ-Listen mit Java.
+   http://www.schachbund.de/api.html
