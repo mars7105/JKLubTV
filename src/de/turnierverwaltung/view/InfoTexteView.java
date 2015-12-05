@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -11,10 +12,12 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTextArea;
 
 public class InfoTexteView {
 
@@ -28,6 +31,12 @@ public class InfoTexteView {
 	private JButton buttoniText;
 	private URI openIconUri;
 	private JButton buttonopenIcon;
+	private URI emailUri;
+	private JButton buttonemailUri;
+	private URI dewisUri;
+	private JButton buttondewisUri;
+	private ImageIcon logoImg = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Logo.png")));
 
 	class OpenUrlAction implements ActionListener {
 		@Override
@@ -47,7 +56,12 @@ public class InfoTexteView {
 			if (e.getSource() == buttonopenIcon) {
 				open(openIconUri);
 			}
-
+			if (e.getSource() == buttonemailUri) {
+				open(emailUri);
+			}
+			if (e.getSource() == buttondewisUri) {
+				open(dewisUri);
+			}
 		}
 
 	}
@@ -60,6 +74,42 @@ public class InfoTexteView {
 		// panel.add(new JLabel("Dieses Programm nutzt verschiedene freie
 		// Bibliotheken:\n"));
 		JPanel temp = new JPanel();
+		temp.setBackground(Color.WHITE);
+		temp.setLayout(new BoxLayout(temp,BoxLayout.X_AXIS));
+//		temp.add(new JLabel(logoImg));
+		JTextArea lizenzLabel = new JTextArea("JKlubTV ist freie Software, Sie können sie weitergeben und/oder \n"
+				+ "verändern, solange Sie sich an die Regeln der \n"
+				+ "GNU General Public License halten, so wie sie von \n"
+				+ "der Free Software Foundation festgelegt wurden;\n" 
+				+ "entweder in Version 3 der Lizenz oder \n"
+				+ "(nach Ihrem Ermessen) in jeder folgenden Version.\n"
+				+ "JKlubTV wurde in der Hoffnung veröffentlicht,\n" 
+				+ "dass Sie es als nützlich empfinden,\n"
+				+ "jedoch OHNE JEGLICHE GARANTIE AUF FUNKTIONSFÄHIGKEIT\n" + ""
+				+ "UND OHNE RECHTSANSPRUCH BEI FEHLERHAFTEM VERHALTEN\n" 
+				+ "DER SOFTWARE. Lesen Sie die GNU General Public License\n" 
+				+ "für weiterführende Informationen."
+				+ "\n\n" 
+				+ "Erstellt von: Martin Schmuck m_schmuck@gmx.net\n");
+		emailUri = new URI("http://mamuck.de/");
+		buttonemailUri = new JButton();
+//		buttonemailUri.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
+		buttonemailUri.add(new JLabel(logoImg));
+		buttonemailUri.setOpaque(false);
+		buttonemailUri.setToolTipText(emailUri.toString());
+		buttonemailUri.addActionListener(new OpenUrlAction());		
+		temp.add(buttonemailUri);
+		JPanel temp2 = new JPanel();
+		temp2.setBackground(Color.WHITE);
+		temp2.setLayout(new FlowLayout(FlowLayout.LEFT));
+		temp2.add(lizenzLabel);
+		temp.add(temp2);
+		panel.add(temp);
+		panel.add(new JSeparator());
+
+
+		
+		temp = new JPanel();
 		temp.setBackground(Color.WHITE);
 		temp.setLayout(new FlowLayout(FlowLayout.LEFT));
 		temp.add(new JLabel("Dieses Programm nutzt verschiedene freie Bibliotheken:\n"));
@@ -85,6 +135,7 @@ public class InfoTexteView {
 		temp.add(labelDatePicker);
 		panel.add(temp);
 		panel.add(new JSeparator());
+		
 		sqLiteUri = new URI("https://bitbucket.org/xerial/sqlite-jdbc/downloads");
 
 		JLabel labelSQlite = new JLabel(
@@ -147,12 +198,28 @@ public class InfoTexteView {
 		temp.add(labeliText);
 		panel.add(temp);
 		panel.add(new JSeparator());
-		// panel.add(labeliText);
-		// panel.add(buttoniText);
+		dewisUri = new URI("http://www.schachbund.de/api.html");
+		buttondewisUri = new JButton();
+		JLabel labeldewis = new JLabel();
+		labeldewis.setText("5. Java API von Peter Fahsel -> dewis.jar\n Zugriff auf DWZ-Listen mit Java.\n");
+		buttondewisUri.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
+		
+		buttondewisUri.setOpaque(false);
+		buttondewisUri.setToolTipText(datepickerUri.toString());
+		buttondewisUri.addActionListener(new OpenUrlAction());
+		temp = new JPanel();
+		temp.setBackground(Color.WHITE);
+		temp.setLayout(new FlowLayout(FlowLayout.LEFT));
 
+		temp.add(buttondewisUri);
+		temp.add(labeldewis);
+		panel.add(temp);
+		panel.add(new JSeparator());
+		
+		
 		openIconUri = new URI("http://sourceforge.net/projects/openiconlibrary/");
 		JLabel openIconPicker = new JLabel(
-				"5. Bilder: Open Icon Library\nhttp://sourceforge.net/projects/openiconlibrary/\n");
+				"6. Bilder: Open Icon Library\nhttp://sourceforge.net/projects/openiconlibrary/\n");
 		buttonopenIcon = new JButton();
 		buttonopenIcon.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
 		// buttonopenIcon.setHorizontalAlignment(SwingConstants.LEFT);

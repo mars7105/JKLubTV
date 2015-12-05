@@ -1,20 +1,4 @@
 package de.turnierverwaltung.view;
-//JKlubTV - Ein Programm zum verwalten von Schach Turnieren
-//Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
-//
-//This program is free software: you can redistribute it and/or modify
-//it under the terms of the GNU General Public License as published by
-//the Free Software Foundation, either version 3 of the License, or
-//(at your option) any later version.
-//
-//This program is distributed in the hope that it will be useful,
-//but WITHOUT ANY WARRANTY; without even the implied warranty of
-//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//GNU General Public License for more details.
-//
-//You should have received a copy of the GNU General Public License
-//along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 
@@ -56,18 +40,18 @@ public class SpielerEditierenView extends JDialog {
 
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-		contentPanel.setBackground(new Color(249, 222, 112));
+//		contentPanel.setBackground(new Color(249, 222, 112));
 
 		JPanel centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		centerPane.setBackground(new Color(249, 222, 112));
+//		centerPane.setBackground(new Color(249, 222, 112));
 		textFieldName.setText(spieler.getName());
 		JLabel label = new JLabel();
 		label.setPreferredSize(new Dimension(120,10));
 		label.setText("Name: ");
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		centerPane.setBackground(new Color(249, 222, 112));
+//		centerPane.setBackground(new Color(249, 222, 112));
 		centerPane.add(label);
 		centerPane.add(textFieldName);
 		contentPanel.add(centerPane);
@@ -77,7 +61,7 @@ public class SpielerEditierenView extends JDialog {
 		label.setText("Kürzel: ");
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		centerPane.setBackground(new Color(249, 222, 112));
+//		centerPane.setBackground(new Color(249, 222, 112));
 		centerPane.add(label);
 		centerPane.add(textFieldKuerzel);
 		contentPanel.add(centerPane);
@@ -88,7 +72,7 @@ public class SpielerEditierenView extends JDialog {
 		label.setText("DWZ: ");
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		centerPane.setBackground(new Color(249, 222, 112));
+//		centerPane.setBackground(new Color(249, 222, 112));
 		centerPane.add(label);
 		centerPane.add(textFieldDwz);
 		contentPanel.add(centerPane);
@@ -101,14 +85,14 @@ public class SpielerEditierenView extends JDialog {
 		label.setText("Alter: ");
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		centerPane.setBackground(new Color(249, 222, 112));
+//		centerPane.setBackground(new Color(249, 222, 112));
 		centerPane.add(label);
 		centerPane.add(textComboBoxAge);
 		contentPanel.add(centerPane);
 	
 		buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout());
-		buttonPane.setBackground(new Color(249, 222, 112));
+//		buttonPane.setBackground(new Color(249, 222, 112));
 		buttonPane.add(okButton);
 		buttonPane.add(cancelButton);
 
