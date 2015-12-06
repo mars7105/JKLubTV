@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -19,10 +20,13 @@ public class DewisDialogControl implements ListSelectionListener, ActionListener
 	private DEWISDialogView dialog;
 	private SpielerDewisView spielerDewisView;
 	private ArrayList<Spieler> players;
+	private int frage;
 
 	public DewisDialogControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
+		frage = -1;
+
 	}
 
 	public void makeDWZLste() {
@@ -41,7 +45,9 @@ public class DewisDialogControl implements ListSelectionListener, ActionListener
 			dialog.setDsbPanel(spielerDewisView);
 			mainControl.getPropertiesControl().setProperties("zps", zps);
 			mainControl.getPropertiesControl().writeProperties();
+			dialog.getUpdateButton().setEnabled(true);
 		} else {
+			dialog.getUpdateButton().setEnabled(false);
 			JLabel noItemLabel = new JLabel("keine Spieler gefunden.");
 			JPanel noItemPanel = new JPanel();
 			noItemPanel.add(noItemLabel);
@@ -59,6 +65,8 @@ public class DewisDialogControl implements ListSelectionListener, ActionListener
 
 			dialog = new DEWISDialogView();
 			dialog.getVereinsSucheButton().addActionListener(this);
+			dialog.getUpdateButton().addActionListener(this);
+			dialog.getUpdateButton().setEnabled(false);
 			dialog.getOkButton().addActionListener(this);
 			dialog.getCancelButton().addActionListener(this);
 			dialog.getOkButton().setEnabled(false);
@@ -100,18 +108,71 @@ public class DewisDialogControl implements ListSelectionListener, ActionListener
 		if (arg0.getSource() == dialog.getOkButton()) {
 			int[] indices = spielerDewisView.getList().getSelectedIndices();
 			mainControl.setEnabled(true);
-			dialog.closeWindow();
+
 			if (players != null) {
 				for (int i = 0; i < indices.length; i++) {
 					Spieler neuerSpieler = new Spieler();
 					neuerSpieler = players.get(indices[i]);
-					SpielerTableControl stc = new SpielerTableControl(mainControl);
-					neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-					mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+					Boolean findPlayer = searchSpieler(neuerSpieler);
+					if (findPlayer == false) {
+						SpielerTableControl stc = new SpielerTableControl(mainControl);
+						neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+						mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+					}
 				}
 			}
+			dialog.closeWindow();
 			mainControl.getSpielerLadenControl().makePanel();
 		}
+		if (arg0.getSource() == dialog.getUpdateButton()) {
+			frage = 0;
+			for (Spieler player : players) {
+				searchSpieler(player);
 
+			}
+			frage = -1;
+			dialog.closeWindow();
+			mainControl.setEnabled(true);
+			mainControl.getSpielerLadenControl().makePanel();
+		}
+	}
+
+	private Boolean searchSpieler(Spieler neuerSpieler) {
+		ArrayList<Spieler> spieler = mainControl.getSpielerLadenControl().getSpieler();
+
+		for (Spieler player : spieler) {
+			if (player.getName().compareTo(neuerSpieler.getName()) == 0) {
+				if (player.getDWZ() != neuerSpieler.getDWZ()) {
+					if (frage != 0) {
+						frage = abfrage(neuerSpieler);
+					}
+					if (frage == 0) {
+						SpielerTableControl stc = new SpielerTableControl(mainControl);
+						neuerSpieler.setSpielerId(player.getSpielerId());
+						stc.updateOneSpieler(neuerSpieler);
+					}
+				} else {
+					if (frage != 0) {
+						JOptionPane.showMessageDialog(null,
+								"Spieler " + neuerSpieler.getName() + " ist schon vorhanden.");
+					}
+				}
+				return true;
+			}
+		}
+		return false;
+
+	}
+
+	private int abfrage(Spieler spieler) {
+		int abfrage = 0;
+		String hinweisText = spieler.getName() + " ist bereits vorhanden. Möchten Sie die neue DWZ übernehmen?";
+
+		// Custom button text
+		Object[] options = { "Ja, für alle Spieler", "Nein" };
+		abfrage = JOptionPane.showOptionDialog(null, hinweisText, "Meldung", JOptionPane.YES_NO_CANCEL_OPTION,
+				JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+
+		return abfrage;
 	}
 }
