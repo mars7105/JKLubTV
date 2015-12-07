@@ -128,19 +128,19 @@ public class RundenEingabeFormularControl implements ActionListener {
 					changeWerte(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
 					changedGroups[index][NaviController.PAARUNGSTABELLE] = NaviController.STANDARD;
-					int selectedTab = rundenEingabeFormularView[index].getTabbedPane().getSelectedIndex();
+//					int selectedTab = rundenEingabeFormularView[index].getTabbedPane().getSelectedIndex();
 
-					makeNewFormular(index);
-					rundenEingabeFormularView[index].getTabbedPane().setSelectedIndex(selectedTab);
+//					makeNewFormular(index);
+//					rundenEingabeFormularView[index].getTabbedPane().setSelectedIndex(selectedTab);
 
 				}
 				if (arg0.getSource() == rundenNummer[index][i]) {
 					changeWerte(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
 					changedGroups[index][NaviController.PAARUNGSTABELLE] = NaviController.SORTIEREN;
-					int selectedTab = rundenEingabeFormularView[index].getTabbedPane().getSelectedIndex();
-					makeNewFormular(index);
-					rundenEingabeFormularView[index].getTabbedPane().setSelectedIndex(selectedTab);
+//					int selectedTab = rundenEingabeFormularView[index].getTabbedPane().getSelectedIndex();
+//					makeNewFormular(index);
+//					rundenEingabeFormularView[index].getTabbedPane().setSelectedIndex(selectedTab);
 
 				}
 			}
