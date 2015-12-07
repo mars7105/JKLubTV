@@ -23,6 +23,15 @@ import de.turnierverwaltung.view.NaviView;
 
 public class NaviController implements ActionListener {
 
+	public static final int TURNIERTABELLE = 0;
+	public static final int TERMINTABELLE = 1;
+	public static final int PAARUNGSTABELLE = 2;
+	public static final int STANDARD = 1;
+
+	public static final int SORTIEREN = 2;
+
+
+
 	private MainControl mainControl;
 	private JButton spielerListeButton;
 	private JButton turnierListeButton;
@@ -152,6 +161,9 @@ public class NaviController implements ActionListener {
 								mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
 								mainControl.getTurnierListeLadenControl().loadTurnier();
 							}
+							mainControl.getPropertiesControl().setProperties("Path", SQLiteDAOFactory.getDB_PATH());
+							mainControl.getPropertiesControl().writeProperties();
+
 						} catch (IOException e) {
 							JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
 						}
@@ -198,7 +210,8 @@ public class NaviController implements ActionListener {
 						mainControl.getTurnierListeLadenControl().loadTurnier();
 						naviView.setPathToDatabase(new JLabel(file.getPath()));
 					}
-
+					mainControl.getPropertiesControl().setProperties("Path", SQLiteDAOFactory.getDB_PATH());
+					mainControl.getPropertiesControl().writeProperties();
 				} else {
 					JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
 				}
@@ -244,12 +257,10 @@ public class NaviController implements ActionListener {
 		if (arg0.getSource() == naviView.getTabelleAktualisierenButton())
 
 		{
-			Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
-			if (ready) {
-				int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
-				for (int i = 0; i < anzahlGruppen; i++) {
-					this.mainControl.getTurnierTabelleControl().okAction(i);
-				}
+			Boolean ok = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+			if (ok) {
+				makeNewTables();
+
 			} else {
 				JOptionPane.showMessageDialog(null, "Erst nach der Eingabe aller Gruppen\n" + "möglich.");
 			}
@@ -261,15 +272,7 @@ public class NaviController implements ActionListener {
 			Boolean ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
 
 			if (ok) {
-				int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
-				for (int i = 0; i < anzahlGruppen; i++) {
-					this.mainControl.getTurnierTabelleControl().okAction(i);
-
-					Arrays.sort(mainControl.getTurnier().getGruppe()[i].getPartien());
-					mainControl.getRundenEingabeFormularControl().makeNewFormular(i);
-				}
-				mainControl.getTurnierTabelleControl().makeSimpleTableView(aktiveGruppe);
-				mainControl.getTerminTabelleControl().makeSimpleTableView(aktiveGruppe);
+				makeNewTables();
 
 			}
 
@@ -283,6 +286,29 @@ public class NaviController implements ActionListener {
 
 		}
 
+	}
+
+	private void makeNewTables() {
+		int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
+		for (int i = 0; i < anzahlGruppen; i++) {
+			for (int x = 0; x < 3; x++) {
+				int changedGroups = mainControl.getRundenEingabeFormularControl().getChangedGroups()[i][x];
+				if (changedGroups >= STANDARD) {
+					this.mainControl.getTurnierTabelleControl().okAction(i);
+
+					if (x == PAARUNGSTABELLE) {
+						if (changedGroups == SORTIEREN) {
+							Arrays.sort(mainControl.getTurnier().getGruppe()[i].getPartien());
+						}
+						mainControl.getRundenEingabeFormularControl().makeNewFormular(i);
+					}
+					mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
+					mainControl.getTerminTabelleControl().makeSimpleTableView(i);
+					mainControl.getRundenEingabeFormularControl().getChangedGroups()[i][x] = 0;
+				}
+
+			}
+		}
 	}
 
 	private int warnHinweis() {

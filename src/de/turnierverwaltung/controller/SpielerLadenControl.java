@@ -22,37 +22,29 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-import de.turnierverwaltung.model.DewisClub;
 import de.turnierverwaltung.model.Spieler;
-import de.turnierverwaltung.view.DEWISDialogView;
-import de.turnierverwaltung.view.SpielerDewisView;
 import de.turnierverwaltung.view.SpielerEditierenView;
 import de.turnierverwaltung.view.SpielerHinzufuegenView;
 import de.turnierverwaltung.view.SpielerLadenView;
 import de.turnierverwaltung.view.TabAnzeigeView;
 
-public class SpielerLadenControl implements ActionListener, ListSelectionListener {
+public class SpielerLadenControl implements ActionListener {
 	private MainControl mainControl;
 	private TabAnzeigeView tabbedPaneView;
 	private JPanel hauptPanel;
 	private int spielerAnzahl;
 	private SpielerLadenView spielerLadenView;
 	private ArrayList<Spieler> spieler;
-	private ArrayList<Spieler> players;
 	private SpielerTableControl spielerTableControl;
 	private SpielerEditierenView spielerEditierenView;
 	private SpielerHinzufuegenView spielerHinzufuegenView;
-	private DEWISDialogView dialog;
+	private DewisDialogControl dewisDialogControl;
 	private int spielerIndex;
-	private SpielerDewisView spielerDewisView;
 
 	public SpielerLadenControl(MainControl mainControl) {
 		this.mainControl = mainControl;
+		dewisDialogControl = new DewisDialogControl(this.mainControl);
 
 	}
 
@@ -75,66 +67,9 @@ public class SpielerLadenControl implements ActionListener, ListSelectionListene
 			mainControl.setEnabled(false);
 		}
 		if (arg0.getSource() == spielerLadenView.getSpielerDEWISSearchButton()) {
-			try {
-				mainControl.setEnabled(false);
-				dialog = new DEWISDialogView();
-				dialog.getVereinsSucheButton().addActionListener(this);
-				dialog.getOkButton().addActionListener(this);
-				dialog.getCancelButton().addActionListener(this);
-				dialog.getOkButton().setEnabled(false);
-			} catch (Exception e) {
-				mainControl.setEnabled(true);
-			}
+			dewisDialogControl.makeDialog();
 		}
-		if (dialog != null) {
-			if (arg0.getSource() == dialog.getVereinsSucheButton()) {
 
-				String zps = dialog.getVereinsSuche().getText();
-				DewisClub verein = new DewisClub(zps);
-				players = new ArrayList<Spieler>();
-				players = verein.getSpieler();
-				if (players != null) {
-					spielerDewisView = new SpielerDewisView(players.size());
-					for (Spieler player : players) {
-						spielerDewisView.makeSpielerZeile(player);
-					}
-					spielerDewisView.makeList();
-					spielerDewisView.updateUI();
-					spielerDewisView.getList().addListSelectionListener(this);
-					dialog.setDsbPanel(spielerDewisView);
-				} else {
-					JLabel noItemLabel = new JLabel("keine Spieler gefunden.");
-					JPanel noItemPanel = new JPanel();
-					noItemPanel.add(noItemLabel);
-					dialog.setDsbPanel(noItemPanel);
-
-				}
-				dialog.pack();
-				dialog.getButtonPanel().updateUI();
-				dialog.getContentPanel().updateUI();
-
-			}
-			if (arg0.getSource() == dialog.getCancelButton()) {
-				mainControl.setEnabled(true);
-				dialog.closeWindow();
-				makePanel();
-			}
-			if (arg0.getSource() == dialog.getOkButton()) {
-				int[] indices = spielerDewisView.getList().getSelectedIndices();
-				mainControl.setEnabled(true);
-				dialog.closeWindow();
-				if (players != null) {
-					for (int i = 0; i < indices.length; i++) {
-						Spieler neuerSpieler = new Spieler();
-						neuerSpieler = players.get(indices[i]);
-						SpielerTableControl stc = new SpielerTableControl(mainControl);
-						neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-						spieler.add(neuerSpieler);
-					}
-				}
-				makePanel();
-			}
-		}
 		if (spielerHinzufuegenView != null) {
 			if (arg0.getSource() == spielerHinzufuegenView.getOkButton()) {
 				String name = spielerHinzufuegenView.getTextFieldName().getText();
@@ -258,18 +193,12 @@ public class SpielerLadenControl implements ActionListener, ListSelectionListene
 
 	}
 
-	public void valueChanged(ListSelectionEvent e) {
-		if (e.getValueIsAdjusting() == false) {
+	public ArrayList<Spieler> getSpieler() {
+		return spieler;
+	}
 
-			if (spielerDewisView.getList().getSelectedIndex() == -1) {
-				// No selection, disable fire button.
-				dialog.getOkButton().setEnabled(false);
-
-			} else {
-				// Selection, enable the fire button.
-				dialog.getOkButton().setEnabled(true);
-			}
-		}
+	public void setSpieler(ArrayList<Spieler> spieler) {
+		this.spieler = spieler;
 	}
 
 }

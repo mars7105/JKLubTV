@@ -31,6 +31,7 @@ public class DEWISDialogView extends JDialog {
 	private JButton vereinsSucheButton;
 	private JButton okButton;
 	private JButton cancelButton;
+	private JButton updateButton;
 	private JPanel buttonPanel;
 	private URI dwzdbURI;
 	private JButton dwzdbButton;
@@ -82,10 +83,13 @@ public class DEWISDialogView extends JDialog {
 
 		contentPanel.add(suchePanel, BorderLayout.NORTH);
 		dsbPanel = new JPanel();
+		updateButton = new JButton("Update DWZ");
 		okButton = new JButton("Einfügen");
 		cancelButton = new JButton("Abbrechen");
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		buttonPanel.add(updateButton);
+
 		buttonPanel.add(okButton);
 		buttonPanel.add(cancelButton);
 //		buttonPanel.setVisible(false);
@@ -177,6 +181,14 @@ public class DEWISDialogView extends JDialog {
 
 	public JPanel getContentPanel() {
 		return contentPanel;
+	}
+
+	public JButton getUpdateButton() {
+		return updateButton;
+	}
+
+	public void setUpdateButton(JButton updateButton) {
+		this.updateButton = updateButton;
 	}
 
 }

@@ -25,7 +25,6 @@ public class InfoView extends JPanel {
 	public InfoView() {
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
-//		contentPanel.setBackground(new Color(249, 222, 112));
 		setLayout(new BorderLayout());
 		
 		JLabel titleLabel = new JLabel("Informationen zum Programm");
@@ -34,10 +33,8 @@ public class InfoView extends JPanel {
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.PAGE_AXIS));
 		titlepanel.add(titleLabel);
-//		lizenzenButton = new JButton("Lizenzen");
-//		topPanel.add(lizenzenButton);
+
 		lizenzenPane = new JTabbedPane();
-//		topPanel.add(lizenzenPane);
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(lizenzenPane);
 		northPanel.add(titlepanel);
@@ -47,7 +44,6 @@ public class InfoView extends JPanel {
 		add(scrollPane, BorderLayout.CENTER);
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
-//		centerPane.add(textArea);
 		contentPanel.add(centerPane);
 
 		
@@ -58,12 +54,7 @@ public class InfoView extends JPanel {
 	public void setTextArea(JTextArea textArea) {
 		this.textArea = textArea;
 	}
-//	public JButton getLizenzenButton() {
-//		return lizenzenButton;
-//	}
-//	public void setLizenzenButton(JButton lizenzenButton) {
-//		this.lizenzenButton = lizenzenButton;
-//	}
+
 	public JTabbedPane getLizenzenPane() {
 		return lizenzenPane;
 	}

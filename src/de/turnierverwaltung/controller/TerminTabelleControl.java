@@ -95,6 +95,8 @@ public class TerminTabelleControl  {
 
 		@Override
 		public void tableChanged(TableModelEvent e) {
+			mainControl.getRundenEingabeFormularControl().getChangedGroups()[gruppenNummer][NaviController.TERMINTABELLE] = NaviController.STANDARD;
+
 
 			int row = e.getFirstRow();
 			int col = e.getColumn();

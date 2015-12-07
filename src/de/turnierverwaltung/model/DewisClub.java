@@ -1,6 +1,7 @@
 package de.turnierverwaltung.model;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,15 +45,23 @@ public class DewisClub {
 			for (Player player : players) {
 				int id = -1;
 
-				String name = player.getFirstName().charAt(0) + ". " + player.getLastName();
-				String kuerzel = player.getFirstName().charAt(0) + "" + player.getLastName().charAt(0);
+				String name = player.getFirstName().substring(0, 1) + ". " + player.getLastName();
+
+				String kuerzel = player.getFirstName().substring(0, 1) + player.getLastName().substring(0, 1);
 				try {
-				 dwz = new Integer(player.getDwz()).toString();
+					dwz = new Integer(player.getDwz()).toString();
 				} catch (NullPointerException e) {
-					 dwz = "";
+					dwz = "";
 				}
 				int age = 2;
-				spieler.add(new Spieler(id, name, kuerzel, dwz, age));
+				// test
+				Charset UTF8_CHARSET = Charset.forName("UTF-8");	
+				byte[] bname = name.getBytes();
+				String nameUTF8 = new String(bname, UTF8_CHARSET);
+				byte[] bkuerzel = kuerzel.getBytes();
+				String kuerzelUTF8 = new String(bkuerzel, UTF8_CHARSET);				
+				// Test
+				spieler.add(new Spieler(id, nameUTF8, kuerzelUTF8, dwz, age));
 			}
 
 		} catch (IOException e) {

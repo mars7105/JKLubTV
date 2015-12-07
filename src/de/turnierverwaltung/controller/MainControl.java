@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import de.turnierverwaltung.model.PaarungsTafeln;
@@ -83,25 +84,28 @@ public class MainControl extends JFrame {
 	private TitleView titleView;
 	private Boolean neuesTurnier;
 	private ArrayList<Partie> changedPartien;
-	
+	private PropertiesControl propertiesControl;
+
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
 		windowHeight = TurnierKonstanten.WINDOW_HEIGHT;
 		setBounds(TurnierKonstanten.WINDOW_BOUNDS_X, TurnierKonstanten.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
 		setMinimumSize(new Dimension(windowWidth / 2, windowHeight / 2));
-//		setMaximumSize(new Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
-//		setBackground(new Color(126, 201, 208));
+		// setMaximumSize(new
+		// Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
+		// setBackground(new Color(126, 201, 208));
 		setTitle("Klubturnierverwaltung");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		init();
-		datenbankMenueView(false);
+		makeProperties();
+
 		setNeuesTurnier(false);
 	}
 
 	public void datenbankMenueView(Boolean enable) {
 		menueControl.setDatenbankMenue(enable);
 		naviView.getDatenbankPanel().setVisible(enable);
-		
+
 		naviView.setPathToDatabase(new JLabel(menueControl.getFileName()));
 		naviView.updateUI();
 		if (enable == true) {
@@ -109,6 +113,14 @@ public class MainControl extends JFrame {
 		} else {
 			this.setTitle("Klubturnierverwaltung ");
 		}
+	}
+
+	public SpielerLadenControl getSpielerLadenControl() {
+		return spielerLadenControl;
+	}
+
+	public void setSpielerLadenControl(SpielerLadenControl spielerLadenControl) {
+		this.spielerLadenControl = spielerLadenControl;
 	}
 
 	public ArrayList<Partie> getChangedPartien() {
@@ -293,18 +305,57 @@ public class MainControl extends JFrame {
 		this.hauptPanel.setLayout(new BorderLayout());
 		standardView = new StandardView();
 		titleView = new TitleView();
-		
+
 		naviController = new NaviController(this);
 		menueView = new MenueView();
 		menueControl = new MenueControl(this);
 		setJMenuBar(menueView.getJMenuBar());
 		setContentPane(hauptPanel);
 
-		standardView.add(titleView,BorderLayout.NORTH);
+		standardView.add(titleView, BorderLayout.NORTH);
 		hauptPanel.add(standardView, BorderLayout.CENTER);
 		hauptPanel.updateUI();
 		setEnabled(true);
 		setVisible(true);
+		if (this.getInfoController() == null) {
+			this.setInfoController(new InfoController(this));
+		} else {
+			this.getInfoController().makeInfoPanel();
+		}
+
+	}
+
+	private void makeProperties() {
+		datenbankMenueView(false);
+		propertiesControl = new PropertiesControl();
+		if (propertiesControl.readProperties() == false) {
+			if (propertiesControl.writeProperties() == false) {
+				JOptionPane.showMessageDialog(null, "Einstellungen des Programms können nicht gespeichert werden.");
+			}
+		} else {
+			if (propertiesControl.checkPath() == true) {
+				datenbankMenueView(true);
+				String path = propertiesControl.getProperties("Path");
+				SQLiteDAOFactory.setDB_PATH(path);
+				this.datenbankMenueView(true);
+				if (this.getTurnierTableControl() == null) {
+					this.setTurnierTableControl(new TurnierTableControl(this));
+					this.getTurnierTableControl().loadTurnierListe();
+					this.setTurnierListeLadenControl(new TurnierListeLadenControl(this));
+					this.getTurnierListeLadenControl().loadTurnier();
+					naviView.setPathToDatabase(new JLabel(path));
+
+				} else {
+					this.resetApp();
+					this.setTurnierTableControl(new TurnierTableControl(this));
+					this.getTurnierTableControl().loadTurnierListe();
+					this.setTurnierListeLadenControl(new TurnierListeLadenControl(this));
+					this.getTurnierListeLadenControl().loadTurnier();
+					naviView.setPathToDatabase(new JLabel(path));
+				}
+
+			}
+		}
 	}
 
 	public void resetApp() {
@@ -347,6 +398,14 @@ public class MainControl extends JFrame {
 		setNeuesTurnier(false);
 		System.gc();
 		init();
+	}
+
+	public PropertiesControl getPropertiesControl() {
+		return propertiesControl;
+	}
+
+	public void setPropertiesControl(PropertiesControl propertiesControl) {
+		this.propertiesControl = propertiesControl;
 	}
 
 	public void setGruppenControl(GruppenControl gruppenControl) {
@@ -524,7 +583,5 @@ public class MainControl extends JFrame {
 	public void setRundenEingabeFormularControl(RundenEingabeFormularControl rundenEingabeFormularControl) {
 		this.rundenEingabeFormularControl = rundenEingabeFormularControl;
 	}
-
-
 
 }

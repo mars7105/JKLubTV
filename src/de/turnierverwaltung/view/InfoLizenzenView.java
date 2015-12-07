@@ -19,14 +19,12 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextArea;
 
-public class InfoTexteView {
+public class InfoLizenzenView {
 
 	private URI datepickerUri;
 	private JButton buttonDatePicker;
 	private URI sqLiteUri;
 	private JButton buttonSQlite;
-	private URI mySQLUri;
-	private JButton buttonmySQL;
 	private URI iTextUri;
 	private JButton buttoniText;
 	private URI openIconUri;
@@ -46,9 +44,6 @@ public class InfoTexteView {
 			}
 			if (e.getSource() == buttonSQlite) {
 				open(sqLiteUri);
-			}
-			if (e.getSource() == buttonmySQL) {
-				open(mySQLUri);
 			}
 			if (e.getSource() == buttoniText) {
 				open(iTextUri);
@@ -71,12 +66,9 @@ public class InfoTexteView {
 		JPanel all = new JPanel(new BorderLayout());
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-		// panel.add(new JLabel("Dieses Programm nutzt verschiedene freie
-		// Bibliotheken:\n"));
 		JPanel temp = new JPanel();
 		temp.setBackground(Color.WHITE);
 		temp.setLayout(new BoxLayout(temp,BoxLayout.X_AXIS));
-//		temp.add(new JLabel(logoImg));
 		JTextArea lizenzLabel = new JTextArea("JKlubTV ist freie Software, Sie können sie weitergeben und/oder \n"
 				+ "verändern, solange Sie sich an die Regeln der \n"
 				+ "GNU General Public License halten, so wie sie von \n"
@@ -93,7 +85,6 @@ public class InfoTexteView {
 				+ "Erstellt von: Martin Schmuck m_schmuck@gmx.net\n");
 		emailUri = new URI("http://mamuck.de/");
 		buttonemailUri = new JButton();
-//		buttonemailUri.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
 		buttonemailUri.add(new JLabel(logoImg));
 		buttonemailUri.setOpaque(false);
 		buttonemailUri.setToolTipText(emailUri.toString());
@@ -120,13 +111,9 @@ public class InfoTexteView {
 		labelDatePicker.setText("1. JDatePicker -> jdatepicker-1.3.4.jar\n für die Auswahl des Datum.\n");
 		buttonDatePicker = new JButton();
 		buttonDatePicker.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
-		// buttonDatePicker.setHorizontalAlignment(SwingConstants.LEFT);
-		// buttonDatePicker.setBorderPainted(false);
 		buttonDatePicker.setOpaque(false);
-		// buttonDatePicker.setBackground(Color.WHITE);
 		buttonDatePicker.setToolTipText(datepickerUri.toString());
 		buttonDatePicker.addActionListener(new OpenUrlAction());
-		// panel.add(labelDatePicker);
 		temp = new JPanel();
 		temp.setBackground(Color.WHITE);
 		temp.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -142,10 +129,8 @@ public class InfoTexteView {
 				"2. SQLite JDBC -> sqlite-jdbc-3.8.11.1.jar\n für die Speicherung im SQLite Format.\n");
 		buttonSQlite = new JButton();
 		buttonSQlite.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
-		// buttonSQlite.setHorizontalAlignment(SwingConstants.LEFT);
-		// buttonSQlite.setBorderPainted(false);
+		
 		buttonSQlite.setOpaque(false);
-		// buttonSQlite.setBackground(Color.WHITE);
 		buttonSQlite.setToolTipText(sqLiteUri.toString());
 		buttonSQlite.addActionListener(new OpenUrlAction());
 		temp = new JPanel();
@@ -156,32 +141,9 @@ public class InfoTexteView {
 		temp.add(labelSQlite);
 		panel.add(temp);
 		panel.add(new JSeparator());
-		// panel.add(buttonSQlite);
-
-		mySQLUri = new URI("http://mvnrepository.com/artifact/mysql/mysql-connector-java");
-		JLabel labelmySQL = new JLabel(
-				"3. MySQL Connector -> mysql-connector-java-5.1.35-bin.jar\n für zukünftige Änderungen.\n");
-		buttonmySQL = new JButton();
-		buttonmySQL.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
-		// buttonmySQL.setHorizontalAlignment(SwingConstants.LEFT);
-		// buttonmySQL.setBorderPainted(false);
-		buttonmySQL.setOpaque(false);
-		// buttonmySQL.setBackground(Color.WHITE);
-		buttonmySQL.setToolTipText(mySQLUri.toString());
-		buttonmySQL.addActionListener(new OpenUrlAction());
-		temp = new JPanel();
-		temp.setBackground(Color.WHITE);
-		temp.setLayout(new FlowLayout(FlowLayout.LEFT));
-		temp.add(buttonmySQL);
-
-		temp.add(labelmySQL);
-		panel.add(temp);
-		panel.add(new JSeparator());
-		// panel.add(labelmySQL);
-		// panel.add(buttonmySQL);
-
+	
 		iTextUri = new URI("http://itextpdf.com/");
-		JLabel labeliText = new JLabel("4. iText, Programmable PDF Software\n für die PDF Ausgabe.\n");
+		JLabel labeliText = new JLabel("3. iText, Programmable PDF Software\n für die PDF Ausgabe.\n");
 		buttoniText = new JButton();
 		buttoniText.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
 		// buttoniText.setHorizontalAlignment(SwingConstants.LEFT);
@@ -201,7 +163,7 @@ public class InfoTexteView {
 		dewisUri = new URI("http://www.schachbund.de/api.html");
 		buttondewisUri = new JButton();
 		JLabel labeldewis = new JLabel();
-		labeldewis.setText("5. Java API von Peter Fahsel -> dewis.jar\n Zugriff auf DWZ-Listen mit Java.\n");
+		labeldewis.setText("4. Java API von Peter Fahsel -> dewis.jar\n Zugriff auf DWZ-Listen mit Java.\n");
 		buttondewisUri.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
 		
 		buttondewisUri.setOpaque(false);
@@ -219,13 +181,11 @@ public class InfoTexteView {
 		
 		openIconUri = new URI("http://sourceforge.net/projects/openiconlibrary/");
 		JLabel openIconPicker = new JLabel(
-				"6. Bilder: Open Icon Library\nhttp://sourceforge.net/projects/openiconlibrary/\n");
+				"5. Bilder: Open Icon Library\nhttp://sourceforge.net/projects/openiconlibrary/\n");
 		buttonopenIcon = new JButton();
 		buttonopenIcon.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
-		// buttonopenIcon.setHorizontalAlignment(SwingConstants.LEFT);
-		// buttonopenIcon.setBorderPainted(false);
+		
 		buttonopenIcon.setOpaque(false);
-		// buttonopenIcon.setBackground(Color.WHITE);
 		buttonopenIcon.setToolTipText(openIconUri.toString());
 		buttonopenIcon.addActionListener(new OpenUrlAction());
 		temp = new JPanel();
@@ -236,8 +196,7 @@ public class InfoTexteView {
 		temp.add(openIconPicker);
 		panel.add(temp);
 		panel.add(new JSeparator());
-		// panel.add(openIconPicker);
-		// panel.add(buttonopenIcon);
+		
 		all.add(panel, BorderLayout.NORTH);
 		return all;
 
