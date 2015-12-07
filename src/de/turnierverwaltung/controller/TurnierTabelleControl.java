@@ -309,7 +309,8 @@ public class TurnierTabelleControl {
 			}
 			mainControl.getTerminTabelleControl().makeSimpleTableView(gruppenNummer);
 			simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
-			mainControl.getRundenEingabeFormularControl().getChangedGroups()[gruppenNummer][0] = 1;
+			mainControl.getRundenEingabeFormularControl().getChangedGroups()[gruppenNummer][NaviController.TURNIERTABELLE] = NaviController.STANDARD;
+
 		}
 
 		private void updatePunkteCol(int col) {

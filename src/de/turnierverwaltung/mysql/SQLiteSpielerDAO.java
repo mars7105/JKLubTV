@@ -110,7 +110,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 	@Override
 	public ArrayList<Spieler> getAllSpieler() {
-		String sql = "Select * from spieler" + ";";
+		String sql = "Select * from spieler" + "  ORDER BY Name ASC;";
 		ArrayList<Spieler> spielerListe = new ArrayList<Spieler>();
 
 		Statement stmt;
@@ -196,7 +196,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public ArrayList<Spieler> selectAllSpieler(int idGruppe) {
 		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe = " + idGruppe
-				+ " AND Spieler_idSpieler = idSpieler" + ";";
+				+ " AND Spieler_idSpieler = idSpieler" + " ORDER BY Name ASC;";
 		ArrayList<Spieler> spielerListe = new ArrayList<Spieler>();
 
 		Statement stmt;

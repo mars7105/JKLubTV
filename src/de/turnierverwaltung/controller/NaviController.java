@@ -23,6 +23,15 @@ import de.turnierverwaltung.view.NaviView;
 
 public class NaviController implements ActionListener {
 
+	public static final int TURNIERTABELLE = 0;
+	public static final int TERMINTABELLE = 1;
+	public static final int PAARUNGSTABELLE = 2;
+	public static final int STANDARD = 1;
+
+	public static final int SORTIEREN = 2;
+
+
+
 	private MainControl mainControl;
 	private JButton spielerListeButton;
 	private JButton turnierListeButton;
@@ -283,17 +292,21 @@ public class NaviController implements ActionListener {
 		int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 		for (int i = 0; i < anzahlGruppen; i++) {
 			for (int x = 0; x < 3; x++) {
-				if (mainControl.getRundenEingabeFormularControl().getChangedGroups()[i][x] == 1) {
+				int changedGroups = mainControl.getRundenEingabeFormularControl().getChangedGroups()[i][x];
+				if (changedGroups >= STANDARD) {
 					this.mainControl.getTurnierTabelleControl().okAction(i);
-					
-					if (x == 2) {
-						Arrays.sort(mainControl.getTurnier().getGruppe()[i].getPartien());
+
+					if (x == PAARUNGSTABELLE) {
+						if (changedGroups == SORTIEREN) {
+							Arrays.sort(mainControl.getTurnier().getGruppe()[i].getPartien());
+						}
 						mainControl.getRundenEingabeFormularControl().makeNewFormular(i);
 					}
 					mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
 					mainControl.getTerminTabelleControl().makeSimpleTableView(i);
 					mainControl.getRundenEingabeFormularControl().getChangedGroups()[i][x] = 0;
 				}
+
 			}
 		}
 	}

@@ -118,7 +118,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 				if (arg0.getSource() == changeColor[index][i]) {
 					changeColor(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
-					changedGroups[index][2] = 1;
+					changedGroups[index][NaviController.PAARUNGSTABELLE] = NaviController.STANDARD;
 					int selectedTab = rundenEingabeFormularView[index].getTabbedPane().getSelectedIndex();
 					makeNewFormular(index);
 					rundenEingabeFormularView[index].getTabbedPane().setSelectedIndex(selectedTab);
@@ -128,7 +128,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 					changeWerte(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
-					changedGroups[index][2] = 1;
+					changedGroups[index][NaviController.PAARUNGSTABELLE] = NaviController.STANDARD;
 					int selectedTab = rundenEingabeFormularView[index].getTabbedPane().getSelectedIndex();
 
 					makeNewFormular(index);
@@ -138,7 +138,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 				if (arg0.getSource() == rundenNummer[index][i]) {
 					changeWerte(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
-					changedGroups[index][2] = 1;
+					changedGroups[index][NaviController.PAARUNGSTABELLE] = NaviController.SORTIEREN;
 					int selectedTab = rundenEingabeFormularView[index].getTabbedPane().getSelectedIndex();
 					makeNewFormular(index);
 					rundenEingabeFormularView[index].getTabbedPane().setSelectedIndex(selectedTab);
@@ -200,9 +200,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 	}
 
-	public void checkChangedGroups(int groupNumber) {
-
-	}
+	
 
 	@SuppressWarnings("unchecked")
 	public void makeNewFormular(int index) {
@@ -239,7 +237,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 	public void makeRundenEditView(int index) {
 		neuesTurnier[index] = true;
-		Arrays.sort(gruppe[index].getPartien());
+//		Arrays.sort(gruppe[index].getPartien());
 		partien = gruppe[index].getPartien();
 
 		spielerAnzahl[index] = gruppe[index].getSpielerAnzahl();
