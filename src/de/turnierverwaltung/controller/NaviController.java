@@ -248,12 +248,10 @@ public class NaviController implements ActionListener {
 		if (arg0.getSource() == naviView.getTabelleAktualisierenButton())
 
 		{
-			Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
-			if (ready) {
-				int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
-				for (int i = 0; i < anzahlGruppen; i++) {
-					this.mainControl.getTurnierTabelleControl().okAction(i);
-				}
+			Boolean ok = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+			if (ok) {
+				makeNewTables();
+
 			} else {
 				JOptionPane.showMessageDialog(null, "Erst nach der Eingabe aller Gruppen\n" + "möglich.");
 			}
@@ -265,15 +263,7 @@ public class NaviController implements ActionListener {
 			Boolean ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
 
 			if (ok) {
-				int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
-				for (int i = 0; i < anzahlGruppen; i++) {
-					this.mainControl.getTurnierTabelleControl().okAction(i);
-
-					Arrays.sort(mainControl.getTurnier().getGruppe()[i].getPartien());
-					mainControl.getRundenEingabeFormularControl().makeNewFormular(i);
-				}
-				mainControl.getTurnierTabelleControl().makeSimpleTableView(aktiveGruppe);
-				mainControl.getTerminTabelleControl().makeSimpleTableView(aktiveGruppe);
+				makeNewTables();
 
 			}
 
@@ -287,6 +277,25 @@ public class NaviController implements ActionListener {
 
 		}
 
+	}
+
+	private void makeNewTables() {
+		int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
+		for (int i = 0; i < anzahlGruppen; i++) {
+			for (int x = 0; x < 3; x++) {
+				if (mainControl.getRundenEingabeFormularControl().getChangedGroups()[i][x] == 1) {
+					this.mainControl.getTurnierTabelleControl().okAction(i);
+					
+					if (x == 2) {
+						Arrays.sort(mainControl.getTurnier().getGruppe()[i].getPartien());
+						mainControl.getRundenEingabeFormularControl().makeNewFormular(i);
+					}
+					mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
+					mainControl.getTerminTabelleControl().makeSimpleTableView(i);
+					mainControl.getRundenEingabeFormularControl().getChangedGroups()[i][x] = 0;
+				}
+			}
+		}
 	}
 
 	private int warnHinweis() {

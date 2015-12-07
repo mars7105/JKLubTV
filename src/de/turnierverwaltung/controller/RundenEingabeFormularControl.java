@@ -63,6 +63,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 	private ArrayList<Partie> changedPartien;
 	private JDatePickerImpl[][] datePicker;
 	private JComboBox<String>[][] rundenNummer;
+	private int[][] changedGroups;
 
 	@SuppressWarnings("unchecked")
 	public RundenEingabeFormularControl(MainControl mainControl) {
@@ -82,9 +83,13 @@ public class RundenEingabeFormularControl implements ActionListener {
 		}
 		rundenEingabeFormularView = new RundenEingabeFormularView[gruppenAnzahl];
 		neuesTurnier = new Boolean[gruppenAnzahl];
+		changedGroups = new int[gruppenAnzahl][3];
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			rundenEingabeFormularView[i] = new RundenEingabeFormularView(gruppe[i].getSpielerAnzahl());
 			neuesTurnier[i] = false;
+			for (int x = 0; x < 3; x++) {
+				changedGroups[i][x] = 0;
+			}
 		}
 		this.mainControl.setRundenEingabeFormularView(rundenEingabeFormularView);
 		changeColor = new JButton[gruppenAnzahl][];
@@ -113,6 +118,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 				if (arg0.getSource() == changeColor[index][i]) {
 					changeColor(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
+					changedGroups[index][2] = 1;
 					int selectedTab = rundenEingabeFormularView[index].getTabbedPane().getSelectedIndex();
 					makeNewFormular(index);
 					rundenEingabeFormularView[index].getTabbedPane().setSelectedIndex(selectedTab);
@@ -122,6 +128,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 					changeWerte(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
+					changedGroups[index][2] = 1;
 					int selectedTab = rundenEingabeFormularView[index].getTabbedPane().getSelectedIndex();
 
 					makeNewFormular(index);
@@ -131,6 +138,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 				if (arg0.getSource() == rundenNummer[index][i]) {
 					changeWerte(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
+					changedGroups[index][2] = 1;
 					int selectedTab = rundenEingabeFormularView[index].getTabbedPane().getSelectedIndex();
 					makeNewFormular(index);
 					rundenEingabeFormularView[index].getTabbedPane().setSelectedIndex(selectedTab);
@@ -192,6 +200,10 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 	}
 
+	public void checkChangedGroups(int groupNumber) {
+
+	}
+
 	@SuppressWarnings("unchecked")
 	public void makeNewFormular(int index) {
 
@@ -223,7 +235,6 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 		rundenEingabeFormularView[index].updateUI();
 		hauptPanel.updateUI();
-
 	}
 
 	public void makeRundenEditView(int index) {
@@ -232,8 +243,6 @@ public class RundenEingabeFormularControl implements ActionListener {
 		partien = gruppe[index].getPartien();
 
 		spielerAnzahl[index] = gruppe[index].getSpielerAnzahl();
-
-
 
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		if (tabAnzeigeView2 != null) {
@@ -280,6 +289,14 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 	public void setNeuesTurnier(Boolean[] neuesTurnier) {
 		this.neuesTurnier = neuesTurnier;
+	}
+
+	public int[][] getChangedGroups() {
+		return changedGroups;
+	}
+
+	public void setChangedGroups(int[][] changedGroups) {
+		this.changedGroups = changedGroups;
 	}
 
 	public Boolean checkNewTurnier() {

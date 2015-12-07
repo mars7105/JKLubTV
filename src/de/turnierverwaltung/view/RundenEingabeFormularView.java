@@ -36,33 +36,6 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 public class RundenEingabeFormularView extends JPanel {
-	public class DateLabelFormatter extends AbstractFormatter {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		// private String datePattern = "yyyy-MM-dd";
-		private String datePattern = "dd.MM.yyy";
-
-		private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
-
-		@Override
-		public Object stringToValue(String text) throws ParseException {
-			return dateFormatter.parseObject(text);
-		}
-
-		@Override
-		public String valueToString(Object value) throws ParseException {
-			if (value != null) {
-				Calendar cal = (Calendar) value;
-				return dateFormatter.format(cal.getTime());
-			}
-
-			return "";
-		}
-
-	}
 
 	/**
 	 * 
@@ -154,10 +127,7 @@ public class RundenEingabeFormularView extends JPanel {
 		scrollPane.setAlignmentY(TOP_ALIGNMENT);
 		add(scrollPane, BorderLayout.CENTER);
 
-	
 	}
-
-
 
 	private int[] getDatefromString(String zeile) {
 		String[] splitDate = zeile.split("\\.");
@@ -241,9 +211,9 @@ public class RundenEingabeFormularView extends JPanel {
 			panel.setLayout(new BorderLayout());
 			flowPane = new JPanel();
 			flowPane.setLayout(new BoxLayout(flowPane, BoxLayout.PAGE_AXIS));
-//			flowPane.setLayout(new BorderLayout());
+			// flowPane.setLayout(new BorderLayout());
 			flowPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-//			flowPane.setAlignmentY(Component.TOP_ALIGNMENT);
+			// flowPane.setAlignmentY(Component.TOP_ALIGNMENT);
 
 			for (int i = 0; i < partienanzahl; i++) {
 				zeile[0] = terminMatrix[0][index];
@@ -252,10 +222,10 @@ public class RundenEingabeFormularView extends JPanel {
 				zeile[3] = terminMatrix[3][index];
 				zeile[4] = terminMatrix[4][index];
 				downPane = new JPanel();
-				
+
 				downPane.setLayout(flowLayout);
 				downPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-//				downPane.setAlignmentY(Component.TOP_ALIGNMENT);
+				// downPane.setAlignmentY(Component.TOP_ALIGNMENT);
 				if (zeile[0] != "Runde") {
 
 					int[] dateInt;
@@ -298,16 +268,43 @@ public class RundenEingabeFormularView extends JPanel {
 				index++;
 				downPane.updateUI();
 
-				flowPane.add(downPane,BorderLayout.CENTER);
-				
+				flowPane.add(downPane, BorderLayout.CENTER);
+
 				flowPane.updateUI();
 			}
-			
-			
-			panel.add(flowPane,BorderLayout.NORTH);
+
+			panel.add(flowPane, BorderLayout.NORTH);
 			tabbedPane.add("Runde: " + (r + 1), panel);
 		}
 		contentPanel.add(tabbedPane, BorderLayout.CENTER);
 		contentPanel.updateUI();
+	}
+
+	public class DateLabelFormatter extends AbstractFormatter {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+		// private String datePattern = "yyyy-MM-dd";
+		private String datePattern = "dd.MM.yyy";
+
+		private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
+
+		@Override
+		public Object stringToValue(String text) throws ParseException {
+			return dateFormatter.parseObject(text);
+		}
+
+		@Override
+		public String valueToString(Object value) throws ParseException {
+			if (value != null) {
+				Calendar cal = (Calendar) value;
+				return dateFormatter.format(cal.getTime());
+			}
+
+			return "";
+		}
+
 	}
 }

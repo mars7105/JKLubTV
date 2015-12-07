@@ -95,6 +95,7 @@ public class TerminTabelleControl  {
 
 		@Override
 		public void tableChanged(TableModelEvent e) {
+			mainControl.getRundenEingabeFormularControl().getChangedGroups()[gruppenNummer][1] = 1;
 
 			int row = e.getFirstRow();
 			int col = e.getColumn();
