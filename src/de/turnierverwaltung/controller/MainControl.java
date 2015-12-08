@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.model.PaarungsTafeln;
 import de.turnierverwaltung.model.Partie;
@@ -42,7 +43,7 @@ public class MainControl extends JFrame {
 	private int windowWidth;
 	private int windowHeight;
 	private MainView mainView;
-	private JPanel hauptPanel;
+	private JTabbedPane hauptPanel;
 	private MenueControl menueControl;
 	private MenueView menueView;
 	private TurnierControl turnierControl;
@@ -85,15 +86,14 @@ public class MainControl extends JFrame {
 	private Boolean neuesTurnier;
 	private ArrayList<Partie> changedPartien;
 	private PropertiesControl propertiesControl;
+	private JPanel mainPanel;
 
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
 		windowHeight = TurnierKonstanten.WINDOW_HEIGHT;
 		setBounds(TurnierKonstanten.WINDOW_BOUNDS_X, TurnierKonstanten.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
 		setMinimumSize(new Dimension(windowWidth / 2, windowHeight / 2));
-		// setMaximumSize(new
-		// Dimension(Toolkit.getDefaultToolkit().getScreenSize()));
-		// setBackground(new Color(126, 201, 208));
+
 		setTitle("Klubturnierverwaltung");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		init();
@@ -159,7 +159,7 @@ public class MainControl extends JFrame {
 		return gruppenView;
 	}
 
-	public JPanel getHauptPanel() {
+	public JTabbedPane getHauptPanel() {
 		return hauptPanel;
 	}
 
@@ -299,10 +299,19 @@ public class MainControl extends JFrame {
 		return windowWidth;
 	}
 
-	private void init() {
+	public JPanel getMainPanel() {
+		return mainPanel;
+	}
 
-		this.hauptPanel = new JPanel();
-		this.hauptPanel.setLayout(new BorderLayout());
+	public void setMainPanel(JPanel mainPanel) {
+		this.mainPanel = mainPanel;
+	}
+
+	private void init() {
+		mainPanel = new JPanel();
+		mainPanel.setLayout(new BorderLayout());
+		this.hauptPanel = new JTabbedPane();
+		// this.hauptPanel.setLayout(new BorderLayout());
 		standardView = new StandardView();
 		titleView = new TitleView();
 
@@ -310,11 +319,14 @@ public class MainControl extends JFrame {
 		menueView = new MenueView();
 		menueControl = new MenueControl(this);
 		setJMenuBar(menueView.getJMenuBar());
-		setContentPane(hauptPanel);
+
+		setContentPane(mainPanel);
 
 		standardView.add(titleView, BorderLayout.NORTH);
-		hauptPanel.add(standardView, BorderLayout.CENTER);
+		mainPanel.add(standardView, BorderLayout.NORTH);
+		mainPanel.add(hauptPanel, BorderLayout.CENTER);
 		hauptPanel.updateUI();
+		mainPanel.updateUI();
 		setEnabled(true);
 		setVisible(true);
 		if (this.getInfoController() == null) {
@@ -337,7 +349,14 @@ public class MainControl extends JFrame {
 				datenbankMenueView(true);
 				String path = propertiesControl.getProperties("Path");
 				SQLiteDAOFactory.setDB_PATH(path);
-				this.datenbankMenueView(true);
+				if (this.getSpielerEditierenControl() != null) {
+					// mainControl.getSpielerEditierenControl().makePanel();
+				} else {
+					this.setSpielerEditierenControl(new SpielerLadenControl(this));
+					this.getSpielerEditierenControl().updateSpielerListe();
+				}
+				this.setNeuesTurnier(false);
+				this.getNaviView().getTabellenPanel().setVisible(false);
 				if (this.getTurnierTableControl() == null) {
 					this.setTurnierTableControl(new TurnierTableControl(this));
 					this.getTurnierTableControl().loadTurnierListe();
@@ -420,7 +439,7 @@ public class MainControl extends JFrame {
 		this.gruppenView = gruppenView;
 	}
 
-	public void setHauptPanel(JPanel hauptPanel) {
+	public void setHauptPanel(JTabbedPane hauptPanel) {
 		this.hauptPanel = hauptPanel;
 	}
 

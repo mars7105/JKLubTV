@@ -30,8 +30,6 @@ public class NaviController implements ActionListener {
 
 	public static final int SORTIEREN = 2;
 
-
-
 	private MainControl mainControl;
 	private JButton spielerListeButton;
 	private JButton turnierListeButton;
@@ -71,7 +69,7 @@ public class NaviController implements ActionListener {
 	}
 
 	public void makeNaviPanel() {
-		JPanel hauptPanel = this.mainControl.getHauptPanel();
+		JPanel hauptPanel = this.mainControl.getMainPanel();
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(naviView);
 		hauptPanel.add(scrollPane, BorderLayout.WEST);
@@ -100,14 +98,16 @@ public class NaviController implements ActionListener {
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
 
-				mainControl.resetApp();
+				// mainControl.resetApp();
 				if (SQLiteDAOFactory.getDB_PATH() == null) {
 					mainControl.datenbankMenueView(false);
 				}
 				if (mainControl.getInfoController() == null) {
 					mainControl.setInfoController(new InfoController(this.mainControl));
 				} else {
-					mainControl.getInfoController().makeInfoPanel();
+					int selectTab = mainControl.getHauptPanel().indexOfTab("Info");
+					mainControl.getHauptPanel().setSelectedIndex(selectTab);
+					// mainControl.getInfoController().makeInfoPanel();
 				}
 				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 				this.mainControl.setNeuesTurnier(false);
@@ -195,6 +195,14 @@ public class NaviController implements ActionListener {
 					// This is where a real application would open the file.
 					SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
 					mainControl.datenbankMenueView(true);
+					if (mainControl.getSpielerEditierenControl() != null) {
+						// mainControl.getSpielerEditierenControl().makePanel();
+					} else {
+						mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
+						mainControl.getSpielerEditierenControl().updateSpielerListe();
+					}
+					mainControl.setNeuesTurnier(false);
+					mainControl.getNaviView().getTabellenPanel().setVisible(false);
 					if (mainControl.getTurnierTableControl() == null) {
 						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 						mainControl.getTurnierTableControl().loadTurnierListe();
@@ -224,9 +232,11 @@ public class NaviController implements ActionListener {
 		{
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
-				mainControl.resetApp();
+				// mainControl.resetApp();
 				if (mainControl.getTurnierListeLadenControl() != null) {
-					mainControl.getTurnierListeLadenControl().loadTurnier();
+					// mainControl.getTurnierListeLadenControl().loadTurnier();
+					int selectTab = mainControl.getHauptPanel().indexOfTab("Turniere");
+					mainControl.getHauptPanel().setSelectedIndex(selectTab);
 				} else {
 					mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(mainControl));
 					mainControl.getTurnierListeLadenControl().loadTurnier();
@@ -241,16 +251,17 @@ public class NaviController implements ActionListener {
 		{
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
-				mainControl.resetApp();
+				// mainControl.resetApp();
 				if (mainControl.getSpielerEditierenControl() != null) {
-					mainControl.getSpielerEditierenControl().makePanel();
+					// mainControl.getSpielerEditierenControl().makePanel();
+					int selectTab = mainControl.getHauptPanel().indexOfTab("Spieler");
+					mainControl.getHauptPanel().setSelectedIndex(selectTab);
 				} else {
 					mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
-					mainControl.getSpielerEditierenControl().makePanel();
+					mainControl.getSpielerEditierenControl().updateSpielerListe();
 				}
 				this.mainControl.setNeuesTurnier(false);
 				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-				mainControl.getNaviView().getTabellenPanel().setVisible(false);
 			}
 		}
 

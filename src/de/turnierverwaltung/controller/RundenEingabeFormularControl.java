@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import org.jdatepicker.impl.JDatePickerImpl;
 
@@ -52,7 +52,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 	private TerminTabelle terminTabelle[];
 	private int gruppenAnzahl;
 	private RundenEingabeFormularView[] rundenEingabeFormularView;
-	private JPanel hauptPanel;
+	private JTabbedPane hauptPanel;
 	private TabAnzeigeView tabAnzeigeView;
 	private JButton changeColor[][];
 	private int[] spielerAnzahl;

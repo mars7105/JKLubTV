@@ -66,7 +66,7 @@ public class MenueControl implements ActionListener {
 				
 				mainControl.resetApp();
 				mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
-				mainControl.getSpielerEditierenControl().makePanel();
+				mainControl.getSpielerEditierenControl().updateSpielerListe();
 			}
 		}
 

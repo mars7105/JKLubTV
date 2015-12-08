@@ -129,7 +129,7 @@ public class SpielerTableControl {
 					options[1]);
 		}
 		if (abfrage == 0) {
-			geloescht = turnier_has_spielerDAO.deleteTurnier_has_Spieler(tId);
+//			geloescht = turnier_has_spielerDAO.deleteTurnier_has_Spieler(tId);
 			geloescht = mySQLSpielerDAO.deleteSpieler(spieler.getSpielerId());
 		}
 

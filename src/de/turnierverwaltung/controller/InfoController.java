@@ -1,10 +1,7 @@
 package de.turnierverwaltung.controller;
 
-import java.awt.BorderLayout;
-
 import java.net.URISyntaxException;
 
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.view.InfoView;
@@ -45,11 +42,11 @@ public class InfoController {
 	 * 
 	 */
 	public void makeInfoPanel() {
-		JPanel hauptPanel = this.mainControl.getHauptPanel();
-		hauptPanel.removeAll();
-		this.mainControl.getNaviController().makeNaviPanel();
+		JTabbedPane hauptPanel = this.mainControl.getHauptPanel();
+		// hauptPanel.removeAll();
+		// this.mainControl.getNaviController().makeNaviPanel();
 
-		hauptPanel.add(infoView, BorderLayout.CENTER);
+		hauptPanel.addTab("Info", null, infoView);
 		hauptPanel.updateUI();
 
 	}

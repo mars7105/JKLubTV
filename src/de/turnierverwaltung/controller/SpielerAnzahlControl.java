@@ -21,7 +21,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import de.turnierverwaltung.ZahlGroesserAlsN;
@@ -51,7 +51,7 @@ public class SpielerAnzahlControl implements ActionListener {
 	private MainControl mainControl;
 	private SpielerAnzahlView[] spielerAnzahlView;
 	private JTextField[] spielerAnzahlTextfield;
-	private JPanel hauptPanel;
+	private JTabbedPane hauptPanel;
 	private TabAnzeigeView tabbedPaneView;
 	private Turnier turnier;
 	private Gruppe[] gruppe;

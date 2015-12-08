@@ -19,7 +19,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Arrays;
-import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -38,7 +38,7 @@ public class TurnierTabelleControl {
 	private TurnierTabelle[] turnierTabelle;
 	private SimpleTurnierTabelleView[] simpleTableView;
 	private SaveTurnierControl saveTurnierControl;
-	private JPanel hauptPanel;
+	private JTabbedPane hauptPanel;
 	private TabAnzeigeView tabAnzeigeView;
 	private TabAnzeigeView[] tabAnzeigeView2;
 	private Turnier turnier;

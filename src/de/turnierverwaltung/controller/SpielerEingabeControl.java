@@ -27,7 +27,7 @@ import java.util.ListIterator;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import de.turnierverwaltung.model.Gruppe;
@@ -48,7 +48,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 	private int[] spielerAnzahl;
 	private int gruppenAnzahl;
 	private TabAnzeigeView tabAnzeigeView;
-	private JPanel hauptPanel;
+	private JTabbedPane hauptPanel;
 	private Turnier turnier;
 	private Gruppe[] gruppe;
 	private Spieler[] spieler;
@@ -221,6 +221,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 	}
 
 	public void makeTabbedPane(int index) {
+		hauptPanel = this.mainControl.getHauptPanel();
 
 		if (spielerAnzahlView[index].getAnzahlSpielerTextField().getText().length() > 0) {
 			spielerAnzahl[index] = this.mainControl.getSpielerAnzahlControl().getSpielerAnzahl(index);

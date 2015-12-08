@@ -2,7 +2,7 @@ package de.turnierverwaltung.controller;
 
 import java.util.ArrayList;
 
-import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -22,7 +22,7 @@ public class TerminTabelleControl  {
 	private TabAnzeigeView[] tabAnzeigeView2;
 	private SimpleTerminTabelleView[] simpleTableView;
 	private SimpleTurnierTabelleView[] simpleTurnierTabelleView;
-	private JPanel hauptPanel;
+	private JTabbedPane hauptPanel;
 	private Turnier turnier;
 	private MyTableModelListener tml[];
 	private ArrayList<Partie> changedPartien;

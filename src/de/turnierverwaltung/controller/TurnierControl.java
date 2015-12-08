@@ -19,7 +19,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.ZahlGroesserAlsN;
 import de.turnierverwaltung.ZahlKleinerAlsN;
@@ -42,7 +42,7 @@ public class TurnierControl implements ActionListener {
 	private TurnierView turnierView;
 	private JButton turnierOkButton;
 	// private JButton turnierCancelButton;
-	private JPanel hauptPanel;
+	private JTabbedPane hauptPanel;
 	private String turnierName;
 	private String startDatum;
 	private String endDatum;

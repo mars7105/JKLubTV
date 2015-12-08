@@ -19,7 +19,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.model.Gruppe;
 import de.turnierverwaltung.model.Turnier;
@@ -30,7 +30,7 @@ public class GruppenControl implements ActionListener {
 	private GruppenView gruppenView;
 	private JButton gruppenOKButton;
 	private JButton gruppenCancelButton;
-	private JPanel hauptPanel;
+	private JTabbedPane hauptPanel;
 	private int gruppenAnzahl;
 	private Turnier turnier;
 	private Gruppe[] gruppe;
