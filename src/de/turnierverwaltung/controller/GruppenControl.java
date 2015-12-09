@@ -15,9 +15,11 @@ package de.turnierverwaltung.controller;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JTabbedPane;
 
@@ -34,10 +36,14 @@ public class GruppenControl implements ActionListener {
 	private int gruppenAnzahl;
 	private Turnier turnier;
 	private Gruppe[] gruppe;
+	private ImageIcon gruppenIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png")));
+	private int selectIndex;
 
-	public GruppenControl(MainControl mainControl) {
+	public GruppenControl(MainControl mainControl, int selectIndex) {
 
 		this.mainControl = mainControl;
+		this.selectIndex = selectIndex;
 		turnier = this.mainControl.getTurnier();
 		hauptPanel = this.mainControl.getHauptPanel();
 		gruppenAnzahl = turnier.getAnzahlGruppen();
@@ -49,10 +55,13 @@ public class GruppenControl implements ActionListener {
 		gruppenCancelButton = this.gruppenView.getCancelButton();
 		gruppenCancelButton.addActionListener(this);
 		gruppenView.getGruppenNameTextField()[0].grabFocus();
-		hauptPanel.removeAll();
 		this.mainControl.getNaviController().makeNaviPanel();
-		hauptPanel.add(gruppenView);
-		hauptPanel.updateUI();
+		hauptPanel.remove(this.selectIndex);
+		hauptPanel.add(this.gruppenView, this.selectIndex);
+		hauptPanel.setTitleAt(selectIndex, "Gruppen");
+		hauptPanel.setIconAt(selectIndex, gruppenIcon);
+		hauptPanel.setSelectedIndex(selectIndex);
+
 	}
 
 	@Override
@@ -63,7 +72,7 @@ public class GruppenControl implements ActionListener {
 			makeGruppe();
 
 			this.mainControl.setSpielerAnzahlControl(new SpielerAnzahlControl(
-					this.mainControl));
+					this.mainControl, selectIndex));
 
 		}
 		if (arg0.getSource() == gruppenCancelButton) {

@@ -16,9 +16,11 @@ package de.turnierverwaltung.controller;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -55,11 +57,14 @@ public class SpielerAnzahlControl implements ActionListener {
 	private TabAnzeigeView tabbedPaneView;
 	private Turnier turnier;
 	private Gruppe[] gruppe;
-
+	private int selectIndex;
 	private Spieler[][] spieler;
+	private ImageIcon gruppenIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png")));
 
-	public SpielerAnzahlControl(MainControl mainControl) {
+	public SpielerAnzahlControl(MainControl mainControl, int selectIndex) {
 		this.mainControl = mainControl;
+		this.selectIndex = selectIndex;
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
 
@@ -85,18 +90,19 @@ public class SpielerAnzahlControl implements ActionListener {
 			gruppe[i].setSpieler(spieler[i]);
 		}
 		tabbedPaneView.updateUI();
-		hauptPanel.removeAll();
 		this.mainControl.getNaviController().makeNaviPanel();
-		hauptPanel.add(tabbedPaneView);
-		hauptPanel.setMinimumSize(new Dimension(800, 600));
-		hauptPanel.updateUI();
-		
+		hauptPanel.remove(this.selectIndex);
+		hauptPanel.add(this.tabbedPaneView, this.selectIndex);
+		hauptPanel.setTitleAt(selectIndex, "Gruppen");
+		hauptPanel.setIconAt(selectIndex, gruppenIcon);
+		hauptPanel.setSelectedIndex(selectIndex);
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (mainControl.getSpielerEingabeControl() == null) {
-			spielerEingabeControl = new SpielerEingabeControl(mainControl);
+			spielerEingabeControl = new SpielerEingabeControl(mainControl,this.selectIndex);
 			mainControl.setSpielerEingabeControl(spielerEingabeControl);
 		}
 		for (int i = 0; i < gruppenAnzahl; i++) {

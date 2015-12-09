@@ -1,7 +1,9 @@
 package de.turnierverwaltung.controller;
 
+import java.awt.Toolkit;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -26,7 +28,8 @@ public class TerminTabelleControl  {
 	private Turnier turnier;
 	private MyTableModelListener tml[];
 	private ArrayList<Partie> changedPartien;
-	
+	private ImageIcon terminTabelleIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png")));
 	public TerminTabelleControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		this.turnier = mainControl.getTurnier();
@@ -67,7 +70,7 @@ public class TerminTabelleControl  {
 
 
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() == 1) {
-			tabAnzeigeView2[gruppenNummer].insertTab("Termintabelle", null,
+			tabAnzeigeView2[gruppenNummer].insertTab("Termintabelle", terminTabelleIcon,
 					simpleTableView[gruppenNummer], null, 1);
 		} else {
 

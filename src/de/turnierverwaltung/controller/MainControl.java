@@ -104,7 +104,7 @@ public class MainControl extends JFrame {
 
 	public void datenbankMenueView(Boolean enable) {
 		menueControl.setDatenbankMenue(enable);
-		naviView.getDatenbankPanel().setVisible(enable);
+		// naviView.getDatenbankPanel().setVisible(enable);
 
 		naviView.setPathToDatabase(new JLabel(menueControl.getFileName()));
 		naviView.updateUI();
@@ -349,6 +349,8 @@ public class MainControl extends JFrame {
 				datenbankMenueView(true);
 				String path = propertiesControl.getProperties("Path");
 				SQLiteDAOFactory.setDB_PATH(path);
+				this.setTitle("Klubturnierverwaltung - Datei:" + SQLiteDAOFactory.getDB_PATH());
+
 				if (this.getSpielerEditierenControl() != null) {
 					// mainControl.getSpielerEditierenControl().makePanel();
 				} else {
@@ -372,6 +374,9 @@ public class MainControl extends JFrame {
 					this.getTurnierListeLadenControl().loadTurnier();
 					naviView.setPathToDatabase(new JLabel(path));
 				}
+
+			} else {
+				this.setTitle("Klubturnierverwaltung ");
 
 			}
 		}

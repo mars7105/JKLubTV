@@ -1,6 +1,7 @@
 package de.turnierverwaltung.controller;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -19,6 +20,8 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
@@ -63,7 +66,8 @@ public class RundenEingabeFormularControl implements ActionListener {
 	private JDatePickerImpl[][] datePicker;
 	private JComboBox<String>[][] rundenNummer;
 	private int[][] changedGroups;
-
+	private ImageIcon paarungenIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/media-playlist-shuffle-3.png")));
 	@SuppressWarnings("unchecked")
 	public RundenEingabeFormularControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -225,9 +229,10 @@ public class RundenEingabeFormularControl implements ActionListener {
 		}
 
 		if (tabAnzeigeView2[index].getComponentCount() == 2) {
-			tabAnzeigeView2[index].insertTab("Paarungen", null, rundenEingabeFormularView[index], null, 2);
+			tabAnzeigeView2[index].insertTab("Paarungen", paarungenIcon, rundenEingabeFormularView[index], null, 2);
 		} else {
 			tabAnzeigeView2[index].setComponentAt(2, rundenEingabeFormularView[index]);
+			tabAnzeigeView2[index].setIconAt(2, paarungenIcon);
 		}
 
 		rundenEingabeFormularView[index].updateUI();

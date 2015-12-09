@@ -31,11 +31,11 @@ public class NaviController implements ActionListener {
 	public static final int SORTIEREN = 2;
 
 	private MainControl mainControl;
-	private JButton spielerListeButton;
-	private JButton turnierListeButton;
+//	private JButton spielerListeButton;
+//	private JButton turnierListeButton;
 	private JButton newdbButton;
 	private JButton loaddbButton;
-	private JButton infoButton;
+//	private JButton infoButton;
 	private NaviView naviView;
 	// private HTMLTabelleView htmlTabelleView;
 	private int aktiveGruppe;
@@ -52,12 +52,12 @@ public class NaviController implements ActionListener {
 		newdbButton.addActionListener(this);
 		loaddbButton = naviView.getLoadDatabaseButton();
 		loaddbButton.addActionListener(this);
-		turnierListeButton = naviView.getTurnierListeButton();
-		turnierListeButton.addActionListener(this);
-		spielerListeButton = naviView.getSpielerListeButton();
-		spielerListeButton.addActionListener(this);
-		infoButton = naviView.getInfoButton();
-		infoButton.addActionListener(this);
+//		turnierListeButton = naviView.getTurnierListeButton();
+//		turnierListeButton.addActionListener(this);
+//		spielerListeButton = naviView.getSpielerListeButton();
+//		spielerListeButton.addActionListener(this);
+//		infoButton = naviView.getInfoButton();
+//		infoButton.addActionListener(this);
 		pdfButton = naviView.getPdfSpeichernButton();
 		pdfButton.addActionListener(this);
 		naviView.getTabelleAktualisierenButton().addActionListener(this);
@@ -94,25 +94,25 @@ public class NaviController implements ActionListener {
 			pdfsave.savePDFFile();
 
 		}
-		if (arg0.getSource() == infoButton) {
-			int abfrage = warnHinweis();
-			if (abfrage == 0) {
-
-				// mainControl.resetApp();
-				if (SQLiteDAOFactory.getDB_PATH() == null) {
-					mainControl.datenbankMenueView(false);
-				}
-				if (mainControl.getInfoController() == null) {
-					mainControl.setInfoController(new InfoController(this.mainControl));
-				} else {
-					int selectTab = mainControl.getHauptPanel().indexOfTab("Info");
-					mainControl.getHauptPanel().setSelectedIndex(selectTab);
-					// mainControl.getInfoController().makeInfoPanel();
-				}
-				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-				this.mainControl.setNeuesTurnier(false);
-			}
-		}
+//		if (arg0.getSource() == infoButton) {
+//			int abfrage = warnHinweis();
+//			if (abfrage == 0) {
+//
+//				// mainControl.resetApp();
+//				if (SQLiteDAOFactory.getDB_PATH() == null) {
+//					mainControl.datenbankMenueView(false);
+//				}
+//				if (mainControl.getInfoController() == null) {
+//					mainControl.setInfoController(new InfoController(this.mainControl));
+//				} else {
+//					int selectTab = mainControl.getHauptPanel().indexOfTab("Info");
+//					mainControl.getHauptPanel().setSelectedIndex(selectTab);
+//					// mainControl.getInfoController().makeInfoPanel();
+//				}
+//				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+//				this.mainControl.setNeuesTurnier(false);
+//			}
+//		}
 		if (arg0.getSource() == newdbButton) {
 
 			int abfrage = warnHinweis();
@@ -227,43 +227,43 @@ public class NaviController implements ActionListener {
 			}
 
 		}
-		if (arg0.getSource() == turnierListeButton)
-
-		{
-			int abfrage = warnHinweis();
-			if (abfrage == 0) {
-				// mainControl.resetApp();
-				if (mainControl.getTurnierListeLadenControl() != null) {
-					// mainControl.getTurnierListeLadenControl().loadTurnier();
-					int selectTab = mainControl.getHauptPanel().indexOfTab("Turniere");
-					mainControl.getHauptPanel().setSelectedIndex(selectTab);
-				} else {
-					mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(mainControl));
-					mainControl.getTurnierListeLadenControl().loadTurnier();
-				}
-				this.mainControl.setNeuesTurnier(false);
-				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-				mainControl.getNaviView().getTabellenPanel().setVisible(false);
-			}
-		}
-		if (arg0.getSource() == spielerListeButton)
-
-		{
-			int abfrage = warnHinweis();
-			if (abfrage == 0) {
-				// mainControl.resetApp();
-				if (mainControl.getSpielerEditierenControl() != null) {
-					// mainControl.getSpielerEditierenControl().makePanel();
-					int selectTab = mainControl.getHauptPanel().indexOfTab("Spieler");
-					mainControl.getHauptPanel().setSelectedIndex(selectTab);
-				} else {
-					mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
-					mainControl.getSpielerEditierenControl().updateSpielerListe();
-				}
-				this.mainControl.setNeuesTurnier(false);
-				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-			}
-		}
+//		if (arg0.getSource() == turnierListeButton)
+//
+//		{
+//			int abfrage = warnHinweis();
+//			if (abfrage == 0) {
+//				// mainControl.resetApp();
+//				if (mainControl.getTurnierListeLadenControl() != null) {
+//					// mainControl.getTurnierListeLadenControl().loadTurnier();
+//					int selectTab = mainControl.getHauptPanel().indexOfTab("Turniere");
+//					mainControl.getHauptPanel().setSelectedIndex(selectTab);
+//				} else {
+//					mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(mainControl));
+//					mainControl.getTurnierListeLadenControl().loadTurnier();
+//				}
+//				this.mainControl.setNeuesTurnier(false);
+//				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+//				mainControl.getNaviView().getTabellenPanel().setVisible(false);
+//			}
+//		}
+//		if (arg0.getSource() == spielerListeButton)
+//
+//		{
+//			int abfrage = warnHinweis();
+//			if (abfrage == 0) {
+//				// mainControl.resetApp();
+//				if (mainControl.getSpielerEditierenControl() != null) {
+//					// mainControl.getSpielerEditierenControl().makePanel();
+//					int selectTab = mainControl.getHauptPanel().indexOfTab("Spieler");
+//					mainControl.getHauptPanel().setSelectedIndex(selectTab);
+//				} else {
+//					mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
+//					mainControl.getSpielerEditierenControl().updateSpielerListe();
+//				}
+//				this.mainControl.setNeuesTurnier(false);
+//				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+//			}
+//		}
 
 		if (arg0.getSource() == naviView.getTabelleAktualisierenButton())
 

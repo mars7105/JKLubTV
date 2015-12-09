@@ -1,5 +1,6 @@
 package de.turnierverwaltung.controller;
 
+import java.awt.Toolkit;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -20,9 +21,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.view.TabAnzeigeView;
@@ -41,6 +45,12 @@ public class TurnierListeLadenControl implements ActionListener {
 	private TabAnzeigeView[] tabbedPaneView2;
 	private ArrayList<Turnier> turnierListe;
 	private int turnierIndex;
+	private ImageIcon turnierListeIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/games-highscores.png")));
+	private ImageIcon turnierIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
+	private ImageIcon gruppenIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png")));
 
 	public TurnierListeLadenControl(MainControl mainControl) {
 		turnierIndex = -1;
@@ -142,8 +152,8 @@ public class TurnierListeLadenControl implements ActionListener {
 
 					for (int z = 0; z < turnier.getAnzahlGruppen(); z++) {
 						tabbedPaneView2[z] = new TabAnzeigeView(mainControl);
-						tabbedPaneView.insertTab(turnier.getGruppe()[z].getGruppenName(), null, tabbedPaneView2[z],
-								null, z);
+						tabbedPaneView.insertTab(turnier.getGruppe()[z].getGruppenName(), gruppenIcon,
+								tabbedPaneView2[z], null, z);
 						mainControl.getTurnierTabelleControl().makeSimpleTableView(z);
 						mainControl.getTerminTabelleControl().makeSimpleTableView(z);
 						// mainControl.getRundenEingabeFormularControl().makeTerminTabelle(z);
@@ -153,9 +163,13 @@ public class TurnierListeLadenControl implements ActionListener {
 
 					// hauptPanel.removeAll();
 					// mainControl.getNaviController().makeNaviPanel();
-					mainControl.getNaviView().setTabellenname("Turnier: " + mainControl.getTurnier().getTurnierName());
-					hauptPanel.addTab(turnier.getTurnierName(), null, tabbedPaneView);
-					hauptPanel.updateUI();
+					mainControl.getNaviView()
+							.setTabellenname("Turnier: " + mainControl.getTurnier().getTurnierName());
+					hauptPanel.addTab(turnier.getTurnierName(), turnierIcon, tabbedPaneView);
+					int selectIndex = hauptPanel.getTabCount() - 1;
+					hauptPanel.setSelectedIndex(selectIndex);
+					hauptPanel.addChangeListener(new TurnierAnsicht(mainControl, turnier));
+//					hauptPanel.updateUI();
 
 				}
 			}
@@ -230,7 +244,34 @@ public class TurnierListeLadenControl implements ActionListener {
 		turnierListeLadenView.getTurnierAddButton().addActionListener(this);
 		// hauptPanel.removeAll();
 		// mainControl.getNaviController().makeNaviPanel();
-		hauptPanel.addTab("Turniere", null, turnierListeLadenView);
+		hauptPanel.addTab("Turnierliste", turnierListeIcon, turnierListeLadenView);
 		hauptPanel.updateUI();
+	}
+
+	class TurnierAnsicht implements ChangeListener {
+
+		private MainControl mainControl;
+		private Turnier turnier;
+
+		public TurnierAnsicht(MainControl mainControl, Turnier turnier) {
+			super();
+			this.mainControl = mainControl;
+			this.turnier = turnier;
+		}
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			if (e.getSource() instanceof JTabbedPane) {
+				JTabbedPane pane = (JTabbedPane) e.getSource();
+				int selectedIndex = pane.getSelectedIndex();
+				if (pane.getTitleAt(selectedIndex).compareTo(turnier.getTurnierName()) == 0) {
+					this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
+
+				} else {
+					this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+				}
+			}
+		}
+
 	}
 }

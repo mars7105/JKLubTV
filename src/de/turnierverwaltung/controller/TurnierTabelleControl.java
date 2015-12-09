@@ -17,8 +17,11 @@ package de.turnierverwaltung.controller;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
@@ -46,7 +49,8 @@ public class TurnierTabelleControl {
 	private Dimension dimension[];
 	private int[] spielerAnzahl;
 	private ArrayList<Partie> changedPartien;
-
+	private ImageIcon turniertabelleIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/x-office-spreadsheet.png")));
 	public TurnierTabelleControl(MainControl mainControl) {
 
 		this.mainControl = mainControl;
@@ -135,7 +139,7 @@ public class TurnierTabelleControl {
 		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
 		simpleTableView[gruppenNummer].setPreferredSize(dimension[gruppenNummer]);
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() < 1) {
-			tabAnzeigeView2[gruppenNummer].insertTab("Turniertabelle", null, simpleTableView[gruppenNummer], null, 0);
+			tabAnzeigeView2[gruppenNummer].insertTab("Turniertabelle", turniertabelleIcon, simpleTableView[gruppenNummer], null, 0);
 
 		} else {
 

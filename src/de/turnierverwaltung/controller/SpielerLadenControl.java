@@ -1,8 +1,12 @@
 package de.turnierverwaltung.controller;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.model.Spieler;
@@ -22,6 +26,11 @@ public class SpielerLadenControl implements ActionListener {
 	private SpielerHinzufuegenView spielerHinzufuegenView;
 	private DewisDialogControl dewisDialogControl;
 	private int spielerIndex;
+
+	private ImageIcon spielerListeIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-group.png")));
+	
+
 
 	public SpielerLadenControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -99,7 +108,6 @@ public class SpielerLadenControl implements ActionListener {
 				}
 			}
 
-			
 			for (int i = 0; i < spielerAnzahl; i++) {
 				if (arg0.getSource() == spielerLadenView.getSpielerLoeschenButton()[i]) {
 					SpielerTableControl stC = new SpielerTableControl(mainControl);
@@ -107,7 +115,6 @@ public class SpielerLadenControl implements ActionListener {
 					updateSpielerListe();
 				}
 			}
-		
 
 			if (arg0.getSource() == spielerLadenView.getSpielerImport()) {
 				SpielerTableImportController spielerImport = new SpielerTableImportController();
@@ -129,9 +136,8 @@ public class SpielerLadenControl implements ActionListener {
 				dewisDialogControl.makeDialog();
 			}
 		}
-		
-	}
 
+	}
 
 	public void neuerSpieler() {
 		updateSpielerListe();
@@ -149,14 +155,14 @@ public class SpielerLadenControl implements ActionListener {
 		spielerAnzahl = spieler.size();
 		if (spielerLadenView == null) {
 			spielerLadenView = new SpielerLadenView(spielerAnzahl);
-			hauptPanel.addTab("Spieler", spielerLadenView);
+			hauptPanel.addTab("Spielerliste",spielerListeIcon, spielerLadenView);
 		} else {
 			spielerLadenView.removeAll();
 			spielerLadenView.init(spielerAnzahl);
 		}
 
 		int index = 0;
-		for (Spieler player:spieler) {
+		for (Spieler player : spieler) {
 
 			spielerLadenView.makeSpielerZeile(player, index);
 			spielerLadenView.getSpielerBearbeitenButton()[index].addActionListener(this);

@@ -1,4 +1,6 @@
 package de.turnierverwaltung.controller;
+
+import java.awt.Toolkit;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -17,18 +19,19 @@ package de.turnierverwaltung.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.ZahlGroesserAlsN;
 import de.turnierverwaltung.ZahlKleinerAlsN;
+import de.turnierverwaltung.controller.TurnierListeLadenControl.TurnierAnsicht;
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.view.TurnierView;
 
 public class TurnierControl implements ActionListener {
-	private static int pruefeObZahlKleinerEinsIst(int zahl)
-			throws ZahlKleinerAlsN, ZahlGroesserAlsN {
+	private static int pruefeObZahlKleinerEinsIst(int zahl) throws ZahlKleinerAlsN, ZahlGroesserAlsN {
 		if (zahl <= 0) {
 			throw new ZahlKleinerAlsN();
 		}
@@ -38,21 +41,23 @@ public class TurnierControl implements ActionListener {
 		return zahl;
 	}
 
+	private int selectIndex;
 	private MainControl mainControl;
 	private TurnierView turnierView;
 	private JButton turnierOkButton;
-	// private JButton turnierCancelButton;
 	private JTabbedPane hauptPanel;
 	private String turnierName;
 	private String startDatum;
 	private String endDatum;
 	private int gruppenAnzahl;
+	private ImageIcon turnierIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
 
 	private Turnier turnier;
 
 	public TurnierControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		
+
 		hauptPanel = this.mainControl.getHauptPanel();
 		this.mainControl.setTurnierView(new TurnierView());
 		this.turnierView = this.mainControl.getTurnierView();
@@ -60,11 +65,12 @@ public class TurnierControl implements ActionListener {
 		turnierOkButton = this.mainControl.getTurnierView().getOkButton();
 		turnierOkButton.addActionListener(this);
 		this.mainControl.setNeuesTurnier(true);
-		hauptPanel.removeAll();
+		hauptPanel.addTab("Neues Turnier", turnierIcon, this.turnierView);
+		selectIndex = hauptPanel.getTabCount() - 1;
+		hauptPanel.setSelectedIndex(selectIndex);
 		mainControl.getNaviController().makeNaviPanel();
-		hauptPanel.add(turnierView);
+	
 		mainControl.getMenueControl().setWarnHinweis(true);
-		hauptPanel.updateUI();
 	}
 
 	@Override
@@ -110,7 +116,7 @@ public class TurnierControl implements ActionListener {
 		turnier.setEndDatum(endDatum);
 		turnier.setAnzahlGruppen(gruppenAnzahl);
 		this.mainControl.setTurnier(turnier);
-
+		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());
 	}
 
 	public void setEndDatum(String endDatum) {
@@ -145,31 +151,25 @@ public class TurnierControl implements ActionListener {
 
 		try {
 
-			gruppenAnzahl = pruefeObZahlKleinerEinsIst(new Integer(turnierView
-					.getGruppenAnzahlTextField().getText()));
+			gruppenAnzahl = pruefeObZahlKleinerEinsIst(new Integer(turnierView.getGruppenAnzahlTextField().getText()));
 
-			if (turnierName.length() > 0 && startDatum.length() > 0
-					&& endDatum.length() > 0 && gruppenAnzahl > 0) {
+			if (turnierName.length() > 0 && startDatum.length() > 0 && endDatum.length() > 0 && gruppenAnzahl > 0) {
 				makeTurnier();
 
-				this.mainControl.setGruppenControl(new GruppenControl(
-						this.mainControl));
+				this.mainControl.setGruppenControl(new GruppenControl(this.mainControl,selectIndex));
 
 			}
 
 		} catch (NumberFormatException e) {
-			JOptionPane
-					.showMessageDialog(null, "Gruppenanzahl ist fehlerhaft!");
+			JOptionPane.showMessageDialog(null, "Gruppenanzahl ist fehlerhaft!");
 			turnierView.getGruppenAnzahlTextField().setText("");
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		} catch (ZahlKleinerAlsN e) {
-			JOptionPane.showMessageDialog(null,
-					"Zahl darf nicht kleiner als 1 sein!");
+			JOptionPane.showMessageDialog(null, "Zahl darf nicht kleiner als 1 sein!");
 			turnierView.getGruppenAnzahlTextField().setText("");
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		} catch (ZahlGroesserAlsN e) {
-			JOptionPane.showMessageDialog(null,
-					"Zahl darf nicht größer als 15 sein!");
+			JOptionPane.showMessageDialog(null, "Zahl darf nicht größer als 15 sein!");
 			turnierView.getGruppenAnzahlTextField().setText("");
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		}
