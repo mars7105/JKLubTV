@@ -37,7 +37,7 @@ public class GruppenControl implements ActionListener {
 	private Turnier turnier;
 	private Gruppe[] gruppe;
 	private ImageIcon gruppenIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
 	private int selectIndex;
 
 	public GruppenControl(MainControl mainControl, int selectIndex) {
@@ -55,10 +55,10 @@ public class GruppenControl implements ActionListener {
 		gruppenCancelButton = this.gruppenView.getCancelButton();
 		gruppenCancelButton.addActionListener(this);
 		gruppenView.getGruppenNameTextField()[0].grabFocus();
-		this.mainControl.getNaviController().makeNaviPanel();
+//		this.mainControl.getNaviController().makeNaviPanel();
 		hauptPanel.remove(this.selectIndex);
 		hauptPanel.add(this.gruppenView, this.selectIndex);
-		hauptPanel.setTitleAt(selectIndex, "Gruppen");
+		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());
 		hauptPanel.setIconAt(selectIndex, gruppenIcon);
 		hauptPanel.setSelectedIndex(selectIndex);
 

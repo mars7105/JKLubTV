@@ -1,6 +1,5 @@
 package de.turnierverwaltung.controller;
 
-import java.awt.BorderLayout;
 import java.awt.Toolkit;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
@@ -25,8 +24,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTabbedPane;
-
 import org.jdatepicker.impl.JDatePickerImpl;
 
 import de.turnierverwaltung.ZahlKleinerAlsN;
@@ -55,8 +52,6 @@ public class RundenEingabeFormularControl implements ActionListener {
 	private TerminTabelle terminTabelle[];
 	private int gruppenAnzahl;
 	private RundenEingabeFormularView[] rundenEingabeFormularView;
-	private JTabbedPane hauptPanel;
-	private TabAnzeigeView tabAnzeigeView;
 	private JButton changeColor[][];
 	private int[] spielerAnzahl;
 	private PaarungsTafeln[] paarungsTafeln;
@@ -71,8 +66,8 @@ public class RundenEingabeFormularControl implements ActionListener {
 	@SuppressWarnings("unchecked")
 	public RundenEingabeFormularControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		hauptPanel = this.mainControl.getHauptPanel();
-		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
+		this.mainControl.getHauptPanel();
+		this.mainControl.getTabAnzeigeView();
 
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
@@ -236,7 +231,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 		}
 
 		rundenEingabeFormularView[index].updateUI();
-		hauptPanel.updateUI();
+//		hauptPanel.updateUI();
 	}
 
 	public void makeRundenEditView(int index) {
@@ -255,9 +250,9 @@ public class RundenEingabeFormularControl implements ActionListener {
 				tabAnzeigeView2[index].setComponentAt(2, rundenEingabeFormularView[index]);
 			}
 		}
-		hauptPanel.add(tabAnzeigeView, BorderLayout.CENTER);
+//		hauptPanel.add(tabAnzeigeView, BorderLayout.CENTER);
 		makeNewFormular(index);
-		hauptPanel.updateUI();
+//		hauptPanel.updateUI();
 	}
 
 	public void makeTerminTabelle(int index) {
@@ -280,7 +275,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 			mainControl.getTerminTabelleControl().makeSimpleTableView(index);
 			makeRundenEditView(index);
 		}
-		makeNewFormular(index);
+//		makeNewFormular(index);
 		mainControl.getNaviView().setTabellenname("Turnier: " + mainControl.getTurnier().getTurnierName());
 
 	}

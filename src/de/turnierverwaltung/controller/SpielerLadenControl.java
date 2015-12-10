@@ -6,12 +6,10 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.view.SpielerEditierenView;
-import de.turnierverwaltung.view.SpielerHinzufuegenView;
 import de.turnierverwaltung.view.SpielerLadenView;
 
 public class SpielerLadenControl implements ActionListener {
@@ -23,8 +21,6 @@ public class SpielerLadenControl implements ActionListener {
 	private ArrayList<Spieler> spieler;
 	private SpielerTableControl spielerTableControl;
 	private SpielerEditierenView spielerEditierenView;
-	private SpielerHinzufuegenView spielerHinzufuegenView;
-	private DewisDialogControl dewisDialogControl;
 	private int spielerIndex;
 
 	private ImageIcon spielerListeIcon = new ImageIcon(
@@ -34,41 +30,13 @@ public class SpielerLadenControl implements ActionListener {
 
 	public SpielerLadenControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		dewisDialogControl = new DewisDialogControl(this.mainControl);
+		new DewisDialogControl(this.mainControl);
 		hauptPanel = this.mainControl.getHauptPanel();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (spielerHinzufuegenView != null) {
-			if (arg0.getSource() == spielerHinzufuegenView.getOkButton()) {
-				String name = spielerHinzufuegenView.getTextFieldName().getText();
-				String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
-				String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
-				int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
-				Spieler neuerSpieler = new Spieler();
-				neuerSpieler.setName(name);
-				neuerSpieler.setKuerzel(kuerzel);
-				neuerSpieler.setDwz(dwz);
-				neuerSpieler.setAge(age);
-				SpielerTableControl stc = new SpielerTableControl(mainControl);
-				neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-				spieler.add(neuerSpieler);
-				spielerHinzufuegenView.getTextFieldName().setEditable(false);
-				spielerHinzufuegenView.getTextFieldKuerzel().setEditable(false);
-				spielerHinzufuegenView.getTextFieldDwz().setEditable(false);
-				spielerHinzufuegenView.getTextComboBoxAge().setEnabled(false);
-				spielerHinzufuegenView.spielerPanel();
 
-			}
-
-			if (arg0.getSource() == spielerHinzufuegenView.getCancelButton()) {
-				mainControl.setEnabled(true);
-				updateSpielerListe();
-
-				spielerHinzufuegenView.closeWindow();
-			}
-		}
 		if (spielerEditierenView != null) {
 			if (arg0.getSource() == spielerEditierenView.getOkButton()) {
 				String name = spielerEditierenView.getTextFieldName().getText();
@@ -116,37 +84,12 @@ public class SpielerLadenControl implements ActionListener {
 				}
 			}
 
-			if (arg0.getSource() == spielerLadenView.getSpielerImport()) {
-				SpielerTableImportController spielerImport = new SpielerTableImportController();
-				spielerImport.importSpielerTable();
-				updateSpielerListe();
-			}
-			if (arg0.getSource() == spielerLadenView.getSpielerExport()) {
-				SpielerTableExportController spielerExport = new SpielerTableExportController(this.mainControl);
-				spielerExport.exportSpielerTable();
-			}
-			if (arg0.getSource() == spielerLadenView.getSpielerAddButton()) {
-				spielerHinzufuegenView = new SpielerHinzufuegenView();
 
-				spielerHinzufuegenView.getOkButton().addActionListener(this);
-				spielerHinzufuegenView.getCancelButton().addActionListener(this);
-				mainControl.setEnabled(false);
-			}
-			if (arg0.getSource() == spielerLadenView.getSpielerDEWISSearchButton()) {
-				dewisDialogControl.makeDialog();
-			}
 		}
 
 	}
 
-	public void neuerSpieler() {
-		updateSpielerListe();
-		spielerHinzufuegenView = new SpielerHinzufuegenView();
 
-		spielerHinzufuegenView.getOkButton().addActionListener(this);
-		spielerHinzufuegenView.getCancelButton().addActionListener(this);
-		mainControl.setEnabled(false);
-	}
 
 	public void updateSpielerListe() {
 		spielerTableControl = new SpielerTableControl(this.mainControl);
@@ -169,10 +112,7 @@ public class SpielerLadenControl implements ActionListener {
 			spielerLadenView.getSpielerLoeschenButton()[index].addActionListener(this);
 			index++;
 		}
-		spielerLadenView.getSpielerAddButton().addActionListener(this);
-		spielerLadenView.getSpielerExport().addActionListener(this);
-		spielerLadenView.getSpielerImport().addActionListener(this);
-		spielerLadenView.getSpielerDEWISSearchButton().addActionListener(this);
+
 
 		spielerLadenView.updateUI();
 	}

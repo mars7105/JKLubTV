@@ -41,25 +41,15 @@ public class SpielerLadenView extends JPanel {
 	private JPanel centerPane;
 	private JButton[] spielerBearbeitenButton;
 	private JButton[] spielerLoeschenButton;
-	private JButton spielerAddButton;
 	private int anzahlElemente;
 	private JPanel line;
-	private ImageIcon userNew = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-new-3.png")));
+
 	private ImageIcon userDelete = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-delete-2.png")));
 	private ImageIcon userProperties = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-properties.png")));
-	private ImageIcon userImport = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-open-4.png")));
-	private ImageIcon userExport = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-export.png")));
-	private ImageIcon DEWISSearch = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/db.png")));
+
 	private int spielerAnzahl;
-	private JButton spielerImport;
-	private JButton spielerExport;
-	private JButton spielerDEWISSearchButton;
 
 	public SpielerLadenView(int spielerAnzahl) {
 		init(spielerAnzahl);
@@ -70,23 +60,14 @@ public class SpielerLadenView extends JPanel {
 		this.spielerAnzahl = spielerAnzahl;
 		anzahlElemente = 0;
 		setLayout(new BorderLayout());
-		spielerAddButton = new JButton("Neuer Spieler", userNew);
-		spielerImport = new JButton("Import Spielerliste", userImport);
-		spielerExport = new JButton("Export Spielerliste", userExport);
-		spielerDEWISSearchButton = new JButton("DSB Datenbank", DEWISSearch);
+
 		JLabel titleLabel = new JLabel("Spielerliste");
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JPanel newPlayerPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		titlepanel.add(titleLabel);
-		newPlayerPanel.add(spielerAddButton);
-		newPlayerPanel.add(spielerDEWISSearchButton);
-		newPlayerPanel.add(spielerImport);
-		newPlayerPanel.add(spielerExport);
 
 		mainPane = new JPanel();
 		mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
 		mainPane.add(titlepanel);
-		mainPane.add(newPlayerPanel);
 
 		add(mainPane, BorderLayout.NORTH);
 		spielerBearbeitenButton = new JButton[this.spielerAnzahl];
@@ -103,26 +84,6 @@ public class SpielerLadenView extends JPanel {
 
 	}
 
-	public JButton getSpielerImport() {
-		return spielerImport;
-	}
-
-	public void setSpielerImport(JButton spielerImport) {
-		this.spielerImport = spielerImport;
-	}
-
-	public JButton getSpielerExport() {
-		return spielerExport;
-	}
-
-	public void setSpielerExport(JButton spielerExport) {
-		this.spielerExport = spielerExport;
-	}
-
-	public JButton getSpielerAddButton() {
-		return spielerAddButton;
-	}
-
 	public JButton[] getSpielerBearbeitenButton() {
 		return spielerBearbeitenButton;
 	}
@@ -131,7 +92,7 @@ public class SpielerLadenView extends JPanel {
 		return spielerLoeschenButton;
 	}
 
-	public void makeSpielerZeile(Spieler spieler,int index) {
+	public void makeSpielerZeile(Spieler spieler, int index) {
 		line = new JPanel();
 
 		line.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -158,24 +119,12 @@ public class SpielerLadenView extends JPanel {
 		anzahlElemente++;
 	}
 
-	public void setSpielerAddButton(JButton spielerAddButton) {
-		this.spielerAddButton = spielerAddButton;
-	}
-
 	public void setSpielerBearbeitenButton(JButton[] spielerBearbeitenButton) {
 		this.spielerBearbeitenButton = spielerBearbeitenButton;
 	}
 
 	public void setSpielerLoeschenButton(JButton[] spielerLoeschenButton) {
 		this.spielerLoeschenButton = spielerLoeschenButton;
-	}
-
-	public JButton getSpielerDEWISSearchButton() {
-		return spielerDEWISSearchButton;
-	}
-
-	public void setSpielerDEWISSearchButton(JButton spielerDEWISSearchButton) {
-		this.spielerDEWISSearchButton = spielerDEWISSearchButton;
 	}
 
 	public int getAnzahlElemente() {

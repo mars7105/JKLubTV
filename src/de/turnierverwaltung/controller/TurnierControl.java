@@ -26,7 +26,6 @@ import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.ZahlGroesserAlsN;
 import de.turnierverwaltung.ZahlKleinerAlsN;
-import de.turnierverwaltung.controller.TurnierListeLadenControl.TurnierAnsicht;
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.view.TurnierView;
 
@@ -65,11 +64,12 @@ public class TurnierControl implements ActionListener {
 		turnierOkButton = this.mainControl.getTurnierView().getOkButton();
 		turnierOkButton.addActionListener(this);
 		this.mainControl.setNeuesTurnier(true);
+		
 		hauptPanel.addTab("Neues Turnier", turnierIcon, this.turnierView);
 		selectIndex = hauptPanel.getTabCount() - 1;
 		hauptPanel.setSelectedIndex(selectIndex);
-		mainControl.getNaviController().makeNaviPanel();
-	
+//		mainControl.getNaviController().makeNaviPanel();
+
 		mainControl.getMenueControl().setWarnHinweis(true);
 	}
 
@@ -79,9 +79,6 @@ public class TurnierControl implements ActionListener {
 			turnierOkButton();
 
 		}
-		// if (arg0.getSource() == turnierCancelButton) {
-		// turnierCancelButton();
-		// }
 
 	}
 
@@ -156,7 +153,7 @@ public class TurnierControl implements ActionListener {
 			if (turnierName.length() > 0 && startDatum.length() > 0 && endDatum.length() > 0 && gruppenAnzahl > 0) {
 				makeTurnier();
 
-				this.mainControl.setGruppenControl(new GruppenControl(this.mainControl,selectIndex));
+				this.mainControl.setGruppenControl(new GruppenControl(this.mainControl, selectIndex));
 
 			}
 

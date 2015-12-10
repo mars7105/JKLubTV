@@ -358,7 +358,7 @@ public class MainControl extends JFrame {
 					this.getSpielerEditierenControl().updateSpielerListe();
 				}
 				this.setNeuesTurnier(false);
-				this.getNaviView().getTabellenPanel().setVisible(false);
+//				this.getNaviView().getTabellenPanel().setVisible(false);
 				if (this.getTurnierTableControl() == null) {
 					this.setTurnierTableControl(new TurnierTableControl(this));
 					this.getTurnierTableControl().loadTurnierListe();

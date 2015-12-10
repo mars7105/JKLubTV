@@ -29,7 +29,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import de.turnierverwaltung.model.Gruppe;
@@ -50,14 +49,12 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 	private int[] spielerAnzahl;
 	private int gruppenAnzahl;
 	private TabAnzeigeView tabAnzeigeView;
-	private JTabbedPane hauptPanel;
 	private Turnier turnier;
 	private Gruppe[] gruppe;
 	private Spieler[] spieler;
 	private RundenEingabeFormularControl rundenEingabeFormularControl;
 	private ArrayList<Spieler> alleSpieler;
 	private Boolean[] readyToSave;
-	private int selectIndex;
 	private ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png")));
 
@@ -65,12 +62,11 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 25;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 75;
 		this.mainControl = mainControl;
-		this.selectIndex = selectIndex;
 		SpielerTableControl spielerTableControl = new SpielerTableControl(mainControl);
 		alleSpieler = spielerTableControl.getAllSpieler();
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
-		hauptPanel = this.mainControl.getHauptPanel();
+		this.mainControl.getHauptPanel();
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
 		tabAnzeigeView.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		spielerAnzahlView = this.mainControl.getSpielerAnzahlControl().getSpielerAnzahlView();
@@ -227,7 +223,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 	}
 
 	public void makeTabbedPane(int index) {
-		hauptPanel = this.mainControl.getHauptPanel();
+		this.mainControl.getHauptPanel();
 
 		if (spielerAnzahlView[index].getAnzahlSpielerTextField().getText().length() > 0) {
 			spielerAnzahl[index] = this.mainControl.getSpielerAnzahlControl().getSpielerAnzahl(index);

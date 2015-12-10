@@ -41,58 +41,44 @@ public class TurnierListeLadenView extends JPanel {
 	private int anzahlElemente;
 	private JButton[] turnierLoeschenButton;
 	private JButton[] turnierBearbeitenButton;
-	private ImageIcon turnierNew = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-new.png")));
+
 	private ImageIcon turnierDelete = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-close-4.png")));
 	private ImageIcon turnierProperties = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-edit.png")));
 	private ImageIcon turnierLaden = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-preview.png")));
-	private JButton turnierAddButton;
 
 	public TurnierListeLadenView(int anzahlTurniere) {
+		makePanel(anzahlTurniere);
+	}
 
+	public void makePanel(int anzahlTurniere) {
 		anzahlElemente = 0;
 		setLayout(new BorderLayout());
 
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new BorderLayout());
-//		contentPanel.setBackground(new Color(249, 222, 112));
+		// contentPanel.setBackground(new Color(249, 222, 112));
 		setLayout(new BorderLayout());
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
-		turnierAddButton = new JButton("Neues Turnier", turnierNew);
 		JLabel titleLabel = new JLabel("Turnierliste");
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		JPanel newTurnierPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.PAGE_AXIS));
 		titlepanel.add(titleLabel);
-		newTurnierPanel.add(turnierAddButton);
 		northPanel.add(titlepanel);
-		northPanel.add(newTurnierPanel);
-
 
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
-		contentPanel.add(centerPane,BorderLayout.NORTH);
+		contentPanel.add(centerPane, BorderLayout.NORTH);
 		turnierLadeButton = new JButton[anzahlTurniere];
 		turnierLoeschenButton = new JButton[anzahlTurniere];
 		turnierBearbeitenButton = new JButton[anzahlTurniere];
 		add(northPanel, BorderLayout.NORTH);
 		add(scrollPane, BorderLayout.CENTER);
 	}
-
-	public JButton getTurnierAddButton() {
-		return turnierAddButton;
-	}
-
-	public void setTurnierAddButton(JButton turnierAddButton) {
-		this.turnierAddButton = turnierAddButton;
-	}
-
-	
 
 	public JButton[] getTurnierBearbeitenButton() {
 		return turnierBearbeitenButton;
@@ -109,14 +95,13 @@ public class TurnierListeLadenView extends JPanel {
 	public void makeTurnierZeile(String turnierName, String startDatum, String endDatum) {
 		line = new JPanel();
 		line.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		line.setPreferredSize(new Dimension(700,50));
-		
+		// line.setPreferredSize(new Dimension(700,50));
+
 		JPanel turnierLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		turnierLine.setPreferredSize(new Dimension(350,50));
+		turnierLine.setPreferredSize(new Dimension(350, 50));
 
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
-//		buttonLine.setPreferredSize(new Dimension(300,50));
-
+		// buttonLine.setPreferredSize(new Dimension(300,50));
 
 		turnierLadeButton[anzahlElemente] = new JButton("Laden", turnierLaden);
 		buttonLine.add(turnierLadeButton[anzahlElemente]);
@@ -127,15 +112,13 @@ public class TurnierListeLadenView extends JPanel {
 		buttonLine.add(turnierLoeschenButton[anzahlElemente]);
 		JLabel tName = new JLabel("  Turnier: " + turnierName);
 		turnierLine.add(tName);
-	
+
 		line.add(turnierLine);
 		line.add(buttonLine);
 		centerPane.add(line);
 		centerPane.add(new JSeparator());
 		anzahlElemente++;
 	}
-
-	
 
 	public void setTurnierBearbeitenButton(JButton[] turnierBearbeitenButton) {
 		this.turnierBearbeitenButton = turnierBearbeitenButton;
@@ -148,7 +131,5 @@ public class TurnierListeLadenView extends JPanel {
 	public void setTurnierLoeschenButton(JButton[] turnierLoeschenButton) {
 		this.turnierLoeschenButton = turnierLoeschenButton;
 	}
-
-
 
 }

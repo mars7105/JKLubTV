@@ -15,11 +15,17 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import de.turnierverwaltung.model.Spieler;
+import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.NaviView;
+import de.turnierverwaltung.view.SpielerHinzufuegenView;
 
 public class NaviController implements ActionListener {
 
@@ -31,15 +37,16 @@ public class NaviController implements ActionListener {
 	public static final int SORTIEREN = 2;
 
 	private MainControl mainControl;
-//	private JButton spielerListeButton;
-//	private JButton turnierListeButton;
+	// private JButton spielerListeButton;
+	// private JButton turnierListeButton;
 	private JButton newdbButton;
 	private JButton loaddbButton;
-//	private JButton infoButton;
+	private JButton newTurnierButton;
 	private NaviView naviView;
-	// private HTMLTabelleView htmlTabelleView;
 	private int aktiveGruppe;
 	private JButton pdfButton;
+	private SpielerHinzufuegenView spielerHinzufuegenView;
+	private DewisDialogControl dewisDialogControl;
 
 	public NaviController(MainControl mainControl) {
 
@@ -52,12 +59,13 @@ public class NaviController implements ActionListener {
 		newdbButton.addActionListener(this);
 		loaddbButton = naviView.getLoadDatabaseButton();
 		loaddbButton.addActionListener(this);
-//		turnierListeButton = naviView.getTurnierListeButton();
-//		turnierListeButton.addActionListener(this);
-//		spielerListeButton = naviView.getSpielerListeButton();
-//		spielerListeButton.addActionListener(this);
-//		infoButton = naviView.getInfoButton();
-//		infoButton.addActionListener(this);
+		newTurnierButton = naviView.getTurnierAddButton();
+		newTurnierButton.addActionListener(this);
+
+		naviView.getSpielerAddButton().addActionListener(this);
+		naviView.getSpielerExport().addActionListener(this);
+		naviView.getSpielerImport().addActionListener(this);
+		naviView.getSpielerDEWISSearchButton().addActionListener(this);
 		pdfButton = naviView.getPdfSpeichernButton();
 		pdfButton.addActionListener(this);
 		naviView.getTabelleAktualisierenButton().addActionListener(this);
@@ -73,12 +81,42 @@ public class NaviController implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(naviView);
 		hauptPanel.add(scrollPane, BorderLayout.WEST);
-
+		this.mainControl.getHauptPanel().addChangeListener(new TurnierAnsicht(mainControl));
+		dewisDialogControl = new DewisDialogControl(mainControl);
 		hauptPanel.updateUI();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		if (spielerHinzufuegenView != null) {
+			if (arg0.getSource() == spielerHinzufuegenView.getOkButton()) {
+				String name = spielerHinzufuegenView.getTextFieldName().getText();
+				String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
+				String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
+				int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
+				Spieler neuerSpieler = new Spieler();
+				neuerSpieler.setName(name);
+				neuerSpieler.setKuerzel(kuerzel);
+				neuerSpieler.setDwz(dwz);
+				neuerSpieler.setAge(age);
+				SpielerTableControl stc = new SpielerTableControl(mainControl);
+				neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+				this.mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+				spielerHinzufuegenView.getTextFieldName().setEditable(false);
+				spielerHinzufuegenView.getTextFieldKuerzel().setEditable(false);
+				spielerHinzufuegenView.getTextFieldDwz().setEditable(false);
+				spielerHinzufuegenView.getTextComboBoxAge().setEnabled(false);
+				spielerHinzufuegenView.spielerPanel();
+
+			}
+
+			if (arg0.getSource() == spielerHinzufuegenView.getCancelButton()) {
+				mainControl.setEnabled(true);
+				this.mainControl.getSpielerLadenControl().updateSpielerListe();
+
+				spielerHinzufuegenView.closeWindow();
+			}
+		}
 		if (this.mainControl.getTabAnzeigeView() != null) {
 
 			if (this.mainControl.getTabAnzeigeView2() != null) {
@@ -94,32 +132,30 @@ public class NaviController implements ActionListener {
 			pdfsave.savePDFFile();
 
 		}
-//		if (arg0.getSource() == infoButton) {
-//			int abfrage = warnHinweis();
-//			if (abfrage == 0) {
-//
-//				// mainControl.resetApp();
-//				if (SQLiteDAOFactory.getDB_PATH() == null) {
-//					mainControl.datenbankMenueView(false);
-//				}
-//				if (mainControl.getInfoController() == null) {
-//					mainControl.setInfoController(new InfoController(this.mainControl));
-//				} else {
-//					int selectTab = mainControl.getHauptPanel().indexOfTab("Info");
-//					mainControl.getHauptPanel().setSelectedIndex(selectTab);
-//					// mainControl.getInfoController().makeInfoPanel();
-//				}
-//				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-//				this.mainControl.setNeuesTurnier(false);
-//			}
-//		}
+		if (arg0.getSource() == newTurnierButton) {
+			Turnier turnier = this.mainControl.getTurnier();
+			if (turnier == null) {
+				mainControl.setTurnierControl(new TurnierControl(mainControl));
+			} else {
+				// Custom button text
+				Object[] options = { "Ja", "Abbrechen" };
+				int abfrage = JOptionPane.showOptionDialog(null,
+						"Wollen Sie wirklich ein neues Turnier erstellen? " + "Alle eingegebenen Daten gehen verloren.",
+						"A Silly Question", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null,
+						options, options[1]);
+				if (abfrage == 0) {
+					// mainControl.resetApp();
+					mainControl.setTurnierControl(new TurnierControl(mainControl));
+				}
+			}
+		}
+
 		if (arg0.getSource() == newdbButton) {
 
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
-				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-				mainControl.resetApp();
-				mainControl.datenbankMenueView(false);
+				// this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+				
 				String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
 						JOptionPane.PLAIN_MESSAGE);
 
@@ -135,6 +171,8 @@ public class NaviController implements ActionListener {
 					BufferedWriter writer;
 					int sf = savefile.showSaveDialog(null);
 					if (sf == JFileChooser.APPROVE_OPTION) {
+						mainControl.resetApp();
+						mainControl.datenbankMenueView(false);
 						try {
 							File file = savefile.getSelectedFile();
 							writer = new BufferedWriter(new FileWriter(savefile.getSelectedFile()));
@@ -148,19 +186,14 @@ public class NaviController implements ActionListener {
 							mainControl.datenbankMenueView(true);
 							JOptionPane.showMessageDialog(null, "Datei wurde gespeichert.", "File Saved",
 									JOptionPane.INFORMATION_MESSAGE);
-							if (mainControl.getTurnierTableControl() == null) {
-								this.mainControl.setNeuesTurnier(false);
-								mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
-								mainControl.getTurnierTableControl().loadTurnierListe();
-								mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-								mainControl.getTurnierListeLadenControl().loadTurnier();
-							} else {
-								mainControl.resetApp();
-								mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
-								mainControl.getTurnierTableControl().loadTurnierListe();
-								mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-								mainControl.getTurnierListeLadenControl().loadTurnier();
-							}
+							this.mainControl.setNeuesTurnier(false);
+							mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
+							mainControl.getTurnierTableControl().loadTurnierListe();
+							mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
+							mainControl.getSpielerEditierenControl().updateSpielerListe();
+							mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
+							mainControl.getTurnierListeLadenControl().loadTurnier();
+
 							mainControl.getPropertiesControl().setProperties("Path", SQLiteDAOFactory.getDB_PATH());
 							mainControl.getPropertiesControl().writeProperties();
 
@@ -179,10 +212,8 @@ public class NaviController implements ActionListener {
 
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
-				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-				mainControl.getNaviView().getTabellenPanel().setVisible(false);
-				mainControl.resetApp();
-				mainControl.datenbankMenueView(false);
+
+				
 				// Create a file chooser
 				JFileChooser fc = new JFileChooser();
 				FileFilter filter = new FileNameExtensionFilter("Turnier Datenbank", "ktv");
@@ -191,33 +222,27 @@ public class NaviController implements ActionListener {
 				int returnVal = fc.showOpenDialog(null);
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					mainControl.resetApp();
+					mainControl.datenbankMenueView(false);
 					File file = fc.getSelectedFile();
 					// This is where a real application would open the file.
 					SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
 					mainControl.datenbankMenueView(true);
-					if (mainControl.getSpielerEditierenControl() != null) {
-						// mainControl.getSpielerEditierenControl().makePanel();
-					} else {
-						mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
-						mainControl.getSpielerEditierenControl().updateSpielerListe();
-					}
-					mainControl.setNeuesTurnier(false);
-					mainControl.getNaviView().getTabellenPanel().setVisible(false);
-					if (mainControl.getTurnierTableControl() == null) {
-						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
-						mainControl.getTurnierTableControl().loadTurnierListe();
-						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-						mainControl.getTurnierListeLadenControl().loadTurnier();
-						naviView.setPathToDatabase(new JLabel(file.getName()));
+					// if (mainControl.getSpielerEditierenControl() != null) {
+					// mainControl.getSpielerEditierenControl().makePanel();
+					// } else {
 
-					} else {
-						mainControl.resetApp();
-						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
-						mainControl.getTurnierTableControl().loadTurnierListe();
-						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-						mainControl.getTurnierListeLadenControl().loadTurnier();
-						naviView.setPathToDatabase(new JLabel(file.getPath()));
-					}
+					// }
+					mainControl.setNeuesTurnier(false);
+					// mainControl.getNaviView().getTabellenPanel().setVisible(false);
+					mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
+					mainControl.getTurnierTableControl().loadTurnierListe();
+					mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
+					mainControl.getSpielerEditierenControl().updateSpielerListe();
+					mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
+					mainControl.getTurnierListeLadenControl().loadTurnier();
+					naviView.setPathToDatabase(new JLabel(file.getName()));
+
 					mainControl.getPropertiesControl().setProperties("Path", SQLiteDAOFactory.getDB_PATH());
 					mainControl.getPropertiesControl().writeProperties();
 				} else {
@@ -227,43 +252,25 @@ public class NaviController implements ActionListener {
 			}
 
 		}
-//		if (arg0.getSource() == turnierListeButton)
-//
-//		{
-//			int abfrage = warnHinweis();
-//			if (abfrage == 0) {
-//				// mainControl.resetApp();
-//				if (mainControl.getTurnierListeLadenControl() != null) {
-//					// mainControl.getTurnierListeLadenControl().loadTurnier();
-//					int selectTab = mainControl.getHauptPanel().indexOfTab("Turniere");
-//					mainControl.getHauptPanel().setSelectedIndex(selectTab);
-//				} else {
-//					mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(mainControl));
-//					mainControl.getTurnierListeLadenControl().loadTurnier();
-//				}
-//				this.mainControl.setNeuesTurnier(false);
-//				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-//				mainControl.getNaviView().getTabellenPanel().setVisible(false);
-//			}
-//		}
-//		if (arg0.getSource() == spielerListeButton)
-//
-//		{
-//			int abfrage = warnHinweis();
-//			if (abfrage == 0) {
-//				// mainControl.resetApp();
-//				if (mainControl.getSpielerEditierenControl() != null) {
-//					// mainControl.getSpielerEditierenControl().makePanel();
-//					int selectTab = mainControl.getHauptPanel().indexOfTab("Spieler");
-//					mainControl.getHauptPanel().setSelectedIndex(selectTab);
-//				} else {
-//					mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
-//					mainControl.getSpielerEditierenControl().updateSpielerListe();
-//				}
-//				this.mainControl.setNeuesTurnier(false);
-//				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-//			}
-//		}
+		if (arg0.getSource() == naviView.getSpielerImport()) {
+			SpielerTableImportController spielerImport = new SpielerTableImportController();
+			spielerImport.importSpielerTable();
+			mainControl.getSpielerLadenControl().updateSpielerListe();
+		}
+		if (arg0.getSource() == naviView.getSpielerExport()) {
+			SpielerTableExportController spielerExport = new SpielerTableExportController(this.mainControl);
+			spielerExport.exportSpielerTable();
+		}
+		if (arg0.getSource() == naviView.getSpielerAddButton()) {
+			spielerHinzufuegenView = new SpielerHinzufuegenView();
+
+			spielerHinzufuegenView.getOkButton().addActionListener(this);
+			spielerHinzufuegenView.getCancelButton().addActionListener(this);
+			mainControl.setEnabled(false);
+		}
+		if (arg0.getSource() == naviView.getSpielerDEWISSearchButton()) {
+			dewisDialogControl.makeDialog();
+		}
 
 		if (arg0.getSource() == naviView.getTabelleAktualisierenButton())
 
@@ -322,6 +329,15 @@ public class NaviController implements ActionListener {
 		}
 	}
 
+	public void neuerSpieler() {
+		this.mainControl.getSpielerLadenControl().updateSpielerListe();
+		spielerHinzufuegenView = new SpielerHinzufuegenView();
+
+		spielerHinzufuegenView.getOkButton().addActionListener(this);
+		spielerHinzufuegenView.getCancelButton().addActionListener(this);
+		mainControl.setEnabled(false);
+	}
+
 	private int warnHinweis() {
 		int abfrage = 0;
 		String hinweisText = "Alle Änderungen gehen eventuell verloren "
@@ -341,4 +357,49 @@ public class NaviController implements ActionListener {
 		}
 		return abfrage;
 	}
+
+	class TurnierAnsicht implements ChangeListener {
+
+		private MainControl mainControl;
+
+		public TurnierAnsicht(MainControl mainControl) {
+			super();
+			this.mainControl = mainControl;
+		}
+
+		@Override
+		public void stateChanged(ChangeEvent e) {
+			if (e.getSource() instanceof JTabbedPane) {
+				JTabbedPane pane = (JTabbedPane) e.getSource();
+				int selectedIndex = pane.getSelectedIndex();
+				String turnierName = "";
+				if (this.mainControl.getTurnier() != null) {
+					turnierName = this.mainControl.getTurnier().getTurnierName();
+					if (pane.getTitleAt(selectedIndex).equals(turnierName) || pane.getTitleAt(selectedIndex).equals("Neues Turnier")) {
+						this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
+
+					} else {
+						this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+					}
+
+				}
+				
+				if (pane.getTitleAt(selectedIndex).equals("Turnierliste")) {
+					this.mainControl.getNaviView().getTurnierListePanel().setVisible(true);
+
+				} else {
+					this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
+				}
+				if (pane.getTitleAt(selectedIndex).equals("Spielerliste")) {
+					this.mainControl.getNaviView().getSpielerListePanel().setVisible(true);
+
+				} else {
+					this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
+				}
+
+			}
+		}
+
+	}
+
 }
