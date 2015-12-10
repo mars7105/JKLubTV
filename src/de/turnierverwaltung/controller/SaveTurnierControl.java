@@ -154,6 +154,7 @@ public class SaveTurnierControl {
 			if (saveOK1 && saveOK2 && saveOK4) {
 				JOptionPane.showMessageDialog(null,
 						"Turnier " + this.mainControl.getTurnier().getTurnierName() + " wurde gespeichert! \n");
+				mainControl.getTurnierListeLadenControl().loadTurnier();
 				return true;
 			} else {
 

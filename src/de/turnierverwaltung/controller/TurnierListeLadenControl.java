@@ -74,7 +74,7 @@ public class TurnierListeLadenControl implements ActionListener {
 				String startDatum = turnierEditierenView.getStartDatumTextField().getJFormattedTextField().getText();
 				String endDatum = turnierEditierenView.getEndDatumTextField().getJFormattedTextField().getText();
 				int lastTab = hauptPanel.getTabCount() - 1;
-				if (hauptPanel.getTitleAt(lastTab).equals(mainControl.getTurnier().getTurnierName())) {
+				if (mainControl.getTurnier().getTurnierId() == turnierListe.get(turnierIndex).getTurnierId()) {
 					hauptPanel.setTitleAt(lastTab, turnierName);
 				}
 				turnierListe.get(turnierIndex).setTurnierName(turnierName);
@@ -89,7 +89,7 @@ public class TurnierListeLadenControl implements ActionListener {
 				for (int i = 0; i < turnierListe.get(turnierIndex).getAnzahlGruppen(); i++) {
 
 					String gEV = turnierEditierenView.getTextFieldGruppenName()[i].getText();
-					if (hauptPanel.getTitleAt(lastTab).equals(mainControl.getTurnier().getTurnierName())) {
+					if (mainControl.getTurnier().getTurnierId() == turnierListe.get(turnierIndex).getTurnierId()) {
 						JTabbedPane temp = (JTabbedPane) hauptPanel.getComponentAt(lastTab);
 						temp.setTitleAt(i, gEV);
 					}
@@ -114,9 +114,8 @@ public class TurnierListeLadenControl implements ActionListener {
 				if (mainControl.getTurnier() != null) {
 					int selectedIndex = hauptPanel.getTabCount() - 1;
 
-					if (hauptPanel.getTitleAt(selectedIndex).equals(mainControl.getTurnier().getTurnierName())) {
-						hauptPanel.remove(selectedIndex);
-					}
+					hauptPanel.remove(selectedIndex);
+
 				}
 				tabbedPaneView = new TabAnzeigeView(mainControl);
 
@@ -194,9 +193,9 @@ public class TurnierListeLadenControl implements ActionListener {
 			// da ansonsten eine ArraOutOfBounds Exception auftritt!
 			if (arg0.getSource() == turnierListeLadenView.getTurnierLoeschenButton()[i]) {
 				int lastTab = hauptPanel.getTabCount() - 1;
-				if (hauptPanel.getTitleAt(lastTab).equals(turnierListe.get(i).getTurnierName())) {
+				if (mainControl.getTurnier().getTurnierId() == turnierListe.get(i).getTurnierId()) {
 					JOptionPane.showMessageDialog(null,
-							"Turnier kann nich gelöscht werden\n da es gerade bearbeitet wird.");
+							"Turnier kann nicht gelöscht werden\n da es gerade bearbeitet wird.");
 
 				} else {
 					TurnierTableControl ttC = new TurnierTableControl(mainControl);

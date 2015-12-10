@@ -64,11 +64,16 @@ public class TurnierControl implements ActionListener {
 		turnierOkButton = this.mainControl.getTurnierView().getOkButton();
 		turnierOkButton.addActionListener(this);
 		this.mainControl.setNeuesTurnier(true);
-		
+		if (mainControl.getTurnier() != null) {
+			int selectedIndex = hauptPanel.getTabCount() - 1;
+
+			if (hauptPanel.getTitleAt(selectedIndex).equals(mainControl.getTurnier().getTurnierName())) {
+				hauptPanel.remove(selectedIndex);
+			}
+		}
 		hauptPanel.addTab("Neues Turnier", turnierIcon, this.turnierView);
 		selectIndex = hauptPanel.getTabCount() - 1;
 		hauptPanel.setSelectedIndex(selectIndex);
-//		mainControl.getNaviController().makeNaviPanel();
 
 		mainControl.getMenueControl().setWarnHinweis(true);
 	}

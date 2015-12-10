@@ -51,6 +51,7 @@ public class TurnierTabelleControl {
 	private ArrayList<Partie> changedPartien;
 	private ImageIcon turniertabelleIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/x-office-spreadsheet.png")));
+
 	public TurnierTabelleControl(MainControl mainControl) {
 
 		this.mainControl = mainControl;
@@ -90,12 +91,14 @@ public class TurnierTabelleControl {
 
 	public void enableDatenbankMenu() {
 		boolean enableSaveMenu = false;
-		for (int i = 0; i < turnier.getAnzahlGruppen(); i++) {
-			if (simpleTableView[i] != null) {
-				enableSaveMenu = true;
-			} else {
-				enableSaveMenu = false;
-				break;
+		if (simpleTableView != null) {
+			for (int i = 0; i < turnier.getAnzahlGruppen(); i++) {
+				if (simpleTableView[i] != null) {
+					enableSaveMenu = true;
+				} else {
+					enableSaveMenu = false;
+					break;
+				}
 			}
 		}
 
@@ -139,7 +142,8 @@ public class TurnierTabelleControl {
 		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
 		simpleTableView[gruppenNummer].setPreferredSize(dimension[gruppenNummer]);
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() < 1) {
-			tabAnzeigeView2[gruppenNummer].insertTab("Turniertabelle", turniertabelleIcon, simpleTableView[gruppenNummer], null, 0);
+			tabAnzeigeView2[gruppenNummer].insertTab("Turniertabelle", turniertabelleIcon,
+					simpleTableView[gruppenNummer], null, 0);
 
 		} else {
 
@@ -148,7 +152,8 @@ public class TurnierTabelleControl {
 
 		mainControl.setSimpleTableView(simpleTableView);
 		if (tabAnzeigeView.getTabCount() < 1) {
-			tabAnzeigeView.insertTab(turnier.getGruppe()[gruppenNummer].getGruppenName(), null, tabAnzeigeView2[gruppenNummer], null, gruppenNummer);
+			tabAnzeigeView.insertTab(turnier.getGruppe()[gruppenNummer].getGruppenName(), null,
+					tabAnzeigeView2[gruppenNummer], null, gruppenNummer);
 
 		} else {
 
@@ -313,7 +318,8 @@ public class TurnierTabelleControl {
 			}
 			mainControl.getTerminTabelleControl().makeSimpleTableView(gruppenNummer);
 			simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
-			mainControl.getRundenEingabeFormularControl().getChangedGroups()[gruppenNummer][NaviController.TURNIERTABELLE] = NaviController.STANDARD;
+			mainControl.getRundenEingabeFormularControl()
+					.getChangedGroups()[gruppenNummer][NaviController.TURNIERTABELLE] = NaviController.STANDARD;
 
 		}
 
