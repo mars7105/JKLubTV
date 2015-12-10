@@ -119,6 +119,8 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 						spieler[y].setSpielerId(spielerID);
 						stc.updateOneSpieler(spieler[y]);
 
+					} else {
+						spieler[y].setSpielerId(stc.insertOneSpieler(spieler[y]));
 					}
 
 				}

@@ -192,19 +192,27 @@ public class TurnierListeLadenControl implements ActionListener {
 			// Diese Abfrage muss an letzter Stelle stehen,
 			// da ansonsten eine ArraOutOfBounds Exception auftritt!
 			if (arg0.getSource() == turnierListeLadenView.getTurnierLoeschenButton()[i]) {
-				if (mainControl.getTurnier().getTurnierId() == turnierListe.get(i).getTurnierId()) {
-					JOptionPane.showMessageDialog(null,
-							"Turnier kann nicht gelöscht werden\n da es gerade bearbeitet wird.");
+				if (mainControl.getTurnier() != null) {
+					if (mainControl.getTurnier().getTurnierId() == turnierListe.get(i).getTurnierId()) {
+						JOptionPane.showMessageDialog(null,
+								"Turnier kann nicht gelöscht werden\n da es gerade bearbeitet wird.");
 
+					} else {
+						deleteTurnier(i);
+					}
 				} else {
-					TurnierTableControl ttC = new TurnierTableControl(mainControl);
-					ttC.loescheTurnier(turnierListe.get(i));
-					loadTurnier();
+					deleteTurnier(i);
 				}
 			}
 
 		}
 
+	}
+
+	private void deleteTurnier(int turnierId) {
+		TurnierTableControl ttC = new TurnierTableControl(mainControl);
+		ttC.loescheTurnier(turnierListe.get(turnierId));
+		loadTurnier();
 	}
 
 	public void loadTurnier() {

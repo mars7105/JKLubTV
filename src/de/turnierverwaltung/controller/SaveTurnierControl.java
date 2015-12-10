@@ -155,6 +155,7 @@ public class SaveTurnierControl {
 				JOptionPane.showMessageDialog(null,
 						"Turnier " + this.mainControl.getTurnier().getTurnierName() + " wurde gespeichert! \n");
 				mainControl.getTurnierListeLadenControl().loadTurnier();
+				mainControl.getSpielerLadenControl().updateSpielerListe();
 				return true;
 			} else {
 
