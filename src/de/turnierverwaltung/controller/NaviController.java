@@ -172,7 +172,7 @@ public class NaviController implements ActionListener {
 					int sf = savefile.showSaveDialog(null);
 					if (sf == JFileChooser.APPROVE_OPTION) {
 						mainControl.resetApp();
-						mainControl.datenbankMenueView(false);
+//						mainControl.datenbankMenueView(false);
 						try {
 							File file = savefile.getSelectedFile();
 							writer = new BufferedWriter(new FileWriter(savefile.getSelectedFile()));
@@ -183,7 +183,7 @@ public class NaviController implements ActionListener {
 							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
 							SQLiteControl sqlC = new SQLiteControl();
 							sqlC.createAllTables();
-							mainControl.datenbankMenueView(true);
+//							mainControl.datenbankMenueView(true);
 							JOptionPane.showMessageDialog(null, "Datei wurde gespeichert.", "File Saved",
 									JOptionPane.INFORMATION_MESSAGE);
 							this.mainControl.setNeuesTurnier(false);
@@ -222,11 +222,11 @@ public class NaviController implements ActionListener {
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					mainControl.resetApp();
-					mainControl.datenbankMenueView(false);
+//					mainControl.datenbankMenueView(false);
 					File file = fc.getSelectedFile();
 					// This is where a real application would open the file.
 					SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-					mainControl.datenbankMenueView(true);
+//					mainControl.datenbankMenueView(true);
 					// if (mainControl.getSpielerEditierenControl() != null) {
 					// mainControl.getSpielerEditierenControl().makePanel();
 					// } else {
@@ -341,8 +341,7 @@ public class NaviController implements ActionListener {
 		int abfrage = 0;
 		String hinweisText = "Alle Änderungen gehen eventuell verloren "
 				+ "\nwenn Sie die Tabellen nicht gespeichert haben." + "\nMöchten Sie den Menüpunkt trotzdem laden?";
-		if (mainControl.getMenueControl().getWarnHinweis()
-				&& this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
+		if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
 			abfrage = 1;
 			// Custom button text
 			Object[] options = { "Ja", "Abbrechen" };

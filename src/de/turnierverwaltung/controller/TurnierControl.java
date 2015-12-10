@@ -79,7 +79,7 @@ public class TurnierControl implements ActionListener {
 		selectIndex = hauptPanel.getTabCount() - 1;
 		hauptPanel.setSelectedIndex(selectIndex);
 
-		mainControl.getMenueControl().setWarnHinweis(true);
+//		mainControl.getMenueControl().setWarnHinweis(true);
 	}
 
 	@Override

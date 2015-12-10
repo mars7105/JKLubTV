@@ -21,7 +21,6 @@ import de.turnierverwaltung.model.TurnierTabelle;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.GruppenView;
 import de.turnierverwaltung.view.MainView;
-import de.turnierverwaltung.view.MenueView;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.RundenEingabeFormularView;
 import de.turnierverwaltung.view.SimpleTerminTabelleView;
@@ -44,8 +43,8 @@ public class MainControl extends JFrame {
 	private int windowHeight;
 	private MainView mainView;
 	private JTabbedPane hauptPanel;
-	private MenueControl menueControl;
-	private MenueView menueView;
+//	private MenueControl menueControl;
+//	private MenueView menueView;
 	private TurnierControl turnierControl;
 	private TurnierView turnierView;
 	private GruppenView gruppenView;
@@ -102,18 +101,18 @@ public class MainControl extends JFrame {
 		setNeuesTurnier(false);
 	}
 
-	public void datenbankMenueView(Boolean enable) {
-		menueControl.setDatenbankMenue(enable);
-		// naviView.getDatenbankPanel().setVisible(enable);
-
-		naviView.setPathToDatabase(new JLabel(menueControl.getFileName()));
-		naviView.updateUI();
-		if (enable == true) {
-			this.setTitle("Klubturnierverwaltung - Datei:" + SQLiteDAOFactory.getDB_PATH());
-		} else {
-			this.setTitle("Klubturnierverwaltung ");
-		}
-	}
+//	public void datenbankMenueView(Boolean enable) {
+//		menueControl.setDatenbankMenue(enable);
+//		// naviView.getDatenbankPanel().setVisible(enable);
+//
+//		naviView.setPathToDatabase(new JLabel(menueControl.getFileName()));
+//		naviView.updateUI();
+//		if (enable == true) {
+//			this.setTitle("Klubturnierverwaltung - Datei:" + SQLiteDAOFactory.getDB_PATH());
+//		} else {
+//			this.setTitle("Klubturnierverwaltung ");
+//		}
+//	}
 
 	public SpielerLadenControl getSpielerLadenControl() {
 		return spielerLadenControl;
@@ -167,13 +166,13 @@ public class MainControl extends JFrame {
 		return mainView;
 	}
 
-	public MenueControl getMenueControl() {
-		return menueControl;
-	}
-
-	public MenueView getMenueView() {
-		return menueView;
-	}
+//	public MenueControl getMenueControl() {
+//		return menueControl;
+//	}
+//
+//	public MenueView getMenueView() {
+//		return menueView;
+//	}
 
 	public PaarungsTafeln getPaarungsTafeln() {
 		return paarungsTafeln;
@@ -316,9 +315,9 @@ public class MainControl extends JFrame {
 		titleView = new TitleView();
 
 		naviController = new NaviController(this);
-		menueView = new MenueView();
-		menueControl = new MenueControl(this);
-		setJMenuBar(menueView.getJMenuBar());
+//		menueView = new MenueView();
+//		menueControl = new MenueControl(this);
+//		setJMenuBar(menueView.getJMenuBar());
 
 		setContentPane(mainPanel);
 
@@ -338,7 +337,7 @@ public class MainControl extends JFrame {
 	}
 
 	private void makeProperties() {
-		datenbankMenueView(false);
+//		datenbankMenueView(false);
 		propertiesControl = new PropertiesControl();
 		if (propertiesControl.readProperties() == false) {
 			if (propertiesControl.writeProperties() == false) {
@@ -346,7 +345,7 @@ public class MainControl extends JFrame {
 			}
 		} else {
 			if (propertiesControl.checkPath() == true) {
-				datenbankMenueView(true);
+//				datenbankMenueView(true);
 				String path = propertiesControl.getProperties("Path");
 				SQLiteDAOFactory.setDB_PATH(path);
 				this.setTitle("Klubturnierverwaltung - Datei:" + SQLiteDAOFactory.getDB_PATH());
@@ -387,8 +386,8 @@ public class MainControl extends JFrame {
 		windowHeight = 0;
 		mainView = null;
 		hauptPanel = null;
-		menueControl = null;
-		menueView = null;
+//		menueControl = null;
+//		menueView = null;
 		turnierControl = null;
 		turnierView = null;
 		gruppenView = null;
@@ -451,14 +450,14 @@ public class MainControl extends JFrame {
 	public void setMainView(MainView mainView) {
 		this.mainView = mainView;
 	}
-
-	public void setMenueControl(MenueControl menueControl) {
-		this.menueControl = menueControl;
-	}
-
-	public void setMenueView(MenueView menueView) {
-		this.menueView = menueView;
-	}
+//
+//	public void setMenueControl(MenueControl menueControl) {
+//		this.menueControl = menueControl;
+//	}
+//
+//	public void setMenueView(MenueView menueView) {
+//		this.menueView = menueView;
+//	}
 
 	public void setPaarungsTafeln(PaarungsTafeln paarungsTafeln) {
 		this.paarungsTafeln = paarungsTafeln;

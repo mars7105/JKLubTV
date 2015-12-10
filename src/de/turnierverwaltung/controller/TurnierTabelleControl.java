@@ -89,23 +89,23 @@ public class TurnierTabelleControl {
 
 	}
 
-	public void enableDatenbankMenu() {
-		boolean enableSaveMenu = false;
-		if (simpleTableView != null) {
-			for (int i = 0; i < turnier.getAnzahlGruppen(); i++) {
-				if (simpleTableView[i] != null) {
-					enableSaveMenu = true;
-				} else {
-					enableSaveMenu = false;
-					break;
-				}
-			}
-		}
+//	public void enableDatenbankMenu() {
+//		boolean enableSaveMenu = false;
+//		if (simpleTableView != null) {
+//			for (int i = 0; i < turnier.getAnzahlGruppen(); i++) {
+//				if (simpleTableView[i] != null) {
+//					enableSaveMenu = true;
+//				} else {
+//					enableSaveMenu = false;
+//					break;
+//				}
+//			}
+//		}
 
-		this.mainControl.getMenueView().getMntmSpeichern().setEnabled(enableSaveMenu);
+//		this.mainControl.getMenueView().getMntmSpeichern().setEnabled(enableSaveMenu);
 
 		// mainControl.datenbankMenueView(enableSaveMenu);
-	}
+//	}
 
 	public MyTableModelListener[] getTml() {
 		return tml;
@@ -118,7 +118,7 @@ public class TurnierTabelleControl {
 	public void makeSimpleTableView(int gruppenNummer) {
 		berechneFolgeDWZ(gruppenNummer);
 
-		mainControl.getMenueControl().setWarnHinweis(true);
+//		mainControl.getMenueControl().setWarnHinweis(true);
 		turnier = mainControl.getTurnier();
 		if (tml[gruppenNummer] == null) {
 			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer);
@@ -163,7 +163,7 @@ public class TurnierTabelleControl {
 		// tabAnzeigeView2[gruppenNummer]);
 
 		hauptPanel.updateUI();
-		enableDatenbankMenu();
+//		enableDatenbankMenu();
 	}
 
 	private void berechneFolgeDWZ(int gruppenNummer) {
