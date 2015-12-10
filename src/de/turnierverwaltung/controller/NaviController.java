@@ -47,6 +47,7 @@ public class NaviController implements ActionListener {
 	private JButton pdfButton;
 	private SpielerHinzufuegenView spielerHinzufuegenView;
 	private DewisDialogControl dewisDialogControl;
+	private TurnierAnsicht turnierAnsicht;
 
 	public NaviController(MainControl mainControl) {
 
@@ -73,7 +74,7 @@ public class NaviController implements ActionListener {
 		naviView.getTabelleHTMLAusgabeButton().addActionListener(this);
 		aktiveGruppe = 0;
 		makeNaviPanel();
-
+		turnierAnsicht = new TurnierAnsicht(mainControl);
 	}
 
 	public void makeNaviPanel() {
@@ -81,7 +82,8 @@ public class NaviController implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(naviView);
 		hauptPanel.add(scrollPane, BorderLayout.WEST);
-		this.mainControl.getHauptPanel().addChangeListener(new TurnierAnsicht(mainControl));
+		// this.mainControl.getHauptPanel().addChangeListener(new
+		// TurnierAnsicht(mainControl));
 		dewisDialogControl = new DewisDialogControl(mainControl);
 		hauptPanel.updateUI();
 	}
@@ -90,10 +92,13 @@ public class NaviController implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if (spielerHinzufuegenView != null) {
 			if (arg0.getSource() == spielerHinzufuegenView.getOkButton()) {
-				String name = spielerHinzufuegenView.getTextFieldName().getText();
-				String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
+				String name = spielerHinzufuegenView.getTextFieldName()
+						.getText();
+				String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel()
+						.getText();
 				String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
-				int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
+				int age = spielerHinzufuegenView.getTextComboBoxAge()
+						.getSelectedIndex();
 				Spieler neuerSpieler = new Spieler();
 				neuerSpieler.setName(name);
 				neuerSpieler.setKuerzel(kuerzel);
@@ -101,7 +106,8 @@ public class NaviController implements ActionListener {
 				neuerSpieler.setAge(age);
 				SpielerTableControl stc = new SpielerTableControl(mainControl);
 				neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-				this.mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+				this.mainControl.getSpielerLadenControl().getSpieler()
+						.add(neuerSpieler);
 				spielerHinzufuegenView.getTextFieldName().setEditable(false);
 				spielerHinzufuegenView.getTextFieldKuerzel().setEditable(false);
 				spielerHinzufuegenView.getTextFieldDwz().setEditable(false);
@@ -120,9 +126,12 @@ public class NaviController implements ActionListener {
 		if (this.mainControl.getTabAnzeigeView() != null) {
 
 			if (this.mainControl.getTabAnzeigeView2() != null) {
-				if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
-					aktiveGruppe = this.mainControl.getTabAnzeigeView().getSelectedIndex();
-					this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getSelectedIndex();
+				if (this.mainControl.getNaviView().getTabellenPanel()
+						.isVisible() == true) {
+					aktiveGruppe = this.mainControl.getTabAnzeigeView()
+							.getSelectedIndex();
+					this.mainControl.getTabAnzeigeView2()[aktiveGruppe]
+							.getSelectedIndex();
 				}
 			}
 		}
@@ -140,12 +149,14 @@ public class NaviController implements ActionListener {
 				// Custom button text
 				Object[] options = { "Ja", "Abbrechen" };
 				int abfrage = JOptionPane.showOptionDialog(null,
-						"Wollen Sie wirklich ein neues Turnier erstellen? " + "Alle eingegebenen Daten gehen verloren.",
-						"A Silly Question", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null,
-						options, options[1]);
+						"Wollen Sie wirklich ein neues Turnier erstellen? "
+								+ "Alle eingegebenen Daten gehen verloren.",
+						"A Silly Question", JOptionPane.YES_NO_CANCEL_OPTION,
+						JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 				if (abfrage == 0) {
-//					mainControl.resetApp();
-					mainControl.setTurnierControl(new TurnierControl(mainControl));
+					// mainControl.resetApp();
+					mainControl.setTurnierControl(new TurnierControl(
+							mainControl));
 				}
 			}
 		}
@@ -156,14 +167,16 @@ public class NaviController implements ActionListener {
 			if (abfrage == 0) {
 				// this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 
-				String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
+				String filename = JOptionPane.showInputDialog(null,
+						"Dateiname : ", "Eine Eingabeaufforderung",
 						JOptionPane.PLAIN_MESSAGE);
 
 				if (filename != null) {
 					filename += ".ktv";
 
 					JFileChooser savefile = new JFileChooser();
-					FileFilter filter = new FileNameExtensionFilter("Turnier Datenbank", "ktv");
+					FileFilter filter = new FileNameExtensionFilter(
+							"Turnier Datenbank", "ktv");
 					savefile.addChoosableFileFilter(filter);
 					savefile.setFileFilter(filter);
 					savefile.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -172,10 +185,11 @@ public class NaviController implements ActionListener {
 					int sf = savefile.showSaveDialog(null);
 					if (sf == JFileChooser.APPROVE_OPTION) {
 						mainControl.resetApp();
-//						mainControl.datenbankMenueView(false);
+						// mainControl.datenbankMenueView(false);
 						try {
 							File file = savefile.getSelectedFile();
-							writer = new BufferedWriter(new FileWriter(savefile.getSelectedFile()));
+							writer = new BufferedWriter(new FileWriter(
+									savefile.getSelectedFile()));
 							writer.write("");
 							writer.close();
 
@@ -183,25 +197,44 @@ public class NaviController implements ActionListener {
 							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
 							SQLiteControl sqlC = new SQLiteControl();
 							sqlC.createAllTables();
-//							mainControl.datenbankMenueView(true);
-							JOptionPane.showMessageDialog(null, "Datei wurde gespeichert.", "File Saved",
+							// mainControl.datenbankMenueView(true);
+							JOptionPane.showMessageDialog(null,
+									"Datei wurde gespeichert.", "File Saved",
 									JOptionPane.INFORMATION_MESSAGE);
 							this.mainControl.setNeuesTurnier(false);
-							mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
-							mainControl.getTurnierTableControl().loadTurnierListe();
-							mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
-							mainControl.getSpielerEditierenControl().updateSpielerListe();
-							mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-							mainControl.getTurnierListeLadenControl().loadTurnierListe();
+							mainControl
+									.setTurnierTableControl(new TurnierTableControl(
+											mainControl));
+							mainControl.getTurnierTableControl()
+									.loadTurnierListe();
+							mainControl
+									.setSpielerEditierenControl(new SpielerLadenControl(
+											mainControl));
+							mainControl.getSpielerEditierenControl()
+									.updateSpielerListe();
+							mainControl
+									.setTurnierListeLadenControl(new TurnierListeLadenControl(
+											this.mainControl));
+							mainControl.getTurnierListeLadenControl()
+									.loadTurnierListe();
 
-							mainControl.getPropertiesControl().setProperties("Path", SQLiteDAOFactory.getDB_PATH());
-							mainControl.getPropertiesControl().writeProperties();
+							mainControl.getPropertiesControl().setProperties(
+									"Path", SQLiteDAOFactory.getDB_PATH());
+							mainControl.getPropertiesControl()
+									.writeProperties();
+							turnierAnsicht = new TurnierAnsicht(mainControl);
+							mainControl.getHauptPanel().addChangeListener(
+									turnierAnsicht);
+							
+							naviView.updateUI();
 
 						} catch (IOException e) {
-							JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
+							JOptionPane.showMessageDialog(null,
+									"Vorgang abgebrochen!");
 						}
 					} else if (sf == JFileChooser.CANCEL_OPTION) {
-						JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
+						JOptionPane.showMessageDialog(null,
+								"Vorgang abgebrochen!");
 					}
 				}
 			}
@@ -215,18 +248,19 @@ public class NaviController implements ActionListener {
 
 				// Create a file chooser
 				JFileChooser fc = new JFileChooser();
-				FileFilter filter = new FileNameExtensionFilter("Turnier Datenbank", "ktv");
+				FileFilter filter = new FileNameExtensionFilter(
+						"Turnier Datenbank", "ktv");
 				fc.addChoosableFileFilter(filter);
 				fc.setFileFilter(filter);
 				int returnVal = fc.showOpenDialog(null);
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					mainControl.resetApp();
-//					mainControl.datenbankMenueView(false);
+					// mainControl.datenbankMenueView(false);
 					File file = fc.getSelectedFile();
 					// This is where a real application would open the file.
 					SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-//					mainControl.datenbankMenueView(true);
+					// mainControl.datenbankMenueView(true);
 					// if (mainControl.getSpielerEditierenControl() != null) {
 					// mainControl.getSpielerEditierenControl().makePanel();
 					// } else {
@@ -234,16 +268,30 @@ public class NaviController implements ActionListener {
 					// }
 					mainControl.setNeuesTurnier(false);
 					// mainControl.getNaviView().getTabellenPanel().setVisible(false);
-					mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
+					mainControl.setTurnierTableControl(new TurnierTableControl(
+							mainControl));
 					mainControl.getTurnierTableControl().loadTurnierListe();
-					mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
-					mainControl.getSpielerEditierenControl().updateSpielerListe();
-					mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-					mainControl.getTurnierListeLadenControl().loadTurnierListe();
+					mainControl
+							.setSpielerEditierenControl(new SpielerLadenControl(
+									mainControl));
+					mainControl.getSpielerEditierenControl()
+							.updateSpielerListe();
+					mainControl
+							.setTurnierListeLadenControl(new TurnierListeLadenControl(
+									this.mainControl));
+					mainControl.getTurnierListeLadenControl()
+							.loadTurnierListe();
 					naviView.setPathToDatabase(new JLabel(file.getName()));
 
-					mainControl.getPropertiesControl().setProperties("Path", SQLiteDAOFactory.getDB_PATH());
+					mainControl.getPropertiesControl().setProperties("Path",
+							SQLiteDAOFactory.getDB_PATH());
 					mainControl.getPropertiesControl().writeProperties();
+					turnierAnsicht = new TurnierAnsicht(mainControl);
+					mainControl.getHauptPanel().addChangeListener(
+							turnierAnsicht);
+					
+					naviView.updateUI();
+
 				} else {
 					JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
 				}
@@ -257,7 +305,8 @@ public class NaviController implements ActionListener {
 			mainControl.getSpielerLadenControl().updateSpielerListe();
 		}
 		if (arg0.getSource() == naviView.getSpielerExport()) {
-			SpielerTableExportController spielerExport = new SpielerTableExportController(this.mainControl);
+			SpielerTableExportController spielerExport = new SpielerTableExportController(
+					this.mainControl);
 			spielerExport.exportSpielerTable();
 		}
 		if (arg0.getSource() == naviView.getSpielerAddButton()) {
@@ -274,19 +323,22 @@ public class NaviController implements ActionListener {
 		if (arg0.getSource() == naviView.getTabelleAktualisierenButton())
 
 		{
-			Boolean ok = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+			Boolean ok = mainControl.getRundenEingabeFormularControl()
+					.checkNewTurnier();
 			if (ok) {
 				makeNewTables();
 
 			} else {
-				JOptionPane.showMessageDialog(null, "Erst nach der Eingabe aller Gruppen\n" + "möglich.");
+				JOptionPane.showMessageDialog(null,
+						"Erst nach der Eingabe aller Gruppen\n" + "möglich.");
 			}
 
 		}
 		if (arg0.getSource() == naviView.getTabelleSpeichernButton())
 
 		{
-			Boolean ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
+			Boolean ok = this.mainControl.getSaveTurnierControl()
+					.saveChangedPartien();
 
 			if (ok) {
 				makeNewTables();
@@ -309,19 +361,25 @@ public class NaviController implements ActionListener {
 		int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 		for (int i = 0; i < anzahlGruppen; i++) {
 			for (int x = 0; x < 3; x++) {
-				int changedGroups = mainControl.getRundenEingabeFormularControl().getChangedGroups()[i][x];
+				int changedGroups = mainControl
+						.getRundenEingabeFormularControl().getChangedGroups()[i][x];
 				if (changedGroups >= STANDARD) {
 					this.mainControl.getTurnierTabelleControl().okAction(i);
 
 					if (x == PAARUNGSTABELLE) {
 						if (changedGroups == SORTIEREN) {
-							Arrays.sort(mainControl.getTurnier().getGruppe()[i].getPartien());
+							Arrays.sort(mainControl.getTurnier().getGruppe()[i]
+									.getPartien());
 						}
-						mainControl.getRundenEingabeFormularControl().makeNewFormular(i);
+						mainControl.getRundenEingabeFormularControl()
+								.makeNewFormular(i);
 					}
-					mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
-					mainControl.getTerminTabelleControl().makeSimpleTableView(i);
-					mainControl.getRundenEingabeFormularControl().getChangedGroups()[i][x] = 0;
+					mainControl.getTurnierTabelleControl().makeSimpleTableView(
+							i);
+					mainControl.getTerminTabelleControl()
+							.makeSimpleTableView(i);
+					mainControl.getRundenEingabeFormularControl()
+							.getChangedGroups()[i][x] = 0;
 				}
 
 			}
@@ -340,12 +398,14 @@ public class NaviController implements ActionListener {
 	private int warnHinweis() {
 		int abfrage = 0;
 		String hinweisText = "Alle Änderungen gehen eventuell verloren "
-				+ "\nwenn Sie die Tabellen nicht gespeichert haben." + "\nMöchten Sie den Menüpunkt trotzdem laden?";
+				+ "\nwenn Sie die Tabellen nicht gespeichert haben."
+				+ "\nMöchten Sie den Menüpunkt trotzdem laden?";
 		if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
 			abfrage = 1;
 			// Custom button text
 			Object[] options = { "Ja", "Abbrechen" };
-			abfrage = JOptionPane.showOptionDialog(null, hinweisText, "Meldung", JOptionPane.YES_NO_CANCEL_OPTION,
+			abfrage = JOptionPane.showOptionDialog(null, hinweisText,
+					"Meldung", JOptionPane.YES_NO_CANCEL_OPTION,
 					JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
 		}
@@ -356,6 +416,14 @@ public class NaviController implements ActionListener {
 		return abfrage;
 	}
 
+	public TurnierAnsicht getTurnierAnsicht() {
+		return turnierAnsicht;
+	}
+
+	public void setTurnierAnsicht(TurnierAnsicht turnierAnsicht) {
+		this.turnierAnsicht = turnierAnsicht;
+	}
+
 	class TurnierAnsicht implements ChangeListener {
 
 		private MainControl mainControl;
@@ -363,6 +431,10 @@ public class NaviController implements ActionListener {
 		public TurnierAnsicht(MainControl mainControl) {
 			super();
 			this.mainControl = mainControl;
+			this.mainControl.getNaviView().getTurnierListePanel()
+					.setVisible(false);
+			this.mainControl.getNaviView().getSpielerListePanel()
+					.setVisible(false);
 		}
 
 		@Override
@@ -372,28 +444,36 @@ public class NaviController implements ActionListener {
 				int selectedIndex = pane.getSelectedIndex();
 				String turnierName = "";
 				if (this.mainControl.getTurnier() != null) {
-					turnierName = this.mainControl.getTurnier().getTurnierName();
+					turnierName = this.mainControl.getTurnier()
+							.getTurnierName();
 					if (pane.getTitleAt(selectedIndex).equals(turnierName)
-							|| pane.getTitleAt(selectedIndex).equals("Neues Turnier")) {
-						this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
+							|| pane.getTitleAt(selectedIndex).equals(
+									"Neues Turnier")) {
+						this.mainControl.getNaviView().getTabellenPanel()
+								.setVisible(true);
 
 					} else {
-						this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+						this.mainControl.getNaviView().getTabellenPanel()
+								.setVisible(false);
 					}
 
 				}
 
 				if (pane.getTitleAt(selectedIndex).equals("Turnierliste")) {
-					this.mainControl.getNaviView().getTurnierListePanel().setVisible(true);
+					this.mainControl.getNaviView().getTurnierListePanel()
+							.setVisible(true);
 
 				} else {
-					this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
+					this.mainControl.getNaviView().getTurnierListePanel()
+							.setVisible(false);
 				}
 				if (pane.getTitleAt(selectedIndex).equals("Spielerliste")) {
-					this.mainControl.getNaviView().getSpielerListePanel().setVisible(true);
+					this.mainControl.getNaviView().getSpielerListePanel()
+							.setVisible(true);
 
 				} else {
-					this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
+					this.mainControl.getNaviView().getSpielerListePanel()
+							.setVisible(false);
 				}
 
 			}

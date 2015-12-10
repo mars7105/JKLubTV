@@ -43,8 +43,8 @@ public class MainControl extends JFrame {
 	private int windowHeight;
 	private MainView mainView;
 	private JTabbedPane hauptPanel;
-//	private MenueControl menueControl;
-//	private MenueView menueView;
+	// private MenueControl menueControl;
+	// private MenueView menueView;
 	private TurnierControl turnierControl;
 	private TurnierView turnierView;
 	private GruppenView gruppenView;
@@ -90,7 +90,8 @@ public class MainControl extends JFrame {
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
 		windowHeight = TurnierKonstanten.WINDOW_HEIGHT;
-		setBounds(TurnierKonstanten.WINDOW_BOUNDS_X, TurnierKonstanten.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
+		setBounds(TurnierKonstanten.WINDOW_BOUNDS_X,
+				TurnierKonstanten.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
 		setMinimumSize(new Dimension(windowWidth / 2, windowHeight / 2));
 
 		setTitle("Klubturnierverwaltung");
@@ -101,18 +102,19 @@ public class MainControl extends JFrame {
 		setNeuesTurnier(false);
 	}
 
-//	public void datenbankMenueView(Boolean enable) {
-//		menueControl.setDatenbankMenue(enable);
-//		// naviView.getDatenbankPanel().setVisible(enable);
-//
-//		naviView.setPathToDatabase(new JLabel(menueControl.getFileName()));
-//		naviView.updateUI();
-//		if (enable == true) {
-//			this.setTitle("Klubturnierverwaltung - Datei:" + SQLiteDAOFactory.getDB_PATH());
-//		} else {
-//			this.setTitle("Klubturnierverwaltung ");
-//		}
-//	}
+	// public void datenbankMenueView(Boolean enable) {
+	// menueControl.setDatenbankMenue(enable);
+	// // naviView.getDatenbankPanel().setVisible(enable);
+	//
+	// naviView.setPathToDatabase(new JLabel(menueControl.getFileName()));
+	// naviView.updateUI();
+	// if (enable == true) {
+	// this.setTitle("Klubturnierverwaltung - Datei:" +
+	// SQLiteDAOFactory.getDB_PATH());
+	// } else {
+	// this.setTitle("Klubturnierverwaltung ");
+	// }
+	// }
 
 	public SpielerLadenControl getSpielerLadenControl() {
 		return spielerLadenControl;
@@ -142,7 +144,8 @@ public class MainControl extends JFrame {
 		return rundenEingabeFormularView;
 	}
 
-	public void setRundenEingabeFormularView(RundenEingabeFormularView[] rundenEingabeFormularView) {
+	public void setRundenEingabeFormularView(
+			RundenEingabeFormularView[] rundenEingabeFormularView) {
 		this.rundenEingabeFormularView = rundenEingabeFormularView;
 	}
 
@@ -166,13 +169,13 @@ public class MainControl extends JFrame {
 		return mainView;
 	}
 
-//	public MenueControl getMenueControl() {
-//		return menueControl;
-//	}
-//
-//	public MenueView getMenueView() {
-//		return menueView;
-//	}
+	// public MenueControl getMenueControl() {
+	// return menueControl;
+	// }
+	//
+	// public MenueView getMenueView() {
+	// return menueView;
+	// }
 
 	public PaarungsTafeln getPaarungsTafeln() {
 		return paarungsTafeln;
@@ -315,9 +318,9 @@ public class MainControl extends JFrame {
 		titleView = new TitleView();
 
 		naviController = new NaviController(this);
-//		menueView = new MenueView();
-//		menueControl = new MenueControl(this);
-//		setJMenuBar(menueView.getJMenuBar());
+		// menueView = new MenueView();
+		// menueControl = new MenueControl(this);
+		// setJMenuBar(menueView.getJMenuBar());
 
 		setContentPane(mainPanel);
 
@@ -337,31 +340,36 @@ public class MainControl extends JFrame {
 	}
 
 	private void makeProperties() {
-//		datenbankMenueView(false);
+		// datenbankMenueView(false);
 		propertiesControl = new PropertiesControl();
 		if (propertiesControl.readProperties() == false) {
 			if (propertiesControl.writeProperties() == false) {
-				JOptionPane.showMessageDialog(null, "Einstellungen des Programms können nicht gespeichert werden.");
+				JOptionPane
+						.showMessageDialog(null,
+								"Einstellungen des Programms können nicht gespeichert werden.");
 			}
 		} else {
 			if (propertiesControl.checkPath() == true) {
-//				datenbankMenueView(true);
+				// datenbankMenueView(true);
 				String path = propertiesControl.getProperties("Path");
 				SQLiteDAOFactory.setDB_PATH(path);
-				this.setTitle("Klubturnierverwaltung - Datei:" + SQLiteDAOFactory.getDB_PATH());
+				this.setTitle("Klubturnierverwaltung - Datei:"
+						+ SQLiteDAOFactory.getDB_PATH());
 
 				if (this.getSpielerEditierenControl() != null) {
 					// mainControl.getSpielerEditierenControl().makePanel();
 				} else {
-					this.setSpielerEditierenControl(new SpielerLadenControl(this));
+					this.setSpielerEditierenControl(new SpielerLadenControl(
+							this));
 					this.getSpielerEditierenControl().updateSpielerListe();
 				}
 				this.setNeuesTurnier(false);
-//				this.getNaviView().getTabellenPanel().setVisible(false);
+				// this.getNaviView().getTabellenPanel().setVisible(false);
 				if (this.getTurnierTableControl() == null) {
 					this.setTurnierTableControl(new TurnierTableControl(this));
 					this.getTurnierTableControl().loadTurnierListe();
-					this.setTurnierListeLadenControl(new TurnierListeLadenControl(this));
+					this.setTurnierListeLadenControl(new TurnierListeLadenControl(
+							this));
 					this.getTurnierListeLadenControl().loadTurnierListe();
 					naviView.setPathToDatabase(new JLabel(path));
 
@@ -369,10 +377,15 @@ public class MainControl extends JFrame {
 					this.resetApp();
 					this.setTurnierTableControl(new TurnierTableControl(this));
 					this.getTurnierTableControl().loadTurnierListe();
-					this.setTurnierListeLadenControl(new TurnierListeLadenControl(this));
+					this.setTurnierListeLadenControl(new TurnierListeLadenControl(
+							this));
 					this.getTurnierListeLadenControl().loadTurnierListe();
 					naviView.setPathToDatabase(new JLabel(path));
 				}
+				naviView.getTurnierListePanel().setVisible(false);
+				naviView.getSpielerListePanel().setVisible(false);
+				hauptPanel
+						.addChangeListener(naviController.getTurnierAnsicht());
 
 			} else {
 				this.setTitle("Klubturnierverwaltung ");
@@ -386,8 +399,8 @@ public class MainControl extends JFrame {
 		windowHeight = 0;
 		mainView = null;
 		hauptPanel = null;
-//		menueControl = null;
-//		menueView = null;
+		// menueControl = null;
+		// menueView = null;
 		turnierControl = null;
 		turnierView = null;
 		gruppenView = null;
@@ -450,14 +463,15 @@ public class MainControl extends JFrame {
 	public void setMainView(MainView mainView) {
 		this.mainView = mainView;
 	}
-//
-//	public void setMenueControl(MenueControl menueControl) {
-//		this.menueControl = menueControl;
-//	}
-//
-//	public void setMenueView(MenueView menueView) {
-//		this.menueView = menueView;
-//	}
+
+	//
+	// public void setMenueControl(MenueControl menueControl) {
+	// this.menueControl = menueControl;
+	// }
+	//
+	// public void setMenueView(MenueView menueView) {
+	// this.menueView = menueView;
+	// }
 
 	public void setPaarungsTafeln(PaarungsTafeln paarungsTafeln) {
 		this.paarungsTafeln = paarungsTafeln;
@@ -483,11 +497,13 @@ public class MainControl extends JFrame {
 		this.simpleTerminTabelle = simpleTerminTabelle;
 	}
 
-	public void setSimpleTerminTabelleView(SimpleTerminTabelleView[] simpleTerminTabelleView) {
+	public void setSimpleTerminTabelleView(
+			SimpleTerminTabelleView[] simpleTerminTabelleView) {
 		this.simpleTerminTabelleView = simpleTerminTabelleView;
 	}
 
-	public void setSpielerAnzahlControl(SpielerAnzahlControl spielerAnzahlControl) {
+	public void setSpielerAnzahlControl(
+			SpielerAnzahlControl spielerAnzahlControl) {
 		this.spielerAnzahlControl = spielerAnzahlControl;
 	}
 
@@ -495,11 +511,13 @@ public class MainControl extends JFrame {
 		this.spielerAnzahlView = spielerAnzahlView;
 	}
 
-	public void setSpielerEditierenControl(SpielerLadenControl spielerLadenControl) {
+	public void setSpielerEditierenControl(
+			SpielerLadenControl spielerLadenControl) {
 		this.spielerLadenControl = spielerLadenControl;
 	}
 
-	public void setSpielerEingabeControl(SpielerEingabeControl spielerEingabeControl) {
+	public void setSpielerEingabeControl(
+			SpielerEingabeControl spielerEingabeControl) {
 		this.spielerEingabeControl = spielerEingabeControl;
 	}
 
@@ -527,7 +545,8 @@ public class MainControl extends JFrame {
 		this.terminTabelle = terminTabelle2;
 	}
 
-	public void setTerminTabelleControl(TerminTabelleControl terminTabelleControl) {
+	public void setTerminTabelleControl(
+			TerminTabelleControl terminTabelleControl) {
 		this.terminTabelleControl = terminTabelleControl;
 	}
 
@@ -535,7 +554,8 @@ public class MainControl extends JFrame {
 		this.turnier = turnier;
 	}
 
-	public void setTurnier_has_SpielerTableControl(Turnier_has_SpielerTableControl turnier_has_SpielerTableControl) {
+	public void setTurnier_has_SpielerTableControl(
+			Turnier_has_SpielerTableControl turnier_has_SpielerTableControl) {
 		this.turnier_has_SpielerTableControl = turnier_has_SpielerTableControl;
 	}
 
@@ -543,11 +563,13 @@ public class MainControl extends JFrame {
 		this.turnierControl = turnierControl;
 	}
 
-	public void setTurnierListeLadenControl(TurnierListeLadenControl turnierListeLadenControl) {
+	public void setTurnierListeLadenControl(
+			TurnierListeLadenControl turnierListeLadenControl) {
 		this.turnierListeLadenControl = turnierListeLadenControl;
 	}
 
-	public void setTurnierListeLadenView(TurnierListeLadenView turnierListeLadenView) {
+	public void setTurnierListeLadenView(
+			TurnierListeLadenView turnierListeLadenView) {
 		this.turnierListeLadenView = turnierListeLadenView;
 	}
 
@@ -555,7 +577,8 @@ public class MainControl extends JFrame {
 		this.turnierTabelle = turnierTabelle;
 	}
 
-	public void setTurnierTabelleControl(TurnierTabelleControl turnierTabelleControl) {
+	public void setTurnierTabelleControl(
+			TurnierTabelleControl turnierTabelleControl) {
 		this.turnierTabelleControl = turnierTabelleControl;
 	}
 
@@ -603,7 +626,8 @@ public class MainControl extends JFrame {
 		return rundenEingabeFormularControl;
 	}
 
-	public void setRundenEingabeFormularControl(RundenEingabeFormularControl rundenEingabeFormularControl) {
+	public void setRundenEingabeFormularControl(
+			RundenEingabeFormularControl rundenEingabeFormularControl) {
 		this.rundenEingabeFormularControl = rundenEingabeFormularControl;
 	}
 
