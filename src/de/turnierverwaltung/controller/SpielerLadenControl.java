@@ -52,6 +52,7 @@ public class SpielerLadenControl implements ActionListener {
 				mainControl.setEnabled(true);
 				updateSpielerListe();
 				spielerEditierenView.closeWindow();
+				mainControl.getTurnierListeLadenControl().reloadTurnier();
 
 			}
 		}

@@ -85,7 +85,7 @@ public class MenueControl implements ActionListener {
 				mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 				mainControl.getTurnierTableControl().loadTurnierListe();
 				mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-				mainControl.getTurnierListeLadenControl().loadTurnier();
+				mainControl.getTurnierListeLadenControl().loadTurnierListe();
 
 			}
 		}
@@ -130,13 +130,13 @@ public class MenueControl implements ActionListener {
 						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 						mainControl.getTurnierTableControl().loadTurnierListe();
 						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-						mainControl.getTurnierListeLadenControl().loadTurnier();
+						mainControl.getTurnierListeLadenControl().loadTurnierListe();
 					} else {
 						mainControl.resetApp();
 						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 						mainControl.getTurnierTableControl().loadTurnierListe();
 						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-						mainControl.getTurnierListeLadenControl().loadTurnier();
+						mainControl.getTurnierListeLadenControl().loadTurnierListe();
 					}
 
 				} else {

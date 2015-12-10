@@ -363,7 +363,7 @@ public class MainControl extends JFrame {
 					this.setTurnierTableControl(new TurnierTableControl(this));
 					this.getTurnierTableControl().loadTurnierListe();
 					this.setTurnierListeLadenControl(new TurnierListeLadenControl(this));
-					this.getTurnierListeLadenControl().loadTurnier();
+					this.getTurnierListeLadenControl().loadTurnierListe();
 					naviView.setPathToDatabase(new JLabel(path));
 
 				} else {
@@ -371,7 +371,7 @@ public class MainControl extends JFrame {
 					this.setTurnierTableControl(new TurnierTableControl(this));
 					this.getTurnierTableControl().loadTurnierListe();
 					this.setTurnierListeLadenControl(new TurnierListeLadenControl(this));
-					this.getTurnierListeLadenControl().loadTurnier();
+					this.getTurnierListeLadenControl().loadTurnierListe();
 					naviView.setPathToDatabase(new JLabel(path));
 				}
 

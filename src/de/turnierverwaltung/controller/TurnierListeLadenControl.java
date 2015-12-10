@@ -99,7 +99,7 @@ public class TurnierListeLadenControl implements ActionListener {
 
 				mainControl.setEnabled(true);
 				turnierEditierenView.dispose();
-				loadTurnier();
+				loadTurnierListe();
 
 			}
 			if (arg0.getSource() == turnierEditierenView.getCancelButton()) {
@@ -111,55 +111,7 @@ public class TurnierListeLadenControl implements ActionListener {
 		for (int i = 0; i < anzahlTurniere; i++) {
 
 			if (arg0.getSource() == turnierListeLadenView.getTurnierLadeButton()[i]) {
-				if (mainControl.getTurnier() != null) {
-					int selectedIndex = hauptPanel.getTabCount() - 1;
-
-					hauptPanel.remove(selectedIndex);
-
-				}
-				tabbedPaneView = new TabAnzeigeView(mainControl);
-
-				mainControl.setTabAnzeigeView(tabbedPaneView);
-				turnier = turnierListe.get(i);
-				mainControl.setTurnier(turnier);
-				mainControl.setGruppenTableControl(new GruppenTableControl(mainControl));
-				mainControl.getGruppenTableControl().getGruppe();
-				mainControl.setSpielerTableControl(new SpielerTableControl(mainControl));
-				mainControl.getSpielerTableControl().getSpieler();
-
-				mainControl.setPartienTableControl(new PartienTableControl(mainControl));
-				for (int z = 0; z < mainControl.getTurnier().getAnzahlGruppen(); z++) {
-					mainControl.getPartienTableControl().getPartien(z);
-				}
-				tabbedPaneView2 = new TabAnzeigeView[turnier.getAnzahlGruppen()];
-
-				mainControl.setTabAnzeigeView2(tabbedPaneView2);
-				TurnierTabelleControl turnierTabelleControl = new TurnierTabelleControl(mainControl);
-				TerminTabelleControl terminTabelleControl = new TerminTabelleControl(mainControl);
-				RundenEingabeFormularControl rundenEingabeFormularControl = new RundenEingabeFormularControl(
-						mainControl);
-
-				mainControl.setTurnierTabelleControl(turnierTabelleControl);
-				mainControl.setTerminTabelleControl(terminTabelleControl);
-				mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
-
-				for (int z = 0; z < turnier.getAnzahlGruppen(); z++) {
-					tabbedPaneView2[z] = new TabAnzeigeView(mainControl);
-					tabbedPaneView.insertTab(turnier.getGruppe()[z].getGruppenName(), gruppenIcon, tabbedPaneView2[z],
-							null, z);
-					mainControl.getTurnierTabelleControl().makeSimpleTableView(z);
-					mainControl.getTerminTabelleControl().makeSimpleTableView(z);
-					// mainControl.getRundenEingabeFormularControl().makeTerminTabelle(z);
-					mainControl.getRundenEingabeFormularControl().makeRundenEditView(z);
-					mainControl.getTurnierTabelleControl().okAction(z);
-				}
-
-				mainControl.getNaviView().setTabellenname("Turnier: " + mainControl.getTurnier().getTurnierName());
-
-				hauptPanel.addTab(turnier.getTurnierName(), turnierIcon, tabbedPaneView);
-				int selectIndex = hauptPanel.getTabCount() - 1;
-				hauptPanel.setSelectedIndex(selectIndex);
-
+				loadTurnier(i);
 			}
 
 			if (arg0.getSource() == turnierListeLadenView.getTurnierBearbeitenButton()[i]) {
@@ -212,10 +164,71 @@ public class TurnierListeLadenControl implements ActionListener {
 	private void deleteTurnier(int turnierId) {
 		TurnierTableControl ttC = new TurnierTableControl(mainControl);
 		ttC.loescheTurnier(turnierListe.get(turnierId));
-		loadTurnier();
+		loadTurnierListe();
 	}
 
-	public void loadTurnier() {
+	public void reloadTurnier() {
+		if (turnier != null) {
+			for (int i = 0; i < anzahlTurniere; i++) {
+				if (turnierListe.get(i).getTurnierId() == turnier.getTurnierId()) {
+					int selectedTab = hauptPanel.getSelectedIndex();
+					loadTurnier(i);
+					hauptPanel.setSelectedIndex(selectedTab);
+				}
+			}
+		}
+	}
+
+	public void loadTurnier(int index) {
+		if (mainControl.getTurnier() != null) {
+			int selectedIndex = hauptPanel.getTabCount() - 1;
+
+			hauptPanel.remove(selectedIndex);
+
+		}
+		tabbedPaneView = new TabAnzeigeView(mainControl);
+
+		mainControl.setTabAnzeigeView(tabbedPaneView);
+		turnier = turnierListe.get(index);
+		mainControl.setTurnier(turnier);
+		mainControl.setGruppenTableControl(new GruppenTableControl(mainControl));
+		mainControl.getGruppenTableControl().getGruppe();
+		mainControl.setSpielerTableControl(new SpielerTableControl(mainControl));
+		mainControl.getSpielerTableControl().getSpieler();
+
+		mainControl.setPartienTableControl(new PartienTableControl(mainControl));
+		for (int z = 0; z < mainControl.getTurnier().getAnzahlGruppen(); z++) {
+			mainControl.getPartienTableControl().getPartien(z);
+		}
+		tabbedPaneView2 = new TabAnzeigeView[turnier.getAnzahlGruppen()];
+
+		mainControl.setTabAnzeigeView2(tabbedPaneView2);
+		TurnierTabelleControl turnierTabelleControl = new TurnierTabelleControl(mainControl);
+		TerminTabelleControl terminTabelleControl = new TerminTabelleControl(mainControl);
+		RundenEingabeFormularControl rundenEingabeFormularControl = new RundenEingabeFormularControl(mainControl);
+
+		mainControl.setTurnierTabelleControl(turnierTabelleControl);
+		mainControl.setTerminTabelleControl(terminTabelleControl);
+		mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
+
+		for (int z = 0; z < turnier.getAnzahlGruppen(); z++) {
+			tabbedPaneView2[z] = new TabAnzeigeView(mainControl);
+			tabbedPaneView.insertTab(turnier.getGruppe()[z].getGruppenName(), gruppenIcon, tabbedPaneView2[z], null, z);
+			mainControl.getTurnierTabelleControl().makeSimpleTableView(z);
+			mainControl.getTerminTabelleControl().makeSimpleTableView(z);
+			// mainControl.getRundenEingabeFormularControl().makeTerminTabelle(z);
+			mainControl.getRundenEingabeFormularControl().makeRundenEditView(z);
+			mainControl.getTurnierTabelleControl().okAction(z);
+		}
+
+		mainControl.getNaviView().setTabellenname("Turnier: " + mainControl.getTurnier().getTurnierName());
+
+		hauptPanel.addTab(turnier.getTurnierName(), turnierIcon, tabbedPaneView);
+		int selectIndex = hauptPanel.getTabCount() - 1;
+		hauptPanel.setSelectedIndex(selectIndex);
+	}
+
+	public void loadTurnierListe() {
 		Turnier temp = null;
 		String turnierName = "";
 		String startDatum = "";

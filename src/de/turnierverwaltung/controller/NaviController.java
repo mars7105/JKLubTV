@@ -192,7 +192,7 @@ public class NaviController implements ActionListener {
 							mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
 							mainControl.getSpielerEditierenControl().updateSpielerListe();
 							mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-							mainControl.getTurnierListeLadenControl().loadTurnier();
+							mainControl.getTurnierListeLadenControl().loadTurnierListe();
 
 							mainControl.getPropertiesControl().setProperties("Path", SQLiteDAOFactory.getDB_PATH());
 							mainControl.getPropertiesControl().writeProperties();
@@ -239,7 +239,7 @@ public class NaviController implements ActionListener {
 					mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
 					mainControl.getSpielerEditierenControl().updateSpielerListe();
 					mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-					mainControl.getTurnierListeLadenControl().loadTurnier();
+					mainControl.getTurnierListeLadenControl().loadTurnierListe();
 					naviView.setPathToDatabase(new JLabel(file.getName()));
 
 					mainControl.getPropertiesControl().setProperties("Path", SQLiteDAOFactory.getDB_PATH());
