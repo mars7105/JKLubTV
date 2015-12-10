@@ -25,8 +25,6 @@ public class SpielerLadenControl implements ActionListener {
 
 	private ImageIcon spielerListeIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-group.png")));
-	
-
 
 	public SpielerLadenControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -51,8 +49,9 @@ public class SpielerLadenControl implements ActionListener {
 				stc.updateOneSpieler(spieler.get(spielerIndex));
 				mainControl.setEnabled(true);
 				updateSpielerListe();
-				spielerEditierenView.closeWindow();
 				mainControl.getTurnierListeLadenControl().reloadTurnier();
+
+				spielerEditierenView.closeWindow();
 
 			}
 		}
@@ -85,12 +84,9 @@ public class SpielerLadenControl implements ActionListener {
 				}
 			}
 
-
 		}
 
 	}
-
-
 
 	public void updateSpielerListe() {
 		spielerTableControl = new SpielerTableControl(this.mainControl);
@@ -99,7 +95,7 @@ public class SpielerLadenControl implements ActionListener {
 		spielerAnzahl = spieler.size();
 		if (spielerLadenView == null) {
 			spielerLadenView = new SpielerLadenView(spielerAnzahl);
-			hauptPanel.addTab("Spielerliste",spielerListeIcon, spielerLadenView);
+			hauptPanel.addTab("Spielerliste", spielerListeIcon, spielerLadenView);
 		} else {
 			spielerLadenView.removeAll();
 			spielerLadenView.init(spielerAnzahl);
@@ -113,7 +109,6 @@ public class SpielerLadenControl implements ActionListener {
 			spielerLadenView.getSpielerLoeschenButton()[index].addActionListener(this);
 			index++;
 		}
-
 
 		spielerLadenView.updateUI();
 	}
