@@ -225,7 +225,7 @@ public class NaviController implements ActionListener {
 							turnierAnsicht = new TurnierAnsicht(mainControl);
 							mainControl.getHauptPanel().addChangeListener(
 									turnierAnsicht);
-							
+
 							naviView.updateUI();
 
 						} catch (IOException e) {
@@ -289,7 +289,13 @@ public class NaviController implements ActionListener {
 					turnierAnsicht = new TurnierAnsicht(mainControl);
 					mainControl.getHauptPanel().addChangeListener(
 							turnierAnsicht);
-					
+					for (int i = 0; i < mainControl.getHauptPanel()
+							.getTabCount(); i++) {
+						if (mainControl.getHauptPanel().getTitleAt(i)
+								.equals("Turnierliste")) {
+							mainControl.getHauptPanel().setSelectedIndex(i);
+						}
+					}
 					naviView.updateUI();
 
 				} else {

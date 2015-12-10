@@ -386,7 +386,11 @@ public class MainControl extends JFrame {
 				naviView.getSpielerListePanel().setVisible(false);
 				hauptPanel
 						.addChangeListener(naviController.getTurnierAnsicht());
-
+				for (int i = 0; i < hauptPanel.getTabCount(); i++) {
+					if (hauptPanel.getTitleAt(i).equals("Turnierliste")) {
+						hauptPanel.setSelectedIndex(i);
+					}
+				}
 			} else {
 				this.setTitle("Klubturnierverwaltung ");
 
