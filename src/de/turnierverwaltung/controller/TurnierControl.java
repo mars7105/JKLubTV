@@ -56,7 +56,11 @@ public class TurnierControl implements ActionListener {
 
 	public TurnierControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-
+		this.mainControl.setGruppenControl(null);
+		this.mainControl.setSpielerAnzahlControl(null);
+		this.mainControl.setSpielerEingabeControl(null);
+		this.mainControl.setRundenEingabeFormularControl(null);
+		this.mainControl.setTurnierTabelleControl(null);
 		hauptPanel = this.mainControl.getHauptPanel();
 		this.mainControl.setTurnierView(new TurnierView());
 		this.turnierView = this.mainControl.getTurnierView();

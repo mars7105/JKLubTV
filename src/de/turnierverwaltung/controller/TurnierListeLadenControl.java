@@ -192,7 +192,6 @@ public class TurnierListeLadenControl implements ActionListener {
 			// Diese Abfrage muss an letzter Stelle stehen,
 			// da ansonsten eine ArraOutOfBounds Exception auftritt!
 			if (arg0.getSource() == turnierListeLadenView.getTurnierLoeschenButton()[i]) {
-				int lastTab = hauptPanel.getTabCount() - 1;
 				if (mainControl.getTurnier().getTurnierId() == turnierListe.get(i).getTurnierId()) {
 					JOptionPane.showMessageDialog(null,
 							"Turnier kann nicht gelöscht werden\n da es gerade bearbeitet wird.");

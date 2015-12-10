@@ -74,7 +74,7 @@ public class SpielerAnzahlControl implements ActionListener {
 			gruppe[i].setSpieler(spieler[i]);
 		}
 		tabbedPaneView.updateUI();
-//		this.mainControl.getNaviController().makeNaviPanel();
+		// this.mainControl.getNaviController().makeNaviPanel();
 		hauptPanel.remove(this.selectIndex);
 		hauptPanel.add(this.tabbedPaneView, this.selectIndex);
 		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());
@@ -86,8 +86,10 @@ public class SpielerAnzahlControl implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (mainControl.getSpielerEingabeControl() == null) {
-			spielerEingabeControl = new SpielerEingabeControl(mainControl,this.selectIndex);
+			spielerEingabeControl = new SpielerEingabeControl(mainControl, this.selectIndex);
 			mainControl.setSpielerEingabeControl(spielerEingabeControl);
+		} else {
+//			spielerEingabeControl.makeTabbedPane(selectIndex);
 		}
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			if (arg0.getSource() == okButton[i]) {

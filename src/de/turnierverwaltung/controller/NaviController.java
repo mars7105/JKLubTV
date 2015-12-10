@@ -144,7 +144,7 @@ public class NaviController implements ActionListener {
 						"A Silly Question", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null,
 						options, options[1]);
 				if (abfrage == 0) {
-					// mainControl.resetApp();
+//					mainControl.resetApp();
 					mainControl.setTurnierControl(new TurnierControl(mainControl));
 				}
 			}
@@ -155,7 +155,7 @@ public class NaviController implements ActionListener {
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
 				// this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-				
+
 				String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
 						JOptionPane.PLAIN_MESSAGE);
 
@@ -213,7 +213,6 @@ public class NaviController implements ActionListener {
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
 
-				
 				// Create a file chooser
 				JFileChooser fc = new JFileChooser();
 				FileFilter filter = new FileNameExtensionFilter("Turnier Datenbank", "ktv");
@@ -375,7 +374,8 @@ public class NaviController implements ActionListener {
 				String turnierName = "";
 				if (this.mainControl.getTurnier() != null) {
 					turnierName = this.mainControl.getTurnier().getTurnierName();
-					if (pane.getTitleAt(selectedIndex).equals(turnierName) || pane.getTitleAt(selectedIndex).equals("Neues Turnier")) {
+					if (pane.getTitleAt(selectedIndex).equals(turnierName)
+							|| pane.getTitleAt(selectedIndex).equals("Neues Turnier")) {
 						this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
 
 					} else {
@@ -383,7 +383,7 @@ public class NaviController implements ActionListener {
 					}
 
 				}
-				
+
 				if (pane.getTitleAt(selectedIndex).equals("Turnierliste")) {
 					this.mainControl.getNaviView().getTurnierListePanel().setVisible(true);
 
