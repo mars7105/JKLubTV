@@ -103,7 +103,8 @@ public class DewisDialogControl implements ListSelectionListener, ActionListener
 		if (arg0.getSource() == dialog.getCancelButton()) {
 			mainControl.setEnabled(true);
 			dialog.closeWindow();
-			mainControl.getSpielerLadenControl().makePanel();
+//			mainControl.getHauptPanel().remove(mainControl.getSpielerLadenControl().getSpielerLadenView());
+//			mainControl.getSpielerLadenControl().makePanel();
 		}
 		if (arg0.getSource() == dialog.getOkButton()) {
 			int[] indices = spielerDewisView.getList().getSelectedIndices();
@@ -122,7 +123,7 @@ public class DewisDialogControl implements ListSelectionListener, ActionListener
 				}
 			}
 			dialog.closeWindow();
-			mainControl.getSpielerLadenControl().makePanel();
+			mainControl.getSpielerLadenControl().updateSpielerListe();
 		}
 		if (arg0.getSource() == dialog.getUpdateButton()) {
 			frage = 0;
@@ -133,7 +134,7 @@ public class DewisDialogControl implements ListSelectionListener, ActionListener
 			frage = -1;
 			dialog.closeWindow();
 			mainControl.setEnabled(true);
-			mainControl.getSpielerLadenControl().makePanel();
+			mainControl.getSpielerLadenControl().updateSpielerListe();
 		}
 	}
 

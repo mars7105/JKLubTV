@@ -11,8 +11,8 @@ public class TurnierTabelleToHTML {
 	private String infoString;
 	private int[] reihenfolge;
 
-	public TurnierTabelleToHTML(String[][] tabellenMatrix, String turnierName, String startDatum, String endDatum,
-			String gruppenName) {
+	public TurnierTabelleToHTML(String[][] tabellenMatrix, String turnierName,
+			String startDatum, String endDatum, String gruppenName) {
 
 		this.tabellenMatrix = tabellenMatrix;
 		this.turnierName = turnierName;
@@ -28,15 +28,20 @@ public class TurnierTabelleToHTML {
 	}
 
 	private String getHTMLHeader() {
-		String headerString = "<!DOCTYPE html>\n" + "<html lang='de'>\n" + "<head>\n" + "  <meta charset='utf-8'>\n"
+		String headerString = "<!DOCTYPE html>\n"
+				+ "<html lang='de'>\n"
+				+ "<head>\n"
+				+ "  <meta charset='utf-8'>\n"
 				+ "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n"
-				+ "  <link rel='stylesheet' href='style.css'>\n" + "  <title>" + turnierName + startDatum + " bis "
-				+ endDatum + "</title>\n" + "</head>\n" + "<body>\n" + "  <h1>" + turnierName + " " + startDatum
-				+ " bis " + endDatum + "</h1>\n" + "  <h2>" + gruppenName + "</h2>\n";
+				+ "  <link rel='stylesheet' href='style.css'>\n" + "  <title>"
+				+ turnierName + startDatum + " bis " + endDatum + "</title>\n"
+				+ "</head>\n" + "<body>\n" + "  <h1>" + turnierName + " "
+				+ startDatum + " bis " + endDatum + "</h1>\n" + "  <h2>"
+				+ gruppenName + "</h2>\n";
 		return headerString;
 	}
 
-	public String getHTMLTable() {
+	public String getHTMLTable(Boolean ohneHeaderundFooter) {
 		int col = this.tabellenMatrix.length;
 		reihenfolge = new int[col];
 
@@ -50,14 +55,19 @@ public class TurnierTabelleToHTML {
 			x++;
 
 		}
-		return makeTurnierTabelle();
+		return makeTurnierTabelle(ohneHeaderundFooter);
 
 	}
 
-	private String makeTurnierTabelle() {
+	private String makeTurnierTabelle(Boolean ohneHeaderundFooter) {
+
 		int col = this.tabellenMatrix.length - 1;
 		int row = this.tabellenMatrix[0].length;
-		htmlString = getHTMLHeader();
+		if (ohneHeaderundFooter == false) {
+			htmlString = getHTMLHeader();
+		} else {
+			htmlString = "";
+		}
 		htmlString += "  <table>\n";
 		for (int y = 0; y < row; y++) {
 			if (y == 0) {
@@ -70,7 +80,8 @@ public class TurnierTabelleToHTML {
 
 			for (int x = 0; x < col; x++) {
 				String ausgabeWert = this.tabellenMatrix[reihenfolge[x]][y];
-				if (ausgabeWert != null && ausgabeWert != "" && ausgabeWert != " ") {
+				if (ausgabeWert != null && ausgabeWert != ""
+						&& ausgabeWert != " ") {
 
 					if (ausgabeWert == TurnierKonstanten.REMIS) {
 						ausgabeWert = "&frac12;";
@@ -83,9 +94,13 @@ public class TurnierTabelleToHTML {
 					}
 				} else {
 					if (y == 0) {
-						htmlString += "        <th>" + TurnierKonstanten.HTML_LEERZEICHEN + "</th>\n";
+						htmlString += "        <th>"
+								+ TurnierKonstanten.HTML_LEERZEICHEN
+								+ "</th>\n";
 					} else {
-						htmlString += "        <td>" + TurnierKonstanten.HTML_LEERZEICHEN + "</td>\n";
+						htmlString += "        <td>"
+								+ TurnierKonstanten.HTML_LEERZEICHEN
+								+ "</td>\n";
 					}
 				}
 
@@ -99,7 +114,9 @@ public class TurnierTabelleToHTML {
 		if (infoString != "") {
 			htmlString += "  <p>" + infoString + "</p>\n";
 		}
-		htmlString += getHTMLFooter();
+		if (ohneHeaderundFooter == false) {
+			htmlString += getHTMLFooter();
+		}
 		return htmlString;
 
 	}

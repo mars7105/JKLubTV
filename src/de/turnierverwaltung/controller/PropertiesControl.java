@@ -86,8 +86,11 @@ public class PropertiesControl {
 	}
 
 	public String getProperties(String key) {
-
-		return this.prop.getProperty(key);
+		if (this.prop.getProperty(key) == null) {
+			return "";
+		} else {
+			return this.prop.getProperty(key);
+		}
 	}
 
 	public Boolean getNoWritableProperties() {

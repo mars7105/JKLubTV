@@ -1,27 +1,13 @@
 package de.turnierverwaltung.controller;
 
-//JKlubTV - Ein Programm zum verwalten von Schach Turnieren
-//Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
-//
-//This program is free software: you can redistribute it and/or modify
-//it under the terms of the GNU General Public License as published by
-//the Free Software Foundation, either version 3 of the License, or
-//(at your option) any later version.
-//
-//This program is distributed in the hope that it will be useful,
-//but WITHOUT ANY WARRANTY; without even the implied warranty of
-//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//GNU General Public License for more details.
-//
-//You should have received a copy of the GNU General Public License
-//along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import de.turnierverwaltung.ZahlGroesserAlsN;
@@ -51,15 +37,18 @@ public class SpielerAnzahlControl implements ActionListener {
 	private MainControl mainControl;
 	private SpielerAnzahlView[] spielerAnzahlView;
 	private JTextField[] spielerAnzahlTextfield;
-	private JPanel hauptPanel;
+	private JTabbedPane hauptPanel;
 	private TabAnzeigeView tabbedPaneView;
 	private Turnier turnier;
 	private Gruppe[] gruppe;
-
+	private int selectIndex;
 	private Spieler[][] spieler;
+	private ImageIcon gruppenIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
 
-	public SpielerAnzahlControl(MainControl mainControl) {
+	public SpielerAnzahlControl(MainControl mainControl, int selectIndex) {
 		this.mainControl = mainControl;
+		this.selectIndex = selectIndex;
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
 
@@ -85,19 +74,22 @@ public class SpielerAnzahlControl implements ActionListener {
 			gruppe[i].setSpieler(spieler[i]);
 		}
 		tabbedPaneView.updateUI();
-		hauptPanel.removeAll();
-		this.mainControl.getNaviController().makeNaviPanel();
-		hauptPanel.add(tabbedPaneView);
-		hauptPanel.setMinimumSize(new Dimension(800, 600));
-		hauptPanel.updateUI();
-		
+		// this.mainControl.getNaviController().makeNaviPanel();
+		hauptPanel.remove(this.selectIndex);
+		hauptPanel.add(this.tabbedPaneView, this.selectIndex);
+		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());
+		hauptPanel.setIconAt(selectIndex, gruppenIcon);
+		hauptPanel.setSelectedIndex(selectIndex);
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (mainControl.getSpielerEingabeControl() == null) {
-			spielerEingabeControl = new SpielerEingabeControl(mainControl);
+			spielerEingabeControl = new SpielerEingabeControl(mainControl, this.selectIndex);
 			mainControl.setSpielerEingabeControl(spielerEingabeControl);
+		} else {
+//			spielerEingabeControl.makeTabbedPane(selectIndex);
 		}
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			if (arg0.getSource() == okButton[i]) {

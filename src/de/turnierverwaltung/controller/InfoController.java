@@ -1,10 +1,9 @@
 package de.turnierverwaltung.controller;
 
-import java.awt.BorderLayout;
-
+import java.awt.Toolkit;
 import java.net.URISyntaxException;
 
-import javax.swing.JPanel;
+import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.view.InfoView;
@@ -18,7 +17,10 @@ public class InfoController {
 	private JTabbedPane lizenzenPane;
 	private InfoLizenzenView infoTexteView;
 	private InfoHomeScreenView infoHelpView;
-
+	private ImageIcon infoIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png")));
+	private ImageIcon lizenzenIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-paragraph.png")));
 	/**
 	 * @param mainControl
 	 */
@@ -29,9 +31,9 @@ public class InfoController {
 		lizenzenPane = new JTabbedPane();
 		infoTexteView = new InfoLizenzenView();
 		try {
-			lizenzenPane.addTab("Information", infoHelpView.getLizenzText());
+			lizenzenPane.addTab("Information",infoIcon, infoHelpView.getLizenzText());
 
-			lizenzenPane.addTab("Lizenzen", infoTexteView.getLizenzText());
+			lizenzenPane.addTab("Lizenzen",lizenzenIcon, infoTexteView.getLizenzText());
 			infoView.setLizenzenPane(lizenzenPane);
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
@@ -45,13 +47,15 @@ public class InfoController {
 	 * 
 	 */
 	public void makeInfoPanel() {
-		JPanel hauptPanel = this.mainControl.getHauptPanel();
-		hauptPanel.removeAll();
-		this.mainControl.getNaviController().makeNaviPanel();
+		JTabbedPane hauptPanel = this.mainControl.getHauptPanel();
+		// hauptPanel.removeAll();
+		// this.mainControl.getNaviController().makeNaviPanel();
 
-		hauptPanel.add(infoView, BorderLayout.CENTER);
+		hauptPanel.addTab("Info", infoIcon, infoView);
 		hauptPanel.updateUI();
-
+		EigenschaftenControl eigenschaftenControl = new EigenschaftenControl(mainControl);
+		mainControl.setEigenschaftenControl(eigenschaftenControl);
+		eigenschaftenControl.makeeigenschaftenPanel();
 	}
 
 }

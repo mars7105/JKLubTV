@@ -110,7 +110,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 	@Override
 	public ArrayList<Spieler> getAllSpieler() {
-		String sql = "Select * from spieler" + "  ORDER BY Name ASC;";
+		String sql = "Select * from spieler ORDER BY Name ASC;";
 		ArrayList<Spieler> spielerListe = new ArrayList<Spieler>();
 
 		Statement stmt;
@@ -133,13 +133,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 						alterTableAge();
 
 					}
-					// test
-//					Charset UTF8_CHARSET = Charset.forName("UTF-8");	
-//					byte[] bname = name.getBytes();
-//					String nameUTF8 = new String(bname, UTF8_CHARSET);
-//					byte[] bkuerzel = kuerzel.getBytes();
-//					String kuerzelUTF8 = new String(bkuerzel, UTF8_CHARSET);				
-					// Test
+
 					spielerListe.add(new Spieler(idSpieler, name, kuerzel, dwz, age));
 				}
 				stmt.close();

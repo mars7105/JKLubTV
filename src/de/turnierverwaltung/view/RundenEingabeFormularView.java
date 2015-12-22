@@ -16,6 +16,7 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -55,6 +56,10 @@ public class RundenEingabeFormularView extends JPanel {
 	private JButton[] changeColor;
 	private int anzahlZeilen;
 	private int anzahlElemente;
+	private int ungerade;
+	private int gerade;
+	private int rundenanzahl;
+	private int partienanzahl;
 
 	@SuppressWarnings("unchecked")
 	public RundenEingabeFormularView(int spielerAnzahl) {
@@ -71,7 +76,10 @@ public class RundenEingabeFormularView extends JPanel {
 		property.put("text.today", "Heute");
 		property.put("text.month", "Monat");
 		property.put("text.year", "Jahr");
-
+		ungerade = (this.spielerAnzahl + 1) % 2;
+		gerade = 1 - ungerade;
+		rundenanzahl = this.spielerAnzahl - ungerade;
+		partienanzahl = (this.spielerAnzahl + gerade) / 2;
 		makePanel();
 
 	}
@@ -198,10 +206,7 @@ public class RundenEingabeFormularView extends JPanel {
 
 	public void makeZeilen(String[][] terminMatrix) {
 		String[] zeile = new String[5];
-		int ungerade = (this.spielerAnzahl + 1) % 2;
-		int gerade = 1 - ungerade;
-		int rundenanzahl = this.spielerAnzahl - ungerade;
-		int partienanzahl = (this.spielerAnzahl + gerade) / 2;
+
 		tabbedPane = new JTabbedPane();
 		FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
 		flowLayout.setVgap(1);
@@ -230,24 +235,23 @@ public class RundenEingabeFormularView extends JPanel {
 
 					int[] dateInt;
 					UtilDateModel model = new UtilDateModel();
+					
 					if (zeile[4].length() > 0) {
-
 						dateInt = getDatefromString(zeile[4]);
 						model.setDate(dateInt[2], dateInt[1] - 1, dateInt[0]);
+
 						model.setSelected(true);
-
 					}
-
-					datum[anzahlElemente] = new JDatePickerImpl(new JDatePanelImpl(model, property),
-							new DateLabelFormatter());
-
+					JDatePanelImpl datePanel = new JDatePanelImpl(model, property);
+	
+					datePanel.setForeground(Color.WHITE);
+					datum[anzahlElemente] = new JDatePickerImpl(datePanel, new DateLabelFormatter());
 					downPane.add(new JLabel("Datum: "));
 					downPane.add(datum[anzahlElemente]);
 					downPane.add(new JLabel(" "));
 					changeColor[anzahlElemente] = new JButton("Farben vertauschen");
 					downPane.add(changeColor[anzahlElemente]);
 					rundenNummer[anzahlElemente] = new JComboBox<String>();
-					// int ungerade = (this.spielerAnzahl + 1) % 2;
 					for (int x = 1; x <= this.spielerAnzahl - ungerade; x++) {
 						rundenNummer[anzahlElemente].addItem(Integer.toString(x));
 					}
@@ -291,8 +295,14 @@ public class RundenEingabeFormularView extends JPanel {
 
 		private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
 
+		public DateLabelFormatter() {
+			super();
+			setBackground(Color.CYAN);
+		}
+
 		@Override
 		public Object stringToValue(String text) throws ParseException {
+
 			return dateFormatter.parseObject(text);
 		}
 

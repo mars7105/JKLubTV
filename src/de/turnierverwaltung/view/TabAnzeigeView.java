@@ -1,5 +1,6 @@
 package de.turnierverwaltung.view;
 
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -26,41 +27,7 @@ public class TabAnzeigeView extends JTabbedPane {
 	private static final long serialVersionUID = 1L;
 
 	public TabAnzeigeView(MainControl mainCtrl) {
-//		this.mainControl = mainCtrl;
-//		ChangeListener changeListener = new ChangeListener() {
-//			public void stateChanged(ChangeEvent changeEvent) {
-//				JTabbedPane sourceTabbedPane = (JTabbedPane) changeEvent.getSource();
-//				
-//				int index = sourceTabbedPane.getSelectedIndex();
-//				String name = sourceTabbedPane.getTitleAt(index);
-//				int tabellennummer = -1;
-//				String tabellenname = "";
-//				int aktiveGruppe = mainControl.getTabAnzeigeView().getSelectedIndex();
-//				TabAnzeigeView tabAnzeigeView;
-//				if (mainControl.getTabAnzeigeView2() != null) {
-//					tabAnzeigeView = mainControl.getTabAnzeigeView2()[aktiveGruppe];
-//					if (tabAnzeigeView.getTabCount() > 0) {
-//						
-//						tabellennummer = tabAnzeigeView.getSelectedIndex();
-//
-//						tabellenname = tabAnzeigeView.getTitleAt(tabellennummer);
-//						mainControl.getNaviView().setTabellenname(tabellenname);
-////						if (tabellennummer == 2) {
-////							mainControl.getNaviView().getPdfSpeichernButton().setVisible(false);
-////							mainControl.getNaviView().getTabelleHTMLAusgabeButton().setVisible(false);
-////						} else {
-////							mainControl.getNaviView().getPdfSpeichernButton().setVisible(true);
-////							mainControl.getNaviView().getTabelleHTMLAusgabeButton().setVisible(true);
-////						}
-//					}
-//				}
-//				if (sourceTabbedPane == (JTabbedPane)mainControl.getTabAnzeigeView()) {
-//					mainControl.getNaviView().setGruppenname(name);
-//				}
-//
-//
-//			}
-//		};
-//		this.addChangeListener(changeListener);
+
+
 	}
 }

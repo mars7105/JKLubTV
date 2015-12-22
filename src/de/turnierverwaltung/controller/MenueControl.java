@@ -42,7 +42,7 @@ public class MenueControl implements ActionListener {
 		warnHinweis = false;
 		this.mainControl = mainControl;
 		turnier = this.mainControl.getTurnier();
-		turnierMenue = this.mainControl.getMenueView();
+//		turnierMenue = this.mainControl.getMenueView();
 		turnierMenue.setVisible(true);
 		turnierMenue.getMntmLaden().addActionListener(this);
 		turnierMenue.getMntmBeenden().addActionListener(this);
@@ -66,7 +66,7 @@ public class MenueControl implements ActionListener {
 				
 				mainControl.resetApp();
 				mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
-				mainControl.getSpielerEditierenControl().makePanel();
+				mainControl.getSpielerEditierenControl().updateSpielerListe();
 			}
 		}
 
@@ -85,7 +85,7 @@ public class MenueControl implements ActionListener {
 				mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 				mainControl.getTurnierTableControl().loadTurnierListe();
 				mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-				mainControl.getTurnierListeLadenControl().loadTurnier();
+				mainControl.getTurnierListeLadenControl().loadTurnierListe();
 
 			}
 		}
@@ -112,7 +112,7 @@ public class MenueControl implements ActionListener {
 					"Wollen Sie wirklich die Seite verlassen? \n" + "Alle eingegebenen Daten gehen verloren.");
 			if (abfrage == 0) {
 				mainControl.resetApp();
-				mainControl.datenbankMenueView(false);
+//				mainControl.datenbankMenueView(false);
 				// Create a file chooser
 				JFileChooser fc = new JFileChooser();
 				FileFilter filter = new FileNameExtensionFilter("Turnier Datenbank", "ktv");
@@ -125,18 +125,18 @@ public class MenueControl implements ActionListener {
 					fileName = file.getPath();
 					// This is where a real application would open the file.
 					SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-					mainControl.datenbankMenueView(true);
+//					mainControl.datenbankMenueView(true);
 					if (mainControl.getTurnierTableControl() == null) {
 						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 						mainControl.getTurnierTableControl().loadTurnierListe();
 						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-						mainControl.getTurnierListeLadenControl().loadTurnier();
+						mainControl.getTurnierListeLadenControl().loadTurnierListe();
 					} else {
 						mainControl.resetApp();
 						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 						mainControl.getTurnierTableControl().loadTurnierListe();
 						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
-						mainControl.getTurnierListeLadenControl().loadTurnier();
+						mainControl.getTurnierListeLadenControl().loadTurnierListe();
 					}
 
 				} else {
@@ -150,7 +150,7 @@ public class MenueControl implements ActionListener {
 					"Wollen Sie wirklich die Seite verlassen? \n" + "Alle eingegebenen Daten gehen verloren.");
 			if (abfrage == 0) {
 				mainControl.resetApp();
-				mainControl.datenbankMenueView(false);
+//				mainControl.datenbankMenueView(false);
 				String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
 						JOptionPane.PLAIN_MESSAGE);
 				if (filename != null) {
@@ -176,7 +176,7 @@ public class MenueControl implements ActionListener {
 							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
 							SQLiteControl sqlC = new SQLiteControl();
 							sqlC.createAllTables();
-							mainControl.datenbankMenueView(true);
+//							mainControl.datenbankMenueView(true);
 							JOptionPane.showMessageDialog(null, "Datei wurde gespeichert.", "File Saved",
 									JOptionPane.INFORMATION_MESSAGE);
 

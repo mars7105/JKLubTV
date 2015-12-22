@@ -107,11 +107,11 @@ public class TerminTabelle {
 		return ergebnisString;
 	}
 
-	public String getHTMLTable() {
+	public String getHTMLTable(Boolean ohneHeaderundFooter) {
 		terminTabelleToHTML = new TerminTabelleToHTML(tabellenMatrix,
 				turnier.getTurnierName(), turnier.getStartDatum(),
 				turnier.getEndDatum(), gruppe.getGruppenName());
-		return terminTabelleToHTML.getHTMLTable();
+		return terminTabelleToHTML.getHTMLTable(ohneHeaderundFooter);
 	}
 
 	public int getSpaltenAnzahl() {
