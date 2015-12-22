@@ -1,4 +1,5 @@
 package de.turnierverwaltung.view;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -34,8 +35,10 @@ public class EigenschaftenView extends JPanel {
 	private JPanel contentPanel;
 	private JScrollPane scrollPane;
 	private JPanel centerPane;
-	
+
 	private JCheckBox checkBoxHeaderFooter;
+	private JCheckBox checkBoxohneDWZ;
+	private JCheckBox checkBoxohneFolgeDWZ;
 
 	/**
 	 * Create the panel.
@@ -66,6 +69,7 @@ public class EigenschaftenView extends JPanel {
 	}
 
 	private void makeHTMLEigenschaften() {
+		// ohne Header und Footer
 		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelHeader = new JLabel(
@@ -76,14 +80,38 @@ public class EigenschaftenView extends JPanel {
 		htmlPanel.add(labelHeader);
 
 		JPanel htmlAll = new JPanel();
-		htmlAll.setLayout(new BorderLayout());
-		htmlAll.add(htmlPanel, BorderLayout.NORTH);
-		htmlAll.add(new JSeparator());
+		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
+		htmlAll.add(htmlPanel);
 		JPanel title = new JPanel();
 		title.setLayout(new FlowLayout(FlowLayout.LEFT));
 		title.add(new JLabel("HTML Ausgabe"));
 		centerPane.add(title);
-		centerPane.add(htmlAll);
+		// ohne DWZ
+		labelHeader = new JLabel("ohne DWZ");
+		checkBoxohneDWZ = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxohneDWZ);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+		JPanel all = new JPanel();
+		all.setLayout(new BorderLayout());
+		all.add(htmlAll, BorderLayout.NORTH);
+		// ohne Folge DWZ
+		labelHeader = new JLabel("ohne Folge-DWZ");
+		checkBoxohneFolgeDWZ = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxohneFolgeDWZ);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel, BorderLayout.NORTH);
+		htmlAll.add(new JSeparator());
+		all = new JPanel();
+		all.setLayout(new BorderLayout());
+		all.add(htmlAll, BorderLayout.NORTH);
+		centerPane.add(all);
 	}
 
 	public JCheckBox getCheckBoxHeaderFooter() {
