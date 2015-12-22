@@ -86,6 +86,7 @@ public class MainControl extends JFrame {
 	private ArrayList<Partie> changedPartien;
 	private PropertiesControl propertiesControl;
 	private JPanel mainPanel;
+	private EigenschaftenControl eigenschaftenControl;
 
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
@@ -634,5 +635,16 @@ public class MainControl extends JFrame {
 			RundenEingabeFormularControl rundenEingabeFormularControl) {
 		this.rundenEingabeFormularControl = rundenEingabeFormularControl;
 	}
+
+	public void setEigenschaftenControl(
+			EigenschaftenControl eigenschaftenControl) {
+		this.eigenschaftenControl = eigenschaftenControl;	
+	}
+
+	public EigenschaftenControl getEigenschaftenControl() {
+		return eigenschaftenControl;
+	}
+
+
 
 }

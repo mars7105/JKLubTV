@@ -53,7 +53,9 @@ public class InfoController {
 
 		hauptPanel.addTab("Info", infoIcon, infoView);
 		hauptPanel.updateUI();
-
+		EigenschaftenControl eigenschaftenControl = new EigenschaftenControl(mainControl);
+		mainControl.setEigenschaftenControl(eigenschaftenControl);
+		eigenschaftenControl.makeeigenschaftenPanel();
 	}
 
 }
