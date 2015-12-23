@@ -32,8 +32,6 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import de.turnierverwaltung.model.TurnierTabelle;
-
 public class HTMLSaveControler {
 
 	private MainControl mainControl;
