@@ -157,6 +157,7 @@ public class NaviController implements ActionListener {
 
 		}
 		if (arg0.getSource() == newTurnierButton) {
+			mainControl.setSpielerEingabeControl(null);
 			Turnier turnier = this.mainControl.getTurnier();
 			if (turnier == null) {
 				mainControl.setTurnierControl(new TurnierControl(mainControl));

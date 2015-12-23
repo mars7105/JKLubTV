@@ -87,7 +87,7 @@ public class TerminTabelleControl  {
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() == 1) {
 			tabAnzeigeView2[gruppenNummer].insertTab("Termintabelle", terminTabelleIcon,
 					simpleTableView[gruppenNummer], null, 1);
-		} else {
+		} else if (tabAnzeigeView2[gruppenNummer].getTabCount() > 1){
 
 			tabAnzeigeView2[gruppenNummer].setComponentAt(1,
 					simpleTableView[gruppenNummer]);

@@ -195,6 +195,7 @@ public class TurnierListeLadenControl implements ActionListener {
 	}
 
 	public void loadTurnier(int index) {
+		mainControl.setSpielerEingabeControl(null);
 		if (mainControl.getTurnier() != null) {
 			int selectedIndex = hauptPanel.getTabCount() - 1;
 
