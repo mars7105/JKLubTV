@@ -122,4 +122,20 @@ public class EigenschaftenView extends JPanel {
 		this.checkBoxHeaderFooter = checkBoxHeaderFooter;
 	}
 
+	public JCheckBox getCheckBoxohneDWZ() {
+		return checkBoxohneDWZ;
+	}
+
+	public void setCheckBoxohneDWZ(JCheckBox checkBoxohneDWZ) {
+		this.checkBoxohneDWZ = checkBoxohneDWZ;
+	}
+
+	public JCheckBox getCheckBoxohneFolgeDWZ() {
+		return checkBoxohneFolgeDWZ;
+	}
+
+	public void setCheckBoxohneFolgeDWZ(JCheckBox checkBoxohneFolgeDWZ) {
+		this.checkBoxohneFolgeDWZ = checkBoxohneFolgeDWZ;
+	}
+
 }

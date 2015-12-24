@@ -292,6 +292,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 		// }
 //		makeNewFormular(index);
 		mainControl.getNaviView().setTabellenname("Turnier: " + mainControl.getTurnier().getTurnierName());
+//		mainControl.getTurnierTabelleControl().checkDWZVisible();
 
 	}
 

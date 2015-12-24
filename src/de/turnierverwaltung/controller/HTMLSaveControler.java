@@ -108,19 +108,13 @@ public class HTMLSaveControler {
 								// Construct a writer for a specific encoding
 								writer1 = new OutputStreamWriter(
 										new FileOutputStream(filename1), "UTF8");
-								String wert = mainControl
-										.getPropertiesControl().getProperties(
-												"onlyTables");
-								Boolean ohneHeaderundFooter = true;
-								if (wert.equals("true")) {
-									ohneHeaderundFooter = true;
-								} else {
-									ohneHeaderundFooter = false;
-
-								}
+								Boolean ohneHeaderundFooter = mainControl
+										.getPropertiesControl().getOnlyTables();
+								
+								
 								writer1.write(this.mainControl
 										.getTurnierTabelle()[i]
-										.getHTMLTable(ohneHeaderundFooter));
+										.getHTMLTable());
 								writer1.flush();
 								writer1.close();
 								writer2 = new OutputStreamWriter(

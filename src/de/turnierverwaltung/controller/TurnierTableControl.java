@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -21,7 +22,6 @@ import javax.swing.JOptionPane;
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.mysql.*;
 
-
 public class TurnierTableControl {
 	private MainControl mainControl;
 	private Turnier turnier;
@@ -39,7 +39,8 @@ public class TurnierTableControl {
 
 	public void getTurnier(int tID) {
 
-		turnier = mySQLTurnierDao.findTurnier(tID);
+		turnier = mySQLTurnierDao.findTurnier(tID,
+				mainControl.getPropertiesControl());
 		mainControl.setTurnier(turnier);
 		mainControl.getGruppenTableControl().getGruppe();
 
@@ -62,7 +63,8 @@ public class TurnierTableControl {
 
 	public ArrayList<Turnier> loadTurnierListe() {
 		ArrayList<Turnier> turnierListe;
-		turnierListe = mySQLTurnierDao.selectAllTurnier();
+		turnierListe = mySQLTurnierDao.selectAllTurnier(mainControl
+				.getPropertiesControl());
 		return turnierListe;
 
 	}

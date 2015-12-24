@@ -90,24 +90,6 @@ public class TurnierTabelleControl {
 
 	}
 
-	// public void enableDatenbankMenu() {
-	// boolean enableSaveMenu = false;
-	// if (simpleTableView != null) {
-	// for (int i = 0; i < turnier.getAnzahlGruppen(); i++) {
-	// if (simpleTableView[i] != null) {
-	// enableSaveMenu = true;
-	// } else {
-	// enableSaveMenu = false;
-	// break;
-	// }
-	// }
-	// }
-
-	// this.mainControl.getMenueView().getMntmSpeichern().setEnabled(enableSaveMenu);
-
-	// mainControl.datenbankMenueView(enableSaveMenu);
-	// }
-
 	public MyTableModelListener[] getTml() {
 		return tml;
 	}
@@ -171,16 +153,41 @@ public class TurnierTabelleControl {
 			tabAnzeigeView.setComponentAt(gruppenNummer,
 					tabAnzeigeView2[gruppenNummer]);
 		}
-		// tabAnzeigeView.setComponentAt(gruppenNummer,
-		// tabAnzeigeView2[gruppenNummer]);
 
 		hauptPanel.updateUI();
+		checkDWZVisible(gruppenNummer);
 		// enableDatenbankMenu();
 	}
 
+	public void checkDWZVisible(int i) {
+
+		simpleTableView[i].getTable().getColumn("Kürzel").setMinWidth(0);
+
+		simpleTableView[i].getTable().getColumn("Kürzel").setPreferredWidth(0);
+		if (mainControl.getPropertiesControl().getNoDWZ() == true) {
+			simpleTableView[i].getTable().getColumn("a.DWZ").setMinWidth(0);
+
+			simpleTableView[i].getTable().getColumn("a.DWZ")
+					.setPreferredWidth(0);
+
+			simpleTableView[i].getTable().updateUI();
+		}
+		if (mainControl.getPropertiesControl().getNoFolgeDWZ() == true) {
+
+			simpleTableView[i].getTable().getColumn("n.DWZ").setMinWidth(0);
+
+			simpleTableView[i].getTable().getColumn("n.DWZ")
+					.setPreferredWidth(0);
+
+			simpleTableView[i].getTable().updateUI();
+		}
+
+	}
+
 	private void berechneFolgeDWZ(int gruppenNummer) {
-		FolgeDWZController folgeDWZ = new FolgeDWZController(mainControl
-				.getTurnier().getGruppe()[gruppenNummer]);
+		FolgeDWZController folgeDWZ = new FolgeDWZController(
+				mainControl.getTurnier(),
+				mainControl.getTurnier().getGruppe()[gruppenNummer]);
 		folgeDWZ.caculateDWZ();
 		// Zweimal ausführen falls DWZ-lose Spieler dabei sind
 		folgeDWZ.caculateDWZ();
@@ -205,7 +212,6 @@ public class TurnierTabelleControl {
 			}
 		}
 		makeSimpleTableView(index);
-
 	}
 
 	public void readDataFromDatabase(int tID) {

@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -15,7 +16,7 @@ package de.turnierverwaltung.mysql;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.util.ArrayList;
-
+import de.turnierverwaltung.controller.PropertiesControl;
 import de.turnierverwaltung.model.Turnier;
 
 public interface TurnierDAO {
@@ -23,11 +24,12 @@ public interface TurnierDAO {
 
 	public boolean deleteTurnier(int id);
 
-	public Turnier findTurnier(int id);
+	public Turnier findTurnier(int id, PropertiesControl prop);
 
 	public int insertTurnier(String turnierName, int datumId);
 
-	public ArrayList<Turnier> selectAllTurnier();
-
 	public boolean updateTurnier(Turnier turnier);
+
+	public ArrayList<Turnier> selectAllTurnier(PropertiesControl prop);
+
 }

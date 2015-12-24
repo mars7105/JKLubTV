@@ -72,8 +72,9 @@ public class TurnierTabelle {
 		tabellenMatrix[3][0] = "n.<br />DWZ";
 		for (int i = 4; i < sp + 4; i++) {
 			if (spieler[i - 4].getKuerzel().length() >= 2) {
-				tabellenMatrix[i][0] = spieler[i - 4].getKuerzel().substring(0, 1) + "<br />"
-						+ spieler[i - 4].getKuerzel().substring(1);
+				tabellenMatrix[i][0] = spieler[i - 4].getKuerzel().substring(0,
+						1)
+						+ "<br />" + spieler[i - 4].getKuerzel().substring(1);
 			} else {
 				tabellenMatrix[i][0] = spieler[i - 4].getKuerzel();
 			}
@@ -93,7 +94,8 @@ public class TurnierTabelle {
 				tabellenMatrix[2][i + 1] = "";
 			}
 			if (spieler[i].getFolgeDWZ() > 0) {
-				tabellenMatrix[3][i + 1] = new Integer(spieler[i].getFolgeDWZ()).toString();
+				tabellenMatrix[3][i + 1] = new Integer(spieler[i].getFolgeDWZ())
+						.toString();
 			} else {
 				tabellenMatrix[3][i + 1] = "";
 			}
@@ -103,17 +105,20 @@ public class TurnierTabelle {
 				if (x == y + 3) {
 					tabellenMatrix[x][y] = "--";
 				} else {
-					if (spieler[x - 4].getSpielerId() > -2 && spieler[y - 1].getSpielerId() > -2) {
+					if (spieler[x - 4].getSpielerId() > -2
+							&& spieler[y - 1].getSpielerId() > -2) {
 						for (int i = 0; i < partienAnzahl; i++) {
 
 							if (partien[i].getSpielerWeiss() == spieler[x - 4]
 									&& partien[i].getSpielerSchwarz() == spieler[y - 1]) {
-								tabellenMatrix[x][y] = partien[i].getErgebnisSchwarz();
+								tabellenMatrix[x][y] = partien[i]
+										.getErgebnisSchwarz();
 
 							}
 							if (partien[i].getSpielerSchwarz() == spieler[x - 4]
 									&& partien[i].getSpielerWeiss() == spieler[y - 1]) {
-								tabellenMatrix[x][y] = partien[i].getErgebnisWeiss();
+								tabellenMatrix[x][y] = partien[i]
+										.getErgebnisWeiss();
 
 							}
 						}
@@ -126,10 +131,10 @@ public class TurnierTabelle {
 
 	}
 
-	public String getHTMLTable(Boolean ohneHeaderundFooter) {
-		turnierTabelleToHTML = new TurnierTabelleToHTML(tabellenMatrix, turnier.getTurnierName(),
-				turnier.getStartDatum(), turnier.getEndDatum(), gruppe.getGruppenName());
-		return turnierTabelleToHTML.getHTMLTable(ohneHeaderundFooter);
+	public String getHTMLTable() {
+		turnierTabelleToHTML = new TurnierTabelleToHTML(tabellenMatrix,
+				turnier, gruppe.getGruppenName());
+		return turnierTabelleToHTML.getHTMLTable();
 	}
 
 	public int getSpalte() {
@@ -158,7 +163,8 @@ public class TurnierTabelle {
 		this.tabellenMatrix = tabellenMatrix;
 	}
 
-	public void setTurnierTabelleToHTML(TurnierTabelleToHTML turnierTabelleToHTML) {
+	public void setTurnierTabelleToHTML(
+			TurnierTabelleToHTML turnierTabelleToHTML) {
 		this.turnierTabelleToHTML = turnierTabelleToHTML;
 	}
 

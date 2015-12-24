@@ -367,7 +367,7 @@ public class MainControl extends JFrame {
 		} else {
 			if (propertiesControl.checkPath() == true) {
 				// datenbankMenueView(true);
-				String path = propertiesControl.getProperties("Path");
+				String path = propertiesControl.getPath();
 				SQLiteDAOFactory.setDB_PATH(path);
 				this.setTitle("Klubturnierverwaltung - Datei:"
 						+ SQLiteDAOFactory.getDB_PATH());

@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -234,8 +235,8 @@ public class NaviController implements ActionListener {
 							mainControl.getTurnierListeLadenControl()
 									.loadTurnierListe();
 
-							mainControl.getPropertiesControl().setProperties(
-									"Path", SQLiteDAOFactory.getDB_PATH());
+							mainControl.getPropertiesControl().setPath(
+									SQLiteDAOFactory.getDB_PATH());
 							mainControl.getPropertiesControl()
 									.writeProperties();
 							turnierAnsicht = new TurnierAnsicht(mainControl);
@@ -299,7 +300,7 @@ public class NaviController implements ActionListener {
 							.loadTurnierListe();
 					naviView.setPathToDatabase(new JLabel(file.getName()));
 
-					mainControl.getPropertiesControl().setProperties("Path",
+					mainControl.getPropertiesControl().setPath(
 							SQLiteDAOFactory.getDB_PATH());
 					mainControl.getPropertiesControl().writeProperties();
 					turnierAnsicht = new TurnierAnsicht(mainControl);

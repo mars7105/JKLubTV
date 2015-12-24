@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -20,9 +21,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 
+import de.turnierverwaltung.controller.PropertiesControl;
 import de.turnierverwaltung.model.Turnier;
 
 public class MySQLTurnierDAO implements TurnierDAO {
@@ -126,7 +127,7 @@ public class MySQLTurnierDAO implements TurnierDAO {
 	}
 
 	@Override
-	public Turnier findTurnier(int id) {
+	public Turnier findTurnier(int id, PropertiesControl prop) {
 		String sql = "Select Startdatum, Enddatum, Turniername, Datum_idDatum, idDatum"
 				+ "from turnier,datum "
 				+ "where idTurnier="
@@ -146,7 +147,8 @@ public class MySQLTurnierDAO implements TurnierDAO {
 					String startDatum = rs.getString("Startdatum");
 					String endDatum = rs.getString("Enddatum");
 					turnier = new Turnier(turnierId, turnierName, startDatum,
-							endDatum);
+							endDatum, prop.getOnlyTables(), prop.getNoDWZ(),
+							prop.getNoFolgeDWZ());
 
 				}
 				stmt.close();
@@ -192,7 +194,7 @@ public class MySQLTurnierDAO implements TurnierDAO {
 	}
 
 	@Override
-	public ArrayList<Turnier> selectAllTurnier() {
+	public ArrayList<Turnier> selectAllTurnier(PropertiesControl prop) {
 		String sql = "Select * from turnier, datum where Datum_idDatum = idDatum";
 		ArrayList<Turnier> turnierListe = new ArrayList<Turnier>();
 
@@ -208,7 +210,9 @@ public class MySQLTurnierDAO implements TurnierDAO {
 					String startDatum = rs.getString("Startdatum");
 					String endDatum = rs.getString("Enddatum");
 					turnierListe.add(new Turnier(id, turnierName, startDatum,
-							endDatum));
+							endDatum, prop.getOnlyTables(), prop.getNoDWZ(),
+							prop.getNoFolgeDWZ()));
+
 				}
 				stmt.close();
 

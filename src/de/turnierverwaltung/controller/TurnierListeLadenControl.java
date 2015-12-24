@@ -236,6 +236,7 @@ public class TurnierListeLadenControl implements ActionListener {
 			mainControl.getRundenEingabeFormularControl().makeRundenEditView(z);
 			mainControl.getTurnierTabelleControl().okAction(z);
 		}
+//		mainControl.getTurnierTabelleControl().checkDWZVisible();
 
 		mainControl.getNaviView().setTabellenname("Turnier: " + mainControl.getTurnier().getTurnierName());
 

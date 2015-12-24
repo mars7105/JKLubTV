@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -45,7 +46,8 @@ import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.view.TurnierView;
 
 public class TurnierControl implements ActionListener {
-	private static int pruefeObZahlKleinerEinsIst(int zahl) throws ZahlKleinerAlsN, ZahlGroesserAlsN {
+	private static int pruefeObZahlKleinerEinsIst(int zahl)
+			throws ZahlKleinerAlsN, ZahlGroesserAlsN {
 		if (zahl <= 0) {
 			throw new ZahlKleinerAlsN();
 		}
@@ -64,8 +66,8 @@ public class TurnierControl implements ActionListener {
 	private String startDatum;
 	private String endDatum;
 	private int gruppenAnzahl;
-	private ImageIcon turnierIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
+	private ImageIcon turnierIcon = new ImageIcon(Toolkit.getDefaultToolkit()
+			.getImage(getClass().getResource("/images/view-remove-3.png")));
 
 	private Turnier turnier;
 
@@ -86,7 +88,8 @@ public class TurnierControl implements ActionListener {
 		if (mainControl.getTurnier() != null) {
 			int selectedIndex = hauptPanel.getTabCount() - 1;
 
-			if (hauptPanel.getTitleAt(selectedIndex).equals(mainControl.getTurnier().getTurnierName())) {
+			if (hauptPanel.getTitleAt(selectedIndex).equals(
+					mainControl.getTurnier().getTurnierName())) {
 				hauptPanel.remove(selectedIndex);
 			}
 		}
@@ -94,7 +97,7 @@ public class TurnierControl implements ActionListener {
 		selectIndex = hauptPanel.getTabCount() - 1;
 		hauptPanel.setSelectedIndex(selectIndex);
 
-//		mainControl.getMenueControl().setWarnHinweis(true);
+		// mainControl.getMenueControl().setWarnHinweis(true);
 	}
 
 	@Override
@@ -131,7 +134,13 @@ public class TurnierControl implements ActionListener {
 	}
 
 	private void makeTurnier() {
-		turnier = new Turnier();
+		Boolean onlyTables = mainControl.getPropertiesControl().getOnlyTables();
+		Boolean noDWZCalc = mainControl.getPropertiesControl().getNoDWZ();
+
+		Boolean noFolgeDWZCalc = mainControl.getPropertiesControl()
+				.getNoFolgeDWZ();
+
+		turnier = new Turnier(onlyTables, noDWZCalc, noFolgeDWZCalc);
 		turnier.setTurnierName(turnierName);
 		turnier.setStartDatum(startDatum);
 		turnier.setEndDatum(endDatum);
@@ -172,25 +181,31 @@ public class TurnierControl implements ActionListener {
 
 		try {
 
-			gruppenAnzahl = pruefeObZahlKleinerEinsIst(new Integer(turnierView.getGruppenAnzahlTextField().getText()));
+			gruppenAnzahl = pruefeObZahlKleinerEinsIst(new Integer(turnierView
+					.getGruppenAnzahlTextField().getText()));
 
-			if (turnierName.length() > 0 && startDatum.length() > 0 && endDatum.length() > 0 && gruppenAnzahl > 0) {
+			if (turnierName.length() > 0 && startDatum.length() > 0
+					&& endDatum.length() > 0 && gruppenAnzahl > 0) {
 				makeTurnier();
 
-				this.mainControl.setGruppenControl(new GruppenControl(this.mainControl, selectIndex));
+				this.mainControl.setGruppenControl(new GruppenControl(
+						this.mainControl, selectIndex));
 
 			}
 
 		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(null, "Gruppenanzahl ist fehlerhaft!");
+			JOptionPane
+					.showMessageDialog(null, "Gruppenanzahl ist fehlerhaft!");
 			turnierView.getGruppenAnzahlTextField().setText("");
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		} catch (ZahlKleinerAlsN e) {
-			JOptionPane.showMessageDialog(null, "Zahl darf nicht kleiner als 1 sein!");
+			JOptionPane.showMessageDialog(null,
+					"Zahl darf nicht kleiner als 1 sein!");
 			turnierView.getGruppenAnzahlTextField().setText("");
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		} catch (ZahlGroesserAlsN e) {
-			JOptionPane.showMessageDialog(null, "Zahl darf nicht größer als 15 sein!");
+			JOptionPane.showMessageDialog(null,
+					"Zahl darf nicht größer als 15 sein!");
 			turnierView.getGruppenAnzahlTextField().setText("");
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		}
