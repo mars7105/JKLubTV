@@ -115,7 +115,7 @@ public class SimpleTerminTabelleView extends JPanel {
 
 		setColumnWidth();
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table.setRowHeight(20);
+		table.setRowHeight(30);
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
 //		JPanel haupt = new JPanel();

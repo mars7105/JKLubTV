@@ -147,6 +147,7 @@ public class TurnierControl implements ActionListener {
 		turnier.setAnzahlGruppen(gruppenAnzahl);
 		this.mainControl.setTurnier(turnier);
 		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());
+		mainControl.getEigenschaftenControl().setColumnWidhtToZero();
 	}
 
 	public void setEndDatum(String endDatum) {

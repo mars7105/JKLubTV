@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -18,10 +19,13 @@ package de.turnierverwaltung.controller;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
+
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import de.turnierverwaltung.model.TurnierTabelle;
 
 public class PDFSaveControler {
 	private MainControl mainControl;
@@ -32,12 +36,15 @@ public class PDFSaveControler {
 	}
 
 	public void savePDFFile() {
-		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+		Boolean ready = mainControl.getRundenEingabeFormularControl()
+				.checkNewTurnier();
 
 		if (ready) {
-			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
-			String filename = JOptionPane.showInputDialog(null, "Anfangsname der Dateien : ",
-					"Eine Eingabeaufforderung", JOptionPane.PLAIN_MESSAGE);
+			int anzahlGruppen = this.mainControl.getTurnier()
+					.getAnzahlGruppen();
+			String filename = JOptionPane.showInputDialog(null,
+					"Anfangsname der Dateien : ", "Eine Eingabeaufforderung",
+					JOptionPane.PLAIN_MESSAGE);
 			if (filename != null) {
 				JFileChooser savefile = new JFileChooser();
 				FileFilter filter = new FileNameExtensionFilter("PDF", "pdf");
@@ -49,16 +56,23 @@ public class PDFSaveControler {
 				if (sf == JFileChooser.APPROVE_OPTION) {
 
 					for (int i = 0; i < anzahlGruppen; i++) {
-
-						int spalte = this.mainControl.getSimpleTableView()[i].getTable().getModel().getColumnCount();
-						int zeile = this.mainControl.getSimpleTableView()[i].getTable().getModel().getRowCount();
+						TurnierTabelle turnierTabelle = new TurnierTabelle(
+								mainControl.getTurnier(), mainControl
+										.getTurnier().getGruppe()[i]);
+						int spalte = this.mainControl.getSimpleTableView()[i]
+								.getTable().getModel().getColumnCount();
+						int zeile = this.mainControl.getSimpleTableView()[i]
+								.getTable().getModel().getRowCount();
 						for (int x = 0; x < spalte; x++) {
 							for (int y = 0; y < zeile; y++) {
 
-								this.mainControl.getTurnierTabelle()[i].getTabellenMatrix()[x][y
-										+ 1] = (String) this.mainControl.getSimpleTableView()[i].getTable()
-												.getValueAt(y, x);
-
+//								this.mainControl.getTurnierTabelle()[i]
+//										.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
+//										.getSimpleTableView()[i].getTable()
+//										.getValueAt(y, x);
+								turnierTabelle.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
+										.getSimpleTableView()[i].getTable()
+										.getValueAt(y, x);
 							}
 						}
 
@@ -68,26 +82,53 @@ public class PDFSaveControler {
 						if (filename != null) {
 							// filename += ".pdf";
 
-							File filename1 = new File(savefile.getCurrentDirectory() + "/" + filename + "_Kreuztabelle_"
-									+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".pdf");
+							File filename1 = new File(
+									savefile.getCurrentDirectory()
+											+ "/"
+											+ filename
+											+ "_Kreuztabelle_"
+											+ mainControl.getTurnier()
+													.getGruppe()[i]
+													.getGruppenName() + ".pdf");
 							File filename2 = new File(
-									savefile.getCurrentDirectory() + "/" + filename + "_Termintabelle_"
-											+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".pdf");
-							mainControl.getTurnierTabelle()[i].createMatrix();
-							String titel = "Kreuztabelle " + mainControl.getTurnier().getTurnierName() + " - "
-									+ mainControl.getTurnier().getGruppe()[i].getGruppenName();
-							String pathName = filename1.getAbsolutePath();
-							mftKreuz.createTurnierPdf(titel, pathName,
-									mainControl.getTurnierTabelle()[i].getTabellenMatrix());
-							// JOptionPane.showMessageDialog(null, "Datei
-							// gespeichert.");
+									savefile.getCurrentDirectory()
+											+ "/"
+											+ filename
+											+ "_Termintabelle_"
+											+ mainControl.getTurnier()
+													.getGruppe()[i]
+													.getGruppenName() + ".pdf");
 
-							mainControl.getTerminTabelle()[i].createTerminTabelle();
-							titel = "Termintabelle " + mainControl.getTurnier().getTurnierName() + " - "
-									+ mainControl.getTurnier().getGruppe()[i].getGruppenName();
+							turnierTabelle.createMatrix();
+
+//							mainControl.getTurnierTabelle()[i].createMatrix();
+							if (mainControl.getTurnier().getNoDWZCalc() == true) {
+								turnierTabelle.removeDWZColumn();
+							}
+							if (mainControl.getTurnier().getNoFolgeDWZCalc() == true) {
+								turnierTabelle.removeFolgeDWZColumn();
+							}
+							String titel = "Kreuztabelle "
+									+ mainControl.getTurnier().getTurnierName()
+									+ " - "
+									+ mainControl.getTurnier().getGruppe()[i]
+											.getGruppenName();
+							String pathName = filename1.getAbsolutePath();
+							mftKreuz.createTurnierPdf(mainControl.getTurnier(), titel, pathName,
+									turnierTabelle.getTabellenMatrix());
+							
+
+							mainControl.getTerminTabelle()[i]
+									.createTerminTabelle();
+							titel = "Termintabelle "
+									+ mainControl.getTurnier().getTurnierName()
+									+ " - "
+									+ mainControl.getTurnier().getGruppe()[i]
+											.getGruppenName();
 							pathName = filename2.getAbsolutePath();
 							mftTermin.createTerminPdf(titel, pathName,
-									mainControl.getTerminTabelle()[i].getTabellenMatrix());
+									mainControl.getTerminTabelle()[i]
+											.getTabellenMatrix());
 
 						}
 					}
@@ -95,7 +136,8 @@ public class PDFSaveControler {
 					// first check if Desktop is supported by
 					// Platform or not
 					if (!Desktop.isDesktopSupported()) {
-						JOptionPane.showMessageDialog(null, "Desktop is not supported.", "File not opened",
+						JOptionPane.showMessageDialog(null,
+								"Desktop is not supported.", "File not opened",
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 
@@ -104,7 +146,9 @@ public class PDFSaveControler {
 						try {
 							desktop.open(savefile.getCurrentDirectory());
 						} catch (IOException e) {
-							JOptionPane.showMessageDialog(null, "Desktop is not supported.", "File not opened",
+							JOptionPane.showMessageDialog(null,
+									"Desktop is not supported.",
+									"File not opened",
 									JOptionPane.INFORMATION_MESSAGE);
 						}
 
@@ -114,7 +158,8 @@ public class PDFSaveControler {
 			}
 
 		} else {
-			JOptionPane.showMessageDialog(null, "Erst nach der Eingabe aller Gruppen\n" + "möglich.");
+			JOptionPane.showMessageDialog(null,
+					"Erst nach der Eingabe aller Gruppen\n" + "möglich.");
 
 		}
 

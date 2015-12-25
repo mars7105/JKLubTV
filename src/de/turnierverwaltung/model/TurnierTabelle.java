@@ -131,6 +131,38 @@ public class TurnierTabelle {
 
 	}
 
+	public void removeDWZColumn() {
+		int v = 0;
+		String[][] temp = new String[tabellenMatrix.length - 1][tabellenMatrix[0].length];
+		for (int x = 0; x < tabellenMatrix.length - 1; x++) {
+			for (int y = 0; y < tabellenMatrix[0].length; y++) {
+				if (tabellenMatrix[x][0].equals("a.<br />DWZ")) {
+					v = 1;
+
+				}
+				temp[x][y] = tabellenMatrix[x + v][y];
+
+			}
+		}
+		tabellenMatrix = temp;
+	}
+
+	public void removeFolgeDWZColumn() {
+		int v = 0;
+		String[][] temp = new String[tabellenMatrix.length - 1][tabellenMatrix[0].length];
+		for (int x = 0; x < tabellenMatrix.length - 1; x++) {
+			for (int y = 0; y < tabellenMatrix[0].length; y++) {
+				if (tabellenMatrix[x][0].equals("n.<br />DWZ")) {
+					v = 1;
+
+				}
+				temp[x][y] = tabellenMatrix[x + v][y];
+
+			}
+		}
+		tabellenMatrix = temp;
+	}
+
 	public String getHTMLTable() {
 		turnierTabelleToHTML = new TurnierTabelleToHTML(tabellenMatrix,
 				turnier, gruppe.getGruppenName());

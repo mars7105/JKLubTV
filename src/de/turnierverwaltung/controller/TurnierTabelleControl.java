@@ -1,21 +1,5 @@
 package de.turnierverwaltung.controller;
 
-//JKlubTV - Ein Programm zum verwalten von Schach Turnieren
-//Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
-//
-//This program is free software: you can redistribute it and/or modify
-//it under the terms of the GNU General Public License as published by
-//the Free Software Foundation, either version 3 of the License, or
-//(at your option) any later version.
-//
-//This program is distributed in the hope that it will be useful,
-//but WITHOUT ANY WARRANTY; without even the implied warranty of
-//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//GNU General Public License for more details.
-//
-//You should have received a copy of the GNU General Public License
-//along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -23,6 +7,7 @@ import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -99,7 +84,6 @@ public class TurnierTabelleControl {
 	}
 
 	public void makeSimpleTableView(int gruppenNummer) {
-		berechneFolgeDWZ(gruppenNummer);
 
 		// mainControl.getMenueControl().setWarnHinweis(true);
 		turnier = mainControl.getTurnier();
@@ -119,7 +103,10 @@ public class TurnierTabelleControl {
 
 		simpleTableView[gruppenNummer] = new SimpleTurnierTabelleView(
 				new SimpleTurnierTabelle(this.turnierTabelle[gruppenNummer]));
-		simpleTableView[gruppenNummer].setBackground(new Color(249, 222, 112));
+		simpleTableView[gruppenNummer]
+				.getTable().setAutoResizeMode(
+						JTable.AUTO_RESIZE_OFF);
+//		simpleTableView[gruppenNummer].setBackground(new Color(249, 222, 112));
 		updatePunkteCol(this.turnierTabelle[gruppenNummer].getSpalte() - 3,
 				gruppenNummer);
 		updateSoBergCol(this.turnierTabelle[gruppenNummer].getSpalte() - 2,
@@ -156,7 +143,7 @@ public class TurnierTabelleControl {
 
 		hauptPanel.updateUI();
 		checkDWZVisible(gruppenNummer);
-		// enableDatenbankMenu();
+		berechneFolgeDWZ(gruppenNummer);
 	}
 
 	public void checkDWZVisible(int i) {
@@ -181,10 +168,13 @@ public class TurnierTabelleControl {
 
 			simpleTableView[i].getTable().updateUI();
 		}
+		turnier.setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
+		turnier.setNoFolgeDWZCalc(mainControl.getPropertiesControl()
+				.getNoFolgeDWZ());
 
 	}
 
-	private void berechneFolgeDWZ(int gruppenNummer) {
+	public void berechneFolgeDWZ(int gruppenNummer) {
 		FolgeDWZController folgeDWZ = new FolgeDWZController(
 				mainControl.getTurnier(),
 				mainControl.getTurnier().getGruppe()[gruppenNummer]);

@@ -389,6 +389,14 @@ public class NaviController implements ActionListener {
 				if (changedGroups >= STANDARD) {
 					this.mainControl.getTurnierTabelleControl().okAction(i);
 
+					if (x == TURNIERTABELLE) {
+						mainControl.getTurnierTabelleControl()
+								.makeSimpleTableView(i);
+					}
+					if (x == TERMINTABELLE) {
+						mainControl.getTerminTabelleControl()
+								.makeSimpleTableView(i);
+					}
 					if (x == PAARUNGSTABELLE) {
 						if (changedGroups == SORTIEREN) {
 							Arrays.sort(mainControl.getTurnier().getGruppe()[i]
@@ -397,10 +405,6 @@ public class NaviController implements ActionListener {
 						mainControl.getRundenEingabeFormularControl()
 								.makeNewFormular(i);
 					}
-					mainControl.getTurnierTabelleControl().makeSimpleTableView(
-							i);
-					mainControl.getTerminTabelleControl()
-							.makeSimpleTableView(i);
 					mainControl.getRundenEingabeFormularControl()
 							.getChangedGroups()[i][x] = 0;
 				}
