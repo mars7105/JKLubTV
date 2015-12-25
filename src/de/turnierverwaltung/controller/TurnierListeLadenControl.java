@@ -259,6 +259,7 @@ public class TurnierListeLadenControl implements ActionListener {
 		mainControl
 				.setRundenEingabeFormularControl(rundenEingabeFormularControl);
 
+
 		for (int z = 0; z < turnier.getAnzahlGruppen(); z++) {
 			tabbedPaneView2[z] = new TabAnzeigeView(mainControl);
 			tabbedPaneView.insertTab(turnier.getGruppe()[z].getGruppenName(),
@@ -268,7 +269,8 @@ public class TurnierListeLadenControl implements ActionListener {
 			mainControl.getRundenEingabeFormularControl().makeRundenEditView(z);
 			mainControl.getTurnierTabelleControl().okAction(z);
 		}
-
+		mainControl.getTurnier().setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
+		mainControl.getTurnier().setNoFolgeDWZCalc(mainControl.getPropertiesControl().getNoFolgeDWZ());
 		mainControl.getNaviView().setTabellenname(
 				"Turnier: " + mainControl.getTurnier().getTurnierName());
 

@@ -35,8 +35,6 @@ public class SimpleTurnierTabelleView extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final int small = 50;
-	private final int medium = 100;
-	private final int big = 275;
 	private JButton okButton;
 	private JButton saveButton;
 	private JButton htmlButton;
@@ -111,17 +109,22 @@ public class SimpleTurnierTabelleView extends JPanel {
 		for (int i = 0; i < columnCount; i++) {
 			TableColumn c = table.getColumnModel().getColumn(i);
 			if (i < 1) {
-				c.setPreferredWidth(big);
+//				c.setPreferredWidth(big);
 			}
 			if (i >= 1 && i < 4) {
-				c.setPreferredWidth(medium);
+//				c.setPreferredWidth(medium);
+			}
+			if (i == 1) {
+				c.setMinWidth(0);
+				c.setMaxWidth(0);
+				c.setPreferredWidth(0);
 			}
 			if (i >= 4 && i < punkte) {
 				c.setCellEditor(new DefaultCellEditor(comboBox));
 				c.setPreferredWidth(small);
 			}
 			if (i >= punkte) {
-				c.setPreferredWidth(medium);
+//				c.setPreferredWidth(medium);
 			}
 
 		}

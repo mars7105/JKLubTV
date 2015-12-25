@@ -103,9 +103,13 @@ public class TurnierTabelleControl {
 
 		simpleTableView[gruppenNummer] = new SimpleTurnierTabelleView(
 				new SimpleTurnierTabelle(this.turnierTabelle[gruppenNummer]));
+//		simpleTableView[gruppenNummer]
+//				.getTable().setAutoResizeMode(
+//						JTable.AUTO_RESIZE_OFF);
 		simpleTableView[gruppenNummer]
-				.getTable().setAutoResizeMode(
-						JTable.AUTO_RESIZE_OFF);
+		.getTable().setAutoResizeMode(
+				JTable.AUTO_RESIZE_ALL_COLUMNS);
+
 //		simpleTableView[gruppenNummer].setBackground(new Color(249, 222, 112));
 		updatePunkteCol(this.turnierTabelle[gruppenNummer].getSpalte() - 3,
 				gruppenNummer);
@@ -144,18 +148,22 @@ public class TurnierTabelleControl {
 		hauptPanel.updateUI();
 		checkDWZVisible(gruppenNummer);
 		berechneFolgeDWZ(gruppenNummer);
+		simpleTableView[gruppenNummer]
+				.getTable().doLayout();
+		simpleTableView[gruppenNummer]
+				.getTable().updateUI();
 	}
 
 	public void checkDWZVisible(int i) {
 
 		simpleTableView[i].getTable().getColumn("Kürzel").setMinWidth(0);
 
-		simpleTableView[i].getTable().getColumn("Kürzel").setPreferredWidth(0);
+		simpleTableView[i].getTable().getColumn("Kürzel").setMaxWidth(0);
 		if (mainControl.getPropertiesControl().getNoDWZ() == true) {
 			simpleTableView[i].getTable().getColumn("a.DWZ").setMinWidth(0);
 
 			simpleTableView[i].getTable().getColumn("a.DWZ")
-					.setPreferredWidth(0);
+					.setMaxWidth(0);
 
 			simpleTableView[i].getTable().updateUI();
 		}
@@ -164,7 +172,7 @@ public class TurnierTabelleControl {
 			simpleTableView[i].getTable().getColumn("n.DWZ").setMinWidth(0);
 
 			simpleTableView[i].getTable().getColumn("n.DWZ")
-					.setPreferredWidth(0);
+					.setMaxWidth(0);
 
 			simpleTableView[i].getTable().updateUI();
 		}
