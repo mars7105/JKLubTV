@@ -68,12 +68,12 @@ public class SpielerEingabeView extends JPanel {
 		add(scrollPane, BorderLayout.CENTER);
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		okButton = new JButton("OK");
-		okButton.setActionCommand("OK");
+		okButton = new JButton(Messages.getString("SpielerEingabeView.0")); //$NON-NLS-1$
+		okButton.setActionCommand(Messages.getString("SpielerEingabeView.1")); //$NON-NLS-1$
 		buttonPane.add(okButton);
 
-		cancelButton = new JButton("Cancel");
-		cancelButton.setActionCommand("Cancel");
+		cancelButton = new JButton(Messages.getString("SpielerEingabeView.2")); //$NON-NLS-1$
+		cancelButton.setActionCommand(Messages.getString("SpielerEingabeView.3")); //$NON-NLS-1$
 		buttonPane.add(cancelButton);
 
 		// contentPanel.add(buttonPane);
@@ -90,30 +90,30 @@ public class SpielerEingabeView extends JPanel {
 			line = new JPanel();
 			line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
 			line.setBackground(new Color(249, 222, 112));
-			JLabel label = new JLabel(" " + new Integer(i + 1).toString()
-					+ ". Spieler -> " + "Name :");
+			JLabel label = new JLabel(" " + new Integer(i + 1).toString() //$NON-NLS-1$
+					+ Messages.getString("SpielerEingabeView.5") + Messages.getString("SpielerEingabeView.6")); //$NON-NLS-1$ //$NON-NLS-2$
 			spielerTextfield[i] = new JTextField(10);
 			spielerSuche[i] = new JComboBox();
 			spielerSuche[i].setMaximumRowCount(15);
-			spielerSuche[i].addItem("Spieler Datenbank");
+			spielerSuche[i].addItem(Messages.getString("SpielerEingabeView.7")); //$NON-NLS-1$
 
 			line.add(spielerSuche[i]);
 			line.add(label);
 			line.add(spielerTextfield[i]);
 
-			JLabel label2 = new JLabel(" Kürzel :");
+			JLabel label2 = new JLabel(Messages.getString("SpielerEingabeView.8")); //$NON-NLS-1$
 			kuerzelTextfield[i] = new JTextField(10);
 			line.add(label2);
 			line.add(kuerzelTextfield[i]);
 
-			JLabel label3 = new JLabel(" DWZ :");
+			JLabel label3 = new JLabel(Messages.getString("SpielerEingabeView.9")); //$NON-NLS-1$
 			dwzTextfield[i] = new JTextField(10);
 			line.add(label3);
 			line.add(dwzTextfield[i]);
 			
-			String[] ageStrings = { "unter 20", "20 bis 25", "über 25" };
+			String[] ageStrings = { Messages.getString("SpielerEingabeView.10"), Messages.getString("SpielerEingabeView.11"), Messages.getString("SpielerEingabeView.12") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 			textComboBoxAge[i] = new JComboBox<String>(ageStrings);
-			line.add(new JLabel("Alter: "));
+			line.add(new JLabel(Messages.getString("SpielerEingabeView.13"))); //$NON-NLS-1$
 			line.add(textComboBoxAge[i]);
 
 			centerPane.add(line);

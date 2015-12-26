@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -18,6 +19,7 @@ package de.turnierverwaltung.controller;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Locale;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -112,25 +114,20 @@ public class MainControl extends JFrame {
 
 		setTitle("Klubturnierverwaltung");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		propertiesControl = new PropertiesControl();
+		propertiesControl.readProperties();
+		if (propertiesControl.getLanguage().equals("german")) {
+			de.turnierverwaltung.view.Messages
+					.setLocale(new Locale("de", "DE"));
+		} else if (propertiesControl.getLanguage().equals("english")) {
+			de.turnierverwaltung.view.Messages
+					.setLocale(new Locale("en", "US"));
+		}
 		init();
 		makeProperties();
 
 		setNeuesTurnier(false);
 	}
-
-	// public void datenbankMenueView(Boolean enable) {
-	// menueControl.setDatenbankMenue(enable);
-	// // naviView.getDatenbankPanel().setVisible(enable);
-	//
-	// naviView.setPathToDatabase(new JLabel(menueControl.getFileName()));
-	// naviView.updateUI();
-	// if (enable == true) {
-	// this.setTitle("Klubturnierverwaltung - Datei:" +
-	// SQLiteDAOFactory.getDB_PATH());
-	// } else {
-	// this.setTitle("Klubturnierverwaltung ");
-	// }
-	// }
 
 	public SpielerLadenControl getSpielerLadenControl() {
 		return spielerLadenControl;
@@ -184,14 +181,6 @@ public class MainControl extends JFrame {
 	public MainView getMainView() {
 		return mainView;
 	}
-
-	// public MenueControl getMenueControl() {
-	// return menueControl;
-	// }
-	//
-	// public MenueView getMenueView() {
-	// return menueView;
-	// }
 
 	public PaarungsTafeln getPaarungsTafeln() {
 		return paarungsTafeln;
@@ -357,7 +346,6 @@ public class MainControl extends JFrame {
 
 	private void makeProperties() {
 		// datenbankMenueView(false);
-		propertiesControl = new PropertiesControl();
 		if (propertiesControl.readProperties() == false) {
 			if (propertiesControl.writeProperties() == false) {
 				JOptionPane
@@ -365,6 +353,7 @@ public class MainControl extends JFrame {
 								"Einstellungen des Programms können nicht gespeichert werden.");
 			}
 		} else {
+
 			if (propertiesControl.checkPath() == true) {
 				// datenbankMenueView(true);
 				String path = propertiesControl.getPath();
@@ -484,14 +473,7 @@ public class MainControl extends JFrame {
 		this.mainView = mainView;
 	}
 
-	//
-	// public void setMenueControl(MenueControl menueControl) {
-	// this.menueControl = menueControl;
-	// }
-	//
-	// public void setMenueView(MenueView menueView) {
-	// this.menueView = menueView;
-	// }
+	
 
 	public void setPaarungsTafeln(PaarungsTafeln paarungsTafeln) {
 		this.paarungsTafeln = paarungsTafeln;
@@ -653,13 +635,11 @@ public class MainControl extends JFrame {
 
 	public void setEigenschaftenControl(
 			EigenschaftenControl eigenschaftenControl) {
-		this.eigenschaftenControl = eigenschaftenControl;	
+		this.eigenschaftenControl = eigenschaftenControl;
 	}
 
 	public EigenschaftenControl getEigenschaftenControl() {
 		return eigenschaftenControl;
 	}
-
-
 
 }

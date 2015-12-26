@@ -16,6 +16,7 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.BorderLayout;
+
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -53,12 +54,12 @@ public class SimpleTurnierTabelleView extends JPanel {
 		// table.setFont(fnt);
 
 		comboBox = new JComboBox<String>();
-		comboBox.addItem(" ");
-		comboBox.addItem("0");
+		comboBox.addItem(" "); //$NON-NLS-1$
+		comboBox.addItem("0"); //$NON-NLS-1$
 		comboBox.addItem(TurnierKonstanten.REMIS);
-		comboBox.addItem("1");
-		comboBox.addItem("-");
-		comboBox.addItem("+");
+		comboBox.addItem("1"); //$NON-NLS-1$
+		comboBox.addItem("-"); //$NON-NLS-1$
+		comboBox.addItem("+"); //$NON-NLS-1$
 		setColumnWidth();
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 //		 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
@@ -74,7 +75,7 @@ public class SimpleTurnierTabelleView extends JPanel {
 
 		JPanel hinweis = new JPanel();
 		hinweis.add(new JLabel(
-				"Geben Sie die Ergebnisse direkt in die Zellen ein " + "und klicken Sie dann auf \"Aktualisieren\"."));
+				Messages.getString("SimpleTurnierTabelleView.5") + Messages.getString("SimpleTurnierTabelleView.6"))); //$NON-NLS-1$ //$NON-NLS-2$
 		tabelPanel.add(hinweis, BorderLayout.SOUTH);
 		// haupt.add(tabelPanel,BorderLayout.CENTER);
 		add(tabelPanel, BorderLayout.CENTER);

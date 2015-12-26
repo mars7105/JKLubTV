@@ -43,25 +43,25 @@ public class MenueView extends JMenu {
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
-		mnDateiMenu = new JMenu("Datei");
+		mnDateiMenu = new JMenu(Messages.getString("MenueView.0")); //$NON-NLS-1$
 		menuBar.add(mnDateiMenu);
 
-		mntmDBNeu = new JMenuItem("Neue Datenbank");
+		mntmDBNeu = new JMenuItem(Messages.getString("MenueView.1")); //$NON-NLS-1$
 		mnDateiMenu.add(mntmDBNeu);
 
-		mntmDBLaden = new JMenuItem("Datenbank laden");
+		mntmDBLaden = new JMenuItem(Messages.getString("MenueView.2")); //$NON-NLS-1$
 		mnDateiMenu.add(mntmDBLaden);
 
-		mntmBeenden = new JMenuItem("Beenden");
+		mntmBeenden = new JMenuItem(Messages.getString("MenueView.3")); //$NON-NLS-1$
 		mnDateiMenu.add(mntmBeenden);
 
-		mnEditMenu = new JMenu("Datenbank");
+		mnEditMenu = new JMenu(Messages.getString("MenueView.4")); //$NON-NLS-1$
 		menuBar.add(mnEditMenu);
 
-		mntmLaden = new JMenuItem("Turnierliste");
+		mntmLaden = new JMenuItem(Messages.getString("MenueView.5")); //$NON-NLS-1$
 		mnEditMenu.add(mntmLaden);
 
-		mntmSpielerLaden = new JMenuItem("Spielerliste");
+		mntmSpielerLaden = new JMenuItem(Messages.getString("MenueView.6")); //$NON-NLS-1$
 		mnEditMenu.add(mntmSpielerLaden);
 
 //		mntmNeu = new JMenuItem("Neues Turnier");
@@ -70,7 +70,7 @@ public class MenueView extends JMenu {
 //		mntmNeueSpieler = new JMenuItem("Neue Spieler");
 //		mnEditMenu.add(mntmNeueSpieler);
 
-		mntmSpeichern = new JMenuItem("Turnier speichern");
+		mntmSpeichern = new JMenuItem(Messages.getString("MenueView.7")); //$NON-NLS-1$
 		mnEditMenu.add(mntmSpeichern);
 	}
 

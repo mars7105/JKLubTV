@@ -45,9 +45,9 @@ public class SpielerLadenView extends JPanel {
 	private JPanel line;
 
 	private ImageIcon userDelete = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-delete-2.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-delete-2.png"))); //$NON-NLS-1$
 	private ImageIcon userProperties = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-properties.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-properties.png"))); //$NON-NLS-1$
 
 	private int spielerAnzahl;
 
@@ -61,7 +61,7 @@ public class SpielerLadenView extends JPanel {
 		anzahlElemente = 0;
 		setLayout(new BorderLayout());
 
-		JLabel titleLabel = new JLabel("Spielerliste");
+		JLabel titleLabel = new JLabel(Messages.getString("SpielerLadenView.2")); //$NON-NLS-1$
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		titlepanel.add(titleLabel);
 
@@ -101,16 +101,16 @@ public class SpielerLadenView extends JPanel {
 		playerLine.setPreferredSize(new Dimension(350, 50));
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-		JLabel sname = new JLabel("  Spielername: " + spieler.getName());
+		JLabel sname = new JLabel(Messages.getString("SpielerLadenView.3") + spieler.getName()); //$NON-NLS-1$
 		playerLine.add(sname);
 
-		JLabel dwz = new JLabel("  DWZ: " + spieler.getDwz());
+		JLabel dwz = new JLabel(Messages.getString("SpielerLadenView.4") + spieler.getDwz()); //$NON-NLS-1$
 		playerLine.add(dwz);
 		line.add(playerLine);
-		spielerBearbeitenButton[index] = new JButton("Bearbeiten", userProperties);
+		spielerBearbeitenButton[index] = new JButton(Messages.getString("SpielerLadenView.5"), userProperties); //$NON-NLS-1$
 
 		buttonLine.add(spielerBearbeitenButton[index]);
-		spielerLoeschenButton[index] = new JButton("Löschen", userDelete);
+		spielerLoeschenButton[index] = new JButton(Messages.getString("SpielerLadenView.6"), userDelete); //$NON-NLS-1$
 		buttonLine.add(spielerLoeschenButton[index]);
 		line.add(buttonLine);
 		centerPane.add(line);

@@ -60,7 +60,7 @@ public class ContextMenuMouseListener extends MouseAdapter {
 		//
 		// popup.add(cutAction);
 		selectAllAndCopyAction = new AbstractAction(
-				"Alles markieren und kopieren") {
+				Messages.getString("ContextMenuMouseListener.0")) { //$NON-NLS-1$
 
 			/**
 					 * 
@@ -75,7 +75,7 @@ public class ContextMenuMouseListener extends MouseAdapter {
 		};
 		popup.add(selectAllAndCopyAction);
 		popup.addSeparator();
-		selectAllAction = new AbstractAction("Alles markieren") {
+		selectAllAction = new AbstractAction(Messages.getString("ContextMenuMouseListener.1")) { //$NON-NLS-1$
 
 			/**
 			 * 
@@ -90,7 +90,7 @@ public class ContextMenuMouseListener extends MouseAdapter {
 
 		popup.add(selectAllAction);
 
-		copyAction = new AbstractAction("Kopieren") {
+		copyAction = new AbstractAction(Messages.getString("ContextMenuMouseListener.2")) { //$NON-NLS-1$
 
 			/**
 			 * 
@@ -105,7 +105,7 @@ public class ContextMenuMouseListener extends MouseAdapter {
 
 		popup.add(copyAction);
 
-		pasteAction = new AbstractAction("Einfügen") {
+		pasteAction = new AbstractAction(Messages.getString("ContextMenuMouseListener.3")) { //$NON-NLS-1$
 
 			/**
 			 * 
@@ -136,7 +136,7 @@ public class ContextMenuMouseListener extends MouseAdapter {
 			boolean enabled = textComponent.isEnabled();
 			boolean editable = textComponent.isEditable();
 			boolean nonempty = !(textComponent.getText() == null || textComponent
-					.getText().equals(""));
+					.getText().equals("")); //$NON-NLS-1$
 			boolean marked = textComponent.getSelectedText() != null;
 
 			boolean pasteAvailable = Toolkit.getDefaultToolkit()

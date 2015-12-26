@@ -47,7 +47,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
-
 import de.turnierverwaltung.model.SimpleTerminTabelle;
 import de.turnierverwaltung.model.TurnierKonstanten;
 
@@ -58,7 +57,7 @@ public class SimpleTerminTabelleView extends JPanel {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		private String datePattern = "dd.MM.yyy";
+		private String datePattern = "dd.MM.yyy"; //$NON-NLS-1$
 		private SimpleDateFormat dateFormatter = new SimpleDateFormat(
 				datePattern);
 
@@ -74,7 +73,7 @@ public class SimpleTerminTabelleView extends JPanel {
 				return dateFormatter.format(cal.getTime());
 			}
 
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 
 	}
@@ -101,17 +100,17 @@ public class SimpleTerminTabelleView extends JPanel {
 //		Font fnt = new Font("Arial", Font.PLAIN, 16);
 //		table.setFont(fnt);
 		comboBox = new JComboBox<String>();
-		comboBox.addItem(" ");
-		comboBox.addItem("0 - 1");
+		comboBox.addItem(" "); //$NON-NLS-1$
+		comboBox.addItem("0 - 1"); //$NON-NLS-1$
 		comboBox.addItem(TurnierKonstanten.PARTIE_REMIS);
-		comboBox.addItem("1 - 0");
-		comboBox.addItem("- / +");
-		comboBox.addItem("+ / -");
+		comboBox.addItem("1 - 0"); //$NON-NLS-1$
+		comboBox.addItem("- / +"); //$NON-NLS-1$
+		comboBox.addItem("+ / -"); //$NON-NLS-1$
 
 		property = new Properties();
-		property.put("text.today", "Heute");
-		property.put("text.month", "Monat");
-		property.put("text.year", "Jahr");
+		property.put("text.today", Messages.getString("SimpleTerminTabelleView.8")); //$NON-NLS-1$ //$NON-NLS-2$
+		property.put("text.month", Messages.getString("SimpleTerminTabelleView.10")); //$NON-NLS-1$ //$NON-NLS-2$
+		property.put("text.year", Messages.getString("SimpleTerminTabelleView.12")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		setColumnWidth();
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -126,8 +125,8 @@ public class SimpleTerminTabelleView extends JPanel {
 		tabelPanel.add(sPane,BorderLayout.CENTER);
 		JPanel hinweis = new JPanel();
 		hinweis.add(new JLabel(
-				"Geben Sie die Ergebnisse direkt in die Zellen ein "
-						+ "und klicken Sie dann auf \"Aktualisieren\"."));
+				Messages.getString("SimpleTerminTabelleView.13") //$NON-NLS-1$
+						+ Messages.getString("SimpleTerminTabelleView.14"))); //$NON-NLS-1$
 		tabelPanel.add(hinweis,BorderLayout.SOUTH);
 //		haupt.add(tabelPanel);
 		add(tabelPanel,BorderLayout.CENTER);
@@ -143,7 +142,7 @@ public class SimpleTerminTabelleView extends JPanel {
 		int[] dateInt = new int[3];
 
 		int index = 0;
-		for (String zahlenWerte : datum.split("\\.")) {
+		for (String zahlenWerte : datum.split("\\.")) { //$NON-NLS-1$
 
 			dateInt[index] = Integer.parseInt(zahlenWerte);
 

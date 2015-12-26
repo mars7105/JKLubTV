@@ -45,7 +45,7 @@ public class TurnierView extends JPanel {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		private String datePattern = "dd.MM.yyy";
+		private String datePattern = "dd.MM.yyy"; //$NON-NLS-1$
 		private SimpleDateFormat dateFormatter = new SimpleDateFormat(
 				datePattern);
 
@@ -61,7 +61,7 @@ public class TurnierView extends JPanel {
 				return dateFormatter.format(cal.getTime());
 			}
 
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 
 	}
@@ -91,9 +91,9 @@ public class TurnierView extends JPanel {
 	 */
 	public TurnierView() {
 		property = new Properties();
-		property.put("text.today", "Heute");
-		property.put("text.month", "Monat");
-		property.put("text.year", "Jahr");
+		property.put("text.today", Messages.getString("TurnierView.3")); //$NON-NLS-1$ //$NON-NLS-2$
+		property.put("text.month", Messages.getString("TurnierView.5")); //$NON-NLS-1$ //$NON-NLS-2$
+		property.put("text.year", Messages.getString("TurnierView.7")); //$NON-NLS-1$ //$NON-NLS-2$
 		gruppenAnzahl = 0;
 		int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
 		int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
@@ -115,7 +115,7 @@ public class TurnierView extends JPanel {
 			hauptPanel.add(panel1);
 			panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 			{
-				JLabel lblTurniername = new JLabel("Turniername");
+				JLabel lblTurniername = new JLabel(Messages.getString("TurnierView.8")); //$NON-NLS-1$
 				panel1.add(lblTurniername);
 			}
 			{
@@ -130,7 +130,7 @@ public class TurnierView extends JPanel {
 			hauptPanel.add(panel2);
 			panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 			{
-				JLabel label = new JLabel("Start Datum");
+				JLabel label = new JLabel(Messages.getString("TurnierView.9")); //$NON-NLS-1$
 				panel2.add(label);
 			}
 			{
@@ -146,7 +146,7 @@ public class TurnierView extends JPanel {
 			panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
 			hauptPanel.add(panel3);
 
-			JLabel lblEndDatum = new JLabel("End Datum");
+			JLabel lblEndDatum = new JLabel(Messages.getString("TurnierView.10")); //$NON-NLS-1$
 			panel3.add(lblEndDatum);
 
 			endDatumeTextField = new JDatePickerImpl(new JDatePanelImpl(
@@ -159,7 +159,7 @@ public class TurnierView extends JPanel {
 			panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
 			hauptPanel.add(panel4);
 
-			JLabel lblAnzahlGruppen = new JLabel("Anzahl Gruppen");
+			JLabel lblAnzahlGruppen = new JLabel(Messages.getString("TurnierView.11")); //$NON-NLS-1$
 			panel4.add(lblAnzahlGruppen);
 
 			gruppenAnzahlTextField = new JTextField();
@@ -173,12 +173,12 @@ public class TurnierView extends JPanel {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			hauptPanel.add(buttonPane);
 			{
-				okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
+				okButton = new JButton(Messages.getString("TurnierView.12")); //$NON-NLS-1$
+				okButton.setActionCommand(Messages.getString("TurnierView.13")); //$NON-NLS-1$
 				buttonPane.add(okButton);
 
 			}
-			String help = "Gruppenanzahl: mindestens 1 bis maximal 15.";
+			String help = Messages.getString("TurnierView.14"); //$NON-NLS-1$
 			JPanel helpPanel = new JPanel();
 			JTextArea helpText = new JTextArea();
 			helpText.setText(help);

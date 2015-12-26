@@ -116,11 +116,11 @@ public class PDFTabellenAusgabe {
 			fl[2] = 1;
 		} else {
 			if (turnier.getNoFolgeDWZCalc() == true) {
-				fl[1] = 2;
+				fl[1] = 3;
 				fl[2] = 1;
 			} else {
-				fl[1] = 2;
-				fl[2] = 2;
+				fl[1] = 3;
+				fl[2] = 3;
 			}
 		}
 

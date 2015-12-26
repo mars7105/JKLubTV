@@ -21,6 +21,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Locale;
 import java.util.Properties;
 
 public class PropertiesControl {
@@ -32,6 +33,7 @@ public class PropertiesControl {
 	public static final String ZPS = "";
 	public static final String TRUE = "true";
 	public static final String FALSE = "false";
+	public static final String LANGUAGE = "language";
 
 	private Properties prop;
 	private OutputStream output;
@@ -46,6 +48,8 @@ public class PropertiesControl {
 		prop.setProperty(NODWZ, FALSE);
 		prop.setProperty(NOFOLGEDWZ, FALSE);
 		prop.setProperty(ZPS, "");
+		prop.setProperty(LANGUAGE, "english");
+
 	}
 
 	public Boolean getOnlyTables() {
@@ -188,5 +192,19 @@ public class PropertiesControl {
 		} else {
 			prop.setProperty(NOFOLGEDWZ, FALSE);
 		}
+	}
+	public String getLanguage() {
+		// TODO Auto-generated method stub
+		return prop.getProperty(LANGUAGE);
+	}
+
+	public void setLanguageToEnglish() {
+		prop.setProperty(LANGUAGE, "english");
+		de.turnierverwaltung.view.Messages.setLocale(new Locale("en","US"));
+	}
+	public void setLanguageToGerman() {
+		prop.setProperty(LANGUAGE, "german");
+		de.turnierverwaltung.view.Messages.setLocale(new Locale("de","DE"));
+
 	}
 }

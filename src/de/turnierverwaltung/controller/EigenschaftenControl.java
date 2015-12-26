@@ -17,8 +17,11 @@ package de.turnierverwaltung.controller;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Locale;
 
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
@@ -65,7 +68,40 @@ public class EigenschaftenControl {
 			eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(false);
 			mainControl.getPropertiesControl().setNoFolgeDWZ(true);
 		}
+		if (mainControl.getPropertiesControl().getLanguage().equals("german")) {
+			eigenschaftenView.getGermanLanguageCheckBox().setSelected(true);
+			eigenschaftenView.getEnglishLanguageCheckBox().setSelected(false);
+			de.turnierverwaltung.view.Messages
+					.setLocale(new Locale("de", "DE"));
+		} else if (mainControl.getPropertiesControl().getLanguage()
+				.equals("english")) {
+			eigenschaftenView.getGermanLanguageCheckBox().setSelected(false);
+			eigenschaftenView.getEnglishLanguageCheckBox().setSelected(true);
+			de.turnierverwaltung.view.Messages
+					.setLocale(new Locale("en", "US"));
+		}
+		eigenschaftenView.getGermanLanguageCheckBox().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						mainControl.getPropertiesControl()
+								.setLanguageToGerman();
+						de.turnierverwaltung.view.Messages
+								.setLocale(new Locale("de", "DE"));
+						mainControl.getPropertiesControl().writeProperties();
 
+					}
+				});
+		eigenschaftenView.getEnglishLanguageCheckBox().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						mainControl.getPropertiesControl()
+								.setLanguageToEnglish();
+						de.turnierverwaltung.view.Messages
+								.setLocale(new Locale("en", "US"));
+						mainControl.getPropertiesControl().writeProperties();
+
+					}
+				});
 		eigenschaftenView.getCheckBoxHeaderFooter().addItemListener(
 				new ItemListener() {
 					public void itemStateChanged(ItemEvent e) {

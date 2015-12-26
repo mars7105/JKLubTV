@@ -32,6 +32,7 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import javax.swing.JTabbedPane;
+
 import de.turnierverwaltung.controller.MainControl;
 
 public class TabAnzeigeView extends JTabbedPane {

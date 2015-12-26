@@ -34,8 +34,8 @@ public class MainView extends JPanel {
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		add(buttonPane);
 
-		cancelButton = new JButton("Alles Verwerfen");
-		cancelButton.setActionCommand("Cancel");
+		cancelButton = new JButton(Messages.getString("MainView.0")); //$NON-NLS-1$
+		cancelButton.setActionCommand(Messages.getString("MainView.1")); //$NON-NLS-1$
 		buttonPane.add(cancelButton);
 
 	}

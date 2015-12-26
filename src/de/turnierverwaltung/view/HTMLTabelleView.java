@@ -63,7 +63,7 @@ public class HTMLTabelleView extends JFrame {
 		setMinimumSize(new Dimension(windowWidth, windowHeight));
 		setMaximumSize(new Dimension(Toolkit.getDefaultToolkit()
 				.getScreenSize()));
-		String help = "Mit der rechten Maustaste können Sie den Text markieren und kopieren.";
+		String help = Messages.getString("HTMLTabelleView.0"); //$NON-NLS-1$
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
 		JTextArea helpText = new JTextArea();
@@ -83,8 +83,8 @@ public class HTMLTabelleView extends JFrame {
 		helpPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		helpPanel.add(helpText);
 		mainPanel.add(scrollPane);
-		saveButton = new JButton("Als HTML Datei speichern");
-		closeButton = new JButton("Ansicht schliessen");
+		saveButton = new JButton(Messages.getString("HTMLTabelleView.1")); //$NON-NLS-1$
+		closeButton = new JButton(Messages.getString("HTMLTabelleView.2")); //$NON-NLS-1$
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
 		buttonPanel.add(saveButton);

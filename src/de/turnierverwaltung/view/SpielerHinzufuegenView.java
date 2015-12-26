@@ -19,8 +19,8 @@ import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -42,10 +42,10 @@ public class SpielerHinzufuegenView extends JDialog {
 	private JComboBox<String> textComboBoxAge;
 
 	public SpielerHinzufuegenView() {
-		this.okButton = new JButton("Speichern");
-		this.cancelButton = new JButton("Beenden");
+		this.okButton = new JButton(Messages.getString("SpielerHinzufuegenView.0")); //$NON-NLS-1$
+		this.cancelButton = new JButton(Messages.getString("SpielerHinzufuegenView.1")); //$NON-NLS-1$
 
-		setTitle("Spieler hinzufügen");
+		setTitle(Messages.getString("SpielerHinzufuegenView.2")); //$NON-NLS-1$
 		this.setAlwaysOnTop(true);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		
@@ -122,17 +122,17 @@ public class SpielerHinzufuegenView extends JDialog {
 		this.textFieldDwz = new JTextField(15);
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 //		centerPane.setBackground(new Color(249, 222, 112));
-		centerPane.add(new JLabel("Name: "));
+		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.3"))); //$NON-NLS-1$
 		centerPane.add(textFieldName);
 
-		centerPane.add(new JLabel("Kürzel: "));
+		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.4"))); //$NON-NLS-1$
 		centerPane.add(textFieldKuerzel);
 
-		centerPane.add(new JLabel("DWZ: "));
+		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.5"))); //$NON-NLS-1$
 		centerPane.add(textFieldDwz);
-		String[] ageStrings = { "unter 20", "20 bis 25", "über 25" };
+		String[] ageStrings = { Messages.getString("SpielerHinzufuegenView.6"), Messages.getString("SpielerHinzufuegenView.7"), Messages.getString("SpielerHinzufuegenView.8") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		this.textComboBoxAge = new JComboBox<String>(ageStrings);
-		centerPane.add(new JLabel("Alter: "));
+		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.9"))); //$NON-NLS-1$
 		centerPane.add(textComboBoxAge);
 		contentPanel.add(centerPane);
 		contentPanel.add(buttonPane);

@@ -58,14 +58,14 @@ public class DEWISDialogView extends JDialog {
 	 */
 	public DEWISDialogView() throws URISyntaxException {
 		this.setAlwaysOnTop(true);
-		setTitle("DSB Spielerliste");
+		setTitle(Messages.getString("DEWISDialogView.0")); //$NON-NLS-1$
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		// setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
-		dwzdbURI = new URI("http://www.schachbund.de/verein.html");
+		dwzdbURI = new URI("http://www.schachbund.de/verein.html"); //$NON-NLS-1$
 
 		dwzdbButton = new JButton();
-		dwzdbButton.setText("<HTML><FONT color=\"#000099\"><U>Vereinssuche (ZPS Nummer)</U></FONT></HTML>");
+		dwzdbButton.setText("<HTML><FONT color=\"#000099\"><U>Vereinssuche (ZPS Nummer)</U></FONT></HTML>"); //$NON-NLS-1$
 		// buttonDatePicker.setHorizontalAlignment(SwingConstants.LEFT);
 		// buttonDatePicker.setBorderPainted(false);
 		dwzdbButton.setOpaque(false);
@@ -83,8 +83,8 @@ public class DEWISDialogView extends JDialog {
 		suchePanel.add(zeilenPanel);
 		zeilenPanel = new JPanel();
 		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel vereinsSucheLabel = new JLabel("ZPS Nummer des Vereins: ");
-		vereinsSucheButton = new JButton("Suche");
+		JLabel vereinsSucheLabel = new JLabel(Messages.getString("DEWISDialogView.3")); //$NON-NLS-1$
+		vereinsSucheButton = new JButton(Messages.getString("DEWISDialogView.4")); //$NON-NLS-1$
 		zeilenPanel.add(vereinsSucheLabel);
 		suchePanel.add(zeilenPanel);
 		zeilenPanel = new JPanel();
@@ -98,9 +98,9 @@ public class DEWISDialogView extends JDialog {
 
 		contentPanel.add(suchePanel, BorderLayout.NORTH);
 		dsbPanel = new JPanel();
-		updateButton = new JButton("Update DWZ");
-		okButton = new JButton("Einfügen");
-		cancelButton = new JButton("Abbrechen");
+		updateButton = new JButton(Messages.getString("DEWISDialogView.5")); //$NON-NLS-1$
+		okButton = new JButton(Messages.getString("DEWISDialogView.6")); //$NON-NLS-1$
+		cancelButton = new JButton(Messages.getString("DEWISDialogView.7")); //$NON-NLS-1$
 		buttonPanel = new JPanel();
 		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		buttonPanel.add(updateButton);

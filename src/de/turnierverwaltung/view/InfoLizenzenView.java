@@ -49,7 +49,7 @@ public class InfoLizenzenView {
 	private URI dewisUri;
 	private JButton buttondewisUri;
 	private ImageIcon logoImg = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Logo.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Logo.png"))); //$NON-NLS-1$
 
 	class OpenUrlAction implements ActionListener {
 		@Override
@@ -77,28 +77,28 @@ public class InfoLizenzenView {
 	}
 
 	public JPanel getLizenzText() throws URISyntaxException {
-		datepickerUri = new URI("http://jdatepicker.org/");
+		datepickerUri = new URI("http://jdatepicker.org/"); //$NON-NLS-1$
 		JPanel all = new JPanel(new BorderLayout());
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		JPanel temp = new JPanel();
 		temp.setBackground(Color.WHITE);
 		temp.setLayout(new BoxLayout(temp,BoxLayout.X_AXIS));
-		JTextArea lizenzLabel = new JTextArea("JKlubTV ist freie Software, Sie können sie weitergeben und/oder \n"
-				+ "verändern, solange Sie sich an die Regeln der \n"
-				+ "GNU General Public License halten, so wie sie von \n"
-				+ "der Free Software Foundation festgelegt wurden;\n" 
-				+ "entweder in Version 3 der Lizenz oder \n"
-				+ "(nach Ihrem Ermessen) in jeder folgenden Version.\n"
-				+ "JKlubTV wurde in der Hoffnung veröffentlicht,\n" 
-				+ "dass Sie es als nützlich empfinden,\n"
-				+ "jedoch OHNE JEGLICHE GARANTIE AUF FUNKTIONSFÄHIGKEIT\n" + ""
-				+ "UND OHNE RECHTSANSPRUCH BEI FEHLERHAFTEM VERHALTEN\n" 
-				+ "DER SOFTWARE. Lesen Sie die GNU General Public License\n" 
-				+ "für weiterführende Informationen."
-				+ "\n\n" 
-				+ "Erstellt von: Martin Schmuck m_schmuck@gmx.net\n");
-		emailUri = new URI("http://mamuck.de/");
+		JTextArea lizenzLabel = new JTextArea(Messages.getString("InfoLizenzenView.2") //$NON-NLS-1$
+				+ Messages.getString("InfoLizenzenView.3") //$NON-NLS-1$
+				+ Messages.getString("InfoLizenzenView.4") //$NON-NLS-1$
+				+ Messages.getString("InfoLizenzenView.5")  //$NON-NLS-1$
+				+ Messages.getString("InfoLizenzenView.6") //$NON-NLS-1$
+				+ Messages.getString("InfoLizenzenView.7") //$NON-NLS-1$
+				+ Messages.getString("InfoLizenzenView.8")  //$NON-NLS-1$
+				+ Messages.getString("InfoLizenzenView.9") //$NON-NLS-1$
+				+ Messages.getString("InfoLizenzenView.10") //$NON-NLS-1$ 
+				+ Messages.getString("InfoLizenzenView.12")  //$NON-NLS-1$
+				+ Messages.getString("InfoLizenzenView.13")  //$NON-NLS-1$
+				+ Messages.getString("InfoLizenzenView.14") //$NON-NLS-1$
+				+ Messages.getString("InfoLizenzenView.15")  //$NON-NLS-1$
+				+ Messages.getString("InfoLizenzenView.16")); //$NON-NLS-1$
+		emailUri = new URI(Messages.getString("InfoLizenzenView.17")); //$NON-NLS-1$
 		buttonemailUri = new JButton();
 		buttonemailUri.add(new JLabel(logoImg));
 		buttonemailUri.setOpaque(false);
@@ -118,14 +118,14 @@ public class InfoLizenzenView {
 		temp = new JPanel();
 		temp.setBackground(Color.WHITE);
 		temp.setLayout(new FlowLayout(FlowLayout.LEFT));
-		temp.add(new JLabel("Dieses Programm nutzt verschiedene freie Bibliotheken:\n"));
+		temp.add(new JLabel(Messages.getString("InfoLizenzenView.18"))); //$NON-NLS-1$
 
 		panel.add(temp);
 		panel.add(new JSeparator());
 		JLabel labelDatePicker = new JLabel();
-		labelDatePicker.setText("1. JDatePicker -> jdatepicker-1.3.4.jar\n für die Auswahl des Datum.\n");
+		labelDatePicker.setText("1. JDatePicker -> jdatepicker-1.3.4.jar\n für die Auswahl des Datum.\n"); //$NON-NLS-1$
 		buttonDatePicker = new JButton();
-		buttonDatePicker.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
+		buttonDatePicker.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>"); //$NON-NLS-1$
 		buttonDatePicker.setOpaque(false);
 		buttonDatePicker.setToolTipText(datepickerUri.toString());
 		buttonDatePicker.addActionListener(new OpenUrlAction());
@@ -138,12 +138,12 @@ public class InfoLizenzenView {
 		panel.add(temp);
 		panel.add(new JSeparator());
 		
-		sqLiteUri = new URI("https://bitbucket.org/xerial/sqlite-jdbc/downloads");
+		sqLiteUri = new URI("https://bitbucket.org/xerial/sqlite-jdbc/downloads"); //$NON-NLS-1$
 
 		JLabel labelSQlite = new JLabel(
-				"2. SQLite JDBC -> sqlite-jdbc-3.8.11.1.jar\n für die Speicherung im SQLite Format.\n");
+				"2. SQLite JDBC -> sqlite-jdbc-3.8.11.1.jar\n für die Speicherung im SQLite Format.\n"); //$NON-NLS-1$
 		buttonSQlite = new JButton();
-		buttonSQlite.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
+		buttonSQlite.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>"); //$NON-NLS-1$
 		
 		buttonSQlite.setOpaque(false);
 		buttonSQlite.setToolTipText(sqLiteUri.toString());
@@ -157,10 +157,10 @@ public class InfoLizenzenView {
 		panel.add(temp);
 		panel.add(new JSeparator());
 	
-		iTextUri = new URI("http://itextpdf.com/");
-		JLabel labeliText = new JLabel("3. iText, Programmable PDF Software\n für die PDF Ausgabe.\n");
+		iTextUri = new URI("http://itextpdf.com/"); //$NON-NLS-1$
+		JLabel labeliText = new JLabel("3. iText, Programmable PDF Software\n für die PDF Ausgabe.\n"); //$NON-NLS-1$
 		buttoniText = new JButton();
-		buttoniText.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
+		buttoniText.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>"); //$NON-NLS-1$
 		// buttoniText.setHorizontalAlignment(SwingConstants.LEFT);
 		// buttoniText.setBorderPainted(false);
 		buttoniText.setOpaque(false);
@@ -175,11 +175,11 @@ public class InfoLizenzenView {
 		temp.add(labeliText);
 		panel.add(temp);
 		panel.add(new JSeparator());
-		dewisUri = new URI("http://www.schachbund.de/api.html");
+		dewisUri = new URI("http://www.schachbund.de/api.html"); //$NON-NLS-1$
 		buttondewisUri = new JButton();
 		JLabel labeldewis = new JLabel();
-		labeldewis.setText("4. Java API von Peter Fahsel -> dewis.jar\n Zugriff auf DWZ-Listen mit Java.\n");
-		buttondewisUri.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
+		labeldewis.setText("4. Java API von Peter Fahsel -> dewis.jar\n Zugriff auf DWZ-Listen mit Java.\n"); //$NON-NLS-1$
+		buttondewisUri.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>"); //$NON-NLS-1$
 		
 		buttondewisUri.setOpaque(false);
 		buttondewisUri.setToolTipText(datepickerUri.toString());
@@ -194,11 +194,11 @@ public class InfoLizenzenView {
 		panel.add(new JSeparator());
 		
 		
-		openIconUri = new URI("http://sourceforge.net/projects/openiconlibrary/");
+		openIconUri = new URI("http://sourceforge.net/projects/openiconlibrary/"); //$NON-NLS-1$
 		JLabel openIconPicker = new JLabel(
-				"5. Bilder: Open Icon Library\nhttp://sourceforge.net/projects/openiconlibrary/\n");
+				"5. Bilder: Open Icon Library\nhttp://sourceforge.net/projects/openiconlibrary/\n"); //$NON-NLS-1$
 		buttonopenIcon = new JButton();
-		buttonopenIcon.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>");
+		buttonopenIcon.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>"); //$NON-NLS-1$
 		
 		buttonopenIcon.setOpaque(false);
 		buttonopenIcon.setToolTipText(openIconUri.toString());
