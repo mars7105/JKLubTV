@@ -21,8 +21,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Locale;
-
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -34,7 +32,7 @@ public class EigenschaftenControl {
 	private EigenschaftenView eigenschaftenView;
 	private ImageIcon eigenschaftenIcon = new ImageIcon(Toolkit
 			.getDefaultToolkit().getImage(
-					getClass().getResource("/images/configure-2.png")));
+					getClass().getResource("/images/configure-2.png"))); //$NON-NLS-1$
 	private int maxWidth = 0;;
 	private int columnWidht = 0;
 
@@ -52,7 +50,7 @@ public class EigenschaftenControl {
 	public void makeeigenschaftenPanel() {
 		JTabbedPane hauptPanel = this.mainControl.getHauptPanel();
 		hauptPanel
-				.addTab("Einstellungen", eigenschaftenIcon, eigenschaftenView);
+				.addTab(Messages.getString("EigenschaftenControl.1"), eigenschaftenIcon, eigenschaftenView); //$NON-NLS-1$
 		if (mainControl.getPropertiesControl() == null) {
 			mainControl.setPropertiesControl(new PropertiesControl());
 			mainControl.getPropertiesControl().readProperties();
@@ -68,25 +66,22 @@ public class EigenschaftenControl {
 			eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(false);
 			mainControl.getPropertiesControl().setNoFolgeDWZ(true);
 		}
-		if (mainControl.getPropertiesControl().getLanguage().equals("german")) {
+		if (mainControl.getPropertiesControl().getLanguage().equals("german")) { //$NON-NLS-1$
 			eigenschaftenView.getGermanLanguageCheckBox().setSelected(true);
 			eigenschaftenView.getEnglishLanguageCheckBox().setSelected(false);
-			de.turnierverwaltung.view.Messages
-					.setLocale(new Locale("de", "DE"));
+			mainControl.getPropertiesControl().setLanguageToGerman();
 		} else if (mainControl.getPropertiesControl().getLanguage()
-				.equals("english")) {
+				.equals("english")) { //$NON-NLS-1$
 			eigenschaftenView.getGermanLanguageCheckBox().setSelected(false);
 			eigenschaftenView.getEnglishLanguageCheckBox().setSelected(true);
-			de.turnierverwaltung.view.Messages
-					.setLocale(new Locale("en", "US"));
+			mainControl.getPropertiesControl().setLanguageToEnglish();
 		}
 		eigenschaftenView.getGermanLanguageCheckBox().addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						mainControl.getPropertiesControl()
 								.setLanguageToGerman();
-						de.turnierverwaltung.view.Messages
-								.setLocale(new Locale("de", "DE"));
+
 						mainControl.getPropertiesControl().writeProperties();
 
 					}
@@ -96,8 +91,6 @@ public class EigenschaftenControl {
 					public void actionPerformed(ActionEvent e) {
 						mainControl.getPropertiesControl()
 								.setLanguageToEnglish();
-						de.turnierverwaltung.view.Messages
-								.setLocale(new Locale("en", "US"));
 						mainControl.getPropertiesControl().writeProperties();
 
 					}
@@ -129,10 +122,14 @@ public class EigenschaftenControl {
 						if (mainControl.getTurnier() != null
 								&& columnWidht == 0) {
 							columnWidht = mainControl.getSimpleTableView()[0]
-									.getTable().getColumn("a.DWZ")
+									.getTable()
+									.getColumn(
+											Messages.getString("EigenschaftenControl.12")) //$NON-NLS-1$
 									.getPreferredWidth();
 							maxWidth = mainControl.getSimpleTableView()[0]
-									.getTable().getColumn("a.DWZ")
+									.getTable()
+									.getColumn(
+											Messages.getString("EigenschaftenControl.13")) //$NON-NLS-1$
 									.getMaxWidth();
 						}
 						Boolean noDWZ = eigenschaftenView.getCheckBoxohneDWZ()
@@ -155,19 +152,27 @@ public class EigenschaftenControl {
 											.getTable().setAutoResizeMode(
 													JTable.AUTO_RESIZE_OFF);
 									mainControl.getSimpleTableView()[i]
-											.getTable().getColumn("a.DWZ")
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.14")) //$NON-NLS-1$
 											.setMinWidth(0);
 
 									mainControl.getSimpleTableView()[i]
-											.getTable().getColumn("n.DWZ")
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.15")) //$NON-NLS-1$
 											.setMinWidth(0);
 
 									mainControl.getSimpleTableView()[i]
-											.getTable().getColumn("a.DWZ")
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.16")) //$NON-NLS-1$
 											.setMaxWidth(0);
 
 									mainControl.getSimpleTableView()[i]
-											.getTable().getColumn("n.DWZ")
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.17")) //$NON-NLS-1$
 											.setMaxWidth(0);
 
 									mainControl.getSimpleTableView()[i]
@@ -184,20 +189,28 @@ public class EigenschaftenControl {
 											.setAutoResizeMode(
 													JTable.AUTO_RESIZE_ALL_COLUMNS);
 									mainControl.getSimpleTableView()[i]
-											.getTable().getColumn("a.DWZ")
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.18")) //$NON-NLS-1$
 											.setMaxWidth(maxWidth);
 									mainControl.getSimpleTableView()[i]
-											.getTable().getColumn("a.DWZ")
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.19")) //$NON-NLS-1$
 											.setPreferredWidth(columnWidht);
 
 									if (eigenschaftenView
 											.getCheckBoxohneFolgeDWZ()
 											.isSelected() == false) {
 										mainControl.getSimpleTableView()[i]
-												.getTable().getColumn("n.DWZ")
+												.getTable()
+												.getColumn(
+														Messages.getString("EigenschaftenControl.20")) //$NON-NLS-1$
 												.setMaxWidth(maxWidth);
 										mainControl.getSimpleTableView()[i]
-												.getTable().getColumn("n.DWZ")
+												.getTable()
+												.getColumn(
+														Messages.getString("EigenschaftenControl.21")) //$NON-NLS-1$
 												.setPreferredWidth(columnWidht);
 
 									}
@@ -225,10 +238,14 @@ public class EigenschaftenControl {
 						if (mainControl.getTurnier() != null
 								&& columnWidht == 0) {
 							columnWidht = mainControl.getSimpleTableView()[0]
-									.getTable().getColumn("a.DWZ")
+									.getTable()
+									.getColumn(
+											Messages.getString("EigenschaftenControl.22")) //$NON-NLS-1$
 									.getPreferredWidth();
 							maxWidth = mainControl.getSimpleTableView()[0]
-									.getTable().getColumn("a.DWZ")
+									.getTable()
+									.getColumn(
+											Messages.getString("EigenschaftenControl.23")) //$NON-NLS-1$
 									.getMaxWidth();
 						}
 						Boolean noFolgeDWZ = eigenschaftenView
@@ -250,10 +267,14 @@ public class EigenschaftenControl {
 													JTable.AUTO_RESIZE_OFF);
 
 									mainControl.getSimpleTableView()[i]
-											.getTable().getColumn("n.DWZ")
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.24")) //$NON-NLS-1$
 											.setMinWidth(0);
 									mainControl.getSimpleTableView()[i]
-											.getTable().getColumn("n.DWZ")
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.25")) //$NON-NLS-1$
 											.setMaxWidth(0);
 									// mainControl.getSimpleTableView()[i]
 									// .getTable().getColumn("n.DWZ")
@@ -272,10 +293,14 @@ public class EigenschaftenControl {
 											.setAutoResizeMode(
 													JTable.AUTO_RESIZE_ALL_COLUMNS);
 									mainControl.getSimpleTableView()[i]
-											.getTable().getColumn("n.DWZ")
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.26")) //$NON-NLS-1$
 											.setMaxWidth(maxWidth);
 									mainControl.getSimpleTableView()[i]
-											.getTable().getColumn("n.DWZ")
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.27")) //$NON-NLS-1$
 											.setPreferredWidth(columnWidht);
 
 									mainControl.getSimpleTableView()[i]

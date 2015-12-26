@@ -47,11 +47,11 @@ public class HTMLSaveControler {
 			int anzahlGruppen = this.mainControl.getTurnier()
 					.getAnzahlGruppen();
 			String filename = JOptionPane.showInputDialog(null,
-					"Anfangsname der Dateien : ", "Eine Eingabeaufforderung",
+					Messages.getString("HTMLSaveControler.0"), Messages.getString("HTMLSaveControler.1"), //$NON-NLS-1$ //$NON-NLS-2$
 					JOptionPane.PLAIN_MESSAGE);
 			if (filename != null) {
 				JFileChooser savefile = new JFileChooser();
-				FileFilter filter = new FileNameExtensionFilter("HTML", "html");
+				FileFilter filter = new FileNameExtensionFilter("HTML", "html"); //$NON-NLS-1$ //$NON-NLS-2$
 				savefile.addChoosableFileFilter(filter);
 				savefile.setFileFilter(filter);
 				savefile.setSelectedFile(new File(filename));
@@ -85,20 +85,20 @@ public class HTMLSaveControler {
 						if (filename != null) {
 							File filename1 = new File(
 									savefile.getCurrentDirectory()
-											+ "/"
+											+ "/" //$NON-NLS-1$
 											+ filename
-											+ "_Kreuztabelle_"
+											+ Messages.getString("HTMLSaveControler.5") //$NON-NLS-1$
 											+ mainControl.getTurnier()
 													.getGruppe()[i]
-													.getGruppenName() + ".html");
+													.getGruppenName() + ".html"); //$NON-NLS-1$
 							File filename2 = new File(
 									savefile.getCurrentDirectory()
-											+ "/"
+											+ "/" //$NON-NLS-1$
 											+ filename
-											+ "_Termintabelle_"
+											+ Messages.getString("HTMLSaveControler.8") //$NON-NLS-1$
 											+ mainControl.getTurnier()
 													.getGruppe()[i]
-													.getGruppenName() + ".html");
+													.getGruppenName() + ".html"); //$NON-NLS-1$
 
 							// BufferedWriter writer;
 							Writer writer1;
@@ -107,7 +107,7 @@ public class HTMLSaveControler {
 							try {
 								// Construct a writer for a specific encoding
 								writer1 = new OutputStreamWriter(
-										new FileOutputStream(filename1), "UTF8");
+										new FileOutputStream(filename1), "UTF8"); //$NON-NLS-1$
 								Boolean ohneHeaderundFooter = mainControl
 										.getPropertiesControl().getOnlyTables();
 								
@@ -118,7 +118,7 @@ public class HTMLSaveControler {
 								writer1.flush();
 								writer1.close();
 								writer2 = new OutputStreamWriter(
-										new FileOutputStream(filename2), "UTF8");
+										new FileOutputStream(filename2), "UTF8"); //$NON-NLS-1$
 								writer2.write(this.mainControl
 										.getTerminTabelleControl()
 										.getTerminTabelle()[i]
@@ -129,14 +129,14 @@ public class HTMLSaveControler {
 									InputStreamReader isReader = new InputStreamReader(
 											this.getClass()
 													.getResourceAsStream(
-															"/files/style.css"));
+															"/files/style.css")); //$NON-NLS-1$
 									BufferedReader br = new BufferedReader(
 											isReader);
 
 									PrintWriter writer3 = new PrintWriter(
 											new File(savefile
 													.getCurrentDirectory()
-													+ "/style.css"));
+													+ "/style.css")); //$NON-NLS-1$
 
 									String Bs;
 									while ((Bs = br.readLine()) != null) {
@@ -148,24 +148,24 @@ public class HTMLSaveControler {
 
 								} catch (FileNotFoundException fnfe) {
 									JOptionPane.showMessageDialog(null,
-											"Vorgang abgebrochen!");
+											Messages.getString("HTMLSaveControler.14")); //$NON-NLS-1$
 								} catch (IOException ioe) {
 									JOptionPane.showMessageDialog(null,
-											"Vorgang abgebrochen!");
+											Messages.getString("HTMLSaveControler.15")); //$NON-NLS-1$
 								}
 
 							} catch (IOException e) {
 								JOptionPane.showMessageDialog(null,
-										"Vorgang abgebrochen!");
+										Messages.getString("HTMLSaveControler.16")); //$NON-NLS-1$
 							}
 
 						} else if (sf == JFileChooser.CANCEL_OPTION) {
 							JOptionPane.showMessageDialog(null,
-									"Vorgang abgebrochen!");
+									Messages.getString("HTMLSaveControler.17")); //$NON-NLS-1$
 						}
 
 					}
-					JOptionPane.showMessageDialog(null, "Dateien gespeichert.");
+					JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.18")); //$NON-NLS-1$
 					// File file = savefile.getSelectedFile();
 					// first check if Desktop is supported by
 					// Platform or not
@@ -173,8 +173,8 @@ public class HTMLSaveControler {
 
 					{
 						JOptionPane.showMessageDialog(null,
-								"Desktop is not supported.",
-								"Folder not opened",
+								Messages.getString("HTMLSaveControler.19"), //$NON-NLS-1$
+								Messages.getString("HTMLSaveControler.20"), //$NON-NLS-1$
 								JOptionPane.INFORMATION_MESSAGE);
 					} else
 
@@ -192,7 +192,7 @@ public class HTMLSaveControler {
 			}
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"Erst nach der Eingabe aller Gruppen\n" + "möglich.");
+					Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		}
 	}

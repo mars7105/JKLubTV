@@ -56,7 +56,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 	private ArrayList<Spieler> alleSpieler;
 	private Boolean[] readyToSave;
 	private ImageIcon gruppenIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png"))); //$NON-NLS-1$
 
 	public SpielerEingabeControl(MainControl mainControl, int selectIndex) {
 		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 25;
@@ -89,9 +89,9 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		String name = "";
-		String kuerzel = "";
-		String dwz = "";
+		String name = ""; //$NON-NLS-1$
+		String kuerzel = ""; //$NON-NLS-1$
+		String dwz = ""; //$NON-NLS-1$
 		int age = 0;
 		int spielerID = 0;
 		int sAnzahl = 0;
@@ -136,10 +136,10 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 			}
 			if (arg0.getSource() == cancelButton[i]) {
 				// Custom button text
-				Object[] options = { "Ja", "Abbrechen" };
+				Object[] options = { Messages.getString("SpielerEingabeControl.4"), Messages.getString("SpielerEingabeControl.5") }; //$NON-NLS-1$ //$NON-NLS-2$
 				int abfrage = JOptionPane.showOptionDialog(null,
-						"Wollen Sie wirklich abbrechen? " + "Alle eingegebenen Daten dieser Gruppe gehen verloren.",
-						"Meldung", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
+						Messages.getString("SpielerEingabeControl.6") + Messages.getString("SpielerEingabeControl.7"), //$NON-NLS-1$ //$NON-NLS-2$
+						Messages.getString("SpielerEingabeControl.8"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, //$NON-NLS-1$
 						options[1]);
 				if (abfrage == 0) {
 					this.mainControl.getSpielerAnzahlControl().makeNewTab(i);
@@ -157,7 +157,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 
 					ListIterator<Spieler> li = alleSpieler.listIterator();
 
-					String textField = "";
+					String textField = ""; //$NON-NLS-1$
 					textField = field.getText();
 					while (li.hasNext()) {
 						temp = li.next();
@@ -193,8 +193,8 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 
 					ListIterator<Spieler> li = alleSpieler.listIterator();
 
-					String textField = "";
-					String labels = "";
+					String textField = ""; //$NON-NLS-1$
+					String labels = ""; //$NON-NLS-1$
 					textField = spielerEingabeView[i].getSpielerTextfield()[s].getText() + e.getKeyChar();
 					while (li.hasNext()) {
 						temp = li.next();
@@ -248,7 +248,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 
 			Spieler temp = null;
 			ListIterator<Spieler> li = alleSpieler.listIterator();
-			String labels = "";
+			String labels = ""; //$NON-NLS-1$
 			while (li.hasNext()) {
 				temp = li.next();
 				labels = temp.getName();

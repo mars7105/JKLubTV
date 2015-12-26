@@ -67,7 +67,7 @@ public class TurnierControl implements ActionListener {
 	private String endDatum;
 	private int gruppenAnzahl;
 	private ImageIcon turnierIcon = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/view-remove-3.png")));
+			.getImage(getClass().getResource("/images/view-remove-3.png"))); //$NON-NLS-1$
 
 	private Turnier turnier;
 
@@ -93,7 +93,7 @@ public class TurnierControl implements ActionListener {
 				hauptPanel.remove(selectedIndex);
 			}
 		}
-		hauptPanel.addTab("Neues Turnier", turnierIcon, this.turnierView);
+		hauptPanel.addTab(Messages.getString("TurnierControl.1"), turnierIcon, this.turnierView); //$NON-NLS-1$
 		selectIndex = hauptPanel.getTabCount() - 1;
 		hauptPanel.setSelectedIndex(selectIndex);
 
@@ -196,18 +196,18 @@ public class TurnierControl implements ActionListener {
 
 		} catch (NumberFormatException e) {
 			JOptionPane
-					.showMessageDialog(null, "Gruppenanzahl ist fehlerhaft!");
-			turnierView.getGruppenAnzahlTextField().setText("");
+					.showMessageDialog(null, Messages.getString("TurnierControl.2")); //$NON-NLS-1$
+			turnierView.getGruppenAnzahlTextField().setText(""); //$NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		} catch (ZahlKleinerAlsN e) {
 			JOptionPane.showMessageDialog(null,
-					"Zahl darf nicht kleiner als 1 sein!");
-			turnierView.getGruppenAnzahlTextField().setText("");
+					Messages.getString("TurnierControl.4")); //$NON-NLS-1$
+			turnierView.getGruppenAnzahlTextField().setText(""); //$NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		} catch (ZahlGroesserAlsN e) {
 			JOptionPane.showMessageDialog(null,
-					"Zahl darf nicht größer als 15 sein!");
-			turnierView.getGruppenAnzahlTextField().setText("");
+					Messages.getString("TurnierControl.6")); //$NON-NLS-1$
+			turnierView.getGruppenAnzahlTextField().setText(""); //$NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		}
 

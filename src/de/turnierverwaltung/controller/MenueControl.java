@@ -37,7 +37,7 @@ public class MenueControl implements ActionListener {
 	private MenueView turnierMenue;
 	private Turnier turnier;
 	private Boolean warnHinweis;
-	private String fileName = " ";
+	private String fileName = " "; //$NON-NLS-1$
 	public MenueControl(MainControl mainControl) {
 		warnHinweis = false;
 		this.mainControl = mainControl;
@@ -61,7 +61,7 @@ public class MenueControl implements ActionListener {
 
 		if (arg0.getSource() == turnierMenue.getMntmSpielerLaden()) {
 			int abfrage = warnHinweis(
-					"Wollen Sie wirklich die Seite verlassen? \n" + "Alle eingegebenen Daten gehen verloren.");
+					Messages.getString("MenueControl.1") + Messages.getString("MenueControl.2")); //$NON-NLS-1$ //$NON-NLS-2$
 			if (abfrage == 0) {
 				
 				mainControl.resetApp();
@@ -79,7 +79,7 @@ public class MenueControl implements ActionListener {
 		}
 		if (arg0.getSource() == turnierMenue.getMntmLaden()) {
 			int abfrage = warnHinweis(
-					"Wollen Sie wirklich die Seite verlassen? \n" + "Alle eingegebenen Daten gehen verloren.");
+					Messages.getString("MenueControl.3") + Messages.getString("MenueControl.4")); //$NON-NLS-1$ //$NON-NLS-2$
 			if (abfrage == 0) {
 				mainControl.resetApp();
 				mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
@@ -96,10 +96,10 @@ public class MenueControl implements ActionListener {
 				System.exit(JFrame.EXIT_ON_CLOSE);
 			} else {
 				// Custom button text
-				Object[] options = { "Ja", "Abbrechen" };
+				Object[] options = { Messages.getString("MenueControl.5"), Messages.getString("MenueControl.6") }; //$NON-NLS-1$ //$NON-NLS-2$
 				int abfrage = JOptionPane.showOptionDialog(null,
-						"Wollen Sie wirklich das Programm beenden? " + "Alle eingegebenen Daten gehen verloren.",
-						"A Silly Question", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null,
+						Messages.getString("MenueControl.7") + Messages.getString("MenueControl.8"), //$NON-NLS-1$ //$NON-NLS-2$
+						Messages.getString("MenueControl.9"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, //$NON-NLS-1$
 						options, options[1]);
 				if (abfrage == 0) {
 					System.exit(JFrame.EXIT_ON_CLOSE);
@@ -109,13 +109,13 @@ public class MenueControl implements ActionListener {
 		}
 		if (arg0.getSource() == turnierMenue.getMntmDBLaden()) {
 			int abfrage = warnHinweis(
-					"Wollen Sie wirklich die Seite verlassen? \n" + "Alle eingegebenen Daten gehen verloren.");
+					Messages.getString("MenueControl.10") + Messages.getString("MenueControl.11")); //$NON-NLS-1$ //$NON-NLS-2$
 			if (abfrage == 0) {
 				mainControl.resetApp();
 //				mainControl.datenbankMenueView(false);
 				// Create a file chooser
 				JFileChooser fc = new JFileChooser();
-				FileFilter filter = new FileNameExtensionFilter("Turnier Datenbank", "ktv");
+				FileFilter filter = new FileNameExtensionFilter(Messages.getString("MenueControl.12"), "ktv"); //$NON-NLS-1$ //$NON-NLS-2$
 				fc.addChoosableFileFilter(filter);
 				fc.setFileFilter(filter);
 				int returnVal = fc.showOpenDialog(null);
@@ -140,25 +140,25 @@ public class MenueControl implements ActionListener {
 					}
 
 				} else {
-					JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
+					JOptionPane.showMessageDialog(null, Messages.getString("MenueControl.14")); //$NON-NLS-1$
 				}
 
 			}
 		}
 		if (arg0.getSource() == turnierMenue.getMntmDBNeu()) {
 			int abfrage = warnHinweis(
-					"Wollen Sie wirklich die Seite verlassen? \n" + "Alle eingegebenen Daten gehen verloren.");
+					Messages.getString("MenueControl.15") + Messages.getString("MenueControl.16")); //$NON-NLS-1$ //$NON-NLS-2$
 			if (abfrage == 0) {
 				mainControl.resetApp();
 //				mainControl.datenbankMenueView(false);
-				String filename = JOptionPane.showInputDialog(null, "Dateiname : ", "Eine Eingabeaufforderung",
+				String filename = JOptionPane.showInputDialog(null, Messages.getString("MenueControl.17"), Messages.getString("MenueControl.18"), //$NON-NLS-1$ //$NON-NLS-2$
 						JOptionPane.PLAIN_MESSAGE);
 				if (filename != null) {
-					filename += ".ktv";
+					filename += ".ktv"; //$NON-NLS-1$
 					fileName = filename;
 
 					JFileChooser savefile = new JFileChooser();
-					FileFilter filter = new FileNameExtensionFilter("Turnier Datenbank", "ktv");
+					FileFilter filter = new FileNameExtensionFilter(Messages.getString("MenueControl.20"), "ktv"); //$NON-NLS-1$ //$NON-NLS-2$
 					savefile.addChoosableFileFilter(filter);
 					savefile.setFileFilter(filter);
 					savefile.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -169,7 +169,7 @@ public class MenueControl implements ActionListener {
 						try {
 							File file = savefile.getSelectedFile();
 							writer = new BufferedWriter(new FileWriter(savefile.getSelectedFile()));
-							writer.write("");
+							writer.write(""); //$NON-NLS-1$
 							writer.close();
 
 							// true for rewrite, false for override
@@ -177,14 +177,14 @@ public class MenueControl implements ActionListener {
 							SQLiteControl sqlC = new SQLiteControl();
 							sqlC.createAllTables();
 //							mainControl.datenbankMenueView(true);
-							JOptionPane.showMessageDialog(null, "Datei wurde gespeichert.", "File Saved",
+							JOptionPane.showMessageDialog(null, Messages.getString("MenueControl.23"), "File Saved", //$NON-NLS-1$ //$NON-NLS-2$
 									JOptionPane.INFORMATION_MESSAGE);
 
 						} catch (IOException e) {
 							e.printStackTrace();
 						}
 					} else if (sf == JFileChooser.CANCEL_OPTION) {
-						JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
+						JOptionPane.showMessageDialog(null, Messages.getString("MenueControl.25")); //$NON-NLS-1$
 					}
 				}
 			}
@@ -198,10 +198,10 @@ public class MenueControl implements ActionListener {
 			mainControl.setTurnierControl(new TurnierControl(mainControl));
 		} else {
 			// Custom button text
-			Object[] options = { "Ja", "Abbrechen" };
+			Object[] options = { Messages.getString("MenueControl.26"), Messages.getString("MenueControl.27") }; //$NON-NLS-1$ //$NON-NLS-2$
 			int abfrage = JOptionPane.showOptionDialog(null,
-					"Wollen Sie wirklich ein neues Turnier erstellen? " + "Alle eingegebenen Daten gehen verloren.",
-					"A Silly Question", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
+					Messages.getString("MenueControl.28") + Messages.getString("MenueControl.29"), //$NON-NLS-1$ //$NON-NLS-2$
+					Messages.getString("MenueControl.30"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, //$NON-NLS-1$
 					options[1]);
 			if (abfrage == 0) {
 				mainControl.resetApp();
@@ -228,8 +228,8 @@ public class MenueControl implements ActionListener {
 		if (warnHinweis) {
 			abfrage = 1;
 			// Custom button text
-			Object[] options = { "Ja", "Abbrechen" };
-			abfrage = JOptionPane.showOptionDialog(null, hinweisText, "Meldung", JOptionPane.YES_NO_CANCEL_OPTION,
+			Object[] options = { Messages.getString("MenueControl.31"), Messages.getString("MenueControl.32") }; //$NON-NLS-1$ //$NON-NLS-2$
+			abfrage = JOptionPane.showOptionDialog(null, hinweisText, Messages.getString("MenueControl.33"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
 					JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
 		}

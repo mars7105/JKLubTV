@@ -41,6 +41,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.view.TabAnzeigeView;
 import de.turnierverwaltung.view.TurnierEditierenView;
@@ -60,12 +61,12 @@ public class TurnierListeLadenControl implements ActionListener {
 	private int turnierIndex;
 	private ImageIcon turnierListeIcon = new ImageIcon(Toolkit
 			.getDefaultToolkit().getImage(
-					getClass().getResource("/images/games-highscores.png")));
+					getClass().getResource("/images/games-highscores.png"))); //$NON-NLS-1$
 	private ImageIcon turnierIcon = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/view-remove-3.png")));
+			.getImage(getClass().getResource("/images/view-remove-3.png"))); //$NON-NLS-1$
 	private ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(
-					getClass().getResource("/images/view-calendar-month.png")));
+					getClass().getResource("/images/view-calendar-month.png"))); //$NON-NLS-1$
 
 	public TurnierListeLadenControl(MainControl mainControl) {
 		turnierIndex = -1;
@@ -163,7 +164,7 @@ public class TurnierListeLadenControl implements ActionListener {
 				mainControl.setPartienTableControl(new PartienTableControl(
 						mainControl));
 				for (int z = 0; z < mainControl.getTurnier().getAnzahlGruppen(); z++) {
-					tabbedPaneView.insertTab("", null, new JPanel(), null, z);
+					tabbedPaneView.insertTab("", null, new JPanel(), null, z); //$NON-NLS-1$
 					mainControl.getPartienTableControl().getPartien(z);
 				}
 
@@ -186,7 +187,7 @@ public class TurnierListeLadenControl implements ActionListener {
 							.get(i).getTurnierId()) {
 						JOptionPane
 								.showMessageDialog(null,
-										"Turnier kann nicht gelöscht werden\n da es gerade bearbeitet wird.");
+										Messages.getString("TurnierListeLadenControl.4")); //$NON-NLS-1$
 
 					} else {
 						deleteTurnier(i);
@@ -272,7 +273,7 @@ public class TurnierListeLadenControl implements ActionListener {
 		mainControl.getTurnier().setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
 		mainControl.getTurnier().setNoFolgeDWZCalc(mainControl.getPropertiesControl().getNoFolgeDWZ());
 		mainControl.getNaviView().setTabellenname(
-				"Turnier: " + mainControl.getTurnier().getTurnierName());
+				Messages.getString("TurnierListeLadenControl.5") + mainControl.getTurnier().getTurnierName()); //$NON-NLS-1$
 
 		hauptPanel
 				.addTab(turnier.getTurnierName(), turnierIcon, tabbedPaneView);
@@ -283,9 +284,9 @@ public class TurnierListeLadenControl implements ActionListener {
 
 	public void loadTurnierListe() {
 		Turnier temp = null;
-		String turnierName = "";
-		String startDatum = "";
-		String endDatum = "";
+		String turnierName = ""; //$NON-NLS-1$
+		String startDatum = ""; //$NON-NLS-1$
+		String endDatum = ""; //$NON-NLS-1$
 		if (turnierTableControl != null) {
 			turnierListe = turnierTableControl.loadTurnierListe();
 		} else {
@@ -299,7 +300,7 @@ public class TurnierListeLadenControl implements ActionListener {
 		if (this.turnierListeLadenView == null) {
 			this.turnierListeLadenView = new TurnierListeLadenView(
 					anzahlTurniere);
-			hauptPanel.addTab("Turnierliste", turnierListeIcon,
+			hauptPanel.addTab(Messages.getString("TurnierListeLadenControl.9"), turnierListeIcon, //$NON-NLS-1$
 					turnierListeLadenView);
 
 		} else {

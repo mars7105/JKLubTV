@@ -19,8 +19,6 @@ package de.turnierverwaltung.controller;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.Locale;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -112,17 +110,17 @@ public class MainControl extends JFrame {
 				TurnierKonstanten.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
 		setMinimumSize(new Dimension(windowWidth / 2, windowHeight / 2));
 
-		setTitle("Klubturnierverwaltung");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		propertiesControl = new PropertiesControl();
 		propertiesControl.readProperties();
-		if (propertiesControl.getLanguage().equals("german")) {
-			de.turnierverwaltung.view.Messages
-					.setLocale(new Locale("de", "DE"));
-		} else if (propertiesControl.getLanguage().equals("english")) {
-			de.turnierverwaltung.view.Messages
-					.setLocale(new Locale("en", "US"));
+		if (propertiesControl.getLanguage().equals("german")) { //$NON-NLS-1$
+			propertiesControl.setLanguageToGerman();
+
+		} else if (propertiesControl.getLanguage().equals("english")) { //$NON-NLS-1$
+			propertiesControl.setLanguageToEnglish();
 		}
+		setTitle(Messages.getString("MainControl.0")); //$NON-NLS-1$
+
 		init();
 		makeProperties();
 
@@ -348,9 +346,8 @@ public class MainControl extends JFrame {
 		// datenbankMenueView(false);
 		if (propertiesControl.readProperties() == false) {
 			if (propertiesControl.writeProperties() == false) {
-				JOptionPane
-						.showMessageDialog(null,
-								"Einstellungen des Programms können nicht gespeichert werden.");
+				JOptionPane.showMessageDialog(null,
+						Messages.getString("MainControl.7")); //$NON-NLS-1$
 			}
 		} else {
 
@@ -358,7 +355,7 @@ public class MainControl extends JFrame {
 				// datenbankMenueView(true);
 				String path = propertiesControl.getPath();
 				SQLiteDAOFactory.setDB_PATH(path);
-				this.setTitle("Klubturnierverwaltung - Datei:"
+				this.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
 						+ SQLiteDAOFactory.getDB_PATH());
 
 				if (this.getSpielerEditierenControl() != null) {
@@ -392,12 +389,13 @@ public class MainControl extends JFrame {
 				hauptPanel
 						.addChangeListener(naviController.getTurnierAnsicht());
 				for (int i = 0; i < hauptPanel.getTabCount(); i++) {
-					if (hauptPanel.getTitleAt(i).equals("Turnierliste")) {
+					if (hauptPanel.getTitleAt(i).equals(
+							Messages.getString("MainControl.9"))) { //$NON-NLS-1$
 						hauptPanel.setSelectedIndex(i);
 					}
 				}
 			} else {
-				this.setTitle("Klubturnierverwaltung ");
+				this.setTitle(Messages.getString("MainControl.10")); //$NON-NLS-1$
 
 			}
 		}
@@ -472,8 +470,6 @@ public class MainControl extends JFrame {
 	public void setMainView(MainView mainView) {
 		this.mainView = mainView;
 	}
-
-	
 
 	public void setPaarungsTafeln(PaarungsTafeln paarungsTafeln) {
 		this.paarungsTafeln = paarungsTafeln;

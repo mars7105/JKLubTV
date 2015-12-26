@@ -40,11 +40,11 @@ public class SpielerTableImportController {
 
 		// Create a file chooser
 		JFileChooser fc = new JFileChooser();
-		FileFilter filter = new FileNameExtensionFilter("Spieler Datenbank", "spl");
+		FileFilter filter = new FileNameExtensionFilter(Messages.getString("SpielerTableImportController.0"), "spl"); //$NON-NLS-1$ //$NON-NLS-2$
 		fc.addChoosableFileFilter(filter);
 		fc.setFileFilter(filter);
 		int returnVal = fc.showOpenDialog(null);
-		String fileName = "";
+		String fileName = ""; //$NON-NLS-1$
 		DAOFactory daoFactory;
 		SpielerDAO mySQLSpielerDAO;
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
@@ -69,7 +69,7 @@ public class SpielerTableImportController {
 			}
 
 		} else {
-			JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
+			JOptionPane.showMessageDialog(null, Messages.getString("SpielerTableImportController.3")); //$NON-NLS-1$
 		}
 
 	}

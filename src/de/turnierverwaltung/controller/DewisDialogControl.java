@@ -65,7 +65,7 @@ public class DewisDialogControl implements ListSelectionListener,
 			dialog.getUpdateButton().setEnabled(true);
 		} else {
 			dialog.getUpdateButton().setEnabled(false);
-			JLabel noItemLabel = new JLabel("keine Spieler gefunden.");
+			JLabel noItemLabel = new JLabel(Messages.getString("DewisDialogControl.0")); //$NON-NLS-1$
 			JPanel noItemPanel = new JPanel();
 			noItemPanel.add(noItemLabel);
 			dialog.setDsbPanel(noItemPanel);
@@ -176,9 +176,9 @@ public class DewisDialogControl implements ListSelectionListener,
 					}
 				} else {
 					if (frage != 0) {
-						JOptionPane.showMessageDialog(null, "Spieler "
+						JOptionPane.showMessageDialog(null, Messages.getString("DewisDialogControl.1") //$NON-NLS-1$
 								+ neuerSpieler.getName()
-								+ " ist schon vorhanden.");
+								+ Messages.getString("DewisDialogControl.2")); //$NON-NLS-1$
 					}
 				}
 				return true;
@@ -191,11 +191,11 @@ public class DewisDialogControl implements ListSelectionListener,
 	private int abfrage(Spieler spieler) {
 		int abfrage = 0;
 		String hinweisText = spieler.getName()
-				+ " ist bereits vorhanden. Möchten Sie die neue DWZ übernehmen?";
+				+ Messages.getString("DewisDialogControl.3"); //$NON-NLS-1$
 
 		// Custom button text
-		Object[] options = { "Ja, für alle Spieler", "Nein" };
-		abfrage = JOptionPane.showOptionDialog(null, hinweisText, "Meldung",
+		Object[] options = { Messages.getString("DewisDialogControl.4"), Messages.getString("DewisDialogControl.5") }; //$NON-NLS-1$ //$NON-NLS-2$
+		abfrage = JOptionPane.showOptionDialog(null, hinweisText, Messages.getString("DewisDialogControl.6"), //$NON-NLS-1$
 				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
 				null, options, options[1]);
 

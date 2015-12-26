@@ -40,6 +40,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+
 import org.jdatepicker.impl.JDatePickerImpl;
 
 import de.turnierverwaltung.ZahlKleinerAlsN;
@@ -81,7 +82,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 	private ImageIcon paarungenIcon = new ImageIcon(Toolkit.getDefaultToolkit()
 			.getImage(
 					getClass().getResource(
-							"/images/media-playlist-shuffle-3.png")));
+							"/images/media-playlist-shuffle-3.png"))); //$NON-NLS-1$
 
 	@SuppressWarnings("unchecked")
 	public RundenEingabeFormularControl(MainControl mainControl) {
@@ -188,11 +189,11 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 		} catch (NumberFormatException e) {
 			JOptionPane
-					.showMessageDialog(null, "Gruppenanzahl ist fehlerhaft!");
+					.showMessageDialog(null, Messages.getString("RundenEingabeFormularControl.1")); //$NON-NLS-1$
 
 		} catch (ZahlKleinerAlsN e) {
 			JOptionPane.showMessageDialog(null,
-					"Zahl darf nicht kleiner als 1 sein!");
+					Messages.getString("RundenEingabeFormularControl.2")); //$NON-NLS-1$
 
 		}
 
@@ -219,11 +220,11 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 		} catch (NumberFormatException e) {
 			JOptionPane
-					.showMessageDialog(null, "Gruppenanzahl ist fehlerhaft!");
+					.showMessageDialog(null, Messages.getString("RundenEingabeFormularControl.3")); //$NON-NLS-1$
 
 		} catch (ZahlKleinerAlsN e) {
 			JOptionPane.showMessageDialog(null,
-					"Zahl darf nicht kleiner als 1 sein!");
+					Messages.getString("RundenEingabeFormularControl.4")); //$NON-NLS-1$
 
 		}
 
@@ -256,7 +257,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 		}
 
 		if (tabAnzeigeView2[index].getComponentCount() == 2) {
-			tabAnzeigeView2[index].insertTab("Paarungen", paarungenIcon,
+			tabAnzeigeView2[index].insertTab(Messages.getString("RundenEingabeFormularControl.5"), paarungenIcon, //$NON-NLS-1$
 					rundenEingabeFormularView[index], null, 2);
 		} else {
 			tabAnzeigeView2[index].setComponentAt(2,
@@ -277,7 +278,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		if (tabAnzeigeView2 != null) {
 			if (tabAnzeigeView2[index].getTabCount() < 3) {
-				tabAnzeigeView2[index].insertTab("Paarungen", null,
+				tabAnzeigeView2[index].insertTab(Messages.getString("RundenEingabeFormularControl.6"), null, //$NON-NLS-1$
 						rundenEingabeFormularView[index], null, 2);
 			} else {
 
@@ -306,7 +307,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 		makeRundenEditView(index);
 
 		mainControl.getNaviView().setTabellenname(
-				"Turnier: " + mainControl.getTurnier().getTurnierName());
+				Messages.getString("RundenEingabeFormularControl.7") + mainControl.getTurnier().getTurnierName()); //$NON-NLS-1$
 
 	}
 

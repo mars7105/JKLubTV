@@ -39,7 +39,7 @@ public class SpielerLadenControl implements ActionListener {
 	private int spielerIndex;
 
 	private ImageIcon spielerListeIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-group.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-group.png"))); //$NON-NLS-1$
 
 	public SpielerLadenControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -110,7 +110,7 @@ public class SpielerLadenControl implements ActionListener {
 		spielerAnzahl = spieler.size();
 		if (spielerLadenView == null) {
 			spielerLadenView = new SpielerLadenView(spielerAnzahl);
-			hauptPanel.addTab("Spielerliste", spielerListeIcon, spielerLadenView);
+			hauptPanel.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, spielerLadenView); //$NON-NLS-1$
 		} else {
 			spielerLadenView.removeAll();
 			spielerLadenView.init(spielerAnzahl);

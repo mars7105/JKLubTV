@@ -65,25 +65,25 @@ public class TurnierTabelle {
 		} else {
 			sp = spielerAnzahl;
 		}
-		tabellenMatrix[0][0] = "Spieler";
-		tabellenMatrix[1][0] = "Kürzel";
-		tabellenMatrix[2][0] = "a.<br />DWZ";
+		tabellenMatrix[0][0] = Messages.getString("TurnierTabelle.0"); //$NON-NLS-1$
+		tabellenMatrix[1][0] = Messages.getString("TurnierTabelle.1"); //$NON-NLS-1$
+		tabellenMatrix[2][0] = "a.<br />DWZ"; //$NON-NLS-1$
 
-		tabellenMatrix[3][0] = "n.<br />DWZ";
+		tabellenMatrix[3][0] = "n.<br />DWZ"; //$NON-NLS-1$
 		for (int i = 4; i < sp + 4; i++) {
 			if (spieler[i - 4].getKuerzel().length() >= 2) {
 				tabellenMatrix[i][0] = spieler[i - 4].getKuerzel().substring(0,
 						1)
-						+ "<br />" + spieler[i - 4].getKuerzel().substring(1);
+						+ "<br />" + spieler[i - 4].getKuerzel().substring(1); //$NON-NLS-1$
 			} else {
 				tabellenMatrix[i][0] = spieler[i - 4].getKuerzel();
 			}
 
 		}
 
-		tabellenMatrix[4 + sp][0] = "P*";
-		tabellenMatrix[5 + sp][0] = "S*";
-		tabellenMatrix[6 + sp][0] = "R";
+		tabellenMatrix[4 + sp][0] = "P*"; //$NON-NLS-1$
+		tabellenMatrix[5 + sp][0] = "S*"; //$NON-NLS-1$
+		tabellenMatrix[6 + sp][0] = "R"; //$NON-NLS-1$
 
 		for (int i = 0; i < sp; i++) {
 			tabellenMatrix[0][i + 1] = spieler[i].getName();
@@ -91,19 +91,19 @@ public class TurnierTabelle {
 			if (spieler[i].getDwz() != TurnierKonstanten.KEINE_DWZ) {
 				tabellenMatrix[2][i + 1] = spieler[i].getDwz();
 			} else {
-				tabellenMatrix[2][i + 1] = "";
+				tabellenMatrix[2][i + 1] = ""; //$NON-NLS-1$
 			}
 			if (spieler[i].getFolgeDWZ() > 0) {
 				tabellenMatrix[3][i + 1] = new Integer(spieler[i].getFolgeDWZ())
 						.toString();
 			} else {
-				tabellenMatrix[3][i + 1] = "";
+				tabellenMatrix[3][i + 1] = ""; //$NON-NLS-1$
 			}
 		}
 		for (int x = 4; x < sp + 4; x++) {
 			for (int y = 1; y < sp + 1; y++) {
 				if (x == y + 3) {
-					tabellenMatrix[x][y] = "--";
+					tabellenMatrix[x][y] = "--"; //$NON-NLS-1$
 				} else {
 					if (spieler[x - 4].getSpielerId() > -2
 							&& spieler[y - 1].getSpielerId() > -2) {
@@ -136,7 +136,7 @@ public class TurnierTabelle {
 		String[][] temp = new String[tabellenMatrix.length - 1][tabellenMatrix[0].length];
 		for (int x = 0; x < tabellenMatrix.length - 1; x++) {
 			for (int y = 0; y < tabellenMatrix[0].length; y++) {
-				if (tabellenMatrix[x][0].equals("a.<br />DWZ")) {
+				if (tabellenMatrix[x][0].equals("a.<br />DWZ")) { //$NON-NLS-1$
 					v = 1;
 
 				}
@@ -152,7 +152,7 @@ public class TurnierTabelle {
 		String[][] temp = new String[tabellenMatrix.length - 1][tabellenMatrix[0].length];
 		for (int x = 0; x < tabellenMatrix.length - 1; x++) {
 			for (int y = 0; y < tabellenMatrix[0].length; y++) {
-				if (tabellenMatrix[x][0].equals("n.<br />DWZ")) {
+				if (tabellenMatrix[x][0].equals("n.<br />DWZ")) { //$NON-NLS-1$
 					v = 1;
 
 				}

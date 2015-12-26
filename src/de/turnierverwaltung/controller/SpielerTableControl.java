@@ -55,7 +55,7 @@ public class SpielerTableControl {
 		for (int i = 0; i < this.turnier.getAnzahlGruppen(); i++) {
 			spieler = mySQLSpielerDAO.selectAllSpieler(turnier.getGruppe()[i].getGruppeId());
 			if (spieler.size() % 2 == 1) {
-				Spieler spielfrei = new Spieler(TurnierKonstanten.SPIELFREI_ID, "Spielfrei", "SF", "0", 0);
+				Spieler spielfrei = new Spieler(TurnierKonstanten.SPIELFREI_ID, Messages.getString("SpielerTableControl.0"), Messages.getString("SpielerTableControl.1"), "0", 0); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				spieler.add(spielfrei);
 			}
 
@@ -116,16 +116,16 @@ public class SpielerTableControl {
 		int abfrage = 0;
 		if (tId.size() > 0) {
 			JOptionPane.showMessageDialog(null,
-					"Spieler " + spieler.getName() + "\n" + "kann nicht gelöscht werden, da " + spieler.getName()
-							+ " \n" + "in " + tId.size() + " Turnier(en) mitspielt!");
+					"Spieler " + spieler.getName() + "\n" + Messages.getString("SpielerTableControl.5") + spieler.getName() //$NON-NLS-2$ //$NON-NLS-3$
+							+ " \n" + Messages.getString("SpielerTableControl.7") + tId.size() + Messages.getString("SpielerTableControl.8")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 			abfrage = -1;
 		} else {
-			Object[] options = { "Ja", "Nein" };
+			Object[] options = { Messages.getString("SpielerTableControl.9"), Messages.getString("SpielerTableControl.10") }; //$NON-NLS-1$ //$NON-NLS-2$
 			abfrage = JOptionPane.showOptionDialog(null,
-					"Spieler löschen?\n" + "Dieser Spieler kann problemlos gelöscht werden,\n " + "da "
-							+ spieler.getName() + " an keinem Turnier teilnimmt.",
-					"Spieler löschen?", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
+					Messages.getString("SpielerTableControl.11") + Messages.getString("SpielerTableControl.12") + Messages.getString("SpielerTableControl.13") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+							+ spieler.getName() + Messages.getString("SpielerTableControl.14"), //$NON-NLS-1$
+					Messages.getString("SpielerTableControl.15"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, //$NON-NLS-1$
 					options[1]);
 		}
 		if (abfrage == 0) {

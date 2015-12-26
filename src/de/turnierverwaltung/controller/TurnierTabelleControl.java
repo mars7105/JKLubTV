@@ -36,7 +36,7 @@ public class TurnierTabelleControl {
 	private ArrayList<Partie> changedPartien;
 	private ImageIcon turniertabelleIcon = new ImageIcon(Toolkit
 			.getDefaultToolkit().getImage(
-					getClass().getResource("/images/x-office-spreadsheet.png")));
+					getClass().getResource("/images/x-office-spreadsheet.png"))); //$NON-NLS-1$
 
 	public TurnierTabelleControl(MainControl mainControl) {
 
@@ -124,7 +124,7 @@ public class TurnierTabelleControl {
 				.setPreferredSize(dimension[gruppenNummer]);
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() < 1) {
 			tabAnzeigeView2[gruppenNummer]
-					.insertTab("Turniertabelle", turniertabelleIcon,
+					.insertTab(Messages.getString("TurnierTabelleControl.1"), turniertabelleIcon, //$NON-NLS-1$
 							simpleTableView[gruppenNummer], null, 0);
 
 		} else {
@@ -156,22 +156,22 @@ public class TurnierTabelleControl {
 
 	public void checkDWZVisible(int i) {
 
-		simpleTableView[i].getTable().getColumn("Kürzel").setMinWidth(0);
+		simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.2")).setMinWidth(0); //$NON-NLS-1$
 
-		simpleTableView[i].getTable().getColumn("Kürzel").setMaxWidth(0);
+		simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.3")).setMaxWidth(0); //$NON-NLS-1$
 		if (mainControl.getPropertiesControl().getNoDWZ() == true) {
-			simpleTableView[i].getTable().getColumn("a.DWZ").setMinWidth(0);
+			simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.4")).setMinWidth(0); //$NON-NLS-1$
 
-			simpleTableView[i].getTable().getColumn("a.DWZ")
+			simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.5")) //$NON-NLS-1$
 					.setMaxWidth(0);
 
 			simpleTableView[i].getTable().updateUI();
 		}
 		if (mainControl.getPropertiesControl().getNoFolgeDWZ() == true) {
 
-			simpleTableView[i].getTable().getColumn("n.DWZ").setMinWidth(0);
+			simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.6")).setMinWidth(0); //$NON-NLS-1$
 
-			simpleTableView[i].getTable().getColumn("n.DWZ")
+			simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.7")) //$NON-NLS-1$
 					.setMaxWidth(0);
 
 			simpleTableView[i].getTable().updateUI();
@@ -286,7 +286,7 @@ public class TurnierTabelleControl {
 			String ergebniss = (String) simpleTableView[gruppenNummer]
 					.getTable().getModel().getValueAt(row, col);
 
-			String invertErgebniss = " ";
+			String invertErgebniss = " "; //$NON-NLS-1$
 			int invertErgebnissInt = 0;
 			int ergebnissInt = 0;
 

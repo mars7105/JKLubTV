@@ -193,6 +193,7 @@ public class PropertiesControl {
 			prop.setProperty(NOFOLGEDWZ, FALSE);
 		}
 	}
+
 	public String getLanguage() {
 		// TODO Auto-generated method stub
 		return prop.getProperty(LANGUAGE);
@@ -200,11 +201,20 @@ public class PropertiesControl {
 
 	public void setLanguageToEnglish() {
 		prop.setProperty(LANGUAGE, "english");
-		de.turnierverwaltung.view.Messages.setLocale(new Locale("en","US"));
+		de.turnierverwaltung.view.Messages.setLocale(new Locale("en", "US"));
+		de.turnierverwaltung.controller.Messages.setLocale(new Locale("en",
+				"US"));
+		de.turnierverwaltung.model.Messages.setLocale(new Locale("en",
+				"US"));
 	}
+
 	public void setLanguageToGerman() {
 		prop.setProperty(LANGUAGE, "german");
-		de.turnierverwaltung.view.Messages.setLocale(new Locale("de","DE"));
+		de.turnierverwaltung.view.Messages.setLocale(new Locale("de", "DE"));
+		de.turnierverwaltung.controller.Messages.setLocale(new Locale("de",
+				"DE"));
+		de.turnierverwaltung.model.Messages.setLocale(new Locale("de",
+				"DE"));
 
 	}
 }

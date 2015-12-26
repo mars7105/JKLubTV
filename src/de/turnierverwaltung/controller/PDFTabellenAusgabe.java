@@ -63,7 +63,7 @@ public class PDFTabellenAusgabe {
 		// step 4
 		try {
 			document.add(new Paragraph(titel));
-			document.add(new Paragraph(" "));
+			document.add(new Paragraph(" ")); //$NON-NLS-1$
 			document.add(createTurnierTabelle(turnier, tabellenMatrix));
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
@@ -89,7 +89,7 @@ public class PDFTabellenAusgabe {
 		// step 4
 		try {
 			document.add(new Paragraph(titel));
-			document.add(new Paragraph(" "));
+			document.add(new Paragraph(" ")); //$NON-NLS-1$
 			document.add(createTerminTabelle(tabellenMatrix));
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
@@ -104,7 +104,7 @@ public class PDFTabellenAusgabe {
 		int spalten = stringTable[0].length;
 		int zeilen = stringTable.length;
 		for (int i = 0; i < zeilen; i++) {
-			String replacedStr = stringTable[i][0].replaceAll("<br />", "");
+			String replacedStr = stringTable[i][0].replaceAll("<br />", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			stringTable[i][0] = replacedStr;
 		}
 
@@ -158,7 +158,7 @@ public class PDFTabellenAusgabe {
 		int spalten = stringTable[0].length;
 		int zeilen = stringTable.length;
 		for (int i = 0; i < zeilen; i++) {
-			String replacedStr = stringTable[i][0].replaceAll("<br />", "");
+			String replacedStr = stringTable[i][0].replaceAll("<br />", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			stringTable[i][0] = replacedStr;
 		}
 

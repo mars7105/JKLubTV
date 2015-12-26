@@ -43,11 +43,11 @@ public class PDFSaveControler {
 			int anzahlGruppen = this.mainControl.getTurnier()
 					.getAnzahlGruppen();
 			String filename = JOptionPane.showInputDialog(null,
-					"Anfangsname der Dateien : ", "Eine Eingabeaufforderung",
+					Messages.getString("PDFSaveControler.0"), Messages.getString("PDFSaveControler.1"), //$NON-NLS-1$ //$NON-NLS-2$
 					JOptionPane.PLAIN_MESSAGE);
 			if (filename != null) {
 				JFileChooser savefile = new JFileChooser();
-				FileFilter filter = new FileNameExtensionFilter("PDF", "pdf");
+				FileFilter filter = new FileNameExtensionFilter("PDF", "pdf"); //$NON-NLS-1$ //$NON-NLS-2$
 				savefile.addChoosableFileFilter(filter);
 				savefile.setFileFilter(filter);
 				savefile.setSelectedFile(new File(filename));
@@ -84,20 +84,20 @@ public class PDFSaveControler {
 
 							File filename1 = new File(
 									savefile.getCurrentDirectory()
-											+ "/"
+											+ "/" //$NON-NLS-1$
 											+ filename
-											+ "_Kreuztabelle_"
+											+ Messages.getString("PDFSaveControler.2") //$NON-NLS-1$
 											+ mainControl.getTurnier()
 													.getGruppe()[i]
-													.getGruppenName() + ".pdf");
+													.getGruppenName() + ".pdf"); //$NON-NLS-1$
 							File filename2 = new File(
 									savefile.getCurrentDirectory()
-											+ "/"
+											+ "/" //$NON-NLS-1$
 											+ filename
-											+ "_Termintabelle_"
+											+ Messages.getString("PDFSaveControler.8") //$NON-NLS-1$
 											+ mainControl.getTurnier()
 													.getGruppe()[i]
-													.getGruppenName() + ".pdf");
+													.getGruppenName() + ".pdf"); //$NON-NLS-1$
 
 							turnierTabelle.createMatrix();
 
@@ -108,9 +108,9 @@ public class PDFSaveControler {
 							if (mainControl.getTurnier().getNoFolgeDWZCalc() == true) {
 								turnierTabelle.removeFolgeDWZColumn();
 							}
-							String titel = "Kreuztabelle "
+							String titel = Messages.getString("PDFSaveControler.10") //$NON-NLS-1$
 									+ mainControl.getTurnier().getTurnierName()
-									+ " - "
+									+ " - " //$NON-NLS-1$
 									+ mainControl.getTurnier().getGruppe()[i]
 											.getGruppenName();
 							String pathName = filename1.getAbsolutePath();
@@ -120,9 +120,9 @@ public class PDFSaveControler {
 
 							mainControl.getTerminTabelle()[i]
 									.createTerminTabelle();
-							titel = "Termintabelle "
+							titel = Messages.getString("PDFSaveControler.12") //$NON-NLS-1$
 									+ mainControl.getTurnier().getTurnierName()
-									+ " - "
+									+ " - " //$NON-NLS-1$
 									+ mainControl.getTurnier().getGruppe()[i]
 											.getGruppenName();
 							pathName = filename2.getAbsolutePath();
@@ -132,12 +132,12 @@ public class PDFSaveControler {
 
 						}
 					}
-					JOptionPane.showMessageDialog(null, "Dateien gespeichert.");
+					JOptionPane.showMessageDialog(null, Messages.getString("PDFSaveControler.14")); //$NON-NLS-1$
 					// first check if Desktop is supported by
 					// Platform or not
 					if (!Desktop.isDesktopSupported()) {
 						JOptionPane.showMessageDialog(null,
-								"Desktop is not supported.", "File not opened",
+								Messages.getString("PDFSaveControler.15"), Messages.getString("PDFSaveControler.16"), //$NON-NLS-1$ //$NON-NLS-2$
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
 
@@ -147,8 +147,8 @@ public class PDFSaveControler {
 							desktop.open(savefile.getCurrentDirectory());
 						} catch (IOException e) {
 							JOptionPane.showMessageDialog(null,
-									"Desktop is not supported.",
-									"File not opened",
+									Messages.getString("PDFSaveControler.17"), //$NON-NLS-1$
+									Messages.getString("PDFSaveControler.18"), //$NON-NLS-1$
 									JOptionPane.INFORMATION_MESSAGE);
 						}
 
@@ -159,7 +159,7 @@ public class PDFSaveControler {
 
 		} else {
 			JOptionPane.showMessageDialog(null,
-					"Erst nach der Eingabe aller Gruppen\n" + "möglich.");
+					Messages.getString("PDFSaveControler.19") + Messages.getString("PDFSaveControler.20")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		}
 
