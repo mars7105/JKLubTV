@@ -27,11 +27,12 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField.AbstractFormatter;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.border.EmptyBorder;
+
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -73,9 +74,9 @@ public class RundenEingabeFormularView extends JPanel {
 		datum = new JDatePickerImpl[anzahlZeilen];
 
 		property = new Properties();
-		property.put("text.today", "Heute");
-		property.put("text.month", "Monat");
-		property.put("text.year", "Jahr");
+		property.put("text.today", Messages.getString("RundenEingabeFormularView.1")); //$NON-NLS-1$ //$NON-NLS-2$
+		property.put("text.month", Messages.getString("RundenEingabeFormularView.3")); //$NON-NLS-1$ //$NON-NLS-2$
+		property.put("text.year", Messages.getString("RundenEingabeFormularView.5")); //$NON-NLS-1$ //$NON-NLS-2$
 		ungerade = (this.spielerAnzahl + 1) % 2;
 		gerade = 1 - ungerade;
 		rundenanzahl = this.spielerAnzahl - ungerade;
@@ -138,7 +139,7 @@ public class RundenEingabeFormularView extends JPanel {
 	}
 
 	private int[] getDatefromString(String zeile) {
-		String[] splitDate = zeile.split("\\.");
+		String[] splitDate = zeile.split("\\."); //$NON-NLS-1$
 		int[] dateInt = new int[splitDate.length];
 
 		for (int i = 0; i < splitDate.length; i++) {
@@ -231,7 +232,7 @@ public class RundenEingabeFormularView extends JPanel {
 				downPane.setLayout(flowLayout);
 				downPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				// downPane.setAlignmentY(Component.TOP_ALIGNMENT);
-				if (zeile[0] != "Runde") {
+				if (zeile[0] != Messages.getString("RundenEingabeFormularView.7")) { //$NON-NLS-1$
 
 					int[] dateInt;
 					UtilDateModel model = new UtilDateModel();
@@ -246,23 +247,23 @@ public class RundenEingabeFormularView extends JPanel {
 	
 					datePanel.setForeground(Color.WHITE);
 					datum[anzahlElemente] = new JDatePickerImpl(datePanel, new DateLabelFormatter());
-					downPane.add(new JLabel("Datum: "));
+					downPane.add(new JLabel(Messages.getString("RundenEingabeFormularView.8"))); //$NON-NLS-1$
 					downPane.add(datum[anzahlElemente]);
-					downPane.add(new JLabel(" "));
-					changeColor[anzahlElemente] = new JButton("Farben vertauschen");
+					downPane.add(new JLabel(" ")); //$NON-NLS-1$
+					changeColor[anzahlElemente] = new JButton(Messages.getString("RundenEingabeFormularView.10")); //$NON-NLS-1$
 					downPane.add(changeColor[anzahlElemente]);
 					rundenNummer[anzahlElemente] = new JComboBox<String>();
 					for (int x = 1; x <= this.spielerAnzahl - ungerade; x++) {
 						rundenNummer[anzahlElemente].addItem(Integer.toString(x));
 					}
 					rundenNummer[anzahlElemente].setSelectedIndex(Integer.parseInt(zeile[0]) - 1);
-					downPane.add(new JLabel("  Runde: "));
+					downPane.add(new JLabel(Messages.getString("RundenEingabeFormularView.11"))); //$NON-NLS-1$
 					downPane.add(rundenNummer[anzahlElemente]);
-					downPane.add(new JLabel(" = "));
+					downPane.add(new JLabel(" = ")); //$NON-NLS-1$
 					weissSpieler[anzahlElemente] = new JLabel();
-					weissSpieler[anzahlElemente].setText("Weiss:  " + zeile[1] + " - ");
+					weissSpieler[anzahlElemente].setText(Messages.getString("RundenEingabeFormularView.13") + zeile[1] + " - "); //$NON-NLS-1$ //$NON-NLS-2$
 					schwarzSpieler[anzahlElemente] = new JLabel();
-					schwarzSpieler[anzahlElemente].setText("Schwarz:  " + zeile[2] + " ");
+					schwarzSpieler[anzahlElemente].setText(Messages.getString("RundenEingabeFormularView.15") + zeile[2] + " "); //$NON-NLS-1$ //$NON-NLS-2$
 					downPane.add(weissSpieler[anzahlElemente]);
 					downPane.add(schwarzSpieler[anzahlElemente]);
 
@@ -278,7 +279,7 @@ public class RundenEingabeFormularView extends JPanel {
 			}
 
 			panel.add(flowPane, BorderLayout.NORTH);
-			tabbedPane.add("Runde: " + (r + 1), panel);
+			tabbedPane.add(Messages.getString("RundenEingabeFormularView.17") + (r + 1), panel); //$NON-NLS-1$
 		}
 		contentPanel.add(tabbedPane, BorderLayout.CENTER);
 		contentPanel.updateUI();
@@ -291,7 +292,7 @@ public class RundenEingabeFormularView extends JPanel {
 		 */
 		private static final long serialVersionUID = 1L;
 		// private String datePattern = "yyyy-MM-dd";
-		private String datePattern = "dd.MM.yyy";
+		private String datePattern = "dd.MM.yyy"; //$NON-NLS-1$
 
 		private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
 
@@ -313,7 +314,7 @@ public class RundenEingabeFormularView extends JPanel {
 				return dateFormatter.format(cal.getTime());
 			}
 
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 
 	}

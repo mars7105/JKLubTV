@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -18,7 +19,6 @@ package de.turnierverwaltung.controller;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
-
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -110,27 +110,22 @@ public class MainControl extends JFrame {
 				TurnierKonstanten.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
 		setMinimumSize(new Dimension(windowWidth / 2, windowHeight / 2));
 
-		setTitle("Klubturnierverwaltung");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		propertiesControl = new PropertiesControl();
+		propertiesControl.readProperties();
+		if (propertiesControl.getLanguage().equals("german")) { //$NON-NLS-1$
+			propertiesControl.setLanguageToGerman();
+
+		} else if (propertiesControl.getLanguage().equals("english")) { //$NON-NLS-1$
+			propertiesControl.setLanguageToEnglish();
+		}
+		setTitle(Messages.getString("MainControl.0")); //$NON-NLS-1$
+
 		init();
 		makeProperties();
 
 		setNeuesTurnier(false);
 	}
-
-	// public void datenbankMenueView(Boolean enable) {
-	// menueControl.setDatenbankMenue(enable);
-	// // naviView.getDatenbankPanel().setVisible(enable);
-	//
-	// naviView.setPathToDatabase(new JLabel(menueControl.getFileName()));
-	// naviView.updateUI();
-	// if (enable == true) {
-	// this.setTitle("Klubturnierverwaltung - Datei:" +
-	// SQLiteDAOFactory.getDB_PATH());
-	// } else {
-	// this.setTitle("Klubturnierverwaltung ");
-	// }
-	// }
 
 	public SpielerLadenControl getSpielerLadenControl() {
 		return spielerLadenControl;
@@ -184,14 +179,6 @@ public class MainControl extends JFrame {
 	public MainView getMainView() {
 		return mainView;
 	}
-
-	// public MenueControl getMenueControl() {
-	// return menueControl;
-	// }
-	//
-	// public MenueView getMenueView() {
-	// return menueView;
-	// }
 
 	public PaarungsTafeln getPaarungsTafeln() {
 		return paarungsTafeln;
@@ -357,19 +344,18 @@ public class MainControl extends JFrame {
 
 	private void makeProperties() {
 		// datenbankMenueView(false);
-		propertiesControl = new PropertiesControl();
 		if (propertiesControl.readProperties() == false) {
 			if (propertiesControl.writeProperties() == false) {
-				JOptionPane
-						.showMessageDialog(null,
-								"Einstellungen des Programms können nicht gespeichert werden.");
+				JOptionPane.showMessageDialog(null,
+						Messages.getString("MainControl.7")); //$NON-NLS-1$
 			}
 		} else {
+
 			if (propertiesControl.checkPath() == true) {
 				// datenbankMenueView(true);
-				String path = propertiesControl.getProperties("Path");
+				String path = propertiesControl.getPath();
 				SQLiteDAOFactory.setDB_PATH(path);
-				this.setTitle("Klubturnierverwaltung - Datei:"
+				this.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
 						+ SQLiteDAOFactory.getDB_PATH());
 
 				if (this.getSpielerEditierenControl() != null) {
@@ -403,12 +389,13 @@ public class MainControl extends JFrame {
 				hauptPanel
 						.addChangeListener(naviController.getTurnierAnsicht());
 				for (int i = 0; i < hauptPanel.getTabCount(); i++) {
-					if (hauptPanel.getTitleAt(i).equals("Turnierliste")) {
+					if (hauptPanel.getTitleAt(i).equals(
+							Messages.getString("MainControl.9"))) { //$NON-NLS-1$
 						hauptPanel.setSelectedIndex(i);
 					}
 				}
 			} else {
-				this.setTitle("Klubturnierverwaltung ");
+				this.setTitle(Messages.getString("MainControl.10")); //$NON-NLS-1$
 
 			}
 		}
@@ -483,15 +470,6 @@ public class MainControl extends JFrame {
 	public void setMainView(MainView mainView) {
 		this.mainView = mainView;
 	}
-
-	//
-	// public void setMenueControl(MenueControl menueControl) {
-	// this.menueControl = menueControl;
-	// }
-	//
-	// public void setMenueView(MenueView menueView) {
-	// this.menueView = menueView;
-	// }
 
 	public void setPaarungsTafeln(PaarungsTafeln paarungsTafeln) {
 		this.paarungsTafeln = paarungsTafeln;
@@ -653,13 +631,11 @@ public class MainControl extends JFrame {
 
 	public void setEigenschaftenControl(
 			EigenschaftenControl eigenschaftenControl) {
-		this.eigenschaftenControl = eigenschaftenControl;	
+		this.eigenschaftenControl = eigenschaftenControl;
 	}
 
 	public EigenschaftenControl getEigenschaftenControl() {
 		return eigenschaftenControl;
 	}
-
-
 
 }

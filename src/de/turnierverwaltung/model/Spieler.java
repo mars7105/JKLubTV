@@ -35,7 +35,7 @@ public class Spieler implements Comparable<Object> {
 	public Spieler() {
 		this.punkte = 0;
 		this.soberg = 0;
-		this.platz = 0;
+		this.platz = 1;
 		spielerId = -1;
 	}
 
@@ -47,7 +47,7 @@ public class Spieler implements Comparable<Object> {
 		this.age = age;
 		this.punkte = 0;
 		this.soberg = 0;
-		this.platz = 0;
+		this.platz = 1;
 	}
 
 	@Override

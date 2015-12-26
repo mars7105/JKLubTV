@@ -33,9 +33,9 @@ public class InfoController {
 	private InfoLizenzenView infoTexteView;
 	private InfoHomeScreenView infoHelpView;
 	private ImageIcon infoIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png"))); //$NON-NLS-1$
 	private ImageIcon lizenzenIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-paragraph.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-paragraph.png"))); //$NON-NLS-1$
 	/**
 	 * @param mainControl
 	 */
@@ -46,9 +46,9 @@ public class InfoController {
 		lizenzenPane = new JTabbedPane();
 		infoTexteView = new InfoLizenzenView();
 		try {
-			lizenzenPane.addTab("Information",infoIcon, infoHelpView.getLizenzText());
+			lizenzenPane.addTab(Messages.getString("InfoController.2"),infoIcon, infoHelpView.getLizenzText()); //$NON-NLS-1$
 
-			lizenzenPane.addTab("Lizenzen",lizenzenIcon, infoTexteView.getLizenzText());
+			lizenzenPane.addTab(Messages.getString("InfoController.3"),lizenzenIcon, infoTexteView.getLizenzText()); //$NON-NLS-1$
 			infoView.setLizenzenPane(lizenzenPane);
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
@@ -66,7 +66,7 @@ public class InfoController {
 		// hauptPanel.removeAll();
 		// this.mainControl.getNaviController().makeNaviPanel();
 
-		hauptPanel.addTab("Info", infoIcon, infoView);
+		hauptPanel.addTab(Messages.getString("InfoController.4"), infoIcon, infoView); //$NON-NLS-1$
 		hauptPanel.updateUI();
 		EigenschaftenControl eigenschaftenControl = new EigenschaftenControl(mainControl);
 		mainControl.setEigenschaftenControl(eigenschaftenControl);

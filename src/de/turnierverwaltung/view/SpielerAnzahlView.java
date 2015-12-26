@@ -58,20 +58,20 @@ public class SpielerAnzahlView extends JPanel {
 			contentPanel.add(centerPane);
 			contentPanel.add(buttonPane);
 			{
-				okButton = new JButton("OK");
-				okButton.setActionCommand("OK");
+				okButton = new JButton("OK"); //$NON-NLS-1$
+				okButton.setActionCommand("OK"); //$NON-NLS-1$
 
 				buttonPane.add(okButton);
 			}
 
 			{
-				JLabel label = new JLabel("Anzahl der Spieler:");
+				JLabel label = new JLabel(Messages.getString("SpielerAnzahlView.2")); //$NON-NLS-1$
 				anzahlSpielerTextField = new JTextField();
 				centerPane.add(label);
 				centerPane.add(anzahlSpielerTextField);
 
 			}
-			String help = "Spieleranzahl: mindestens 3 bis maximal 20.";
+			String help = Messages.getString("SpielerAnzahlView.3"); //$NON-NLS-1$
 			JPanel helpPanel = new JPanel();
 			JTextArea helpText = new JTextArea();
 			helpText.setText(help);

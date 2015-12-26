@@ -1,4 +1,5 @@
 package de.turnierverwaltung.model;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -25,38 +26,39 @@ public class TurnierTabelleToHTML {
 	private String htmlString;
 	private String infoString;
 	private int[] reihenfolge;
+	private Turnier turnier;
 
-	public TurnierTabelleToHTML(String[][] tabellenMatrix, String turnierName,
-			String startDatum, String endDatum, String gruppenName) {
-
+	public TurnierTabelleToHTML(String[][] tabellenMatrix, Turnier turnier,
+			String gruppenName) {
+		this.turnier = turnier;
 		this.tabellenMatrix = tabellenMatrix;
-		this.turnierName = turnierName;
-		this.startDatum = startDatum;
-		this.endDatum = endDatum;
+		this.turnierName = turnier.getTurnierName();
+		this.startDatum = turnier.getStartDatum();
+		this.endDatum = turnier.getEndDatum();
 		this.gruppenName = gruppenName;
-		this.infoString = "R = Rang<br />a. DWZ = aktuelle DWZ<br />n. DWZ = Folge DWZ<br />P* = Punkte<br />S* = Sonnebornberger<br />";
+		this.infoString = Messages.getString("TurnierTabelleToHTML.0"); //$NON-NLS-1$
 	}
 
 	private String getHTMLFooter() {
-		String footerString = "</body>\n</html>\n";
+		String footerString = "</body>\n</html>\n"; //$NON-NLS-1$
 		return footerString;
 	}
 
 	private String getHTMLHeader() {
-		String headerString = "<!DOCTYPE html>\n"
-				+ "<html lang='de'>\n"
-				+ "<head>\n"
-				+ "  <meta charset='utf-8'>\n"
-				+ "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n"
-				+ "  <link rel='stylesheet' href='style.css'>\n" + "  <title>"
-				+ turnierName + startDatum + " bis " + endDatum + "</title>\n"
-				+ "</head>\n" + "<body>\n" + "  <h1>" + turnierName + " "
-				+ startDatum + " bis " + endDatum + "</h1>\n" + "  <h2>"
-				+ gruppenName + "</h2>\n";
+		String headerString = "<!DOCTYPE html>\n" //$NON-NLS-1$
+				+ "<html lang='de'>\n" //$NON-NLS-1$
+				+ "<head>\n" //$NON-NLS-1$
+				+ "  <meta charset='utf-8'>\n" //$NON-NLS-1$
+				+ "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n" //$NON-NLS-1$
+				+ "  <link rel='stylesheet' href='style.css'>\n" + "  <title>" //$NON-NLS-1$ //$NON-NLS-2$
+				+ turnierName + startDatum + Messages.getString("TurnierTabelleToHTML.9") + endDatum + "</title>\n" //$NON-NLS-1$ //$NON-NLS-2$
+				+ "</head>\n" + "<body>\n" + "  <h1>" + turnierName + " " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
+				+ startDatum + Messages.getString("TurnierTabelleToHTML.15") + endDatum + "</h1>\n" + "  <h2>" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ gruppenName + "</h2>\n"; //$NON-NLS-1$
 		return headerString;
 	}
 
-	public String getHTMLTable(Boolean ohneHeaderundFooter) {
+	public String getHTMLTable() {
 		int col = this.tabellenMatrix.length;
 		reihenfolge = new int[col];
 
@@ -70,66 +72,75 @@ public class TurnierTabelleToHTML {
 			x++;
 
 		}
-		return makeTurnierTabelle(ohneHeaderundFooter);
+		return makeTurnierTabelle();
 
 	}
 
-	private String makeTurnierTabelle(Boolean ohneHeaderundFooter) {
+	private String makeTurnierTabelle() {
 
 		int col = this.tabellenMatrix.length - 1;
 		int row = this.tabellenMatrix[0].length;
-		if (ohneHeaderundFooter == false) {
+		Boolean ohneDWZ = turnier.getNoDWZCalc();
+		Boolean ohneFolgeDWZ = turnier.getNoFolgeDWZCalc();
+		if (turnier.getOnlyTables() == false) {
 			htmlString = getHTMLHeader();
 		} else {
-			htmlString = "";
+			htmlString = ""; //$NON-NLS-1$
 		}
-		htmlString += "  <table>\n";
+		htmlString += "  <table>\n"; //$NON-NLS-1$
 		for (int y = 0; y < row; y++) {
 			if (y == 0) {
-				htmlString += "    <thead>\n";
+				htmlString += "    <thead>\n"; //$NON-NLS-1$
 			}
 			if (y == 1) {
-				htmlString += "    <tbody>\n";
+				htmlString += "    <tbody>\n"; //$NON-NLS-1$
 			}
-			htmlString += "      <tr>\n";
+			htmlString += "      <tr>\n"; //$NON-NLS-1$
 
 			for (int x = 0; x < col; x++) {
-				String ausgabeWert = this.tabellenMatrix[reihenfolge[x]][y];
-				if (ausgabeWert != null && ausgabeWert != ""
-						&& ausgabeWert != " ") {
+				
+				if ((ohneDWZ == true && x == 2) || (ohneFolgeDWZ == true && x == 3)) {
 
-					if (ausgabeWert == TurnierKonstanten.REMIS) {
-						ausgabeWert = "&frac12;";
-					}
-
-					if (y == 0) {
-						htmlString += "        <th>" + ausgabeWert + "</th>\n";
-					} else {
-						htmlString += "        <td>" + ausgabeWert + "</td>\n";
-					}
 				} else {
-					if (y == 0) {
-						htmlString += "        <th>"
-								+ TurnierKonstanten.HTML_LEERZEICHEN
-								+ "</th>\n";
-					} else {
-						htmlString += "        <td>"
-								+ TurnierKonstanten.HTML_LEERZEICHEN
-								+ "</td>\n";
-					}
-				}
+					String ausgabeWert = this.tabellenMatrix[reihenfolge[x]][y];
+					if (ausgabeWert != null && ausgabeWert != "" //$NON-NLS-1$
+							&& ausgabeWert != " ") { //$NON-NLS-1$
 
+						if (ausgabeWert == TurnierKonstanten.REMIS) {
+							ausgabeWert = "&frac12;"; //$NON-NLS-1$
+						}
+
+						if (y == 0) {
+							htmlString += "        <th>" + ausgabeWert //$NON-NLS-1$
+									+ "</th>\n"; //$NON-NLS-1$
+						} else {
+							htmlString += "        <td>" + ausgabeWert //$NON-NLS-1$
+									+ "</td>\n"; //$NON-NLS-1$
+						}
+					} else {
+						if (y == 0) {
+							htmlString += "        <th>" //$NON-NLS-1$
+									+ TurnierKonstanten.HTML_LEERZEICHEN
+									+ "</th>\n"; //$NON-NLS-1$
+						} else {
+							htmlString += "        <td>" //$NON-NLS-1$
+									+ TurnierKonstanten.HTML_LEERZEICHEN
+									+ "</td>\n"; //$NON-NLS-1$
+						}
+					}
+
+				}
 			}
-			htmlString += "      </tr>\n";
+			htmlString += "      </tr>\n"; //$NON-NLS-1$
 			if (y == 0) {
-				htmlString += "    </thead>\n";
+				htmlString += "    </thead>\n"; //$NON-NLS-1$
 			}
 		}
-		htmlString += "    </tbody>\n  </table>\n";
-		if (infoString != "") {
-			htmlString += "  <p>" + infoString + "</p>\n";
+		htmlString += "    </tbody>\n  </table>\n"; //$NON-NLS-1$
+		if (infoString != "") { //$NON-NLS-1$
+			htmlString += "  <p>" + infoString + "</p>\n"; //$NON-NLS-1$ //$NON-NLS-2$
 		}
-		if (ohneHeaderundFooter == false) {
+		if (turnier.getOnlyTables() == false) {
 			htmlString += getHTMLFooter();
 		}
 		return htmlString;

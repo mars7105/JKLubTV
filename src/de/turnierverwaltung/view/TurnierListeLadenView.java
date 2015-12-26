@@ -43,11 +43,11 @@ public class TurnierListeLadenView extends JPanel {
 	private JButton[] turnierBearbeitenButton;
 
 	private ImageIcon turnierDelete = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-close-4.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-close-4.png"))); //$NON-NLS-1$
 	private ImageIcon turnierProperties = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-edit.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-edit.png"))); //$NON-NLS-1$
 	private ImageIcon turnierLaden = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-preview.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-preview.png"))); //$NON-NLS-1$
 
 	public TurnierListeLadenView(int anzahlTurniere) {
 		makePanel(anzahlTurniere);
@@ -63,7 +63,7 @@ public class TurnierListeLadenView extends JPanel {
 		setLayout(new BorderLayout());
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
-		JLabel titleLabel = new JLabel("Turnierliste");
+		JLabel titleLabel = new JLabel(Messages.getString("TurnierListeLadenView.3")); //$NON-NLS-1$
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.PAGE_AXIS));
@@ -103,14 +103,14 @@ public class TurnierListeLadenView extends JPanel {
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		// buttonLine.setPreferredSize(new Dimension(300,50));
 
-		turnierLadeButton[anzahlElemente] = new JButton("Laden", turnierLaden);
+		turnierLadeButton[anzahlElemente] = new JButton(Messages.getString("TurnierListeLadenView.4"), turnierLaden); //$NON-NLS-1$
 		buttonLine.add(turnierLadeButton[anzahlElemente]);
-		turnierBearbeitenButton[anzahlElemente] = new JButton("Bearbeiten", turnierProperties);
+		turnierBearbeitenButton[anzahlElemente] = new JButton(Messages.getString("TurnierListeLadenView.5"), turnierProperties); //$NON-NLS-1$
 		buttonLine.add(turnierBearbeitenButton[anzahlElemente]);
 
-		turnierLoeschenButton[anzahlElemente] = new JButton("Löschen", turnierDelete);
+		turnierLoeschenButton[anzahlElemente] = new JButton(Messages.getString("TurnierListeLadenView.6"), turnierDelete); //$NON-NLS-1$
 		buttonLine.add(turnierLoeschenButton[anzahlElemente]);
-		JLabel tName = new JLabel("  Turnier: " + turnierName);
+		JLabel tName = new JLabel(Messages.getString("TurnierListeLadenView.7") + turnierName); //$NON-NLS-1$
 		turnierLine.add(tName);
 
 		line.add(turnierLine);

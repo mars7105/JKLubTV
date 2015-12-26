@@ -44,7 +44,7 @@ public class TerminTabelleControl  {
 	private MyTableModelListener tml[];
 	private ArrayList<Partie> changedPartien;
 	private ImageIcon terminTabelleIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
 	public TerminTabelleControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		this.turnier = mainControl.getTurnier();
@@ -85,9 +85,9 @@ public class TerminTabelleControl  {
 
 
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() == 1) {
-			tabAnzeigeView2[gruppenNummer].insertTab("Termintabelle", terminTabelleIcon,
+			tabAnzeigeView2[gruppenNummer].insertTab(Messages.getString("TerminTabelleControl.1"), terminTabelleIcon, //$NON-NLS-1$
 					simpleTableView[gruppenNummer], null, 1);
-		} else {
+		} else if (tabAnzeigeView2[gruppenNummer].getTabCount() > 1){
 
 			tabAnzeigeView2[gruppenNummer].setComponentAt(1,
 					simpleTableView[gruppenNummer]);

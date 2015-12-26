@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -157,16 +158,17 @@ public class NaviController implements ActionListener {
 
 		}
 		if (arg0.getSource() == newTurnierButton) {
+			mainControl.setSpielerEingabeControl(null);
 			Turnier turnier = this.mainControl.getTurnier();
 			if (turnier == null) {
 				mainControl.setTurnierControl(new TurnierControl(mainControl));
 			} else {
 				// Custom button text
-				Object[] options = { "Ja", "Abbrechen" };
+				Object[] options = { Messages.getString("NaviController.0"), Messages.getString("NaviController.1") }; //$NON-NLS-1$ //$NON-NLS-2$
 				int abfrage = JOptionPane.showOptionDialog(null,
-						"Wollen Sie wirklich ein neues Turnier erstellen? "
-								+ "Alle eingegebenen Daten gehen verloren.",
-						"A Silly Question", JOptionPane.YES_NO_CANCEL_OPTION,
+						Messages.getString("NaviController.2") //$NON-NLS-1$
+								+ Messages.getString("NaviController.3"), //$NON-NLS-1$
+						Messages.getString("NaviController.4"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
 						JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 				if (abfrage == 0) {
 					// mainControl.resetApp();
@@ -183,15 +185,15 @@ public class NaviController implements ActionListener {
 				// this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 
 				String filename = JOptionPane.showInputDialog(null,
-						"Dateiname : ", "Eine Eingabeaufforderung",
+						Messages.getString("NaviController.5"), Messages.getString("NaviController.6"), //$NON-NLS-1$ //$NON-NLS-2$
 						JOptionPane.PLAIN_MESSAGE);
 
 				if (filename != null) {
-					filename += ".ktv";
+					filename += ".ktv"; //$NON-NLS-1$
 
 					JFileChooser savefile = new JFileChooser();
 					FileFilter filter = new FileNameExtensionFilter(
-							"Turnier Datenbank", "ktv");
+							Messages.getString("NaviController.8"), "ktv"); //$NON-NLS-1$ //$NON-NLS-2$
 					savefile.addChoosableFileFilter(filter);
 					savefile.setFileFilter(filter);
 					savefile.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -205,7 +207,7 @@ public class NaviController implements ActionListener {
 							File file = savefile.getSelectedFile();
 							writer = new BufferedWriter(new FileWriter(
 									savefile.getSelectedFile()));
-							writer.write("");
+							writer.write(Messages.getString("NaviController.10")); //$NON-NLS-1$
 							writer.close();
 
 							// true for rewrite, false for override
@@ -214,7 +216,7 @@ public class NaviController implements ActionListener {
 							sqlC.createAllTables();
 							// mainControl.datenbankMenueView(true);
 							JOptionPane.showMessageDialog(null,
-									"Datei wurde gespeichert.", "File Saved",
+									Messages.getString("NaviController.11"), Messages.getString("NaviController.12"), //$NON-NLS-1$ //$NON-NLS-2$
 									JOptionPane.INFORMATION_MESSAGE);
 							this.mainControl.setNeuesTurnier(false);
 							mainControl
@@ -233,8 +235,8 @@ public class NaviController implements ActionListener {
 							mainControl.getTurnierListeLadenControl()
 									.loadTurnierListe();
 
-							mainControl.getPropertiesControl().setProperties(
-									"Path", SQLiteDAOFactory.getDB_PATH());
+							mainControl.getPropertiesControl().setPath(
+									SQLiteDAOFactory.getDB_PATH());
 							mainControl.getPropertiesControl()
 									.writeProperties();
 							turnierAnsicht = new TurnierAnsicht(mainControl);
@@ -245,11 +247,11 @@ public class NaviController implements ActionListener {
 
 						} catch (IOException e) {
 							JOptionPane.showMessageDialog(null,
-									"Vorgang abgebrochen!");
+									Messages.getString("NaviController.13")); //$NON-NLS-1$
 						}
 					} else if (sf == JFileChooser.CANCEL_OPTION) {
 						JOptionPane.showMessageDialog(null,
-								"Vorgang abgebrochen!");
+								Messages.getString("NaviController.14")); //$NON-NLS-1$
 					}
 				}
 			}
@@ -264,7 +266,7 @@ public class NaviController implements ActionListener {
 				// Create a file chooser
 				JFileChooser fc = new JFileChooser();
 				FileFilter filter = new FileNameExtensionFilter(
-						"Turnier Datenbank", "ktv");
+						Messages.getString("NaviController.15"), Messages.getString("NaviController.16")); //$NON-NLS-1$ //$NON-NLS-2$
 				fc.addChoosableFileFilter(filter);
 				fc.setFileFilter(filter);
 				int returnVal = fc.showOpenDialog(null);
@@ -298,7 +300,7 @@ public class NaviController implements ActionListener {
 							.loadTurnierListe();
 					naviView.setPathToDatabase(new JLabel(file.getName()));
 
-					mainControl.getPropertiesControl().setProperties("Path",
+					mainControl.getPropertiesControl().setPath(
 							SQLiteDAOFactory.getDB_PATH());
 					mainControl.getPropertiesControl().writeProperties();
 					turnierAnsicht = new TurnierAnsicht(mainControl);
@@ -307,14 +309,14 @@ public class NaviController implements ActionListener {
 					for (int i = 0; i < mainControl.getHauptPanel()
 							.getTabCount(); i++) {
 						if (mainControl.getHauptPanel().getTitleAt(i)
-								.equals("Turnierliste")) {
+								.equals(Messages.getString("NaviController.17"))) { //$NON-NLS-1$
 							mainControl.getHauptPanel().setSelectedIndex(i);
 						}
 					}
 					naviView.updateUI();
 
 				} else {
-					JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
+					JOptionPane.showMessageDialog(null, Messages.getString("NaviController.18")); //$NON-NLS-1$
 				}
 
 			}
@@ -351,7 +353,7 @@ public class NaviController implements ActionListener {
 
 			} else {
 				JOptionPane.showMessageDialog(null,
-						"Erst nach der Eingabe aller Gruppen\n" + "möglich.");
+						Messages.getString("NaviController.19") + Messages.getString("NaviController.20")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 
 		}
@@ -387,6 +389,14 @@ public class NaviController implements ActionListener {
 				if (changedGroups >= STANDARD) {
 					this.mainControl.getTurnierTabelleControl().okAction(i);
 
+					if (x == TURNIERTABELLE) {
+						mainControl.getTurnierTabelleControl()
+								.makeSimpleTableView(i);
+					}
+					if (x == TERMINTABELLE) {
+						mainControl.getTerminTabelleControl()
+								.makeSimpleTableView(i);
+					}
 					if (x == PAARUNGSTABELLE) {
 						if (changedGroups == SORTIEREN) {
 							Arrays.sort(mainControl.getTurnier().getGruppe()[i]
@@ -395,10 +405,6 @@ public class NaviController implements ActionListener {
 						mainControl.getRundenEingabeFormularControl()
 								.makeNewFormular(i);
 					}
-					mainControl.getTurnierTabelleControl().makeSimpleTableView(
-							i);
-					mainControl.getTerminTabelleControl()
-							.makeSimpleTableView(i);
 					mainControl.getRundenEingabeFormularControl()
 							.getChangedGroups()[i][x] = 0;
 				}
@@ -418,15 +424,15 @@ public class NaviController implements ActionListener {
 
 	private int warnHinweis() {
 		int abfrage = 0;
-		String hinweisText = "Alle Änderungen gehen eventuell verloren "
-				+ "\nwenn Sie die Tabellen nicht gespeichert haben."
-				+ "\nMöchten Sie den Menüpunkt trotzdem laden?";
+		String hinweisText = Messages.getString("NaviController.21") //$NON-NLS-1$
+				+ Messages.getString("NaviController.22") //$NON-NLS-1$
+				+ Messages.getString("NaviController.23"); //$NON-NLS-1$
 		if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
 			abfrage = 1;
 			// Custom button text
-			Object[] options = { "Ja", "Abbrechen" };
+			Object[] options = { Messages.getString("NaviController.24"), Messages.getString("NaviController.25") }; //$NON-NLS-1$ //$NON-NLS-2$
 			abfrage = JOptionPane.showOptionDialog(null, hinweisText,
-					"Meldung", JOptionPane.YES_NO_CANCEL_OPTION,
+					Messages.getString("NaviController.26"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
 					JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
 		}
@@ -463,13 +469,13 @@ public class NaviController implements ActionListener {
 			if (e.getSource() instanceof JTabbedPane) {
 				JTabbedPane pane = (JTabbedPane) e.getSource();
 				int selectedIndex = pane.getSelectedIndex();
-				String turnierName = "";
+				String turnierName = Messages.getString("NaviController.27"); //$NON-NLS-1$
 				if (this.mainControl.getTurnier() != null) {
 					turnierName = this.mainControl.getTurnier()
 							.getTurnierName();
 					if (pane.getTitleAt(selectedIndex).equals(turnierName)
 							|| pane.getTitleAt(selectedIndex).equals(
-									"Neues Turnier")) {
+									Messages.getString("NaviController.28"))) { //$NON-NLS-1$
 						this.mainControl.getNaviView().getTabellenPanel()
 								.setVisible(true);
 
@@ -480,7 +486,7 @@ public class NaviController implements ActionListener {
 
 				}
 
-				if (pane.getTitleAt(selectedIndex).equals("Turnierliste")) {
+				if (pane.getTitleAt(selectedIndex).equals(Messages.getString("NaviController.29"))) { //$NON-NLS-1$
 					this.mainControl.getNaviView().getTurnierListePanel()
 							.setVisible(true);
 
@@ -488,7 +494,7 @@ public class NaviController implements ActionListener {
 					this.mainControl.getNaviView().getTurnierListePanel()
 							.setVisible(false);
 				}
-				if (pane.getTitleAt(selectedIndex).equals("Spielerliste")) {
+				if (pane.getTitleAt(selectedIndex).equals(Messages.getString("NaviController.30"))) { //$NON-NLS-1$
 					this.mainControl.getNaviView().getSpielerListePanel()
 							.setVisible(true);
 

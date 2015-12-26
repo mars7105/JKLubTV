@@ -36,7 +36,6 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-
 import de.turnierverwaltung.model.Turnier;
 
 public class TurnierEditierenView extends JDialog {
@@ -51,7 +50,7 @@ public class TurnierEditierenView extends JDialog {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		private String datePattern = "dd.MM.yyy";
+		private String datePattern = "dd.MM.yyy"; //$NON-NLS-1$
 		private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
 
 		@Override
@@ -66,7 +65,7 @@ public class TurnierEditierenView extends JDialog {
 				return dateFormatter.format(cal.getTime());
 			}
 
-			return "";
+			return ""; //$NON-NLS-1$
 		}
 
 	}
@@ -86,14 +85,14 @@ public class TurnierEditierenView extends JDialog {
 //		this.rundenEditierenButton = new JButton("Paarungen bearbeiten");
 		this.textFieldGruppenName = new JTextField[turnier.getAnzahlGruppen()];
 		property = new Properties();
-		property.put("text.today", "Heute");
-		property.put("text.month", "Monat");
-		property.put("text.year", "Jahr");
-		this.okButton = new JButton("Speichern");
-		this.cancelButton = new JButton("Abbrechen");
+		property.put("text.today", Messages.getString("TurnierEditierenView.3")); //$NON-NLS-1$ //$NON-NLS-2$
+		property.put("text.month", Messages.getString("TurnierEditierenView.5")); //$NON-NLS-1$ //$NON-NLS-2$
+		property.put("text.year", Messages.getString("TurnierEditierenView.7")); //$NON-NLS-1$ //$NON-NLS-2$
+		this.okButton = new JButton(Messages.getString("TurnierEditierenView.8")); //$NON-NLS-1$
+		this.cancelButton = new JButton(Messages.getString("TurnierEditierenView.9")); //$NON-NLS-1$
 		this.textFieldTurnierName = new JTextField(20);
 		this.setAlwaysOnTop(true);
-		setTitle("Turnier editieren");
+		setTitle(Messages.getString("TurnierEditierenView.10")); //$NON-NLS-1$
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
@@ -106,7 +105,7 @@ public class TurnierEditierenView extends JDialog {
 		textFieldTurnierName.setText(turnier.getTurnierName());
 		JLabel label = new JLabel();
 		label.setPreferredSize(new Dimension(120,10));
-		label.setText("Turniername: ");
+		label.setText(Messages.getString("TurnierEditierenView.11")); //$NON-NLS-1$
 		centerPane.add(label);
 		centerPane.add(textFieldTurnierName);
 		contentPanel.add(centerPane);
@@ -120,7 +119,7 @@ public class TurnierEditierenView extends JDialog {
 		centerPane.setBackground(new Color(249, 222, 112));
 		label = new JLabel();
 		label.setPreferredSize(new Dimension(120,10));
-		label.setText("Startdatum: ");
+		label.setText(Messages.getString("TurnierEditierenView.12")); //$NON-NLS-1$
 		centerPane.add(label);
 		centerPane.add(startDatumTextField);
 		contentPanel.add(centerPane);
@@ -135,7 +134,7 @@ public class TurnierEditierenView extends JDialog {
 		centerPane.setBackground(new Color(249, 222, 112));
 		label = new JLabel();
 		label.setPreferredSize(new Dimension(120,10));
-		label.setText("Enddatum: ");
+		label.setText(Messages.getString("TurnierEditierenView.13")); //$NON-NLS-1$
 		centerPane.add(label);
 		centerPane.add(endDatumTextField);
 		contentPanel.add(centerPane);
@@ -154,7 +153,7 @@ public class TurnierEditierenView extends JDialog {
 			textFieldGruppenName[i].setText(turnier.getGruppe()[i].getGruppenName());
 			label = new JLabel();
 			label.setPreferredSize(new Dimension(120,10));
-			label.setText("Gruppenname " + (i + 1));
+			label.setText(Messages.getString("TurnierEditierenView.14") + (i + 1)); //$NON-NLS-1$
 			centerPane.add(label);
 			centerPane.add(textFieldGruppenName[i]);
 
@@ -174,7 +173,7 @@ public class TurnierEditierenView extends JDialog {
 		int[] dateInt = new int[3];
 
 		int index = 0;
-		for (String zahlenWerte : datum.split("\\.")) {
+		for (String zahlenWerte : datum.split("\\.")) { //$NON-NLS-1$
 
 			dateInt[index] = Integer.parseInt(zahlenWerte);
 

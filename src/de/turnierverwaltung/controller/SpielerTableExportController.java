@@ -52,13 +52,13 @@ public class SpielerTableExportController {
 
 			try {
 				int positionEXT = filename.lastIndexOf('.');
-				String newFile = "";
+				String newFile = ""; //$NON-NLS-1$
 				if (positionEXT > 0) {
-					newFile = filename.substring(0, positionEXT) + ".spl";
+					newFile = filename.substring(0, positionEXT) + ".spl"; //$NON-NLS-1$
 				}
 				File savefile = new File(newFile);
 				writer = new BufferedWriter(new FileWriter(savefile.getAbsolutePath()));
-				writer.write("");
+				writer.write(""); //$NON-NLS-1$
 				writer.close();
 
 				// true for rewrite, false for override
@@ -74,7 +74,7 @@ public class SpielerTableExportController {
 					mySQLSpielerDAO.insertSpieler(oneSpieler.getName(), oneSpieler.getDwz(), oneSpieler.getKuerzel(),
 							oneSpieler.getAge());
 				}
-				JOptionPane.showMessageDialog(null, "Datei wurde gespeichert.\n Dateiname:\n" + newFile, "File Saved",
+				JOptionPane.showMessageDialog(null, Messages.getString("SpielerTableExportController.3") + newFile, Messages.getString("SpielerTableExportController.4"), //$NON-NLS-1$ //$NON-NLS-2$
 						JOptionPane.INFORMATION_MESSAGE);
 				SQLiteDAOFactory.setDB_PATH(filename);
 			} catch (IOException e) {

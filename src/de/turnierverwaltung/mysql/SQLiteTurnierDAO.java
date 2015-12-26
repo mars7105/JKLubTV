@@ -21,9 +21,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 
+import de.turnierverwaltung.controller.PropertiesControl;
 import de.turnierverwaltung.model.Turnier;
 
 public class SQLiteTurnierDAO implements TurnierDAO {
@@ -38,7 +38,8 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 	@Override
 	public void createTurnierTable() {
 		String sql = "CREATE TABLE turnier (idTurnier INTEGER PRIMARY KEY "
-				+ "AUTOINCREMENT  NOT NULL , Datum_idDatum INTEGER, Turniername VARCHAR)" + ";";
+				+ "AUTOINCREMENT  NOT NULL , Datum_idDatum INTEGER, Turniername VARCHAR)"
+				+ ";";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -60,8 +61,10 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 	@Override
 	public boolean deleteTurnier(int id) {
 		boolean ok = false;
-		String datum = "Select Datum_idDatum from turnier where idTurnier=" + id + ";";
-		String gruppe = "Select idGruppe from gruppen where TurnierId=" + id + ";";
+		String datum = "Select Datum_idDatum from turnier where idTurnier="
+				+ id + ";";
+		String gruppe = "Select idGruppe from gruppen where TurnierId=" + id
+				+ ";";
 		String sql = "delete from turnier where idTurnier=?" + ";";
 		Statement stmt;
 		int datumId = 0;
@@ -108,7 +111,8 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 					preStm.executeBatch();
 					this.dbConnect.setAutoCommit(true); // Turnier_has_Spieler
 														// l�schen
-					sql = "delete from turnier_has_spieler where Gruppe_idGruppe=?" + ";";
+					sql = "delete from turnier_has_spieler where Gruppe_idGruppe=?"
+							+ ";";
 					preStm = this.dbConnect.prepareStatement(sql);
 					preStm.setInt(1, gruppeId);
 					preStm.addBatch();
@@ -140,9 +144,12 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 	}
 
 	@Override
-	public Turnier findTurnier(int id) {
-		String sql = "Select Startdatum, Enddatum, Turniername, Datum_idDatum, idDatum" + "from turnier,datum "
-				+ "where idTurnier=" + id + " AND Datum_idDatum = idDatum" + ";";
+	public Turnier findTurnier(int id, PropertiesControl prop) {
+		String sql = "Select Startdatum, Enddatum, Turniername, Datum_idDatum, idDatum"
+				+ "from turnier,datum "
+				+ "where idTurnier="
+				+ id
+				+ " AND Datum_idDatum = idDatum" + ";";
 		Turnier turnier = null;
 
 		Statement stmt;
@@ -156,7 +163,10 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 					String turnierName = rs.getString("Turniername");
 					String startDatum = rs.getString("Startdatum");
 					String endDatum = rs.getString("Enddatum");
-					turnier = new Turnier(turnierId, turnierName, startDatum, endDatum);
+
+					turnier = new Turnier(turnierId, turnierName, startDatum,
+							endDatum, prop.getOnlyTables(), prop.getNoDWZ(),
+							prop.getNoFolgeDWZ());
 
 				}
 				stmt.close();
@@ -178,7 +188,8 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 		int id = -1;
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
+						Statement.RETURN_GENERATED_KEYS);
 
 				preStm.setString(1, turnierName);
 				preStm.setInt(2, datumId);
@@ -204,8 +215,9 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 	}
 
 	@Override
-	public ArrayList<Turnier> selectAllTurnier() {
-		String sql = "Select * from turnier, datum where Datum_idDatum = idDatum" + ";";
+	public ArrayList<Turnier> selectAllTurnier(PropertiesControl prop) {
+		String sql = "Select * from turnier, datum where Datum_idDatum = idDatum"
+				+ ";";
 		ArrayList<Turnier> turnierListe = new ArrayList<Turnier>();
 
 		Statement stmt;
@@ -219,7 +231,9 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 					String turnierName = rs.getString("Turniername");
 					String startDatum = rs.getString("Startdatum");
 					String endDatum = rs.getString("Enddatum");
-					turnierListe.add(new Turnier(id, turnierName, startDatum, endDatum));
+					turnierListe.add(new Turnier(id, turnierName, startDatum,
+							endDatum, prop.getOnlyTables(), prop.getNoDWZ(),
+							prop.getNoFolgeDWZ()));
 				}
 				stmt.close();
 
@@ -234,7 +248,8 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 	@Override
 	public boolean updateTurnier(Turnier turnier) {
 		boolean ok = false;
-		String datum = "Select Datum_idDatum from turnier where idTurnier=" + turnier.getTurnierId() + ";";
+		String datum = "Select Datum_idDatum from turnier where idTurnier="
+				+ turnier.getTurnierId() + ";";
 		int datumId = -1;
 		if (this.dbConnect != null) {
 			// Datum l�schen
@@ -256,12 +271,15 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 			}
 		}
 		// String sql0 = "BEGIN;";
-		String sql1 = "update turnier set Turniername = ?" + " where idTurnier = " + turnier.getTurnierId() + ";";
-		String sql2 = "update datum set Startdatum = ?, Enddatum = ?" + " where idDatum = " + datumId + ";";
+		String sql1 = "update turnier set Turniername = ?"
+				+ " where idTurnier = " + turnier.getTurnierId() + ";";
+		String sql2 = "update datum set Startdatum = ?, Enddatum = ?"
+				+ " where idDatum = " + datumId + ";";
 
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql1);
+				PreparedStatement preStm = this.dbConnect
+						.prepareStatement(sql1);
 				preStm.setString(1, turnier.getTurnierName());
 				preStm.addBatch();
 				this.dbConnect.setAutoCommit(false);
@@ -276,7 +294,8 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 		}
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql2);
+				PreparedStatement preStm = this.dbConnect
+						.prepareStatement(sql2);
 
 				preStm.setString(1, turnier.getStartDatum());
 				preStm.setString(2, turnier.getEndDatum());

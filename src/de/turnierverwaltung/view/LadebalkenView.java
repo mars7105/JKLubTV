@@ -39,7 +39,7 @@ public class LadebalkenView extends JDialog {
 	public LadebalkenView(String text, int gruppenAnzahl) {
 		addNumber = 20 / (double)gruppenAnzahl;
 		this.setAlwaysOnTop(true);
-		setTitle("Speichervorgang");
+		setTitle(Messages.getString("LadebalkenView.0")); //$NON-NLS-1$
 		
 		progressBar = new JProgressBar(0, 100);
 

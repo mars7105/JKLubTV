@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -40,14 +41,17 @@ public class HTMLSaveControler {
 	}
 
 	public void saveHTMLFile() {
-		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+		Boolean ready = mainControl.getRundenEingabeFormularControl()
+				.checkNewTurnier();
 		if (ready) {
-			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
-			String filename = JOptionPane.showInputDialog(null, "Anfangsname der Dateien : ",
-					"Eine Eingabeaufforderung", JOptionPane.PLAIN_MESSAGE);
+			int anzahlGruppen = this.mainControl.getTurnier()
+					.getAnzahlGruppen();
+			String filename = JOptionPane.showInputDialog(null,
+					Messages.getString("HTMLSaveControler.0"), Messages.getString("HTMLSaveControler.1"), //$NON-NLS-1$ //$NON-NLS-2$
+					JOptionPane.PLAIN_MESSAGE);
 			if (filename != null) {
 				JFileChooser savefile = new JFileChooser();
-				FileFilter filter = new FileNameExtensionFilter("HTML", "html");
+				FileFilter filter = new FileNameExtensionFilter("HTML", "html"); //$NON-NLS-1$ //$NON-NLS-2$
 				savefile.addChoosableFileFilter(filter);
 				savefile.setFileFilter(filter);
 				savefile.setSelectedFile(new File(filename));
@@ -57,24 +61,44 @@ public class HTMLSaveControler {
 				if (sf == JFileChooser.APPROVE_OPTION) {
 
 					for (int i = 0; i < anzahlGruppen; i++) {
+						if (this.mainControl.getTurnierTabelle()[i] == null) {
+							this.mainControl.getTurnierTabelleControl()
+									.makeSimpleTableView(i);
+							this.mainControl.getTerminTabelleControl()
+									.makeSimpleTableView(i);
+						}
 						this.mainControl.getTurnierTabelle()[i].createMatrix();
-						int spalte = this.mainControl.getSimpleTableView()[i].getTable().getModel().getColumnCount();
-						int zeile = this.mainControl.getSimpleTableView()[i].getTable().getModel().getRowCount();
+						int spalte = this.mainControl.getSimpleTableView()[i]
+								.getTable().getModel().getColumnCount();
+						int zeile = this.mainControl.getSimpleTableView()[i]
+								.getTable().getModel().getRowCount();
 						for (int x = 0; x < spalte; x++) {
 							for (int y = 0; y < zeile; y++) {
 
-								this.mainControl.getTurnierTabelle()[i].getTabellenMatrix()[x][y
-										+ 1] = (String) this.mainControl.getSimpleTableView()[i].getTable()
-												.getValueAt(y, x);
+								this.mainControl.getTurnierTabelle()[i]
+										.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
+										.getSimpleTableView()[i].getTable()
+										.getValueAt(y, x);
 
 							}
 						}
 						if (filename != null) {
-							File filename1 = new File(savefile.getCurrentDirectory() + "/" + filename + "_Kreuztabelle_"
-									+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".html");
+							File filename1 = new File(
+									savefile.getCurrentDirectory()
+											+ "/" //$NON-NLS-1$
+											+ filename
+											+ Messages.getString("HTMLSaveControler.5") //$NON-NLS-1$
+											+ mainControl.getTurnier()
+													.getGruppe()[i]
+													.getGruppenName() + ".html"); //$NON-NLS-1$
 							File filename2 = new File(
-									savefile.getCurrentDirectory() + "/" + filename + "_Termintabelle_"
-											+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".html");
+									savefile.getCurrentDirectory()
+											+ "/" //$NON-NLS-1$
+											+ filename
+											+ Messages.getString("HTMLSaveControler.8") //$NON-NLS-1$
+											+ mainControl.getTurnier()
+													.getGruppe()[i]
+													.getGruppenName() + ".html"); //$NON-NLS-1$
 
 							// BufferedWriter writer;
 							Writer writer1;
@@ -82,31 +106,37 @@ public class HTMLSaveControler {
 
 							try {
 								// Construct a writer for a specific encoding
-								writer1 = new OutputStreamWriter(new FileOutputStream(filename1), "UTF8");
-								String wert = mainControl.getPropertiesControl().getProperties(
-										"onlyTables");
-								Boolean ohneHeaderundFooter = true;
-								if (wert.equals("true")) {
-									ohneHeaderundFooter	 = true;	
-								} else {
-									ohneHeaderundFooter	 = false;							
-
-								}
-								writer1.write(this.mainControl.getTurnierTabelle()[i].getHTMLTable(ohneHeaderundFooter));
+								writer1 = new OutputStreamWriter(
+										new FileOutputStream(filename1), "UTF8"); //$NON-NLS-1$
+								Boolean ohneHeaderundFooter = mainControl
+										.getPropertiesControl().getOnlyTables();
+								
+								
+								writer1.write(this.mainControl
+										.getTurnierTabelle()[i]
+										.getHTMLTable());
 								writer1.flush();
 								writer1.close();
-								writer2 = new OutputStreamWriter(new FileOutputStream(filename2), "UTF8");
-								writer2.write(this.mainControl.getTerminTabelleControl().getTerminTabelle()[i]
+								writer2 = new OutputStreamWriter(
+										new FileOutputStream(filename2), "UTF8"); //$NON-NLS-1$
+								writer2.write(this.mainControl
+										.getTerminTabelleControl()
+										.getTerminTabelle()[i]
 										.getHTMLTable(ohneHeaderundFooter));
 								writer2.flush();
 								writer2.close();
 								try {
 									InputStreamReader isReader = new InputStreamReader(
-											this.getClass().getResourceAsStream("/files/style.css"));
-									BufferedReader br = new BufferedReader(isReader);
+											this.getClass()
+													.getResourceAsStream(
+															"/files/style.css")); //$NON-NLS-1$
+									BufferedReader br = new BufferedReader(
+											isReader);
 
 									PrintWriter writer3 = new PrintWriter(
-											new File(savefile.getCurrentDirectory() + "/style.css"));
+											new File(savefile
+													.getCurrentDirectory()
+													+ "/style.css")); //$NON-NLS-1$
 
 									String Bs;
 									while ((Bs = br.readLine()) != null) {
@@ -117,28 +147,34 @@ public class HTMLSaveControler {
 									br.close();
 
 								} catch (FileNotFoundException fnfe) {
-									JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
+									JOptionPane.showMessageDialog(null,
+											Messages.getString("HTMLSaveControler.14")); //$NON-NLS-1$
 								} catch (IOException ioe) {
-									JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
+									JOptionPane.showMessageDialog(null,
+											Messages.getString("HTMLSaveControler.15")); //$NON-NLS-1$
 								}
 
 							} catch (IOException e) {
-								JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
+								JOptionPane.showMessageDialog(null,
+										Messages.getString("HTMLSaveControler.16")); //$NON-NLS-1$
 							}
 
 						} else if (sf == JFileChooser.CANCEL_OPTION) {
-							JOptionPane.showMessageDialog(null, "Vorgang abgebrochen!");
+							JOptionPane.showMessageDialog(null,
+									Messages.getString("HTMLSaveControler.17")); //$NON-NLS-1$
 						}
 
 					}
-					JOptionPane.showMessageDialog(null, "Dateien gespeichert.");
+					JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.18")); //$NON-NLS-1$
 					// File file = savefile.getSelectedFile();
 					// first check if Desktop is supported by
 					// Platform or not
 					if (!Desktop.isDesktopSupported())
 
 					{
-						JOptionPane.showMessageDialog(null, "Desktop is not supported.", "Folder not opened",
+						JOptionPane.showMessageDialog(null,
+								Messages.getString("HTMLSaveControler.19"), //$NON-NLS-1$
+								Messages.getString("HTMLSaveControler.20"), //$NON-NLS-1$
 								JOptionPane.INFORMATION_MESSAGE);
 					} else
 
@@ -155,7 +191,8 @@ public class HTMLSaveControler {
 				}
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "Erst nach der Eingabe aller Gruppen\n" + "möglich.");
+			JOptionPane.showMessageDialog(null,
+					Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		}
 	}

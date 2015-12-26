@@ -42,7 +42,7 @@ public class InfoView extends JPanel {
 		contentPanel.setLayout(new FlowLayout());
 		setLayout(new BorderLayout());
 		
-		JLabel titleLabel = new JLabel("Informationen zum Programm");
+		JLabel titleLabel = new JLabel(Messages.getString("InfoView.0")); //$NON-NLS-1$
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel northPanel = new JPanel();

@@ -58,11 +58,11 @@ public class TerminTabelle {
 //	}
 
 	public void createTerminTabelle() {
-		tabellenMatrix[0][0] = "Runde";
-		tabellenMatrix[1][0] = "Weiss";
-		tabellenMatrix[2][0] = "Schwarz";
-		tabellenMatrix[3][0] = "Ergebnis";
-		tabellenMatrix[4][0] = "Termin";
+		tabellenMatrix[0][0] = Messages.getString("TerminTabelle.0"); //$NON-NLS-1$
+		tabellenMatrix[1][0] = Messages.getString("TerminTabelle.1"); //$NON-NLS-1$
+		tabellenMatrix[2][0] = Messages.getString("TerminTabelle.2"); //$NON-NLS-1$
+		tabellenMatrix[3][0] = Messages.getString("TerminTabelle.3"); //$NON-NLS-1$
+		tabellenMatrix[4][0] = Messages.getString("TerminTabelle.4"); //$NON-NLS-1$
 		int index = 0;
 		for (int i = 0; i < spielerAnzahl - 1; i++) {
 			for (int y = i + 1; y < spielerAnzahl; y++) {
@@ -77,7 +77,7 @@ public class TerminTabelle {
 						.getErgebnis());
 				tabellenMatrix[4][index + 1] = partien[index].getSpielDatum();
 				if (tabellenMatrix[4][index + 1] == null) {
-					tabellenMatrix[4][index + 1] = "";
+					tabellenMatrix[4][index + 1] = ""; //$NON-NLS-1$
 				}
 				index++;
 			}

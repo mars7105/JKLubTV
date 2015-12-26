@@ -16,6 +16,7 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.BorderLayout;
+
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -35,8 +36,6 @@ public class SimpleTurnierTabelleView extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private final int small = 50;
-	private final int medium = 100;
-	private final int big = 275;
 	private JButton okButton;
 	private JButton saveButton;
 	private JButton htmlButton;
@@ -55,16 +54,16 @@ public class SimpleTurnierTabelleView extends JPanel {
 		// table.setFont(fnt);
 
 		comboBox = new JComboBox<String>();
-		comboBox.addItem(" ");
-		comboBox.addItem("0");
+		comboBox.addItem(" "); //$NON-NLS-1$
+		comboBox.addItem("0"); //$NON-NLS-1$
 		comboBox.addItem(TurnierKonstanten.REMIS);
-		comboBox.addItem("1");
-		comboBox.addItem("-");
-		comboBox.addItem("+");
+		comboBox.addItem("1"); //$NON-NLS-1$
+		comboBox.addItem("-"); //$NON-NLS-1$
+		comboBox.addItem("+"); //$NON-NLS-1$
 		setColumnWidth();
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		// table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		table.setRowHeight(20);
+//		 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.setRowHeight(30);
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
 		// JPanel haupt = new JPanel();
@@ -76,7 +75,7 @@ public class SimpleTurnierTabelleView extends JPanel {
 
 		JPanel hinweis = new JPanel();
 		hinweis.add(new JLabel(
-				"Geben Sie die Ergebnisse direkt in die Zellen ein " + "und klicken Sie dann auf \"Aktualisieren\"."));
+				Messages.getString("SimpleTurnierTabelleView.5") + Messages.getString("SimpleTurnierTabelleView.6"))); //$NON-NLS-1$ //$NON-NLS-2$
 		tabelPanel.add(hinweis, BorderLayout.SOUTH);
 		// haupt.add(tabelPanel,BorderLayout.CENTER);
 		add(tabelPanel, BorderLayout.CENTER);
@@ -111,17 +110,22 @@ public class SimpleTurnierTabelleView extends JPanel {
 		for (int i = 0; i < columnCount; i++) {
 			TableColumn c = table.getColumnModel().getColumn(i);
 			if (i < 1) {
-				c.setPreferredWidth(big);
+//				c.setPreferredWidth(big);
 			}
 			if (i >= 1 && i < 4) {
-				c.setPreferredWidth(medium);
+//				c.setPreferredWidth(medium);
+			}
+			if (i == 1) {
+				c.setMinWidth(0);
+				c.setMaxWidth(0);
+				c.setPreferredWidth(0);
 			}
 			if (i >= 4 && i < punkte) {
 				c.setCellEditor(new DefaultCellEditor(comboBox));
 				c.setPreferredWidth(small);
 			}
 			if (i >= punkte) {
-				c.setPreferredWidth(medium);
+//				c.setPreferredWidth(medium);
 			}
 
 		}

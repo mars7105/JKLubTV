@@ -1,21 +1,5 @@
 package de.turnierverwaltung.controller;
 
-//JKlubTV - Ein Programm zum verwalten von Schach Turnieren
-//Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
-//
-//This program is free software: you can redistribute it and/or modify
-//it under the terms of the GNU General Public License as published by
-//the Free Software Foundation, either version 3 of the License, or
-//(at your option) any later version.
-//
-//This program is distributed in the hope that it will be useful,
-//but WITHOUT ANY WARRANTY; without even the implied warranty of
-//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//GNU General Public License for more details.
-//
-//You should have received a copy of the GNU General Public License
-//along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
@@ -23,6 +7,7 @@ import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
@@ -49,8 +34,9 @@ public class TurnierTabelleControl {
 	private Dimension dimension[];
 	private int[] spielerAnzahl;
 	private ArrayList<Partie> changedPartien;
-	private ImageIcon turniertabelleIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/x-office-spreadsheet.png")));
+	private ImageIcon turniertabelleIcon = new ImageIcon(Toolkit
+			.getDefaultToolkit().getImage(
+					getClass().getResource("/images/x-office-spreadsheet.png"))); //$NON-NLS-1$
 
 	public TurnierTabelleControl(MainControl mainControl) {
 
@@ -89,24 +75,6 @@ public class TurnierTabelleControl {
 
 	}
 
-//	public void enableDatenbankMenu() {
-//		boolean enableSaveMenu = false;
-//		if (simpleTableView != null) {
-//			for (int i = 0; i < turnier.getAnzahlGruppen(); i++) {
-//				if (simpleTableView[i] != null) {
-//					enableSaveMenu = true;
-//				} else {
-//					enableSaveMenu = false;
-//					break;
-//				}
-//			}
-//		}
-
-//		this.mainControl.getMenueView().getMntmSpeichern().setEnabled(enableSaveMenu);
-
-		// mainControl.datenbankMenueView(enableSaveMenu);
-//	}
-
 	public MyTableModelListener[] getTml() {
 		return tml;
 	}
@@ -116,16 +84,17 @@ public class TurnierTabelleControl {
 	}
 
 	public void makeSimpleTableView(int gruppenNummer) {
-		berechneFolgeDWZ(gruppenNummer);
 
-//		mainControl.getMenueControl().setWarnHinweis(true);
+		// mainControl.getMenueControl().setWarnHinweis(true);
 		turnier = mainControl.getTurnier();
 		if (tml[gruppenNummer] == null) {
 			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer);
 		}
 		Arrays.sort(turnier.getGruppe()[gruppenNummer].getPartien());
-		spielerAnzahl[gruppenNummer] = turnier.getGruppe()[gruppenNummer].getSpielerAnzahl();
-		if (turnier.getGruppe()[gruppenNummer].getSpieler()[spielerAnzahl[gruppenNummer] - 1].getSpielerId() == -2) {
+		spielerAnzahl[gruppenNummer] = turnier.getGruppe()[gruppenNummer]
+				.getSpielerAnzahl();
+		if (turnier.getGruppe()[gruppenNummer].getSpieler()[spielerAnzahl[gruppenNummer] - 1]
+				.getSpielerId() == -2) {
 			spielerAnzahl[gruppenNummer]--;
 		}
 		this.turnierTabelle[gruppenNummer] = new TurnierTabelle(turnier,
@@ -134,40 +103,89 @@ public class TurnierTabelleControl {
 
 		simpleTableView[gruppenNummer] = new SimpleTurnierTabelleView(
 				new SimpleTurnierTabelle(this.turnierTabelle[gruppenNummer]));
-		simpleTableView[gruppenNummer].setBackground(new Color(249, 222, 112));
-		updatePunkteCol(this.turnierTabelle[gruppenNummer].getSpalte() - 3, gruppenNummer);
-		updateSoBergCol(this.turnierTabelle[gruppenNummer].getSpalte() - 2, gruppenNummer);
-		updatePlatzCol(this.turnierTabelle[gruppenNummer].getSpalte() - 1, gruppenNummer);
+//		simpleTableView[gruppenNummer]
+//				.getTable().setAutoResizeMode(
+//						JTable.AUTO_RESIZE_OFF);
+		simpleTableView[gruppenNummer]
+		.getTable().setAutoResizeMode(
+				JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
-		simpleTableView[gruppenNummer].setPreferredSize(dimension[gruppenNummer]);
+//		simpleTableView[gruppenNummer].setBackground(new Color(249, 222, 112));
+		updatePunkteCol(this.turnierTabelle[gruppenNummer].getSpalte() - 3,
+				gruppenNummer);
+		updateSoBergCol(this.turnierTabelle[gruppenNummer].getSpalte() - 2,
+				gruppenNummer);
+		updatePlatzCol(this.turnierTabelle[gruppenNummer].getSpalte() - 1,
+				gruppenNummer);
+
+		simpleTableView[gruppenNummer].getTable().getModel()
+				.addTableModelListener(tml[gruppenNummer]);
+		simpleTableView[gruppenNummer]
+				.setPreferredSize(dimension[gruppenNummer]);
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() < 1) {
-			tabAnzeigeView2[gruppenNummer].insertTab("Turniertabelle", turniertabelleIcon,
-					simpleTableView[gruppenNummer], null, 0);
+			tabAnzeigeView2[gruppenNummer]
+					.insertTab(Messages.getString("TurnierTabelleControl.1"), turniertabelleIcon, //$NON-NLS-1$
+							simpleTableView[gruppenNummer], null, 0);
 
 		} else {
 
-			tabAnzeigeView2[gruppenNummer].setComponentAt(0, simpleTableView[gruppenNummer]);
+			tabAnzeigeView2[gruppenNummer].setComponentAt(0,
+					simpleTableView[gruppenNummer]);
 		}
 
 		mainControl.setSimpleTableView(simpleTableView);
 		if (tabAnzeigeView.getTabCount() < 1) {
-			tabAnzeigeView.insertTab(turnier.getGruppe()[gruppenNummer].getGruppenName(), null,
+			tabAnzeigeView.insertTab(
+					turnier.getGruppe()[gruppenNummer].getGruppenName(), null,
 					tabAnzeigeView2[gruppenNummer], null, gruppenNummer);
 
 		} else {
 
-			tabAnzeigeView.setComponentAt(gruppenNummer, tabAnzeigeView2[gruppenNummer]);
+			tabAnzeigeView.setComponentAt(gruppenNummer,
+					tabAnzeigeView2[gruppenNummer]);
 		}
-		// tabAnzeigeView.setComponentAt(gruppenNummer,
-		// tabAnzeigeView2[gruppenNummer]);
 
 		hauptPanel.updateUI();
-//		enableDatenbankMenu();
+		checkDWZVisible(gruppenNummer);
+		berechneFolgeDWZ(gruppenNummer);
+		simpleTableView[gruppenNummer]
+				.getTable().doLayout();
+		simpleTableView[gruppenNummer]
+				.getTable().updateUI();
 	}
 
-	private void berechneFolgeDWZ(int gruppenNummer) {
-		FolgeDWZController folgeDWZ = new FolgeDWZController(mainControl.getTurnier().getGruppe()[gruppenNummer]);
+	public void checkDWZVisible(int i) {
+
+		simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.2")).setMinWidth(0); //$NON-NLS-1$
+
+		simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.3")).setMaxWidth(0); //$NON-NLS-1$
+		if (mainControl.getPropertiesControl().getNoDWZ() == true) {
+			simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.4")).setMinWidth(0); //$NON-NLS-1$
+
+			simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.5")) //$NON-NLS-1$
+					.setMaxWidth(0);
+
+			simpleTableView[i].getTable().updateUI();
+		}
+		if (mainControl.getPropertiesControl().getNoFolgeDWZ() == true) {
+
+			simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.6")).setMinWidth(0); //$NON-NLS-1$
+
+			simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.7")) //$NON-NLS-1$
+					.setMaxWidth(0);
+
+			simpleTableView[i].getTable().updateUI();
+		}
+		turnier.setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
+		turnier.setNoFolgeDWZCalc(mainControl.getPropertiesControl()
+				.getNoFolgeDWZ());
+
+	}
+
+	public void berechneFolgeDWZ(int gruppenNummer) {
+		FolgeDWZController folgeDWZ = new FolgeDWZController(
+				mainControl.getTurnier(),
+				mainControl.getTurnier().getGruppe()[gruppenNummer]);
 		folgeDWZ.caculateDWZ();
 		// Zweimal ausführen falls DWZ-lose Spieler dabei sind
 		folgeDWZ.caculateDWZ();
@@ -177,18 +195,21 @@ public class TurnierTabelleControl {
 	public void okAction(int index) {
 
 		turnier.getGruppe()[index].berechnePunkte();
-		int spalte = simpleTableView[index].getTable().getModel().getColumnCount();
+		if (simpleTableView[index] == null) {
+			makeSimpleTableView(index);
+		}
+		int spalte = simpleTableView[index].getTable().getModel()
+				.getColumnCount();
 		int zeile = simpleTableView[index].getTable().getModel().getRowCount();
 		for (int x = 0; x < spalte; x++) {
 			for (int y = 0; y < zeile; y++) {
 
-				turnierTabelle[index].getTabellenMatrix()[x][y + 1] = (String) simpleTableView[index].getTable()
-						.getValueAt(y, x);
+				turnierTabelle[index].getTabellenMatrix()[x][y + 1] = (String) simpleTableView[index]
+						.getTable().getValueAt(y, x);
 
 			}
 		}
 		makeSimpleTableView(index);
-
 	}
 
 	public void readDataFromDatabase(int tID) {
@@ -207,24 +228,36 @@ public class TurnierTabelleControl {
 
 	private void updatePlatzCol(int col, int gruppenNummer) {
 		for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
-			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
-					Integer.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getPlatz()), i, col);
+			simpleTableView[gruppenNummer]
+					.getTable()
+					.getModel()
+					.setValueAt(
+							Integer.toString(turnier.getGruppe()[gruppenNummer]
+									.getSpieler()[i].getPlatz()), i, col);
 
 		}
 	}
 
 	private void updatePunkteCol(int col, int gruppenNummer) {
 		for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
-			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
-					Double.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getPunkte()), i, col);
+			simpleTableView[gruppenNummer]
+					.getTable()
+					.getModel()
+					.setValueAt(
+							Double.toString(turnier.getGruppe()[gruppenNummer]
+									.getSpieler()[i].getPunkte()), i, col);
 
 		}
 	}
 
 	private void updateSoBergCol(int col, int gruppenNummer) {
 		for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
-			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
-					Double.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getSoberg()), i, col);
+			simpleTableView[gruppenNummer]
+					.getTable()
+					.getModel()
+					.setValueAt(
+							Double.toString(turnier.getGruppe()[gruppenNummer]
+									.getSpieler()[i].getSoberg()), i, col);
 
 		}
 	}
@@ -238,19 +271,22 @@ public class TurnierTabelleControl {
 
 		@Override
 		public void tableChanged(TableModelEvent e) {
-			simpleTableView[gruppenNummer].getTable().getModel().removeTableModelListener(tml[gruppenNummer]);
+			simpleTableView[gruppenNummer].getTable().getModel()
+					.removeTableModelListener(tml[gruppenNummer]);
 
 			int row = e.getFirstRow();
 			int col = e.getColumn();
 
-			int colCount = simpleTableView[gruppenNummer].getTable().getModel().getColumnCount();
+			int colCount = simpleTableView[gruppenNummer].getTable().getModel()
+					.getColumnCount();
 			int spielery = row;
 			int spielerx = col - 4;
 			int invertRow = spielerx;
 			int invertCol = spielery + 4;
-			String ergebniss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, col);
+			String ergebniss = (String) simpleTableView[gruppenNummer]
+					.getTable().getModel().getValueAt(row, col);
 
-			String invertErgebniss = " ";
+			String invertErgebniss = " "; //$NON-NLS-1$
 			int invertErgebnissInt = 0;
 			int ergebnissInt = 0;
 
@@ -285,55 +321,89 @@ public class TurnierTabelleControl {
 				ergebnissInt = TurnierKonstanten.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS;
 				invertErgebnissInt = TurnierKonstanten.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ;
 			}
-			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(invertErgebniss, invertRow, invertCol);
-			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(ergebniss, row, col);
+			simpleTableView[gruppenNummer].getTable().getModel()
+					.setValueAt(invertErgebniss, invertRow, invertCol);
+			simpleTableView[gruppenNummer].getTable().getModel()
+					.setValueAt(ergebniss, row, col);
 			Spieler spy = turnier.getGruppe()[gruppenNummer].getSpieler()[spielery];
 			Spieler spx = turnier.getGruppe()[gruppenNummer].getSpieler()[spielerx];
-			if ((spielerx >= 0 && spielerx < turnier.getGruppe()[gruppenNummer].getSpielerAnzahl())
-					&& (spielery >= 0 && spielery < turnier.getGruppe()[gruppenNummer].getSpielerAnzahl())
-					&& (spielerx != spielery)) {
+			if ((spielerx >= 0 && spielerx < turnier.getGruppe()[gruppenNummer]
+					.getSpielerAnzahl())
+					&& (spielery >= 0 && spielery < turnier.getGruppe()[gruppenNummer]
+							.getSpielerAnzahl()) && (spielerx != spielery)) {
 
-				for (int i = 0; i < turnier.getGruppe()[gruppenNummer].getPartienAnzahl(); i++) {
-					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss() == spx
-							&& turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerSchwarz() == spy) {
+				for (int i = 0; i < turnier.getGruppe()[gruppenNummer]
+						.getPartienAnzahl(); i++) {
+					if (turnier.getGruppe()[gruppenNummer].getPartien()[i]
+							.getSpielerWeiss() == spx
+							&& turnier.getGruppe()[gruppenNummer].getPartien()[i]
+									.getSpielerSchwarz() == spy) {
 
-						turnier.getGruppe()[gruppenNummer].getPartien()[i].setErgebnis(invertErgebnissInt);
+						turnier.getGruppe()[gruppenNummer].getPartien()[i]
+								.setErgebnis(invertErgebnissInt);
 
 						updatePunkteCol(colCount - 3);
 						updateSoBergCol(colCount - 2);
-						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
+						changedPartien.add(turnier.getGruppe()[gruppenNummer]
+								.getPartien()[i]);
 
 					}
 
-					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss() == spy
-							&& turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerSchwarz() == spx) {
-						turnier.getGruppe()[gruppenNummer].getPartien()[i].setErgebnis(ergebnissInt);
+					if (turnier.getGruppe()[gruppenNummer].getPartien()[i]
+							.getSpielerWeiss() == spy
+							&& turnier.getGruppe()[gruppenNummer].getPartien()[i]
+									.getSpielerSchwarz() == spx) {
+						turnier.getGruppe()[gruppenNummer].getPartien()[i]
+								.setErgebnis(ergebnissInt);
 
 						updatePunkteCol(colCount - 3);
 						updateSoBergCol(colCount - 2);
-						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
+						updatePlatzCol(colCount - 1);
+						changedPartien.add(turnier.getGruppe()[gruppenNummer]
+								.getPartien()[i]);
 
 					}
 				}
 			}
-			mainControl.getTerminTabelleControl().makeSimpleTableView(gruppenNummer);
-			simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
-			mainControl.getRundenEingabeFormularControl()
-					.getChangedGroups()[gruppenNummer][NaviController.TURNIERTABELLE] = NaviController.STANDARD;
+			mainControl.getTerminTabelleControl().makeSimpleTableView(
+					gruppenNummer);
+			simpleTableView[gruppenNummer].getTable().getModel()
+					.addTableModelListener(tml[gruppenNummer]);
+			mainControl.getRundenEingabeFormularControl().getChangedGroups()[gruppenNummer][NaviController.TURNIERTABELLE] = NaviController.STANDARD;
 
 		}
 
 		private void updatePunkteCol(int col) {
 			for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
-				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
-						Double.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getPunkte()), i, col);
+				simpleTableView[gruppenNummer]
+						.getTable()
+						.getModel()
+						.setValueAt(
+								Double.toString(turnier.getGruppe()[gruppenNummer]
+										.getSpieler()[i].getPunkte()), i, col);
 			}
 		}
 
 		private void updateSoBergCol(int col) {
 			for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
-				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
-						Double.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getSoberg()), i, col);
+				simpleTableView[gruppenNummer]
+						.getTable()
+						.getModel()
+						.setValueAt(
+								Double.toString(turnier.getGruppe()[gruppenNummer]
+										.getSpieler()[i].getSoberg()), i, col);
+			}
+		}
+
+		private void updatePlatzCol(int col) {
+			for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
+				simpleTableView[gruppenNummer]
+						.getTable()
+						.getModel()
+						.setValueAt(
+								Integer.toString(turnier.getGruppe()[gruppenNummer]
+										.getSpieler()[i].getPlatz()), i, col);
+
 			}
 		}
 	}

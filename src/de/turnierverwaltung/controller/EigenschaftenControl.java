@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -16,11 +17,13 @@ package de.turnierverwaltung.controller;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 
 import de.turnierverwaltung.view.EigenschaftenView;
 
@@ -29,7 +32,9 @@ public class EigenschaftenControl {
 	private EigenschaftenView eigenschaftenView;
 	private ImageIcon eigenschaftenIcon = new ImageIcon(Toolkit
 			.getDefaultToolkit().getImage(
-					getClass().getResource("/images/configure-2.png")));
+					getClass().getResource("/images/configure-2.png"))); //$NON-NLS-1$
+	private int maxWidth = 0;;
+	private int columnWidht = 0;
 
 	/**
 	 * @param mainControl
@@ -37,7 +42,6 @@ public class EigenschaftenControl {
 	public EigenschaftenControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		eigenschaftenView = new EigenschaftenView();
-
 	}
 
 	/**
@@ -46,28 +50,285 @@ public class EigenschaftenControl {
 	public void makeeigenschaftenPanel() {
 		JTabbedPane hauptPanel = this.mainControl.getHauptPanel();
 		hauptPanel
-				.addTab("Einstellungen", eigenschaftenIcon, eigenschaftenView);
+				.addTab(Messages.getString("EigenschaftenControl.1"), eigenschaftenIcon, eigenschaftenView); //$NON-NLS-1$
 		if (mainControl.getPropertiesControl() == null) {
 			mainControl.setPropertiesControl(new PropertiesControl());
 			mainControl.getPropertiesControl().readProperties();
 		}
-		String wert = mainControl.getPropertiesControl().getProperties(
-				"onlyTables");
-		if (wert.equals("true")) {
-			eigenschaftenView.getCheckBoxHeaderFooter().setSelected(true);
+		eigenschaftenView.getCheckBoxHeaderFooter().setSelected(
+				mainControl.getPropertiesControl().getOnlyTables());
+		eigenschaftenView.getCheckBoxohneDWZ().setSelected(
+				mainControl.getPropertiesControl().getNoDWZ());
+		eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(
+				mainControl.getPropertiesControl().getNoFolgeDWZ());
+		if (eigenschaftenView.getCheckBoxohneDWZ().isSelected() == true) {
+			eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(true);
+			eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(false);
+			mainControl.getPropertiesControl().setNoFolgeDWZ(true);
 		}
-		eigenschaftenView.getCheckBoxHeaderFooter().addItemListener(new ItemListener() {
-		      public void itemStateChanged(ItemEvent e) {
-		    	  if (eigenschaftenView.getCheckBoxHeaderFooter().isSelected() == true) {
-		    		  mainControl.getPropertiesControl().setProperties("onlyTables", "true");
-		    	  } else {
-		    		  mainControl.getPropertiesControl().setProperties("onlyTables", "false");
-		    	  }
-		    	  mainControl.getPropertiesControl().writeProperties();
-		        }
-		      });
+		if (mainControl.getPropertiesControl().getLanguage().equals("german")) { //$NON-NLS-1$
+			eigenschaftenView.getGermanLanguageCheckBox().setSelected(true);
+			eigenschaftenView.getEnglishLanguageCheckBox().setSelected(false);
+			mainControl.getPropertiesControl().setLanguageToGerman();
+		} else if (mainControl.getPropertiesControl().getLanguage()
+				.equals("english")) { //$NON-NLS-1$
+			eigenschaftenView.getGermanLanguageCheckBox().setSelected(false);
+			eigenschaftenView.getEnglishLanguageCheckBox().setSelected(true);
+			mainControl.getPropertiesControl().setLanguageToEnglish();
+		}
+		eigenschaftenView.getGermanLanguageCheckBox().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						mainControl.getPropertiesControl()
+								.setLanguageToGerman();
+
+						mainControl.getPropertiesControl().writeProperties();
+
+					}
+				});
+		eigenschaftenView.getEnglishLanguageCheckBox().addActionListener(
+				new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						mainControl.getPropertiesControl()
+								.setLanguageToEnglish();
+						mainControl.getPropertiesControl().writeProperties();
+
+					}
+				});
+		eigenschaftenView.getCheckBoxHeaderFooter().addItemListener(
+				new ItemListener() {
+					public void itemStateChanged(ItemEvent e) {
+						Boolean onlyTable = eigenschaftenView
+								.getCheckBoxHeaderFooter().isSelected();
+
+						mainControl.getPropertiesControl().setOnlyTables(
+								onlyTable);
+						if (mainControl.getTurnier() != null) {
+							mainControl.getTurnier().setOnlyTables(onlyTable);
+						}
+
+						mainControl.getPropertiesControl().writeProperties();
+					}
+				});
+
+		eigenschaftenView.getCheckBoxohneDWZ().setSelected(
+				mainControl.getPropertiesControl().getNoDWZ());
+		eigenschaftenView.getCheckBoxohneDWZ().addItemListener(
+				new ItemListener() {
+
+					public void itemStateChanged(ItemEvent e) {
+						eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(
+								false);
+						if (mainControl.getTurnier() != null
+								&& columnWidht == 0) {
+							columnWidht = mainControl.getSimpleTableView()[0]
+									.getTable()
+									.getColumn(
+											Messages.getString("EigenschaftenControl.12")) //$NON-NLS-1$
+									.getPreferredWidth();
+							maxWidth = mainControl.getSimpleTableView()[0]
+									.getTable()
+									.getColumn(
+											Messages.getString("EigenschaftenControl.13")) //$NON-NLS-1$
+									.getMaxWidth();
+						}
+						Boolean noDWZ = eigenschaftenView.getCheckBoxohneDWZ()
+								.isSelected();
+						mainControl.getPropertiesControl().setNoFolgeDWZ(noDWZ);
+						mainControl.getPropertiesControl().setNoDWZ(noDWZ);
+						eigenschaftenView.getCheckBoxohneFolgeDWZ()
+								.setSelected(noDWZ);
+						eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(
+								!noDWZ);
+						if (mainControl.getTurnier() != null) {
+							mainControl.getTurnier().setNoFolgeDWZCalc(noDWZ);
+							mainControl.getTurnier().setNoDWZCalc(noDWZ);
+
+							if (noDWZ) {
+
+								for (int i = 0; i < mainControl.getTurnier()
+										.getAnzahlGruppen(); i++) {
+									mainControl.getSimpleTableView()[i]
+											.getTable().setAutoResizeMode(
+													JTable.AUTO_RESIZE_OFF);
+									mainControl.getSimpleTableView()[i]
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.14")) //$NON-NLS-1$
+											.setMinWidth(0);
+
+									mainControl.getSimpleTableView()[i]
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.15")) //$NON-NLS-1$
+											.setMinWidth(0);
+
+									mainControl.getSimpleTableView()[i]
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.16")) //$NON-NLS-1$
+											.setMaxWidth(0);
+
+									mainControl.getSimpleTableView()[i]
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.17")) //$NON-NLS-1$
+											.setMaxWidth(0);
+
+									mainControl.getSimpleTableView()[i]
+											.getTable().updateUI();
+									eigenschaftenView.getCheckBoxohneFolgeDWZ()
+											.setEnabled(false);
+								}
+							} else {
+
+								for (int i = 0; i < mainControl.getTurnier()
+										.getAnzahlGruppen(); i++) {
+									mainControl.getSimpleTableView()[i]
+											.getTable()
+											.setAutoResizeMode(
+													JTable.AUTO_RESIZE_ALL_COLUMNS);
+									mainControl.getSimpleTableView()[i]
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.18")) //$NON-NLS-1$
+											.setMaxWidth(maxWidth);
+									mainControl.getSimpleTableView()[i]
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.19")) //$NON-NLS-1$
+											.setPreferredWidth(columnWidht);
+
+									if (eigenschaftenView
+											.getCheckBoxohneFolgeDWZ()
+											.isSelected() == false) {
+										mainControl.getSimpleTableView()[i]
+												.getTable()
+												.getColumn(
+														Messages.getString("EigenschaftenControl.20")) //$NON-NLS-1$
+												.setMaxWidth(maxWidth);
+										mainControl.getSimpleTableView()[i]
+												.getTable()
+												.getColumn(
+														Messages.getString("EigenschaftenControl.21")) //$NON-NLS-1$
+												.setPreferredWidth(columnWidht);
+
+									}
+									mainControl.getSimpleTableView()[i]
+											.getTable().updateUI();
+									mainControl.getTurnierTabelleControl()
+											.berechneFolgeDWZ(i);
+
+								}
+								eigenschaftenView.getCheckBoxohneFolgeDWZ()
+										.setEnabled(true);
+							}
+						}
+
+						mainControl.getPropertiesControl().writeProperties();
+					}
+				});
+
+		eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(
+				mainControl.getPropertiesControl().getNoFolgeDWZ());
+		eigenschaftenView.getCheckBoxohneFolgeDWZ().addItemListener(
+				new ItemListener() {
+
+					public void itemStateChanged(ItemEvent e) {
+						if (mainControl.getTurnier() != null
+								&& columnWidht == 0) {
+							columnWidht = mainControl.getSimpleTableView()[0]
+									.getTable()
+									.getColumn(
+											Messages.getString("EigenschaftenControl.22")) //$NON-NLS-1$
+									.getPreferredWidth();
+							maxWidth = mainControl.getSimpleTableView()[0]
+									.getTable()
+									.getColumn(
+											Messages.getString("EigenschaftenControl.23")) //$NON-NLS-1$
+									.getMaxWidth();
+						}
+						Boolean noFolgeDWZ = eigenschaftenView
+								.getCheckBoxohneFolgeDWZ().isSelected();
+
+						mainControl.getPropertiesControl().setNoFolgeDWZ(
+								noFolgeDWZ);
+						if (mainControl.getTurnier() != null) {
+							mainControl.getTurnier().setNoDWZCalc(noFolgeDWZ);
+							if (noFolgeDWZ) {
+
+								mainControl.getPropertiesControl()
+										.setNoFolgeDWZ(true);
+
+								for (int i = 0; i < mainControl.getTurnier()
+										.getAnzahlGruppen(); i++) {
+									mainControl.getSimpleTableView()[i]
+											.getTable().setAutoResizeMode(
+													JTable.AUTO_RESIZE_OFF);
+
+									mainControl.getSimpleTableView()[i]
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.24")) //$NON-NLS-1$
+											.setMinWidth(0);
+									mainControl.getSimpleTableView()[i]
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.25")) //$NON-NLS-1$
+											.setMaxWidth(0);
+									// mainControl.getSimpleTableView()[i]
+									// .getTable().getColumn("n.DWZ")
+									// .setPreferredWidth(0);
+
+									mainControl.getSimpleTableView()[i]
+											.getTable().updateUI();
+
+								}
+							} else {
+
+								for (int i = 0; i < mainControl.getTurnier()
+										.getAnzahlGruppen(); i++) {
+									mainControl.getSimpleTableView()[i]
+											.getTable()
+											.setAutoResizeMode(
+													JTable.AUTO_RESIZE_ALL_COLUMNS);
+									mainControl.getSimpleTableView()[i]
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.26")) //$NON-NLS-1$
+											.setMaxWidth(maxWidth);
+									mainControl.getSimpleTableView()[i]
+											.getTable()
+											.getColumn(
+													Messages.getString("EigenschaftenControl.27")) //$NON-NLS-1$
+											.setPreferredWidth(columnWidht);
+
+									mainControl.getSimpleTableView()[i]
+											.getTable().updateUI();
+									mainControl.getTurnierTabelleControl()
+											.berechneFolgeDWZ(i);
+
+								}
+							}
+						}
+
+						mainControl.getPropertiesControl().writeProperties();
+					}
+				});
+
 		hauptPanel.updateUI();
 
 	}
 
+	public int getColumnWidht() {
+		return columnWidht;
+	}
+
+	public void setColumnWidht(int columnWidht) {
+		this.columnWidht = columnWidht;
+	}
+
+	public void setColumnWidhtToZero() {
+		this.columnWidht = 0;
+	}
 }

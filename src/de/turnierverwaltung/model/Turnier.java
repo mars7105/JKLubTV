@@ -1,4 +1,5 @@
 package de.turnierverwaltung.model;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -25,21 +26,56 @@ public class Turnier {
 	private int anzahlGruppen;
 	private Gruppe[] gruppe;
 	private int turnierId;
+	private Boolean onlyTables;
+	private Boolean noDWZCalc;
+	private Boolean noFolgeDWZCalc;
 
 	//
 	// Constructors
 	//
-	public Turnier() {
+	public Turnier(Boolean onlyTables, Boolean noDWZCalc, Boolean noFolgeDWZCalc) {
 		turnierId = -1;
+		this.onlyTables = onlyTables;
+		this.noDWZCalc = noDWZCalc;
+		this.noFolgeDWZCalc = noFolgeDWZCalc;
 	}
 
 	public Turnier(int turnierId, String turnierName, String startDatum,
-			String endDatum) {
+			String endDatum, Boolean onlyTables, Boolean noDWZCalc,
+			Boolean noFolgeDWZCalc) {
 		super();
 		this.turnierName = turnierName;
 		this.startDatum = startDatum;
 		this.endDatum = endDatum;
 		this.turnierId = turnierId;
+		this.onlyTables = onlyTables;
+		this.noDWZCalc = noDWZCalc;
+		this.noFolgeDWZCalc = noFolgeDWZCalc;
+
+	}
+
+	public Boolean getOnlyTables() {
+		return onlyTables;
+	}
+
+	public void setOnlyTables(Boolean onlyTables) {
+		this.onlyTables = onlyTables;
+	}
+
+	public Boolean getNoDWZCalc() {
+		return noDWZCalc;
+	}
+
+	public void setNoDWZCalc(Boolean noDWZCalc) {
+		this.noDWZCalc = noDWZCalc;
+	}
+
+	public Boolean getNoFolgeDWZCalc() {
+		return noFolgeDWZCalc;
+	}
+
+	public void setNoFolgeDWZCalc(Boolean noFolgeDWZCalc) {
+		this.noFolgeDWZCalc = noFolgeDWZCalc;
 	}
 
 	public int getAnzahlGruppen() {

@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -30,7 +31,8 @@ import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.view.DEWISDialogView;
 import de.turnierverwaltung.view.SpielerDewisView;
 
-public class DewisDialogControl implements ListSelectionListener, ActionListener {
+public class DewisDialogControl implements ListSelectionListener,
+		ActionListener {
 	private MainControl mainControl;
 	private DEWISDialogView dialog;
 	private SpielerDewisView spielerDewisView;
@@ -58,12 +60,12 @@ public class DewisDialogControl implements ListSelectionListener, ActionListener
 			spielerDewisView.updateUI();
 			spielerDewisView.getList().addListSelectionListener(this);
 			dialog.setDsbPanel(spielerDewisView);
-			mainControl.getPropertiesControl().setProperties("zps", zps);
+			mainControl.getPropertiesControl().setZPS(zps);
 			mainControl.getPropertiesControl().writeProperties();
 			dialog.getUpdateButton().setEnabled(true);
 		} else {
 			dialog.getUpdateButton().setEnabled(false);
-			JLabel noItemLabel = new JLabel("keine Spieler gefunden.");
+			JLabel noItemLabel = new JLabel(Messages.getString("DewisDialogControl.0")); //$NON-NLS-1$
 			JPanel noItemPanel = new JPanel();
 			noItemPanel.add(noItemLabel);
 			dialog.setDsbPanel(noItemPanel);
@@ -85,7 +87,7 @@ public class DewisDialogControl implements ListSelectionListener, ActionListener
 			dialog.getOkButton().addActionListener(this);
 			dialog.getCancelButton().addActionListener(this);
 			dialog.getOkButton().setEnabled(false);
-			String zps = mainControl.getPropertiesControl().getProperties("zps");
+			String zps = mainControl.getPropertiesControl().getZPS();
 			if (zps.length() > 0) {
 				dialog.getVereinsSuche().setText(zps);
 				makeDWZLste();
@@ -118,8 +120,8 @@ public class DewisDialogControl implements ListSelectionListener, ActionListener
 		if (arg0.getSource() == dialog.getCancelButton()) {
 			mainControl.setEnabled(true);
 			dialog.closeWindow();
-//			mainControl.getHauptPanel().remove(mainControl.getSpielerLadenControl().getSpielerLadenView());
-//			mainControl.getSpielerLadenControl().makePanel();
+			// mainControl.getHauptPanel().remove(mainControl.getSpielerLadenControl().getSpielerLadenView());
+			// mainControl.getSpielerLadenControl().makePanel();
 		}
 		if (arg0.getSource() == dialog.getOkButton()) {
 			int[] indices = spielerDewisView.getList().getSelectedIndices();
@@ -131,9 +133,12 @@ public class DewisDialogControl implements ListSelectionListener, ActionListener
 					neuerSpieler = players.get(indices[i]);
 					Boolean findPlayer = searchSpieler(neuerSpieler);
 					if (findPlayer == false) {
-						SpielerTableControl stc = new SpielerTableControl(mainControl);
-						neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-						mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+						SpielerTableControl stc = new SpielerTableControl(
+								mainControl);
+						neuerSpieler.setSpielerId(stc
+								.insertOneSpieler(neuerSpieler));
+						mainControl.getSpielerLadenControl().getSpieler()
+								.add(neuerSpieler);
 					}
 				}
 			}
@@ -154,7 +159,8 @@ public class DewisDialogControl implements ListSelectionListener, ActionListener
 	}
 
 	private Boolean searchSpieler(Spieler neuerSpieler) {
-		ArrayList<Spieler> spieler = mainControl.getSpielerLadenControl().getSpieler();
+		ArrayList<Spieler> spieler = mainControl.getSpielerLadenControl()
+				.getSpieler();
 
 		for (Spieler player : spieler) {
 			if (player.getName().compareTo(neuerSpieler.getName()) == 0) {
@@ -163,14 +169,16 @@ public class DewisDialogControl implements ListSelectionListener, ActionListener
 						frage = abfrage(neuerSpieler);
 					}
 					if (frage == 0) {
-						SpielerTableControl stc = new SpielerTableControl(mainControl);
+						SpielerTableControl stc = new SpielerTableControl(
+								mainControl);
 						neuerSpieler.setSpielerId(player.getSpielerId());
 						stc.updateOneSpieler(neuerSpieler);
 					}
 				} else {
 					if (frage != 0) {
-						JOptionPane.showMessageDialog(null,
-								"Spieler " + neuerSpieler.getName() + " ist schon vorhanden.");
+						JOptionPane.showMessageDialog(null, Messages.getString("DewisDialogControl.1") //$NON-NLS-1$
+								+ neuerSpieler.getName()
+								+ Messages.getString("DewisDialogControl.2")); //$NON-NLS-1$
 					}
 				}
 				return true;
@@ -182,12 +190,14 @@ public class DewisDialogControl implements ListSelectionListener, ActionListener
 
 	private int abfrage(Spieler spieler) {
 		int abfrage = 0;
-		String hinweisText = spieler.getName() + " ist bereits vorhanden. Möchten Sie die neue DWZ übernehmen?";
+		String hinweisText = spieler.getName()
+				+ Messages.getString("DewisDialogControl.3"); //$NON-NLS-1$
 
 		// Custom button text
-		Object[] options = { "Ja, für alle Spieler", "Nein" };
-		abfrage = JOptionPane.showOptionDialog(null, hinweisText, "Meldung", JOptionPane.YES_NO_CANCEL_OPTION,
-				JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+		Object[] options = { Messages.getString("DewisDialogControl.4"), Messages.getString("DewisDialogControl.5") }; //$NON-NLS-1$ //$NON-NLS-2$
+		abfrage = JOptionPane.showOptionDialog(null, hinweisText, Messages.getString("DewisDialogControl.6"), //$NON-NLS-1$
+				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
+				null, options, options[1]);
 
 		return abfrage;
 	}

@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -21,7 +22,6 @@ import javax.swing.JOptionPane;
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.mysql.*;
 
-
 public class TurnierTableControl {
 	private MainControl mainControl;
 	private Turnier turnier;
@@ -39,7 +39,8 @@ public class TurnierTableControl {
 
 	public void getTurnier(int tID) {
 
-		turnier = mySQLTurnierDao.findTurnier(tID);
+		turnier = mySQLTurnierDao.findTurnier(tID,
+				mainControl.getPropertiesControl());
 		mainControl.setTurnier(turnier);
 		mainControl.getGruppenTableControl().getGruppe();
 
@@ -62,7 +63,8 @@ public class TurnierTableControl {
 
 	public ArrayList<Turnier> loadTurnierListe() {
 		ArrayList<Turnier> turnierListe;
-		turnierListe = mySQLTurnierDao.selectAllTurnier();
+		turnierListe = mySQLTurnierDao.selectAllTurnier(mainControl
+				.getPropertiesControl());
 		return turnierListe;
 
 	}
@@ -70,10 +72,10 @@ public class TurnierTableControl {
 	public boolean loescheTurnier(Turnier turnier) {
 		boolean geloescht = false;
 
-		Object[] options = { "Ja", "Abbrechen" };
+		Object[] options = { Messages.getString("TurnierTableControl.0"), Messages.getString("TurnierTableControl.1") }; //$NON-NLS-1$ //$NON-NLS-2$
 		int abfrage = JOptionPane.showOptionDialog(null,
-				"Wollen Sie wirklich das Turnier \n" + turnier.getTurnierName()
-						+ "\n" + "löschen?", "Turnier löschen?",
+				Messages.getString("TurnierTableControl.2") + turnier.getTurnierName() //$NON-NLS-1$
+						+ "\n" + Messages.getString("TurnierTableControl.4"), Messages.getString("TurnierTableControl.5"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
 				null, options, options[1]);
 		if (abfrage == 0) {

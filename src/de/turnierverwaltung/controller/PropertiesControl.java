@@ -21,9 +21,20 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Locale;
 import java.util.Properties;
 
 public class PropertiesControl {
+
+	public static final String ONLYTABLES = "onlyTables";
+	public static final String NODWZ = "noDWZ";
+	public static final String NOFOLGEDWZ = "noFolgeDWZ";
+	public static final String PATH = "Path";
+	public static final String ZPS = "";
+	public static final String TRUE = "true";
+	public static final String FALSE = "false";
+	public static final String LANGUAGE = "language";
+
 	private Properties prop;
 	private OutputStream output;
 	private FileInputStream input;
@@ -32,6 +43,41 @@ public class PropertiesControl {
 	public PropertiesControl() {
 		super();
 		prop = new Properties();
+		prop.setProperty(PATH, "");
+		prop.setProperty(ONLYTABLES, FALSE);
+		prop.setProperty(NODWZ, FALSE);
+		prop.setProperty(NOFOLGEDWZ, FALSE);
+		prop.setProperty(ZPS, "");
+		prop.setProperty(LANGUAGE, "english");
+
+	}
+
+	public Boolean getOnlyTables() {
+		if (prop.getProperty(ONLYTABLES).equals(TRUE)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Boolean getNoDWZ() {
+		if (prop.getProperty(NODWZ).equals(TRUE)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Boolean getNoFolgeDWZ() {
+		if (prop.getProperty(NOFOLGEDWZ).equals(TRUE)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public String getZPS() {
+		return prop.getProperty(ZPS);
 	}
 
 	public Boolean writeProperties() {
@@ -83,7 +129,7 @@ public class PropertiesControl {
 	}
 
 	public Boolean checkPath() {
-		String path = prop.getProperty("Path");
+		String path = prop.getProperty(PATH);
 		try {
 			File fl = new File(path);
 			return fl.exists();
@@ -101,18 +147,6 @@ public class PropertiesControl {
 		this.prop = prop;
 	}
 
-	public void setProperties(String key, String value) {
-		this.prop.setProperty(key, value);
-	}
-
-	public String getProperties(String key) {
-		if (this.prop.getProperty(key) == null) {
-			return "";
-		} else {
-			return this.prop.getProperty(key);
-		}
-	}
-
 	public Boolean getNoWritableProperties() {
 		return NoWritableProperties;
 	}
@@ -121,4 +155,66 @@ public class PropertiesControl {
 		NoWritableProperties = noWritableProperties;
 	}
 
+	public void setZPS(String zps) {
+		prop.setProperty(ZPS, zps);
+
+	}
+
+	public void setOnlyTables(boolean b) {
+		if (b == true) {
+			prop.setProperty(ONLYTABLES, TRUE);
+		} else {
+			prop.setProperty(ONLYTABLES, FALSE);
+		}
+
+	}
+
+	public String getPath() {
+		// TODO Auto-generated method stub
+		return prop.getProperty(PATH);
+	}
+
+	public void setPath(String db_PATH) {
+		prop.setProperty(PATH, db_PATH);
+	}
+
+	public void setNoDWZ(Boolean noDWZWert) {
+		if (noDWZWert == true) {
+			prop.setProperty(NODWZ, TRUE);
+		} else {
+			prop.setProperty(NODWZ, FALSE);
+		}
+	}
+
+	public void setNoFolgeDWZ(Boolean noDWZWert) {
+		if (noDWZWert == true) {
+			prop.setProperty(NOFOLGEDWZ, TRUE);
+		} else {
+			prop.setProperty(NOFOLGEDWZ, FALSE);
+		}
+	}
+
+	public String getLanguage() {
+		// TODO Auto-generated method stub
+		return prop.getProperty(LANGUAGE);
+	}
+
+	public void setLanguageToEnglish() {
+		prop.setProperty(LANGUAGE, "english");
+		de.turnierverwaltung.view.Messages.setLocale(new Locale("en", "US"));
+		de.turnierverwaltung.controller.Messages.setLocale(new Locale("en",
+				"US"));
+		de.turnierverwaltung.model.Messages.setLocale(new Locale("en",
+				"US"));
+	}
+
+	public void setLanguageToGerman() {
+		prop.setProperty(LANGUAGE, "german");
+		de.turnierverwaltung.view.Messages.setLocale(new Locale("de", "DE"));
+		de.turnierverwaltung.controller.Messages.setLocale(new Locale("de",
+				"DE"));
+		de.turnierverwaltung.model.Messages.setLocale(new Locale("de",
+				"DE"));
+
+	}
 }

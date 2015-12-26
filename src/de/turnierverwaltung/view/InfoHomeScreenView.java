@@ -41,14 +41,14 @@ public class InfoHomeScreenView {
 		// Da setPage eine IOException wirft, muss
 		// der Aufruf im try-catch-Block erfolgen.
 		try {
-			editorPane.setPage("http://www.mamuck.de/fileadmin/user_upload/projekte/Info/JKlubTV.html");
+			editorPane.setPage("http://www.mamuck.de/fileadmin/user_upload/projekte/Info/JKlubTV.html"); //$NON-NLS-1$
 		} catch (IOException ioe) {
 			// HTML wird als Texttyp vorgegeben.
-			editorPane.setContentType("text/html");
+			editorPane.setContentType("text/html"); //$NON-NLS-1$
 
 			// Text für Fehlermeldung wird
 			// im HTML-Format übergeben.
-			editorPane.setText("<html> <center>" + "<h1>Page not found</h1>" + "</center> </html>.");
+			editorPane.setText("<html> <center>" + Messages.getString("InfoHomeScreenView.0") + "</center> </html>."); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 		panel.add(editorPane);
 		panel.add(new JSeparator());

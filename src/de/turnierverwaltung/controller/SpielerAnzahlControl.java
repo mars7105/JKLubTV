@@ -59,7 +59,7 @@ public class SpielerAnzahlControl implements ActionListener {
 	private int selectIndex;
 	private Spieler[][] spieler;
 	private ImageIcon gruppenIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png"))); //$NON-NLS-1$
 
 	public SpielerAnzahlControl(MainControl mainControl, int selectIndex) {
 		this.mainControl = mainControl;
@@ -125,16 +125,16 @@ public class SpielerAnzahlControl implements ActionListener {
 							Integer.parseInt(spielerAnzahlTextfield[indexI].getText()));
 				} catch (NumberFormatException e) {
 
-					JOptionPane.showMessageDialog(null, "Zahl ist fehlerhaft!");
-					spielerAnzahlTextfield[indexI].setText("");
+					JOptionPane.showMessageDialog(null, Messages.getString("SpielerAnzahlControl.1")); //$NON-NLS-1$
+					spielerAnzahlTextfield[indexI].setText(""); //$NON-NLS-1$
 					spielerAnzahlTextfield[indexI].grabFocus();
 				} catch (ZahlKleinerAlsN e) {
-					JOptionPane.showMessageDialog(null, "Zahl darf nicht kleiner als 3 sein!");
-					spielerAnzahlTextfield[indexI].setText("");
+					JOptionPane.showMessageDialog(null, Messages.getString("SpielerAnzahlControl.3")); //$NON-NLS-1$
+					spielerAnzahlTextfield[indexI].setText(""); //$NON-NLS-1$
 					spielerAnzahlTextfield[indexI].grabFocus();
 				} catch (ZahlGroesserAlsN e) {
-					JOptionPane.showMessageDialog(null, "Zahl darf nicht größer als 20 sein!");
-					spielerAnzahlTextfield[indexI].setText("");
+					JOptionPane.showMessageDialog(null, Messages.getString("SpielerAnzahlControl.5")); //$NON-NLS-1$
+					spielerAnzahlTextfield[indexI].setText(""); //$NON-NLS-1$
 					spielerAnzahlTextfield[indexI].grabFocus();
 				}
 			}

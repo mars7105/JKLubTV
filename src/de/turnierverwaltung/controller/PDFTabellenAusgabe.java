@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -29,17 +30,22 @@ import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 
+import de.turnierverwaltung.model.Turnier;
+
 public class PDFTabellenAusgabe {
 
 	/**
 	 * Creates a PDF with information about the movies
+	 * 
+	 * @param turnier
 	 * 
 	 * @param filename
 	 *            the name of the PDF file that will be created.
 	 * @throws DocumentException
 	 * @throws IOException
 	 */
-	public void createTurnierPdf(String titel, String absolutePath, String[][] tabellenMatrix) {
+	public void createTurnierPdf(Turnier turnier, String titel,
+			String absolutePath, String[][] tabellenMatrix) {
 		// step 1
 		Document document = new Document();
 		// step 2
@@ -57,8 +63,8 @@ public class PDFTabellenAusgabe {
 		// step 4
 		try {
 			document.add(new Paragraph(titel));
-			document.add(new Paragraph(" "));
-			document.add(createTurnierTabelle(tabellenMatrix));
+			document.add(new Paragraph(" ")); //$NON-NLS-1$
+			document.add(createTurnierTabelle(turnier, tabellenMatrix));
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,7 +73,8 @@ public class PDFTabellenAusgabe {
 		document.close();
 	}
 
-	public void createTerminPdf(String titel, String absolutePath, String[][] tabellenMatrix) {
+	public void createTerminPdf(String titel, String absolutePath,
+			String[][] tabellenMatrix) {
 		// step 1
 		Document document = new Document();
 		// step 2
@@ -82,7 +89,7 @@ public class PDFTabellenAusgabe {
 		// step 4
 		try {
 			document.add(new Paragraph(titel));
-			document.add(new Paragraph(" "));
+			document.add(new Paragraph(" ")); //$NON-NLS-1$
 			document.add(createTerminTabelle(tabellenMatrix));
 		} catch (DocumentException e) {
 			// TODO Auto-generated catch block
@@ -92,19 +99,31 @@ public class PDFTabellenAusgabe {
 		document.close();
 	}
 
-	public static PdfPTable createTurnierTabelle(String[][] stringTable) throws DocumentException {
+	public static PdfPTable createTurnierTabelle(Turnier turnier,
+			String[][] stringTable) throws DocumentException {
 		int spalten = stringTable[0].length;
 		int zeilen = stringTable.length;
 		for (int i = 0; i < zeilen; i++) {
-			String replacedStr = stringTable[i][0].replaceAll("<br />", "");
+			String replacedStr = stringTable[i][0].replaceAll("<br />", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			stringTable[i][0] = replacedStr;
 		}
 
 		PdfPTable table = new PdfPTable(zeilen - 1);
 		float[] fl = new float[zeilen - 1];
 		fl[0] = 5;
-		fl[1] = 2;
-		fl[2] = 2;
+		if (turnier.getNoDWZCalc() == true) {
+			fl[1] = 1;
+			fl[2] = 1;
+		} else {
+			if (turnier.getNoFolgeDWZCalc() == true) {
+				fl[1] = 3;
+				fl[2] = 1;
+			} else {
+				fl[1] = 3;
+				fl[2] = 3;
+			}
+		}
+
 		for (int i = 0; i < zeilen; i++) {
 			if (i > 2 && i < zeilen - 3) {
 				fl[i] = 1;
@@ -134,11 +153,12 @@ public class PDFTabellenAusgabe {
 
 	}
 
-	public static PdfPTable createTerminTabelle(String[][] stringTable) throws DocumentException {
+	public static PdfPTable createTerminTabelle(String[][] stringTable)
+			throws DocumentException {
 		int spalten = stringTable[0].length;
 		int zeilen = stringTable.length;
 		for (int i = 0; i < zeilen; i++) {
-			String replacedStr = stringTable[i][0].replaceAll("<br />", "");
+			String replacedStr = stringTable[i][0].replaceAll("<br />", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			stringTable[i][0] = replacedStr;
 		}
 

@@ -45,12 +45,12 @@ public class SpielerEditierenView extends JDialog {
 
 	public SpielerEditierenView(Spieler spieler) {
 		this.setAlwaysOnTop(true);
-		this.okButton = new JButton("Speichern");
-		this.cancelButton = new JButton("Abbrechen");
+		this.okButton = new JButton(Messages.getString("SpielerEditierenView.0")); //$NON-NLS-1$
+		this.cancelButton = new JButton(Messages.getString("SpielerEditierenView.1")); //$NON-NLS-1$
 		this.textFieldName = new JTextField(15);
 		this.textFieldKuerzel = new JTextField(15);
 		this.textFieldDwz = new JTextField(15);
-		setTitle("Spieler editieren");
+		setTitle(Messages.getString("SpielerEditierenView.2")); //$NON-NLS-1$
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 	
 
@@ -64,7 +64,7 @@ public class SpielerEditierenView extends JDialog {
 		textFieldName.setText(spieler.getName());
 		JLabel label = new JLabel();
 		label.setPreferredSize(new Dimension(120,10));
-		label.setText("Name: ");
+		label.setText(Messages.getString("SpielerEditierenView.3")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 //		centerPane.setBackground(new Color(249, 222, 112));
@@ -74,7 +74,7 @@ public class SpielerEditierenView extends JDialog {
 		textFieldKuerzel.setText(spieler.getKuerzel());
 		label = new JLabel();
 		label.setPreferredSize(new Dimension(120,10));
-		label.setText("Kürzel: ");
+		label.setText(Messages.getString("SpielerEditierenView.4")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 //		centerPane.setBackground(new Color(249, 222, 112));
@@ -85,7 +85,7 @@ public class SpielerEditierenView extends JDialog {
 		textFieldDwz.setText(spieler.getDwz());
 		label = new JLabel();
 		label.setPreferredSize(new Dimension(120,10));
-		label.setText("DWZ: ");
+		label.setText(Messages.getString("SpielerEditierenView.5")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 //		centerPane.setBackground(new Color(249, 222, 112));
@@ -93,12 +93,12 @@ public class SpielerEditierenView extends JDialog {
 		centerPane.add(textFieldDwz);
 		contentPanel.add(centerPane);
 
-		String[] ageStrings = { "unter 20", "20 bis 25", "über 25" };
+		String[] ageStrings = { Messages.getString("SpielerEditierenView.6"), Messages.getString("SpielerEditierenView.7"), Messages.getString("SpielerEditierenView.8") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		this.textComboBoxAge = new JComboBox<String>(ageStrings);
 		this.textComboBoxAge.setSelectedIndex(spieler.getAge());
 		label = new JLabel();
 		label.setPreferredSize(new Dimension(120,10));
-		label.setText("Alter: ");
+		label.setText(Messages.getString("SpielerEditierenView.9")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 //		centerPane.setBackground(new Color(249, 222, 112));

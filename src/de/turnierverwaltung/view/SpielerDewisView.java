@@ -17,6 +17,7 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
@@ -45,8 +46,8 @@ public class SpielerDewisView extends JPanel {
 		this.spielerAnzahl = spielerAnzahl;
 		setLayout(new BorderLayout());
 
-		JLabel titleLabel = new JLabel("DSB Spielerliste");
-		JLabel hilfeLabel = new JLabel("Drücken Sie die Strg Taste und markieren Sie die gewünschten Spieler.");
+		JLabel titleLabel = new JLabel(Messages.getString("SpielerDewisView.0")); //$NON-NLS-1$
+		JLabel hilfeLabel = new JLabel(Messages.getString("SpielerDewisView.1")); //$NON-NLS-1$
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		titlepanel.add(titleLabel);
 		JPanel hilfepanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -73,7 +74,7 @@ public class SpielerDewisView extends JPanel {
 
 	public void makeSpielerZeile(Spieler spieler) {
 
-		listModel.addElement(spieler.getName() + "  DWZ: " + spieler.getDwz());
+		listModel.addElement(spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz()); //$NON-NLS-1$
 
 	}
 
