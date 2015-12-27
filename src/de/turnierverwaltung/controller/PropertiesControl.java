@@ -30,7 +30,7 @@ public class PropertiesControl {
 	public static final String NODWZ = "noDWZ";
 	public static final String NOFOLGEDWZ = "noFolgeDWZ";
 	public static final String PATH = "Path";
-	public static final String ZPS = "";
+	public static final String ZPS = "ZPS";
 	public static final String TRUE = "true";
 	public static final String FALSE = "false";
 	public static final String LANGUAGE = "language";
