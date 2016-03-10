@@ -85,7 +85,7 @@ public class TurnierTabelleToHTML {
 		if (turnier.getOnlyTables() == false) {
 			htmlString = getHTMLHeader();
 		} else {
-			htmlString = ""; //$NON-NLS-1$
+			htmlString = " \n"; //$NON-NLS-1$
 		}
 		htmlString += "  <table>\n"; //$NON-NLS-1$
 		for (int y = 0; y < row; y++) {
@@ -143,6 +143,13 @@ public class TurnierTabelleToHTML {
 		if (turnier.getOnlyTables() == false) {
 			htmlString += getHTMLFooter();
 		}
+		htmlString = htmlString.replaceAll("\u00e4", "&auml;");
+		htmlString = htmlString.replaceAll("\u00f6", "&ouml;");
+		htmlString = htmlString.replaceAll("\u00fc", "&uuml;");
+		htmlString = htmlString.replaceAll("\u00df", "&slig;");
+		htmlString = htmlString.replaceAll("\u00c4", "&Auml;");
+		htmlString = htmlString.replaceAll("\u00d6", "&Ouml;");
+		htmlString = htmlString.replaceAll("\u00dc", "&Uuml;");
 		return htmlString;
 
 	}
