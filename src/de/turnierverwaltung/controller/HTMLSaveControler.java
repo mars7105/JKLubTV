@@ -46,9 +46,11 @@ public class HTMLSaveControler {
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier()
 					.getAnzahlGruppen();
-			String filename = JOptionPane.showInputDialog(null,
-					Messages.getString("HTMLSaveControler.0"), Messages.getString("HTMLSaveControler.1"), //$NON-NLS-1$ //$NON-NLS-2$
-					JOptionPane.PLAIN_MESSAGE);
+			String filename = JOptionPane
+					.showInputDialog(
+							null,
+							Messages.getString("HTMLSaveControler.0"), Messages.getString("HTMLSaveControler.1"), //$NON-NLS-1$ //$NON-NLS-2$
+							JOptionPane.PLAIN_MESSAGE);
 			if (filename != null) {
 				JFileChooser savefile = new JFileChooser();
 				FileFilter filter = new FileNameExtensionFilter("HTML", "html"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -87,7 +89,8 @@ public class HTMLSaveControler {
 									savefile.getCurrentDirectory()
 											+ "/" //$NON-NLS-1$
 											+ filename
-											+ Messages.getString("HTMLSaveControler.5") //$NON-NLS-1$
+											+ Messages
+													.getString("HTMLSaveControler.5") //$NON-NLS-1$
 											+ mainControl.getTurnier()
 													.getGruppe()[i]
 													.getGruppenName() + ".html"); //$NON-NLS-1$
@@ -95,7 +98,8 @@ public class HTMLSaveControler {
 									savefile.getCurrentDirectory()
 											+ "/" //$NON-NLS-1$
 											+ filename
-											+ Messages.getString("HTMLSaveControler.8") //$NON-NLS-1$
+											+ Messages
+													.getString("HTMLSaveControler.8") //$NON-NLS-1$
 											+ mainControl.getTurnier()
 													.getGruppe()[i]
 													.getGruppenName() + ".html"); //$NON-NLS-1$
@@ -103,18 +107,15 @@ public class HTMLSaveControler {
 							// BufferedWriter writer;
 							Writer writer1;
 							Writer writer2;
-
 							try {
 								// Construct a writer for a specific encoding
 								writer1 = new OutputStreamWriter(
 										new FileOutputStream(filename1), "UTF8"); //$NON-NLS-1$
 								Boolean ohneHeaderundFooter = mainControl
 										.getPropertiesControl().getOnlyTables();
-								
-								
+
 								writer1.write(this.mainControl
-										.getTurnierTabelle()[i]
-										.getHTMLTable());
+										.getTurnierTabelle()[i].getHTMLTable());
 								writer1.flush();
 								writer1.close();
 								writer2 = new OutputStreamWriter(
@@ -147,16 +148,20 @@ public class HTMLSaveControler {
 									br.close();
 
 								} catch (FileNotFoundException fnfe) {
-									JOptionPane.showMessageDialog(null,
-											Messages.getString("HTMLSaveControler.14")); //$NON-NLS-1$
+									JOptionPane
+											.showMessageDialog(
+													null,
+													Messages.getString("HTMLSaveControler.14")); //$NON-NLS-1$
 								} catch (IOException ioe) {
-									JOptionPane.showMessageDialog(null,
-											Messages.getString("HTMLSaveControler.15")); //$NON-NLS-1$
+									JOptionPane
+											.showMessageDialog(
+													null,
+													Messages.getString("HTMLSaveControler.15")); //$NON-NLS-1$
 								}
 
 							} catch (IOException e) {
-								JOptionPane.showMessageDialog(null,
-										Messages.getString("HTMLSaveControler.16")); //$NON-NLS-1$
+								JOptionPane.showMessageDialog(null, Messages
+										.getString("HTMLSaveControler.16")); //$NON-NLS-1$
 							}
 
 						} else if (sf == JFileChooser.CANCEL_OPTION) {
@@ -165,7 +170,8 @@ public class HTMLSaveControler {
 						}
 
 					}
-					JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.18")); //$NON-NLS-1$
+					JOptionPane.showMessageDialog(null,
+							Messages.getString("HTMLSaveControler.18")); //$NON-NLS-1$
 					// File file = savefile.getSelectedFile();
 					// first check if Desktop is supported by
 					// Platform or not
@@ -191,8 +197,10 @@ public class HTMLSaveControler {
 				}
 			}
 		} else {
-			JOptionPane.showMessageDialog(null,
-					Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$
+			JOptionPane
+					.showMessageDialog(
+							null,
+							Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		}
 	}

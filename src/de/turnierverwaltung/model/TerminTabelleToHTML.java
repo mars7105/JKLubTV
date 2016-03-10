@@ -126,6 +126,13 @@ public class TerminTabelleToHTML {
 		if (ohneHeaderundFooter == false) {
 			htmlString += getHTMLFooter();
 		}
+		htmlString = htmlString.replaceAll("\u00e4", "&auml;");
+		htmlString = htmlString.replaceAll("\u00f6", "&ouml;");
+		htmlString = htmlString.replaceAll("\u00fc", "&uuml;");
+		htmlString = htmlString.replaceAll("\u00df", "&slig;");
+		htmlString = htmlString.replaceAll("\u00c4", "&Auml;");
+		htmlString = htmlString.replaceAll("\u00d6", "&Ouml;");
+		htmlString = htmlString.replaceAll("\u00dc", "&Uuml;");
 		return htmlString;
 
 	}
