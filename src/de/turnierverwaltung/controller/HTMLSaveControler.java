@@ -115,7 +115,8 @@ public class HTMLSaveControler {
 										.getPropertiesControl().getOnlyTables();
 
 								writer1.write(this.mainControl
-										.getTurnierTabelle()[i].getHTMLTable());
+										.getTurnierTabelle()[i]
+										.getHTMLTable(ohneHeaderundFooter));
 								writer1.flush();
 								writer1.close();
 								writer2 = new OutputStreamWriter(

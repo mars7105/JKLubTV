@@ -51,14 +51,17 @@ public class TurnierTabelleToHTML {
 				+ "  <meta charset='utf-8'>\n" //$NON-NLS-1$
 				+ "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n" //$NON-NLS-1$
 				+ "  <link rel='stylesheet' href='style.css'>\n" + "  <title>" //$NON-NLS-1$ //$NON-NLS-2$
-				+ turnierName + startDatum + Messages.getString("TurnierTabelleToHTML.9") + endDatum + "</title>\n" //$NON-NLS-1$ //$NON-NLS-2$
+				+ turnierName
+				+ startDatum
+				+ Messages.getString("TurnierTabelleToHTML.9") + endDatum + "</title>\n" //$NON-NLS-1$ //$NON-NLS-2$
 				+ "</head>\n" + "<body>\n" + "  <h1>" + turnierName + " " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ startDatum + Messages.getString("TurnierTabelleToHTML.15") + endDatum + "</h1>\n" + "  <h2>" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				+ startDatum
+				+ Messages.getString("TurnierTabelleToHTML.15") + endDatum + "</h1>\n" + "  <h2>" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 				+ gruppenName + "</h2>\n"; //$NON-NLS-1$
 		return headerString;
 	}
 
-	public String getHTMLTable() {
+	public String getHTMLTable(Boolean ohneHeaderundFooter) {
 		int col = this.tabellenMatrix.length;
 		reihenfolge = new int[col];
 
@@ -72,20 +75,20 @@ public class TurnierTabelleToHTML {
 			x++;
 
 		}
-		return makeTurnierTabelle();
+		return makeTurnierTabelle(ohneHeaderundFooter);
 
 	}
 
-	private String makeTurnierTabelle() {
+	private String makeTurnierTabelle(Boolean ohneHeaderundFooter) {
 
 		int col = this.tabellenMatrix.length - 1;
 		int row = this.tabellenMatrix[0].length;
 		Boolean ohneDWZ = turnier.getNoDWZCalc();
 		Boolean ohneFolgeDWZ = turnier.getNoFolgeDWZCalc();
-		if (turnier.getOnlyTables() == false) {
+		if (ohneHeaderundFooter == false) {
 			htmlString = getHTMLHeader();
 		} else {
-			htmlString = " \n"; //$NON-NLS-1$
+			htmlString = "";
 		}
 		htmlString += "  <table>\n"; //$NON-NLS-1$
 		for (int y = 0; y < row; y++) {
@@ -98,8 +101,9 @@ public class TurnierTabelleToHTML {
 			htmlString += "      <tr>\n"; //$NON-NLS-1$
 
 			for (int x = 0; x < col; x++) {
-				
-				if ((ohneDWZ == true && x == 2) || (ohneFolgeDWZ == true && x == 3)) {
+
+				if ((ohneDWZ == true && x == 2)
+						|| (ohneFolgeDWZ == true && x == 3)) {
 
 				} else {
 					String ausgabeWert = this.tabellenMatrix[reihenfolge[x]][y];
