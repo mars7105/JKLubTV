@@ -163,10 +163,10 @@ public class TurnierTabelle {
 		tabellenMatrix = temp;
 	}
 
-	public String getHTMLTable() {
+	public String getHTMLTable(Boolean ohneHeaderundFooter) {
 		turnierTabelleToHTML = new TurnierTabelleToHTML(tabellenMatrix,
 				turnier, gruppe.getGruppenName());
-		return turnierTabelleToHTML.getHTMLTable();
+		return turnierTabelleToHTML.getHTMLTable(ohneHeaderundFooter);
 	}
 
 	public int getSpalte() {
