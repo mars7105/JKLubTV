@@ -29,6 +29,8 @@ import javax.swing.JSeparator;
 public class InfoHomeScreenView {
 
 	public JPanel getLizenzText() throws URISyntaxException {
+		java.net.URL helpURL = getClass().getResource(
+                "/files/JKlubTV.html");
 		JPanel all = new JPanel(new BorderLayout());
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -41,7 +43,7 @@ public class InfoHomeScreenView {
 		// Da setPage eine IOException wirft, muss
 		// der Aufruf im try-catch-Block erfolgen.
 		try {
-			editorPane.setPage("http://www.mamuck.de/fileadmin/user_upload/projekte/Info/JKlubTV.html"); //$NON-NLS-1$
+			editorPane.setPage(helpURL); //$NON-NLS-1$
 		} catch (IOException ioe) {
 			// HTML wird als Texttyp vorgegeben.
 			editorPane.setContentType("text/html"); //$NON-NLS-1$
