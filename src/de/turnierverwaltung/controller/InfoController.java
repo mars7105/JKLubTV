@@ -36,13 +36,16 @@ public class InfoController {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png"))); //$NON-NLS-1$
 	private ImageIcon lizenzenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-paragraph.png"))); //$NON-NLS-1$
+	private PropertiesControl propertiesControl;
 	/**
 	 * @param mainControl
 	 */
 	public InfoController(MainControl mainControl) {
 		this.mainControl = mainControl;
 		infoView = new InfoView();
-		infoHelpView = new InfoHomeScreenView();
+		propertiesControl = mainControl.getPropertiesControl();
+		String lang = propertiesControl.getLanguage();
+		infoHelpView = new InfoHomeScreenView(lang);
 		lizenzenPane = new JTabbedPane();
 		infoTexteView = new InfoLizenzenView();
 		try {

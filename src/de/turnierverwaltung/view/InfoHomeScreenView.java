@@ -1,4 +1,5 @@
 package de.turnierverwaltung.view;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -27,10 +28,20 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 
 public class InfoHomeScreenView {
+	private String language;
+
+	public InfoHomeScreenView(String lang) {
+		language = lang;
+	}
 
 	public JPanel getLizenzText() throws URISyntaxException {
-		java.net.URL helpURL = getClass().getResource(
-                "/files/JKlubTV.html");
+		ContextMenuMouseListener cmmL = new ContextMenuMouseListener();
+		java.net.URL helpURL = getClass().getResource("/files/JKlubTV.html");
+		if (language == "german") {
+			helpURL = getClass().getResource("/files/JKlubTV.html");
+		} else if (language == "english") {
+			helpURL = getClass().getResource("/files/JKlubTV_en.html");
+		}
 		JPanel all = new JPanel(new BorderLayout());
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -39,6 +50,8 @@ public class InfoHomeScreenView {
 		temp.setLayout(new BoxLayout(temp, BoxLayout.X_AXIS));
 		JEditorPane editorPane = new JEditorPane();
 		editorPane.setEditable(false);
+		editorPane.setContentType("text/html");
+		editorPane.addMouseListener(cmmL);
 		// Anzuzeigende URL wird gesetzt.
 		// Da setPage eine IOException wirft, muss
 		// der Aufruf im try-catch-Block erfolgen.
@@ -50,13 +63,14 @@ public class InfoHomeScreenView {
 
 			// Text für Fehlermeldung wird
 			// im HTML-Format übergeben.
-			editorPane.setText("<html> <center>" + Messages.getString("InfoHomeScreenView.0") + "</center> </html>."); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			editorPane
+					.setText("<html> <center>" + Messages.getString("InfoHomeScreenView.0") + "</center> </html>."); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 		panel.add(editorPane);
 		panel.add(new JSeparator());
 
 		all.add(panel, BorderLayout.NORTH);
-		editorPane.setPreferredSize(new Dimension(500,900));
+		editorPane.setPreferredSize(new Dimension(500, 900));
 
 		return all;
 
@@ -66,6 +80,5 @@ public class InfoHomeScreenView {
 		return null;
 
 	}
-
 
 }
