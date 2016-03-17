@@ -1,4 +1,5 @@
 package de.turnierverwaltung.view;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -57,6 +58,7 @@ public class DEWISDialogView extends JDialog {
 	 * @throws URISyntaxException
 	 */
 	public DEWISDialogView() throws URISyntaxException {
+
 		this.setAlwaysOnTop(true);
 		setTitle(Messages.getString("DEWISDialogView.0")); //$NON-NLS-1$
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -65,7 +67,8 @@ public class DEWISDialogView extends JDialog {
 		dwzdbURI = new URI("http://www.schachbund.de/verein.html"); //$NON-NLS-1$
 
 		dwzdbButton = new JButton();
-		dwzdbButton.setText("<HTML><FONT color=\"#000099\"><U>Vereinssuche (ZPS Nummer)</U></FONT></HTML>"); //$NON-NLS-1$
+		dwzdbButton
+				.setText("<HTML><FONT color=\"#000099\"><U>Vereinssuche (ZPS Nummer)</U></FONT></HTML>"); //$NON-NLS-1$
 		// buttonDatePicker.setHorizontalAlignment(SwingConstants.LEFT);
 		// buttonDatePicker.setBorderPainted(false);
 		dwzdbButton.setOpaque(false);
@@ -83,8 +86,10 @@ public class DEWISDialogView extends JDialog {
 		suchePanel.add(zeilenPanel);
 		zeilenPanel = new JPanel();
 		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel vereinsSucheLabel = new JLabel(Messages.getString("DEWISDialogView.3")); //$NON-NLS-1$
-		vereinsSucheButton = new JButton(Messages.getString("DEWISDialogView.4")); //$NON-NLS-1$
+		JLabel vereinsSucheLabel = new JLabel(
+				Messages.getString("DEWISDialogView.3")); //$NON-NLS-1$
+		vereinsSucheButton = new JButton(
+				Messages.getString("DEWISDialogView.4")); //$NON-NLS-1$
 		zeilenPanel.add(vereinsSucheLabel);
 		suchePanel.add(zeilenPanel);
 		zeilenPanel = new JPanel();
@@ -107,15 +112,16 @@ public class DEWISDialogView extends JDialog {
 
 		buttonPanel.add(okButton);
 		buttonPanel.add(cancelButton);
-//		buttonPanel.setVisible(false);
+		// buttonPanel.setVisible(false);
 		contentPanel.add(dsbPanel, BorderLayout.CENTER);
 		contentPanel.add(buttonPanel, BorderLayout.SOUTH);
 
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		pack();
 		setLocationRelativeTo(null);
 		setEnabled(true);
 		setVisible(true);
-		pack();
+
 	}
 
 	class OpenUrlAction implements ActionListener {
@@ -134,9 +140,9 @@ public class DEWISDialogView extends JDialog {
 			try {
 				Desktop.getDesktop().browse(uri);
 			} catch (IOException e) {
-				/* TODO: error handling */ }
+				/* TODO: error handling */}
 		} else {
-			/* TODO: error handling */ }
+			/* TODO: error handling */}
 	}
 
 	public void closeWindow() {
@@ -152,6 +158,13 @@ public class DEWISDialogView extends JDialog {
 		contentPanel.remove(this.dsbPanel);
 		this.dsbPanel = dsbPanel;
 		contentPanel.add(dsbPanel, BorderLayout.CENTER);
+	}
+
+	public void refresh() {
+		getButtonPanel().updateUI();
+		getContentPanel().updateUI();
+		pack();
+		setLocationRelativeTo(null);
 	}
 
 	public JPanel getButtonPanel() {

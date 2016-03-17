@@ -52,7 +52,7 @@ public class DewisDialogControl implements ListSelectionListener,
 		players = new ArrayList<Spieler>();
 		players = verein.getSpieler();
 		if (players != null) {
-			spielerDewisView = new SpielerDewisView(players.size());
+			spielerDewisView = new SpielerDewisView();
 			for (Spieler player : players) {
 				spielerDewisView.makeSpielerZeile(player);
 			}
@@ -65,15 +65,15 @@ public class DewisDialogControl implements ListSelectionListener,
 			dialog.getUpdateButton().setEnabled(true);
 		} else {
 			dialog.getUpdateButton().setEnabled(false);
-			JLabel noItemLabel = new JLabel(Messages.getString("DewisDialogControl.0")); //$NON-NLS-1$
+			JLabel noItemLabel = new JLabel(
+					Messages.getString("DewisDialogControl.0")); //$NON-NLS-1$
 			JPanel noItemPanel = new JPanel();
 			noItemPanel.add(noItemLabel);
 			dialog.setDsbPanel(noItemPanel);
 
 		}
-		dialog.pack();
-		dialog.getButtonPanel().updateUI();
-		dialog.getContentPanel().updateUI();
+		dialog.refresh();
+
 	}
 
 	public void makeDialog() {
@@ -176,9 +176,13 @@ public class DewisDialogControl implements ListSelectionListener,
 					}
 				} else {
 					if (frage != 0) {
-						JOptionPane.showMessageDialog(null, Messages.getString("DewisDialogControl.1") //$NON-NLS-1$
-								+ neuerSpieler.getName()
-								+ Messages.getString("DewisDialogControl.2")); //$NON-NLS-1$
+						JOptionPane
+								.showMessageDialog(
+										null,
+										Messages.getString("DewisDialogControl.1") //$NON-NLS-1$
+												+ neuerSpieler.getName()
+												+ Messages
+														.getString("DewisDialogControl.2")); //$NON-NLS-1$
 					}
 				}
 				return true;
@@ -194,8 +198,11 @@ public class DewisDialogControl implements ListSelectionListener,
 				+ Messages.getString("DewisDialogControl.3"); //$NON-NLS-1$
 
 		// Custom button text
-		Object[] options = { Messages.getString("DewisDialogControl.4"), Messages.getString("DewisDialogControl.5") }; //$NON-NLS-1$ //$NON-NLS-2$
-		abfrage = JOptionPane.showOptionDialog(null, hinweisText, Messages.getString("DewisDialogControl.6"), //$NON-NLS-1$
+		Object[] options = {
+				Messages.getString("DewisDialogControl.4"), Messages.getString("DewisDialogControl.5") }; //$NON-NLS-1$ //$NON-NLS-2$
+		abfrage = JOptionPane.showOptionDialog(null,
+				hinweisText,
+				Messages.getString("DewisDialogControl.6"), //$NON-NLS-1$
 				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
 				null, options, options[1]);
 

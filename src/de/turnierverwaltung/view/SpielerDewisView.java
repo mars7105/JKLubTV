@@ -16,6 +16,7 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
@@ -27,6 +28,7 @@ import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
 import de.turnierverwaltung.model.Spieler;
+import de.turnierverwaltung.model.TurnierKonstanten;
 
 public class SpielerDewisView extends JPanel {
 	/**
@@ -36,14 +38,17 @@ public class SpielerDewisView extends JPanel {
 	private JPanel contentPanel;
 	private JPanel mainPane;
 	private JScrollPane scrollPane;
-	private JPanel centerPane;
-
-	int spielerAnzahl;
 	private DefaultListModel<Object> listModel;
 	private JList<Object> list;
+	private int windowWidth;
+	private int windowHeight;
 
-	public SpielerDewisView(int spielerAnzahl) {
-		this.spielerAnzahl = spielerAnzahl;
+	public SpielerDewisView() {
+		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
+		windowHeight = TurnierKonstanten.WINDOW_HEIGHT;
+
+		setPreferredSize(new Dimension(windowWidth, windowHeight / 2));
+		setMinimumSize(new Dimension(windowWidth / 4, windowHeight / 4));
 		setLayout(new BorderLayout());
 
 		JLabel titleLabel = new JLabel(Messages.getString("SpielerDewisView.0")); //$NON-NLS-1$
@@ -53,7 +58,7 @@ public class SpielerDewisView extends JPanel {
 		JPanel hilfepanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		hilfepanel.add(hilfeLabel);
 		mainPane = new JPanel();
-		mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
+		mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.X_AXIS));
 		mainPane.add(titlepanel);
 		mainPane.add(hilfepanel);
 
@@ -61,9 +66,7 @@ public class SpielerDewisView extends JPanel {
 
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new BorderLayout());
-		centerPane = new JPanel();
-		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
-		contentPanel.add(centerPane, BorderLayout.NORTH);
+
 		listModel = new DefaultListModel<Object>();
 
 		scrollPane = new JScrollPane();
@@ -74,7 +77,8 @@ public class SpielerDewisView extends JPanel {
 
 	public void makeSpielerZeile(Spieler spieler) {
 
-		listModel.addElement(spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz()); //$NON-NLS-1$
+		listModel.addElement(spieler.getName()
+				+ Messages.getString("SpielerDewisView.2") + spieler.getDwz()); //$NON-NLS-1$
 
 	}
 
@@ -102,5 +106,5 @@ public class SpielerDewisView extends JPanel {
 	public void setList(JList<Object> list) {
 		this.list = list;
 	}
-	
+
 }
