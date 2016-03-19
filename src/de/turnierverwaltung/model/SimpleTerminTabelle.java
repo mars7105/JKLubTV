@@ -73,8 +73,8 @@ public class SimpleTerminTabelle extends DefaultTableModel {
 			icE = true;
 
 		}
-		if (this.getValueAt(rowIndex, 1) == "Spielfrei"
-				|| this.getValueAt(rowIndex, 2) == "Spielfrei") {
+		if (this.getValueAt(rowIndex, 1).equals("Spielfrei")
+				|| this.getValueAt(rowIndex, 2).equals("Spielfrei")) {
 			icE = false;
 		}
 

@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -38,8 +39,9 @@ public class SpielerLadenControl implements ActionListener {
 	private SpielerEditierenView spielerEditierenView;
 	private int spielerIndex;
 
-	private ImageIcon spielerListeIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-group.png"))); //$NON-NLS-1$
+	private ImageIcon spielerListeIcon = new ImageIcon(Toolkit
+			.getDefaultToolkit().getImage(
+					getClass().getResource("/images/edit-group.png"))); //$NON-NLS-1$
 
 	public SpielerLadenControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -53,20 +55,29 @@ public class SpielerLadenControl implements ActionListener {
 		if (spielerEditierenView != null) {
 			if (arg0.getSource() == spielerEditierenView.getOkButton()) {
 				String name = spielerEditierenView.getTextFieldName().getText();
-				String kuerzel = spielerEditierenView.getTextFieldKuerzel().getText();
-				String dwz = spielerEditierenView.getTextFieldDwz().getText();
-				int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
-				spieler.get(spielerIndex).setName(name);
-				spieler.get(spielerIndex).setKuerzel(kuerzel);
-				spieler.get(spielerIndex).setDwz(dwz);
-				spieler.get(spielerIndex).setAge(age);
-				SpielerTableControl stc = new SpielerTableControl(mainControl);
-				stc.updateOneSpieler(spieler.get(spielerIndex));
-				mainControl.setEnabled(true);
-				updateSpielerListe();
-				mainControl.getTurnierListeLadenControl().reloadTurnier();
-
-				spielerEditierenView.closeWindow();
+				if (!name.equals("Spielfrei")) {
+					String kuerzel = spielerEditierenView.getTextFieldKuerzel()
+							.getText();
+					String dwz = spielerEditierenView.getTextFieldDwz()
+							.getText();
+					int age = spielerEditierenView.getTextComboBoxAge()
+							.getSelectedIndex();
+					spieler.get(spielerIndex).setName(name);
+					spieler.get(spielerIndex).setKuerzel(kuerzel);
+					spieler.get(spielerIndex).setDwz(dwz);
+					spieler.get(spielerIndex).setAge(age);
+					SpielerTableControl stc = new SpielerTableControl(
+							mainControl);
+					stc.updateOneSpieler(spieler.get(spielerIndex));
+					mainControl.setEnabled(true);
+					updateSpielerListe();
+					mainControl.getTurnierListeLadenControl().reloadTurnier();
+					spielerEditierenView.closeWindow();
+				} else {
+					mainControl.setEnabled(true);
+					updateSpielerListe();
+					spielerEditierenView.closeWindow();
+				}
 
 			}
 		}
@@ -82,18 +93,23 @@ public class SpielerLadenControl implements ActionListener {
 		if (spielerLadenView != null) {
 
 			for (int i = 0; i < spielerAnzahl; i++) {
-				if (arg0.getSource() == spielerLadenView.getSpielerBearbeitenButton()[i]) {
+				if (arg0.getSource() == spielerLadenView
+						.getSpielerBearbeitenButton()[i]) {
 					spielerIndex = i;
-					spielerEditierenView = new SpielerEditierenView(spieler.get(i));
+					spielerEditierenView = new SpielerEditierenView(
+							spieler.get(i));
 					spielerEditierenView.getOkButton().addActionListener(this);
-					spielerEditierenView.getCancelButton().addActionListener(this);
+					spielerEditierenView.getCancelButton().addActionListener(
+							this);
 					mainControl.setEnabled(false);
 				}
 			}
 
 			for (int i = 0; i < spielerAnzahl; i++) {
-				if (arg0.getSource() == spielerLadenView.getSpielerLoeschenButton()[i]) {
-					SpielerTableControl stC = new SpielerTableControl(mainControl);
+				if (arg0.getSource() == spielerLadenView
+						.getSpielerLoeschenButton()[i]) {
+					SpielerTableControl stC = new SpielerTableControl(
+							mainControl);
 					stC.loescheSpieler(spieler.get(i));
 					updateSpielerListe();
 				}
@@ -110,7 +126,8 @@ public class SpielerLadenControl implements ActionListener {
 		spielerAnzahl = spieler.size();
 		if (spielerLadenView == null) {
 			spielerLadenView = new SpielerLadenView(spielerAnzahl);
-			hauptPanel.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, spielerLadenView); //$NON-NLS-1$
+			hauptPanel
+					.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, spielerLadenView); //$NON-NLS-1$
 		} else {
 			spielerLadenView.removeAll();
 			spielerLadenView.init(spielerAnzahl);
@@ -120,8 +137,10 @@ public class SpielerLadenControl implements ActionListener {
 		for (Spieler player : spieler) {
 
 			spielerLadenView.makeSpielerZeile(player, index);
-			spielerLadenView.getSpielerBearbeitenButton()[index].addActionListener(this);
-			spielerLadenView.getSpielerLoeschenButton()[index].addActionListener(this);
+			spielerLadenView.getSpielerBearbeitenButton()[index]
+					.addActionListener(this);
+			spielerLadenView.getSpielerLoeschenButton()[index]
+					.addActionListener(this);
 			index++;
 		}
 
