@@ -110,20 +110,25 @@ public class NaviController implements ActionListener {
 			if (arg0.getSource() == spielerHinzufuegenView.getOkButton()) {
 				String name = spielerHinzufuegenView.getTextFieldName()
 						.getText();
-				String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel()
-						.getText();
-				String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
-				int age = spielerHinzufuegenView.getTextComboBoxAge()
-						.getSelectedIndex();
-				Spieler neuerSpieler = new Spieler();
-				neuerSpieler.setName(name);
-				neuerSpieler.setKuerzel(kuerzel);
-				neuerSpieler.setDwz(dwz);
-				neuerSpieler.setAge(age);
-				SpielerTableControl stc = new SpielerTableControl(mainControl);
-				neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-				this.mainControl.getSpielerLadenControl().getSpieler()
-						.add(neuerSpieler);
+				if (!name.equals("Spielfrei")) {
+					String kuerzel = spielerHinzufuegenView
+							.getTextFieldKuerzel().getText();
+					String dwz = spielerHinzufuegenView.getTextFieldDwz()
+							.getText();
+					int age = spielerHinzufuegenView.getTextComboBoxAge()
+							.getSelectedIndex();
+					Spieler neuerSpieler = new Spieler();
+					neuerSpieler.setName(name);
+					neuerSpieler.setKuerzel(kuerzel);
+					neuerSpieler.setDwz(dwz);
+					neuerSpieler.setAge(age);
+					SpielerTableControl stc = new SpielerTableControl(
+							mainControl);
+					neuerSpieler.setSpielerId(stc
+							.insertOneSpieler(neuerSpieler));
+					this.mainControl.getSpielerLadenControl().getSpieler()
+							.add(neuerSpieler);
+				}
 				spielerHinzufuegenView.getTextFieldName().setEditable(false);
 				spielerHinzufuegenView.getTextFieldKuerzel().setEditable(false);
 				spielerHinzufuegenView.getTextFieldDwz().setEditable(false);
@@ -164,12 +169,17 @@ public class NaviController implements ActionListener {
 				mainControl.setTurnierControl(new TurnierControl(mainControl));
 			} else {
 				// Custom button text
-				Object[] options = { Messages.getString("NaviController.0"), Messages.getString("NaviController.1") }; //$NON-NLS-1$ //$NON-NLS-2$
-				int abfrage = JOptionPane.showOptionDialog(null,
-						Messages.getString("NaviController.2") //$NON-NLS-1$
-								+ Messages.getString("NaviController.3"), //$NON-NLS-1$
-						Messages.getString("NaviController.4"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
-						JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+				Object[] options = {
+						Messages.getString("NaviController.0"), Messages.getString("NaviController.1") }; //$NON-NLS-1$ //$NON-NLS-2$
+				int abfrage = JOptionPane
+						.showOptionDialog(
+								null,
+								Messages.getString("NaviController.2") //$NON-NLS-1$
+										+ Messages
+												.getString("NaviController.3"), //$NON-NLS-1$
+								Messages.getString("NaviController.4"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
+								JOptionPane.WARNING_MESSAGE, null, options,
+								options[1]);
 				if (abfrage == 0) {
 					// mainControl.resetApp();
 					mainControl.setTurnierControl(new TurnierControl(
@@ -184,9 +194,11 @@ public class NaviController implements ActionListener {
 			if (abfrage == 0) {
 				// this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 
-				String filename = JOptionPane.showInputDialog(null,
-						Messages.getString("NaviController.5"), Messages.getString("NaviController.6"), //$NON-NLS-1$ //$NON-NLS-2$
-						JOptionPane.PLAIN_MESSAGE);
+				String filename = JOptionPane
+						.showInputDialog(
+								null,
+								Messages.getString("NaviController.5"), Messages.getString("NaviController.6"), //$NON-NLS-1$ //$NON-NLS-2$
+								JOptionPane.PLAIN_MESSAGE);
 
 				if (filename != null) {
 					filename += ".ktv"; //$NON-NLS-1$
@@ -207,7 +219,8 @@ public class NaviController implements ActionListener {
 							File file = savefile.getSelectedFile();
 							writer = new BufferedWriter(new FileWriter(
 									savefile.getSelectedFile()));
-							writer.write(Messages.getString("NaviController.10")); //$NON-NLS-1$
+							writer.write(Messages
+									.getString("NaviController.10")); //$NON-NLS-1$
 							writer.close();
 
 							// true for rewrite, false for override
@@ -215,9 +228,11 @@ public class NaviController implements ActionListener {
 							SQLiteControl sqlC = new SQLiteControl();
 							sqlC.createAllTables();
 							// mainControl.datenbankMenueView(true);
-							JOptionPane.showMessageDialog(null,
-									Messages.getString("NaviController.11"), Messages.getString("NaviController.12"), //$NON-NLS-1$ //$NON-NLS-2$
-									JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane
+									.showMessageDialog(
+											null,
+											Messages.getString("NaviController.11"), Messages.getString("NaviController.12"), //$NON-NLS-1$ //$NON-NLS-2$
+											JOptionPane.INFORMATION_MESSAGE);
 							this.mainControl.setNeuesTurnier(false);
 							mainControl
 									.setTurnierTableControl(new TurnierTableControl(
@@ -308,7 +323,9 @@ public class NaviController implements ActionListener {
 							turnierAnsicht);
 					for (int i = 0; i < mainControl.getHauptPanel()
 							.getTabCount(); i++) {
-						if (mainControl.getHauptPanel().getTitleAt(i)
+						if (mainControl
+								.getHauptPanel()
+								.getTitleAt(i)
 								.equals(Messages.getString("NaviController.17"))) { //$NON-NLS-1$
 							mainControl.getHauptPanel().setSelectedIndex(i);
 						}
@@ -316,7 +333,8 @@ public class NaviController implements ActionListener {
 					naviView.updateUI();
 
 				} else {
-					JOptionPane.showMessageDialog(null, Messages.getString("NaviController.18")); //$NON-NLS-1$
+					JOptionPane.showMessageDialog(null,
+							Messages.getString("NaviController.18")); //$NON-NLS-1$
 				}
 
 			}
@@ -352,8 +370,10 @@ public class NaviController implements ActionListener {
 				makeNewTables();
 
 			} else {
-				JOptionPane.showMessageDialog(null,
-						Messages.getString("NaviController.19") + Messages.getString("NaviController.20")); //$NON-NLS-1$ //$NON-NLS-2$
+				JOptionPane
+						.showMessageDialog(
+								null,
+								Messages.getString("NaviController.19") + Messages.getString("NaviController.20")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 
 		}
@@ -430,10 +450,15 @@ public class NaviController implements ActionListener {
 		if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
 			abfrage = 1;
 			// Custom button text
-			Object[] options = { Messages.getString("NaviController.24"), Messages.getString("NaviController.25") }; //$NON-NLS-1$ //$NON-NLS-2$
-			abfrage = JOptionPane.showOptionDialog(null, hinweisText,
-					Messages.getString("NaviController.26"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
-					JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+			Object[] options = {
+					Messages.getString("NaviController.24"), Messages.getString("NaviController.25") }; //$NON-NLS-1$ //$NON-NLS-2$
+			abfrage = JOptionPane
+					.showOptionDialog(
+							null,
+							hinweisText,
+							Messages.getString("NaviController.26"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
+							JOptionPane.WARNING_MESSAGE, null, options,
+							options[1]);
 
 		}
 		if (abfrage == 0) {
@@ -486,7 +511,8 @@ public class NaviController implements ActionListener {
 
 				}
 
-				if (pane.getTitleAt(selectedIndex).equals(Messages.getString("NaviController.29"))) { //$NON-NLS-1$
+				if (pane.getTitleAt(selectedIndex).equals(
+						Messages.getString("NaviController.29"))) { //$NON-NLS-1$
 					this.mainControl.getNaviView().getTurnierListePanel()
 							.setVisible(true);
 
@@ -494,7 +520,8 @@ public class NaviController implements ActionListener {
 					this.mainControl.getNaviView().getTurnierListePanel()
 							.setVisible(false);
 				}
-				if (pane.getTitleAt(selectedIndex).equals(Messages.getString("NaviController.30"))) { //$NON-NLS-1$
+				if (pane.getTitleAt(selectedIndex).equals(
+						Messages.getString("NaviController.30"))) { //$NON-NLS-1$
 					this.mainControl.getNaviView().getSpielerListePanel()
 							.setVisible(true);
 
