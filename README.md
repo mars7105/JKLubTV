@@ -35,3 +35,6 @@ Dieses Programm nutzt verschiedene freie Bibliotheken:
 5. Java API von Peter Fahsel -> dewis.jar
    Zugriff auf DWZ-Listen mit Java.
    http://www.schachbund.de/api.html
+
+6. Look and Feel: JGoodies
+   http://www.jgoodies.com/
