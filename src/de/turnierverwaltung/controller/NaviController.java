@@ -173,7 +173,7 @@ public class NaviController implements ActionListener {
 						Messages.getString("NaviController.0"), Messages.getString("NaviController.1") }; //$NON-NLS-1$ //$NON-NLS-2$
 				int abfrage = JOptionPane
 						.showOptionDialog(
-								null,
+								mainControl,
 								Messages.getString("NaviController.2") //$NON-NLS-1$
 										+ Messages
 												.getString("NaviController.3"), //$NON-NLS-1$
@@ -341,7 +341,7 @@ public class NaviController implements ActionListener {
 
 		}
 		if (arg0.getSource() == naviView.getSpielerImport()) {
-			SpielerTableImportController spielerImport = new SpielerTableImportController();
+			SpielerTableImportController spielerImport = new SpielerTableImportController(mainControl);
 			spielerImport.importSpielerTable();
 			mainControl.getSpielerLadenControl().updateSpielerListe();
 		}
@@ -454,7 +454,7 @@ public class NaviController implements ActionListener {
 					Messages.getString("NaviController.24"), Messages.getString("NaviController.25") }; //$NON-NLS-1$ //$NON-NLS-2$
 			abfrage = JOptionPane
 					.showOptionDialog(
-							null,
+							mainControl,
 							hinweisText,
 							Messages.getString("NaviController.26"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
 							JOptionPane.WARNING_MESSAGE, null, options,

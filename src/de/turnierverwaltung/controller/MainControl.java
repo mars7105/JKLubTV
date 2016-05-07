@@ -346,7 +346,7 @@ public class MainControl extends JFrame {
 		// datenbankMenueView(false);
 		if (propertiesControl.readProperties() == false) {
 			if (propertiesControl.writeProperties() == false) {
-				JOptionPane.showMessageDialog(null,
+				JOptionPane.showMessageDialog(this,
 						Messages.getString("MainControl.7")); //$NON-NLS-1$
 			}
 		} else {

@@ -79,7 +79,7 @@ public class SaveTurnierControl {
 			if (ready) {
 				ArrayList<Partie> changedPartien;
 				if (this.mainControl.getChangedPartien() == null) {
-					JOptionPane.showMessageDialog(null, Messages.getString("SaveTurnierControl.1") //$NON-NLS-1$
+					JOptionPane.showMessageDialog(mainControl, Messages.getString("SaveTurnierControl.1") //$NON-NLS-1$
 							+ this.mainControl.getTurnier().getTurnierName() + Messages.getString("SaveTurnierControl.2")); //$NON-NLS-1$
 					return false;
 				} else {
@@ -96,17 +96,17 @@ public class SaveTurnierControl {
 				saved = mySQLPartienDAO.updatePartien(changedPartien);
 				changedPartien.clear();
 				if (saved) {
-					JOptionPane.showMessageDialog(null,
+					JOptionPane.showMessageDialog(mainControl,
 							Messages.getString("SaveTurnierControl.3") + this.mainControl.getTurnier().getTurnierName() + Messages.getString("SaveTurnierControl.4")); //$NON-NLS-1$ //$NON-NLS-2$
 					return true;
 				} else {
 
-					JOptionPane.showMessageDialog(null, Messages.getString("SaveTurnierControl.5") //$NON-NLS-1$
+					JOptionPane.showMessageDialog(mainControl, Messages.getString("SaveTurnierControl.5") //$NON-NLS-1$
 							+ this.mainControl.getTurnier().getTurnierName() + Messages.getString("SaveTurnierControl.6")); //$NON-NLS-1$
 					return false;
 				}
 			} else {
-				JOptionPane.showMessageDialog(null,
+				JOptionPane.showMessageDialog(mainControl,
 						Messages.getString("SaveTurnierControl.7") + Messages.getString("SaveTurnierControl.8")); //$NON-NLS-1$ //$NON-NLS-2$
 				return false;
 			}
@@ -161,26 +161,26 @@ public class SaveTurnierControl {
 				if (saveOK1 && saveOK2 && saveOK4) {
 
 				} else {
-					JOptionPane.showMessageDialog(null, Messages.getString("SaveTurnierControl.9") //$NON-NLS-1$
+					JOptionPane.showMessageDialog(mainControl, Messages.getString("SaveTurnierControl.9") //$NON-NLS-1$
 							+ this.mainControl.getTurnier().getTurnierName() + Messages.getString("SaveTurnierControl.10")); //$NON-NLS-1$
 					return false;
 
 				}
 			}
 			if (saveOK1 && saveOK2 && saveOK4) {
-				JOptionPane.showMessageDialog(null,
+				JOptionPane.showMessageDialog(mainControl,
 						Messages.getString("SaveTurnierControl.11") + this.mainControl.getTurnier().getTurnierName() + Messages.getString("SaveTurnierControl.12")); //$NON-NLS-1$ //$NON-NLS-2$
 				mainControl.getTurnierListeLadenControl().loadTurnierListe();
 				mainControl.getSpielerLadenControl().updateSpielerListe();
 				return true;
 			} else {
 
-				JOptionPane.showMessageDialog(null, Messages.getString("SaveTurnierControl.13") + this.mainControl.getTurnier().getTurnierName() //$NON-NLS-1$
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("SaveTurnierControl.13") + this.mainControl.getTurnier().getTurnierName() //$NON-NLS-1$
 						+ Messages.getString("SaveTurnierControl.14")); //$NON-NLS-1$
 				return false;
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, Messages.getString("SaveTurnierControl.15") + Messages.getString("SaveTurnierControl.16")); //$NON-NLS-1$ //$NON-NLS-2$
+			JOptionPane.showMessageDialog(mainControl, Messages.getString("SaveTurnierControl.15") + Messages.getString("SaveTurnierControl.16")); //$NON-NLS-1$ //$NON-NLS-2$
 			return false;
 		}
 	}

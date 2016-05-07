@@ -199,7 +199,7 @@ public class TurnierListeLadenControl implements ActionListener {
 				if (mainControl.getTurnier() != null) {
 					if (mainControl.getTurnier().getTurnierId() == turnierListe
 							.get(i).getTurnierId()) {
-						JOptionPane.showMessageDialog(null, Messages
+						JOptionPane.showMessageDialog(mainControl, Messages
 								.getString("TurnierListeLadenControl.4")); //$NON-NLS-1$
 
 					} else {

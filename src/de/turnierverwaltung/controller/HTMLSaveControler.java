@@ -48,7 +48,7 @@ public class HTMLSaveControler {
 					.getAnzahlGruppen();
 			String filename = JOptionPane
 					.showInputDialog(
-							null,
+							mainControl,
 							Messages.getString("HTMLSaveControler.0"), Messages.getString("HTMLSaveControler.1"), //$NON-NLS-1$ //$NON-NLS-2$
 							JOptionPane.PLAIN_MESSAGE);
 			if (filename != null) {

@@ -163,7 +163,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 						Messages.getString("SpielerEingabeControl.4"), Messages.getString("SpielerEingabeControl.5") }; //$NON-NLS-1$ //$NON-NLS-2$
 				int abfrage = JOptionPane
 						.showOptionDialog(
-								null,
+								mainControl,
 								Messages.getString("SpielerEingabeControl.6") + Messages.getString("SpielerEingabeControl.7"), //$NON-NLS-1$ //$NON-NLS-2$
 								Messages.getString("SpielerEingabeControl.8"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, //$NON-NLS-1$
 								options[1]);

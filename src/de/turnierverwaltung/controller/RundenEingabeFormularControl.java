@@ -189,10 +189,10 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 		} catch (NumberFormatException e) {
 			JOptionPane
-					.showMessageDialog(null, Messages.getString("RundenEingabeFormularControl.1")); //$NON-NLS-1$
+					.showMessageDialog(mainControl, Messages.getString("RundenEingabeFormularControl.1")); //$NON-NLS-1$
 
 		} catch (ZahlKleinerAlsN e) {
-			JOptionPane.showMessageDialog(null,
+			JOptionPane.showMessageDialog(mainControl,
 					Messages.getString("RundenEingabeFormularControl.2")); //$NON-NLS-1$
 
 		}
@@ -220,10 +220,10 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 		} catch (NumberFormatException e) {
 			JOptionPane
-					.showMessageDialog(null, Messages.getString("RundenEingabeFormularControl.3")); //$NON-NLS-1$
+					.showMessageDialog(mainControl, Messages.getString("RundenEingabeFormularControl.3")); //$NON-NLS-1$
 
 		} catch (ZahlKleinerAlsN e) {
-			JOptionPane.showMessageDialog(null,
+			JOptionPane.showMessageDialog(mainControl,
 					Messages.getString("RundenEingabeFormularControl.4")); //$NON-NLS-1$
 
 		}

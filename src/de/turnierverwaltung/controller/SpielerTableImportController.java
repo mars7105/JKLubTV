@@ -33,7 +33,10 @@ import de.turnierverwaltung.mysql.SpielerDAO;
 public class SpielerTableImportController {
 
 
-	public SpielerTableImportController() {
+	private MainControl mainControl;
+
+	public SpielerTableImportController(MainControl mainControl) {
+		this.mainControl = mainControl;
 	}
 
 	public void importSpielerTable() {
@@ -69,7 +72,7 @@ public class SpielerTableImportController {
 			}
 
 		} else {
-			JOptionPane.showMessageDialog(null, Messages.getString("SpielerTableImportController.3")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerTableImportController.3")); //$NON-NLS-1$
 		}
 
 	}

@@ -197,16 +197,16 @@ public class TurnierControl implements ActionListener {
 
 		} catch (NumberFormatException e) {
 			JOptionPane
-					.showMessageDialog(null, Messages.getString("TurnierControl.2")); //$NON-NLS-1$
+					.showMessageDialog(mainControl, Messages.getString("TurnierControl.2")); //$NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().setText(""); //$NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		} catch (ZahlKleinerAlsN e) {
-			JOptionPane.showMessageDialog(null,
+			JOptionPane.showMessageDialog(mainControl,
 					Messages.getString("TurnierControl.4")); //$NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().setText(""); //$NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		} catch (ZahlGroesserAlsN e) {
-			JOptionPane.showMessageDialog(null,
+			JOptionPane.showMessageDialog(mainControl,
 					Messages.getString("TurnierControl.6")); //$NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().setText(""); //$NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().grabFocus();

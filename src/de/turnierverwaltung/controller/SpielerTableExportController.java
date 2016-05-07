@@ -74,7 +74,7 @@ public class SpielerTableExportController {
 					mySQLSpielerDAO.insertSpieler(oneSpieler.getName(), oneSpieler.getDwz(), oneSpieler.getKuerzel(),
 							oneSpieler.getAge());
 				}
-				JOptionPane.showMessageDialog(null, Messages.getString("SpielerTableExportController.3") + newFile, Messages.getString("SpielerTableExportController.4"), //$NON-NLS-1$ //$NON-NLS-2$
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerTableExportController.3") + newFile, Messages.getString("SpielerTableExportController.4"), //$NON-NLS-1$ //$NON-NLS-2$
 						JOptionPane.INFORMATION_MESSAGE);
 				SQLiteDAOFactory.setDB_PATH(filename);
 			} catch (IOException e) {
