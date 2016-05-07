@@ -125,15 +125,15 @@ public class SpielerAnzahlControl implements ActionListener {
 							Integer.parseInt(spielerAnzahlTextfield[indexI].getText()));
 				} catch (NumberFormatException e) {
 
-					JOptionPane.showMessageDialog(null, Messages.getString("SpielerAnzahlControl.1")); //$NON-NLS-1$
+					JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.1")); //$NON-NLS-1$
 					spielerAnzahlTextfield[indexI].setText(""); //$NON-NLS-1$
 					spielerAnzahlTextfield[indexI].grabFocus();
 				} catch (ZahlKleinerAlsN e) {
-					JOptionPane.showMessageDialog(null, Messages.getString("SpielerAnzahlControl.3")); //$NON-NLS-1$
+					JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.3")); //$NON-NLS-1$
 					spielerAnzahlTextfield[indexI].setText(""); //$NON-NLS-1$
 					spielerAnzahlTextfield[indexI].grabFocus();
 				} catch (ZahlGroesserAlsN e) {
-					JOptionPane.showMessageDialog(null, Messages.getString("SpielerAnzahlControl.5")); //$NON-NLS-1$
+					JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.5")); //$NON-NLS-1$
 					spielerAnzahlTextfield[indexI].setText(""); //$NON-NLS-1$
 					spielerAnzahlTextfield[indexI].grabFocus();
 				}

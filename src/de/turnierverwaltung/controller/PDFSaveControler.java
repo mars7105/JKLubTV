@@ -42,7 +42,7 @@ public class PDFSaveControler {
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier()
 					.getAnzahlGruppen();
-			String filename = JOptionPane.showInputDialog(null,
+			String filename = JOptionPane.showInputDialog(mainControl,
 					Messages.getString("PDFSaveControler.0"), Messages.getString("PDFSaveControler.1"), //$NON-NLS-1$ //$NON-NLS-2$
 					JOptionPane.PLAIN_MESSAGE);
 			if (filename != null) {
@@ -132,11 +132,11 @@ public class PDFSaveControler {
 
 						}
 					}
-					JOptionPane.showMessageDialog(null, Messages.getString("PDFSaveControler.14")); //$NON-NLS-1$
+					JOptionPane.showMessageDialog(mainControl, Messages.getString("PDFSaveControler.14")); //$NON-NLS-1$
 					// first check if Desktop is supported by
 					// Platform or not
 					if (!Desktop.isDesktopSupported()) {
-						JOptionPane.showMessageDialog(null,
+						JOptionPane.showMessageDialog(mainControl,
 								Messages.getString("PDFSaveControler.15"), Messages.getString("PDFSaveControler.16"), //$NON-NLS-1$ //$NON-NLS-2$
 								JOptionPane.INFORMATION_MESSAGE);
 					} else {
@@ -146,7 +146,7 @@ public class PDFSaveControler {
 						try {
 							desktop.open(savefile.getCurrentDirectory());
 						} catch (IOException e) {
-							JOptionPane.showMessageDialog(null,
+							JOptionPane.showMessageDialog(mainControl,
 									Messages.getString("PDFSaveControler.17"), //$NON-NLS-1$
 									Messages.getString("PDFSaveControler.18"), //$NON-NLS-1$
 									JOptionPane.INFORMATION_MESSAGE);

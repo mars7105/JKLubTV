@@ -115,14 +115,14 @@ public class SpielerTableControl {
 		ArrayList<Integer> tId = turnier_has_spielerDAO.findSpielerisinTurnier_has_Spieler(spieler);
 		int abfrage = 0;
 		if (tId.size() > 0) {
-			JOptionPane.showMessageDialog(null,
+			JOptionPane.showMessageDialog(mainControl,
 					"Spieler " + spieler.getName() + "\n" + Messages.getString("SpielerTableControl.5") + spieler.getName() //$NON-NLS-2$ //$NON-NLS-3$
 							+ " \n" + Messages.getString("SpielerTableControl.7") + tId.size() + Messages.getString("SpielerTableControl.8")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 
 			abfrage = -1;
 		} else {
 			Object[] options = { Messages.getString("SpielerTableControl.9"), Messages.getString("SpielerTableControl.10") }; //$NON-NLS-1$ //$NON-NLS-2$
-			abfrage = JOptionPane.showOptionDialog(null,
+			abfrage = JOptionPane.showOptionDialog(mainControl,
 					Messages.getString("SpielerTableControl.11") + Messages.getString("SpielerTableControl.12") + Messages.getString("SpielerTableControl.13") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 							+ spieler.getName() + Messages.getString("SpielerTableControl.14"), //$NON-NLS-1$
 					Messages.getString("SpielerTableControl.15"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, //$NON-NLS-1$

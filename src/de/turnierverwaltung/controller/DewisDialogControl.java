@@ -21,7 +21,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -37,12 +36,9 @@ public class DewisDialogControl implements ListSelectionListener,
 	private DEWISDialogView dialog;
 	private SpielerDewisView spielerDewisView;
 	private ArrayList<Spieler> players;
-	private int frage;
-
 	public DewisDialogControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
-		frage = -1;
 
 	}
 
@@ -118,20 +114,17 @@ public class DewisDialogControl implements ListSelectionListener,
 
 		}
 		if (arg0.getSource() == dialog.getCancelButton()) {
-			mainControl.setEnabled(true);
 			dialog.closeWindow();
-			// mainControl.getHauptPanel().remove(mainControl.getSpielerLadenControl().getSpielerLadenView());
-			// mainControl.getSpielerLadenControl().makePanel();
+			mainControl.setEnabled(true);
 		}
 		if (arg0.getSource() == dialog.getOkButton()) {
 			int[] indices = spielerDewisView.getList().getSelectedIndices();
-			mainControl.setEnabled(true);
 
 			if (players != null) {
 				for (int i = 0; i < indices.length; i++) {
 					Spieler neuerSpieler = new Spieler();
 					neuerSpieler = players.get(indices[i]);
-					Boolean findPlayer = searchSpieler(neuerSpieler);
+					Boolean findPlayer = searchSpieler(neuerSpieler, false);
 					if (findPlayer == false) {
 						SpielerTableControl stc = new SpielerTableControl(
 								mainControl);
@@ -142,70 +135,43 @@ public class DewisDialogControl implements ListSelectionListener,
 					}
 				}
 			}
-			dialog.closeWindow();
 			mainControl.getSpielerLadenControl().updateSpielerListe();
 		}
 		if (arg0.getSource() == dialog.getUpdateButton()) {
-			frage = 0;
+
+			@SuppressWarnings("unused")
+			Boolean findPlayer = true;
 			for (Spieler player : players) {
-				searchSpieler(player);
+				findPlayer = searchSpieler(player, true);
 
 			}
-			frage = -1;
+
 			dialog.closeWindow();
 			mainControl.setEnabled(true);
 			mainControl.getSpielerLadenControl().updateSpielerListe();
 		}
 	}
 
-	private Boolean searchSpieler(Spieler neuerSpieler) {
+	private Boolean searchSpieler(Spieler neuerSpieler, Boolean updateDWZ) {
 		ArrayList<Spieler> spieler = mainControl.getSpielerLadenControl()
 				.getSpieler();
 
 		for (Spieler player : spieler) {
-			if (player.getName().compareTo(neuerSpieler.getName()) == 0) {
-				if (player.getDWZ() != neuerSpieler.getDWZ()) {
-					if (frage != 0) {
-						frage = abfrage(neuerSpieler);
-					}
-					if (frage == 0) {
-						SpielerTableControl stc = new SpielerTableControl(
-								mainControl);
-						neuerSpieler.setSpielerId(player.getSpielerId());
-						stc.updateOneSpieler(neuerSpieler);
-					}
-				} else {
-					if (frage != 0) {
-						JOptionPane
-								.showMessageDialog(
-										null,
-										Messages.getString("DewisDialogControl.1") //$NON-NLS-1$
-												+ neuerSpieler.getName()
-												+ Messages
-														.getString("DewisDialogControl.2")); //$NON-NLS-1$
-					}
+			if (player.getName().equals(neuerSpieler.getName()) == true) {
+				if (player.getDWZ() != neuerSpieler.getDWZ()
+						&& updateDWZ == true) {
+
+					SpielerTableControl stc = new SpielerTableControl(
+							mainControl);
+					player.setDwz(neuerSpieler.getDWZ());
+					stc.updateOneSpieler(player);
+
 				}
+
 				return true;
 			}
 		}
 		return false;
 
-	}
-
-	private int abfrage(Spieler spieler) {
-		int abfrage = 0;
-		String hinweisText = spieler.getName()
-				+ Messages.getString("DewisDialogControl.3"); //$NON-NLS-1$
-
-		// Custom button text
-		Object[] options = {
-				Messages.getString("DewisDialogControl.4"), Messages.getString("DewisDialogControl.5") }; //$NON-NLS-1$ //$NON-NLS-2$
-		abfrage = JOptionPane.showOptionDialog(null,
-				hinweisText,
-				Messages.getString("DewisDialogControl.6"), //$NON-NLS-1$
-				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE,
-				null, options, options[1]);
-
-		return abfrage;
 	}
 }
