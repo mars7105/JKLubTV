@@ -96,6 +96,7 @@ public class TurnierControl implements ActionListener {
 		hauptPanel.addTab(Messages.getString("TurnierControl.1"), turnierIcon, this.turnierView); //$NON-NLS-1$
 		selectIndex = hauptPanel.getTabCount() - 1;
 		hauptPanel.setSelectedIndex(selectIndex);
+//		hauptPanel.putClientProperty(Options.EMBEDDED_TABS_KEY, Boolean.TRUE);
 
 		// mainControl.getMenueControl().setWarnHinweis(true);
 	}
