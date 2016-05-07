@@ -17,9 +17,16 @@ package de.turnierverwaltung;
 //    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.EventQueue;
+//import java.awt.Font;
+
+
 
 import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+
+
+import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
+import com.jgoodies.looks.plastic.PlasticLookAndFeel;
+import com.jgoodies.looks.plastic.theme.DesertGreen;
 
 import de.turnierverwaltung.controller.MainControl;
 
@@ -29,32 +36,29 @@ import de.turnierverwaltung.controller.MainControl;
  *
  */
 public class Turnierverwaltung {
-	
+
 	public Turnierverwaltung() {
 
 	}
-/**
- * 
- * @param args
- */
+
+	/**
+	 * 
+	 * @param args
+	 */
 	public static void main(String args[]) {
 		EventQueue.invokeLater(new Runnable() {
 			private MainControl mainControl;
 
 			@Override
 			public void run() {
+				PlasticLookAndFeel.setPlasticTheme(new DesertGreen());
+				PlasticLookAndFeel
+						.setTabStyle(PlasticLookAndFeel.TAB_STYLE_METAL_VALUE);
+				System.setProperty("Windows.controlFont", "Segoe UI-plain-15");
+				System.setProperty("Plastic.controlFont", "Segoe UI-plain-15");
 				try {
-					// Set System L&F
-					UIManager.setLookAndFeel(UIManager
-							.getSystemLookAndFeelClassName());
-				} catch (UnsupportedLookAndFeelException e) {
-					// handle exception
-				} catch (ClassNotFoundException e) {
-					// handle exception
-				} catch (InstantiationException e) {
-					// handle exception
-				} catch (IllegalAccessException e) {
-					// handle exception
+					UIManager.setLookAndFeel(new Plastic3DLookAndFeel());
+				} catch (Exception e) {
 				}
 				try {
 					setMainControl(new MainControl());
@@ -74,8 +78,5 @@ public class Turnierverwaltung {
 			}
 		});
 	}
-
-
-
 
 }

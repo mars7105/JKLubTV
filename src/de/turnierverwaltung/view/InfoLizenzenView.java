@@ -50,6 +50,8 @@ public class InfoLizenzenView {
 	private JButton buttondewisUri;
 	private ImageIcon logoImg = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Logo.png"))); //$NON-NLS-1$
+	private URI jgoodiesUri;
+	private JButton buttonjgoodies;
 
 	class OpenUrlAction implements ActionListener {
 		@Override
@@ -71,6 +73,9 @@ public class InfoLizenzenView {
 			}
 			if (e.getSource() == buttondewisUri) {
 				open(dewisUri);
+			}
+			if (e.getSource() == buttonjgoodies) {
+				open(jgoodiesUri);
 			}
 		}
 
@@ -196,7 +201,7 @@ public class InfoLizenzenView {
 		
 		openIconUri = new URI("http://sourceforge.net/projects/openiconlibrary/"); //$NON-NLS-1$
 		JLabel openIconPicker = new JLabel(
-				"5. Bilder: Open Icon Library\nhttp://sourceforge.net/projects/openiconlibrary/\n"); //$NON-NLS-1$
+				"5. Bilder: Open Icon Library -> \nhttp://sourceforge.net/projects/openiconlibrary/\n"); //$NON-NLS-1$
 		buttonopenIcon = new JButton();
 		buttonopenIcon.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>"); //$NON-NLS-1$
 		
@@ -209,6 +214,25 @@ public class InfoLizenzenView {
 		temp.add(buttonopenIcon);
 
 		temp.add(openIconPicker);
+		panel.add(temp);
+		panel.add(new JSeparator());
+		
+		
+		jgoodiesUri = new URI("http://www.jgoodies.com/"); //$NON-NLS-1$
+		JLabel jgoodiesUriPicker = new JLabel(
+				"6. Look and Feel: JGoodies -> \nhttp://www.jgoodies.com/\n"); //$NON-NLS-1$
+		buttonjgoodies = new JButton();
+		buttonjgoodies.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>"); //$NON-NLS-1$
+		
+		buttonjgoodies.setOpaque(false);
+		buttonjgoodies.setToolTipText(jgoodiesUri.toString());
+		buttonjgoodies.addActionListener(new OpenUrlAction());
+		temp = new JPanel();
+		temp.setBackground(Color.WHITE);
+		temp.setLayout(new FlowLayout(FlowLayout.LEFT));
+		temp.add(buttonjgoodies);
+
+		temp.add(jgoodiesUriPicker);
 		panel.add(temp);
 		panel.add(new JSeparator());
 		

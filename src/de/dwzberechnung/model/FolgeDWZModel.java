@@ -26,12 +26,12 @@ public class FolgeDWZModel {
 	// und einem
 	// Entwicklungskoeffizienten E in die neue DWZ = Rn umgerechnet:
 	// Rn = Ro + 800 x (W - We) / (E + n)
-	int oldDWZ;
-	double folgeDWZ;
-	double punkte;
-	double punkterwartung;
-	double entwicklungskoeffizient;
-	double anzahlDerGegner;
+	private int oldDWZ;
+	private double folgeDWZ;
+	private double punkte;
+	private double punkterwartung;
+	private double entwicklungskoeffizient;
+	private double anzahlDerGegner;
 
 	public FolgeDWZModel(int oldDWZ, double punkte, double punkterwartung, double entwicklungskoeffizient,
 			double anzahlDerGegner) {
