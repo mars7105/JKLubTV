@@ -50,6 +50,7 @@ import de.turnierverwaltung.model.Partie;
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.model.TerminTabelle;
 import de.turnierverwaltung.model.Turnier;
+import de.turnierverwaltung.view.PairingsLoadView;
 import de.turnierverwaltung.view.RundenEingabeFormularView;
 import de.turnierverwaltung.view.TabAnzeigeView;
 
@@ -78,13 +79,13 @@ public class RundenEingabeFormularControl implements ActionListener {
 	private ArrayList<Partie> changedPartien;
 	private JDatePickerImpl[][] datePicker;
 	private JComboBox<String>[][] rundenNummer;
+	private PairingsLoadView[] pairingsLoadView;
 	private int[][] changedGroups;
 	private ImageIcon paarungenIcon = new ImageIcon(Toolkit.getDefaultToolkit()
 			.getImage(
 					getClass().getResource(
 							"/images/media-playlist-shuffle-3.png"))); //$NON-NLS-1$
 
-	@SuppressWarnings("unchecked")
 	public RundenEingabeFormularControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		this.mainControl.getHauptPanel();
@@ -93,54 +94,114 @@ public class RundenEingabeFormularControl implements ActionListener {
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
 		gruppenAnzahl = turnier.getAnzahlGruppen();
+		pairingsLoadView = new PairingsLoadView[gruppenAnzahl];
+		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+		makePairingsLoadPanel();
 
-		if (mainControl.getTurnierTabelleControl() == null) {
-			terminTabelle = new TerminTabelle[gruppenAnzahl];
-			this.mainControl.setTerminTabelle(terminTabelle);
-		} else {
-			terminTabelle = this.mainControl.getTerminTabelle();
-		}
-		rundenEingabeFormularView = new RundenEingabeFormularView[gruppenAnzahl];
-		neuesTurnier = new Boolean[gruppenAnzahl];
-		changedGroups = new int[gruppenAnzahl][3];
+	}
+
+	private void makePairingsLoadPanel() {
 		for (int i = 0; i < gruppenAnzahl; i++) {
-			rundenEingabeFormularView[i] = new RundenEingabeFormularView(
-					gruppe[i].getSpielerAnzahl());
-			neuesTurnier[i] = false;
-			for (int x = 0; x < 3; x++) {
+			pairingsLoadView[i] = new PairingsLoadView();
+			pairingsLoadView[i].getLoadPairingsButton().addActionListener(this);
 
-				if (checkNewTurnier() == true) {
-					changedGroups[i][x] = 1;
-				} else {
-					changedGroups[i][x] = 0;
+			if (tabAnzeigeView2[i].getComponentCount() == 2) {
+				tabAnzeigeView2[i]
+						.insertTab(
+								Messages.getString("RundenEingabeFormularControl.5"), paarungenIcon, //$NON-NLS-1$
+								pairingsLoadView[i], null, 2);
+			} else {
+				tabAnzeigeView2[i].setComponentAt(2, pairingsLoadView[i]);
+				tabAnzeigeView2[i].setIconAt(2, paarungenIcon);
+			}
+			pairingsLoadView[i].updateUI();
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	private void init() {
+		if (rundenEingabeFormularView == null) {
+			if (mainControl.getTurnierTabelleControl() == null) {
+				terminTabelle = new TerminTabelle[gruppenAnzahl];
+				this.mainControl.setTerminTabelle(terminTabelle);
+			} else {
+				terminTabelle = this.mainControl.getTerminTabelle();
+			}
+			rundenEingabeFormularView = new RundenEingabeFormularView[gruppenAnzahl];
+			neuesTurnier = new Boolean[gruppenAnzahl];
+			changedGroups = new int[gruppenAnzahl][3];
+			for (int i = 0; i < gruppenAnzahl; i++) {
+				rundenEingabeFormularView[i] = new RundenEingabeFormularView(
+						gruppe[i].getSpielerAnzahl());
+				neuesTurnier[i] = false;
+				for (int x = 0; x < 3; x++) {
+
+					if (checkNewTurnier() == true) {
+						changedGroups[i][x] = 1;
+					} else {
+						changedGroups[i][x] = 0;
+					}
 				}
 			}
-		}
-		this.mainControl
-				.setRundenEingabeFormularView(rundenEingabeFormularView);
-		changeColor = new JButton[gruppenAnzahl][];
-		datePicker = new JDatePickerImpl[gruppenAnzahl][];
-		rundenNummer = new JComboBox[gruppenAnzahl][];
-		spielerAnzahl = new int[gruppenAnzahl];
-		paarungsTafeln = new PaarungsTafeln[gruppenAnzahl];
-		if (this.mainControl.getChangedPartien() == null) {
-			changedPartien = new ArrayList<Partie>();
-			this.mainControl.setChangedPartien(changedPartien);
-		} else {
-			changedPartien = this.mainControl.getChangedPartien();
+			this.mainControl
+					.setRundenEingabeFormularView(rundenEingabeFormularView);
+			changeColor = new JButton[gruppenAnzahl][];
+			datePicker = new JDatePickerImpl[gruppenAnzahl][];
+			rundenNummer = new JComboBox[gruppenAnzahl][];
+			spielerAnzahl = new int[gruppenAnzahl];
+			paarungsTafeln = new PaarungsTafeln[gruppenAnzahl];
+			if (this.mainControl.getChangedPartien() == null) {
+				changedPartien = new ArrayList<Partie>();
+				this.mainControl.setChangedPartien(changedPartien);
+			} else {
+				changedPartien = this.mainControl.getChangedPartien();
 
+			}
 		}
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-
+		init();
+		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		int max;
 		int anzahl;
 		for (int index = 0; index < gruppenAnzahl; index++) {
 			max = spielerAnzahl[index];
 			anzahl = max * (max - 1) / 2;
+			if (arg0.getSource() == pairingsLoadView[index]
+					.getLoadPairingsButton()) {
+
+				mainControl.getNaviView().getTabellenPanel().setVisible(false);
+				for (int i = 0; i < gruppenAnzahl; i++) {
+					tabAnzeigeView2[i].setEnabledAt(0, false);
+					tabAnzeigeView2[i].setEnabledAt(1, false);
+					makeRundenEditView(i);
+					tabAnzeigeView2[i].setSelectedIndex(2);
+
+				}
+
+			}
+			if (arg0.getSource() == rundenEingabeFormularView[index]
+					.getReloadButton()) {
+
+				Boolean ok = this.mainControl.getSaveTurnierControl()
+						.saveChangedPartien();
+				if (ok) {
+					mainControl.getNaviView().getTabellenPanel()
+							.setVisible(true);
+					for (int i = 0; i < gruppenAnzahl; i++) {
+						tabAnzeigeView2[i].setEnabledAt(0, true);
+						tabAnzeigeView2[i].setEnabledAt(1, true);
+					}
+					mainControl.getTurnierListeLadenControl().reloadTurnier();
+
+				} else {
+
+				}
+			}
 			for (int i = 0; i < anzahl; i++) {
+
 				if (arg0.getSource() == changeColor[index][i]) {
 					changeColor(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
@@ -188,8 +249,8 @@ public class RundenEingabeFormularControl implements ActionListener {
 			partien[nummer].setRunde(runde);
 
 		} catch (NumberFormatException e) {
-			JOptionPane
-					.showMessageDialog(mainControl, Messages.getString("RundenEingabeFormularControl.1")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(mainControl,
+					Messages.getString("RundenEingabeFormularControl.1")); //$NON-NLS-1$
 
 		} catch (ZahlKleinerAlsN e) {
 			JOptionPane.showMessageDialog(mainControl,
@@ -219,8 +280,8 @@ public class RundenEingabeFormularControl implements ActionListener {
 			partien[nummer].setRunde(runde);
 
 		} catch (NumberFormatException e) {
-			JOptionPane
-					.showMessageDialog(mainControl, Messages.getString("RundenEingabeFormularControl.3")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(mainControl,
+					Messages.getString("RundenEingabeFormularControl.3")); //$NON-NLS-1$
 
 		} catch (ZahlKleinerAlsN e) {
 			JOptionPane.showMessageDialog(mainControl,
@@ -257,14 +318,17 @@ public class RundenEingabeFormularControl implements ActionListener {
 		}
 
 		if (tabAnzeigeView2[index].getComponentCount() == 2) {
-			tabAnzeigeView2[index].insertTab(Messages.getString("RundenEingabeFormularControl.5"), paarungenIcon, //$NON-NLS-1$
-					rundenEingabeFormularView[index], null, 2);
+			tabAnzeigeView2[index]
+					.insertTab(
+							Messages.getString("RundenEingabeFormularControl.5"), paarungenIcon, //$NON-NLS-1$
+							rundenEingabeFormularView[index], null, 2);
 		} else {
 			tabAnzeigeView2[index].setComponentAt(2,
 					rundenEingabeFormularView[index]);
 			tabAnzeigeView2[index].setIconAt(2, paarungenIcon);
 		}
-
+		rundenEingabeFormularView[index].getReloadButton().addActionListener(
+				this);
 		rundenEingabeFormularView[index].updateUI();
 	}
 
@@ -278,8 +342,10 @@ public class RundenEingabeFormularControl implements ActionListener {
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		if (tabAnzeigeView2 != null) {
 			if (tabAnzeigeView2[index].getTabCount() < 3) {
-				tabAnzeigeView2[index].insertTab(Messages.getString("RundenEingabeFormularControl.6"), null, //$NON-NLS-1$
-						rundenEingabeFormularView[index], null, 2);
+				tabAnzeigeView2[index]
+						.insertTab(
+								Messages.getString("RundenEingabeFormularControl.6"), null, //$NON-NLS-1$
+								rundenEingabeFormularView[index], null, 2);
 			} else {
 
 				tabAnzeigeView2[index].setComponentAt(2,
@@ -306,8 +372,10 @@ public class RundenEingabeFormularControl implements ActionListener {
 		terminTabelleControl.makeSimpleTableView(index);
 		makeRundenEditView(index);
 
-		mainControl.getNaviView().setTabellenname(
-				Messages.getString("RundenEingabeFormularControl.7") + mainControl.getTurnier().getTurnierName()); //$NON-NLS-1$
+		mainControl
+				.getNaviView()
+				.setTabellenname(
+						Messages.getString("RundenEingabeFormularControl.7") + mainControl.getTurnier().getTurnierName()); //$NON-NLS-1$
 
 	}
 

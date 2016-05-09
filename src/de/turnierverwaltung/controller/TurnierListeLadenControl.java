@@ -266,13 +266,9 @@ public class TurnierListeLadenControl implements ActionListener {
 				mainControl);
 		TerminTabelleControl terminTabelleControl = new TerminTabelleControl(
 				mainControl);
-		RundenEingabeFormularControl rundenEingabeFormularControl = new RundenEingabeFormularControl(
-				mainControl);
 
 		mainControl.setTurnierTabelleControl(turnierTabelleControl);
 		mainControl.setTerminTabelleControl(terminTabelleControl);
-		mainControl
-				.setRundenEingabeFormularControl(rundenEingabeFormularControl);
 
 		for (int z = 0; z < turnier.getAnzahlGruppen(); z++) {
 			tabbedPaneView2[z] = new TabAnzeigeView(mainControl);
@@ -280,9 +276,13 @@ public class TurnierListeLadenControl implements ActionListener {
 					gruppenIcon, tabbedPaneView2[z], null, z);
 			mainControl.getTurnierTabelleControl().makeSimpleTableView(z);
 			mainControl.getTerminTabelleControl().makeSimpleTableView(z);
-			mainControl.getRundenEingabeFormularControl().makeRundenEditView(z);
+			// mainControl.getRundenEingabeFormularControl().makeRundenEditView(z);
 			mainControl.getTurnierTabelleControl().okAction(z);
 		}
+		RundenEingabeFormularControl rundenEingabeFormularControl = new RundenEingabeFormularControl(
+				mainControl);
+		mainControl
+				.setRundenEingabeFormularControl(rundenEingabeFormularControl);
 		mainControl.getTurnier().setNoDWZCalc(
 				mainControl.getPropertiesControl().getNoDWZ());
 		mainControl.getTurnier().setNoFolgeDWZCalc(
