@@ -100,6 +100,21 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 	}
 
+	public RundenEingabeFormularControl(MainControl mainControl,
+			int selectIndex) {
+		this.mainControl = mainControl;
+		this.mainControl.getHauptPanel();
+		this.mainControl.getTabAnzeigeView();
+
+		turnier = this.mainControl.getTurnier();
+		gruppe = turnier.getGruppe();
+		gruppenAnzahl = turnier.getAnzahlGruppen();
+		pairingsLoadView = new PairingsLoadView[gruppenAnzahl];
+		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+		init();
+//		makePairingsLoadPanel();
+	}
+
 	private void makePairingsLoadPanel() {
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			pairingsLoadView[i] = new PairingsLoadView();
@@ -356,7 +371,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 	}
 
 	public void makeTerminTabelle(int index) {
-
+		init();
 		neuesTurnier[index] = true;
 		paarungsTafeln[index] = new PaarungsTafeln(gruppe[index]);
 		gruppe[index] = paarungsTafeln[index].getGruppe();
