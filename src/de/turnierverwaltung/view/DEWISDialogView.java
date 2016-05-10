@@ -27,6 +27,7 @@ import java.net.URISyntaxException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -51,6 +52,12 @@ public class DEWISDialogView extends JDialog {
 	private JPanel buttonPanel;
 	private URI dwzdbURI;
 	private JButton dwzdbButton;
+
+	private JTextField vereinsName;
+
+	private JComboBox<String> vereinsAuswahl;
+
+	private JButton vereinsAuswahlOkButton;
 
 	/**
 	 * Create the dialog.
@@ -98,7 +105,27 @@ public class DEWISDialogView extends JDialog {
 		suchePanel.add(zeilenPanel);
 		zeilenPanel = new JPanel();
 		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		zeilenPanel.add(new JLabel("oder Vereinsname:"));
+		suchePanel.add(zeilenPanel);
+		
+		vereinsName = new JTextField(25);
+		zeilenPanel = new JPanel();
+		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		zeilenPanel.add(vereinsName);
+		suchePanel.add(zeilenPanel);
+		zeilenPanel = new JPanel();
+		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		zeilenPanel.add(vereinsSucheButton);
+		suchePanel.add(zeilenPanel);
+
+		vereinsAuswahl = new JComboBox<String>();
+		vereinsAuswahlOkButton = new JButton("Ok");
+
+		zeilenPanel = new JPanel();
+		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		zeilenPanel.add(vereinsAuswahl);
+		zeilenPanel.add(vereinsAuswahlOkButton);
+
 		suchePanel.add(zeilenPanel);
 
 		contentPanel.add(suchePanel, BorderLayout.NORTH);
@@ -217,6 +244,30 @@ public class DEWISDialogView extends JDialog {
 
 	public void setUpdateButton(JButton updateButton) {
 		this.updateButton = updateButton;
+	}
+
+	public JTextField getVereinsName() {
+		return vereinsName;
+	}
+
+	public void setVereinsName(JTextField vereinsName) {
+		this.vereinsName = vereinsName;
+	}
+
+	public JComboBox<String> getVereinsAuswahl() {
+		return vereinsAuswahl;
+	}
+
+	public void setVereinsAuswahl(JComboBox<String> vereinsAuswahl) {
+		this.vereinsAuswahl = vereinsAuswahl;
+	}
+
+	public JButton getVereinsAuswahlOkButton() {
+		return vereinsAuswahlOkButton;
+	}
+
+	public void setVereinsAuswahlOkButton(JButton vereinsAuswahlOkButton) {
+		this.vereinsAuswahlOkButton = vereinsAuswahlOkButton;
 	}
 
 }

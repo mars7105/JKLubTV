@@ -19,6 +19,7 @@ package de.turnierverwaltung.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -36,14 +37,16 @@ public class DewisDialogControl implements ListSelectionListener,
 	private DEWISDialogView dialog;
 	private SpielerDewisView spielerDewisView;
 	private ArrayList<Spieler> players;
+	private DewisDialogVereinsSucheController vereinsSuche;
+	private ArrayList<String[]> zpsItems;
+
 	public DewisDialogControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
 
 	}
 
-	public void makeDWZLste() {
-		String zps = dialog.getVereinsSuche().getText();
+	public void makeDWZLste(String zps) {
 		DewisClub verein = new DewisClub(zps);
 		players = new ArrayList<Spieler>();
 		players = verein.getSpieler();
@@ -78,6 +81,7 @@ public class DewisDialogControl implements ListSelectionListener,
 
 			dialog = new DEWISDialogView();
 			dialog.getVereinsSucheButton().addActionListener(this);
+			dialog.getVereinsAuswahlOkButton().addActionListener(this);
 			dialog.getUpdateButton().addActionListener(this);
 			dialog.getUpdateButton().setEnabled(false);
 			dialog.getOkButton().addActionListener(this);
@@ -86,8 +90,10 @@ public class DewisDialogControl implements ListSelectionListener,
 			String zps = mainControl.getPropertiesControl().getZPS();
 			if (zps.length() > 0) {
 				dialog.getVereinsSuche().setText(zps);
-				makeDWZLste();
+
+				makeDWZLste(zps);
 			}
+			vereinsSuche = new DewisDialogVereinsSucheController();
 		} catch (Exception e) {
 			mainControl.setEnabled(true);
 		}
@@ -109,8 +115,26 @@ public class DewisDialogControl implements ListSelectionListener,
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == dialog.getVereinsAuswahlOkButton()) {
+			if (dialog.getVereinsAuswahl().getItemCount() > 0) {
+				if (dialog.getVereinsAuswahl().getSelectedItem().toString()
+						.length() > 0) {
+					int index = dialog.getVereinsAuswahl().getSelectedIndex();
+					String items[] = zpsItems.get(index);
+					String zps = items[0];
+					makeDWZLste(zps);
+				}
+			}
+		}
 		if (arg0.getSource() == dialog.getVereinsSucheButton()) {
-			makeDWZLste();
+			if (dialog.getVereinsSuche().getText().length() > 0) {
+				String zps = dialog.getVereinsSuche().getText();
+
+				makeDWZLste(zps);
+			}
+			if (dialog.getVereinsName().getText().length() > 0) {
+				makeVereinsListe();
+			}
 
 		}
 		if (arg0.getSource() == dialog.getCancelButton()) {
@@ -149,6 +173,28 @@ public class DewisDialogControl implements ListSelectionListener,
 			dialog.closeWindow();
 			mainControl.setEnabled(true);
 			mainControl.getSpielerLadenControl().updateSpielerListe();
+		}
+	}
+
+	private void makeVereinsListe() {
+		ArrayList<String[]> vereine = vereinsSuche.searchForVerein(dialog
+				.getVereinsName().getText());
+		zpsItems = new ArrayList<String[]>();
+		if (vereine.size() > 0) {
+			dialog.getVereinsAuswahl().removeAllItems();
+			for (Iterator<String[]> iterator = vereine.iterator(); iterator
+					.hasNext();) {
+
+				String[] row = iterator.next();
+				zpsItems.add(row);
+				dialog.getVereinsAuswahl().addItem(row[3]);
+
+			}
+			dialog.getVereinsName().setText("");
+		}
+
+		if (vereine.size() == 0) {
+
 		}
 	}
 

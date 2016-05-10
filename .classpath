@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.8.11.1.jar"/>
 	<classpathentry kind="lib" path="lib/jgoodies-common-1.7.0.jar"/>
 	<classpathentry kind="lib" path="lib/jgoodies-looks-2.5.3.jar"/>
+	<classpathentry kind="lib" path="lib/opencsv-3.7.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
