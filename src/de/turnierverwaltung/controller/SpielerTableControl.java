@@ -78,6 +78,7 @@ public class SpielerTableControl {
 		int age = spieler.getAge();
 
 		int spielerId = -1;
+		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
 
 		spielerId = mySQLSpielerDAO.insertSpieler(spielerName, spielerDWZ, spielerKuerzel, age);
 

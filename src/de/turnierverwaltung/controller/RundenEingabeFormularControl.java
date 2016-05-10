@@ -100,8 +100,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 	}
 
-	public RundenEingabeFormularControl(MainControl mainControl,
-			int selectIndex) {
+	public RundenEingabeFormularControl(MainControl mainControl, int selectIndex) {
 		this.mainControl = mainControl;
 		this.mainControl.getHauptPanel();
 		this.mainControl.getTabAnzeigeView();
@@ -112,7 +111,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 		pairingsLoadView = new PairingsLoadView[gruppenAnzahl];
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		init();
-//		makePairingsLoadPanel();
+		// makePairingsLoadPanel();
 	}
 
 	private void makePairingsLoadPanel() {
@@ -131,6 +130,24 @@ public class RundenEingabeFormularControl implements ActionListener {
 			}
 			pairingsLoadView[i].updateUI();
 		}
+	}
+
+	private void makePairingsLoadPanel(int index) {
+
+		pairingsLoadView[index] = new PairingsLoadView();
+		pairingsLoadView[index].getLoadPairingsButton().addActionListener(this);
+
+		if (tabAnzeigeView2[index].getComponentCount() == 2) {
+			tabAnzeigeView2[index]
+					.insertTab(
+							Messages.getString("RundenEingabeFormularControl.5"), paarungenIcon, //$NON-NLS-1$
+							pairingsLoadView[index], null, 2);
+		} else {
+			tabAnzeigeView2[index].setComponentAt(2, pairingsLoadView[index]);
+			tabAnzeigeView2[index].setIconAt(2, paarungenIcon);
+		}
+		pairingsLoadView[index].updateUI();
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -200,20 +217,8 @@ public class RundenEingabeFormularControl implements ActionListener {
 			if (arg0.getSource() == rundenEingabeFormularView[index]
 					.getReloadButton()) {
 
-				Boolean ok = this.mainControl.getSaveTurnierControl()
-						.saveChangedPartien();
-				if (ok) {
-					mainControl.getNaviView().getTabellenPanel()
-							.setVisible(true);
-					for (int i = 0; i < gruppenAnzahl; i++) {
-						tabAnzeigeView2[i].setEnabledAt(0, true);
-						tabAnzeigeView2[i].setEnabledAt(1, true);
-					}
-					mainControl.getTurnierListeLadenControl().reloadTurnier();
-
-				} else {
-
-				}
+				saveAndReloadTurnier();
+				setTabsEnable(true);
 			}
 			for (int i = 0; i < anzahl; i++) {
 
@@ -385,12 +390,58 @@ public class RundenEingabeFormularControl implements ActionListener {
 		mainControl.setTerminTabelleControl(terminTabelleControl);
 		turnierTabelleControl.makeSimpleTableView(index);
 		terminTabelleControl.makeSimpleTableView(index);
-		makeRundenEditView(index);
+		neuesTurnier[index] = true;
+		// Arrays.sort(gruppe[index].getPartien());
+		partien = gruppe[index].getPartien();
+
+		spielerAnzahl[index] = gruppe[index].getSpielerAnzahl();
+
+		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+		makePairingsLoadPanel(index);
 
 		mainControl
 				.getNaviView()
 				.setTabellenname(
 						Messages.getString("RundenEingabeFormularControl.7") + mainControl.getTurnier().getTurnierName()); //$NON-NLS-1$
+		tabAnzeigeView2[index].setEnabledAt(0, false);
+		tabAnzeigeView2[index].setEnabledAt(1, false);
+		tabAnzeigeView2[index].setEnabledAt(2, false);
+		Boolean readyToSave = checkIfReadyToSave();
+		if (readyToSave == true) {
+			JOptionPane
+					.showMessageDialog(null, "Das Turnier wird gespeichert."); //$NON-NLS-1$ //$NON-NLS-2$
+			saveAndReloadTurnier();
+
+		}
+	}
+
+	private Boolean checkIfReadyToSave() {
+		Boolean readyToSave = false;
+		for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
+
+			if (mainControl.getSpielerEingabeControl().getReadyToSave()[i] == true) {
+				readyToSave = true;
+			} else {
+				return false;
+			}
+		}
+		return readyToSave;
+	}
+
+	private Boolean saveAndReloadTurnier() {
+		Boolean ok = this.mainControl.getSaveTurnierControl()
+				.saveChangedPartien();
+		return ok;
+	}
+
+	private void setTabsEnable(Boolean enable) {
+
+		mainControl.getNaviView().getTabellenPanel().setVisible(enable);
+		for (int i = 0; i < gruppenAnzahl; i++) {
+			tabAnzeigeView2[i].setEnabledAt(0, enable);
+			tabAnzeigeView2[i].setEnabledAt(1, enable);
+		}
+		mainControl.getTurnierListeLadenControl().reloadTurnier();
 
 	}
 
