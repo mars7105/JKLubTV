@@ -46,7 +46,8 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 			try {
 				// create a database connection
 				stmt = this.dbConnect.createStatement();
-				stmt.setQueryTimeout(30); // set timeout to 30 sec.
+//				stmt.setQueryTimeout(30); // set timeout to 30 sec.
+//				stmt.executeUpdate("DROP TABLE IF EXISTS turnier;"); 
 				stmt.executeUpdate(sql);
 				stmt.close();
 

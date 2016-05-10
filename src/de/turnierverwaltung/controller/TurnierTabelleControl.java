@@ -369,7 +369,7 @@ public class TurnierTabelleControl {
 					gruppenNummer);
 			simpleTableView[gruppenNummer].getTable().getModel()
 					.addTableModelListener(tml[gruppenNummer]);
-			mainControl.getRundenEingabeFormularControl().getChangedGroups()[gruppenNummer][NaviController.TURNIERTABELLE] = NaviController.STANDARD;
+//			mainControl.getRundenEingabeFormularControl().getChangedGroups()[gruppenNummer][NaviController.TURNIERTABELLE] = NaviController.STANDARD;
 
 		}
 

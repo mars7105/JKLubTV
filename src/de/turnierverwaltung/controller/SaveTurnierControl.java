@@ -72,6 +72,7 @@ public class SaveTurnierControl {
 			ready = saveNewTurnier();
 			if (ready) {
 				mainControl.setNeuesTurnier(false);
+				mainControl.getTurnierListeLadenControl().reloadTurnier();
 			}
 			return ready;
 		} else {

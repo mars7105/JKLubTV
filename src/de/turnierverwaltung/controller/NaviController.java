@@ -23,7 +23,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -219,12 +218,15 @@ public class NaviController implements ActionListener {
 							File file = savefile.getSelectedFile();
 							writer = new BufferedWriter(new FileWriter(
 									savefile.getSelectedFile()));
-							writer.write(Messages
-									.getString("NaviController.10")); //$NON-NLS-1$
+							writer.write(""); //$NON-NLS-1$
 							writer.close();
 
 							// true for rewrite, false for override
 							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
+							mainControl.getPropertiesControl().setPath(
+									SQLiteDAOFactory.getDB_PATH());
+							mainControl.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
+									+ SQLiteDAOFactory.getDB_PATH());
 							SQLiteControl sqlC = new SQLiteControl();
 							sqlC.createAllTables();
 							// mainControl.datenbankMenueView(true);
@@ -341,7 +343,8 @@ public class NaviController implements ActionListener {
 
 		}
 		if (arg0.getSource() == naviView.getSpielerImport()) {
-			SpielerTableImportController spielerImport = new SpielerTableImportController(mainControl);
+			SpielerTableImportController spielerImport = new SpielerTableImportController(
+					mainControl);
 			spielerImport.importSpielerTable();
 			mainControl.getSpielerLadenControl().updateSpielerListe();
 		}
@@ -380,14 +383,18 @@ public class NaviController implements ActionListener {
 		if (arg0.getSource() == naviView.getTabelleSpeichernButton())
 
 		{
-			Boolean ok = this.mainControl.getSaveTurnierControl()
-					.saveChangedPartien();
+			Boolean ok = false;
+			if (mainControl.getNeuesTurnier()) {
+				ok = this.mainControl.getSaveTurnierControl()
+						.saveChangedPartien();
 
-			if (ok) {
-				makeNewTables();
-
+			} else {
+				ok = this.mainControl.getSaveTurnierControl()
+						.saveChangedPartien();
+				if (ok) {
+					makeNewTables();
+				}
 			}
-
 		}
 
 		if (arg0.getSource() == naviView.getTabelleHTMLAusgabeButton())
@@ -403,33 +410,13 @@ public class NaviController implements ActionListener {
 	private void makeNewTables() {
 		int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 		for (int i = 0; i < anzahlGruppen; i++) {
-			for (int x = 0; x < 3; x++) {
-				int changedGroups = mainControl
-						.getRundenEingabeFormularControl().getChangedGroups()[i][x];
-				if (changedGroups >= STANDARD) {
-					this.mainControl.getTurnierTabelleControl().okAction(i);
 
-					if (x == TURNIERTABELLE) {
-						mainControl.getTurnierTabelleControl()
-								.makeSimpleTableView(i);
-					}
-					if (x == TERMINTABELLE) {
-						mainControl.getTerminTabelleControl()
-								.makeSimpleTableView(i);
-					}
-					if (x == PAARUNGSTABELLE) {
-						if (changedGroups == SORTIEREN) {
-							Arrays.sort(mainControl.getTurnier().getGruppe()[i]
-									.getPartien());
-						}
-						mainControl.getRundenEingabeFormularControl()
-								.makeNewFormular(i);
-					}
-					mainControl.getRundenEingabeFormularControl()
-							.getChangedGroups()[i][x] = 0;
-				}
+			this.mainControl.getTurnierTabelleControl().okAction(i);
 
-			}
+			mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
+
+			mainControl.getTerminTabelleControl().makeSimpleTableView(i);
+
 		}
 	}
 

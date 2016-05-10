@@ -82,8 +82,16 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 
 		okButton = new JButton[gruppenAnzahl];
 		cancelButton = new JButton[gruppenAnzahl];
+		if (this.mainControl.getRundenEingabeFormularControl() == null) {
+			rundenEingabeFormularControl = new RundenEingabeFormularControl(
+					this.mainControl, selectIndex);
+			this.mainControl
+					.setRundenEingabeFormularControl(rundenEingabeFormularControl);
+		} else {
+			rundenEingabeFormularControl = this.mainControl.getRundenEingabeFormularControl();
+		}
 		rundenEingabeFormularControl = new RundenEingabeFormularControl(
-				this.mainControl);
+				this.mainControl, selectIndex);
 		this.mainControl
 				.setRundenEingabeFormularControl(rundenEingabeFormularControl);
 		readyToSave = new Boolean[gruppenAnzahl];
