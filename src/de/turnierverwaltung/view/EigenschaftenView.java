@@ -99,11 +99,11 @@ public class EigenschaftenView extends JPanel {
 		// deutsch
 		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel labelHeader = new JLabel("Deutsch (erst nach Neustart sichtbar)");
+		JLabel labelHeader = new JLabel("Deutsch (erst nach Neustart sichtbar)"); //$NON-NLS-1$
 		JLabel germanFlagLabel = new JLabel(germanFlag);
 		JPanel title = new JPanel();
 		title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		title.add(new JLabel("Sprache / Language"));
+		title.add(new JLabel("Sprache / Language")); //$NON-NLS-1$
 		htmlAll.add(title);
 		germanLanguageCheckBox = new JRadioButton();
 		germanLanguageCheckBox.setSelected(true);
@@ -115,7 +115,7 @@ public class EigenschaftenView extends JPanel {
 		htmlAll.add(htmlPanel);
 
 		// englisch
-		labelHeader = new JLabel("English (visible after restart)");
+		labelHeader = new JLabel("English (visible after restart)"); //$NON-NLS-1$
 		JLabel englishFlagLabel = new JLabel(englishFlag);
 
 		englishLanguageCheckBox = new JRadioButton();
@@ -137,14 +137,14 @@ public class EigenschaftenView extends JPanel {
 	private void downloadLinks() {
 		// ohne Header und Footer
 		try {
-			dsbHomepage = new URI("http://www.schachbund.de/download.html");
+			dsbHomepage = new URI("http://www.schachbund.de/download.html"); //$NON-NLS-1$
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		JPanel title = new JPanel();
 		title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		title.add(new JLabel("Download von nützlichen Dateien"));
+		title.add(new JLabel(Messages.getString("EigenschaftenView.5"))); //$NON-NLS-1$
 		htmlAll.add(title);
 		dsbHomepageButton = new JButton();
 		dsbHomepageButton
@@ -160,16 +160,16 @@ public class EigenschaftenView extends JPanel {
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelHeader1 = new JLabel(
-				"1. Laden Sie bitte eine der im CSV Format gespeicherten"
-						+ " DWZ Daten ");
+				Messages.getString("EigenschaftenView.10") //$NON-NLS-1$
+						+ Messages.getString("EigenschaftenView.11")); //$NON-NLS-1$
 		JLabel labelHeader1b = new JLabel(
-				"im .zip "
-						+ "Archiv unter dem Abschnitt 'Exporte als CSV, DOS und SQL' herunter.");
+				Messages.getString("EigenschaftenView.12") //$NON-NLS-1$
+						+ Messages.getString("EigenschaftenView.13")); //$NON-NLS-1$
 		JLabel labelHeader2 = new JLabel(
-				"2. Entpacken Sie die Datei und kopieren Sie"
-						+ " die vereine.csv in den Ordner,");
-		JLabel labelHeader2b = new JLabel("in der die JKlubTV Anwendung "
-				+ "gespeichert ist.");
+				Messages.getString("EigenschaftenView.14") //$NON-NLS-1$
+						+ Messages.getString("EigenschaftenView.15")); //$NON-NLS-1$
+		JLabel labelHeader2b = new JLabel(Messages.getString("EigenschaftenView.16") //$NON-NLS-1$
+				+ Messages.getString("EigenschaftenView.17")); //$NON-NLS-1$
 		htmlPanel.add(labelHeader1);
 		htmlAll.add(htmlPanel);
 		htmlPanel = new JPanel();
