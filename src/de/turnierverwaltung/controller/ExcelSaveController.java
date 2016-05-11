@@ -14,7 +14,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CreationHelper;
 import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.PrintSetup;
@@ -56,13 +55,13 @@ public class ExcelSaveController {
 					OutputStream out;
 
 					wb = new HSSFWorkbook();
-					CreationHelper createHelper = wb.getCreationHelper();
 					Font font = wb.createFont();
 					// set font 1 to 12 point type
 					font.setFontHeightInPoints((short) 12);
 					// make it blue
 					font.setColor((short) 0xc);
 					Sheet[] s = new Sheet[anzahlGruppen];
+					Sheet[] s2 = new Sheet[anzahlGruppen];
 
 					CellStyle cellStyle = wb.createCellStyle();
 					cellStyle.setBorderBottom(CellStyle.BORDER_MEDIUM);
@@ -84,48 +83,100 @@ public class ExcelSaveController {
 									.makeSimpleTableView(i);
 							this.mainControl.getTerminTabelleControl()
 									.makeSimpleTableView(i);
+
 						}
 						this.mainControl.getTurnierTabelle()[i].createMatrix();
-						int spalte = this.mainControl.getSimpleTableView()[i]
-								.getTable().getModel().getColumnCount();
-						int zeile = this.mainControl.getSimpleTableView()[i]
-								.getTable().getModel().getRowCount();
-						// create a new sheet
+
+						int spalte = this.mainControl.getTurnierTabelle()[i]
+								.getSpalte();
+						int zeile = this.mainControl.getTurnierTabelle()[i]
+								.getZeile();
+						int spalte2 = this.mainControl.getTerminTabelle()[i]
+								.getSpaltenAnzahl();
+						int zeile2 = this.mainControl.getTerminTabelle()[i]
+								.getZeilenAnzahl();
 						s[i] = wb.createSheet(this.mainControl.getTurnier()
-								.getGruppe()[i].getGruppenName());
+								.getGruppe()[i].getGruppenName()
+								+ " - Kreuztabelle");
+						s2[i] = wb.createSheet(this.mainControl.getTurnier()
+								.getGruppe()[i].getGruppenName()
+								+ " - Termintabelle");
 						PrintSetup ps = s[i].getPrintSetup();
 
 						s[i].setAutobreaks(true);
 
 						ps.setFitHeight((short) 1);
 						ps.setFitWidth((short) 1);
+						PrintSetup ps2 = s2[i].getPrintSetup();
+
+						s2[i].setAutobreaks(true);
+
+						ps2.setFitHeight((short) 1);
+						ps2.setFitWidth((short) 1);
 						// declare a row object reference
 						Row r = null;
 						// declare a cell object reference
 						Cell c = null;
 						short rownum;
+						String rep;
+
+						// declare a row object reference
+						Row r2 = null;
+						// declare a cell object reference
+						Cell c2 = null;
+						short rownum2;
 						for (int y = 0; y < zeile; y++) {
 							rownum = (short) y;
 							// create a row
 							r = s[i].createRow(rownum);
 
 							short cellnum;
-
 							for (int x = 0; x < spalte; x++) {
 								cellnum = (short) x;
 								// create a numeric cell
 								c = r.createCell(cellnum);
+
 								c.setCellStyle(cellStyle);
-								this.mainControl.getTurnierTabelle()[i]
-										.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
-										.getSimpleTableView()[i].getTable()
-										.getValueAt(y, x);
-								c.setCellValue(createHelper
-										.createRichTextString((String) this.mainControl
-												.getSimpleTableView()[i]
-												.getTable().getValueAt(y, x)));
+								if (y < (zeile - 1)) {
+									this.mainControl.getTurnierTabelle()[i]
+											.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
+											.getSimpleTableView()[i].getTable()
+											.getValueAt(y, x);
+								}
+								rep = (String) this.mainControl
+										.getTurnierTabelle()[i]
+										.getTabellenMatrix()[x][y];
+								rep = rep.replaceAll("<br />", "");
+								c.setCellValue(rep);
+								s[i].autoSizeColumn(x);
 							}
+
 							r.setHeight((short) (r.getHeight() * 2));
+
+						}
+						for (int y = 0; y < zeile2; y++) {
+							rownum2 = (short) y;
+							// create a row
+							r2 = s2[i].createRow(rownum2);
+
+							short cellnum2;
+							for (int x = 0; x < spalte2; x++) {
+								cellnum2 = (short) x;
+								// create a numeric cell
+								c2 = r2.createCell(cellnum2);
+
+								c2.setCellStyle(cellStyle);
+
+								c2.setCellValue((String) this.mainControl
+										.getTerminTabelleControl()
+										.getTerminTabelle()[i]
+										.getTabellenMatrix()[x][y]);
+
+								s2[i].autoSizeColumn(x);
+							}
+
+							r2.setHeight((short) (r2.getHeight() * 2));
+
 						}
 
 					}
