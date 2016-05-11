@@ -190,7 +190,6 @@ public class DewisDialogControl implements ListSelectionListener,
 				dialog.getVereinsAuswahl().addItem(row[3]);
 
 			}
-			dialog.getVereinsName().setText("");
 		}
 
 		if (vereine.size() == 0) {

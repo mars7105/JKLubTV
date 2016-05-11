@@ -87,6 +87,7 @@ public class NaviController implements ActionListener {
 		naviView.getTabelleAktualisierenButton().addActionListener(this);
 		naviView.getTabelleSpeichernButton().addActionListener(this);
 		naviView.getTabelleHTMLAusgabeButton().addActionListener(this);
+		naviView.getExcelSpeichernButton().addActionListener(this);
 		aktiveGruppe = 0;
 		makeNaviPanel();
 		turnierAnsicht = new TurnierAnsicht(mainControl);
@@ -161,6 +162,11 @@ public class NaviController implements ActionListener {
 			pdfsave.savePDFFile();
 
 		}
+		if (arg0.getSource() == naviView.getExcelSpeichernButton()) {
+			ExcelSaveController excelsave = new ExcelSaveController(this.mainControl);
+			excelsave.saveExcelFile();
+
+		}
 		if (arg0.getSource() == newTurnierButton) {
 			mainControl.setSpielerEingabeControl(null);
 			Turnier turnier = this.mainControl.getTurnier();
@@ -225,7 +231,8 @@ public class NaviController implements ActionListener {
 							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
 							mainControl.getPropertiesControl().setPath(
 									SQLiteDAOFactory.getDB_PATH());
-							mainControl.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
+							mainControl.setTitle(Messages
+									.getString("MainControl.8") //$NON-NLS-1$
 									+ SQLiteDAOFactory.getDB_PATH());
 							SQLiteControl sqlC = new SQLiteControl();
 							sqlC.createAllTables();

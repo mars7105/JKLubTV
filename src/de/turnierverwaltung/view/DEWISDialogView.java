@@ -105,7 +105,7 @@ public class DEWISDialogView extends JDialog {
 		suchePanel.add(zeilenPanel);
 		zeilenPanel = new JPanel();
 		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		zeilenPanel.add(new JLabel("oder Vereinsname:"));
+		zeilenPanel.add(new JLabel(Messages.getString("DEWISDialogView.1"))); //$NON-NLS-1$
 		suchePanel.add(zeilenPanel);
 		
 		vereinsName = new JTextField(25);
@@ -119,7 +119,7 @@ public class DEWISDialogView extends JDialog {
 		suchePanel.add(zeilenPanel);
 
 		vereinsAuswahl = new JComboBox<String>();
-		vereinsAuswahlOkButton = new JButton("Ok");
+		vereinsAuswahlOkButton = new JButton("Ok"); //$NON-NLS-1$
 
 		zeilenPanel = new JPanel();
 		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
