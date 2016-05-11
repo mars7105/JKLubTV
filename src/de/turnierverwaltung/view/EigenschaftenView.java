@@ -17,12 +17,19 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.BorderLayout;
+import java.awt.Desktop;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -46,11 +53,13 @@ public class EigenschaftenView extends JPanel {
 	private JRadioButton germanLanguageCheckBox;
 	private JRadioButton englishLanguageCheckBox;
 	private JPanel htmlAll;
-	private ImageIcon germanFlag = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/de.png"))); //$NON-NLS-1$
-	private ImageIcon englishFlag = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/flag-gb.png"))); //$NON-NLS-1$
-	
+	private ImageIcon germanFlag = new ImageIcon(Toolkit.getDefaultToolkit()
+			.getImage(getClass().getResource("/images/de.png"))); //$NON-NLS-1$
+	private ImageIcon englishFlag = new ImageIcon(Toolkit.getDefaultToolkit()
+			.getImage(getClass().getResource("/images/flag-gb.png"))); //$NON-NLS-1$
+	private URI dsbHomepage;
+	private JButton dsbHomepageButton;
+
 	/**
 	 * Create the panel.
 	 */
@@ -77,6 +86,7 @@ public class EigenschaftenView extends JPanel {
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		languageSupport();
 		makeHTMLEigenschaften();
+		downloadLinks();
 		centerPane.add(htmlAll, BorderLayout.NORTH);
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(centerPane);
@@ -85,15 +95,15 @@ public class EigenschaftenView extends JPanel {
 	}
 
 	private void languageSupport() {
-		 ButtonGroup group = new ButtonGroup();
+		ButtonGroup group = new ButtonGroup();
 		// deutsch
 		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel labelHeader = new JLabel("Deutsch (erst nach Neustart sichtbar)");
+		JLabel labelHeader = new JLabel("Deutsch (erst nach Neustart sichtbar)"); //$NON-NLS-1$
 		JLabel germanFlagLabel = new JLabel(germanFlag);
 		JPanel title = new JPanel();
 		title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		title.add(new JLabel("Sprache / Language"));
+		title.add(new JLabel("Sprache / Language")); //$NON-NLS-1$
 		htmlAll.add(title);
 		germanLanguageCheckBox = new JRadioButton();
 		germanLanguageCheckBox.setSelected(true);
@@ -105,7 +115,7 @@ public class EigenschaftenView extends JPanel {
 		htmlAll.add(htmlPanel);
 
 		// englisch
-		labelHeader = new JLabel("English (visible after restart)");
+		labelHeader = new JLabel("English (visible after restart)"); //$NON-NLS-1$
 		JLabel englishFlagLabel = new JLabel(englishFlag);
 
 		englishLanguageCheckBox = new JRadioButton();
@@ -119,10 +129,63 @@ public class EigenschaftenView extends JPanel {
 		htmlPanel.add(labelHeader);
 
 		htmlAll.add(htmlPanel);
-		JPanel all = new JPanel();
-		all.setLayout(new BorderLayout());
-		all.add(htmlAll, BorderLayout.NORTH);
 
+		htmlAll.add(new JSeparator());
+
+	}
+
+	private void downloadLinks() {
+		// ohne Header und Footer
+		try {
+			dsbHomepage = new URI("http://www.schachbund.de/download.html"); //$NON-NLS-1$
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		JPanel title = new JPanel();
+		title.setLayout(new FlowLayout(FlowLayout.LEFT));
+		title.add(new JLabel(Messages.getString("EigenschaftenView.5"))); //$NON-NLS-1$
+		htmlAll.add(title);
+		dsbHomepageButton = new JButton();
+		dsbHomepageButton
+				.setText("<HTML><FONT color=\"#000099\"><U>http://www.schachbund.de/download.html</U></FONT></HTML>"); //$NON-NLS-1$
+
+		dsbHomepageButton.setOpaque(false);
+		dsbHomepageButton.setToolTipText(dsbHomepage.toString());
+		dsbHomepageButton.addActionListener(new OpenUrlAction());
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(dsbHomepageButton);
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JLabel labelHeader1 = new JLabel(
+				Messages.getString("EigenschaftenView.10") //$NON-NLS-1$
+						+ Messages.getString("EigenschaftenView.11")); //$NON-NLS-1$
+		JLabel labelHeader1b = new JLabel(
+				Messages.getString("EigenschaftenView.12") //$NON-NLS-1$
+						+ Messages.getString("EigenschaftenView.13")); //$NON-NLS-1$
+		JLabel labelHeader2 = new JLabel(
+				Messages.getString("EigenschaftenView.14") //$NON-NLS-1$
+						+ Messages.getString("EigenschaftenView.15")); //$NON-NLS-1$
+		JLabel labelHeader2b = new JLabel(Messages.getString("EigenschaftenView.16") //$NON-NLS-1$
+				+ Messages.getString("EigenschaftenView.17")); //$NON-NLS-1$
+		htmlPanel.add(labelHeader1);
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(labelHeader1b);
+
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(labelHeader2);
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(labelHeader2b);
+
+		htmlAll.add(htmlPanel);
 		htmlAll.add(new JSeparator());
 
 	}
@@ -208,4 +271,24 @@ public class EigenschaftenView extends JPanel {
 		this.englishLanguageCheckBox = englishLanguageCheckBox;
 	}
 
+	private static void open(URI uri) {
+		if (Desktop.isDesktopSupported()) {
+			try {
+				Desktop.getDesktop().browse(uri);
+			} catch (IOException e) {
+				/* TODO: error handling */}
+		} else {
+			/* TODO: error handling */}
+	}
+
+	class OpenUrlAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource() == dsbHomepageButton) {
+				open(dsbHomepage);
+			}
+
+		}
+
+	}
 }

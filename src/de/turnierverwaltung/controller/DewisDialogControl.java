@@ -16,10 +16,10 @@ package de.turnierverwaltung.controller;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
@@ -36,14 +36,16 @@ public class DewisDialogControl implements ListSelectionListener,
 	private DEWISDialogView dialog;
 	private SpielerDewisView spielerDewisView;
 	private ArrayList<Spieler> players;
+	private DewisDialogVereinsSucheController vereinsSuche;
+	private ArrayList<String[]> zpsItems;
+
 	public DewisDialogControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
 
 	}
 
-	public void makeDWZLste() {
-		String zps = dialog.getVereinsSuche().getText();
+	public void makeDWZListe(String zps) {
 		DewisClub verein = new DewisClub(zps);
 		players = new ArrayList<Spieler>();
 		players = verein.getSpieler();
@@ -78,6 +80,7 @@ public class DewisDialogControl implements ListSelectionListener,
 
 			dialog = new DEWISDialogView();
 			dialog.getVereinsSucheButton().addActionListener(this);
+			dialog.getVereinsAuswahlOkButton().addActionListener(this);
 			dialog.getUpdateButton().addActionListener(this);
 			dialog.getUpdateButton().setEnabled(false);
 			dialog.getOkButton().addActionListener(this);
@@ -86,7 +89,15 @@ public class DewisDialogControl implements ListSelectionListener,
 			String zps = mainControl.getPropertiesControl().getZPS();
 			if (zps.length() > 0) {
 				dialog.getVereinsSuche().setText(zps);
-				makeDWZLste();
+
+				makeDWZListe(zps);
+			}
+			vereinsSuche = new DewisDialogVereinsSucheController();
+			if (vereinsSuche.checkifFileExist() == false) {
+				dialog.getVereinsAuswahl().setEnabled(false);
+				dialog.getVereinsAuswahlOkButton().setEnabled(false);
+				dialog.getVereinsName().setEnabled(false);
+				dialog.getVereinsName().setBackground(Color.LIGHT_GRAY);
 			}
 		} catch (Exception e) {
 			mainControl.setEnabled(true);
@@ -109,8 +120,23 @@ public class DewisDialogControl implements ListSelectionListener,
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == dialog.getVereinsAuswahlOkButton()) {
+			if (dialog.getVereinsAuswahl().getItemCount() > 0) {
+
+				int index = dialog.getVereinsAuswahl().getSelectedIndex();
+				String items[] = zpsItems.get(index);
+				String zps = items[0];
+				makeDWZListe(zps);
+			}
+
+		}
 		if (arg0.getSource() == dialog.getVereinsSucheButton()) {
-			makeDWZLste();
+			if (dialog.getVereinsName().getText().length() > 0) {
+				makeVereinsListe();
+			} else if (dialog.getVereinsSuche().getText().length() > 0) {
+				String zps = dialog.getVereinsSuche().getText();
+				makeDWZListe(zps);
+			}
 
 		}
 		if (arg0.getSource() == dialog.getCancelButton()) {
@@ -150,6 +176,22 @@ public class DewisDialogControl implements ListSelectionListener,
 			mainControl.setEnabled(true);
 			mainControl.getSpielerLadenControl().updateSpielerListe();
 		}
+	}
+
+	private void makeVereinsListe() {
+		ArrayList<String[]> vereine = vereinsSuche.searchForVerein(dialog
+				.getVereinsName().getText());
+		zpsItems = new ArrayList<String[]>();
+		dialog.getVereinsAuswahl().removeAllItems();
+
+		for (String[] iterator : vereine) {
+
+			String[] row = iterator;
+			zpsItems.add(row);
+			dialog.getVereinsAuswahl().addItem(row[3]);
+
+		}
+
 	}
 
 	private Boolean searchSpieler(Spieler neuerSpieler, Boolean updateDWZ) {

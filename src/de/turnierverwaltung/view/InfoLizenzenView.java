@@ -52,6 +52,8 @@ public class InfoLizenzenView {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Logo.png"))); //$NON-NLS-1$
 	private URI jgoodiesUri;
 	private JButton buttonjgoodies;
+	private URI opencsvUri;
+	private JButton buttonopencsv;
 
 	class OpenUrlAction implements ActionListener {
 		@Override
@@ -76,6 +78,9 @@ public class InfoLizenzenView {
 			}
 			if (e.getSource() == buttonjgoodies) {
 				open(jgoodiesUri);
+			}
+			if (e.getSource() == buttonopencsv) {
+				open(opencsvUri);
 			}
 		}
 
@@ -235,6 +240,26 @@ public class InfoLizenzenView {
 		temp.add(jgoodiesUriPicker);
 		panel.add(temp);
 		panel.add(new JSeparator());
+	
+		
+		opencsvUri = new URI("http://opencsv.sourceforge.net/"); //$NON-NLS-1$
+		JLabel opencsvUriPicker = new JLabel(
+				"7. Opencsv -> \nhttp://opencsv.sourceforge.net/\n"); //$NON-NLS-1$
+		buttonopencsv = new JButton();
+		buttonopencsv.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>"); //$NON-NLS-1$
+		
+		buttonopencsv.setOpaque(false);
+		buttonopencsv.setToolTipText(opencsvUri.toString());
+		buttonopencsv.addActionListener(new OpenUrlAction());
+		temp = new JPanel();
+		temp.setBackground(Color.WHITE);
+		temp.setLayout(new FlowLayout(FlowLayout.LEFT));
+		temp.add(buttonopencsv);
+
+		temp.add(opencsvUriPicker);
+		panel.add(temp);
+		panel.add(new JSeparator());
+		
 		
 		all.add(panel, BorderLayout.NORTH);
 		return all;
