@@ -29,8 +29,8 @@ public class DewisDialogVereinsSucheController {
 				csvReader = new CSVReader(new FileReader(csvFilename));
 
 				while ((row = csvReader.readNext()) != null) {
-
-					if (row[3].contains(searchString)) {
+					String paramLower = row[3].toLowerCase();
+					if (paramLower.contains(searchString.toLowerCase())) {
 						foundStringList.add(row);
 					}
 				}

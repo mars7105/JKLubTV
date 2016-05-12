@@ -93,12 +93,19 @@ public class TurnierControl implements ActionListener {
 				hauptPanel.remove(selectedIndex);
 			}
 		}
-		hauptPanel.addTab(Messages.getString("TurnierControl.1"), turnierIcon, this.turnierView); //$NON-NLS-1$
+		hauptPanel
+				.addTab(Messages.getString("TurnierControl.1"), turnierIcon, this.turnierView); //$NON-NLS-1$
 		selectIndex = hauptPanel.getTabCount() - 1;
 		hauptPanel.setSelectedIndex(selectIndex);
-//		hauptPanel.putClientProperty(Options.EMBEDDED_TABS_KEY, Boolean.TRUE);
+		Boolean onlyTables = this.mainControl.getPropertiesControl()
+				.getOnlyTables();
+		Boolean noDWZCalc = this.mainControl.getPropertiesControl().getNoDWZ();
 
-		// mainControl.getMenueControl().setWarnHinweis(true);
+		Boolean noFolgeDWZCalc = mainControl.getPropertiesControl()
+				.getNoFolgeDWZ();
+
+		turnier = new Turnier(onlyTables, noDWZCalc, noFolgeDWZCalc);
+		this.mainControl.setTurnier(turnier);
 	}
 
 	@Override
@@ -135,13 +142,7 @@ public class TurnierControl implements ActionListener {
 	}
 
 	private void makeTurnier() {
-		Boolean onlyTables = mainControl.getPropertiesControl().getOnlyTables();
-		Boolean noDWZCalc = mainControl.getPropertiesControl().getNoDWZ();
 
-		Boolean noFolgeDWZCalc = mainControl.getPropertiesControl()
-				.getNoFolgeDWZ();
-
-		turnier = new Turnier(onlyTables, noDWZCalc, noFolgeDWZCalc);
 		turnier.setTurnierName(turnierName);
 		turnier.setStartDatum(startDatum);
 		turnier.setEndDatum(endDatum);
@@ -196,8 +197,8 @@ public class TurnierControl implements ActionListener {
 			}
 
 		} catch (NumberFormatException e) {
-			JOptionPane
-					.showMessageDialog(mainControl, Messages.getString("TurnierControl.2")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(mainControl,
+					Messages.getString("TurnierControl.2")); //$NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().setText(""); //$NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		} catch (ZahlKleinerAlsN e) {
