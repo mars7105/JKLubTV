@@ -54,6 +54,8 @@ public class InfoLizenzenView {
 	private JButton buttonjgoodies;
 	private URI opencsvUri;
 	private JButton buttonopencsv;
+	private URI poiUri;
+	private JButton buttonpoi;
 
 	class OpenUrlAction implements ActionListener {
 		@Override
@@ -81,6 +83,9 @@ public class InfoLizenzenView {
 			}
 			if (e.getSource() == buttonopencsv) {
 				open(opencsvUri);
+			}
+			if (e.getSource() == buttonpoi) {
+				open(poiUri);
 			}
 		}
 
@@ -259,7 +264,24 @@ public class InfoLizenzenView {
 		temp.add(opencsvUriPicker);
 		panel.add(temp);
 		panel.add(new JSeparator());
+	
+		poiUri = new URI("https://poi.apache.org/"); //$NON-NLS-1$
+		JLabel poiUriPicker = new JLabel(
+				"8. Apache POI - the Java API for Microsoft Documents -> \nhttps://poi.apache.org/\n"); //$NON-NLS-1$
+		buttonpoi = new JButton();
+		buttonpoi.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>"); //$NON-NLS-1$
 		
+		buttonpoi.setOpaque(false);
+		buttonpoi.setToolTipText(poiUri.toString());
+		buttonpoi.addActionListener(new OpenUrlAction());
+		temp = new JPanel();
+		temp.setBackground(Color.WHITE);
+		temp.setLayout(new FlowLayout(FlowLayout.LEFT));
+		temp.add(buttonpoi);
+
+		temp.add(poiUriPicker);
+		panel.add(temp);
+		panel.add(new JSeparator());
 		
 		all.add(panel, BorderLayout.NORTH);
 		return all;
