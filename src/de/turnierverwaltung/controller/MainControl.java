@@ -24,7 +24,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-
 import de.turnierverwaltung.model.PaarungsTafeln;
 import de.turnierverwaltung.model.Partie;
 import de.turnierverwaltung.model.SimpleTerminTabelle;

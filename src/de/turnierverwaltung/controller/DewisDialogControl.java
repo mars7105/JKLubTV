@@ -45,6 +45,10 @@ public class DewisDialogControl implements ListSelectionListener,
 
 	}
 
+	/**
+	 * 
+	 * @param zps = ZPS number of the association
+	 */
 	public void makeDWZListe(String zps) {
 		DewisClub verein = new DewisClub(zps);
 		players = new ArrayList<Spieler>();
@@ -74,6 +78,9 @@ public class DewisDialogControl implements ListSelectionListener,
 
 	}
 
+	/**
+ * 
+ */
 	public void makeDialog() {
 		try {
 			mainControl.setEnabled(false);
@@ -194,6 +201,11 @@ public class DewisDialogControl implements ListSelectionListener,
 
 	}
 
+	/**
+	 * @param neuerSpieler = new player
+	 * @param updateDWZ = update the dwz
+	 * @return
+	 */
 	private Boolean searchSpieler(Spieler neuerSpieler, Boolean updateDWZ) {
 		ArrayList<Spieler> spieler = mainControl.getSpielerLadenControl()
 				.getSpieler();
