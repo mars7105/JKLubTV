@@ -81,51 +81,37 @@ public class PropertiesControl {
 	}
 
 	public Boolean writeProperties() {
+		Boolean ok = true;
 		try {
 
 			output = new FileOutputStream("config.properties");
 
 			prop.store(output, null);
-
+			output.close();
+			NoWritableProperties = false;
+			ok = true;
 		} catch (IOException io) {
 			NoWritableProperties = true;
-			return false;
-		} finally {
-			if (output != null) {
-				try {
-					output.close();
-				} catch (IOException e) {
-					NoWritableProperties = true;
-					return false;
-				}
-			}
-
+			ok = false;
 		}
-		NoWritableProperties = false;
-		return true;
+		return ok;
 	}
 
 	public Boolean readProperties() {
+		Boolean ok = true;
 		try {
 
 			input = new FileInputStream("config.properties");
 
 			// load a properties file
 			prop.load(input);
-
+			input.close();
+			ok = true;
 		} catch (IOException ex) {
 
-			return false;
-		} finally {
-			if (input != null) {
-				try {
-					input.close();
-				} catch (IOException e) {
-					return false;
-				}
-			}
+			ok = false;
 		}
-		return true;
+		return ok;
 	}
 
 	public Boolean checkPath() {
@@ -204,8 +190,7 @@ public class PropertiesControl {
 		de.turnierverwaltung.view.Messages.setLocale(new Locale("en", "US"));
 		de.turnierverwaltung.controller.Messages.setLocale(new Locale("en",
 				"US"));
-		de.turnierverwaltung.model.Messages.setLocale(new Locale("en",
-				"US"));
+		de.turnierverwaltung.model.Messages.setLocale(new Locale("en", "US"));
 	}
 
 	public void setLanguageToGerman() {
@@ -213,8 +198,7 @@ public class PropertiesControl {
 		de.turnierverwaltung.view.Messages.setLocale(new Locale("de", "DE"));
 		de.turnierverwaltung.controller.Messages.setLocale(new Locale("de",
 				"DE"));
-		de.turnierverwaltung.model.Messages.setLocale(new Locale("de",
-				"DE"));
+		de.turnierverwaltung.model.Messages.setLocale(new Locale("de", "DE"));
 
 	}
 }
