@@ -57,8 +57,7 @@ public class MainControl extends JFrame {
 	private int windowHeight;
 	private MainView mainView;
 	private JTabbedPane hauptPanel;
-	// private MenueControl menueControl;
-	// private MenueView menueView;
+
 	private TurnierControl turnierControl;
 	private TurnierView turnierView;
 	private GruppenView gruppenView;
@@ -111,7 +110,12 @@ public class MainControl extends JFrame {
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		propertiesControl = new PropertiesControl();
-		propertiesControl.readProperties();
+		if (propertiesControl.readProperties() == false) {
+			if (propertiesControl.writeProperties() == false) {
+				JOptionPane.showMessageDialog(this,
+						Messages.getString("MainControl.7")); //$NON-NLS-1$
+			}
+		}
 		if (propertiesControl.getLanguage().equals("german")) { //$NON-NLS-1$
 			propertiesControl.setLanguageToGerman();
 
@@ -343,60 +347,51 @@ public class MainControl extends JFrame {
 
 	private void makeProperties() {
 		// datenbankMenueView(false);
-		if (propertiesControl.readProperties() == false) {
-			if (propertiesControl.writeProperties() == false) {
-				JOptionPane.showMessageDialog(this,
-						Messages.getString("MainControl.7")); //$NON-NLS-1$
+
+		if (propertiesControl.checkPath() == true) {
+			// datenbankMenueView(true);
+			String path = propertiesControl.getPath();
+			SQLiteDAOFactory.setDB_PATH(path);
+			this.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
+					+ SQLiteDAOFactory.getDB_PATH());
+
+			if (this.getSpielerEditierenControl() != null) {
+				// mainControl.getSpielerEditierenControl().makePanel();
+			} else {
+				this.setSpielerEditierenControl(new SpielerLadenControl(this));
+				this.getSpielerEditierenControl().updateSpielerListe();
+			}
+			this.setNeuesTurnier(false);
+			// this.getNaviView().getTabellenPanel().setVisible(false);
+			if (this.getTurnierTableControl() == null) {
+				this.setTurnierTableControl(new TurnierTableControl(this));
+				this.getTurnierTableControl().loadTurnierListe();
+				this.setTurnierListeLadenControl(new TurnierListeLadenControl(
+						this));
+				this.getTurnierListeLadenControl().loadTurnierListe();
+				naviView.setPathToDatabase(new JLabel(path));
+
+			} else {
+				this.resetApp();
+				this.setTurnierTableControl(new TurnierTableControl(this));
+				this.getTurnierTableControl().loadTurnierListe();
+				this.setTurnierListeLadenControl(new TurnierListeLadenControl(
+						this));
+				this.getTurnierListeLadenControl().loadTurnierListe();
+				naviView.setPathToDatabase(new JLabel(path));
+			}
+			naviView.getTurnierListePanel().setVisible(false);
+			naviView.getSpielerListePanel().setVisible(false);
+			hauptPanel.addChangeListener(naviController.getTurnierAnsicht());
+			for (int i = 0; i < hauptPanel.getTabCount(); i++) {
+				if (hauptPanel.getTitleAt(i).equals(
+						Messages.getString("MainControl.9"))) { //$NON-NLS-1$
+					hauptPanel.setSelectedIndex(i);
+				}
 			}
 		} else {
+			this.setTitle(Messages.getString("MainControl.10")); //$NON-NLS-1$
 
-			if (propertiesControl.checkPath() == true) {
-				// datenbankMenueView(true);
-				String path = propertiesControl.getPath();
-				SQLiteDAOFactory.setDB_PATH(path);
-				this.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
-						+ SQLiteDAOFactory.getDB_PATH());
-
-				if (this.getSpielerEditierenControl() != null) {
-					// mainControl.getSpielerEditierenControl().makePanel();
-				} else {
-					this.setSpielerEditierenControl(new SpielerLadenControl(
-							this));
-					this.getSpielerEditierenControl().updateSpielerListe();
-				}
-				this.setNeuesTurnier(false);
-				// this.getNaviView().getTabellenPanel().setVisible(false);
-				if (this.getTurnierTableControl() == null) {
-					this.setTurnierTableControl(new TurnierTableControl(this));
-					this.getTurnierTableControl().loadTurnierListe();
-					this.setTurnierListeLadenControl(new TurnierListeLadenControl(
-							this));
-					this.getTurnierListeLadenControl().loadTurnierListe();
-					naviView.setPathToDatabase(new JLabel(path));
-
-				} else {
-					this.resetApp();
-					this.setTurnierTableControl(new TurnierTableControl(this));
-					this.getTurnierTableControl().loadTurnierListe();
-					this.setTurnierListeLadenControl(new TurnierListeLadenControl(
-							this));
-					this.getTurnierListeLadenControl().loadTurnierListe();
-					naviView.setPathToDatabase(new JLabel(path));
-				}
-				naviView.getTurnierListePanel().setVisible(false);
-				naviView.getSpielerListePanel().setVisible(false);
-				hauptPanel
-						.addChangeListener(naviController.getTurnierAnsicht());
-				for (int i = 0; i < hauptPanel.getTabCount(); i++) {
-					if (hauptPanel.getTitleAt(i).equals(
-							Messages.getString("MainControl.9"))) { //$NON-NLS-1$
-						hauptPanel.setSelectedIndex(i);
-					}
-				}
-			} else {
-				this.setTitle(Messages.getString("MainControl.10")); //$NON-NLS-1$
-
-			}
 		}
 	}
 
@@ -405,8 +400,7 @@ public class MainControl extends JFrame {
 		windowHeight = 0;
 		mainView = null;
 		hauptPanel = null;
-		// menueControl = null;
-		// menueView = null;
+
 		turnierControl = null;
 		turnierView = null;
 		gruppenView = null;
