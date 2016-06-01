@@ -20,10 +20,12 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 
+import de.turnierverwaltung.model.SortName;
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.view.SpielerEditierenView;
 import de.turnierverwaltung.view.SpielerLadenView;
@@ -120,20 +122,26 @@ public class SpielerLadenControl implements ActionListener {
 	}
 
 	public void updateSpielerListe() {
+
 		spielerTableControl = new SpielerTableControl(this.mainControl);
 		spieler = new ArrayList<Spieler>();
 		spieler = spielerTableControl.getAllSpieler();
 		spielerAnzahl = spieler.size();
+		int selectedTab = 0;
 		if (spielerLadenView == null) {
 			spielerLadenView = new SpielerLadenView(spielerAnzahl);
 			hauptPanel
 					.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, spielerLadenView); //$NON-NLS-1$
 		} else {
+			selectedTab = spielerLadenView.getSpielerListe().getSelectedIndex();
 			spielerLadenView.removeAll();
 			spielerLadenView.init(spielerAnzahl);
+
 		}
 
 		int index = 0;
+		Collections.sort(spieler, new SortName());
+
 		for (Spieler player : spieler) {
 
 			spielerLadenView.makeSpielerZeile(player, index);
@@ -143,7 +151,10 @@ public class SpielerLadenControl implements ActionListener {
 					.addActionListener(this);
 			index++;
 		}
-
+		if (selectedTab > 0
+				&& spielerLadenView.getSpielerListe().getComponentCount() > selectedTab) {
+			spielerLadenView.getSpielerListe().setSelectedIndex(selectedTab);
+		}
 		spielerLadenView.updateUI();
 	}
 

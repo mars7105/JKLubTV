@@ -27,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.model.Spieler;
 
@@ -44,10 +45,13 @@ public class SpielerLadenView extends JPanel {
 	private int anzahlElemente;
 	private JPanel line;
 
-	private ImageIcon userDelete = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-delete-2.png"))); //$NON-NLS-1$
-	private ImageIcon userProperties = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-properties.png"))); //$NON-NLS-1$
+	private JTabbedPane spielerListe;
+
+	private ImageIcon userDelete = new ImageIcon(Toolkit.getDefaultToolkit()
+			.getImage(getClass().getResource("/images/user-delete-2.png"))); //$NON-NLS-1$
+	private ImageIcon userProperties = new ImageIcon(Toolkit
+			.getDefaultToolkit().getImage(
+					getClass().getResource("/images/user-properties.png"))); //$NON-NLS-1$
 
 	private int spielerAnzahl;
 
@@ -60,7 +64,7 @@ public class SpielerLadenView extends JPanel {
 		this.spielerAnzahl = spielerAnzahl;
 		anzahlElemente = 0;
 		setLayout(new BorderLayout());
-
+		spielerListe = new JTabbedPane();
 		JLabel titleLabel = new JLabel(Messages.getString("SpielerLadenView.2")); //$NON-NLS-1$
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		titlepanel.add(titleLabel);
@@ -76,7 +80,8 @@ public class SpielerLadenView extends JPanel {
 		contentPanel.setLayout(new BorderLayout());
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
-		contentPanel.add(centerPane, BorderLayout.NORTH);
+		// contentPanel.add(centerPane, BorderLayout.NORTH);
+		contentPanel.add(spielerListe, BorderLayout.NORTH);
 
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
@@ -101,22 +106,42 @@ public class SpielerLadenView extends JPanel {
 		playerLine.setPreferredSize(new Dimension(350, 50));
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-		JLabel sname = new JLabel(Messages.getString("SpielerLadenView.3") + spieler.getName()); //$NON-NLS-1$
+		JLabel sname = new JLabel(
+				Messages.getString("SpielerLadenView.3") + spieler.getName()); //$NON-NLS-1$
 		playerLine.add(sname);
 
-		JLabel dwz = new JLabel(Messages.getString("SpielerLadenView.4") + spieler.getDwz()); //$NON-NLS-1$
+		JLabel dwz = new JLabel(
+				Messages.getString("SpielerLadenView.4") + spieler.getDwz()); //$NON-NLS-1$
 		playerLine.add(dwz);
 		line.add(playerLine);
-		spielerBearbeitenButton[index] = new JButton(Messages.getString("SpielerLadenView.5"), userProperties); //$NON-NLS-1$
+		spielerBearbeitenButton[index] = new JButton(
+				Messages.getString("SpielerLadenView.5"), userProperties); //$NON-NLS-1$
 
 		buttonLine.add(spielerBearbeitenButton[index]);
-		spielerLoeschenButton[index] = new JButton(Messages.getString("SpielerLadenView.6"), userDelete); //$NON-NLS-1$
+		spielerLoeschenButton[index] = new JButton(
+				Messages.getString("SpielerLadenView.6"), userDelete); //$NON-NLS-1$
 		buttonLine.add(spielerLoeschenButton[index]);
 		line.add(buttonLine);
 		centerPane.add(line);
 		centerPane.add(new JSeparator());
 
 		anzahlElemente++;
+		if (anzahlElemente % 10 == 0 || anzahlElemente == spielerAnzahl) {
+			int endIndex = anzahlElemente;
+			int startIndex = endIndex + 1 - centerPane.getComponentCount() / 2;
+			if (startIndex < 1) {
+				startIndex = 1;
+			}
+			JPanel panel = new JPanel();
+			panel.setLayout(new BorderLayout());
+			panel.add(centerPane, BorderLayout.NORTH);
+			spielerListe.addTab(
+					startIndex + " " + Messages.getString("SpielerLadenView.7")
+							+ " " + endIndex, panel);
+			centerPane = new JPanel();
+			centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
+		}
+
 	}
 
 	public void setSpielerBearbeitenButton(JButton[] spielerBearbeitenButton) {
@@ -141,6 +166,14 @@ public class SpielerLadenView extends JPanel {
 
 	public void setSpielerAnzahl(int spielerAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
+	}
+
+	public JTabbedPane getSpielerListe() {
+		return spielerListe;
+	}
+
+	public void setSpielerListe(JTabbedPane spielerListe) {
+		this.spielerListe = spielerListe;
 	}
 
 }

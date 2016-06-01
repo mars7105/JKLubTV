@@ -52,6 +52,9 @@ public class Spieler implements Comparable<Object> {
 
 	@Override
 	public int compareTo(Object o) {
+
+		// return this.getName().compareTo(((Spieler) o).getName());
+
 		int compareQuantity = ((Spieler) o).getSort();
 
 		// ascending order
@@ -104,7 +107,8 @@ public class Spieler implements Comparable<Object> {
 
 			try {
 				loop = false;
-				sort = (int) (this.punkte * 1000000 + this.soberg * 100000 + Integer.parseInt(this.dwz));
+				sort = (int) (this.punkte * 1000000 + this.soberg * 100000 + Integer
+						.parseInt(this.dwz));
 			} catch (NumberFormatException e) {
 				loop = true;
 				this.dwz = TurnierKonstanten.KEINE_DWZ;
@@ -175,9 +179,9 @@ public class Spieler implements Comparable<Object> {
 	}
 
 	public void setFolgeDWZ(double folgeDWZ) {
-		this.folgeDWZ = (int)folgeDWZ;
+		this.folgeDWZ = (int) folgeDWZ;
 	}
-	
+
 	public int getAge() {
 		return age;
 	}
