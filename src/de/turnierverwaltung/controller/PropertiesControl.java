@@ -17,12 +17,12 @@ package de.turnierverwaltung.controller;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.io.StringReader;
+import java.io.StringWriter;
 import java.util.Locale;
 import java.util.Properties;
+import java.util.prefs.Preferences;
 
 public class PropertiesControl {
 
@@ -36,12 +36,12 @@ public class PropertiesControl {
 	public static final String LANGUAGE = "language";
 
 	private Properties prop;
-	private OutputStream output;
-	private FileInputStream input;
 	private Boolean NoWritableProperties;
+	private Preferences prefs;
 
 	public PropertiesControl() {
 		super();
+		prefs = Preferences.userRoot();
 		prop = new Properties();
 		prop.setProperty(PATH, "");
 		prop.setProperty(ONLYTABLES, FALSE);
@@ -82,34 +82,59 @@ public class PropertiesControl {
 
 	public Boolean writeProperties() {
 		Boolean ok = true;
+		// try {
+		//
+		// output = new FileOutputStream("config.properties");
+		//
+		// prop.store(output, null);
+		// output.close();
+		// NoWritableProperties = false;
+		// ok = true;
+		// } catch (IOException io) {
+		// NoWritableProperties = true;
+		// ok = false;
+		// }
+		// speichern
+		StringWriter sw = new StringWriter();
 		try {
-
-			output = new FileOutputStream("config.properties");
-
-			prop.store(output, null);
-			output.close();
-			NoWritableProperties = false;
+			prop.store(sw, null);
+			prefs.put("properties", sw.toString());
 			ok = true;
-		} catch (IOException io) {
-			NoWritableProperties = true;
+			NoWritableProperties = false;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 			ok = false;
+			NoWritableProperties = true;
 		}
+
 		return ok;
 	}
 
 	public Boolean readProperties() {
 		Boolean ok = true;
+		// try {
+		//
+		// input = new FileInputStream("config.properties");
+		//
+		// // load a properties file
+		// prop.load(input);
+		// input.close();
+		// ok = true;
+		// } catch (IOException ex) {
+		//
+		// ok = false;
+		// }
+		// auslesen
 		try {
-
-			input = new FileInputStream("config.properties");
-
-			// load a properties file
-			prop.load(input);
-			input.close();
+			prop.load(new StringReader(prefs.get("properties", null)));
 			ok = true;
-		} catch (IOException ex) {
-
+		} catch (IOException e) {
+			
 			ok = false;
+		} catch (NullPointerException e) {
+			writeProperties();
+			ok = true;
 		}
 		return ok;
 	}

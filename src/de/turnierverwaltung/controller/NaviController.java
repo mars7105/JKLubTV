@@ -163,7 +163,8 @@ public class NaviController implements ActionListener {
 
 		}
 		if (arg0.getSource() == naviView.getExcelSpeichernButton()) {
-			ExcelSaveController excelsave = new ExcelSaveController(this.mainControl);
+			ExcelSaveController excelsave = new ExcelSaveController(
+					this.mainControl);
 			excelsave.saveExcelFile();
 
 		}
@@ -322,11 +323,16 @@ public class NaviController implements ActionListener {
 									this.mainControl));
 					mainControl.getTurnierListeLadenControl()
 							.loadTurnierListe();
-					naviView.setPathToDatabase(new JLabel(file.getName()));
 
 					mainControl.getPropertiesControl().setPath(
 							SQLiteDAOFactory.getDB_PATH());
+
 					mainControl.getPropertiesControl().writeProperties();
+					naviView.setPathToDatabase(new JLabel(SQLiteDAOFactory
+							.getDB_PATH()));
+
+					mainControl.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
+							+ SQLiteDAOFactory.getDB_PATH());
 					turnierAnsicht = new TurnierAnsicht(mainControl);
 					mainControl.getHauptPanel().addChangeListener(
 							turnierAnsicht);
