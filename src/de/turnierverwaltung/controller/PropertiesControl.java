@@ -82,18 +82,7 @@ public class PropertiesControl {
 
 	public Boolean writeProperties() {
 		Boolean ok = true;
-		// try {
-		//
-		// output = new FileOutputStream("config.properties");
-		//
-		// prop.store(output, null);
-		// output.close();
-		// NoWritableProperties = false;
-		// ok = true;
-		// } catch (IOException io) {
-		// NoWritableProperties = true;
-		// ok = false;
-		// }
+		
 		// speichern
 		StringWriter sw = new StringWriter();
 		try {
@@ -113,18 +102,7 @@ public class PropertiesControl {
 
 	public Boolean readProperties() {
 		Boolean ok = true;
-		// try {
-		//
-		// input = new FileInputStream("config.properties");
-		//
-		// // load a properties file
-		// prop.load(input);
-		// input.close();
-		// ok = true;
-		// } catch (IOException ex) {
-		//
-		// ok = false;
-		// }
+		
 		// auslesen
 		try {
 			prop.load(new StringReader(prefs.get("properties", null)));

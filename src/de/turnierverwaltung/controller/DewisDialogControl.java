@@ -20,12 +20,15 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import de.turnierverwaltung.model.DewisClub;
+import de.turnierverwaltung.model.SortName;
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.view.DEWISDialogView;
 import de.turnierverwaltung.view.SpielerDewisView;
@@ -54,6 +57,8 @@ public class DewisDialogControl implements ListSelectionListener,
 		players = new ArrayList<Spieler>();
 		players = verein.getSpieler();
 		if (players != null) {
+			Collections.sort(players, new SortName());
+
 			spielerDewisView = new SpielerDewisView();
 			for (Spieler player : players) {
 				spielerDewisView.makeSpielerZeile(player);
