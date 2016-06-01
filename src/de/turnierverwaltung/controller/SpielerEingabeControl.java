@@ -88,7 +88,8 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 			this.mainControl
 					.setRundenEingabeFormularControl(rundenEingabeFormularControl);
 		} else {
-			rundenEingabeFormularControl = this.mainControl.getRundenEingabeFormularControl();
+			rundenEingabeFormularControl = this.mainControl
+					.getRundenEingabeFormularControl();
 		}
 		rundenEingabeFormularControl = new RundenEingabeFormularControl(
 				this.mainControl, selectIndex);
@@ -120,50 +121,54 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 				spieler = new Spieler[sAnzahl];
 				Boolean correctName = true;
 				int counter = -1;
-				for (int y = 0; y < sAnzahl; y++) {
-					if (spielerEingabeView[i].getSpielerTextfield()[y]
-							.getText().equals("Spielfrei")) {
-						correctName = false;
-					} else {
-						correctName = true;
-						counter++;
-					}
-
-					if (correctName == true) {
-						name = spielerEingabeView[i].getSpielerTextfield()[y]
-								.getText();
-						kuerzel = spielerEingabeView[i].getKuerzelTextfield()[y]
-								.getText();
-						dwz = spielerEingabeView[i].getDwzTextfield()[y]
-								.getText();
-						spielerID = spielerEingabeView[i].getSpielerID()[y];
-						age = spielerEingabeView[i].getTextComboBoxAge()[y]
-								.getSelectedIndex();
-
-						spieler[counter] = new Spieler();
-						spieler[counter].setName(name);
-						spieler[counter].setKuerzel(kuerzel);
-						spieler[counter].setDwz(dwz);
-						spieler[counter].setAge(age);
-						if (spielerID >= 0) {
-							spieler[counter].setSpielerId(spielerID);
-							stc.updateOneSpieler(spieler[counter]);
-
+				if (testForDoubles(i) == true) {
+					for (int y = 0; y < sAnzahl; y++) {
+						if (spielerEingabeView[i].getSpielerTextfield()[y]
+								.getText().equals("Spielfrei")) {
+							correctName = false;
 						} else {
-							spieler[counter].setSpielerId(stc
-									.insertOneSpieler(spieler[counter]));
+							correctName = true;
+							counter++;
+						}
+
+						if (correctName == true) {
+							name = spielerEingabeView[i].getSpielerTextfield()[y]
+									.getText();
+							kuerzel = spielerEingabeView[i]
+									.getKuerzelTextfield()[y].getText();
+							dwz = spielerEingabeView[i].getDwzTextfield()[y]
+									.getText();
+							spielerID = spielerEingabeView[i].getSpielerID()[y];
+							age = spielerEingabeView[i].getTextComboBoxAge()[y]
+									.getSelectedIndex();
+
+							spieler[counter] = new Spieler();
+							spieler[counter].setName(name);
+							spieler[counter].setKuerzel(kuerzel);
+							spieler[counter].setDwz(dwz);
+							spieler[counter].setAge(age);
+							if (spielerID >= 0) {
+								spieler[counter].setSpielerId(spielerID);
+								stc.updateOneSpieler(spieler[counter]);
+
+							} else {
+								spieler[counter].setSpielerId(stc
+										.insertOneSpieler(spieler[counter]));
+							}
 						}
 					}
+
+					gruppe[i].setSpieler(spieler);
+					Arrays.sort(spieler);
+					spielerEingabeView[i].removeAll();
+					// rundenEingabeFormularControl.makeRundenEditView(i);
+
+					rundenEingabeFormularControl.makeTerminTabelle(i);
+					// rundenEingabeFormularControl.saveTurnier(i);
+				} else {
+					JOptionPane.showMessageDialog(null,
+							Messages.getString("SpielerEingabeControl.9")); //$NON-NLS-1$
 				}
-
-				gruppe[i].setSpieler(spieler);
-				Arrays.sort(spieler);
-				spielerEingabeView[i].removeAll();
-				// rundenEingabeFormularControl.makeRundenEditView(i);
-
-				rundenEingabeFormularControl.makeTerminTabelle(i);
-				// rundenEingabeFormularControl.saveTurnier(i);
-
 			}
 			if (arg0.getSource() == cancelButton[i]) {
 				// Custom button text
@@ -218,6 +223,23 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 		}
 		// hauptPanel.updateUI();
 
+	}
+
+	private boolean testForDoubles(int index) {
+		int sAnzahl = gruppe[index].getSpielerAnzahl();
+		Boolean testOK = true;
+		for (int y = 0; y < sAnzahl - 1; y++) {
+
+			int spielerYID = spielerEingabeView[index].getSpielerID()[y];
+
+			for (int x = y + 1; x < sAnzahl; x++) {
+				int spielerXID = spielerEingabeView[index].getSpielerID()[x];
+				if (spielerYID == spielerXID) {
+					testOK = false;
+				}
+			}
+		}
+		return testOK;
 	}
 
 	@SuppressWarnings("unchecked")
