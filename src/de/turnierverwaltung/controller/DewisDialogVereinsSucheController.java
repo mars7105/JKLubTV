@@ -9,12 +9,15 @@ import com.opencsv.CSVReader;
 
 public class DewisDialogVereinsSucheController {
 
-	CSVReader csvReader;
-	String csvFilename;
+	private CSVReader csvReader;
+	private String csvFilename;
+	private MainControl mainControl;
 
-	public DewisDialogVereinsSucheController() {
+	public DewisDialogVereinsSucheController(MainControl mainControl) {
 		super();
-		csvFilename = "vereine.csv";
+		this.mainControl = mainControl;
+
+		csvFilename = this.mainControl.getPropertiesControl().getPathToCVS();
 
 	}
 
@@ -47,6 +50,9 @@ public class DewisDialogVereinsSucheController {
 	}
 
 	public Boolean checkifFileExist() {
+		if (csvFilename.equals("")) {
+			return false;
+		}
 		File f = new File(csvFilename);
 		if (f.exists()) {
 			return true;

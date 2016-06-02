@@ -34,7 +34,7 @@ public class PropertiesControl {
 	public static final String TRUE = "true";
 	public static final String FALSE = "false";
 	public static final String LANGUAGE = "language";
-
+	public static final String PATHTOCVS = "PathToCVS";
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
@@ -49,6 +49,7 @@ public class PropertiesControl {
 		prop.setProperty(NOFOLGEDWZ, FALSE);
 		prop.setProperty(ZPS, "");
 		prop.setProperty(LANGUAGE, "english");
+		prop.setProperty(PATHTOCVS, "");
 
 	}
 
@@ -82,7 +83,7 @@ public class PropertiesControl {
 
 	public Boolean writeProperties() {
 		Boolean ok = true;
-		
+
 		// speichern
 		StringWriter sw = new StringWriter();
 		try {
@@ -102,13 +103,13 @@ public class PropertiesControl {
 
 	public Boolean readProperties() {
 		Boolean ok = true;
-		
+
 		// auslesen
 		try {
 			prop.load(new StringReader(prefs.get("properties", null)));
 			ok = true;
 		} catch (IOException e) {
-			
+
 			ok = false;
 		} catch (NullPointerException e) {
 			writeProperties();
@@ -203,5 +204,13 @@ public class PropertiesControl {
 				"DE"));
 		de.turnierverwaltung.model.Messages.setLocale(new Locale("de", "DE"));
 
+	}
+
+	public void setPathToCVS(String absolutePath) {
+		prop.setProperty(PATHTOCVS, absolutePath);
+	}
+
+	public String getPathToCVS() {
+		return prop.getProperty(PATHTOCVS);
 	}
 }
