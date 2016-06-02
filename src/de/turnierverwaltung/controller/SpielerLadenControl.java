@@ -129,13 +129,14 @@ public class SpielerLadenControl implements ActionListener {
 		spielerAnzahl = spieler.size();
 		int selectedTab = 0;
 		if (spielerLadenView == null) {
-			spielerLadenView = new SpielerLadenView(spielerAnzahl);
+			spielerLadenView = new SpielerLadenView(spielerAnzahl, mainControl
+					.getPropertiesControl().getSpielerProTab());
 			hauptPanel
 					.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, spielerLadenView); //$NON-NLS-1$
 		} else {
 			selectedTab = spielerLadenView.getSpielerListe().getSelectedIndex();
 			spielerLadenView.removeAll();
-			spielerLadenView.init(spielerAnzahl);
+			spielerLadenView.init();
 
 		}
 

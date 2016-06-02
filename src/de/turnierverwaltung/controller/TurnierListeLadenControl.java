@@ -35,6 +35,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.ListIterator;
 
 import javax.swing.ImageIcon;
@@ -42,6 +43,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import de.turnierverwaltung.model.SortTournamentList;
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.view.TabAnzeigeView;
 import de.turnierverwaltung.view.TurnierEditierenView;
@@ -318,16 +320,18 @@ public class TurnierListeLadenControl implements ActionListener {
 		anzahlTurniere = turnierListe.size();
 		if (this.turnierListeLadenView == null) {
 			this.turnierListeLadenView = new TurnierListeLadenView(
-					anzahlTurniere);
+					anzahlTurniere, mainControl.getPropertiesControl()
+							.getTurniereProTab());
 			hauptPanel
 					.addTab(Messages.getString("TurnierListeLadenControl.9"), turnierListeIcon, //$NON-NLS-1$
 							turnierListeLadenView);
 
 		} else {
 			this.turnierListeLadenView.removeAll();
-			this.turnierListeLadenView.makePanel(anzahlTurniere);
+			this.turnierListeLadenView.makePanel();
 		}
 
+		Collections.sort(turnierListe, new SortTournamentList());
 		ListIterator<Turnier> li = turnierListe.listIterator();
 		while (li.hasNext()) {
 			temp = li.next();

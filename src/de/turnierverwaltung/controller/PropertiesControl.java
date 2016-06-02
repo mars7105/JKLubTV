@@ -35,6 +35,9 @@ public class PropertiesControl {
 	public static final String FALSE = "false";
 	public static final String LANGUAGE = "language";
 	public static final String PATHTOCVS = "PathToCVS";
+	public static final String TURNIEREPROTAB = "TurniereproTab";
+	public static final String SPIELERPROTAB = "SpielerproTab";
+
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
@@ -50,6 +53,8 @@ public class PropertiesControl {
 		prop.setProperty(ZPS, "");
 		prop.setProperty(LANGUAGE, "english");
 		prop.setProperty(PATHTOCVS, "");
+		prop.setProperty(TURNIEREPROTAB, "");
+		prop.setProperty(SPIELERPROTAB, "");
 
 	}
 
@@ -212,5 +217,31 @@ public class PropertiesControl {
 
 	public String getPathToCVS() {
 		return prop.getProperty(PATHTOCVS);
+	}
+
+	public void setTurniereProTab(int anzahlprotab) {
+		prop.setProperty(TURNIEREPROTAB, new Integer(anzahlprotab).toString());
+	}
+
+	public int getTurniereProTab() {
+		try {
+			return Integer.parseInt(prop.getProperty(TURNIEREPROTAB));
+		} catch (NumberFormatException e) {
+			return 1;
+		}
+	}
+
+	public void setSpielerProTab(int anzahlprotab) {
+
+		prop.setProperty(SPIELERPROTAB, new Integer(anzahlprotab).toString());
+
+	}
+
+	public int getSpielerProTab() {
+		try {
+			return Integer.parseInt(prop.getProperty(SPIELERPROTAB));
+		} catch (NumberFormatException e) {
+			return 1;
+		}
 	}
 }

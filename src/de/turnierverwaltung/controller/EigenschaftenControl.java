@@ -69,6 +69,10 @@ public class EigenschaftenControl implements ActionListener {
 				mainControl.getPropertiesControl().getNoDWZ());
 		eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(
 				mainControl.getPropertiesControl().getNoFolgeDWZ());
+		eigenschaftenView.getSpielerListeAuswahlBox().setSelectedIndex(
+				mainControl.getPropertiesControl().getSpielerProTab());
+		eigenschaftenView.getTurnierListeAuswahlBox().setSelectedIndex(
+				mainControl.getPropertiesControl().getTurniereProTab());
 		if (eigenschaftenView.getCheckBoxohneDWZ().isSelected() == true) {
 			eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(true);
 			eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(false);
@@ -99,6 +103,32 @@ public class EigenschaftenControl implements ActionListener {
 					public void actionPerformed(ActionEvent e) {
 						mainControl.getPropertiesControl()
 								.setLanguageToEnglish();
+						mainControl.getPropertiesControl().writeProperties();
+
+					}
+				});
+		eigenschaftenView.getSpielerListeAuswahlBox().addActionListener(
+				new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						int anzahlProTab = eigenschaftenView
+								.getSpielerListeAuswahlBox().getSelectedIndex();
+						mainControl.getPropertiesControl().setSpielerProTab(
+								anzahlProTab);
+						mainControl.getPropertiesControl().writeProperties();
+
+					}
+				});
+		eigenschaftenView.getTurnierListeAuswahlBox().addActionListener(
+				new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						int anzahlProTab = eigenschaftenView
+								.getTurnierListeAuswahlBox().getSelectedIndex();
+						mainControl.getPropertiesControl().setTurniereProTab(
+								anzahlProTab);
 						mainControl.getPropertiesControl().writeProperties();
 
 					}
