@@ -19,6 +19,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -41,7 +42,7 @@ public class SpielerTableExportController {
 		this.mainControl = mainControl;
 	}
 
-	public void exportSpielerTable() {
+	public void exportSpielerTable() throws SQLException {
 
 		spielerTableControl = new SpielerTableControl(this.mainControl);
 		spieler = spielerTableControl.getAllSpieler();

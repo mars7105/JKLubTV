@@ -21,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ListIterator;
@@ -59,7 +60,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 			Toolkit.getDefaultToolkit().getImage(
 					getClass().getResource("/images/view-calendar-month.png"))); //$NON-NLS-1$
 
-	public SpielerEingabeControl(MainControl mainControl, int selectIndex) {
+	public SpielerEingabeControl(MainControl mainControl, int selectIndex) throws SQLException {
 		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 25;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 75;
 		this.mainControl = mainControl;

@@ -15,6 +15,7 @@ package de.turnierverwaltung.controller;
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -67,10 +68,11 @@ public class TurnierTableControl {
 		return eintragGespeichert;
 	}
 
-	public ArrayList<Turnier> loadTurnierListe() {
+	public ArrayList<Turnier> loadTurnierListe() throws SQLException{
 		ArrayList<Turnier> turnierListe;
 		turnierListe = mySQLTurnierDao.selectAllTurnier(mainControl
 				.getPropertiesControl());
+		
 		return turnierListe;
 
 	}

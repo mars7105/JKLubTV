@@ -18,6 +18,7 @@ package de.turnierverwaltung.controller;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -101,7 +102,11 @@ public class SpielerAnzahlControl implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (mainControl.getSpielerEingabeControl() == null) {
-			spielerEingabeControl = new SpielerEingabeControl(mainControl, this.selectIndex);
+			try {
+				spielerEingabeControl = new SpielerEingabeControl(mainControl, this.selectIndex);
+			} catch (SQLException e) {
+				mainControl.resetProperties();
+			}
 			mainControl.setSpielerEingabeControl(spielerEingabeControl);
 		} else {
 //			spielerEingabeControl.makeTabbedPane(selectIndex);

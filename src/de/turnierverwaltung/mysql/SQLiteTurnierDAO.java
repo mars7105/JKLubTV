@@ -216,14 +216,14 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 	}
 
 	@Override
-	public ArrayList<Turnier> selectAllTurnier(PropertiesControl prop) {
+	public ArrayList<Turnier> selectAllTurnier(PropertiesControl prop) throws SQLException{
 		String sql = "Select * from turnier, datum where Datum_idDatum = idDatum"
 				+ ";";
 		ArrayList<Turnier> turnierListe = new ArrayList<Turnier>();
 
 		Statement stmt;
 		if (this.dbConnect != null) {
-			try {
+			
 				stmt = this.dbConnect.createStatement();
 				ResultSet rs = stmt.executeQuery(sql);
 
@@ -238,10 +238,7 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				}
 				stmt.close();
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
+			
 		}
 		return turnierListe;
 	}

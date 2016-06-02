@@ -19,6 +19,7 @@ package de.turnierverwaltung.controller;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -72,12 +73,20 @@ public class SpielerLadenControl implements ActionListener {
 							mainControl);
 					stc.updateOneSpieler(spieler.get(spielerIndex));
 					mainControl.setEnabled(true);
-					updateSpielerListe();
+					try {
+						updateSpielerListe();
+					} catch (SQLException e) {
+						mainControl.resetProperties();
+					}
 					mainControl.getTurnierListeLadenControl().reloadTurnier();
 					spielerEditierenView.closeWindow();
 				} else {
 					mainControl.setEnabled(true);
-					updateSpielerListe();
+					try {
+						updateSpielerListe();
+					} catch (SQLException e) {
+						mainControl.resetProperties();
+					}
 					spielerEditierenView.closeWindow();
 				}
 
@@ -113,7 +122,11 @@ public class SpielerLadenControl implements ActionListener {
 					SpielerTableControl stC = new SpielerTableControl(
 							mainControl);
 					stC.loescheSpieler(spieler.get(i));
-					updateSpielerListe();
+					try {
+						updateSpielerListe();
+					} catch (SQLException e) {
+						mainControl.resetProperties();
+					}
 				}
 			}
 
@@ -121,7 +134,7 @@ public class SpielerLadenControl implements ActionListener {
 
 	}
 
-	public void updateSpielerListe() {
+	public void updateSpielerListe() throws SQLException {
 
 		spielerTableControl = new SpielerTableControl(this.mainControl);
 		spieler = new ArrayList<Spieler>();
@@ -136,7 +149,7 @@ public class SpielerLadenControl implements ActionListener {
 		} else {
 			selectedTab = spielerLadenView.getSpielerListe().getSelectedIndex();
 			spielerLadenView.removeAll();
-			spielerLadenView.init();
+			spielerLadenView.init(spieler.size());
 
 		}
 

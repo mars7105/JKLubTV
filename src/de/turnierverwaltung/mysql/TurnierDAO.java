@@ -15,7 +15,9 @@ package de.turnierverwaltung.mysql;
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import java.sql.SQLException;
 import java.util.ArrayList;
+
 import de.turnierverwaltung.controller.PropertiesControl;
 import de.turnierverwaltung.model.Turnier;
 
@@ -30,6 +32,6 @@ public interface TurnierDAO {
 
 	public boolean updateTurnier(Turnier turnier);
 
-	public ArrayList<Turnier> selectAllTurnier(PropertiesControl prop);
+	public ArrayList<Turnier> selectAllTurnier(PropertiesControl prop) throws SQLException;
 
 }

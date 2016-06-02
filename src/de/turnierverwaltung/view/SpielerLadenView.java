@@ -59,11 +59,12 @@ public class SpielerLadenView extends JPanel {
 	public SpielerLadenView(int spielerAnzahl, int spielerTabAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
 		this.spielerTabAnzahl = spielerTabAnzahl;
-		init();
+		init(this.spielerAnzahl);
 
 	}
 
-	public void init() {
+	public void init(int anzahl) {
+		spielerAnzahl = anzahl;
 		anzahlElemente = 0;
 		setLayout(new BorderLayout());
 		spielerListe = new JTabbedPane();

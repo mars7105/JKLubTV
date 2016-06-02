@@ -53,8 +53,8 @@ public class PropertiesControl {
 		prop.setProperty(ZPS, "");
 		prop.setProperty(LANGUAGE, "english");
 		prop.setProperty(PATHTOCVS, "");
-		prop.setProperty(TURNIEREPROTAB, "");
-		prop.setProperty(SPIELERPROTAB, "");
+		prop.setProperty(TURNIEREPROTAB, "1");
+		prop.setProperty(SPIELERPROTAB, "1");
 
 	}
 

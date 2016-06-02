@@ -18,12 +18,15 @@ package de.turnierverwaltung.controller;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+
 import de.turnierverwaltung.model.PaarungsTafeln;
 import de.turnierverwaltung.model.Partie;
 import de.turnierverwaltung.model.SimpleTerminTabelle;
@@ -359,25 +362,37 @@ public class MainControl extends JFrame {
 				// mainControl.getSpielerEditierenControl().makePanel();
 			} else {
 				this.setSpielerEditierenControl(new SpielerLadenControl(this));
-				this.getSpielerEditierenControl().updateSpielerListe();
+				try {
+					this.getSpielerEditierenControl().updateSpielerListe();
+				} catch (SQLException e) {
+					resetProperties();
+				}
 			}
 			this.setNeuesTurnier(false);
 			// this.getNaviView().getTabellenPanel().setVisible(false);
 			if (this.getTurnierTableControl() == null) {
 				this.setTurnierTableControl(new TurnierTableControl(this));
-				this.getTurnierTableControl().loadTurnierListe();
+				// this.getTurnierTableControl().loadTurnierListe();
 				this.setTurnierListeLadenControl(new TurnierListeLadenControl(
 						this));
-				this.getTurnierListeLadenControl().loadTurnierListe();
+				try {
+					this.getTurnierListeLadenControl().loadTurnierListe();
+				} catch (SQLException e) {
+					resetProperties();
+				}
 				naviView.setPathToDatabase(new JLabel(path));
 
 			} else {
 				this.resetApp();
 				this.setTurnierTableControl(new TurnierTableControl(this));
-				this.getTurnierTableControl().loadTurnierListe();
+				// this.getTurnierTableControl().loadTurnierListe();
 				this.setTurnierListeLadenControl(new TurnierListeLadenControl(
 						this));
-				this.getTurnierListeLadenControl().loadTurnierListe();
+				try {
+					this.getTurnierListeLadenControl().loadTurnierListe();
+				} catch (SQLException e) {
+					resetProperties();
+				}
 				naviView.setPathToDatabase(new JLabel(path));
 			}
 			naviView.getTurnierListePanel().setVisible(false);
@@ -434,6 +449,19 @@ public class MainControl extends JFrame {
 		setNeuesTurnier(false);
 		System.gc();
 		init();
+	}
+
+	public void resetProperties() {
+		propertiesControl = new PropertiesControl();
+		Boolean ok = propertiesControl.writeProperties();
+		if (ok) {
+			JOptionPane.showMessageDialog(null, "Fehlerhafte Datei!");
+
+		} else {
+			JOptionPane.showMessageDialog(null, "kein speichern möglich!");
+
+		}
+		resetApp();
 	}
 
 	public PropertiesControl getPropertiesControl() {
