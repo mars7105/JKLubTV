@@ -31,6 +31,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -61,7 +62,8 @@ public class EigenschaftenView extends JPanel {
 	private JButton dsbHomepageButton;
 	private JButton openVereineCSVButton;
 	private JLabel openVereineCSVLabel;
-
+	private JComboBox<String> spielerListeAuswahlBox;
+	private JComboBox<String> turnierListeAuswahlBox;
 	/**
 	 * Create the panel.
 	 */
@@ -69,6 +71,19 @@ public class EigenschaftenView extends JPanel {
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		setLayout(new BorderLayout());
+		spielerListeAuswahlBox = new JComboBox<String>();
+		spielerListeAuswahlBox.addItem(" 5"); //$NON-NLS-1$
+		spielerListeAuswahlBox.addItem("10"); //$NON-NLS-1$
+		spielerListeAuswahlBox.addItem("15"); //$NON-NLS-1$
+		spielerListeAuswahlBox.addItem("20"); //$NON-NLS-1$
+
+		turnierListeAuswahlBox = new JComboBox<String>();
+		turnierListeAuswahlBox.addItem(" 5"); //$NON-NLS-1$
+		turnierListeAuswahlBox.addItem("10"); //$NON-NLS-1$
+		turnierListeAuswahlBox.addItem("15"); //$NON-NLS-1$
+		turnierListeAuswahlBox.addItem("20"); //$NON-NLS-1$
+
+		new JButton("OK");
 
 		JLabel titleLabel = new JLabel(
 				Messages.getString("EigenschaftenView.0")); //$NON-NLS-1$
@@ -88,6 +103,7 @@ public class EigenschaftenView extends JPanel {
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		languageSupport();
 		makeHTMLEigenschaften();
+		anzahlElemente();
 		downloadLinks();
 		centerPane.add(htmlAll, BorderLayout.NORTH);
 		scrollPane = new JScrollPane();
@@ -136,12 +152,32 @@ public class EigenschaftenView extends JPanel {
 
 	}
 
+	private void anzahlElemente() {
+		JPanel title = new JPanel();
+		title.setLayout(new FlowLayout(FlowLayout.LEFT));
+		title.add(new JLabel(Messages.getString("EigenschaftenView.26"))); //$NON-NLS-1$
+		htmlAll.add(title);
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(spielerListeAuswahlBox);
+		htmlPanel.add(new JLabel(Messages.getString("EigenschaftenView.24"))); //$NON-NLS-1$
+
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(turnierListeAuswahlBox);
+		htmlPanel.add(new JLabel(Messages.getString("EigenschaftenView.25"))); //$NON-NLS-1$
+
+		htmlAll.add(htmlPanel);
+
+		htmlAll.add(new JSeparator());
+	}
+
 	private void downloadLinks() {
 		// ohne Header und Footer
 		try {
 			dsbHomepage = new URI("http://www.schachbund.de/download.html"); //$NON-NLS-1$
 		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		JPanel title = new JPanel();
@@ -189,7 +225,7 @@ public class EigenschaftenView extends JPanel {
 		htmlAll.add(htmlPanel);
 
 		openVereineCSVButton = new JButton(
-				Messages.getString("EigenschaftenView.18"));
+				Messages.getString("EigenschaftenView.18")); //$NON-NLS-1$
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(openVereineCSVButton);
@@ -197,7 +233,6 @@ public class EigenschaftenView extends JPanel {
 		htmlPanel.add(openVereineCSVLabel);
 		htmlAll.add(htmlPanel);
 
-		
 		htmlAll.add(htmlPanel);
 		htmlAll.add(new JSeparator());
 
@@ -309,6 +344,24 @@ public class EigenschaftenView extends JPanel {
 	public void setOpenVereineCSVLabel(String openVereineCSVLabel) {
 		this.openVereineCSVLabel.setText(openVereineCSVLabel);
 		this.openVereineCSVLabel.updateUI();
+	}
+
+	public JComboBox<String> getSpielerListeAuswahlBox() {
+		return spielerListeAuswahlBox;
+	}
+
+	public void setSpielerListeAuswahlBox(
+			JComboBox<String> spielerListeAuswahlBox) {
+		this.spielerListeAuswahlBox = spielerListeAuswahlBox;
+	}
+
+	public JComboBox<String> getTurnierListeAuswahlBox() {
+		return turnierListeAuswahlBox;
+	}
+
+	public void setTurnierListeAuswahlBox(
+			JComboBox<String> turnierListeAuswahlBox) {
+		this.turnierListeAuswahlBox = turnierListeAuswahlBox;
 	}
 
 	class OpenUrlAction implements ActionListener {

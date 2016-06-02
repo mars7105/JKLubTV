@@ -54,14 +54,16 @@ public class SpielerLadenView extends JPanel {
 					getClass().getResource("/images/user-properties.png"))); //$NON-NLS-1$
 
 	private int spielerAnzahl;
+	private int spielerTabAnzahl;
 
-	public SpielerLadenView(int spielerAnzahl) {
-		init(spielerAnzahl);
+	public SpielerLadenView(int spielerAnzahl, int spielerTabAnzahl) {
+		this.spielerAnzahl = spielerAnzahl;
+		this.spielerTabAnzahl = spielerTabAnzahl;
+		init();
 
 	}
 
-	public void init(int spielerAnzahl) {
-		this.spielerAnzahl = spielerAnzahl;
+	public void init() {
 		anzahlElemente = 0;
 		setLayout(new BorderLayout());
 		spielerListe = new JTabbedPane();
@@ -126,7 +128,20 @@ public class SpielerLadenView extends JPanel {
 		centerPane.add(new JSeparator());
 
 		anzahlElemente++;
-		if (anzahlElemente % 10 == 0 || anzahlElemente == spielerAnzahl) {
+		int anzahlItems = 0;
+		if (spielerTabAnzahl == 0) {
+			anzahlItems = 5;
+		}
+		if (spielerTabAnzahl == 1) {
+			anzahlItems = 10;
+		}
+		if (spielerTabAnzahl == 2) {
+			anzahlItems = 15;
+		}
+		if (spielerTabAnzahl == 3) {
+			anzahlItems = 20;
+		}
+		if (anzahlElemente % anzahlItems == 0 || anzahlElemente == spielerAnzahl) {
 			int endIndex = anzahlElemente;
 			int startIndex = endIndex + 1 - centerPane.getComponentCount() / 2;
 			if (startIndex < 1) {
