@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="/home/mars/git/JKLubTV/lib/opencsv-3.7.jar"/>
 	<classpathentry kind="lib" path="/home/mars/git/JKLubTV/lib/poi-3.14-20160307.jar"/>
 	<classpathentry kind="lib" path="/home/mars/git/JKLubTV/lib/sqlite-jdbc-3.8.11.1.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

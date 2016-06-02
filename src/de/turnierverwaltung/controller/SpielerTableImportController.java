@@ -1,4 +1,5 @@
 package de.turnierverwaltung.controller;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -16,6 +17,7 @@ package de.turnierverwaltung.controller;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.io.File;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -32,18 +34,18 @@ import de.turnierverwaltung.mysql.SpielerDAO;
 
 public class SpielerTableImportController {
 
-
 	private MainControl mainControl;
 
 	public SpielerTableImportController(MainControl mainControl) {
 		this.mainControl = mainControl;
 	}
 
-	public void importSpielerTable() {
+	public void importSpielerTable() throws SQLException {
 
 		// Create a file chooser
 		JFileChooser fc = new JFileChooser();
-		FileFilter filter = new FileNameExtensionFilter(Messages.getString("SpielerTableImportController.0"), "spl"); //$NON-NLS-1$ //$NON-NLS-2$
+		FileFilter filter = new FileNameExtensionFilter(
+				Messages.getString("SpielerTableImportController.0"), "spl"); //$NON-NLS-1$ //$NON-NLS-2$
 		fc.addChoosableFileFilter(filter);
 		fc.setFileFilter(filter);
 		int returnVal = fc.showOpenDialog(null);
@@ -53,26 +55,30 @@ public class SpielerTableImportController {
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			fileName = SQLiteDAOFactory.getDB_PATH();
 			File file = fc.getSelectedFile();
-			
+
 			// This is where a real application would open the file.
 			SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-			daoFactory = DAOFactory.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
+			daoFactory = DAOFactory
+					.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 			mySQLSpielerDAO = daoFactory.getSpielerDAO();
 			ArrayList<Spieler> spielerListe = mySQLSpielerDAO.getAllSpieler();
 			SQLiteDAOFactory.setDB_PATH(fileName);
-			daoFactory = DAOFactory.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
+			daoFactory = DAOFactory
+					.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 			mySQLSpielerDAO = daoFactory.getSpielerDAO();
-			
+
 			Spieler oneSpieler = null;
 			ListIterator<Spieler> li = spielerListe.listIterator();
 			while (li.hasNext()) {
 				oneSpieler = li.next();
-				mySQLSpielerDAO.insertSpieler(oneSpieler.getName(), oneSpieler.getDwz(), oneSpieler.getKuerzel(),
+				mySQLSpielerDAO.insertSpieler(oneSpieler.getName(),
+						oneSpieler.getDwz(), oneSpieler.getKuerzel(),
 						oneSpieler.getAge());
 			}
 
 		} else {
-			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerTableImportController.3")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(mainControl,
+					Messages.getString("SpielerTableImportController.3")); //$NON-NLS-1$
 		}
 
 	}

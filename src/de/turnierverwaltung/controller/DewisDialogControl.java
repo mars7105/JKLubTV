@@ -19,6 +19,7 @@ package de.turnierverwaltung.controller;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -174,7 +175,11 @@ public class DewisDialogControl implements ListSelectionListener,
 					}
 				}
 			}
-			mainControl.getSpielerLadenControl().updateSpielerListe();
+			try {
+				mainControl.getSpielerLadenControl().updateSpielerListe();
+			} catch (SQLException e) {
+				mainControl.resetProperties();
+			}
 		}
 		if (arg0.getSource() == dialog.getUpdateButton()) {
 
@@ -187,7 +192,11 @@ public class DewisDialogControl implements ListSelectionListener,
 
 			dialog.closeWindow();
 			mainControl.setEnabled(true);
-			mainControl.getSpielerLadenControl().updateSpielerListe();
+			try {
+				mainControl.getSpielerLadenControl().updateSpielerListe();
+			} catch (SQLException e) {
+				mainControl.resetProperties();
+			}
 		}
 	}
 

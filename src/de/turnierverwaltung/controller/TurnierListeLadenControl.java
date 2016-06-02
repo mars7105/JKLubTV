@@ -34,6 +34,7 @@ import java.awt.Toolkit;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.ListIterator;
@@ -146,7 +147,12 @@ public class TurnierListeLadenControl implements ActionListener {
 				mainControl.setTurnier(turnier);
 				mainControl.setEnabled(true);
 				turnierEditierenView.dispose();
-				loadTurnierListe();
+				try {
+					loadTurnierListe();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 
 			}
 			if (arg0.getSource() == turnierEditierenView.getCancelButton()) {
@@ -205,10 +211,20 @@ public class TurnierListeLadenControl implements ActionListener {
 								.getString("TurnierListeLadenControl.4")); //$NON-NLS-1$
 
 					} else {
-						deleteTurnier(i);
+						try {
+							deleteTurnier(i);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 				} else {
-					deleteTurnier(i);
+					try {
+						deleteTurnier(i);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 
@@ -216,7 +232,7 @@ public class TurnierListeLadenControl implements ActionListener {
 
 	}
 
-	private void deleteTurnier(int turnierId) {
+	private void deleteTurnier(int turnierId) throws SQLException {
 		TurnierTableControl ttC = new TurnierTableControl(mainControl);
 		ttC.loescheTurnier(turnierListe.get(turnierId));
 		loadTurnierListe();
@@ -303,7 +319,7 @@ public class TurnierListeLadenControl implements ActionListener {
 
 	}
 
-	public void loadTurnierListe() {
+	public void loadTurnierListe() throws SQLException{
 		Turnier temp = null;
 		String turnierName = ""; //$NON-NLS-1$
 		String startDatum = ""; //$NON-NLS-1$
@@ -317,40 +333,45 @@ public class TurnierListeLadenControl implements ActionListener {
 			turnierListe = turnierTableControl.loadTurnierListe();
 
 		}
-		anzahlTurniere = turnierListe.size();
-		if (this.turnierListeLadenView == null) {
-			this.turnierListeLadenView = new TurnierListeLadenView(
-					anzahlTurniere, mainControl.getPropertiesControl()
-							.getTurniereProTab());
-			hauptPanel
-					.addTab(Messages.getString("TurnierListeLadenControl.9"), turnierListeIcon, //$NON-NLS-1$
-							turnierListeLadenView);
+		if (turnierListe != null) {
+			anzahlTurniere = turnierListe.size();
+			if (this.turnierListeLadenView == null) {
+				this.turnierListeLadenView = new TurnierListeLadenView(
+						anzahlTurniere, mainControl.getPropertiesControl()
+								.getTurniereProTab());
+				hauptPanel
+						.addTab(Messages
+								.getString("TurnierListeLadenControl.9"), turnierListeIcon, //$NON-NLS-1$
+								turnierListeLadenView);
 
+			} else {
+				this.turnierListeLadenView.removeAll();
+				this.turnierListeLadenView.makePanel();
+			}
+
+			Collections.sort(turnierListe, new SortTournamentList());
+			ListIterator<Turnier> li = turnierListe.listIterator();
+			while (li.hasNext()) {
+				temp = li.next();
+				turnierName = temp.getTurnierName();
+				startDatum = temp.getStartDatum();
+				endDatum = temp.getEndDatum();
+				turnierListeLadenView.makeTurnierZeile(turnierName, startDatum,
+						endDatum);
+			}
+			for (int i = 0; i < anzahlTurniere; i++) {
+				turnierListeLadenView.getTurnierLadeButton()[i]
+						.addActionListener(this);
+				turnierListeLadenView.getTurnierBearbeitenButton()[i]
+						.addActionListener(this);
+				turnierListeLadenView.getTurnierLoeschenButton()[i]
+						.addActionListener(this);
+
+			}
+			this.turnierListeLadenView.updateUI();
 		} else {
-			this.turnierListeLadenView.removeAll();
-			this.turnierListeLadenView.makePanel();
+			JOptionPane.showMessageDialog(mainControl, "Falsche Datei gewählt. "); //$NON-NLS-1$
 		}
-
-		Collections.sort(turnierListe, new SortTournamentList());
-		ListIterator<Turnier> li = turnierListe.listIterator();
-		while (li.hasNext()) {
-			temp = li.next();
-			turnierName = temp.getTurnierName();
-			startDatum = temp.getStartDatum();
-			endDatum = temp.getEndDatum();
-			turnierListeLadenView.makeTurnierZeile(turnierName, startDatum,
-					endDatum);
-		}
-		for (int i = 0; i < anzahlTurniere; i++) {
-			turnierListeLadenView.getTurnierLadeButton()[i]
-					.addActionListener(this);
-			turnierListeLadenView.getTurnierBearbeitenButton()[i]
-					.addActionListener(this);
-			turnierListeLadenView.getTurnierLoeschenButton()[i]
-					.addActionListener(this);
-
-		}
-		this.turnierListeLadenView.updateUI();
 	}
 
 }
