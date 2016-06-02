@@ -59,6 +59,8 @@ public class EigenschaftenView extends JPanel {
 			.getImage(getClass().getResource("/images/flag-gb.png"))); //$NON-NLS-1$
 	private URI dsbHomepage;
 	private JButton dsbHomepageButton;
+	private JButton openVereineCSVButton;
+	private JLabel openVereineCSVLabel;
 
 	/**
 	 * Create the panel.
@@ -168,8 +170,8 @@ public class EigenschaftenView extends JPanel {
 		JLabel labelHeader2 = new JLabel(
 				Messages.getString("EigenschaftenView.14") //$NON-NLS-1$
 						+ Messages.getString("EigenschaftenView.15")); //$NON-NLS-1$
-		JLabel labelHeader2b = new JLabel(Messages.getString("EigenschaftenView.16") //$NON-NLS-1$
-				+ Messages.getString("EigenschaftenView.17")); //$NON-NLS-1$
+		JLabel labelHeader2b = new JLabel(
+				Messages.getString("EigenschaftenView.16")); //$NON-NLS-1$
 		htmlPanel.add(labelHeader1);
 		htmlAll.add(htmlPanel);
 		htmlPanel = new JPanel();
@@ -184,7 +186,18 @@ public class EigenschaftenView extends JPanel {
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(labelHeader2b);
+		htmlAll.add(htmlPanel);
 
+		openVereineCSVButton = new JButton(
+				Messages.getString("EigenschaftenView.18"));
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(openVereineCSVButton);
+		openVereineCSVLabel = new JLabel();
+		htmlPanel.add(openVereineCSVLabel);
+		htmlAll.add(htmlPanel);
+
+		
 		htmlAll.add(htmlPanel);
 		htmlAll.add(new JSeparator());
 
@@ -279,6 +292,23 @@ public class EigenschaftenView extends JPanel {
 				/* TODO: error handling */}
 		} else {
 			/* TODO: error handling */}
+	}
+
+	public JButton getOpenVereineCSVButton() {
+		return openVereineCSVButton;
+	}
+
+	public void setOpenVereineCSVButton(JButton openVereineCSVButton) {
+		this.openVereineCSVButton = openVereineCSVButton;
+	}
+
+	public String getOpenVereineCSVLabel() {
+		return openVereineCSVLabel.getText();
+	}
+
+	public void setOpenVereineCSVLabel(String openVereineCSVLabel) {
+		this.openVereineCSVLabel.setText(openVereineCSVLabel);
+		this.openVereineCSVLabel.updateUI();
 	}
 
 	class OpenUrlAction implements ActionListener {

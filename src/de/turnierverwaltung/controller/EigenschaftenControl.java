@@ -21,13 +21,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.File;
+
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.turnierverwaltung.view.EigenschaftenView;
 
-public class EigenschaftenControl {
+public class EigenschaftenControl implements ActionListener {
 	private MainControl mainControl;
 	private EigenschaftenView eigenschaftenView;
 	private ImageIcon eigenschaftenIcon = new ImageIcon(Toolkit
@@ -42,6 +47,9 @@ public class EigenschaftenControl {
 	public EigenschaftenControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		eigenschaftenView = new EigenschaftenView();
+		eigenschaftenView.getOpenVereineCSVButton().addActionListener(this);
+		eigenschaftenView.setOpenVereineCSVLabel(mainControl
+				.getPropertiesControl().getPathToCVS());
 	}
 
 	/**
@@ -330,5 +338,28 @@ public class EigenschaftenControl {
 
 	public void setColumnWidhtToZero() {
 		this.columnWidht = 0;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == eigenschaftenView.getOpenVereineCSVButton()) {
+			final JFileChooser fc = new JFileChooser();
+			FileFilter filter = new FileNameExtensionFilter("CSV file", "csv",
+					"CSV");
+
+			fc.setFileFilter(filter);
+			int returnVal = fc.showOpenDialog(eigenschaftenView);
+
+			if (returnVal == JFileChooser.APPROVE_OPTION) {
+				File file = fc.getSelectedFile();
+				// This is where a real application would open the file.
+				mainControl.getPropertiesControl().setPathToCVS(
+						file.getAbsolutePath());
+				mainControl.getPropertiesControl().writeProperties();
+				eigenschaftenView.setOpenVereineCSVLabel(mainControl
+						.getPropertiesControl().getPathToCVS());
+			}
+		}
+
 	}
 }
