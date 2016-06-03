@@ -29,12 +29,12 @@ public class PropertiesControl {
 	public static final String ONLYTABLES = "onlyTables";
 	public static final String NODWZ = "noDWZ";
 	public static final String NOFOLGEDWZ = "noFolgeDWZ";
-	public static final String PATH = "Path";
+	public static final String PATHTODATABASE = "Path";
 	public static final String ZPS = "ZPS";
 	public static final String TRUE = "true";
 	public static final String FALSE = "false";
 	public static final String LANGUAGE = "language";
-	public static final String PATHTOCVS = "PathToCVS";
+	public static final String PATHTOVEREINECVS = "PathToCVS";
 	public static final String TURNIEREPROTAB = "TurniereproTab";
 	public static final String SPIELERPROTAB = "SpielerproTab";
 
@@ -46,13 +46,13 @@ public class PropertiesControl {
 		super();
 		prefs = Preferences.userRoot();
 		prop = new Properties();
-		prop.setProperty(PATH, "");
+		prop.setProperty(PATHTODATABASE, "");
 		prop.setProperty(ONLYTABLES, FALSE);
 		prop.setProperty(NODWZ, FALSE);
 		prop.setProperty(NOFOLGEDWZ, FALSE);
 		prop.setProperty(ZPS, "");
 		prop.setProperty(LANGUAGE, "english");
-		prop.setProperty(PATHTOCVS, "");
+		prop.setProperty(PATHTOVEREINECVS, "");
 		prop.setProperty(TURNIEREPROTAB, "1");
 		prop.setProperty(SPIELERPROTAB, "1");
 
@@ -75,6 +75,18 @@ public class PropertiesControl {
 		} catch (NumberFormatException e) {
 			prop.setProperty(SPIELERPROTAB, "1");
 			spielerProTab = 1;
+			saveChanges = true;
+		}
+
+		File f = new File(prop.getProperty(PATHTODATABASE));
+		if (!(f.exists() && !f.isDirectory())) {
+			prop.setProperty(PATHTODATABASE, "");
+			saveChanges = true;
+		}
+
+		f = new File(prop.getProperty(PATHTOVEREINECVS));
+		if (!(f.exists() && !f.isDirectory())) {
+			prop.setProperty(PATHTOVEREINECVS, "");
 			saveChanges = true;
 		}
 
@@ -172,6 +184,7 @@ public class PropertiesControl {
 
 			ok = false;
 		} catch (NullPointerException e) {
+			checkProperties();
 			writeProperties();
 			ok = true;
 		}
@@ -179,7 +192,7 @@ public class PropertiesControl {
 	}
 
 	public Boolean checkPath() {
-		String path = prop.getProperty(PATH);
+		String path = prop.getProperty(PATHTODATABASE);
 		try {
 			File fl = new File(path);
 			return fl.exists();
@@ -221,11 +234,11 @@ public class PropertiesControl {
 
 	public String getPath() {
 		// TODO Auto-generated method stub
-		return prop.getProperty(PATH);
+		return prop.getProperty(PATHTODATABASE);
 	}
 
 	public void setPath(String db_PATH) {
-		prop.setProperty(PATH, db_PATH);
+		prop.setProperty(PATHTODATABASE, db_PATH);
 	}
 
 	public void setNoDWZ(Boolean noDWZWert) {
@@ -267,11 +280,11 @@ public class PropertiesControl {
 	}
 
 	public void setPathToCVS(String absolutePath) {
-		prop.setProperty(PATHTOCVS, absolutePath);
+		prop.setProperty(PATHTOVEREINECVS, absolutePath);
 	}
 
 	public String getPathToCVS() {
-		return prop.getProperty(PATHTOCVS);
+		return prop.getProperty(PATHTOVEREINECVS);
 	}
 
 	public void setTurniereProTab(int anzahlprotab) {
