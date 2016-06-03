@@ -60,7 +60,7 @@ public class EigenschaftenControl implements ActionListener {
 		hauptPanel
 				.addTab(Messages.getString("EigenschaftenControl.1"), eigenschaftenIcon, eigenschaftenView); //$NON-NLS-1$
 		if (mainControl.getPropertiesControl() == null) {
-			mainControl.setPropertiesControl(new PropertiesControl());
+			mainControl.setPropertiesControl(new PropertiesControl(mainControl));
 			mainControl.getPropertiesControl().readProperties();
 		}
 		eigenschaftenView.getCheckBoxHeaderFooter().setSelected(
@@ -81,17 +81,17 @@ public class EigenschaftenControl implements ActionListener {
 		if (mainControl.getPropertiesControl().getLanguage().equals("german")) { //$NON-NLS-1$
 			eigenschaftenView.getGermanLanguageCheckBox().setSelected(true);
 			eigenschaftenView.getEnglishLanguageCheckBox().setSelected(false);
-			mainControl.getPropertiesControl().setLanguageToGerman();
+			mainControl.getLanguagePropertiesControl().setLanguageToGerman();
 		} else if (mainControl.getPropertiesControl().getLanguage()
 				.equals("english")) { //$NON-NLS-1$
 			eigenschaftenView.getGermanLanguageCheckBox().setSelected(false);
 			eigenschaftenView.getEnglishLanguageCheckBox().setSelected(true);
-			mainControl.getPropertiesControl().setLanguageToEnglish();
+			mainControl.getLanguagePropertiesControl().setLanguageToEnglish();
 		}
 		eigenschaftenView.getGermanLanguageCheckBox().addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						mainControl.getPropertiesControl()
+						mainControl.getLanguagePropertiesControl()
 								.setLanguageToGerman();
 
 						mainControl.getPropertiesControl().writeProperties();
@@ -101,7 +101,7 @@ public class EigenschaftenControl implements ActionListener {
 		eigenschaftenView.getEnglishLanguageCheckBox().addActionListener(
 				new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						mainControl.getPropertiesControl()
+						mainControl.getLanguagePropertiesControl()
 								.setLanguageToEnglish();
 						mainControl.getPropertiesControl().writeProperties();
 

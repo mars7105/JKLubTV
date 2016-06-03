@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
-import java.util.Locale;
 import java.util.Properties;
 import java.util.prefs.Preferences;
 
@@ -41,9 +40,11 @@ public class PropertiesControl {
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
+	private MainControl mainControl;
 
-	public PropertiesControl() {
+	public PropertiesControl(MainControl mainControl) {
 		super();
+		this.mainControl = mainControl;
 		prefs = Preferences.userRoot();
 		prop = new Properties();
 		prop.setProperty(PATHTODATABASE, "");
@@ -51,7 +52,7 @@ public class PropertiesControl {
 		prop.setProperty(NODWZ, FALSE);
 		prop.setProperty(NOFOLGEDWZ, FALSE);
 		prop.setProperty(ZPS, "");
-		prop.setProperty(LANGUAGE, "english");
+		prop.setProperty(LANGUAGE, "");
 		prop.setProperty(PATHTOVEREINECSV, "");
 		prop.setProperty(TURNIEREPROTAB, "1");
 		prop.setProperty(SPIELERPROTAB, "1");
@@ -111,11 +112,10 @@ public class PropertiesControl {
 			prop.setProperty(SPIELERPROTAB, "1");
 			saveChanges = true;
 		}
-		if (!(prop.getProperty(LANGUAGE).equals("english") || prop.getProperty(
-				LANGUAGE).equals("german"))) {
-			prop.setProperty(LANGUAGE, "english");
+		if (mainControl.getLanguagePropertiesControl().checkLanguage() == false) {
 			saveChanges = true;
 		}
+
 		if (saveChanges == true) {
 			writeProperties();
 		}
@@ -190,15 +190,15 @@ public class PropertiesControl {
 	}
 
 	private Boolean checkPath(String path) {
-		
-			File f = new File(path);
 
-			if (f.exists() && !f.isDirectory()) {
-				return true;
-			} else {
-				return false;
-			}
-		
+		File f = new File(path);
+
+		if (f.exists() && !f.isDirectory()) {
+			return true;
+		} else {
+			return false;
+		}
+
 	}
 
 	public Boolean checkPathToDatabase() {
@@ -211,6 +211,7 @@ public class PropertiesControl {
 		return checkPath(path);
 
 	}
+
 	public String getPathToDatabase() {
 		// TODO Auto-generated method stub
 		return prop.getProperty(PATHTODATABASE);
@@ -219,7 +220,7 @@ public class PropertiesControl {
 	public void setPathToDatabase(String db_PATH) {
 		prop.setProperty(PATHTODATABASE, db_PATH);
 	}
-	
+
 	public String getPathToVereineCSV() {
 		// TODO Auto-generated method stub
 		return prop.getProperty(PATHTOVEREINECSV);
@@ -228,7 +229,7 @@ public class PropertiesControl {
 	public void setPathToVereineCSV(String vereinecsv_PATH) {
 		prop.setProperty(PATHTOVEREINECSV, vereinecsv_PATH);
 	}
-	
+
 	public Properties getProp() {
 		return prop;
 	}
@@ -259,8 +260,6 @@ public class PropertiesControl {
 
 	}
 
-
-
 	public void setNoDWZ(Boolean noDWZWert) {
 		if (noDWZWert == true) {
 			prop.setProperty(NODWZ, TRUE);
@@ -280,23 +279,6 @@ public class PropertiesControl {
 	public String getLanguage() {
 		// TODO Auto-generated method stub
 		return prop.getProperty(LANGUAGE);
-	}
-
-	public void setLanguageToEnglish() {
-		prop.setProperty(LANGUAGE, "english");
-		de.turnierverwaltung.view.Messages.setLocale(new Locale("en", "US"));
-		de.turnierverwaltung.controller.Messages.setLocale(new Locale("en",
-				"US"));
-		de.turnierverwaltung.model.Messages.setLocale(new Locale("en", "US"));
-	}
-
-	public void setLanguageToGerman() {
-		prop.setProperty(LANGUAGE, "german");
-		de.turnierverwaltung.view.Messages.setLocale(new Locale("de", "DE"));
-		de.turnierverwaltung.controller.Messages.setLocale(new Locale("de",
-				"DE"));
-		de.turnierverwaltung.model.Messages.setLocale(new Locale("de", "DE"));
-
 	}
 
 	public void setPathToCVS(String absolutePath) {
@@ -332,4 +314,9 @@ public class PropertiesControl {
 			return 1;
 		}
 	}
+
+	public void setLanguage(String language) {
+		prop.setProperty(LANGUAGE, language);
+	}
+
 }

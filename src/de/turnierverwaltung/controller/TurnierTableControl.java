@@ -35,7 +35,8 @@ public class TurnierTableControl {
 		this.mainControl = mainControl;
 		daoFactory = DAOFactory.getDAOFactory(3);
 		if (daoFactory == null) {
-			this.mainControl.setPropertiesControl(new PropertiesControl());
+			this.mainControl.setPropertiesControl(new PropertiesControl(
+					this.mainControl));
 			this.mainControl.getPropertiesControl().writeProperties();
 
 		} else {
@@ -68,11 +69,11 @@ public class TurnierTableControl {
 		return eintragGespeichert;
 	}
 
-	public ArrayList<Turnier> loadTurnierListe() throws SQLException{
+	public ArrayList<Turnier> loadTurnierListe() throws SQLException {
 		ArrayList<Turnier> turnierListe;
 		turnierListe = mySQLTurnierDao.selectAllTurnier(mainControl
 				.getPropertiesControl());
-		
+
 		return turnierListe;
 
 	}

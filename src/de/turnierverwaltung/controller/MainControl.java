@@ -103,6 +103,7 @@ public class MainControl extends JFrame {
 	private PropertiesControl propertiesControl;
 	private JPanel mainPanel;
 	private EigenschaftenControl eigenschaftenControl;
+	private LanguagePropertiesControl languagePropertiesControl;
 
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
@@ -112,25 +113,31 @@ public class MainControl extends JFrame {
 		setMinimumSize(new Dimension(windowWidth / 2, windowHeight / 2));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		propertiesControl = new PropertiesControl();
+		propertiesControl = new PropertiesControl(this);
+		languagePropertiesControl = new LanguagePropertiesControl(this);
 		if (propertiesControl.readProperties() == false) {
 			if (propertiesControl.writeProperties() == false) {
 				JOptionPane.showMessageDialog(this,
 						Messages.getString("MainControl.7")); //$NON-NLS-1$
 			}
 		}
-		if (propertiesControl.getLanguage().equals("german")) { //$NON-NLS-1$
-			propertiesControl.setLanguageToGerman();
+		languagePropertiesControl.checkLanguage();
 
-		} else if (propertiesControl.getLanguage().equals("english")) { //$NON-NLS-1$
-			propertiesControl.setLanguageToEnglish();
-		}
 		setTitle(Messages.getString("MainControl.0")); //$NON-NLS-1$
 
 		init();
 		makeProperties();
 
 		setNeuesTurnier(false);
+	}
+
+	public LanguagePropertiesControl getLanguagePropertiesControl() {
+		return languagePropertiesControl;
+	}
+
+	public void setLanguagePropertiesControl(
+			LanguagePropertiesControl languagePropertiesControl) {
+		this.languagePropertiesControl = languagePropertiesControl;
 	}
 
 	public SpielerLadenControl getSpielerLadenControl() {
@@ -452,13 +459,13 @@ public class MainControl extends JFrame {
 	}
 
 	public void resetProperties() {
-		propertiesControl = new PropertiesControl();
+		propertiesControl = new PropertiesControl(this);
 		Boolean ok = propertiesControl.writeProperties();
 		if (ok) {
 			JOptionPane.showMessageDialog(null, "Fehlerhafte Datei!");
 
 		} else {
-			JOptionPane.showMessageDialog(null, "kein speichern möglich!");
+			JOptionPane.showMessageDialog(null, "kein Speichern möglich!");
 
 		}
 		resetApp();
