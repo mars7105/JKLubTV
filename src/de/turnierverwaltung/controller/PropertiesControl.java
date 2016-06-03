@@ -152,7 +152,7 @@ public class PropertiesControl {
 	}
 
 	public Boolean writeProperties() {
-		checkProperties();
+//		checkProperties();
 		Boolean ok = true;
 
 		// speichern
