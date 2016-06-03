@@ -59,6 +59,7 @@ public class PropertiesControl {
 	}
 
 	private void checkProperties() {
+		Boolean saveChanges = false;
 		int turniereProTab = 0;
 		int spielerProTab = 0;
 		try {
@@ -66,6 +67,7 @@ public class PropertiesControl {
 		} catch (NumberFormatException e) {
 			prop.setProperty(TURNIEREPROTAB, "1");
 			turniereProTab = 1;
+			saveChanges = true;
 		}
 
 		try {
@@ -73,31 +75,40 @@ public class PropertiesControl {
 		} catch (NumberFormatException e) {
 			prop.setProperty(SPIELERPROTAB, "1");
 			spielerProTab = 1;
+			saveChanges = true;
 		}
 
 		if (!(prop.getProperty(ONLYTABLES).equals(TRUE) || prop.getProperty(
 				ONLYTABLES).equals(FALSE))) {
 			prop.setProperty(ONLYTABLES, FALSE);
+			saveChanges = true;
 		}
 		if (!(prop.getProperty(NODWZ).equals(TRUE) || prop.getProperty(NODWZ)
 				.equals(FALSE))) {
 			prop.setProperty(NODWZ, FALSE);
+			saveChanges = true;
 		}
 		if (!(prop.getProperty(NOFOLGEDWZ).equals(TRUE) || prop.getProperty(
 				NOFOLGEDWZ).equals(FALSE))) {
 			prop.setProperty(NOFOLGEDWZ, FALSE);
+			saveChanges = true;
 		}
 		if (!(turniereProTab >= 0 && turniereProTab <= 3)) {
 			prop.setProperty(TURNIEREPROTAB, "1");
+			saveChanges = true;
 		}
 		if (!(spielerProTab >= 0 && spielerProTab <= 3)) {
 			prop.setProperty(SPIELERPROTAB, "1");
+			saveChanges = true;
 		}
 		if (!(prop.getProperty(LANGUAGE).equals("english") || prop.getProperty(
 				LANGUAGE).equals("german"))) {
 			prop.setProperty(LANGUAGE, "english");
+			saveChanges = true;
 		}
-
+		if (saveChanges == true) {
+			writeProperties();
+		}
 	}
 
 	public Boolean getOnlyTables() {
