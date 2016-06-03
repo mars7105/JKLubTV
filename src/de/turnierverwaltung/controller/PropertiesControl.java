@@ -77,19 +77,20 @@ public class PropertiesControl {
 			spielerProTab = 1;
 			saveChanges = true;
 		}
-
-		File f = new File(prop.getProperty(PATHTODATABASE));
-		if (!(f.exists() && !f.isDirectory())) {
-			prop.setProperty(PATHTODATABASE, "");
-			saveChanges = true;
+		if (prop.getProperty(PATHTODATABASE) != "") {
+			File f = new File(prop.getProperty(PATHTODATABASE));
+			if (!(f.exists() && !f.isDirectory())) {
+				prop.setProperty(PATHTODATABASE, "");
+				saveChanges = true;
+			}
 		}
-
-		f = new File(prop.getProperty(PATHTOVEREINECVS));
-		if (!(f.exists() && !f.isDirectory())) {
-			prop.setProperty(PATHTOVEREINECVS, "");
-			saveChanges = true;
+		if (prop.getProperty(PATHTOVEREINECVS) != "") {
+			File f = new File(prop.getProperty(PATHTOVEREINECVS));
+			if (!(f.exists() && !f.isDirectory())) {
+				prop.setProperty(PATHTOVEREINECVS, "");
+				saveChanges = true;
+			}
 		}
-
 		if (!(prop.getProperty(ONLYTABLES).equals(TRUE) || prop.getProperty(
 				ONLYTABLES).equals(FALSE))) {
 			prop.setProperty(ONLYTABLES, FALSE);
@@ -152,7 +153,7 @@ public class PropertiesControl {
 	}
 
 	public Boolean writeProperties() {
-//		checkProperties();
+		// checkProperties();
 		Boolean ok = true;
 
 		// speichern
