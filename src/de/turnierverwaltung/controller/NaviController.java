@@ -236,7 +236,7 @@ public class NaviController implements ActionListener {
 
 							// true for rewrite, false for override
 							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-							mainControl.getPropertiesControl().setPath(
+							mainControl.getPropertiesControl().setPathToDatabase(
 									SQLiteDAOFactory.getDB_PATH());
 							mainControl.setTitle(Messages
 									.getString("MainControl.8") //$NON-NLS-1$
@@ -266,7 +266,7 @@ public class NaviController implements ActionListener {
 							mainControl.getTurnierListeLadenControl()
 									.loadTurnierListe();
 
-							mainControl.getPropertiesControl().setPath(
+							mainControl.getPropertiesControl().setPathToDatabase(
 									SQLiteDAOFactory.getDB_PATH());
 							mainControl.getPropertiesControl()
 									.writeProperties();
@@ -335,7 +335,7 @@ public class NaviController implements ActionListener {
 						mainControl.getTurnierListeLadenControl()
 								.loadTurnierListe();
 
-						mainControl.getPropertiesControl().setPath(
+						mainControl.getPropertiesControl().setPathToDatabase(
 								SQLiteDAOFactory.getDB_PATH());
 
 						mainControl.getPropertiesControl().writeProperties();
