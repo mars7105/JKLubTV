@@ -29,12 +29,12 @@ public class PropertiesControl {
 	public static final String ONLYTABLES = "onlyTables";
 	public static final String NODWZ = "noDWZ";
 	public static final String NOFOLGEDWZ = "noFolgeDWZ";
-	public static final String PATHTODATABASE = "Path";
+	public static final String PATHTODATABASE = "PathToDatabase";
 	public static final String ZPS = "ZPS";
 	public static final String TRUE = "true";
 	public static final String FALSE = "false";
 	public static final String LANGUAGE = "language";
-	public static final String PATHTOVEREINECVS = "PathToCVS";
+	public static final String PATHTOVEREINECSV = "PathToCSV";
 	public static final String TURNIEREPROTAB = "TurniereproTab";
 	public static final String SPIELERPROTAB = "SpielerproTab";
 
@@ -52,7 +52,7 @@ public class PropertiesControl {
 		prop.setProperty(NOFOLGEDWZ, FALSE);
 		prop.setProperty(ZPS, "");
 		prop.setProperty(LANGUAGE, "english");
-		prop.setProperty(PATHTOVEREINECVS, "");
+		prop.setProperty(PATHTOVEREINECSV, "");
 		prop.setProperty(TURNIEREPROTAB, "1");
 		prop.setProperty(SPIELERPROTAB, "1");
 
@@ -77,20 +77,17 @@ public class PropertiesControl {
 			spielerProTab = 1;
 			saveChanges = true;
 		}
-		if (prop.getProperty(PATHTODATABASE) != "") {
-			File f = new File(prop.getProperty(PATHTODATABASE));
-			if (!(f.exists() && !f.isDirectory())) {
-				prop.setProperty(PATHTODATABASE, "");
-				saveChanges = true;
-			}
+		if (prop.getProperty(PATHTODATABASE) != ""
+				&& checkPathToDatabase() == false) {
+			prop.setProperty(PATHTODATABASE, "");
+			saveChanges = true;
 		}
-		if (prop.getProperty(PATHTOVEREINECVS) != "") {
-			File f = new File(prop.getProperty(PATHTOVEREINECVS));
-			if (!(f.exists() && !f.isDirectory())) {
-				prop.setProperty(PATHTOVEREINECVS, "");
-				saveChanges = true;
-			}
+		if (prop.getProperty(PATHTOVEREINECSV) != ""
+				&& checkPathToVereineCSV() == false) {
+			prop.setProperty(PATHTOVEREINECSV, "");
+			saveChanges = true;
 		}
+
 		if (!(prop.getProperty(ONLYTABLES).equals(TRUE) || prop.getProperty(
 				ONLYTABLES).equals(FALSE))) {
 			prop.setProperty(ONLYTABLES, FALSE);
@@ -192,17 +189,46 @@ public class PropertiesControl {
 		return ok;
 	}
 
-	public Boolean checkPath() {
-		String path = prop.getProperty(PATHTODATABASE);
-		try {
-			File fl = new File(path);
-			return fl.exists();
-		} catch (NullPointerException e) {
-			return false;
-		}
+	private Boolean checkPath(String path) {
+		
+			File f = new File(path);
 
+			if (f.exists() && !f.isDirectory()) {
+				return true;
+			} else {
+				return false;
+			}
+		
 	}
 
+	public Boolean checkPathToDatabase() {
+		String path = prop.getProperty(PATHTODATABASE);
+		return checkPath(path);
+	}
+
+	public Boolean checkPathToVereineCSV() {
+		String path = prop.getProperty(PATHTOVEREINECSV);
+		return checkPath(path);
+
+	}
+	public String getPathToDatabase() {
+		// TODO Auto-generated method stub
+		return prop.getProperty(PATHTODATABASE);
+	}
+
+	public void setPathToDatabase(String db_PATH) {
+		prop.setProperty(PATHTODATABASE, db_PATH);
+	}
+	
+	public String getPathToVereineCSV() {
+		// TODO Auto-generated method stub
+		return prop.getProperty(PATHTOVEREINECSV);
+	}
+
+	public void setPathToVereineCSV(String vereinecsv_PATH) {
+		prop.setProperty(PATHTOVEREINECSV, vereinecsv_PATH);
+	}
+	
 	public Properties getProp() {
 		return prop;
 	}
@@ -233,14 +259,7 @@ public class PropertiesControl {
 
 	}
 
-	public String getPath() {
-		// TODO Auto-generated method stub
-		return prop.getProperty(PATHTODATABASE);
-	}
 
-	public void setPath(String db_PATH) {
-		prop.setProperty(PATHTODATABASE, db_PATH);
-	}
 
 	public void setNoDWZ(Boolean noDWZWert) {
 		if (noDWZWert == true) {
@@ -281,11 +300,11 @@ public class PropertiesControl {
 	}
 
 	public void setPathToCVS(String absolutePath) {
-		prop.setProperty(PATHTOVEREINECVS, absolutePath);
+		prop.setProperty(PATHTOVEREINECSV, absolutePath);
 	}
 
 	public String getPathToCVS() {
-		return prop.getProperty(PATHTOVEREINECVS);
+		return prop.getProperty(PATHTOVEREINECSV);
 	}
 
 	public void setTurniereProTab(int anzahlprotab) {

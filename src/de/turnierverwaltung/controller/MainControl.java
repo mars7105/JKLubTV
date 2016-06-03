@@ -351,9 +351,9 @@ public class MainControl extends JFrame {
 	private void makeProperties() {
 		// datenbankMenueView(false);
 
-		if (propertiesControl.checkPath() == true) {
+		if (propertiesControl.checkPathToDatabase() == true) {
 			// datenbankMenueView(true);
-			String path = propertiesControl.getPath();
+			String path = propertiesControl.getPathToDatabase();
 			SQLiteDAOFactory.setDB_PATH(path);
 			this.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
 					+ SQLiteDAOFactory.getDB_PATH());
