@@ -2,33 +2,34 @@ package de.turnierverwaltung.controller;
 
 import java.util.Locale;
 
+import de.turnierverwaltung.model.Language;
+
 public class LanguagePropertiesControl {
 	private MainControl mainControl;
 	private PropertiesControl propertiesControl;
 	public static final String LANGUAGE = "language";
 	public static final String ENGLISH = "english";
 	public static final String GERMAN = "german";
+	private Language englishLanguage;
+	private Language germanLanguage;
 
 	public LanguagePropertiesControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		propertiesControl = this.mainControl.getPropertiesControl();
+		germanLanguage = new Language(GERMAN, new Locale("de", "DE"));
+		englishLanguage = new Language(ENGLISH, new Locale("en", "US"));
+		setLanguageToDefault();
 	}
 
 	public void setLanguageToEnglish() {
-		propertiesControl.setLanguage(ENGLISH);
-		de.turnierverwaltung.view.Messages.setLocale(new Locale("en", "US"));
-		de.turnierverwaltung.controller.Messages.setLocale(new Locale("en",
-				"US"));
-		de.turnierverwaltung.model.Messages.setLocale(new Locale("en", "US"));
+		propertiesControl.setLanguage(englishLanguage.getLanguage());
+		englishLanguage.setLocaleToDefault();
 
 	}
 
 	public void setLanguageToGerman() {
-		propertiesControl.setLanguage(GERMAN);
-		de.turnierverwaltung.view.Messages.setLocale(new Locale("de", "DE"));
-		de.turnierverwaltung.controller.Messages.setLocale(new Locale("de",
-				"DE"));
-		de.turnierverwaltung.model.Messages.setLocale(new Locale("de", "DE"));
+		propertiesControl.setLanguage(germanLanguage.getLanguage());
+		germanLanguage.setLocaleToDefault();
 
 	}
 
