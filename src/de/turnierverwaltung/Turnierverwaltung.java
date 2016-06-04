@@ -21,14 +21,14 @@ import java.awt.EventQueue;
 
 
 
-import javax.swing.UIManager;
 
+import javax.swing.UIManager;
 
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
 import com.jgoodies.looks.plastic.PlasticLookAndFeel;
 import com.jgoodies.looks.plastic.theme.DesertGreen;
 
-import de.turnierverwaltung.controller.MainControl;
+import de.turnierverwaltung.control.MainControl;
 
 /**
  * 
