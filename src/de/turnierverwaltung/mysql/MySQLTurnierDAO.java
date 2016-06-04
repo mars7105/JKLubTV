@@ -21,9 +21,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
-import de.turnierverwaltung.controller.PropertiesControl;
+import de.turnierverwaltung.control.PropertiesControl;
 import de.turnierverwaltung.model.Turnier;
 
 public class MySQLTurnierDAO implements TurnierDAO {
