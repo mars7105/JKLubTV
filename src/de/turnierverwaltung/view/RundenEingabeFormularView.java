@@ -62,7 +62,7 @@ public class RundenEingabeFormularView extends JPanel {
 	private int rundenanzahl;
 	private int partienanzahl;
 	private JPanel bottomPanel;
-	private JButton reloadButton;
+//	private JButton reloadButton;
 
 	@SuppressWarnings("unchecked")
 	public RundenEingabeFormularView(int spielerAnzahl) {
@@ -141,9 +141,9 @@ public class RundenEingabeFormularView extends JPanel {
 		scrollPane.setAlignmentY(TOP_ALIGNMENT);
 		add(scrollPane, BorderLayout.CENTER);
 		bottomPanel = new JPanel();
-		reloadButton = new JButton(Messages.getString("RundenEingabeFormularView.0")); //$NON-NLS-1$
+//		reloadButton = new JButton(Messages.getString("RundenEingabeFormularView.0")); //$NON-NLS-1$
 		bottomPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		bottomPanel.add(reloadButton);
+//		bottomPanel.add(reloadButton);
 		add(bottomPanel, BorderLayout.SOUTH);
 	}
 
@@ -308,13 +308,13 @@ public class RundenEingabeFormularView extends JPanel {
 		contentPanel.updateUI();
 	}
 
-	public JButton getReloadButton() {
-		return reloadButton;
-	}
-
-	public void setReloadButton(JButton reloadButton) {
-		this.reloadButton = reloadButton;
-	}
+//	public JButton getReloadButton() {
+//		return reloadButton;
+//	}
+//
+//	public void setReloadButton(JButton reloadButton) {
+//		this.reloadButton = reloadButton;
+//	}
 
 	public class DateLabelFormatter extends AbstractFormatter {
 

@@ -86,6 +86,18 @@ public class NaviView extends JPanel {
 	private JPanel turnierListePanel;
 	private JPanel spielerListePanel;
 	private JButton excelSpeichernButton;
+	private JButton pairingsLoadButton;
+	private JButton pairingsSaveButton;
+	private ImageIcon pairingsLoadIcon = new ImageIcon(Toolkit
+			.getDefaultToolkit().getImage(
+					getClass().getResource(
+							"/images/media-playlist-shuffle-3.png")));
+	private ImageIcon pairingsSaveIcon = new ImageIcon(Toolkit
+			.getDefaultToolkit().getImage(
+					getClass().getResource("/images/document-save-5.png")));
+	private JPanel pairingsPanel;
+	private JLabel pairingsLabel;
+	private String pairingsname;
 
 	public NaviView() {
 		this.setBackground(Color.LIGHT_GRAY);
@@ -113,13 +125,24 @@ public class NaviView extends JPanel {
 		pdfSpeichernButton.setPreferredSize(new Dimension(200, 40));
 		pdfSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
 
-		excelSpeichernButton = new JButton(Messages.getString("NaviView.2"), excelIcon); //$NON-NLS-1$
+		excelSpeichernButton = new JButton(
+				Messages.getString("NaviView.2"), excelIcon); //$NON-NLS-1$
 		excelSpeichernButton.setPreferredSize(new Dimension(200, 40));
 		excelSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
 		tabelleHTMLAusgabeButton = new JButton(
 				Messages.getString("NaviView.16"), tabelleHTMLAusgabeIcon); //$NON-NLS-1$
 		tabelleHTMLAusgabeButton.setPreferredSize(new Dimension(200, 40));
 		tabelleHTMLAusgabeButton.setHorizontalAlignment(SwingConstants.LEFT);
+
+		pairingsLoadButton = new JButton(Messages.getString("NaviView.27"),
+				pairingsLoadIcon);
+		pairingsLoadButton.setPreferredSize(new Dimension(200, 40));
+		pairingsLoadButton.setHorizontalAlignment(SwingConstants.LEFT);
+
+		pairingsSaveButton = new JButton(Messages.getString("NaviView.28"),
+				pairingsSaveIcon);
+		pairingsSaveButton.setPreferredSize(new Dimension(200, 40));
+		pairingsSaveButton.setHorizontalAlignment(SwingConstants.LEFT);
 
 		dateiPanel = new JPanel();
 		dateiPanel.setBackground(Color.LIGHT_GRAY);
@@ -258,6 +281,16 @@ public class NaviView extends JPanel {
 		panel4g.setBackground(Color.LIGHT_GRAY);
 		panel4g.add(excelSpeichernButton);
 
+		JPanel panel4h = new JPanel();
+		panel4h.setLayout(flowLayout);
+		panel4h.setBackground(Color.LIGHT_GRAY);
+		panel4h.add(pairingsLoadButton);
+
+		JPanel panel4k = new JPanel();
+		panel4k.setLayout(flowLayout);
+		panel4k.setBackground(Color.LIGHT_GRAY);
+		panel4k.add(pairingsSaveButton);
+
 		JPanel dateiPanelLabel = new JPanel();
 		dateiPanelLabel.setBackground(Color.LIGHT_GRAY);
 		dateiPanelLabel.setPreferredSize(new Dimension(200, 30));
@@ -279,10 +312,6 @@ public class NaviView extends JPanel {
 		datenbankLabel.setBackground(Color.LIGHT_GRAY);
 		datenbankPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		datenbankPanelLabel.add(datenbankLabel);
-		// datenbankPanel.add(datenbankPanelLabel);
-		// datenbankPanel.add(panel3);
-		// datenbankPanel.add(panel4);
-		// datenbankPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		JPanel tabellenPanelLabel = new JPanel();
 		tabellenPanelLabel.setPreferredSize(new Dimension(200, 30));
@@ -306,8 +335,25 @@ public class NaviView extends JPanel {
 		tabellenPanel.add(panel4e);
 		tabellenPanel.add(panel4f);
 		tabellenPanel.add(panel4g);
+		tabellenPanel.add(panel4h);
+
+		pairingsPanel = new JPanel();
+		pairingsPanel.setBackground(Color.LIGHT_GRAY);
+		BoxLayout pairingsPanelLayout = new BoxLayout(pairingsPanel,
+				BoxLayout.PAGE_AXIS);
+		pairingsPanel.setLayout(pairingsPanelLayout);
+		JPanel pairingsPanelLabel = new JPanel();
+		pairingsPanelLabel.setPreferredSize(new Dimension(200, 30));
+		pairingsPanelLabel.setBackground(Color.LIGHT_GRAY);
+		pairingsLabel = new JLabel(pairingsname);
+
+		pairingsPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		pairingsPanelLabel.add(pairingsLabel);
+		pairingsPanel.add(pairingsPanelLabel);
+		pairingsPanel.add(panel4k);
 
 		tabellenPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		pairingsPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		JPanel panel5 = new JPanel();
 		BoxLayout boxLayout = new BoxLayout(panel5, BoxLayout.Y_AXIS);
@@ -316,6 +362,7 @@ public class NaviView extends JPanel {
 		panel5.add(dateiPanel);
 		// panel5.add(datenbankPanel);
 		panel5.add(tabellenPanel);
+		panel5.add(pairingsPanel);
 		panel5.add(turnierListePanel);
 		panel5.add(spielerListePanel);
 
@@ -357,6 +404,9 @@ public class NaviView extends JPanel {
 		this.tabellenname = tabellenname;
 		tabellenLabel.setText(tabellenname);
 		tabellenLabel.updateUI();
+		pairingsname = tabellenname;
+		pairingsLabel.setText(tabellenname);
+		pairingsLabel.updateUI();
 	}
 
 	public JLabel getPathToDatabase() {
@@ -367,22 +417,6 @@ public class NaviView extends JPanel {
 		this.pathToDatabase = pathToDatabase;
 		this.pathToDatabase.updateUI();
 	}
-
-	// public JButton getTurnierListeButton() {
-	// return turnierListeButton;
-	// }
-	//
-	// public void setTurnierListeButton(JButton turnierListeButton) {
-	// this.turnierListeButton = turnierListeButton;
-	// }
-	//
-	// public JButton getSpielerListeButton() {
-	// return spielerListeButton;
-	// }
-	//
-	// public void setSpielerListeButton(JButton spielerListeButton) {
-	// this.spielerListeButton = spielerListeButton;
-	// }
 
 	public JButton getNewDatabseButton() {
 		return newDatabseButton;
@@ -400,14 +434,6 @@ public class NaviView extends JPanel {
 		this.loadDatabaseButton = loadDatabaseButton;
 	}
 
-	// public JButton getInfoButton() {
-	// return infoButton;
-	// }
-	//
-	// public void setInfoButton(JButton infoButton) {
-	// this.infoButton = infoButton;
-	// }
-
 	public JPanel getTabellenPanel() {
 		return tabellenPanel;
 	}
@@ -415,14 +441,6 @@ public class NaviView extends JPanel {
 	public void setTabellenPanel(JPanel tabellenPanel) {
 		this.tabellenPanel = tabellenPanel;
 	}
-
-	// public JPanel getDatenbankPanel() {
-	// return datenbankPanel;
-	// }
-	//
-	// public void setDatenbankPanel(JPanel datenbankPanel) {
-	// this.datenbankPanel = datenbankPanel;
-	// }
 
 	public JPanel getDateiPanel() {
 		return dateiPanel;
@@ -510,6 +528,30 @@ public class NaviView extends JPanel {
 
 	public void setExcelSpeichernButton(JButton excelSpeichernButton) {
 		this.excelSpeichernButton = excelSpeichernButton;
+	}
+
+	public JButton getPairingsLoadButton() {
+		return pairingsLoadButton;
+	}
+
+	public void setPairingsLoadButton(JButton pairingsLoadButton) {
+		this.pairingsLoadButton = pairingsLoadButton;
+	}
+
+	public JButton getPairingsSaveButton() {
+		return pairingsSaveButton;
+	}
+
+	public void setPairingsSaveButton(JButton pairingsSaveButton) {
+		this.pairingsSaveButton = pairingsSaveButton;
+	}
+
+	public JPanel getPairingsPanel() {
+		return pairingsPanel;
+	}
+
+	public void setPairingsPanel(JPanel pairingsPanel) {
+		this.pairingsPanel = pairingsPanel;
 	}
 
 }
