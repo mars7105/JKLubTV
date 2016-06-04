@@ -42,6 +42,7 @@ import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.SpielerHinzufuegenView;
+import de.turnierverwaltung.view.TabAnzeigeView;
 
 public class NaviControl implements ActionListener {
 
@@ -72,6 +73,8 @@ public class NaviControl implements ActionListener {
 		naviView = new NaviView();
 		mainControl.setNaviView(naviView);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
+
 		newdbButton = naviView.getNewDatabseButton();
 		newdbButton.addActionListener(this);
 		loaddbButton = naviView.getLoadDatabaseButton();
@@ -89,6 +92,9 @@ public class NaviControl implements ActionListener {
 		naviView.getTabelleSpeichernButton().addActionListener(this);
 		naviView.getTabelleHTMLAusgabeButton().addActionListener(this);
 		naviView.getExcelSpeichernButton().addActionListener(this);
+		naviView.getPairingsLoadButton().addActionListener(this);
+		naviView.getPairingsSaveButton().addActionListener(this);
+
 		aktiveGruppe = 0;
 		makeNaviPanel();
 		turnierAnsicht = new TurnierAnsicht(mainControl);
@@ -172,6 +178,30 @@ public class NaviControl implements ActionListener {
 			ExcelSaveControl excelsave = new ExcelSaveControl(this.mainControl);
 			excelsave.saveExcelFile();
 
+		}
+		if (arg0.getSource() == naviView.getPairingsLoadButton()) {
+
+			mainControl.getNaviView().getTabellenPanel().setVisible(false);
+			RundenEingabeFormularControl pairingsControl = mainControl
+					.getRundenEingabeFormularControl();
+			pairingsControl.init();
+			int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
+			TabAnzeigeView[] tabAnzeigeView2 = this.mainControl
+					.getTabAnzeigeView2();
+
+			for (int i = 0; i < gruppenAnzahl; i++) {
+				tabAnzeigeView2[i].setEnabledAt(0, false);
+				tabAnzeigeView2[i].setEnabledAt(1, false);
+				pairingsControl.makeRundenEditView(i);
+				tabAnzeigeView2[i].setSelectedIndex(2);
+
+			}
+			this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
+		}
+		if (arg0.getSource() == naviView.getPairingsSaveButton()) {
+
+			saveAndReloadTurnier();
+			setTabsEnable(true);
 		}
 		if (arg0.getSource() == newTurnierButton) {
 			mainControl.setSpielerEingabeControl(null);
@@ -451,6 +481,33 @@ public class NaviControl implements ActionListener {
 			HTMLSave.saveHTMLFile();
 
 		}
+
+	}
+
+	private Boolean saveAndReloadTurnier() {
+
+		Boolean ok = true;
+		try {
+			ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
+		} catch (SQLException e) {
+			ok = false;
+			e.printStackTrace();
+		}
+		return ok;
+	}
+
+	private void setTabsEnable(Boolean enable) {
+		int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
+		TabAnzeigeView[] tabAnzeigeView2 = this.mainControl
+				.getTabAnzeigeView2();
+		mainControl.getNaviView().getTabellenPanel().setVisible(enable);
+		mainControl.getNaviView().getPairingsPanel().setVisible(!enable);
+		for (int i = 0; i < gruppenAnzahl; i++) {
+			tabAnzeigeView2[i].setEnabledAt(0, enable);
+			tabAnzeigeView2[i].setEnabledAt(1, enable);
+			tabAnzeigeView2[i].setEnabledAt(2, !enable);
+		}
+		mainControl.getTurnierListeLadenControl().reloadTurnier();
 
 	}
 
