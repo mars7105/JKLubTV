@@ -165,7 +165,27 @@ public class TurnierListeLadenControl implements ActionListener {
 
 			if (arg0.getSource() == turnierListeLadenView
 					.getTurnierLadeButton()[i]) {
-				loadTurnier(i);
+				Turnier turnier = this.mainControl.getTurnier();
+				if (turnier == null) {
+					loadTurnier(i);
+				} else {
+					// Custom button text
+					Object[] options = {
+							Messages.getString("TurnierListeLadenControl.10"), Messages.getString("TurnierListeLadenControl.11") }; //$NON-NLS-1$ //$NON-NLS-2$
+					int abfrage = JOptionPane
+							.showOptionDialog(
+									mainControl,
+									Messages.getString("TurnierListeLadenControl.12") //$NON-NLS-1$
+											+ Messages
+													.getString("TurnierListeLadenControl.13"), //$NON-NLS-1$
+									Messages.getString("TurnierListeLadenControl.14"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
+									JOptionPane.WARNING_MESSAGE, null, options,
+									options[1]);
+					if (abfrage == 0) {
+						loadTurnier(i);
+					}
+				}
+				
 			}
 
 			if (arg0.getSource() == turnierListeLadenView

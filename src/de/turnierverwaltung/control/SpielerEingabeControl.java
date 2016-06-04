@@ -101,6 +101,8 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 			readyToSave[i] = false;
 
 		}
+		this.mainControl.getNaviView().getTabellenPanel()
+		.setVisible(false);
 	}
 
 	@Override

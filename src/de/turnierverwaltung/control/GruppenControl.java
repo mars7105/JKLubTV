@@ -61,7 +61,8 @@ public class GruppenControl implements ActionListener {
 		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());
 		hauptPanel.setIconAt(selectIndex, gruppenIcon);
 		hauptPanel.setSelectedIndex(selectIndex);
-
+		this.mainControl.getNaviView().getTabellenPanel()
+		.setVisible(false);
 	}
 
 	@Override

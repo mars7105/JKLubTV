@@ -409,8 +409,8 @@ public class RundenEingabeFormularControl implements ActionListener {
 		tabAnzeigeView2[index].setEnabledAt(2, false);
 		Boolean readyToSave = checkIfReadyToSave();
 		if (readyToSave == true) {
-			JOptionPane
-					.showMessageDialog(null, "Das Turnier wird gespeichert."); //$NON-NLS-1$ //$NON-NLS-2$
+			// JOptionPane
+			//					.showMessageDialog(null, "Das Turnier wird gespeichert."); //$NON-NLS-1$ //$NON-NLS-2$
 			saveAndReloadTurnier();
 
 		}
