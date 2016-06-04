@@ -57,11 +57,11 @@ public class TurnierListeLadenView extends JPanel {
 	public TurnierListeLadenView(int anzahlTurniere, int turnierTabAnzahl) {
 		this.anzahlTurniere = anzahlTurniere;
 		this.turnierTabAnzahl = turnierTabAnzahl;
-		makePanel();
+		makePanel(anzahlTurniere);
 	}
 
-	public void makePanel() {
-
+	public void makePanel(int anzahlTurniere) {
+		this.anzahlTurniere = anzahlTurniere;
 		anzahlElemente = 0;
 		setLayout(new BorderLayout());
 		turnierListe = new JTabbedPane();

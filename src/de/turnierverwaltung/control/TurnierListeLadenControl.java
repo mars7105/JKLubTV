@@ -346,7 +346,7 @@ public class TurnierListeLadenControl implements ActionListener {
 
 			} else {
 				this.turnierListeLadenView.removeAll();
-				this.turnierListeLadenView.makePanel();
+				this.turnierListeLadenView.makePanel(anzahlTurniere);
 			}
 
 			Collections.sort(turnierListe, new SortTournamentList());
