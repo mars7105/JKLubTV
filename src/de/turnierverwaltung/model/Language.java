@@ -3,6 +3,7 @@ package de.turnierverwaltung.model;
 import java.util.Locale;
 
 public class Language {
+	
 	private String language;
 	private Locale locale;
 
@@ -12,7 +13,7 @@ public class Language {
 		this.locale = locale;
 	}
 
-	public void setLocaleToDefault() {
+	public void enableLocale() {
 		de.turnierverwaltung.view.Messages.setLocale(locale);
 		de.turnierverwaltung.control.Messages.setLocale(locale);
 		de.turnierverwaltung.model.Messages.setLocale(locale);
