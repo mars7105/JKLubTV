@@ -226,7 +226,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 				if (arg0.getSource() == changeColor[index][i]) {
 					changeColor(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
-					changedGroups[index][NaviController.PAARUNGSTABELLE] = NaviController.STANDARD;
+					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
 					int selectedTab = rundenEingabeFormularView[index]
 							.getTabbedPane().getSelectedIndex();
 					makeNewFormular(index);
@@ -239,13 +239,13 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 					changeWerte(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
-					changedGroups[index][NaviController.PAARUNGSTABELLE] = NaviController.STANDARD;
+					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
 
 				}
 				if (arg0.getSource() == rundenNummer[index][i]) {
 					changeWerte(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
-					changedGroups[index][NaviController.PAARUNGSTABELLE] = NaviController.SORTIEREN;
+					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.SORTIEREN;
 
 				}
 			}

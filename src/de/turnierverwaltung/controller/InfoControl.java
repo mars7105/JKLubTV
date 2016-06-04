@@ -25,7 +25,7 @@ import de.turnierverwaltung.view.InfoView;
 import de.turnierverwaltung.view.InfoHomeScreenView;
 import de.turnierverwaltung.view.InfoLizenzenView;
 
-public class InfoController {
+public class InfoControl {
 	private MainControl mainControl;
 	private InfoView infoView;
 	// private JButton lizenzButton;
@@ -40,7 +40,7 @@ public class InfoController {
 	/**
 	 * @param mainControl
 	 */
-	public InfoController(MainControl mainControl) {
+	public InfoControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		infoView = new InfoView();
 		propertiesControl = mainControl.getPropertiesControl();

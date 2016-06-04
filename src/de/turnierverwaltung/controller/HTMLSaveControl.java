@@ -32,11 +32,11 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class HTMLSaveControler {
+public class HTMLSaveControl {
 
 	private MainControl mainControl;
 
-	public HTMLSaveControler(MainControl mainControl) {
+	public HTMLSaveControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 	}
 

@@ -33,7 +33,7 @@ public class DewisDialogControl {
 	private DEWISDialogView dialog;
 	private SpielerDewisView spielerDewisView;
 	private ArrayList<Spieler> players;
-	private DewisDialogVereinsSucheController vereinsSuche;
+	private DewisDialogVereinsSucheControl vereinsSuche;
 	private ArrayList<String[]> zpsItems;
 	private DewisDialogActionListenerControl dewisDialogActionListenerControl;
 
@@ -107,7 +107,7 @@ public class DewisDialogControl {
 
 				makeDWZListe(zps);
 			}
-			vereinsSuche = new DewisDialogVereinsSucheController(mainControl);
+			vereinsSuche = new DewisDialogVereinsSucheControl(mainControl);
 			if (vereinsSuche.checkifFileExist() == false) {
 				dialog.getVereinsAuswahl().setEnabled(false);
 				dialog.getVereinsAuswahlOkButton().setEnabled(false);
@@ -189,11 +189,11 @@ public class DewisDialogControl {
 		this.players = players;
 	}
 
-	public DewisDialogVereinsSucheController getVereinsSuche() {
+	public DewisDialogVereinsSucheControl getVereinsSuche() {
 		return vereinsSuche;
 	}
 
-	public void setVereinsSuche(DewisDialogVereinsSucheController vereinsSuche) {
+	public void setVereinsSuche(DewisDialogVereinsSucheControl vereinsSuche) {
 		this.vereinsSuche = vereinsSuche;
 	}
 

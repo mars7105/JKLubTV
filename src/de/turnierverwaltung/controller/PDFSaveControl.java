@@ -27,10 +27,10 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.turnierverwaltung.model.TurnierTabelle;
 
-public class PDFSaveControler {
+public class PDFSaveControl {
 	private MainControl mainControl;
 
-	public PDFSaveControler(MainControl mainControl) {
+	public PDFSaveControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
 	}
@@ -76,8 +76,8 @@ public class PDFSaveControler {
 							}
 						}
 
-						PDFTabellenAusgabe mftKreuz = new PDFTabellenAusgabe();
-						PDFTabellenAusgabe mftTermin = new PDFTabellenAusgabe();
+						PDFTabellenAusgabeControl mftKreuz = new PDFTabellenAusgabeControl();
+						PDFTabellenAusgabeControl mftTermin = new PDFTabellenAusgabeControl();
 
 						if (filename != null) {
 							// filename += ".pdf";

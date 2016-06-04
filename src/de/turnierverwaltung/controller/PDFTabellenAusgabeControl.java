@@ -32,7 +32,7 @@ import com.itextpdf.text.pdf.PdfWriter;
 
 import de.turnierverwaltung.model.Turnier;
 
-public class PDFTabellenAusgabe {
+public class PDFTabellenAusgabeControl {
 
 	/**
 	 * Creates a PDF with information about the movies

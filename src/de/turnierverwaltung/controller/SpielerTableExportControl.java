@@ -31,14 +31,14 @@ import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.mysql.SpielerDAO;
 
-public class SpielerTableExportController {
+public class SpielerTableExportControl {
 	private MainControl mainControl;
 	private SpielerTableControl spielerTableControl;
 	private ArrayList<Spieler> spieler;
 	private DAOFactory daoFactory;
 	private SpielerDAO mySQLSpielerDAO;
 
-	public SpielerTableExportController(MainControl mainControl) {
+	public SpielerTableExportControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 	}
 

@@ -21,12 +21,12 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-public class ExcelSaveController {
+public class ExcelSaveControl {
 
 	private MainControl mainControl;
 	private Workbook wb;
 
-	public ExcelSaveController(MainControl mainControl) {
+	public ExcelSaveControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 	}
 

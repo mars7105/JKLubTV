@@ -32,11 +32,11 @@ import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.mysql.SpielerDAO;
 
-public class SpielerTableImportController {
+public class SpielerTableImportControl {
 
 	private MainControl mainControl;
 
-	public SpielerTableImportController(MainControl mainControl) {
+	public SpielerTableImportControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 	}
 

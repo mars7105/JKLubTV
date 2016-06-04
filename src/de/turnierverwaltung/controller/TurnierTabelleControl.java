@@ -183,7 +183,7 @@ public class TurnierTabelleControl {
 	}
 
 	public void berechneFolgeDWZ(int gruppenNummer) {
-		FolgeDWZController folgeDWZ = new FolgeDWZController(
+		FolgeDWZControl folgeDWZ = new FolgeDWZControl(
 				mainControl.getTurnier(),
 				mainControl.getTurnier().getGruppe()[gruppenNummer]);
 		folgeDWZ.caculateDWZ();

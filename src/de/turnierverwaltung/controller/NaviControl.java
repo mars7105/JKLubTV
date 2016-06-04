@@ -43,7 +43,7 @@ import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.SpielerHinzufuegenView;
 
-public class NaviController implements ActionListener {
+public class NaviControl implements ActionListener {
 
 	public static final int TURNIERTABELLE = 0;
 	public static final int TERMINTABELLE = 1;
@@ -65,7 +65,7 @@ public class NaviController implements ActionListener {
 	private DewisDialogControl dewisDialogControl;
 	private TurnierAnsicht turnierAnsicht;
 
-	public NaviController(MainControl mainControl) {
+	public NaviControl(MainControl mainControl) {
 
 		this.mainControl = mainControl;
 
@@ -164,12 +164,12 @@ public class NaviController implements ActionListener {
 		}
 
 		if (arg0.getSource() == pdfButton) {
-			PDFSaveControler pdfsave = new PDFSaveControler(this.mainControl);
+			PDFSaveControl pdfsave = new PDFSaveControl(this.mainControl);
 			pdfsave.savePDFFile();
 
 		}
 		if (arg0.getSource() == naviView.getExcelSpeichernButton()) {
-			ExcelSaveController excelsave = new ExcelSaveController(
+			ExcelSaveControl excelsave = new ExcelSaveControl(
 					this.mainControl);
 			excelsave.saveExcelFile();
 
@@ -372,7 +372,7 @@ public class NaviController implements ActionListener {
 
 		}
 		if (arg0.getSource() == naviView.getSpielerImport()) {
-			SpielerTableImportController spielerImport = new SpielerTableImportController(
+			SpielerTableImportControl spielerImport = new SpielerTableImportControl(
 					mainControl);
 			try {
 				spielerImport.importSpielerTable();
@@ -383,7 +383,7 @@ public class NaviController implements ActionListener {
 			}
 		}
 		if (arg0.getSource() == naviView.getSpielerExport()) {
-			SpielerTableExportController spielerExport = new SpielerTableExportController(
+			SpielerTableExportControl spielerExport = new SpielerTableExportControl(
 					this.mainControl);
 			try {
 				spielerExport.exportSpielerTable();
@@ -446,7 +446,7 @@ public class NaviController implements ActionListener {
 		if (arg0.getSource() == naviView.getTabelleHTMLAusgabeButton())
 
 		{
-			HTMLSaveControler HTMLSave = new HTMLSaveControler(this.mainControl);
+			HTMLSaveControl HTMLSave = new HTMLSaveControl(this.mainControl);
 			HTMLSave.saveHTMLFile();
 
 		}

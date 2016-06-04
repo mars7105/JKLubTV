@@ -7,13 +7,13 @@ import java.util.ArrayList;
 
 import com.opencsv.CSVReader;
 
-public class DewisDialogVereinsSucheController {
+public class DewisDialogVereinsSucheControl {
 
 	private CSVReader csvReader;
 	private String csvFilename;
 	private MainControl mainControl;
 
-	public DewisDialogVereinsSucheController(MainControl mainControl) {
+	public DewisDialogVereinsSucheControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
 

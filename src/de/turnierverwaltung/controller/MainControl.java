@@ -95,8 +95,8 @@ public class MainControl extends JFrame {
 	private SpielerLadenControl spielerLadenControl;
 	private StandardView standardView;
 	private NaviView naviView;
-	private NaviController naviController;
-	private InfoController infoController;
+	private NaviControl naviController;
+	private InfoControl infoController;
 	private TitleView titleView;
 	private Boolean neuesTurnier;
 	private ArrayList<Partie> changedPartien;
@@ -205,11 +205,11 @@ public class MainControl extends JFrame {
 		return saveTurnierControl;
 	}
 
-	public InfoController getInfoController() {
+	public InfoControl getInfoController() {
 		return infoController;
 	}
 
-	public void setInfoController(InfoController infoController) {
+	public void setInfoController(InfoControl infoController) {
 		this.infoController = infoController;
 	}
 
@@ -333,7 +333,7 @@ public class MainControl extends JFrame {
 		standardView = new StandardView();
 		titleView = new TitleView();
 
-		naviController = new NaviController(this);
+		naviController = new NaviControl(this);
 		// menueView = new MenueView();
 		// menueControl = new MenueControl(this);
 		// setJMenuBar(menueView.getJMenuBar());
@@ -348,7 +348,7 @@ public class MainControl extends JFrame {
 		setEnabled(true);
 		setVisible(true);
 		if (this.getInfoController() == null) {
-			this.setInfoController(new InfoController(this));
+			this.setInfoController(new InfoControl(this));
 		} else {
 			this.getInfoController().makeInfoPanel();
 		}
@@ -640,11 +640,11 @@ public class MainControl extends JFrame {
 		this.naviView = naviView;
 	}
 
-	public NaviController getNaviController() {
+	public NaviControl getNaviController() {
 		return naviController;
 	}
 
-	public void setNaviController(NaviController naviController) {
+	public void setNaviController(NaviControl naviController) {
 		this.naviController = naviController;
 	}
 

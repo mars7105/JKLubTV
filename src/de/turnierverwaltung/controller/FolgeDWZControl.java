@@ -27,14 +27,14 @@ import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.model.TurnierKonstanten;
 
-public class FolgeDWZController {
+public class FolgeDWZControl {
 	private Gruppe gruppe;
 	private Partie[] partien;
 	private int spielerAnzahl;
 	private int partienanzahl;
 	private Turnier turnier;
 
-	public FolgeDWZController(Turnier turnier, Gruppe gruppe) {
+	public FolgeDWZControl(Turnier turnier, Gruppe gruppe) {
 		this.turnier = turnier;
 		this.gruppe = gruppe;
 		this.partien = this.gruppe.getPartien();
