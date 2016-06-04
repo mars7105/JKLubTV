@@ -169,8 +169,7 @@ public class NaviControl implements ActionListener {
 
 		}
 		if (arg0.getSource() == naviView.getExcelSpeichernButton()) {
-			ExcelSaveControl excelsave = new ExcelSaveControl(
-					this.mainControl);
+			ExcelSaveControl excelsave = new ExcelSaveControl(this.mainControl);
 			excelsave.saveExcelFile();
 
 		}
@@ -236,8 +235,9 @@ public class NaviControl implements ActionListener {
 
 							// true for rewrite, false for override
 							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-							mainControl.getPropertiesControl().setPathToDatabase(
-									SQLiteDAOFactory.getDB_PATH());
+							mainControl.getPropertiesControl()
+									.setPathToDatabase(
+											SQLiteDAOFactory.getDB_PATH());
 							mainControl.setTitle(Messages
 									.getString("MainControl.8") //$NON-NLS-1$
 									+ SQLiteDAOFactory.getDB_PATH());
@@ -266,8 +266,9 @@ public class NaviControl implements ActionListener {
 							mainControl.getTurnierListeLadenControl()
 									.loadTurnierListe();
 
-							mainControl.getPropertiesControl().setPathToDatabase(
-									SQLiteDAOFactory.getDB_PATH());
+							mainControl.getPropertiesControl()
+									.setPathToDatabase(
+											SQLiteDAOFactory.getDB_PATH());
 							mainControl.getPropertiesControl()
 									.writeProperties();
 							turnierAnsicht = new TurnierAnsicht(mainControl);

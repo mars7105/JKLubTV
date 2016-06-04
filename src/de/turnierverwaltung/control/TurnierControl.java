@@ -106,6 +106,8 @@ public class TurnierControl implements ActionListener {
 
 		turnier = new Turnier(onlyTables, noDWZCalc, noFolgeDWZCalc);
 		this.mainControl.setTurnier(turnier);
+		this.mainControl.getNaviView().getTabellenPanel()
+		.setVisible(false);
 	}
 
 	@Override
