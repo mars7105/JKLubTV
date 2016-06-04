@@ -17,36 +17,31 @@ package de.turnierverwaltung.controller;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import de.turnierverwaltung.model.DewisClub;
 import de.turnierverwaltung.model.SortName;
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.view.DEWISDialogView;
 import de.turnierverwaltung.view.SpielerDewisView;
 
-public class DewisDialogControl implements ListSelectionListener,
-		ActionListener {
+public class DewisDialogControl {
 	private MainControl mainControl;
 	private DEWISDialogView dialog;
 	private SpielerDewisView spielerDewisView;
 	private ArrayList<Spieler> players;
 	private DewisDialogVereinsSucheController vereinsSuche;
 	private ArrayList<String[]> zpsItems;
+	private DewisDialogActionListenerControl dewisDialogActionListenerControl;
 
 	public DewisDialogControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
-
+		dewisDialogActionListenerControl = new DewisDialogActionListenerControl(
+				this.mainControl, this);
 	}
 
 	/**
@@ -67,7 +62,8 @@ public class DewisDialogControl implements ListSelectionListener,
 			}
 			spielerDewisView.makeList();
 			spielerDewisView.updateUI();
-			spielerDewisView.getList().addListSelectionListener(this);
+			spielerDewisView.getList().addListSelectionListener(
+					dewisDialogActionListenerControl);
 			dialog.setDsbPanel(spielerDewisView);
 			mainControl.getPropertiesControl().setZPS(zps);
 			mainControl.getPropertiesControl().writeProperties();
@@ -93,12 +89,17 @@ public class DewisDialogControl implements ListSelectionListener,
 			mainControl.setEnabled(false);
 
 			dialog = new DEWISDialogView();
-			dialog.getVereinsSucheButton().addActionListener(this);
-			dialog.getVereinsAuswahlOkButton().addActionListener(this);
-			dialog.getUpdateButton().addActionListener(this);
+			dialog.getVereinsSucheButton().addActionListener(
+					dewisDialogActionListenerControl);
+			dialog.getVereinsAuswahlOkButton().addActionListener(
+					dewisDialogActionListenerControl);
+			dialog.getUpdateButton().addActionListener(
+					dewisDialogActionListenerControl);
 			dialog.getUpdateButton().setEnabled(false);
-			dialog.getOkButton().addActionListener(this);
-			dialog.getCancelButton().addActionListener(this);
+			dialog.getOkButton().addActionListener(
+					dewisDialogActionListenerControl);
+			dialog.getCancelButton().addActionListener(
+					dewisDialogActionListenerControl);
 			dialog.getOkButton().setEnabled(false);
 			String zps = mainControl.getPropertiesControl().getZPS();
 			if (zps.length() > 0) {
@@ -118,89 +119,7 @@ public class DewisDialogControl implements ListSelectionListener,
 		}
 	}
 
-	public void valueChanged(ListSelectionEvent e) {
-		if (e.getValueIsAdjusting() == false) {
-
-			if (spielerDewisView.getList().getSelectedIndex() == -1) {
-				// No selection, disable fire button.
-				dialog.getOkButton().setEnabled(false);
-
-			} else {
-				// Selection, enable the fire button.
-				dialog.getOkButton().setEnabled(true);
-			}
-		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == dialog.getVereinsAuswahlOkButton()) {
-			if (dialog.getVereinsAuswahl().getItemCount() > 0) {
-
-				int index = dialog.getVereinsAuswahl().getSelectedIndex();
-				String items[] = zpsItems.get(index);
-				String zps = items[0];
-				makeDWZListe(zps);
-			}
-
-		}
-		if (arg0.getSource() == dialog.getVereinsSucheButton()) {
-			if (dialog.getVereinsName().getText().length() > 0) {
-				makeVereinsListe();
-			} else if (dialog.getVereinsSuche().getText().length() > 0) {
-				String zps = dialog.getVereinsSuche().getText();
-				makeDWZListe(zps);
-			}
-
-		}
-		if (arg0.getSource() == dialog.getCancelButton()) {
-			dialog.closeWindow();
-			mainControl.setEnabled(true);
-		}
-		if (arg0.getSource() == dialog.getOkButton()) {
-			int[] indices = spielerDewisView.getList().getSelectedIndices();
-
-			if (players != null) {
-				for (int i = 0; i < indices.length; i++) {
-					Spieler neuerSpieler = new Spieler();
-					neuerSpieler = players.get(indices[i]);
-					Boolean findPlayer = searchSpieler(neuerSpieler, false);
-					if (findPlayer == false) {
-						SpielerTableControl stc = new SpielerTableControl(
-								mainControl);
-						neuerSpieler.setSpielerId(stc
-								.insertOneSpieler(neuerSpieler));
-						mainControl.getSpielerLadenControl().getSpieler()
-								.add(neuerSpieler);
-					}
-				}
-			}
-			try {
-				mainControl.getSpielerLadenControl().updateSpielerListe();
-			} catch (SQLException e) {
-				mainControl.resetProperties();
-			}
-		}
-		if (arg0.getSource() == dialog.getUpdateButton()) {
-
-			@SuppressWarnings("unused")
-			Boolean findPlayer = true;
-			for (Spieler player : players) {
-				findPlayer = searchSpieler(player, true);
-
-			}
-
-			dialog.closeWindow();
-			mainControl.setEnabled(true);
-			try {
-				mainControl.getSpielerLadenControl().updateSpielerListe();
-			} catch (SQLException e) {
-				mainControl.resetProperties();
-			}
-		}
-	}
-
-	private void makeVereinsListe() {
+	public void makeVereinsListe() {
 		ArrayList<String[]> vereine = vereinsSuche.searchForVerein(dialog
 				.getVereinsName().getText());
 		zpsItems = new ArrayList<String[]>();
@@ -223,7 +142,7 @@ public class DewisDialogControl implements ListSelectionListener,
 	 *            = update the dwz
 	 * @return
 	 */
-	private Boolean searchSpieler(Spieler neuerSpieler, Boolean updateDWZ) {
+	public Boolean searchSpieler(Spieler neuerSpieler, Boolean updateDWZ) {
 		ArrayList<Spieler> spieler = mainControl.getSpielerLadenControl()
 				.getSpieler();
 
@@ -245,4 +164,45 @@ public class DewisDialogControl implements ListSelectionListener,
 		return false;
 
 	}
+
+	public DEWISDialogView getDialog() {
+		return dialog;
+	}
+
+	public void setDialog(DEWISDialogView dialog) {
+		this.dialog = dialog;
+	}
+
+	public SpielerDewisView getSpielerDewisView() {
+		return spielerDewisView;
+	}
+
+	public void setSpielerDewisView(SpielerDewisView spielerDewisView) {
+		this.spielerDewisView = spielerDewisView;
+	}
+
+	public ArrayList<Spieler> getPlayers() {
+		return players;
+	}
+
+	public void setPlayers(ArrayList<Spieler> players) {
+		this.players = players;
+	}
+
+	public DewisDialogVereinsSucheController getVereinsSuche() {
+		return vereinsSuche;
+	}
+
+	public void setVereinsSuche(DewisDialogVereinsSucheController vereinsSuche) {
+		this.vereinsSuche = vereinsSuche;
+	}
+
+	public ArrayList<String[]> getZpsItems() {
+		return zpsItems;
+	}
+
+	public void setZpsItems(ArrayList<String[]> zpsItems) {
+		this.zpsItems = zpsItems;
+	}
+
 }
