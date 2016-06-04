@@ -42,10 +42,7 @@ public class EigenschaftenControl {
 				this.mainControl, this);
 		itemListenerControl = new EigenschaftenItemListenerControl(
 				this.mainControl, this);
-		eigenschaftenView.getOpenVereineCSVButton().addActionListener(
-				actionListenerControl);
-		eigenschaftenView.setOpenVereineCSVLabel(mainControl
-				.getPropertiesControl().getPathToCVS());
+
 	}
 
 	/**

@@ -8,7 +8,7 @@ import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class EigenschaftenActionListenerControl implements ActionListener {
+public class EigenschaftenActionListenerControl {
 	private MainControl mainControl;
 	private EigenschaftenControl esControl;
 
@@ -17,12 +17,39 @@ public class EigenschaftenActionListenerControl implements ActionListener {
 		super();
 		this.mainControl = mainControl;
 		this.esControl = esControl;
-		esControl.getEigenschaftenView();
-		esControl.getColumnWidht();
-		esControl.getMaxWidth();
+
 	}
 
 	public void addActionListeners() {
+		esControl.getEigenschaftenView().getOpenVereineCSVButton()
+				.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						final JFileChooser fc = new JFileChooser();
+						FileFilter filter = new FileNameExtensionFilter(
+								"CSV file", "csv", "CSV");
+
+						fc.setFileFilter(filter);
+						int returnVal = fc.showOpenDialog(esControl
+								.getEigenschaftenView());
+
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							File file = fc.getSelectedFile();
+							// This is where a real application would open the
+							// file.
+							mainControl.getPropertiesControl().setPathToCVS(
+									file.getAbsolutePath());
+							mainControl.getPropertiesControl()
+									.writeProperties();
+							esControl.getEigenschaftenView()
+									.setOpenVereineCSVLabel(
+											mainControl.getPropertiesControl()
+													.getPathToCVS());
+						}
+
+					}
+				});
+		esControl.getEigenschaftenView().setOpenVereineCSVLabel(
+				mainControl.getPropertiesControl().getPathToCVS());
 		esControl.getEigenschaftenView().getGermanLanguageCheckBox()
 				.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
@@ -68,30 +95,6 @@ public class EigenschaftenActionListenerControl implements ActionListener {
 
 					}
 				});
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == esControl.getEigenschaftenView()
-				.getOpenVereineCSVButton()) {
-			final JFileChooser fc = new JFileChooser();
-			FileFilter filter = new FileNameExtensionFilter("CSV file", "csv",
-					"CSV");
-
-			fc.setFileFilter(filter);
-			int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
-
-			if (returnVal == JFileChooser.APPROVE_OPTION) {
-				File file = fc.getSelectedFile();
-				// This is where a real application would open the file.
-				mainControl.getPropertiesControl().setPathToCVS(
-						file.getAbsolutePath());
-				mainControl.getPropertiesControl().writeProperties();
-				esControl.getEigenschaftenView().setOpenVereineCSVLabel(
-						mainControl.getPropertiesControl().getPathToCVS());
-			}
-		}
-
 	}
 
 }
