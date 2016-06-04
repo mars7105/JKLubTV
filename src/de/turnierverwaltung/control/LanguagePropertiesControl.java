@@ -3,7 +3,6 @@ package de.turnierverwaltung.control;
 import java.awt.Toolkit;
 import java.util.Locale;
 
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
