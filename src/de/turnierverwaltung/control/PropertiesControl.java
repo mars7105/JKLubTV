@@ -36,7 +36,8 @@ public class PropertiesControl {
 	public static final String PATHTOVEREINECSV = "PathToCSV";
 	public static final String TURNIEREPROTAB = "TurniereproTab";
 	public static final String SPIELERPROTAB = "SpielerproTab";
-
+	private static final String PACKAGE = "/de/jklubtv";
+	
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
@@ -45,7 +46,7 @@ public class PropertiesControl {
 	public PropertiesControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
-		prefs = Preferences.userRoot();
+		prefs = Preferences.userRoot().node(PACKAGE);
 		prop = new Properties();
 		prop.setProperty(PATHTODATABASE, "");
 		prop.setProperty(ONLYTABLES, FALSE);
