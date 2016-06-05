@@ -185,7 +185,7 @@ public class TurnierListeLadenControl implements ActionListener {
 						loadTurnier(i);
 					}
 				}
-				
+
 			}
 
 			if (arg0.getSource() == turnierListeLadenView
@@ -330,16 +330,19 @@ public class TurnierListeLadenControl implements ActionListener {
 				.getNaviView()
 				.setTabellenname(
 						Messages.getString("TurnierListeLadenControl.5") + mainControl.getTurnier().getTurnierName()); //$NON-NLS-1$
-
+		mainControl.getNaviController().setPairingIsActive(false);
+		this.mainControl.setNeuesTurnier(false);
 		hauptPanel
 				.addTab(turnier.getTurnierName(), turnierIcon, tabbedPaneView);
 		int selectIndex = hauptPanel.getTabCount() - 1;
 		hauptPanel.setSelectedIndex(selectIndex);
+		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
+
 		mainControl.getEigenschaftenControl().setColumnWidhtToZero();
 
 	}
 
-	public void loadTurnierListe() throws SQLException{
+	public void loadTurnierListe() throws SQLException {
 		Turnier temp = null;
 		String turnierName = ""; //$NON-NLS-1$
 		String startDatum = ""; //$NON-NLS-1$
@@ -390,7 +393,8 @@ public class TurnierListeLadenControl implements ActionListener {
 			}
 			this.turnierListeLadenView.updateUI();
 		} else {
-			JOptionPane.showMessageDialog(mainControl, "Falsche Datei gewählt. "); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(mainControl,
+					"Falsche Datei gewählt. "); //$NON-NLS-1$
 		}
 	}
 

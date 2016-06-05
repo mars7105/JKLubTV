@@ -65,6 +65,7 @@ public class NaviControl implements ActionListener {
 	private SpielerHinzufuegenView spielerHinzufuegenView;
 	private DewisDialogControl dewisDialogControl;
 	private TurnierAnsicht turnierAnsicht;
+	private boolean pairingIsActive;
 
 	public NaviControl(MainControl mainControl) {
 
@@ -94,7 +95,7 @@ public class NaviControl implements ActionListener {
 		naviView.getExcelSpeichernButton().addActionListener(this);
 		naviView.getPairingsLoadButton().addActionListener(this);
 		naviView.getPairingsSaveButton().addActionListener(this);
-
+		pairingIsActive = false;
 		aktiveGruppe = 0;
 		makeNaviPanel();
 		turnierAnsicht = new TurnierAnsicht(mainControl);
@@ -181,27 +182,41 @@ public class NaviControl implements ActionListener {
 		}
 		if (arg0.getSource() == naviView.getPairingsLoadButton()) {
 
-			mainControl.getNaviView().getTabellenPanel().setVisible(false);
-			RundenEingabeFormularControl pairingsControl = mainControl
-					.getRundenEingabeFormularControl();
-			pairingsControl.init();
-			int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
-			TabAnzeigeView[] tabAnzeigeView2 = this.mainControl
-					.getTabAnzeigeView2();
+			Boolean ready = mainControl.getRundenEingabeFormularControl()
+					.checkNewTurnier();
+			if (ready) {
+				mainControl.getNaviView().getTabellenPanel().setVisible(false);
+				RundenEingabeFormularControl pairingsControl = mainControl
+						.getRundenEingabeFormularControl();
+				pairingsControl.init();
+				int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
+				TabAnzeigeView[] tabAnzeigeView2 = this.mainControl
+						.getTabAnzeigeView2();
 
-			for (int i = 0; i < gruppenAnzahl; i++) {
-				tabAnzeigeView2[i].setEnabledAt(0, false);
-				tabAnzeigeView2[i].setEnabledAt(1, false);
-				pairingsControl.makeRundenEditView(i);
-				tabAnzeigeView2[i].setSelectedIndex(2);
+				for (int i = 0; i < gruppenAnzahl; i++) {
+					tabAnzeigeView2[i].setEnabledAt(0, false);
+					tabAnzeigeView2[i].setEnabledAt(1, false);
+					pairingsControl.makeRundenEditView(i);
+					tabAnzeigeView2[i].setSelectedIndex(2);
+
+				}
+				this.mainControl.getNaviView().getPairingsPanel()
+						.setVisible(true);
+				pairingIsActive = true;
+			} else {
+				JOptionPane
+						.showMessageDialog(
+								null,
+								Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$
 
 			}
-			this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
 		}
 		if (arg0.getSource() == naviView.getPairingsSaveButton()) {
 
 			saveAndReloadTurnier();
 			setTabsEnable(true);
+			pairingIsActive = false;
+
 		}
 		if (arg0.getSource() == newTurnierButton) {
 			mainControl.setSpielerEingabeControl(null);
@@ -496,6 +511,14 @@ public class NaviControl implements ActionListener {
 		return ok;
 	}
 
+	public boolean getPairingIsActive() {
+		return pairingIsActive;
+	}
+
+	public void setPairingIsActive(boolean pairingIsActive) {
+		this.pairingIsActive = pairingIsActive;
+	}
+
 	private void setTabsEnable(Boolean enable) {
 		int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
 		TabAnzeigeView[] tabAnzeigeView2 = this.mainControl
@@ -582,6 +605,12 @@ public class NaviControl implements ActionListener {
 					.setVisible(false);
 			this.mainControl.getNaviView().getSpielerListePanel()
 					.setVisible(false);
+			if (this.mainControl.getNeuesTurnier() == true) {
+				this.mainControl.getNaviView().getTabellenPanel()
+						.setVisible(false);
+				this.mainControl.getNaviView().getPairingsPanel()
+						.setVisible(false);
+			}
 		}
 
 		@Override
@@ -595,12 +624,31 @@ public class NaviControl implements ActionListener {
 							.getTurnierName();
 					if (pane.getTitleAt(selectedIndex).equals(turnierName)
 							|| pane.getTitleAt(selectedIndex).equals(
-									Messages.getString("NaviController.28"))) { //$NON-NLS-1$
-						this.mainControl.getNaviView().getTabellenPanel()
-								.setVisible(true);
+									Messages.getString("NaviController.28"))) {
+						if (this.mainControl.getNeuesTurnier() == false) {
+							if (pairingIsActive == true) {
+								this.mainControl.getNaviView()
+										.getTabellenPanel().setVisible(false);
+								this.mainControl.getNaviView()
+										.getPairingsPanel().setVisible(true);
+							} else {
+								this.mainControl.getNaviView()
+										.getTabellenPanel().setVisible(true);
+								this.mainControl.getNaviView()
+										.getPairingsPanel().setVisible(false);
+							}
+
+						} else {
+							this.mainControl.getNaviView().getTabellenPanel()
+									.setVisible(false);
+							this.mainControl.getNaviView().getPairingsPanel()
+									.setVisible(false);
+						}
 
 					} else {
 						this.mainControl.getNaviView().getTabellenPanel()
+								.setVisible(false);
+						this.mainControl.getNaviView().getPairingsPanel()
 								.setVisible(false);
 					}
 

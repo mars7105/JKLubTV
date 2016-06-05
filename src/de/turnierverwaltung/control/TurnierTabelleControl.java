@@ -64,7 +64,9 @@ public class TurnierTabelleControl {
 		this.saveTurnierControl = new SaveTurnierControl(this.mainControl);
 		this.mainControl.setSaveTurnierControl(saveTurnierControl);
 		spielerAnzahl = new int[anzahlGruppen];
-		this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
+		if (mainControl.getNeuesTurnier() == false) {
+			this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
+		}
 		if (this.mainControl.getChangedPartien() == null) {
 			changedPartien = new ArrayList<Partie>();
 			this.mainControl.setChangedPartien(changedPartien);
@@ -103,14 +105,14 @@ public class TurnierTabelleControl {
 
 		simpleTableView[gruppenNummer] = new SimpleTurnierTabelleView(
 				new SimpleTurnierTabelle(this.turnierTabelle[gruppenNummer]));
-//		simpleTableView[gruppenNummer]
-//				.getTable().setAutoResizeMode(
-//						JTable.AUTO_RESIZE_OFF);
-		simpleTableView[gruppenNummer]
-		.getTable().setAutoResizeMode(
+		// simpleTableView[gruppenNummer]
+		// .getTable().setAutoResizeMode(
+		// JTable.AUTO_RESIZE_OFF);
+		simpleTableView[gruppenNummer].getTable().setAutoResizeMode(
 				JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-//		simpleTableView[gruppenNummer].setBackground(new Color(249, 222, 112));
+		// simpleTableView[gruppenNummer].setBackground(new Color(249, 222,
+		// 112));
 		updatePunkteCol(this.turnierTabelle[gruppenNummer].getSpalte() - 3,
 				gruppenNummer);
 		updateSoBergCol(this.turnierTabelle[gruppenNummer].getSpalte() - 2,
@@ -124,7 +126,8 @@ public class TurnierTabelleControl {
 				.setPreferredSize(dimension[gruppenNummer]);
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() < 1) {
 			tabAnzeigeView2[gruppenNummer]
-					.insertTab(Messages.getString("TurnierTabelleControl.1"), turniertabelleIcon, //$NON-NLS-1$
+					.insertTab(
+							Messages.getString("TurnierTabelleControl.1"), turniertabelleIcon, //$NON-NLS-1$
 							simpleTableView[gruppenNummer], null, 0);
 
 		} else {
@@ -148,30 +151,38 @@ public class TurnierTabelleControl {
 		hauptPanel.updateUI();
 		checkDWZVisible(gruppenNummer);
 		berechneFolgeDWZ(gruppenNummer);
-		simpleTableView[gruppenNummer]
-				.getTable().doLayout();
-		simpleTableView[gruppenNummer]
-				.getTable().updateUI();
+		simpleTableView[gruppenNummer].getTable().doLayout();
+		simpleTableView[gruppenNummer].getTable().updateUI();
 	}
 
 	public void checkDWZVisible(int i) {
 
-		simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.2")).setMinWidth(0); //$NON-NLS-1$
+		simpleTableView[i]
+				.getTable()
+				.getColumn(Messages.getString("TurnierTabelleControl.2")).setMinWidth(0); //$NON-NLS-1$
 
-		simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.3")).setMaxWidth(0); //$NON-NLS-1$
+		simpleTableView[i]
+				.getTable()
+				.getColumn(Messages.getString("TurnierTabelleControl.3")).setMaxWidth(0); //$NON-NLS-1$
 		if (mainControl.getPropertiesControl().getNoDWZ() == true) {
-			simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.4")).setMinWidth(0); //$NON-NLS-1$
+			simpleTableView[i]
+					.getTable()
+					.getColumn(Messages.getString("TurnierTabelleControl.4")).setMinWidth(0); //$NON-NLS-1$
 
-			simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.5")) //$NON-NLS-1$
+			simpleTableView[i].getTable()
+					.getColumn(Messages.getString("TurnierTabelleControl.5")) //$NON-NLS-1$
 					.setMaxWidth(0);
 
 			simpleTableView[i].getTable().updateUI();
 		}
 		if (mainControl.getPropertiesControl().getNoFolgeDWZ() == true) {
 
-			simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.6")).setMinWidth(0); //$NON-NLS-1$
+			simpleTableView[i]
+					.getTable()
+					.getColumn(Messages.getString("TurnierTabelleControl.6")).setMinWidth(0); //$NON-NLS-1$
 
-			simpleTableView[i].getTable().getColumn(Messages.getString("TurnierTabelleControl.7")) //$NON-NLS-1$
+			simpleTableView[i].getTable()
+					.getColumn(Messages.getString("TurnierTabelleControl.7")) //$NON-NLS-1$
 					.setMaxWidth(0);
 
 			simpleTableView[i].getTable().updateUI();
@@ -369,7 +380,8 @@ public class TurnierTabelleControl {
 					gruppenNummer);
 			simpleTableView[gruppenNummer].getTable().getModel()
 					.addTableModelListener(tml[gruppenNummer]);
-//			mainControl.getRundenEingabeFormularControl().getChangedGroups()[gruppenNummer][NaviController.TURNIERTABELLE] = NaviController.STANDARD;
+			// mainControl.getRundenEingabeFormularControl().getChangedGroups()[gruppenNummer][NaviController.TURNIERTABELLE]
+			// = NaviController.STANDARD;
 
 		}
 
