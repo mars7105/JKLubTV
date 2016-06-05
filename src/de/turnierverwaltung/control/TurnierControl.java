@@ -88,10 +88,7 @@ public class TurnierControl implements ActionListener {
 		if (mainControl.getTurnier() != null) {
 			int selectedIndex = hauptPanel.getTabCount() - 1;
 
-			if (hauptPanel.getTitleAt(selectedIndex).equals(
-					mainControl.getTurnier().getTurnierName())) {
-				hauptPanel.remove(selectedIndex);
-			}
+			hauptPanel.remove(selectedIndex);
 
 		}
 		hauptPanel
@@ -107,7 +104,6 @@ public class TurnierControl implements ActionListener {
 				.getNoFolgeDWZ();
 
 		turnier = new Turnier(onlyTables, noDWZCalc, noFolgeDWZCalc);
-		turnier.setTurnierName(Messages.getString("TurnierControl.1"));
 		this.mainControl.setTurnier(turnier);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
