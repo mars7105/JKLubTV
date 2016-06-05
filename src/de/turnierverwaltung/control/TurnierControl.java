@@ -46,16 +46,6 @@ import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.view.TurnierView;
 
 public class TurnierControl implements ActionListener {
-	private static int pruefeObZahlKleinerEinsIst(int zahl)
-			throws ZahlKleinerAlsN, ZahlGroesserAlsN {
-		if (zahl <= 0) {
-			throw new ZahlKleinerAlsN();
-		}
-		if (zahl > 15) {
-			throw new ZahlGroesserAlsN();
-		}
-		return zahl;
-	}
 
 	private int selectIndex;
 	private MainControl mainControl;
@@ -88,15 +78,14 @@ public class TurnierControl implements ActionListener {
 		if (mainControl.getTurnier() != null) {
 			int selectedIndex = hauptPanel.getTabCount() - 1;
 
-			if (hauptPanel.getTitleAt(selectedIndex).equals(
-					mainControl.getTurnier().getTurnierName())) {
-				hauptPanel.remove(selectedIndex);
-			}
+			hauptPanel.remove(selectedIndex);
+
 		}
 		hauptPanel
 				.addTab(Messages.getString("TurnierControl.1"), turnierIcon, this.turnierView); //$NON-NLS-1$
 		selectIndex = hauptPanel.getTabCount() - 1;
 		hauptPanel.setSelectedIndex(selectIndex);
+
 		Boolean onlyTables = this.mainControl.getPropertiesControl()
 				.getOnlyTables();
 		Boolean noDWZCalc = this.mainControl.getPropertiesControl().getNoDWZ();
@@ -106,8 +95,7 @@ public class TurnierControl implements ActionListener {
 
 		turnier = new Turnier(onlyTables, noDWZCalc, noFolgeDWZCalc);
 		this.mainControl.setTurnier(turnier);
-		this.mainControl.getNaviView().getTabellenPanel()
-		.setVisible(false);
+		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
 		mainControl.getNaviController().setPairingIsActive(false);
 	}
@@ -119,6 +107,17 @@ public class TurnierControl implements ActionListener {
 
 		}
 
+	}
+
+	private static int pruefeObZahlKleinerEinsIst(int zahl)
+			throws ZahlKleinerAlsN, ZahlGroesserAlsN {
+		if (zahl <= 0) {
+			throw new ZahlKleinerAlsN();
+		}
+		if (zahl > 15) {
+			throw new ZahlGroesserAlsN();
+		}
+		return zahl;
 	}
 
 	public String getEndDatum() {
