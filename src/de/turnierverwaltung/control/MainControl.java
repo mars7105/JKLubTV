@@ -128,7 +128,7 @@ public class MainControl extends JFrame {
 		init();
 		makeProperties();
 
-		setNeuesTurnier(false);
+		
 	}
 
 	public LanguagePropertiesControl getLanguagePropertiesControl() {
@@ -326,6 +326,7 @@ public class MainControl extends JFrame {
 	}
 
 	private void init() {
+		setNeuesTurnier(false);
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		this.hauptPanel = new JTabbedPane();

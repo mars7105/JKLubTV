@@ -331,10 +331,23 @@ public class NaviView extends JPanel {
 
 		tabellenPanel.add(panel4c);
 		tabellenPanel.add(panel4d);
-
+		JLabel minusminus = new JLabel(" ");
+		JPanel minusminusPanel = new JPanel();
+		minusminusPanel.setPreferredSize(new Dimension(200, 30));
+		minusminusPanel.setBackground(Color.LIGHT_GRAY);
+		minusminusPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		minusminusPanel.add(minusminus);
+		tabellenPanel.add(minusminusPanel);
 		tabellenPanel.add(panel4e);
 		tabellenPanel.add(panel4f);
 		tabellenPanel.add(panel4g);
+		minusminus = new JLabel(" ");
+		minusminusPanel = new JPanel();
+		minusminusPanel.setPreferredSize(new Dimension(200, 30));
+		minusminusPanel.setBackground(Color.LIGHT_GRAY);
+		minusminusPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		minusminusPanel.add(minusminus);
+		tabellenPanel.add(minusminusPanel);
 		tabellenPanel.add(panel4h);
 
 		pairingsPanel = new JPanel();

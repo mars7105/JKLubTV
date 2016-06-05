@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.model.SortName;
@@ -106,26 +107,38 @@ public class SpielerLadenControl implements ActionListener {
 			for (int i = 0; i < spielerAnzahl; i++) {
 				if (arg0.getSource() == spielerLadenView
 						.getSpielerBearbeitenButton()[i]) {
-					spielerIndex = i;
-					spielerEditierenView = new SpielerEditierenView(
-							spieler.get(i));
-					spielerEditierenView.getOkButton().addActionListener(this);
-					spielerEditierenView.getCancelButton().addActionListener(
-							this);
-					mainControl.setEnabled(false);
+					if (mainControl.getNeuesTurnier() == false) {
+						spielerIndex = i;
+						spielerEditierenView = new SpielerEditierenView(
+								spieler.get(i));
+						spielerEditierenView.getOkButton().addActionListener(
+								this);
+						spielerEditierenView.getCancelButton()
+								.addActionListener(this);
+						mainControl.setEnabled(false);
+					} else {
+						JOptionPane.showMessageDialog(mainControl,
+								Messages.getString("SpielerLadenControl.2"));
+					}
 				}
 			}
 
 			for (int i = 0; i < spielerAnzahl; i++) {
 				if (arg0.getSource() == spielerLadenView
 						.getSpielerLoeschenButton()[i]) {
-					SpielerTableControl stC = new SpielerTableControl(
-							mainControl);
-					stC.loescheSpieler(spieler.get(i));
-					try {
-						updateSpielerListe();
-					} catch (SQLException e) {
-						mainControl.resetProperties();
+					if (mainControl.getNeuesTurnier() == false) {
+
+						SpielerTableControl stC = new SpielerTableControl(
+								mainControl);
+						stC.loescheSpieler(spieler.get(i));
+						try {
+							updateSpielerListe();
+						} catch (SQLException e) {
+							mainControl.resetProperties();
+						}
+					} else {
+						JOptionPane.showMessageDialog(mainControl,
+								Messages.getString("SpielerLadenControl.2"));
 					}
 				}
 			}

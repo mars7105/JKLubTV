@@ -108,6 +108,8 @@ public class TurnierControl implements ActionListener {
 		this.mainControl.setTurnier(turnier);
 		this.mainControl.getNaviView().getTabellenPanel()
 		.setVisible(false);
+		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
+		mainControl.getNaviController().setPairingIsActive(false);
 	}
 
 	@Override
