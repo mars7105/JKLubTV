@@ -46,16 +46,6 @@ import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.view.TurnierView;
 
 public class TurnierControl implements ActionListener {
-	private static int pruefeObZahlKleinerEinsIst(int zahl)
-			throws ZahlKleinerAlsN, ZahlGroesserAlsN {
-		if (zahl <= 0) {
-			throw new ZahlKleinerAlsN();
-		}
-		if (zahl > 15) {
-			throw new ZahlGroesserAlsN();
-		}
-		return zahl;
-	}
 
 	private int selectIndex;
 	private MainControl mainControl;
@@ -117,6 +107,17 @@ public class TurnierControl implements ActionListener {
 
 		}
 
+	}
+
+	private static int pruefeObZahlKleinerEinsIst(int zahl)
+			throws ZahlKleinerAlsN, ZahlGroesserAlsN {
+		if (zahl <= 0) {
+			throw new ZahlKleinerAlsN();
+		}
+		if (zahl > 15) {
+			throw new ZahlGroesserAlsN();
+		}
+		return zahl;
 	}
 
 	public String getEndDatum() {
