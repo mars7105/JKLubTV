@@ -34,10 +34,11 @@ public class PropertiesControl {
 	public static final String FALSE = "false";
 	public static final String LANGUAGE = "language";
 	public static final String PATHTOVEREINECSV = "PathToCSV";
+	public static final String DEFAULTPATH = "defaultPath";
 	public static final String TURNIEREPROTAB = "TurniereproTab";
 	public static final String SPIELERPROTAB = "SpielerproTab";
 	private static final String PACKAGE = "/de/jklubtv";
-	
+
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
@@ -55,6 +56,7 @@ public class PropertiesControl {
 		prop.setProperty(ZPS, "");
 		prop.setProperty(LANGUAGE, "");
 		prop.setProperty(PATHTOVEREINECSV, "");
+		prop.setProperty(DEFAULTPATH, "");
 		prop.setProperty(TURNIEREPROTAB, "1");
 		prop.setProperty(SPIELERPROTAB, "1");
 
@@ -288,6 +290,14 @@ public class PropertiesControl {
 
 	public String getPathToCVS() {
 		return prop.getProperty(PATHTOVEREINECSV);
+	}
+
+	public void setDefaultPath(String absolutePath) {
+		prop.setProperty(DEFAULTPATH, absolutePath);
+	}
+
+	public String getDefaultPath() {
+		return prop.getProperty(DEFAULTPATH);
 	}
 
 	public void setTurniereProTab(int anzahlprotab) {
