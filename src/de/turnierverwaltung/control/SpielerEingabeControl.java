@@ -237,7 +237,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 
 			for (int x = y + 1; x < sAnzahl; x++) {
 				int spielerXID = spielerEingabeView[index].getSpielerID()[x];
-				if (spielerYID == spielerXID) {
+				if (spielerYID == spielerXID && spielerYID >= 0) {
 					testOK = false;
 				}
 			}
