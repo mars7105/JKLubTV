@@ -59,11 +59,11 @@ public class EigenschaftenActionListenerControl {
 								.getEigenschaftenView());
 
 						if (returnVal == JFileChooser.APPROVE_OPTION) {
-//							File file = fc.getCurrentDirectory();
+							 File file = fc.getSelectedFile();
 							// This is where a real application would open the
 							// file.
 							mainControl.getPropertiesControl().setDefaultPath(
-									fc.getCurrentDirectory().getPath());
+									file.getAbsolutePath());
 							mainControl.getPropertiesControl()
 									.writeProperties();
 							esControl.getEigenschaftenView()
