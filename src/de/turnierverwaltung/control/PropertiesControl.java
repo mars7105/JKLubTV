@@ -92,6 +92,10 @@ public class PropertiesControl {
 			saveChanges = true;
 		}
 
+		if (prop.getProperty(DEFAULTPATH) != "" && checkDefaultPath() == false) {
+			prop.setProperty(DEFAULTPATH, "");
+			saveChanges = true;
+		}
 		if (!(prop.getProperty(ONLYTABLES).equals(TRUE) || prop.getProperty(
 				ONLYTABLES).equals(FALSE))) {
 			prop.setProperty(ONLYTABLES, FALSE);
@@ -197,6 +201,19 @@ public class PropertiesControl {
 		File f = new File(path);
 
 		if (f.exists() && !f.isDirectory()) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	private Boolean checkDefaultPath() {
+		String path = prop.getProperty(DEFAULTPATH);
+
+		File f = new File(path);
+
+		if (f.isDirectory()) {
 			return true;
 		} else {
 			return false;

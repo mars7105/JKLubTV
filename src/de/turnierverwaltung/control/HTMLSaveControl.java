@@ -52,7 +52,10 @@ public class HTMLSaveControl {
 							Messages.getString("HTMLSaveControler.0"), Messages.getString("HTMLSaveControler.1"), //$NON-NLS-1$ //$NON-NLS-2$
 							JOptionPane.PLAIN_MESSAGE);
 			if (filename != null) {
-				JFileChooser savefile = new JFileChooser();
+				File path = new File(mainControl.getPropertiesControl()
+						.getDefaultPath());
+
+				JFileChooser savefile = new JFileChooser(path);
 				FileFilter filter = new FileNameExtensionFilter("HTML", "html"); //$NON-NLS-1$ //$NON-NLS-2$
 				savefile.addChoosableFileFilter(filter);
 				savefile.setFileFilter(filter);

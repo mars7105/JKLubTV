@@ -82,6 +82,9 @@ public class EigenschaftenControl {
 			eigenschaftenView.getEnglishLanguageCheckBox().setSelected(true);
 			mainControl.getLanguagePropertiesControl().setLanguageToEnglish();
 		}
+		eigenschaftenView.setOpenDefaultPathLabel(mainControl
+				.getPropertiesControl().getDefaultPath());
+
 		actionListenerControl.addActionListeners();
 		itemListenerControl.addItemListeners();
 

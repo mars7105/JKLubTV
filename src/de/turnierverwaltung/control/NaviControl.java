@@ -258,8 +258,10 @@ public class NaviControl implements ActionListener {
 
 				if (filename != null) {
 					filename += ".ktv"; //$NON-NLS-1$
+					File path = new File(mainControl.getPropertiesControl()
+							.getDefaultPath());
 
-					JFileChooser savefile = new JFileChooser();
+					JFileChooser savefile = new JFileChooser(path);
 					FileFilter filter = new FileNameExtensionFilter(
 							Messages.getString("NaviController.8"), "ktv"); //$NON-NLS-1$ //$NON-NLS-2$
 					savefile.addChoosableFileFilter(filter);
@@ -286,6 +288,11 @@ public class NaviControl implements ActionListener {
 							mainControl.setTitle(Messages
 									.getString("MainControl.8") //$NON-NLS-1$
 									+ SQLiteDAOFactory.getDB_PATH());
+							mainControl.getPropertiesControl().setDefaultPath(
+									file.getParent());
+							mainControl.getEigenschaftenControl()
+									.getEigenschaftenView()
+									.setOpenDefaultPathLabel(file.getParent());
 							SQLiteControl sqlC = new SQLiteControl();
 							sqlC.createAllTables();
 							// mainControl.datenbankMenueView(true);
@@ -343,7 +350,10 @@ public class NaviControl implements ActionListener {
 			if (abfrage == 0) {
 
 				// Create a file chooser
-				JFileChooser fc = new JFileChooser();
+				File path = new File(mainControl.getPropertiesControl()
+						.getDefaultPath());
+
+				JFileChooser fc = new JFileChooser(path);
 				FileFilter filter = new FileNameExtensionFilter(
 						Messages.getString("NaviController.15"), Messages.getString("NaviController.16")); //$NON-NLS-1$ //$NON-NLS-2$
 				fc.addChoosableFileFilter(filter);
@@ -383,7 +393,11 @@ public class NaviControl implements ActionListener {
 
 						mainControl.getPropertiesControl().setPathToDatabase(
 								SQLiteDAOFactory.getDB_PATH());
-
+						mainControl.getPropertiesControl().setDefaultPath(
+								file.getParent());
+						mainControl.getEigenschaftenControl()
+								.getEigenschaftenView()
+								.setOpenDefaultPathLabel(file.getParent());
 						mainControl.getPropertiesControl().writeProperties();
 						naviView.setPathToDatabase(new JLabel(SQLiteDAOFactory
 								.getDB_PATH()));
