@@ -149,7 +149,7 @@ public class NaviControl implements ActionListener {
 					this.mainControl.getSpielerLadenControl()
 							.updateSpielerListe();
 				} catch (SQLException e) {
-					mainControl.resetProperties();
+					mainControl.fileSQLError();
 				}
 
 				spielerHinzufuegenView.closeWindow();
@@ -331,7 +331,7 @@ public class NaviControl implements ActionListener {
 							JOptionPane.showMessageDialog(null,
 									Messages.getString("NaviController.13")); //$NON-NLS-1$
 						} catch (SQLException e) {
-							mainControl.resetProperties();
+							mainControl.fileSQLError();
 						}
 					} else if (sf == JFileChooser.CANCEL_OPTION) {
 						JOptionPane.showMessageDialog(null,
@@ -418,7 +418,7 @@ public class NaviControl implements ActionListener {
 								Messages.getString("NaviController.18")); //$NON-NLS-1$
 					}
 				} catch (SQLException e) {
-					mainControl.resetProperties();
+					mainControl.fileSQLError();
 				}
 			}
 
@@ -431,7 +431,7 @@ public class NaviControl implements ActionListener {
 
 				mainControl.getSpielerLadenControl().updateSpielerListe();
 			} catch (SQLException e) {
-				mainControl.resetProperties();
+				mainControl.fileSQLError();
 			}
 		}
 		if (arg0.getSource() == naviView.getSpielerExport()) {
@@ -440,7 +440,7 @@ public class NaviControl implements ActionListener {
 			try {
 				spielerExport.exportSpielerTable();
 			} catch (SQLException e) {
-				mainControl.resetProperties();
+				mainControl.fileSQLError();
 			}
 		}
 		if (arg0.getSource() == naviView.getSpielerAddButton()) {
@@ -479,7 +479,7 @@ public class NaviControl implements ActionListener {
 					ok = this.mainControl.getSaveTurnierControl()
 							.saveChangedPartien();
 				} catch (SQLException e) {
-					mainControl.resetProperties();
+					mainControl.fileSQLError();
 				}
 
 			} else {
@@ -487,7 +487,7 @@ public class NaviControl implements ActionListener {
 					ok = this.mainControl.getSaveTurnierControl()
 							.saveChangedPartien();
 				} catch (SQLException e) {
-					mainControl.resetProperties();
+					mainControl.fileSQLError();
 				}
 				if (ok) {
 					makeNewTables();
@@ -557,7 +557,7 @@ public class NaviControl implements ActionListener {
 		try {
 			this.mainControl.getSpielerLadenControl().updateSpielerListe();
 		} catch (SQLException e) {
-			mainControl.resetProperties();
+			mainControl.fileSQLError();
 		}
 		spielerHinzufuegenView = new SpielerHinzufuegenView();
 

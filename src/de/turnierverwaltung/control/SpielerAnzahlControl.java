@@ -109,7 +109,7 @@ public class SpielerAnzahlControl implements ActionListener {
 				spielerEingabeControl = new SpielerEingabeControl(mainControl,
 						this.selectIndex);
 			} catch (SQLException e) {
-				mainControl.resetProperties();
+				mainControl.fileSQLError();
 			}
 			mainControl.setSpielerEingabeControl(spielerEingabeControl);
 		}

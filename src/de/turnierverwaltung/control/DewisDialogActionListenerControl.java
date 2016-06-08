@@ -94,7 +94,7 @@ public class DewisDialogActionListenerControl implements ListSelectionListener,
 			try {
 				mainControl.getSpielerLadenControl().updateSpielerListe();
 			} catch (SQLException e) {
-				mainControl.resetProperties();
+				mainControl.fileSQLError();
 			}
 		}
 		if (arg0.getSource() == dewisDialogControl.getDialog()
@@ -112,7 +112,7 @@ public class DewisDialogActionListenerControl implements ListSelectionListener,
 			try {
 				mainControl.getSpielerLadenControl().updateSpielerListe();
 			} catch (SQLException e) {
-				mainControl.resetProperties();
+				mainControl.fileSQLError();
 			}
 		}
 	}

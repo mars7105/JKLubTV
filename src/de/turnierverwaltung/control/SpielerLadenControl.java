@@ -77,7 +77,7 @@ public class SpielerLadenControl implements ActionListener {
 					try {
 						updateSpielerListe();
 					} catch (SQLException e) {
-						mainControl.resetProperties();
+						mainControl.fileSQLError();
 					}
 					mainControl.getTurnierListeLadenControl().reloadTurnier();
 					spielerEditierenView.closeWindow();
@@ -86,7 +86,7 @@ public class SpielerLadenControl implements ActionListener {
 					try {
 						updateSpielerListe();
 					} catch (SQLException e) {
-						mainControl.resetProperties();
+						mainControl.fileSQLError();
 					}
 					spielerEditierenView.closeWindow();
 				}
@@ -134,7 +134,7 @@ public class SpielerLadenControl implements ActionListener {
 						try {
 							updateSpielerListe();
 						} catch (SQLException e) {
-							mainControl.resetProperties();
+							mainControl.fileSQLError();
 						}
 					} else {
 						JOptionPane.showMessageDialog(mainControl,

@@ -128,7 +128,6 @@ public class MainControl extends JFrame {
 		init();
 		makeProperties();
 
-		
 	}
 
 	public LanguagePropertiesControl getLanguagePropertiesControl() {
@@ -334,7 +333,7 @@ public class MainControl extends JFrame {
 		titleView = new TitleView();
 
 		naviController = new NaviControl(this);
-		
+
 		setContentPane(mainPanel);
 
 		standardView.add(titleView, BorderLayout.NORTH);
@@ -349,7 +348,8 @@ public class MainControl extends JFrame {
 		} else {
 			this.getInfoController().makeInfoPanel();
 		}
-
+		SQLiteDAOFactory.setDB_PATH("");
+		this.setTitle(Messages.getString("MainControl.8"));
 	}
 
 	private void makeProperties() {
@@ -369,7 +369,7 @@ public class MainControl extends JFrame {
 				try {
 					this.getSpielerEditierenControl().updateSpielerListe();
 				} catch (SQLException e) {
-					resetProperties();
+					fileSQLError();
 				}
 			}
 			this.setNeuesTurnier(false);
@@ -382,7 +382,7 @@ public class MainControl extends JFrame {
 				try {
 					this.getTurnierListeLadenControl().loadTurnierListe();
 				} catch (SQLException e) {
-					resetProperties();
+					fileSQLError();
 				}
 				naviView.setPathToDatabase(new JLabel(path));
 
@@ -395,7 +395,7 @@ public class MainControl extends JFrame {
 				try {
 					this.getTurnierListeLadenControl().loadTurnierListe();
 				} catch (SQLException e) {
-					resetProperties();
+					fileSQLError();
 				}
 				naviView.setPathToDatabase(new JLabel(path));
 			}
@@ -453,16 +453,19 @@ public class MainControl extends JFrame {
 		setNeuesTurnier(false);
 		System.gc();
 		init();
+
 	}
 
-	public void resetProperties() {
-		propertiesControl = new PropertiesControl(this);
+	public void fileSQLError() {
+		propertiesControl.checkProperties();
 		Boolean ok = propertiesControl.writeProperties();
 		if (ok) {
-			JOptionPane.showMessageDialog(null, "Fehlerhafte Datei!");
+			JOptionPane.showMessageDialog(null,
+					Messages.getString("MainControl.11"));
 
 		} else {
-			JOptionPane.showMessageDialog(null, "kein Speichern möglich!");
+			JOptionPane.showMessageDialog(null,
+					Messages.getString("MainControl.12"));
 
 		}
 		resetApp();

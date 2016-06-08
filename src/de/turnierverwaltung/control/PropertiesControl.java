@@ -62,7 +62,7 @@ public class PropertiesControl {
 
 	}
 
-	private void checkProperties() {
+	public void checkProperties() {
 		Boolean saveChanges = false;
 		int turniereProTab = 0;
 		int spielerProTab = 0;
