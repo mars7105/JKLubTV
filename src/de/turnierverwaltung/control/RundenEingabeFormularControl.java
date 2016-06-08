@@ -79,7 +79,6 @@ public class RundenEingabeFormularControl implements ActionListener {
 	private ArrayList<Partie> changedPartien;
 	private JDatePickerImpl[][] datePicker;
 	private JComboBox<String>[][] rundenNummer;
-	// private PairingsLoadView[] pairingsLoadView;
 	private int[][] changedGroups;
 	private ImageIcon paarungenIcon = new ImageIcon(Toolkit.getDefaultToolkit()
 			.getImage(
@@ -94,9 +93,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
 		gruppenAnzahl = turnier.getAnzahlGruppen();
-		// pairingsLoadView = new PairingsLoadView[gruppenAnzahl];
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
-		// makePairingsLoadPanel();
 
 	}
 
@@ -108,47 +105,9 @@ public class RundenEingabeFormularControl implements ActionListener {
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
 		gruppenAnzahl = turnier.getAnzahlGruppen();
-		// pairingsLoadView = new PairingsLoadView[gruppenAnzahl];
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		init();
-		// makePairingsLoadPanel();
 	}
-
-	// private void makePairingsLoadPanel() {
-	// for (int i = 0; i < gruppenAnzahl; i++) {
-	// pairingsLoadView[i] = new PairingsLoadView();
-	// pairingsLoadView[i].getLoadPairingsButton().addActionListener(this);
-
-	// if (tabAnzeigeView2[i].getComponentCount() == 2) {
-	// tabAnzeigeView2[i]
-	// .insertTab(
-	//								Messages.getString("RundenEingabeFormularControl.5"), paarungenIcon, //$NON-NLS-1$
-	// pairingsLoadView[i], null, 2);
-	// } else {
-	// tabAnzeigeView2[i].setComponentAt(2, pairingsLoadView[i]);
-	// tabAnzeigeView2[i].setIconAt(2, paarungenIcon);
-	// }
-	// pairingsLoadView[i].updateUI();
-	// }
-	// }
-
-	// private void makePairingsLoadPanel(int index) {
-	//
-	// pairingsLoadView[index] = new PairingsLoadView();
-	// pairingsLoadView[index].getLoadPairingsButton().addActionListener(this);
-	//
-	// if (tabAnzeigeView2[index].getComponentCount() == 2) {
-	// tabAnzeigeView2[index]
-	// .insertTab(
-	//							Messages.getString("RundenEingabeFormularControl.5"), paarungenIcon, //$NON-NLS-1$
-	// pairingsLoadView[index], null, 2);
-	// } else {
-	// tabAnzeigeView2[index].setComponentAt(2, pairingsLoadView[index]);
-	// tabAnzeigeView2[index].setIconAt(2, paarungenIcon);
-	// }
-	// pairingsLoadView[index].updateUI();
-	//
-	// }
 
 	@SuppressWarnings("unchecked")
 	public void init() {
@@ -329,14 +288,12 @@ public class RundenEingabeFormularControl implements ActionListener {
 					rundenEingabeFormularView[index]);
 			tabAnzeigeView2[index].setIconAt(2, paarungenIcon);
 		}
-		// rundenEingabeFormularView[index].getReloadButton().addActionListener(
-		// this);
+
 		rundenEingabeFormularView[index].updateUI();
 	}
 
 	public void makeRundenEditView(int index) {
 		neuesTurnier[index] = true;
-		// Arrays.sort(gruppe[index].getPartien());
 		partien = gruppe[index].getPartien();
 
 		spielerAnzahl[index] = gruppe[index].getSpielerAnzahl();
@@ -373,13 +330,11 @@ public class RundenEingabeFormularControl implements ActionListener {
 		turnierTabelleControl.makeSimpleTableView(index);
 		terminTabelleControl.makeSimpleTableView(index);
 		neuesTurnier[index] = true;
-		// Arrays.sort(gruppe[index].getPartien());
 		partien = gruppe[index].getPartien();
 
 		spielerAnzahl[index] = gruppe[index].getSpielerAnzahl();
 
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
-		// makePairingsLoadPanel(index);
 
 		mainControl
 				.getNaviView()
@@ -392,12 +347,10 @@ public class RundenEingabeFormularControl implements ActionListener {
 		}
 		Boolean readyToSave = checkIfReadyToSave();
 		if (readyToSave == true) {
-			// JOptionPane
-			//					.showMessageDialog(null, "Das Turnier wird gespeichert."); //$NON-NLS-1$ //$NON-NLS-2$
 			saveAndReloadTurnier();
 
-		} 
-		
+		}
+
 	}
 
 	private Boolean checkIfReadyToSave() {
@@ -424,17 +377,6 @@ public class RundenEingabeFormularControl implements ActionListener {
 		}
 		return ok;
 	}
-
-	// private void setTabsEnable(Boolean enable) {
-	//
-	// mainControl.getNaviView().getTabellenPanel().setVisible(enable);
-	// for (int i = 0; i < gruppenAnzahl; i++) {
-	// tabAnzeigeView2[i].setEnabledAt(0, enable);
-	// tabAnzeigeView2[i].setEnabledAt(1, enable);
-	// }
-	// mainControl.getTurnierListeLadenControl().reloadTurnier();
-	//
-	// }
 
 	public Boolean[] getNeuesTurnier() {
 		return neuesTurnier;

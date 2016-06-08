@@ -24,7 +24,11 @@ public class EigenschaftenActionListenerControl {
 		esControl.getEigenschaftenView().getOpenVereineCSVButton()
 				.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						final JFileChooser fc = new JFileChooser();
+
+						File path = new File(mainControl.getPropertiesControl()
+								.getDefaultPath());
+
+						final JFileChooser fc = new JFileChooser(path);
 						FileFilter filter = new FileNameExtensionFilter(
 								"CSV file", "csv", "CSV");
 
@@ -44,6 +48,32 @@ public class EigenschaftenActionListenerControl {
 									.setOpenVereineCSVLabel(
 											mainControl.getPropertiesControl()
 													.getPathToCVS());
+						}
+
+					}
+				});
+		esControl.getEigenschaftenView().getOpenDefaultPathButton()
+				.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						final JFileChooser fc = new JFileChooser();
+						fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+						fc.setMultiSelectionEnabled(false);
+
+						int returnVal = fc.showOpenDialog(esControl
+								.getEigenschaftenView());
+
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							File file = fc.getSelectedFile();
+							// This is where a real application would open the
+							// file.
+							mainControl.getPropertiesControl().setDefaultPath(
+									file.getAbsolutePath());
+							mainControl.getPropertiesControl()
+									.writeProperties();
+							esControl.getEigenschaftenView()
+									.setOpenDefaultPathLabel(
+											mainControl.getPropertiesControl()
+													.getDefaultPath());
 						}
 
 					}

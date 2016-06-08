@@ -36,7 +36,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.ListIterator;
 
 import javax.swing.ImageIcon;
@@ -44,7 +43,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import de.turnierverwaltung.model.SortTournamentList;
 import de.turnierverwaltung.model.Turnier;
 import de.turnierverwaltung.view.TabAnzeigeView;
 import de.turnierverwaltung.view.TurnierEditierenView;
@@ -372,7 +370,7 @@ public class TurnierListeLadenControl implements ActionListener {
 				this.turnierListeLadenView.makePanel(anzahlTurniere);
 			}
 
-			Collections.sort(turnierListe, new SortTournamentList());
+//			Collections.sort(turnierListe, new SortTournamentList());
 			ListIterator<Turnier> li = turnierListe.listIterator();
 			while (li.hasNext()) {
 				temp = li.next();

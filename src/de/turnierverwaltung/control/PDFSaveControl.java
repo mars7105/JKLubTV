@@ -46,7 +46,10 @@ public class PDFSaveControl {
 					Messages.getString("PDFSaveControler.0"), Messages.getString("PDFSaveControler.1"), //$NON-NLS-1$ //$NON-NLS-2$
 					JOptionPane.PLAIN_MESSAGE);
 			if (filename != null) {
-				JFileChooser savefile = new JFileChooser();
+				File path = new File(mainControl.getPropertiesControl()
+						.getDefaultPath());
+
+				JFileChooser savefile = new JFileChooser(path);
 				FileFilter filter = new FileNameExtensionFilter("PDF", "pdf"); //$NON-NLS-1$ //$NON-NLS-2$
 				savefile.addChoosableFileFilter(filter);
 				savefile.setFileFilter(filter);

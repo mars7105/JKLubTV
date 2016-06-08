@@ -1,4 +1,5 @@
 package de.turnierverwaltung.control;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -28,15 +29,15 @@ import de.turnierverwaltung.view.InfoLizenzenView;
 public class InfoControl {
 	private MainControl mainControl;
 	private InfoView infoView;
-	// private JButton lizenzButton;
 	private JTabbedPane lizenzenPane;
 	private InfoLizenzenView infoTexteView;
 	private InfoHomeScreenView infoHelpView;
-	private ImageIcon infoIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png"))); //$NON-NLS-1$
-	private ImageIcon lizenzenIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-paragraph.png"))); //$NON-NLS-1$
+	private ImageIcon infoIcon = new ImageIcon(Toolkit.getDefaultToolkit()
+			.getImage(getClass().getResource("/images/emblem-notice.png"))); //$NON-NLS-1$
+	private ImageIcon lizenzenIcon = new ImageIcon(Toolkit.getDefaultToolkit()
+			.getImage(getClass().getResource("/images/emblem-paragraph.png"))); //$NON-NLS-1$
 	private PropertiesControl propertiesControl;
+
 	/**
 	 * @param mainControl
 	 */
@@ -49,9 +50,11 @@ public class InfoControl {
 		lizenzenPane = new JTabbedPane();
 		infoTexteView = new InfoLizenzenView();
 		try {
-			lizenzenPane.addTab(Messages.getString("InfoController.2"),infoIcon, infoHelpView.getLizenzText()); //$NON-NLS-1$
+			lizenzenPane
+					.addTab(Messages.getString("InfoController.2"), infoIcon, infoHelpView.getLizenzText()); //$NON-NLS-1$
 
-			lizenzenPane.addTab(Messages.getString("InfoController.3"),lizenzenIcon, infoTexteView.getLizenzText()); //$NON-NLS-1$
+			lizenzenPane
+					.addTab(Messages.getString("InfoController.3"), lizenzenIcon, infoTexteView.getLizenzText()); //$NON-NLS-1$
 			infoView.setLizenzenPane(lizenzenPane);
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
@@ -66,12 +69,12 @@ public class InfoControl {
 	 */
 	public void makeInfoPanel() {
 		JTabbedPane hauptPanel = this.mainControl.getHauptPanel();
-		// hauptPanel.removeAll();
-		// this.mainControl.getNaviController().makeNaviPanel();
 
-		hauptPanel.addTab(Messages.getString("InfoController.4"), infoIcon, infoView); //$NON-NLS-1$
+		hauptPanel.addTab(
+				Messages.getString("InfoController.4"), infoIcon, infoView); //$NON-NLS-1$
 		hauptPanel.updateUI();
-		EigenschaftenControl eigenschaftenControl = new EigenschaftenControl(mainControl);
+		EigenschaftenControl eigenschaftenControl = new EigenschaftenControl(
+				mainControl);
 		mainControl.setEigenschaftenControl(eigenschaftenControl);
 		eigenschaftenControl.makeeigenschaftenPanel();
 	}

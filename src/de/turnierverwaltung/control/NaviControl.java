@@ -54,8 +54,7 @@ public class NaviControl implements ActionListener {
 	public static final int SORTIEREN = 2;
 
 	private MainControl mainControl;
-	// private JButton spielerListeButton;
-	// private JButton turnierListeButton;
+	
 	private JButton newdbButton;
 	private JButton loaddbButton;
 	private JButton newTurnierButton;
@@ -106,8 +105,7 @@ public class NaviControl implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(naviView);
 		hauptPanel.add(scrollPane, BorderLayout.WEST);
-		// this.mainControl.getHauptPanel().addChangeListener(new
-		// TurnierAnsicht(mainControl));
+		
 		dewisDialogControl = new DewisDialogControl(mainControl);
 		hauptPanel.updateUI();
 	}
@@ -151,7 +149,7 @@ public class NaviControl implements ActionListener {
 					this.mainControl.getSpielerLadenControl()
 							.updateSpielerListe();
 				} catch (SQLException e) {
-					mainControl.resetProperties();
+					mainControl.fileSQLError();
 				}
 
 				spielerHinzufuegenView.closeWindow();
@@ -258,8 +256,10 @@ public class NaviControl implements ActionListener {
 
 				if (filename != null) {
 					filename += ".ktv"; //$NON-NLS-1$
+					File path = new File(mainControl.getPropertiesControl()
+							.getDefaultPath());
 
-					JFileChooser savefile = new JFileChooser();
+					JFileChooser savefile = new JFileChooser(path);
 					FileFilter filter = new FileNameExtensionFilter(
 							Messages.getString("NaviController.8"), "ktv"); //$NON-NLS-1$ //$NON-NLS-2$
 					savefile.addChoosableFileFilter(filter);
@@ -286,6 +286,11 @@ public class NaviControl implements ActionListener {
 							mainControl.setTitle(Messages
 									.getString("MainControl.8") //$NON-NLS-1$
 									+ SQLiteDAOFactory.getDB_PATH());
+							mainControl.getPropertiesControl().setDefaultPath(
+									file.getParent());
+							mainControl.getEigenschaftenControl()
+									.getEigenschaftenView()
+									.setOpenDefaultPathLabel(file.getParent());
 							SQLiteControl sqlC = new SQLiteControl();
 							sqlC.createAllTables();
 							// mainControl.datenbankMenueView(true);
@@ -326,7 +331,7 @@ public class NaviControl implements ActionListener {
 							JOptionPane.showMessageDialog(null,
 									Messages.getString("NaviController.13")); //$NON-NLS-1$
 						} catch (SQLException e) {
-							mainControl.resetProperties();
+							mainControl.fileSQLError();
 						}
 					} else if (sf == JFileChooser.CANCEL_OPTION) {
 						JOptionPane.showMessageDialog(null,
@@ -343,7 +348,10 @@ public class NaviControl implements ActionListener {
 			if (abfrage == 0) {
 
 				// Create a file chooser
-				JFileChooser fc = new JFileChooser();
+				File path = new File(mainControl.getPropertiesControl()
+						.getDefaultPath());
+
+				JFileChooser fc = new JFileChooser(path);
 				FileFilter filter = new FileNameExtensionFilter(
 						Messages.getString("NaviController.15"), Messages.getString("NaviController.16")); //$NON-NLS-1$ //$NON-NLS-2$
 				fc.addChoosableFileFilter(filter);
@@ -356,13 +364,7 @@ public class NaviControl implements ActionListener {
 						File file = fc.getSelectedFile();
 						// This is where a real application would open the file.
 						SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-						// mainControl.datenbankMenueView(true);
-						// if (mainControl.getSpielerEditierenControl() != null)
-						// {
-						// mainControl.getSpielerEditierenControl().makePanel();
-						// } else {
-
-						// }
+						
 						mainControl.setNeuesTurnier(false);
 						// mainControl.getNaviView().getTabellenPanel().setVisible(false);
 						mainControl
@@ -383,7 +385,11 @@ public class NaviControl implements ActionListener {
 
 						mainControl.getPropertiesControl().setPathToDatabase(
 								SQLiteDAOFactory.getDB_PATH());
-
+						mainControl.getPropertiesControl().setDefaultPath(
+								file.getParent());
+						mainControl.getEigenschaftenControl()
+								.getEigenschaftenView()
+								.setOpenDefaultPathLabel(file.getParent());
 						mainControl.getPropertiesControl().writeProperties();
 						naviView.setPathToDatabase(new JLabel(SQLiteDAOFactory
 								.getDB_PATH()));
@@ -412,7 +418,7 @@ public class NaviControl implements ActionListener {
 								Messages.getString("NaviController.18")); //$NON-NLS-1$
 					}
 				} catch (SQLException e) {
-					mainControl.resetProperties();
+					mainControl.fileSQLError();
 				}
 			}
 
@@ -425,7 +431,7 @@ public class NaviControl implements ActionListener {
 
 				mainControl.getSpielerLadenControl().updateSpielerListe();
 			} catch (SQLException e) {
-				mainControl.resetProperties();
+				mainControl.fileSQLError();
 			}
 		}
 		if (arg0.getSource() == naviView.getSpielerExport()) {
@@ -434,7 +440,7 @@ public class NaviControl implements ActionListener {
 			try {
 				spielerExport.exportSpielerTable();
 			} catch (SQLException e) {
-				mainControl.resetProperties();
+				mainControl.fileSQLError();
 			}
 		}
 		if (arg0.getSource() == naviView.getSpielerAddButton()) {
@@ -473,7 +479,7 @@ public class NaviControl implements ActionListener {
 					ok = this.mainControl.getSaveTurnierControl()
 							.saveChangedPartien();
 				} catch (SQLException e) {
-					mainControl.resetProperties();
+					mainControl.fileSQLError();
 				}
 
 			} else {
@@ -481,7 +487,7 @@ public class NaviControl implements ActionListener {
 					ok = this.mainControl.getSaveTurnierControl()
 							.saveChangedPartien();
 				} catch (SQLException e) {
-					mainControl.resetProperties();
+					mainControl.fileSQLError();
 				}
 				if (ok) {
 					makeNewTables();
@@ -551,7 +557,7 @@ public class NaviControl implements ActionListener {
 		try {
 			this.mainControl.getSpielerLadenControl().updateSpielerListe();
 		} catch (SQLException e) {
-			mainControl.resetProperties();
+			mainControl.fileSQLError();
 		}
 		spielerHinzufuegenView = new SpielerHinzufuegenView();
 

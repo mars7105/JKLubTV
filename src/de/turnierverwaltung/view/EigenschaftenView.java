@@ -64,6 +64,9 @@ public class EigenschaftenView extends JPanel {
 	private JLabel openVereineCSVLabel;
 	private JComboBox<String> spielerListeAuswahlBox;
 	private JComboBox<String> turnierListeAuswahlBox;
+	private JButton openDefaultPathButton;
+	private JLabel openDefaultPathLabel;
+
 	/**
 	 * Create the panel.
 	 */
@@ -102,6 +105,7 @@ public class EigenschaftenView extends JPanel {
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		languageSupport();
+		defaultPath();
 		makeHTMLEigenschaften();
 		anzahlElemente();
 		downloadLinks();
@@ -110,6 +114,28 @@ public class EigenschaftenView extends JPanel {
 		scrollPane.setViewportView(centerPane);
 		// contentPanel.add(scrollPane);
 		add(scrollPane, BorderLayout.CENTER);
+	}
+
+	private void defaultPath() {
+
+		JPanel title = new JPanel();
+		title.setLayout(new FlowLayout(FlowLayout.LEFT));
+		title.add(new JLabel(Messages.getString("EigenschaftenView.20"))); //$NON-NLS-1$
+		htmlAll.add(title);
+
+		JPanel htmlPanel = new JPanel();
+
+		openDefaultPathButton = new JButton(
+				Messages.getString("EigenschaftenView.19")); //$NON-NLS-1$
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(openDefaultPathButton);
+		openDefaultPathLabel = new JLabel();
+		htmlPanel.add(openDefaultPathLabel);
+		htmlAll.add(htmlPanel);
+
+		htmlAll.add(htmlPanel);
+		htmlAll.add(new JSeparator());
 	}
 
 	private void languageSupport() {
@@ -362,6 +388,23 @@ public class EigenschaftenView extends JPanel {
 	public void setTurnierListeAuswahlBox(
 			JComboBox<String> turnierListeAuswahlBox) {
 		this.turnierListeAuswahlBox = turnierListeAuswahlBox;
+	}
+
+	public JButton getOpenDefaultPathButton() {
+		return openDefaultPathButton;
+	}
+
+	public void setOpenDefaultPathButton(JButton openDefaultPathButton) {
+		this.openDefaultPathButton = openDefaultPathButton;
+	}
+
+	public String getOpenDefaultPathLabel() {
+		return openDefaultPathLabel.getText();
+	}
+
+	public void setOpenDefaultPathLabel(String openDefaultPathLabel) {
+		this.openDefaultPathLabel.setText(openDefaultPathLabel);
+		this.openDefaultPathLabel.updateUI();
 	}
 
 	class OpenUrlAction implements ActionListener {

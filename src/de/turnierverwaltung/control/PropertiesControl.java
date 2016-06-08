@@ -34,10 +34,11 @@ public class PropertiesControl {
 	public static final String FALSE = "false";
 	public static final String LANGUAGE = "language";
 	public static final String PATHTOVEREINECSV = "PathToCSV";
+	public static final String DEFAULTPATH = "defaultPath";
 	public static final String TURNIEREPROTAB = "TurniereproTab";
 	public static final String SPIELERPROTAB = "SpielerproTab";
 	private static final String PACKAGE = "/de/jklubtv";
-	
+
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
@@ -55,12 +56,13 @@ public class PropertiesControl {
 		prop.setProperty(ZPS, "");
 		prop.setProperty(LANGUAGE, "");
 		prop.setProperty(PATHTOVEREINECSV, "");
+		prop.setProperty(DEFAULTPATH, "");
 		prop.setProperty(TURNIEREPROTAB, "1");
 		prop.setProperty(SPIELERPROTAB, "1");
 
 	}
 
-	private void checkProperties() {
+	public void checkProperties() {
 		Boolean saveChanges = false;
 		int turniereProTab = 0;
 		int spielerProTab = 0;
@@ -90,6 +92,10 @@ public class PropertiesControl {
 			saveChanges = true;
 		}
 
+		if (prop.getProperty(DEFAULTPATH) != "" && checkDefaultPath() == false) {
+			prop.setProperty(DEFAULTPATH, "");
+			saveChanges = true;
+		}
 		if (!(prop.getProperty(ONLYTABLES).equals(TRUE) || prop.getProperty(
 				ONLYTABLES).equals(FALSE))) {
 			prop.setProperty(ONLYTABLES, FALSE);
@@ -202,6 +208,19 @@ public class PropertiesControl {
 
 	}
 
+	private Boolean checkDefaultPath() {
+		String path = prop.getProperty(DEFAULTPATH);
+
+		File f = new File(path);
+
+		if (f.isDirectory()) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
 	public Boolean checkPathToDatabase() {
 		String path = prop.getProperty(PATHTODATABASE);
 		return checkPath(path);
@@ -288,6 +307,14 @@ public class PropertiesControl {
 
 	public String getPathToCVS() {
 		return prop.getProperty(PATHTOVEREINECSV);
+	}
+
+	public void setDefaultPath(String absolutePath) {
+		prop.setProperty(DEFAULTPATH, absolutePath);
+	}
+
+	public String getDefaultPath() {
+		return prop.getProperty(DEFAULTPATH);
 	}
 
 	public void setTurniereProTab(int anzahlprotab) {
