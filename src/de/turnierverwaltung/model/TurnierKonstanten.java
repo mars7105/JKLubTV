@@ -1,4 +1,5 @@
 package de.turnierverwaltung.model;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -49,6 +50,11 @@ public class TurnierKonstanten {
 	public static final int WINDOW_BOUNDS_Y = (Toolkit.getDefaultToolkit()
 			.getScreenSize().height - TurnierKonstanten.WINDOW_HEIGHT) / 2;
 	public static final int SPIELFREI_ID = -2;
+	public static final int TAB_INFO = 0;
+	public static final int TAB_PROPERTIES = 1;
+	public static final int TAB_PLAYER_LIST = 2;
+	public static final int TAB_TOURNAMENTS_LIST = 3;
+	public static final int TAB_ACTIVE_TOURNAMENT = 4;
 
 	private static int setWidth() {
 

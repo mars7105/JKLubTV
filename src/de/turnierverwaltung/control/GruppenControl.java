@@ -55,7 +55,6 @@ public class GruppenControl implements ActionListener {
 		gruppenCancelButton = this.gruppenView.getCancelButton();
 		gruppenCancelButton.addActionListener(this);
 		gruppenView.getGruppenNameTextField()[0].grabFocus();
-//		this.mainControl.getNaviController().makeNaviPanel();
 		hauptPanel.remove(this.selectIndex);
 		hauptPanel.add(this.gruppenView, this.selectIndex);
 		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());

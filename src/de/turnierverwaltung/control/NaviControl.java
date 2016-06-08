@@ -54,8 +54,7 @@ public class NaviControl implements ActionListener {
 	public static final int SORTIEREN = 2;
 
 	private MainControl mainControl;
-	// private JButton spielerListeButton;
-	// private JButton turnierListeButton;
+	
 	private JButton newdbButton;
 	private JButton loaddbButton;
 	private JButton newTurnierButton;
@@ -106,8 +105,7 @@ public class NaviControl implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(naviView);
 		hauptPanel.add(scrollPane, BorderLayout.WEST);
-		// this.mainControl.getHauptPanel().addChangeListener(new
-		// TurnierAnsicht(mainControl));
+		
 		dewisDialogControl = new DewisDialogControl(mainControl);
 		hauptPanel.updateUI();
 	}
@@ -366,13 +364,7 @@ public class NaviControl implements ActionListener {
 						File file = fc.getSelectedFile();
 						// This is where a real application would open the file.
 						SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-						// mainControl.datenbankMenueView(true);
-						// if (mainControl.getSpielerEditierenControl() != null)
-						// {
-						// mainControl.getSpielerEditierenControl().makePanel();
-						// } else {
-
-						// }
+						
 						mainControl.setNeuesTurnier(false);
 						// mainControl.getNaviView().getTabellenPanel().setVisible(false);
 						mainControl

@@ -330,15 +330,11 @@ public class MainControl extends JFrame {
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		this.hauptPanel = new JTabbedPane();
-		// this.hauptPanel.setLayout(new BorderLayout());
 		standardView = new StandardView();
 		titleView = new TitleView();
 
 		naviController = new NaviControl(this);
-		// menueView = new MenueView();
-		// menueControl = new MenueControl(this);
-		// setJMenuBar(menueView.getJMenuBar());
-
+		
 		setContentPane(mainPanel);
 
 		standardView.add(titleView, BorderLayout.NORTH);

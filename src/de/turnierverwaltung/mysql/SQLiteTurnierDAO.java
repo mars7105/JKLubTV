@@ -219,6 +219,7 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 	@Override
 	public ArrayList<Turnier> selectAllTurnier(PropertiesControl prop) throws SQLException{
 		String sql = "Select * from turnier, datum where Datum_idDatum = idDatum"
+				+ " ORDER BY idTurnier DESC"
 				+ ";";
 		ArrayList<Turnier> turnierListe = new ArrayList<Turnier>();
 
