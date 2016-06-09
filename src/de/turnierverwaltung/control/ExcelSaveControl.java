@@ -137,7 +137,7 @@ public class ExcelSaveControl {
 						Cell c2 = null;
 						short rownum2;
 
-						for (int y = 0; y < zeile; y++) {
+						for (int y = 0; y < zeile + 1; y++) {
 							rownum = (short) y;
 							// create a row
 							r = s[i].createRow(rownum);
@@ -147,10 +147,11 @@ public class ExcelSaveControl {
 								if (x == 1) {
 									inc++;
 								} else {
-									turnierTabelle.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
-											.getSimpleTableView()[i].getTable()
-											.getValueAt(y, x);
-
+									if (y < zeile) {
+										turnierTabelle.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
+												.getSimpleTableView()[i]
+												.getTable().getValueAt(y, x);
+									}
 									cellnum = (short) (x - inc);
 									// create a numeric cell
 									c = r.createCell(cellnum);
