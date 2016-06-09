@@ -59,9 +59,16 @@ public class PDFSaveControl {
 				if (sf == JFileChooser.APPROVE_OPTION) {
 
 					for (int i = 0; i < anzahlGruppen; i++) {
-						TurnierTabelle turnierTabelle = new TurnierTabelle(
-								mainControl.getTurnier(), mainControl
-										.getTurnier().getGruppe()[i]);
+						if (this.mainControl.getTurnierTabelle()[i] == null) {
+							this.mainControl.getTurnierTabelleControl()
+									.makeSimpleTableView(i);
+							this.mainControl.getTerminTabelleControl()
+									.makeSimpleTableView(i);
+
+						}
+
+						TurnierTabelle turnierTabelle = mainControl
+								.getTurnierTabelle()[i];
 						int spalte = this.mainControl.getSimpleTableView()[i]
 								.getTable().getModel().getColumnCount();
 						int zeile = this.mainControl.getSimpleTableView()[i]
@@ -102,15 +109,15 @@ public class PDFSaveControl {
 													.getGruppe()[i]
 													.getGruppenName() + ".pdf"); //$NON-NLS-1$
 
-							turnierTabelle.createMatrix();
+//							turnierTabelle.createMatrix();
 
 //							mainControl.getTurnierTabelle()[i].createMatrix();
-							if (mainControl.getTurnier().getNoDWZCalc() == true) {
-								turnierTabelle.removeDWZColumn();
-							}
-							if (mainControl.getTurnier().getNoFolgeDWZCalc() == true) {
-								turnierTabelle.removeFolgeDWZColumn();
-							}
+//							if (mainControl.getTurnier().getNoDWZCalc() == true) {
+//								turnierTabelle.removeDWZColumn();
+//							}
+//							if (mainControl.getTurnier().getNoFolgeDWZCalc() == true) {
+//								turnierTabelle.removeFolgeDWZColumn();
+//							}
 							String titel = Messages.getString("PDFSaveControler.10") //$NON-NLS-1$
 									+ mainControl.getTurnier().getTurnierName()
 									+ " - " //$NON-NLS-1$

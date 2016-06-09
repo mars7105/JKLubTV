@@ -83,8 +83,8 @@ public class TurnierTabelleToHTML {
 
 		int col = this.tabellenMatrix.length - 1;
 		int row = this.tabellenMatrix[0].length;
-		Boolean ohneDWZ = turnier.getNoDWZCalc();
-		Boolean ohneFolgeDWZ = turnier.getNoFolgeDWZCalc();
+//		Boolean ohneDWZ = turnier.getNoDWZCalc();
+//		Boolean ohneFolgeDWZ = turnier.getNoFolgeDWZCalc();
 		if (ohneHeaderundFooter == false) {
 			htmlString = getHTMLHeader();
 		} else {
@@ -102,10 +102,10 @@ public class TurnierTabelleToHTML {
 
 			for (int x = 0; x < col; x++) {
 
-				if ((ohneDWZ == true && x == 2)
-						|| (ohneFolgeDWZ == true && x == 3)) {
-
-				} else {
+//				if ((ohneDWZ == true && x == 2)
+//						|| (ohneFolgeDWZ == true && x == 3)) {
+//
+//				} else {
 					String ausgabeWert = this.tabellenMatrix[reihenfolge[x]][y];
 					if (ausgabeWert != null && ausgabeWert != "" //$NON-NLS-1$
 							&& ausgabeWert != " ") { //$NON-NLS-1$
@@ -133,7 +133,7 @@ public class TurnierTabelleToHTML {
 						}
 					}
 
-				}
+//				}
 			}
 			htmlString += "      </tr>\n"; //$NON-NLS-1$
 			if (y == 0) {

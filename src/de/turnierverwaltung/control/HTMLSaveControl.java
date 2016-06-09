@@ -32,6 +32,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import de.turnierverwaltung.model.TurnierTabelle;
+
 public class HTMLSaveControl {
 
 	private MainControl mainControl;
@@ -71,8 +73,12 @@ public class HTMLSaveControl {
 									.makeSimpleTableView(i);
 							this.mainControl.getTerminTabelleControl()
 									.makeSimpleTableView(i);
+
 						}
-						this.mainControl.getTurnierTabelle()[i].createMatrix();
+
+						TurnierTabelle turnierTabelle = mainControl
+								.getTurnierTabelle()[i];
+
 						int spalte = this.mainControl.getSimpleTableView()[i]
 								.getTable().getModel().getColumnCount();
 						int zeile = this.mainControl.getSimpleTableView()[i]
@@ -80,7 +86,7 @@ public class HTMLSaveControl {
 						for (int x = 0; x < spalte; x++) {
 							for (int y = 0; y < zeile; y++) {
 
-								this.mainControl.getTurnierTabelle()[i]
+								turnierTabelle
 										.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
 										.getSimpleTableView()[i].getTable()
 										.getValueAt(y, x);
