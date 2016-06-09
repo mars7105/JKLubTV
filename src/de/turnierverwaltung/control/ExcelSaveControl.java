@@ -21,6 +21,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
+import de.turnierverwaltung.model.TurnierTabelle;
+
 public class ExcelSaveControl {
 
 	private MainControl mainControl;
@@ -84,6 +86,7 @@ public class ExcelSaveControl {
 					cellStyle.setFont(font);
 					// cellStyle.setShrinkToFit(true);
 					for (int i = 0; i < anzahlGruppen; i++) {
+
 						if (this.mainControl.getTurnierTabelle()[i] == null) {
 							this.mainControl.getTurnierTabelleControl()
 									.makeSimpleTableView(i);
@@ -91,12 +94,14 @@ public class ExcelSaveControl {
 									.makeSimpleTableView(i);
 
 						}
-						this.mainControl.getTurnierTabelle()[i].createMatrix();
 
-						int spalte = this.mainControl.getTurnierTabelle()[i]
-								.getSpalte();
-						int zeile = this.mainControl.getTurnierTabelle()[i]
-								.getZeile();
+						TurnierTabelle turnierTabelle = mainControl
+								.getTurnierTabelle()[i];
+
+						int spalte = this.mainControl.getSimpleTableView()[i]
+								.getTable().getModel().getColumnCount();
+						int zeile = this.mainControl.getSimpleTableView()[i]
+								.getTable().getModel().getRowCount();
 						int spalte2 = this.mainControl.getTerminTabelle()[i]
 								.getSpaltenAnzahl();
 						int zeile2 = this.mainControl.getTerminTabelle()[i]
@@ -131,30 +136,35 @@ public class ExcelSaveControl {
 						// declare a cell object reference
 						Cell c2 = null;
 						short rownum2;
-						for (int y = 0; y < zeile; y++) {
+
+						for (int y = 0; y < zeile + 1; y++) {
 							rownum = (short) y;
 							// create a row
 							r = s[i].createRow(rownum);
-
+							int inc = 0;
 							short cellnum;
 							for (int x = 0; x < spalte; x++) {
-								cellnum = (short) x;
-								// create a numeric cell
-								c = r.createCell(cellnum);
+								if (x == 1) {
+									inc++;
+								} else {
+									if (y < zeile) {
+										turnierTabelle.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
+												.getSimpleTableView()[i]
+												.getTable().getValueAt(y, x);
+									}
+									cellnum = (short) (x - inc);
+									// create a numeric cell
+									c = r.createCell(cellnum);
 
-								c.setCellStyle(cellStyle);
-								if (y < (zeile - 1)) {
-									this.mainControl.getTurnierTabelle()[i]
-											.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
-											.getSimpleTableView()[i].getTable()
-											.getValueAt(y, x);
+									c.setCellStyle(cellStyle);
+
+									rep = (String) turnierTabelle
+											.getTabellenMatrix()[x][y];
+									rep = rep.replaceAll("<br />", "");
+									c.setCellValue(rep);
+									s[i].autoSizeColumn((x - inc));
+
 								}
-								rep = (String) this.mainControl
-										.getTurnierTabelle()[i]
-										.getTabellenMatrix()[x][y];
-								rep = rep.replaceAll("<br />", "");
-								c.setCellValue(rep);
-								s[i].autoSizeColumn(x);
 							}
 
 							r.setHeight((short) (r.getHeight() * 2));
