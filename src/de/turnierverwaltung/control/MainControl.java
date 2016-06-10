@@ -122,7 +122,6 @@ public class MainControl extends JFrame {
 			}
 		}
 		languagePropertiesControl.checkLanguage();
-		TurnierKonstanten.setConstantLanguage();
 
 		setTitle(Messages.getString("MainControl.0")); //$NON-NLS-1$
 
