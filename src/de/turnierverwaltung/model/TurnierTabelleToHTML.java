@@ -67,10 +67,8 @@ public class TurnierTabelleToHTML {
 
 		reihenfolge[0] = col - 1;
 		int x = 0;
-		for (int i = 1; i < col - 1; i++) {
-			if (x == 1) {
-				x++;
-			}
+		for (int i = 1; i < col; i++) {
+			
 			reihenfolge[i] = x;
 			x++;
 
@@ -81,7 +79,7 @@ public class TurnierTabelleToHTML {
 
 	private String makeTurnierTabelle(Boolean ohneHeaderundFooter) {
 
-		int col = this.tabellenMatrix.length - 1;
+		int col = this.tabellenMatrix.length ;
 		int row = this.tabellenMatrix[0].length;
 
 		if (ohneHeaderundFooter == false) {
