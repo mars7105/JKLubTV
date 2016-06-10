@@ -18,6 +18,7 @@ package de.turnierverwaltung.view;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -37,6 +38,9 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
+
+import de.turnierverwaltung.model.TurnierKonstanten;
 
 public class EigenschaftenView extends JPanel {
 
@@ -66,6 +70,17 @@ public class EigenschaftenView extends JPanel {
 	private JComboBox<String> turnierListeAuswahlBox;
 	private JButton openDefaultPathButton;
 	private JLabel openDefaultPathLabel;
+	private JTextField playerTextField;
+	private JTextField newDWZTextField;
+	private JTextField oldDWZTextField;
+	private JTextField pointDWZTextField;
+	private JTextField sbbTextField;
+	private JTextField rankingTextField;
+	private JTextField roundTextField;
+	private JTextField whiteTextField;
+	private JTextField blackTextField;
+	private JTextField resultTextField;
+	private JTextField meetingTextField;
 
 	/**
 	 * Create the panel.
@@ -105,15 +120,167 @@ public class EigenschaftenView extends JPanel {
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		languageSupport();
-		defaultPath();
 		makeHTMLEigenschaften();
+//		tableLabel();
 		anzahlElemente();
+		defaultPath();
+
 		downloadLinks();
 		centerPane.add(htmlAll, BorderLayout.NORTH);
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(centerPane);
 		// contentPanel.add(scrollPane);
 		add(scrollPane, BorderLayout.CENTER);
+	}
+
+	@SuppressWarnings("unused")
+	private void tableLabel() {
+
+		JPanel title = new JPanel();
+		title.setLayout(new FlowLayout(FlowLayout.LEFT));
+		title.add(new JLabel(Messages.getString("EigenschaftenView.21"))); //$NON-NLS-1$
+		htmlAll.add(title);
+
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		Dimension dimTextField = new Dimension(175, 30);
+		oldDWZTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_OLD_DWZ);
+		oldDWZTextField.setPreferredSize(dimTextField);
+
+		newDWZTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_NEW_DWZ);
+		newDWZTextField.setPreferredSize(dimTextField);
+
+		pointDWZTextField = new JTextField(
+				TurnierKonstanten.TABLE_COLUMN_POINTS);
+		pointDWZTextField.setPreferredSize(dimTextField);
+
+		sbbTextField = new JTextField(
+				TurnierKonstanten.TABLE_COLUMN_SONNEBORNBERGER);
+		sbbTextField.setPreferredSize(dimTextField);
+
+		rankingTextField = new JTextField(
+				TurnierKonstanten.TABLE_COLUMN_RANKING);
+		rankingTextField.setPreferredSize(dimTextField);
+
+		roundTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_ROUND);
+		roundTextField.setPreferredSize(dimTextField);
+
+		whiteTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_WHITE);
+		whiteTextField.setPreferredSize(dimTextField);
+
+		blackTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_BLACK);
+		blackTextField.setPreferredSize(dimTextField);
+
+		resultTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_RESULT);
+		resultTextField.setPreferredSize(dimTextField);
+
+		meetingTextField = new JTextField(
+				TurnierKonstanten.TABLE_COLUMN_MEETING);
+		meetingTextField.setPreferredSize(dimTextField);
+
+		playerTextField = new JTextField(
+				TurnierKonstanten.TABLE_COLUMN_PLAYER);
+		playerTextField.setPreferredSize(dimTextField);
+
+		Dimension dim = new Dimension(175, 30);
+		JLabel oldDWZTextFieldLabel = new JLabel(
+				Messages.getString("EigenschaftenView.22") + ":");
+		oldDWZTextFieldLabel.setPreferredSize(dim);
+		JLabel newDWZTextFieldLabel = new JLabel(
+				Messages.getString("EigenschaftenView.23") + ":");
+		newDWZTextFieldLabel.setPreferredSize(dim);
+
+		JLabel pointDWZTextFieldLabel = new JLabel(
+				Messages.getString("EigenschaftenView.32") + ":");
+		pointDWZTextFieldLabel.setPreferredSize(dim);
+
+		JLabel sbbTextFieldLabel = new JLabel(
+				Messages.getString("EigenschaftenView.33") + ":");
+		sbbTextFieldLabel.setPreferredSize(dim);
+
+		JLabel rankingTextFieldLabel = new JLabel(
+				Messages.getString("EigenschaftenView.34") + ":");
+		rankingTextFieldLabel.setPreferredSize(dim);
+
+		JLabel whiteTextFieldLabel = new JLabel(
+				Messages.getString("EigenschaftenView.27") + ":");
+		whiteTextFieldLabel.setPreferredSize(dim);
+
+		JLabel blackTextFieldLabel = new JLabel(
+				Messages.getString("EigenschaftenView.28") + ":");
+		blackTextFieldLabel.setPreferredSize(dim);
+
+		JLabel resultTextFieldLabel = new JLabel(
+				Messages.getString("EigenschaftenView.29") + ":");
+		resultTextFieldLabel.setPreferredSize(dim);
+
+		JLabel meetingTextFieldLabel = new JLabel(
+				Messages.getString("EigenschaftenView.30") + ":");
+		meetingTextFieldLabel.setPreferredSize(dim);
+
+		JLabel playerTextFieldLabel = new JLabel(
+				Messages.getString("EigenschaftenView.31") + ":");
+		playerTextFieldLabel.setPreferredSize(dim);
+
+		htmlPanel.add(oldDWZTextFieldLabel);
+		htmlPanel.add(oldDWZTextField);
+		htmlAll.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(newDWZTextFieldLabel);
+		htmlPanel.add(newDWZTextField);
+		htmlAll.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(pointDWZTextFieldLabel);
+		htmlPanel.add(pointDWZTextField);
+		htmlAll.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(sbbTextFieldLabel);
+		htmlPanel.add(sbbTextField);
+		htmlAll.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(rankingTextFieldLabel);
+		htmlPanel.add(rankingTextField);
+		htmlAll.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(whiteTextFieldLabel);
+		htmlPanel.add(whiteTextField);
+		htmlAll.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(blackTextFieldLabel);
+		htmlPanel.add(blackTextField);
+		htmlAll.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(resultTextFieldLabel);
+		htmlPanel.add(resultTextField);
+		htmlAll.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(meetingTextFieldLabel);
+		htmlPanel.add(meetingTextField);
+		htmlAll.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(playerTextFieldLabel);
+		htmlPanel.add(playerTextField);
+		htmlAll.add(htmlPanel);
+
+		htmlAll.add(new JSeparator());
 	}
 
 	private void defaultPath() {
@@ -123,18 +290,15 @@ public class EigenschaftenView extends JPanel {
 		title.add(new JLabel(Messages.getString("EigenschaftenView.20"))); //$NON-NLS-1$
 		htmlAll.add(title);
 
-		JPanel htmlPanel = new JPanel();
-
 		openDefaultPathButton = new JButton(
 				Messages.getString("EigenschaftenView.19")); //$NON-NLS-1$
-		htmlPanel = new JPanel();
+		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(openDefaultPathButton);
 		openDefaultPathLabel = new JLabel();
 		htmlPanel.add(openDefaultPathLabel);
 		htmlAll.add(htmlPanel);
 
-		htmlAll.add(htmlPanel);
 		htmlAll.add(new JSeparator());
 	}
 

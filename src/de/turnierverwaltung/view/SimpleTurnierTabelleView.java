@@ -42,7 +42,7 @@ public class SimpleTurnierTabelleView extends JPanel {
 	private JTable table;
 	private JComboBox<String> comboBox;
 
-	public SimpleTurnierTabelleView(SimpleTurnierTabelle simpleTableModel) {
+	public SimpleTurnierTabelleView(SimpleTurnierTabelle simpleTableModel, int abstand) {
 
 		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));#
 		setLayout(new BorderLayout());
@@ -60,7 +60,7 @@ public class SimpleTurnierTabelleView extends JPanel {
 		comboBox.addItem("1"); //$NON-NLS-1$
 		comboBox.addItem("-"); //$NON-NLS-1$
 		comboBox.addItem("+"); //$NON-NLS-1$
-		setColumnWidth();
+		setColumnWidth(abstand);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 //		 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setRowHeight(30);
@@ -104,7 +104,7 @@ public class SimpleTurnierTabelleView extends JPanel {
 		return table;
 	}
 
-	private void setColumnWidth() {
+	private void setColumnWidth(int abstand) {
 		int columnCount = table.getColumnCount();
 		int punkte = columnCount - 3;
 		for (int i = 0; i < columnCount; i++) {
@@ -115,12 +115,12 @@ public class SimpleTurnierTabelleView extends JPanel {
 			if (i >= 1 && i < 4) {
 //				c.setPreferredWidth(medium);
 			}
-			if (i == 1) {
-				c.setMinWidth(0);
-				c.setMaxWidth(0);
-				c.setPreferredWidth(0);
-			}
-			if (i >= 4 && i < punkte) {
+//			if (i == 1) {
+//				c.setMinWidth(0);
+//				c.setMaxWidth(0);
+//				c.setPreferredWidth(0);
+//			}
+			if (i >= abstand && i < punkte) {
 				c.setCellEditor(new DefaultCellEditor(comboBox));
 				c.setPreferredWidth(small);
 			}

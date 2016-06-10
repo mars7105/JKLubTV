@@ -90,6 +90,7 @@ public class ExcelSaveControl {
 						if (this.mainControl.getTurnierTabelle()[i] == null) {
 							this.mainControl.getTurnierTabelleControl()
 									.makeSimpleTableView(i);
+
 							this.mainControl.getTerminTabelleControl()
 									.makeSimpleTableView(i);
 

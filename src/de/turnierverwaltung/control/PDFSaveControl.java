@@ -42,9 +42,11 @@ public class PDFSaveControl {
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier()
 					.getAnzahlGruppen();
-			String filename = JOptionPane.showInputDialog(mainControl,
-					Messages.getString("PDFSaveControler.0"), Messages.getString("PDFSaveControler.1"), //$NON-NLS-1$ //$NON-NLS-2$
-					JOptionPane.PLAIN_MESSAGE);
+			String filename = JOptionPane
+					.showInputDialog(
+							mainControl,
+							Messages.getString("PDFSaveControler.0"), Messages.getString("PDFSaveControler.1"), //$NON-NLS-1$ //$NON-NLS-2$
+							JOptionPane.PLAIN_MESSAGE);
 			if (filename != null) {
 				File path = new File(mainControl.getPropertiesControl()
 						.getDefaultPath());
@@ -62,6 +64,7 @@ public class PDFSaveControl {
 						if (this.mainControl.getTurnierTabelle()[i] == null) {
 							this.mainControl.getTurnierTabelleControl()
 									.makeSimpleTableView(i);
+
 							this.mainControl.getTerminTabelleControl()
 									.makeSimpleTableView(i);
 
@@ -76,10 +79,11 @@ public class PDFSaveControl {
 						for (int x = 0; x < spalte; x++) {
 							for (int y = 0; y < zeile; y++) {
 
-//								this.mainControl.getTurnierTabelle()[i]
-//										.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
-//										.getSimpleTableView()[i].getTable()
-//										.getValueAt(y, x);
+								// this.mainControl.getTurnierTabelle()[i]
+								// .getTabellenMatrix()[x][y + 1] = (String)
+								// this.mainControl
+								// .getSimpleTableView()[i].getTable()
+								// .getValueAt(y, x);
 								turnierTabelle.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
 										.getSimpleTableView()[i].getTable()
 										.getValueAt(y, x);
@@ -96,7 +100,8 @@ public class PDFSaveControl {
 									savefile.getCurrentDirectory()
 											+ "/" //$NON-NLS-1$
 											+ filename
-											+ Messages.getString("PDFSaveControler.2") //$NON-NLS-1$
+											+ Messages
+													.getString("PDFSaveControler.2") //$NON-NLS-1$
 											+ mainControl.getTurnier()
 													.getGruppe()[i]
 													.getGruppenName() + ".pdf"); //$NON-NLS-1$
@@ -104,29 +109,33 @@ public class PDFSaveControl {
 									savefile.getCurrentDirectory()
 											+ "/" //$NON-NLS-1$
 											+ filename
-											+ Messages.getString("PDFSaveControler.8") //$NON-NLS-1$
+											+ Messages
+													.getString("PDFSaveControler.8") //$NON-NLS-1$
 											+ mainControl.getTurnier()
 													.getGruppe()[i]
 													.getGruppenName() + ".pdf"); //$NON-NLS-1$
 
-//							turnierTabelle.createMatrix();
+							// turnierTabelle.createMatrix();
 
-//							mainControl.getTurnierTabelle()[i].createMatrix();
-//							if (mainControl.getTurnier().getNoDWZCalc() == true) {
-//								turnierTabelle.removeDWZColumn();
-//							}
-//							if (mainControl.getTurnier().getNoFolgeDWZCalc() == true) {
-//								turnierTabelle.removeFolgeDWZColumn();
-//							}
-							String titel = Messages.getString("PDFSaveControler.10") //$NON-NLS-1$
+							// mainControl.getTurnierTabelle()[i].createMatrix();
+							// if (mainControl.getTurnier().getNoDWZCalc() ==
+							// true) {
+							// turnierTabelle.removeDWZColumn();
+							// }
+							// if (mainControl.getTurnier().getNoFolgeDWZCalc()
+							// == true) {
+							// turnierTabelle.removeFolgeDWZColumn();
+							// }
+							String titel = Messages
+									.getString("PDFSaveControler.10") //$NON-NLS-1$
 									+ mainControl.getTurnier().getTurnierName()
 									+ " - " //$NON-NLS-1$
 									+ mainControl.getTurnier().getGruppe()[i]
 											.getGruppenName();
 							String pathName = filename1.getAbsolutePath();
-							mftKreuz.createTurnierPdf(mainControl.getTurnier(), titel, pathName,
+							mftKreuz.createTurnierPdf(mainControl.getTurnier(),
+									titel, pathName,
 									turnierTabelle.getTabellenMatrix());
-							
 
 							mainControl.getTerminTabelle()[i]
 									.createTerminTabelle();
@@ -142,13 +151,16 @@ public class PDFSaveControl {
 
 						}
 					}
-					JOptionPane.showMessageDialog(mainControl, Messages.getString("PDFSaveControler.14")); //$NON-NLS-1$
+					JOptionPane.showMessageDialog(mainControl,
+							Messages.getString("PDFSaveControler.14")); //$NON-NLS-1$
 					// first check if Desktop is supported by
 					// Platform or not
 					if (!Desktop.isDesktopSupported()) {
-						JOptionPane.showMessageDialog(mainControl,
-								Messages.getString("PDFSaveControler.15"), Messages.getString("PDFSaveControler.16"), //$NON-NLS-1$ //$NON-NLS-2$
-								JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane
+								.showMessageDialog(
+										mainControl,
+										Messages.getString("PDFSaveControler.15"), Messages.getString("PDFSaveControler.16"), //$NON-NLS-1$ //$NON-NLS-2$
+										JOptionPane.INFORMATION_MESSAGE);
 					} else {
 
 						Desktop desktop = Desktop.getDesktop();
@@ -168,8 +180,10 @@ public class PDFSaveControl {
 			}
 
 		} else {
-			JOptionPane.showMessageDialog(null,
-					Messages.getString("PDFSaveControler.19") + Messages.getString("PDFSaveControler.20")); //$NON-NLS-1$ //$NON-NLS-2$
+			JOptionPane
+					.showMessageDialog(
+							null,
+							Messages.getString("PDFSaveControler.19") + Messages.getString("PDFSaveControler.20")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		}
 

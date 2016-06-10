@@ -1,4 +1,5 @@
 package de.turnierverwaltung.model;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -27,11 +28,12 @@ public class SimpleTurnierTabelle extends DefaultTableModel {
 	private TurnierTabelle turnierTabelle;
 	private String tabellenMatrix[][];
 	private Object[] rowData;
+	private int abstand;
 
-	public SimpleTurnierTabelle(TurnierTabelle turnierTabelle) {
+	public SimpleTurnierTabelle(TurnierTabelle turnierTabelle, int abstand) {
 		super();
 		this.turnierTabelle = turnierTabelle;
-
+		this.abstand = abstand;
 		this.zeile = this.turnierTabelle.getZeile();
 		this.spalte = this.turnierTabelle.getSpalte();
 		rowData = new Object[this.spalte];
@@ -66,9 +68,9 @@ public class SimpleTurnierTabelle extends DefaultTableModel {
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
 		int spielery = rowIndex;
-		int spielerx = columnIndex - 4;
+		int spielerx = columnIndex - abstand;
 		boolean icE = true;
-		if (columnIndex < 4) {
+		if (columnIndex < abstand) {
 			icE = false;
 		}
 		if (columnIndex > spalte - 4) {
@@ -87,4 +89,13 @@ public class SimpleTurnierTabelle extends DefaultTableModel {
 	public void setZeile(int zeile) {
 		this.zeile = zeile;
 	}
+
+	public int getAbstand() {
+		return abstand;
+	}
+
+	public void setAbstand(int abstand) {
+		this.abstand = abstand;
+	}
+
 }

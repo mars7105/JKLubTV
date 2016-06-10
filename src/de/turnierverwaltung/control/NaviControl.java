@@ -54,7 +54,7 @@ public class NaviControl implements ActionListener {
 	public static final int SORTIEREN = 2;
 
 	private MainControl mainControl;
-	
+
 	private JButton newdbButton;
 	private JButton loaddbButton;
 	private JButton newTurnierButton;
@@ -105,7 +105,7 @@ public class NaviControl implements ActionListener {
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(naviView);
 		hauptPanel.add(scrollPane, BorderLayout.WEST);
-		
+
 		dewisDialogControl = new DewisDialogControl(mainControl);
 		hauptPanel.updateUI();
 	}
@@ -364,7 +364,7 @@ public class NaviControl implements ActionListener {
 						File file = fc.getSelectedFile();
 						// This is where a real application would open the file.
 						SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-						
+
 						mainControl.setNeuesTurnier(false);
 						// mainControl.getNaviView().getTabellenPanel().setVisible(false);
 						mainControl

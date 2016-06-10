@@ -71,6 +71,7 @@ public class HTMLSaveControl {
 						if (this.mainControl.getTurnierTabelle()[i] == null) {
 							this.mainControl.getTurnierTabelleControl()
 									.makeSimpleTableView(i);
+
 							this.mainControl.getTerminTabelleControl()
 									.makeSimpleTableView(i);
 
@@ -86,8 +87,7 @@ public class HTMLSaveControl {
 						for (int x = 0; x < spalte; x++) {
 							for (int y = 0; y < zeile; y++) {
 
-								turnierTabelle
-										.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
+								turnierTabelle.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
 										.getSimpleTableView()[i].getTable()
 										.getValueAt(y, x);
 

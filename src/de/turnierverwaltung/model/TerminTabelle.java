@@ -1,4 +1,5 @@
 package de.turnierverwaltung.model;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -52,17 +53,12 @@ public class TerminTabelle {
 
 	}
 
-//	public void createMatrix() {
-//		// TODO Auto-generated method stub
-//
-//	}
-
 	public void createTerminTabelle() {
-		tabellenMatrix[0][0] = Messages.getString("TerminTabelle.0"); //$NON-NLS-1$
-		tabellenMatrix[1][0] = Messages.getString("TerminTabelle.1"); //$NON-NLS-1$
-		tabellenMatrix[2][0] = Messages.getString("TerminTabelle.2"); //$NON-NLS-1$
-		tabellenMatrix[3][0] = Messages.getString("TerminTabelle.3"); //$NON-NLS-1$
-		tabellenMatrix[4][0] = Messages.getString("TerminTabelle.4"); //$NON-NLS-1$
+		tabellenMatrix[0][0] = TurnierKonstanten.TABLE_COLUMN_ROUND;
+		tabellenMatrix[1][0] = TurnierKonstanten.TABLE_COLUMN_WHITE;
+		tabellenMatrix[2][0] = TurnierKonstanten.TABLE_COLUMN_BLACK;
+		tabellenMatrix[3][0] = TurnierKonstanten.TABLE_COLUMN_RESULT;
+		tabellenMatrix[4][0] = TurnierKonstanten.TABLE_COLUMN_MEETING;
 		int index = 0;
 		for (int i = 0; i < spielerAnzahl - 1; i++) {
 			for (int y = i + 1; y < spielerAnzahl; y++) {
