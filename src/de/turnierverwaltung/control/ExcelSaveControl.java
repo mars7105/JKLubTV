@@ -145,27 +145,24 @@ public class ExcelSaveControl {
 							int inc = 0;
 							short cellnum;
 							for (int x = 0; x < spalte; x++) {
-								if (x == 1) {
-									inc++;
-								} else {
-									if (y < zeile) {
-										turnierTabelle.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
-												.getSimpleTableView()[i]
-												.getTable().getValueAt(y, x);
-									}
-									cellnum = (short) (x - inc);
-									// create a numeric cell
-									c = r.createCell(cellnum);
 
-									c.setCellStyle(cellStyle);
-
-									rep = (String) turnierTabelle
-											.getTabellenMatrix()[x][y];
-									rep = rep.replaceAll("<br />", "");
-									c.setCellValue(rep);
-									s[i].autoSizeColumn((x - inc));
-
+								if (y < zeile) {
+									turnierTabelle.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
+											.getSimpleTableView()[i].getTable()
+											.getValueAt(y, x);
 								}
+								cellnum = (short) (x - inc);
+								// create a numeric cell
+								c = r.createCell(cellnum);
+
+								c.setCellStyle(cellStyle);
+
+								rep = (String) turnierTabelle
+										.getTabellenMatrix()[x][y];
+								rep = rep.replaceAll("<br />", "");
+								c.setCellValue(rep);
+								s[i].autoSizeColumn((x - inc));
+
 							}
 
 							r.setHeight((short) (r.getHeight() * 2));

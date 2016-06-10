@@ -108,27 +108,28 @@ public class PDFTabellenAusgabeControl {
 			stringTable[i][0] = replacedStr;
 		}
 
-		PdfPTable table = new PdfPTable(zeilen - 1);
-		float[] fl = new float[zeilen - 1];
+		PdfPTable table = new PdfPTable(zeilen);
+		float[] fl = new float[zeilen];
 		fl[0] = 5;
 		if (turnier.getNoDWZCalc() == true) {
 			fl[1] = 1;
+
+		} else {
+			fl[1] = 3;
+
+		}
+		if (turnier.getNoFolgeDWZCalc() == true) {
+
 			fl[2] = 1;
 		} else {
-			if (turnier.getNoFolgeDWZCalc() == true) {
-				fl[1] = 3;
-				fl[2] = 1;
-			} else {
-				fl[1] = 3;
-				fl[2] = 3;
-			}
+			fl[2] = 3;
 		}
 
-		for (int i = 0; i < zeilen; i++) {
+		for (int i = 0; i <= zeilen; i++) {
 			if (i > 2 && i < zeilen - 3) {
 				fl[i] = 1;
 			}
-			if (i >= zeilen - 3) {
+			if (i >= zeilen - 2) {
 				fl[i - 1] = 2;
 			}
 		}
@@ -137,13 +138,13 @@ public class PDFTabellenAusgabeControl {
 		for (int x = 0; x < spalten; x++) {
 
 			for (int y = 0; y < zeilen; y++) {
-				if (y != 1) {
-					Phrase ph = new Phrase(stringTable[y][x]);
-					ph.setFont(font);
-					PdfPCell cell = new PdfPCell(ph);
 
-					table.addCell(cell);
-				}
+				Phrase ph = new Phrase(stringTable[y][x]);
+				ph.setFont(font);
+				PdfPCell cell = new PdfPCell(ph);
+
+				table.addCell(cell);
+
 			}
 
 		}
