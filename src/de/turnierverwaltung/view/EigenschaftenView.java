@@ -133,6 +133,7 @@ public class EigenschaftenView extends JPanel {
 		add(scrollPane, BorderLayout.CENTER);
 	}
 
+	@SuppressWarnings("unused")
 	private void tableLabel() {
 
 		JPanel title = new JPanel();
