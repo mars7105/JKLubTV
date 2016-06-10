@@ -65,7 +65,7 @@ public class TurnierTabelle {
 		} else {
 			sp = spielerAnzahl;
 		}
-		tabellenMatrix[0][0] = TurnierKonstanten.TABLE_COLUMN_PLAYER_NAME; //$NON-NLS-1$
+		tabellenMatrix[0][0] = TurnierKonstanten.TABLE_COLUMN_PLAYER; //$NON-NLS-1$
 		tabellenMatrix[1][0] = Messages.getString("TurnierTabelle.1"); //$NON-NLS-1$
 		tabellenMatrix[2][0] = TurnierKonstanten.TABLE_COLUMN_OLD_DWZ;
 

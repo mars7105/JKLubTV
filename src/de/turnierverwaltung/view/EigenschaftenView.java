@@ -178,7 +178,7 @@ public class EigenschaftenView extends JPanel {
 		meetingTextField.setPreferredSize(dimTextField);
 
 		playerTextField = new JTextField(
-				TurnierKonstanten.TABLE_COLUMN_PLAYER_NAME);
+				TurnierKonstanten.TABLE_COLUMN_PLAYER);
 		playerTextField.setPreferredSize(dimTextField);
 
 		Dimension dim = new Dimension(175, 30);

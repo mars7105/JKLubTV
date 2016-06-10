@@ -55,7 +55,7 @@ public class TurnierKonstanten {
 	public static final int TAB_PLAYER_LIST = 2;
 	public static final int TAB_TOURNAMENTS_LIST = 3;
 	public static final int TAB_ACTIVE_TOURNAMENT = 4;
-	public static String TABLE_COLUMN_PLAYER_NAME = Messages
+	public static String TABLE_COLUMN_PLAYER = Messages
 			.getString("TurnierKonstanten.0");
 	public static String TABLE_COLUMN_OLD_DWZ = Messages
 			.getString("TurnierKonstanten.1");
@@ -91,7 +91,7 @@ public class TurnierKonstanten {
 	}
 
 	public static void setConstantLanguage() {
-		TABLE_COLUMN_PLAYER_NAME = Messages.getString("TurnierKonstanten.0");
+		TABLE_COLUMN_PLAYER = Messages.getString("TurnierKonstanten.0");
 		TABLE_COLUMN_OLD_DWZ = Messages.getString("TurnierKonstanten.1");
 		TABLE_COLUMN_NEW_DWZ = Messages.getString("TurnierKonstanten.2");
 		TABLE_COLUMN_POINTS = Messages.getString("TurnierKonstanten.3");

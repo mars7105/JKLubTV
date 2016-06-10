@@ -23,6 +23,8 @@ import java.io.StringWriter;
 import java.util.Properties;
 import java.util.prefs.Preferences;
 
+import de.turnierverwaltung.model.TurnierKonstanten;
+
 public class PropertiesControl {
 
 	public static final String ONLYTABLES = "onlyTables";
@@ -37,8 +39,17 @@ public class PropertiesControl {
 	public static final String DEFAULTPATH = "defaultPath";
 	public static final String TURNIEREPROTAB = "TurniereproTab";
 	public static final String SPIELERPROTAB = "SpielerproTab";
-	private static final String PACKAGE = "/de/jklubtv";
-
+	public static final String PACKAGE = "/de/jklubtv";
+	public static final String TABLE_COLUMN_OLD_DWZ = "tablecolumn-olddwz";
+	public static final String TABLE_COLUMN_NEW_DWZ = "tablecolumn-newdwz";
+	public static final String TABLE_COLUMN_POINTS = "tablecolumn-points";
+	public static final String TABLE_COLUMN_SONNEBORNBERGER = "tablecolumn-sonnebornberger";
+	public static final String TABLE_COLUMN_RANKING = "tablecolumn-ranking";
+	public static final String TABLE_COLUMN_WHITE = "tablecolumn-white";
+	public static final String TABLE_COLUMN_BLACK = "tablecolumn-black";
+	public static final String TABLE_COLUMN_RESULT = "tablecolumn-result";
+	public static final String TABLE_COLUMN_MEETING = "tablecolumn-meeting";
+	public static final String TABLE_COLUMN_PLAYER = "tablecolumn-player";
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
@@ -59,7 +70,16 @@ public class PropertiesControl {
 		prop.setProperty(DEFAULTPATH, "");
 		prop.setProperty(TURNIEREPROTAB, "1");
 		prop.setProperty(SPIELERPROTAB, "1");
-
+		prop.setProperty(TABLE_COLUMN_OLD_DWZ, "");
+		prop.setProperty(TABLE_COLUMN_NEW_DWZ, "");
+		prop.setProperty(TABLE_COLUMN_POINTS, "");
+		prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER, "");
+		prop.setProperty(TABLE_COLUMN_RANKING, "");
+		prop.setProperty(TABLE_COLUMN_WHITE, "");
+		prop.setProperty(TABLE_COLUMN_BLACK, "");
+		prop.setProperty(TABLE_COLUMN_RESULT, "");
+		prop.setProperty(TABLE_COLUMN_MEETING, "");
+		prop.setProperty(TABLE_COLUMN_PLAYER, "");
 	}
 
 	public void checkProperties() {
@@ -122,6 +142,56 @@ public class PropertiesControl {
 		if (mainControl.getLanguagePropertiesControl().checkLanguage() == false) {
 			saveChanges = true;
 		}
+		if (prop.getProperty(TABLE_COLUMN_OLD_DWZ) == "") {
+			prop.setProperty(TABLE_COLUMN_OLD_DWZ,
+					TurnierKonstanten.TABLE_COLUMN_OLD_DWZ);
+			saveChanges = true;
+		}
+		if (prop.getProperty(TABLE_COLUMN_NEW_DWZ) == "") {
+			prop.setProperty(TABLE_COLUMN_NEW_DWZ,
+					TurnierKonstanten.TABLE_COLUMN_NEW_DWZ);
+			saveChanges = true;
+		}
+		if (prop.getProperty(TABLE_COLUMN_POINTS) == "") {
+			prop.setProperty(TABLE_COLUMN_POINTS,
+					TurnierKonstanten.TABLE_COLUMN_POINTS);
+			saveChanges = true;
+		}
+		if (prop.getProperty(TABLE_COLUMN_SONNEBORNBERGER) == "") {
+			prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER,
+					TurnierKonstanten.TABLE_COLUMN_SONNEBORNBERGER);
+			saveChanges = true;
+		}
+		if (prop.getProperty(TABLE_COLUMN_RANKING) == "") {
+			prop.setProperty(TABLE_COLUMN_RANKING,
+					TurnierKonstanten.TABLE_COLUMN_RANKING);
+			saveChanges = true;
+		}
+		if (prop.getProperty(TABLE_COLUMN_WHITE) == "") {
+			prop.setProperty(TABLE_COLUMN_WHITE,
+					TurnierKonstanten.TABLE_COLUMN_WHITE);
+			saveChanges = true;
+		}
+		if (prop.getProperty(TABLE_COLUMN_BLACK) == "") {
+			prop.setProperty(TABLE_COLUMN_BLACK,
+					TurnierKonstanten.TABLE_COLUMN_BLACK);
+			saveChanges = true;
+		}
+		if (prop.getProperty(TABLE_COLUMN_RESULT) == "") {
+			prop.setProperty(TABLE_COLUMN_RESULT,
+					TurnierKonstanten.TABLE_COLUMN_RESULT);
+			saveChanges = true;
+		}
+		if (prop.getProperty(TABLE_COLUMN_MEETING) == "") {
+			prop.setProperty(TABLE_COLUMN_MEETING,
+					TurnierKonstanten.TABLE_COLUMN_MEETING);
+			saveChanges = true;
+		}
+		if (prop.getProperty(TABLE_COLUMN_PLAYER) == "") {
+			prop.setProperty(TABLE_COLUMN_PLAYER,
+					TurnierKonstanten.TABLE_COLUMN_PLAYER);
+			saveChanges = true;
+		}
 
 		if (saveChanges == true) {
 			writeProperties();
@@ -157,7 +227,6 @@ public class PropertiesControl {
 	}
 
 	public Boolean writeProperties() {
-		// checkProperties();
 		Boolean ok = true;
 
 		// speichern
@@ -269,6 +338,106 @@ public class PropertiesControl {
 	public void setZPS(String zps) {
 		prop.setProperty(ZPS, zps);
 
+	}
+
+	public void setTableComumnOldDWZ(String tableString) {
+		prop.setProperty(TABLE_COLUMN_OLD_DWZ, tableString);
+
+	}
+
+	public String getTableComumnOldDWZ() {
+
+		return prop.getProperty(TABLE_COLUMN_OLD_DWZ);
+	}
+
+	public void setTableComumnNewDWZ(String tableString) {
+		prop.setProperty(TABLE_COLUMN_NEW_DWZ, tableString);
+
+	}
+
+	public String getTableComumnNewDWZ() {
+
+		return prop.getProperty(TABLE_COLUMN_NEW_DWZ);
+	}
+
+	public void setTableComumnPoints(String tableString) {
+		prop.setProperty(TABLE_COLUMN_POINTS, tableString);
+
+	}
+
+	public String getTableComumnPoints() {
+
+		return prop.getProperty(TABLE_COLUMN_POINTS);
+	}
+
+	public void setTableComumnSonnebornBerger(String tableString) {
+		prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER, tableString);
+
+	}
+
+	public String getTableComumnSonnebornBerger() {
+
+		return prop.getProperty(TABLE_COLUMN_SONNEBORNBERGER);
+	}
+
+	public void setTableComumnRanking(String tableString) {
+		prop.setProperty(TABLE_COLUMN_RANKING, tableString);
+
+	}
+
+	public String getTableComumnRanking() {
+
+		return prop.getProperty(TABLE_COLUMN_RANKING);
+	}
+
+	public void setTableComumnWhite(String tableString) {
+		prop.setProperty(TABLE_COLUMN_WHITE, tableString);
+
+	}
+
+	public String getTableComumnWhite() {
+
+		return prop.getProperty(TABLE_COLUMN_WHITE);
+	}
+
+	public void setTableComumnBlack(String tableString) {
+		prop.setProperty(TABLE_COLUMN_BLACK, tableString);
+
+	}
+
+	public String getTableComumnBlack() {
+
+		return prop.getProperty(TABLE_COLUMN_BLACK);
+	}
+
+	public void setTableComumnResult(String tableString) {
+		prop.setProperty(TABLE_COLUMN_RESULT, tableString);
+
+	}
+
+	public String getTableComumnResult() {
+
+		return prop.getProperty(TABLE_COLUMN_RESULT);
+	}
+
+	public void setTableComumnMeeting(String tableString) {
+		prop.setProperty(TABLE_COLUMN_MEETING, tableString);
+
+	}
+
+	public String getTableComumnMeeting() {
+
+		return prop.getProperty(TABLE_COLUMN_MEETING);
+	}
+
+	public void setTableComumnPlayer(String tableString) {
+		prop.setProperty(TABLE_COLUMN_PLAYER, tableString);
+
+	}
+
+	public String getTableComumnPlayer() {
+
+		return prop.getProperty(TABLE_COLUMN_PLAYER);
 	}
 
 	public void setOnlyTables(boolean b) {
