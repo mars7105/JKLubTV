@@ -1,4 +1,5 @@
 package de.turnierverwaltung.control;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -32,7 +33,7 @@ import de.turnierverwaltung.view.SimpleTerminTabelleView;
 import de.turnierverwaltung.view.SimpleTurnierTabelleView;
 import de.turnierverwaltung.view.TabAnzeigeView;
 
-public class TerminTabelleControl  {
+public class TerminTabelleControl {
 
 	private MainControl mainControl;
 	private TerminTabelle[] terminTabelle;
@@ -43,8 +44,10 @@ public class TerminTabelleControl  {
 	private Turnier turnier;
 	private MyTableModelListener tml[];
 	private ArrayList<Partie> changedPartien;
-	private ImageIcon terminTabelleIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
+	private ImageIcon terminTabelleIcon = new ImageIcon(Toolkit
+			.getDefaultToolkit().getImage(
+					getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
+
 	public TerminTabelleControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		this.turnier = mainControl.getTurnier();
@@ -61,11 +64,9 @@ public class TerminTabelleControl  {
 			this.mainControl.setChangedPartien(changedPartien);
 		} else {
 			changedPartien = this.mainControl.getChangedPartien();
-			
+
 		}
 	}
-
-
 
 	public void makeSimpleTableView(int gruppenNummer) {
 
@@ -77,17 +78,21 @@ public class TerminTabelleControl  {
 		simpleTurnierTabelleView = mainControl.getSimpleTableView();
 		mainControl.getTurnierTabelle();
 		if (tml[gruppenNummer] == null) {
-			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer);
+			int abstand = mainControl.getPropertiesControl()
+					.getTabellenAbstand();
+			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer,
+					abstand);
 		}
 
 		simpleTableView[gruppenNummer].getTable().getModel()
 				.addTableModelListener(tml[gruppenNummer]);
 
-
 		if (tabAnzeigeView2[gruppenNummer].getTabCount() == 1) {
-			tabAnzeigeView2[gruppenNummer].insertTab(Messages.getString("TerminTabelleControl.1"), terminTabelleIcon, //$NON-NLS-1$
-					simpleTableView[gruppenNummer], null, 1);
-		} else if (tabAnzeigeView2[gruppenNummer].getTabCount() > 1){
+			tabAnzeigeView2[gruppenNummer]
+					.insertTab(
+							Messages.getString("TerminTabelleControl.1"), terminTabelleIcon, //$NON-NLS-1$
+							simpleTableView[gruppenNummer], null, 1);
+		} else if (tabAnzeigeView2[gruppenNummer].getTabCount() > 1) {
 
 			tabAnzeigeView2[gruppenNummer].setComponentAt(1,
 					simpleTableView[gruppenNummer]);
@@ -106,15 +111,17 @@ public class TerminTabelleControl  {
 
 	class MyTableModelListener implements TableModelListener {
 		private int gruppenNummer;
+		private int abstand;
 
-		public MyTableModelListener(int gruppenNummer) {
+		public MyTableModelListener(int gruppenNummer, int abstand) {
 			this.gruppenNummer = gruppenNummer;
+			this.abstand = abstand;
 		}
 
 		@Override
 		public void tableChanged(TableModelEvent e) {
-//			mainControl.getRundenEingabeFormularControl().getChangedGroups()[gruppenNummer][NaviController.TERMINTABELLE] = NaviController.STANDARD;
-
+			// mainControl.getRundenEingabeFormularControl().getChangedGroups()[gruppenNummer][NaviController.TERMINTABELLE]
+			// = NaviController.STANDARD;
 
 			int row = e.getFirstRow();
 			int col = e.getColumn();
@@ -155,8 +162,10 @@ public class TerminTabelleControl  {
 							if (simpleTurnierTabelleView[gruppenNummer]
 									.getTable().getModel().getValueAt(y, 0) == spielerSchwarz) {
 								simpleTurnierTabelleView[gruppenNummer]
-										.getTable().getModel()
-										.setValueAt(ergebnissSet, i, y + 4);
+										.getTable()
+										.getModel()
+										.setValueAt(ergebnissSet, i,
+												y + abstand);
 							}
 						}
 

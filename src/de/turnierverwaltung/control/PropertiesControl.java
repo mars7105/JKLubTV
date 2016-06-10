@@ -516,4 +516,14 @@ public class PropertiesControl {
 		prop.setProperty(LANGUAGE, language);
 	}
 
+	public int getTabellenAbstand() {
+		int abstand = 3;
+		if (getNoDWZ() == true) {
+			abstand = abstand - 1;
+		}
+		if (getNoFolgeDWZ() == true) {
+			abstand = abstand - 1;
+		}
+		return abstand;
+	}
 }

@@ -312,8 +312,8 @@ public class TurnierListeLadenControl implements ActionListener {
 			tabbedPaneView.insertTab(turnier.getGruppe()[z].getGruppenName(),
 					gruppenIcon, tabbedPaneView2[z], null, z);
 			mainControl.getTurnierTabelleControl().makeSimpleTableView(z);
+
 			mainControl.getTerminTabelleControl().makeSimpleTableView(z);
-			// mainControl.getRundenEingabeFormularControl().makeRundenEditView(z);
 			mainControl.getTurnierTabelleControl().okAction(z);
 		}
 		RundenEingabeFormularControl rundenEingabeFormularControl = new RundenEingabeFormularControl(
@@ -370,7 +370,7 @@ public class TurnierListeLadenControl implements ActionListener {
 				this.turnierListeLadenView.makePanel(anzahlTurniere);
 			}
 
-//			Collections.sort(turnierListe, new SortTournamentList());
+			// Collections.sort(turnierListe, new SortTournamentList());
 			ListIterator<Turnier> li = turnierListe.listIterator();
 			while (li.hasNext()) {
 				temp = li.next();

@@ -328,6 +328,7 @@ public class RundenEingabeFormularControl implements ActionListener {
 		mainControl.setTurnierTabelleControl(turnierTabelleControl);
 		mainControl.setTerminTabelleControl(terminTabelleControl);
 		turnierTabelleControl.makeSimpleTableView(index);
+
 		terminTabelleControl.makeSimpleTableView(index);
 		neuesTurnier[index] = true;
 		partien = gruppe[index].getPartien();

@@ -37,6 +37,7 @@ public class TurnierTabelleControl {
 	private ImageIcon turniertabelleIcon = new ImageIcon(Toolkit
 			.getDefaultToolkit().getImage(
 					getClass().getResource("/images/x-office-spreadsheet.png"))); //$NON-NLS-1$
+	private int abstand;
 
 	public TurnierTabelleControl(MainControl mainControl) {
 
@@ -108,8 +109,11 @@ public class TurnierTabelleControl {
 		if (mainControl.getPropertiesControl().getNoFolgeDWZ() == true) {
 			this.turnierTabelle[gruppenNummer].removeFolgeDWZColumn();
 		}
+		abstand = mainControl.getPropertiesControl().getTabellenAbstand();
+
 		simpleTableView[gruppenNummer] = new SimpleTurnierTabelleView(
-				new SimpleTurnierTabelle(this.turnierTabelle[gruppenNummer]));
+				new SimpleTurnierTabelle(this.turnierTabelle[gruppenNummer],
+						abstand), abstand);
 
 		simpleTableView[gruppenNummer].getTable().setAutoResizeMode(
 				JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -153,50 +157,50 @@ public class TurnierTabelleControl {
 		turnier.setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
 		turnier.setNoFolgeDWZCalc(mainControl.getPropertiesControl()
 				.getNoFolgeDWZ());
-//		checkDWZVisible(gruppenNummer);
+		// checkDWZVisible(gruppenNummer);
 		berechneFolgeDWZ(gruppenNummer);
 		simpleTableView[gruppenNummer].getTable().doLayout();
 		simpleTableView[gruppenNummer].getTable().updateUI();
 	}
 
-//	public void checkDWZVisible(int i) {
+	// public void checkDWZVisible(int i) {
 
-//		simpleTableView[i]
-//				.getTable()
-//				.getColumn(Messages.getString("TurnierTabelleControl.2")).setMinWidth(0); //$NON-NLS-1$
-//
-//		simpleTableView[i]
-//				.getTable()
-//				.getColumn(Messages.getString("TurnierTabelleControl.3")).setMaxWidth(0); //$NON-NLS-1$
-//		if (mainControl.getPropertiesControl().getNoDWZ() == true) {
-//			simpleTableView[i]
-//					.getTable()
-//					.getColumn(Messages.getString("TurnierTabelleControl.4")).setMinWidth(0); //$NON-NLS-1$
-//
-//			simpleTableView[i].getTable()
-//					.getColumn(Messages.getString("TurnierTabelleControl.5")) //$NON-NLS-1$
-//					.setMaxWidth(0);
-//
-//			simpleTableView[i].getTable().updateUI();
-//		}
-//		if (mainControl.getPropertiesControl().getNoFolgeDWZ() == true) {
-//
-//			simpleTableView[i]
-//					.getTable()
-//					.getColumn(Messages.getString("TurnierTabelleControl.6")).setMinWidth(0); //$NON-NLS-1$
-//
-//			simpleTableView[i].getTable()
-//					.getColumn(Messages.getString("TurnierTabelleControl.7")) //$NON-NLS-1$
-//					.setMaxWidth(0);
-//
-//			simpleTableView[i].getTable().updateUI();
-//		}
+	// simpleTableView[i]
+	// .getTable()
+	//				.getColumn(Messages.getString("TurnierTabelleControl.2")).setMinWidth(0); //$NON-NLS-1$
+	//
+	// simpleTableView[i]
+	// .getTable()
+	//				.getColumn(Messages.getString("TurnierTabelleControl.3")).setMaxWidth(0); //$NON-NLS-1$
+	// if (mainControl.getPropertiesControl().getNoDWZ() == true) {
+	// simpleTableView[i]
+	// .getTable()
+	//					.getColumn(Messages.getString("TurnierTabelleControl.4")).setMinWidth(0); //$NON-NLS-1$
+	//
+	// simpleTableView[i].getTable()
+	//					.getColumn(Messages.getString("TurnierTabelleControl.5")) //$NON-NLS-1$
+	// .setMaxWidth(0);
+	//
+	// simpleTableView[i].getTable().updateUI();
+	// }
+	// if (mainControl.getPropertiesControl().getNoFolgeDWZ() == true) {
+	//
+	// simpleTableView[i]
+	// .getTable()
+	//					.getColumn(Messages.getString("TurnierTabelleControl.6")).setMinWidth(0); //$NON-NLS-1$
+	//
+	// simpleTableView[i].getTable()
+	//					.getColumn(Messages.getString("TurnierTabelleControl.7")) //$NON-NLS-1$
+	// .setMaxWidth(0);
+	//
+	// simpleTableView[i].getTable().updateUI();
+	// }
 
-//		turnier.setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
-//		turnier.setNoFolgeDWZCalc(mainControl.getPropertiesControl()
-//				.getNoFolgeDWZ());
+	// turnier.setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
+	// turnier.setNoFolgeDWZCalc(mainControl.getPropertiesControl()
+	// .getNoFolgeDWZ());
 
-//	}
+	// }
 
 	public void berechneFolgeDWZ(int gruppenNummer) {
 		FolgeDWZControl folgeDWZ = new FolgeDWZControl(
@@ -296,9 +300,9 @@ public class TurnierTabelleControl {
 			int colCount = simpleTableView[gruppenNummer].getTable().getModel()
 					.getColumnCount();
 			int spielery = row;
-			int spielerx = col - 4;
+			int spielerx = col - abstand;
 			int invertRow = spielerx;
-			int invertCol = spielery + 4;
+			int invertCol = spielery + abstand;
 			String ergebniss = (String) simpleTableView[gruppenNummer]
 					.getTable().getModel().getValueAt(row, col);
 
@@ -385,8 +389,6 @@ public class TurnierTabelleControl {
 					gruppenNummer);
 			simpleTableView[gruppenNummer].getTable().getModel()
 					.addTableModelListener(tml[gruppenNummer]);
-			// mainControl.getRundenEingabeFormularControl().getChangedGroups()[gruppenNummer][NaviController.TURNIERTABELLE]
-			// = NaviController.STANDARD;
 
 		}
 
