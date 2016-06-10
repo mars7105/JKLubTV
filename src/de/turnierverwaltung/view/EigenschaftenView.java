@@ -121,7 +121,7 @@ public class EigenschaftenView extends JPanel {
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		languageSupport();
 		makeHTMLEigenschaften();
-		tableLabel();
+//		tableLabel();
 		anzahlElemente();
 		defaultPath();
 
