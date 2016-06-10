@@ -83,8 +83,7 @@ public class TurnierTabelleToHTML {
 
 		int col = this.tabellenMatrix.length - 1;
 		int row = this.tabellenMatrix[0].length;
-//		Boolean ohneDWZ = turnier.getNoDWZCalc();
-//		Boolean ohneFolgeDWZ = turnier.getNoFolgeDWZCalc();
+
 		if (ohneHeaderundFooter == false) {
 			htmlString = getHTMLHeader();
 		} else {

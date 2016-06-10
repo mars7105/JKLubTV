@@ -9,7 +9,6 @@ public class EigenschaftenItemListenerControl {
 	private MainControl mainControl;
 	private EigenschaftenControl esControl;
 	private EigenschaftenView eigenschaftenView;
-	private int columnWidht;
 
 	public EigenschaftenItemListenerControl(MainControl mainControl,
 			EigenschaftenControl esControl) {
@@ -17,7 +16,7 @@ public class EigenschaftenItemListenerControl {
 		this.mainControl = mainControl;
 		this.esControl = esControl;
 		this.eigenschaftenView = this.esControl.getEigenschaftenView();
-		this.columnWidht = this.esControl.getColumnWidht();
+		this.esControl.getColumnWidht();
 		this.esControl.getMaxWidth();
 	}
 

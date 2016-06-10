@@ -65,11 +65,11 @@ public class TurnierTabelle {
 		} else {
 			sp = spielerAnzahl;
 		}
-		tabellenMatrix[0][0] = Messages.getString("TurnierTabelle.0"); //$NON-NLS-1$
+		tabellenMatrix[0][0] = TurnierKonstanten.TABLE_COLUMN_PLAYER_NAME; //$NON-NLS-1$
 		tabellenMatrix[1][0] = Messages.getString("TurnierTabelle.1"); //$NON-NLS-1$
-		tabellenMatrix[2][0] = "a.<br />DWZ"; //$NON-NLS-1$
+		tabellenMatrix[2][0] = TurnierKonstanten.TABLE_COLUMN_OLD_DWZ;
 
-		tabellenMatrix[3][0] = "n.<br />DWZ"; //$NON-NLS-1$
+		tabellenMatrix[3][0] = TurnierKonstanten.TABLE_COLUMN_NEW_DWZ; //$NON-NLS-1$
 		for (int i = 4; i < sp + 4; i++) {
 			if (spieler[i - 4].getKuerzel().length() >= 2) {
 				tabellenMatrix[i][0] = spieler[i - 4].getKuerzel().substring(0,
@@ -81,9 +81,9 @@ public class TurnierTabelle {
 
 		}
 
-		tabellenMatrix[4 + sp][0] = "P*"; //$NON-NLS-1$
-		tabellenMatrix[5 + sp][0] = "S*"; //$NON-NLS-1$
-		tabellenMatrix[6 + sp][0] = "R"; //$NON-NLS-1$
+		tabellenMatrix[4 + sp][0] = TurnierKonstanten.TABLE_COLUMN_POINTS;
+		tabellenMatrix[5 + sp][0] = TurnierKonstanten.TABLE_COLUMN_SONNEBORNBERGER;
+		tabellenMatrix[6 + sp][0] = TurnierKonstanten.TABLE_COLUMN_RANKING;
 
 		for (int i = 0; i < sp; i++) {
 			tabellenMatrix[0][i + 1] = spieler[i].getName();
@@ -136,7 +136,8 @@ public class TurnierTabelle {
 		String[][] temp = new String[tabellenMatrix.length - 1][tabellenMatrix[0].length];
 		for (int x = 0; x < tabellenMatrix.length - 1; x++) {
 			for (int y = 0; y < tabellenMatrix[0].length; y++) {
-				if (tabellenMatrix[x][0].equals("a.<br />DWZ")) { //$NON-NLS-1$
+				if (tabellenMatrix[x][0]
+						.equals(TurnierKonstanten.TABLE_COLUMN_OLD_DWZ)) { 
 					v = 1;
 
 				}
@@ -152,7 +153,8 @@ public class TurnierTabelle {
 		String[][] temp = new String[tabellenMatrix.length - 1][tabellenMatrix[0].length];
 		for (int x = 0; x < tabellenMatrix.length - 1; x++) {
 			for (int y = 0; y < tabellenMatrix[0].length; y++) {
-				if (tabellenMatrix[x][0].equals("n.<br />DWZ")) { //$NON-NLS-1$
+				if (tabellenMatrix[x][0]
+						.equals(TurnierKonstanten.TABLE_COLUMN_NEW_DWZ)) { 
 					v = 1;
 
 				}

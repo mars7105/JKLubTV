@@ -55,6 +55,28 @@ public class TurnierKonstanten {
 	public static final int TAB_PLAYER_LIST = 2;
 	public static final int TAB_TOURNAMENTS_LIST = 3;
 	public static final int TAB_ACTIVE_TOURNAMENT = 4;
+	public static String TABLE_COLUMN_PLAYER_NAME = Messages
+			.getString("TurnierKonstanten.0");
+	public static String TABLE_COLUMN_OLD_DWZ = Messages
+			.getString("TurnierKonstanten.1");
+	public static String TABLE_COLUMN_NEW_DWZ = Messages
+			.getString("TurnierKonstanten.2");
+	public static String TABLE_COLUMN_POINTS = Messages
+			.getString("TurnierKonstanten.3");
+	public static String TABLE_COLUMN_SONNEBORNBERGER = Messages
+			.getString("TurnierKonstanten.4");
+	public static String TABLE_COLUMN_RANKING = Messages
+			.getString("TurnierKonstanten.5");
+	public static String TABLE_COLUMN_ROUND = Messages
+			.getString("TurnierKonstanten.6");
+	public static String TABLE_COLUMN_WHITE = Messages
+			.getString("TurnierKonstanten.7");
+	public static String TABLE_COLUMN_BLACK = Messages
+			.getString("TurnierKonstanten.8");
+	public static String TABLE_COLUMN_RESULT = Messages
+			.getString("TurnierKonstanten.9");
+	public static String TABLE_COLUMN_MEETING = Messages
+			.getString("TurnierKonstanten.10");
 
 	private static int setWidth() {
 
@@ -65,6 +87,22 @@ public class TurnierKonstanten {
 		} else {
 			return widthAllowed;
 		}
+
+	}
+
+	public static void setConstantLanguage() {
+		TABLE_COLUMN_PLAYER_NAME = Messages.getString("TurnierKonstanten.0");
+		TABLE_COLUMN_OLD_DWZ = Messages.getString("TurnierKonstanten.1");
+		TABLE_COLUMN_NEW_DWZ = Messages.getString("TurnierKonstanten.2");
+		TABLE_COLUMN_POINTS = Messages.getString("TurnierKonstanten.3");
+		TABLE_COLUMN_SONNEBORNBERGER = Messages
+				.getString("TurnierKonstanten.4");
+		TABLE_COLUMN_RANKING = Messages.getString("TurnierKonstanten.5");
+		TABLE_COLUMN_ROUND = Messages.getString("TurnierKonstanten.6");
+		TABLE_COLUMN_WHITE = Messages.getString("TurnierKonstanten.7");
+		TABLE_COLUMN_BLACK = Messages.getString("TurnierKonstanten.8");
+		TABLE_COLUMN_RESULT = Messages.getString("TurnierKonstanten.9");
+		TABLE_COLUMN_MEETING = Messages.getString("TurnierKonstanten.10");
 
 	}
 }
