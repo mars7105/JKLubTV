@@ -21,6 +21,7 @@ import java.awt.FlowLayout;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.BoxLayout;
@@ -62,7 +63,8 @@ public class RundenEingabeFormularView extends JPanel {
 	private int rundenanzahl;
 	private int partienanzahl;
 	private JPanel bottomPanel;
-//	private JButton reloadButton;
+
+	// private JButton reloadButton;
 
 	@SuppressWarnings("unchecked")
 	public RundenEingabeFormularView(int spielerAnzahl) {
@@ -141,14 +143,29 @@ public class RundenEingabeFormularView extends JPanel {
 		scrollPane.setAlignmentY(TOP_ALIGNMENT);
 		add(scrollPane, BorderLayout.CENTER);
 		bottomPanel = new JPanel();
-//		reloadButton = new JButton(Messages.getString("RundenEingabeFormularView.0")); //$NON-NLS-1$
+		//		reloadButton = new JButton(Messages.getString("RundenEingabeFormularView.0")); //$NON-NLS-1$
 		bottomPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		bottomPanel.add(reloadButton);
+		// bottomPanel.add(reloadButton);
 		add(bottomPanel, BorderLayout.SOUTH);
 	}
 
 	private int[] getDatefromString(String zeile) {
-		String[] splitDate = zeile.split("\\."); //$NON-NLS-1$
+		String[] splitDate = null;
+		String[] dateItems = null;
+		if (zeile.contains(".")) {
+			splitDate = zeile.split("\\.");
+		}
+		if (zeile.contains("-")) {
+			splitDate = zeile.split("-");
+			dateItems = new String[splitDate.length];
+			int increment = splitDate.length;
+			for (int i = 0; i < splitDate.length; i++) {
+				increment--;
+				dateItems[increment] = splitDate[i];
+			}
+			splitDate = dateItems;
+		}
+
 		int[] dateInt = new int[splitDate.length];
 
 		for (int i = 0; i < splitDate.length; i++) {
@@ -158,6 +175,7 @@ public class RundenEingabeFormularView extends JPanel {
 				dateInt[i] = 0;
 			}
 		}
+
 		return dateInt;
 	}
 
@@ -308,13 +326,13 @@ public class RundenEingabeFormularView extends JPanel {
 		contentPanel.updateUI();
 	}
 
-//	public JButton getReloadButton() {
-//		return reloadButton;
-//	}
-//
-//	public void setReloadButton(JButton reloadButton) {
-//		this.reloadButton = reloadButton;
-//	}
+	// public JButton getReloadButton() {
+	// return reloadButton;
+	// }
+	//
+	// public void setReloadButton(JButton reloadButton) {
+	// this.reloadButton = reloadButton;
+	// }
 
 	public class DateLabelFormatter extends AbstractFormatter {
 
@@ -323,10 +341,10 @@ public class RundenEingabeFormularView extends JPanel {
 		 */
 		private static final long serialVersionUID = 1L;
 		// private String datePattern = "yyyy-MM-dd";
-		private String datePattern = "dd.MM.yyy"; //$NON-NLS-1$
+		private String datePattern = Messages.getString("TurnierView.15"); //$NON-NLS-1$
 
 		private SimpleDateFormat dateFormatter = new SimpleDateFormat(
-				datePattern);
+				datePattern, Locale.getDefault());
 
 		public DateLabelFormatter() {
 			super();

@@ -9,8 +9,8 @@ public class Messages {
 
 	private static Locale LOCALE = new Locale("en", "US");
 
-	private static ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-			.getBundle(BUNDLE_NAME, LOCALE);
+	private static ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(
+			BUNDLE_NAME, LOCALE);
 
 	private Messages() {
 	}
@@ -26,5 +26,8 @@ public class Messages {
 	public static void setLocale(Locale locale) {
 		LOCALE = locale;
 		RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, LOCALE);
+	}
+	public static Locale getLocale() {
+		return RESOURCE_BUNDLE.getLocale();
 	}
 }

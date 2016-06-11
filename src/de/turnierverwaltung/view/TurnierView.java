@@ -1,4 +1,5 @@
 package de.turnierverwaltung.view;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -22,6 +23,7 @@ import java.awt.Toolkit;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.BoxLayout;
@@ -45,10 +47,12 @@ public class TurnierView extends JPanel {
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		private String datePattern = "dd.MM.yyy"; //$NON-NLS-1$
+		private String datePattern = Messages.getString("TurnierView.15"); //$NON-NLS-1$
 		private SimpleDateFormat dateFormatter = new SimpleDateFormat(
-				datePattern);
-
+				datePattern, Locale.getDefault() );
+		
+		public DateLabelFormatter() {
+		}
 		@Override
 		public Object stringToValue(String text) throws ParseException {
 			return dateFormatter.parseObject(text);
@@ -115,7 +119,8 @@ public class TurnierView extends JPanel {
 			hauptPanel.add(panel1);
 			panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 			{
-				JLabel lblTurniername = new JLabel(Messages.getString("TurnierView.8")); //$NON-NLS-1$
+				JLabel lblTurniername = new JLabel(
+						Messages.getString("TurnierView.8")); //$NON-NLS-1$
 				panel1.add(lblTurniername);
 			}
 			{
@@ -146,7 +151,8 @@ public class TurnierView extends JPanel {
 			panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
 			hauptPanel.add(panel3);
 
-			JLabel lblEndDatum = new JLabel(Messages.getString("TurnierView.10")); //$NON-NLS-1$
+			JLabel lblEndDatum = new JLabel(
+					Messages.getString("TurnierView.10")); //$NON-NLS-1$
 			panel3.add(lblEndDatum);
 
 			endDatumeTextField = new JDatePickerImpl(new JDatePanelImpl(
@@ -159,7 +165,8 @@ public class TurnierView extends JPanel {
 			panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
 			hauptPanel.add(panel4);
 
-			JLabel lblAnzahlGruppen = new JLabel(Messages.getString("TurnierView.11")); //$NON-NLS-1$
+			JLabel lblAnzahlGruppen = new JLabel(
+					Messages.getString("TurnierView.11")); //$NON-NLS-1$
 			panel4.add(lblAnzahlGruppen);
 
 			gruppenAnzahlTextField = new JTextField();
