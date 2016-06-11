@@ -38,8 +38,6 @@ import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
-import de.turnierverwaltung.control.MainControl;
-
 public class RundenEingabeFormularView extends JPanel {
 
 	/**
