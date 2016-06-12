@@ -49,6 +49,7 @@ public class EigenschaftenControl {
 	 * 
 	 */
 	public void makeeigenschaftenPanel() {
+		PropertiesControl ppC = mainControl.getPropertiesControl();
 		JTabbedPane hauptPanel = this.mainControl.getHauptPanel();
 		hauptPanel
 				.addTab(Messages.getString("EigenschaftenControl.1"), eigenschaftenIcon, eigenschaftenView); //$NON-NLS-1$
@@ -85,6 +86,26 @@ public class EigenschaftenControl {
 		eigenschaftenView.setOpenDefaultPathLabel(mainControl
 				.getPropertiesControl().getDefaultPath());
 
+		eigenschaftenView.getWhiteTextField()
+				.setText(ppC.getTableComumnWhite());
+		eigenschaftenView.getBlackTextField()
+				.setText(ppC.getTableComumnBlack());
+		eigenschaftenView.getMeetingTextField().setText(
+				ppC.getTableComumnMeeting());
+		eigenschaftenView.getOldDWZTextField().setText(
+				ppC.getTableComumnOldDWZ());
+		eigenschaftenView.getNewDWZTextField().setText(
+				ppC.getTableComumnNewDWZ());
+		eigenschaftenView.getPlayerTextField().setText(
+				ppC.getTableComumnPlayer());
+		eigenschaftenView.getPointsTextField().setText(
+				ppC.getTableComumnPoints());
+		eigenschaftenView.getRankingTextField().setText(
+				ppC.getTableComumnRanking());
+		eigenschaftenView.getSbbTextField().setText(
+				ppC.getTableComumnSonnebornBerger());
+		eigenschaftenView.getResultTextField().setText(
+				ppC.getTableComumnResult());
 		actionListenerControl.addActionListeners();
 		itemListenerControl.addItemListeners();
 

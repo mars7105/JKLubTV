@@ -17,6 +17,7 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -27,6 +28,7 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -39,7 +41,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
-
 import de.turnierverwaltung.model.TurnierKonstanten;
 
 public class EigenschaftenView extends JPanel {
@@ -73,7 +74,7 @@ public class EigenschaftenView extends JPanel {
 	private JTextField playerTextField;
 	private JTextField newDWZTextField;
 	private JTextField oldDWZTextField;
-	private JTextField pointDWZTextField;
+	private JTextField pointsTextField;
 	private JTextField sbbTextField;
 	private JTextField rankingTextField;
 	private JTextField roundTextField;
@@ -81,6 +82,7 @@ public class EigenschaftenView extends JPanel {
 	private JTextField blackTextField;
 	private JTextField resultTextField;
 	private JTextField meetingTextField;
+	private JButton saveTableNamesButton;
 
 	/**
 	 * Create the panel.
@@ -121,7 +123,7 @@ public class EigenschaftenView extends JPanel {
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		languageSupport();
 		makeHTMLEigenschaften();
-//		tableLabel();
+		tableLabel();
 		anzahlElemente();
 		defaultPath();
 
@@ -133,53 +135,69 @@ public class EigenschaftenView extends JPanel {
 		add(scrollPane, BorderLayout.CENTER);
 	}
 
-	@SuppressWarnings("unused")
 	private void tableLabel() {
 
 		JPanel title = new JPanel();
 		title.setLayout(new FlowLayout(FlowLayout.LEFT));
 		title.add(new JLabel(Messages.getString("EigenschaftenView.21"))); //$NON-NLS-1$
 		htmlAll.add(title);
+		JPanel bothPanel = new JPanel();
+		bothPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		bothPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		JPanel leftPanel = new JPanel();
+		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
+		leftPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		JPanel rightPanel = new JPanel();
+		rightPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
 
 		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		Dimension dimTextField = new Dimension(175, 30);
-		oldDWZTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_OLD_DWZ);
+		int textFieldColumns = 9;
+		oldDWZTextField = new JTextField(
+				TurnierKonstanten.TABLE_COLUMN_OLD_DWZ, textFieldColumns);
 		oldDWZTextField.setPreferredSize(dimTextField);
 
-		newDWZTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_NEW_DWZ);
+		newDWZTextField = new JTextField(
+				TurnierKonstanten.TABLE_COLUMN_NEW_DWZ, textFieldColumns);
 		newDWZTextField.setPreferredSize(dimTextField);
 
-		pointDWZTextField = new JTextField(
-				TurnierKonstanten.TABLE_COLUMN_POINTS);
-		pointDWZTextField.setPreferredSize(dimTextField);
+		pointsTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_POINTS,
+				textFieldColumns);
+		pointsTextField.setPreferredSize(dimTextField);
 
 		sbbTextField = new JTextField(
-				TurnierKonstanten.TABLE_COLUMN_SONNEBORNBERGER);
+				TurnierKonstanten.TABLE_COLUMN_SONNEBORNBERGER,
+				textFieldColumns);
 		sbbTextField.setPreferredSize(dimTextField);
 
 		rankingTextField = new JTextField(
-				TurnierKonstanten.TABLE_COLUMN_RANKING);
+				TurnierKonstanten.TABLE_COLUMN_RANKING, textFieldColumns);
 		rankingTextField.setPreferredSize(dimTextField);
 
-		roundTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_ROUND);
+		roundTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_ROUND,
+				textFieldColumns);
 		roundTextField.setPreferredSize(dimTextField);
 
-		whiteTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_WHITE);
+		whiteTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_WHITE,
+				textFieldColumns);
 		whiteTextField.setPreferredSize(dimTextField);
 
-		blackTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_BLACK);
+		blackTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_BLACK,
+				textFieldColumns);
 		blackTextField.setPreferredSize(dimTextField);
 
-		resultTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_RESULT);
+		resultTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_RESULT,
+				textFieldColumns);
 		resultTextField.setPreferredSize(dimTextField);
 
 		meetingTextField = new JTextField(
-				TurnierKonstanten.TABLE_COLUMN_MEETING);
+				TurnierKonstanten.TABLE_COLUMN_MEETING, textFieldColumns);
 		meetingTextField.setPreferredSize(dimTextField);
 
-		playerTextField = new JTextField(
-				TurnierKonstanten.TABLE_COLUMN_PLAYER);
+		playerTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_PLAYER,
+				textFieldColumns);
 		playerTextField.setPreferredSize(dimTextField);
 
 		Dimension dim = new Dimension(175, 30);
@@ -221,65 +239,99 @@ public class EigenschaftenView extends JPanel {
 		JLabel playerTextFieldLabel = new JLabel(
 				Messages.getString("EigenschaftenView.31") + ":");
 		playerTextFieldLabel.setPreferredSize(dim);
+		JLabel leftTitleLabel = new JLabel("Kreuztabelle");
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(leftTitleLabel);
+		leftPanel.add(htmlPanel);
 
+		JLabel rightTitleLabel = new JLabel("Termintabelle");
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(rightTitleLabel);
+		rightPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
 		htmlPanel.add(oldDWZTextFieldLabel);
 		htmlPanel.add(oldDWZTextField);
-		htmlAll.add(htmlPanel);
+		leftPanel.add(htmlPanel);
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(newDWZTextFieldLabel);
 		htmlPanel.add(newDWZTextField);
-		htmlAll.add(htmlPanel);
+		leftPanel.add(htmlPanel);
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(pointDWZTextFieldLabel);
-		htmlPanel.add(pointDWZTextField);
-		htmlAll.add(htmlPanel);
+		htmlPanel.add(pointsTextField);
+		leftPanel.add(htmlPanel);
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(sbbTextFieldLabel);
 		htmlPanel.add(sbbTextField);
-		htmlAll.add(htmlPanel);
+		leftPanel.add(htmlPanel);
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(rankingTextFieldLabel);
 		htmlPanel.add(rankingTextField);
-		htmlAll.add(htmlPanel);
+		leftPanel.add(htmlPanel);
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(whiteTextFieldLabel);
 		htmlPanel.add(whiteTextField);
-		htmlAll.add(htmlPanel);
+		rightPanel.add(htmlPanel);
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(blackTextFieldLabel);
 		htmlPanel.add(blackTextField);
-		htmlAll.add(htmlPanel);
+		rightPanel.add(htmlPanel);
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(resultTextFieldLabel);
 		htmlPanel.add(resultTextField);
-		htmlAll.add(htmlPanel);
+		rightPanel.add(htmlPanel);
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(meetingTextFieldLabel);
 		htmlPanel.add(meetingTextField);
-		htmlAll.add(htmlPanel);
+		rightPanel.add(htmlPanel);
+
+		JPanel leerPanel = new JPanel();
+		leerPanel.setPreferredSize(dim);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(leerPanel);
+		rightPanel.add(htmlPanel);
+
+		leerPanel = new JPanel();
+		leerPanel.setPreferredSize(dim);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(leerPanel);
+		rightPanel.add(htmlPanel);
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(playerTextFieldLabel);
 		htmlPanel.add(playerTextField);
+		leftPanel.add(htmlPanel);
+		saveTableNamesButton = new JButton(
+				Messages.getString("EigenschaftenView.35")); //$NON-NLS-1$
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(saveTableNamesButton);
+		bothPanel.add(leftPanel);
+		bothPanel.add(rightPanel);
+		htmlAll.add(bothPanel);
 		htmlAll.add(htmlPanel);
-
 		htmlAll.add(new JSeparator());
 	}
 
@@ -569,6 +621,102 @@ public class EigenschaftenView extends JPanel {
 	public void setOpenDefaultPathLabel(String openDefaultPathLabel) {
 		this.openDefaultPathLabel.setText(openDefaultPathLabel);
 		this.openDefaultPathLabel.updateUI();
+	}
+
+	public JTextField getPlayerTextField() {
+		return playerTextField;
+	}
+
+	public void setPlayerTextField(JTextField playerTextField) {
+		this.playerTextField = playerTextField;
+	}
+
+	public JTextField getNewDWZTextField() {
+		return newDWZTextField;
+	}
+
+	public void setNewDWZTextField(JTextField newDWZTextField) {
+		this.newDWZTextField = newDWZTextField;
+	}
+
+	public JTextField getOldDWZTextField() {
+		return oldDWZTextField;
+	}
+
+	public void setOldDWZTextField(JTextField oldDWZTextField) {
+		this.oldDWZTextField = oldDWZTextField;
+	}
+
+	public JTextField getSbbTextField() {
+		return sbbTextField;
+	}
+
+	public void setSbbTextField(JTextField sbbTextField) {
+		this.sbbTextField = sbbTextField;
+	}
+
+	public JTextField getRankingTextField() {
+		return rankingTextField;
+	}
+
+	public void setRankingTextField(JTextField rankingTextField) {
+		this.rankingTextField = rankingTextField;
+	}
+
+	public JTextField getRoundTextField() {
+		return roundTextField;
+	}
+
+	public void setRoundTextField(JTextField roundTextField) {
+		this.roundTextField = roundTextField;
+	}
+
+	public JTextField getWhiteTextField() {
+		return whiteTextField;
+	}
+
+	public void setWhiteTextField(JTextField whiteTextField) {
+		this.whiteTextField = whiteTextField;
+	}
+
+	public JTextField getBlackTextField() {
+		return blackTextField;
+	}
+
+	public void setBlackTextField(JTextField blackTextField) {
+		this.blackTextField = blackTextField;
+	}
+
+	public JTextField getResultTextField() {
+		return resultTextField;
+	}
+
+	public void setResultTextField(JTextField resultTextField) {
+		this.resultTextField = resultTextField;
+	}
+
+	public JTextField getMeetingTextField() {
+		return meetingTextField;
+	}
+
+	public void setMeetingTextField(JTextField meetingTextField) {
+		this.meetingTextField = meetingTextField;
+	}
+
+	public JTextField getPointsTextField() {
+		return pointsTextField;
+	}
+
+	public void setPointsTextField(JTextField pointsTextField) {
+		this.pointsTextField = pointsTextField;
+	}
+
+	public JButton getSaveTableNamesButton() {
+		return saveTableNamesButton;
+	}
+
+	public void setSaveTableNamesButton(JButton saveTableNamesButton) {
+		this.saveTableNamesButton = saveTableNamesButton;
 	}
 
 	class OpenUrlAction implements ActionListener {

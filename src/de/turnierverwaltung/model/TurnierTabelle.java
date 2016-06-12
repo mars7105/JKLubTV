@@ -27,6 +27,12 @@ public class TurnierTabelle {
 	private int spalte;
 	private TurnierTabelleToHTML turnierTabelleToHTML;
 	private Boolean spielfrei;
+	private String playerColumnName;
+	private String oldDWZColumnName;
+	private String newDWZColumnName;
+	private String poinsColumnName;
+	private String sbbColumnName;
+	private String rankingColumnName;
 
 	public TurnierTabelle(Turnier turnier, Gruppe gruppe) {
 		this.turnier = turnier;
@@ -58,17 +64,27 @@ public class TurnierTabelle {
 		}
 	}
 
-	public void createMatrix() {
+	public void createMatrix(String playerColumnName, String oldDWZColumnName,
+			String newDWZColumnName, String poinsColumnName,
+			String sbbColumnName, String rankingColumnName) {
+		this.playerColumnName = playerColumnName;
+		this.oldDWZColumnName = oldDWZColumnName;
+		this.newDWZColumnName = newDWZColumnName;
+		this.poinsColumnName = poinsColumnName;
+		this.sbbColumnName = sbbColumnName;
+		this.rankingColumnName = rankingColumnName;
 		int sp = 0;
 		if (spielfrei) {
 			sp = spielerAnzahl - 1;
 		} else {
 			sp = spielerAnzahl;
 		}
-		tabellenMatrix[0][0] = TurnierKonstanten.TABLE_COLUMN_PLAYER; //$NON-NLS-1$
-		tabellenMatrix[1][0] = TurnierKonstanten.TABLE_COLUMN_OLD_DWZ;
-
-		tabellenMatrix[2][0] = TurnierKonstanten.TABLE_COLUMN_NEW_DWZ; //$NON-NLS-1$
+		//		tabellenMatrix[0][0] = TurnierKonstanten.TABLE_COLUMN_PLAYER; //$NON-NLS-1$
+		// tabellenMatrix[1][0] = TurnierKonstanten.TABLE_COLUMN_OLD_DWZ;
+		//		tabellenMatrix[2][0] = TurnierKonstanten.TABLE_COLUMN_NEW_DWZ; //$NON-NLS-1$
+		tabellenMatrix[0][0] = playerColumnName; //$NON-NLS-1$
+		tabellenMatrix[1][0] = oldDWZColumnName;
+		tabellenMatrix[2][0] = newDWZColumnName; //$NON-NLS-1$
 		for (int i = 3; i < sp + 3; i++) {
 			if (spieler[i - 3].getKuerzel().length() >= 2) {
 				tabellenMatrix[i][0] = spieler[i - 3].getKuerzel().substring(0,
@@ -80,10 +96,14 @@ public class TurnierTabelle {
 
 		}
 
-		tabellenMatrix[3 + sp][0] = TurnierKonstanten.TABLE_COLUMN_POINTS;
-		tabellenMatrix[4 + sp][0] = TurnierKonstanten.TABLE_COLUMN_SONNEBORNBERGER;
-		tabellenMatrix[5 + sp][0] = TurnierKonstanten.TABLE_COLUMN_RANKING;
+		// tabellenMatrix[3 + sp][0] = TurnierKonstanten.TABLE_COLUMN_POINTS;
+		// tabellenMatrix[4 + sp][0] =
+		// TurnierKonstanten.TABLE_COLUMN_SONNEBORNBERGER;
+		// tabellenMatrix[5 + sp][0] = TurnierKonstanten.TABLE_COLUMN_RANKING;
 
+		tabellenMatrix[3 + sp][0] = poinsColumnName;
+		tabellenMatrix[4 + sp][0] = sbbColumnName;
+		tabellenMatrix[5 + sp][0] = rankingColumnName;
 		for (int i = 0; i < sp; i++) {
 			tabellenMatrix[0][i + 1] = spieler[i].getName();
 			if (spieler[i].getDwz() != TurnierKonstanten.KEINE_DWZ) {
@@ -134,8 +154,7 @@ public class TurnierTabelle {
 		String[][] temp = new String[tabellenMatrix.length - 1][tabellenMatrix[0].length];
 		for (int x = 0; x < tabellenMatrix.length - 1; x++) {
 			for (int y = 0; y < tabellenMatrix[0].length; y++) {
-				if (tabellenMatrix[x][0]
-						.equals(TurnierKonstanten.TABLE_COLUMN_OLD_DWZ)) {
+				if (tabellenMatrix[x][0].equals(oldDWZColumnName)) {
 					v = 1;
 
 				}
@@ -151,8 +170,7 @@ public class TurnierTabelle {
 		String[][] temp = new String[tabellenMatrix.length - 1][tabellenMatrix[0].length];
 		for (int x = 0; x < tabellenMatrix.length - 1; x++) {
 			for (int y = 0; y < tabellenMatrix[0].length; y++) {
-				if (tabellenMatrix[x][0]
-						.equals(TurnierKonstanten.TABLE_COLUMN_NEW_DWZ)) {
+				if (tabellenMatrix[x][0].equals(newDWZColumnName)) {
 					v = 1;
 
 				}
@@ -202,6 +220,54 @@ public class TurnierTabelle {
 
 	public void setZeile(int zeile) {
 		this.zeile = zeile;
+	}
+
+	public String getPlayerColumnName() {
+		return playerColumnName;
+	}
+
+	public void setPlayerColumnName(String playerColumnName) {
+		this.playerColumnName = playerColumnName;
+	}
+
+	public String getOldDWZColumnName() {
+		return oldDWZColumnName;
+	}
+
+	public void setOldDWZColumnName(String oldDWZColumnName) {
+		this.oldDWZColumnName = oldDWZColumnName;
+	}
+
+	public String getNewDWZColumnName() {
+		return newDWZColumnName;
+	}
+
+	public void setNewDWZColumnName(String newDWZColumnName) {
+		this.newDWZColumnName = newDWZColumnName;
+	}
+
+	public String getPoinsColumnName() {
+		return poinsColumnName;
+	}
+
+	public void setPoinsColumnName(String poinsColumnName) {
+		this.poinsColumnName = poinsColumnName;
+	}
+
+	public String getSbbColumnName() {
+		return sbbColumnName;
+	}
+
+	public void setSbbColumnName(String sbbColumnName) {
+		this.sbbColumnName = sbbColumnName;
+	}
+
+	public String getRankingColumnName() {
+		return rankingColumnName;
+	}
+
+	public void setRankingColumnName(String rankingColumnName) {
+		this.rankingColumnName = rankingColumnName;
 	}
 
 }
