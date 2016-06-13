@@ -56,22 +56,21 @@ public class EigenschaftenControl {
 		if (mainControl.getPropertiesControl() == null) {
 			mainControl
 					.setPropertiesControl(new PropertiesControl(mainControl));
-			mainControl.getPropertiesControl().readProperties();
+			ppC.readProperties();
 		}
 		eigenschaftenView.getCheckBoxHeaderFooter().setSelected(
-				mainControl.getPropertiesControl().getOnlyTables());
-		eigenschaftenView.getCheckBoxohneDWZ().setSelected(
-				mainControl.getPropertiesControl().getNoDWZ());
+				ppC.getOnlyTables());
+		eigenschaftenView.getCheckBoxohneDWZ().setSelected(ppC.getNoDWZ());
 		eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(
 				mainControl.getPropertiesControl().getNoFolgeDWZ());
 		eigenschaftenView.getSpielerListeAuswahlBox().setSelectedIndex(
-				mainControl.getPropertiesControl().getSpielerProTab());
+				ppC.getSpielerProTab());
 		eigenschaftenView.getTurnierListeAuswahlBox().setSelectedIndex(
-				mainControl.getPropertiesControl().getTurniereProTab());
+				ppC.getTurniereProTab());
 		if (eigenschaftenView.getCheckBoxohneDWZ().isSelected() == true) {
 			eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(true);
 			eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(false);
-			mainControl.getPropertiesControl().setNoFolgeDWZ(true);
+			ppC.setNoFolgeDWZ(true);
 		}
 		if (mainControl.getPropertiesControl().getLanguage().equals("german")) { //$NON-NLS-1$
 			eigenschaftenView.getGermanLanguageCheckBox().setSelected(true);
@@ -83,8 +82,7 @@ public class EigenschaftenControl {
 			eigenschaftenView.getEnglishLanguageCheckBox().setSelected(true);
 			mainControl.getLanguagePropertiesControl().setLanguageToEnglish();
 		}
-		eigenschaftenView.setOpenDefaultPathLabel(mainControl
-				.getPropertiesControl().getDefaultPath());
+		eigenschaftenView.setOpenDefaultPathLabel(ppC.getDefaultPath());
 
 		setTableColumns();
 		actionListenerControl.addActionListeners();
