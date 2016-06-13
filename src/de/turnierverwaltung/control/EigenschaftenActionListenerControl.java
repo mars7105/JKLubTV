@@ -115,7 +115,7 @@ public class EigenschaftenActionListenerControl {
 				FileFilter filter = new FileNameExtensionFilter("CSV file", "csv", "CSV");
 
 				fc.setFileFilter(filter);
-				int returnVal = fc.showOpenDialog(mainControl);
+				int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
@@ -136,7 +136,7 @@ public class EigenschaftenActionListenerControl {
 				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				fc.setMultiSelectionEnabled(false);
 
-				int returnVal = fc.showOpenDialog(mainControl);
+				int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
 					File file = fc.getSelectedFile();
