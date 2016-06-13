@@ -40,8 +40,7 @@ public class DewisDialogControl {
 	public DewisDialogControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
-		dewisDialogActionListenerControl = new DewisDialogActionListenerControl(
-				this.mainControl, this);
+		dewisDialogActionListenerControl = new DewisDialogActionListenerControl(this.mainControl, this);
 	}
 
 	/**
@@ -62,16 +61,14 @@ public class DewisDialogControl {
 			}
 			spielerDewisView.makeList();
 			spielerDewisView.updateUI();
-			spielerDewisView.getList().addListSelectionListener(
-					dewisDialogActionListenerControl);
+			spielerDewisView.getList().addListSelectionListener(dewisDialogActionListenerControl);
 			dialog.setDsbPanel(spielerDewisView);
 			mainControl.getPropertiesControl().setZPS(zps);
 			mainControl.getPropertiesControl().writeProperties();
 			dialog.getUpdateButton().setEnabled(true);
 		} else {
 			dialog.getUpdateButton().setEnabled(false);
-			JLabel noItemLabel = new JLabel(
-					Messages.getString("DewisDialogControl.0")); //$NON-NLS-1$
+			JLabel noItemLabel = new JLabel(Messages.getString("DewisDialogControl.0")); //$NON-NLS-1$
 			JPanel noItemPanel = new JPanel();
 			noItemPanel.add(noItemLabel);
 			dialog.setDsbPanel(noItemPanel);
@@ -82,24 +79,20 @@ public class DewisDialogControl {
 	}
 
 	/**
- * 
- */
+	* 
+	*/
 	public void makeDialog() {
 		try {
-			mainControl.setEnabled(false);
-
-			dialog = new DEWISDialogView();
-			dialog.getVereinsSucheButton().addActionListener(
-					dewisDialogActionListenerControl);
-			dialog.getVereinsAuswahlOkButton().addActionListener(
-					dewisDialogActionListenerControl);
-			dialog.getUpdateButton().addActionListener(
-					dewisDialogActionListenerControl);
+//			mainControl.setEnabled(false);
+			if (dialog == null) {
+				dialog = new DEWISDialogView();
+			}
+			dialog.getVereinsSucheButton().addActionListener(dewisDialogActionListenerControl);
+			dialog.getVereinsAuswahlOkButton().addActionListener(dewisDialogActionListenerControl);
+			dialog.getUpdateButton().addActionListener(dewisDialogActionListenerControl);
 			dialog.getUpdateButton().setEnabled(false);
-			dialog.getOkButton().addActionListener(
-					dewisDialogActionListenerControl);
-			dialog.getCancelButton().addActionListener(
-					dewisDialogActionListenerControl);
+			dialog.getOkButton().addActionListener(dewisDialogActionListenerControl);
+			dialog.getCancelButton().addActionListener(dewisDialogActionListenerControl);
 			dialog.getOkButton().setEnabled(false);
 			String zps = mainControl.getPropertiesControl().getZPS();
 			if (zps.length() > 0) {
@@ -115,13 +108,12 @@ public class DewisDialogControl {
 				dialog.getVereinsName().setBackground(Color.LIGHT_GRAY);
 			}
 		} catch (Exception e) {
-			mainControl.setEnabled(true);
+//			mainControl.setEnabled(true);
 		}
 	}
 
 	public void makeVereinsListe() {
-		ArrayList<String[]> vereine = vereinsSuche.searchForVerein(dialog
-				.getVereinsName().getText());
+		ArrayList<String[]> vereine = vereinsSuche.searchForVerein(dialog.getVereinsName().getText());
 		zpsItems = new ArrayList<String[]>();
 		dialog.getVereinsAuswahl().removeAllItems();
 
@@ -143,16 +135,13 @@ public class DewisDialogControl {
 	 * @return
 	 */
 	public Boolean searchSpieler(Spieler neuerSpieler, Boolean updateDWZ) {
-		ArrayList<Spieler> spieler = mainControl.getSpielerLadenControl()
-				.getSpieler();
+		ArrayList<Spieler> spieler = mainControl.getSpielerLadenControl().getSpieler();
 
 		for (Spieler player : spieler) {
 			if (player.getName().equals(neuerSpieler.getName()) == true) {
-				if (player.getDWZ() != neuerSpieler.getDWZ()
-						&& updateDWZ == true) {
+				if (player.getDWZ() != neuerSpieler.getDWZ() && updateDWZ == true) {
 
-					SpielerTableControl stc = new SpielerTableControl(
-							mainControl);
+					SpielerTableControl stc = new SpielerTableControl(mainControl);
 					player.setDwz(neuerSpieler.getDWZ());
 					stc.updateOneSpieler(player);
 

@@ -68,7 +68,6 @@ public class DewisDialogActionListenerControl implements ListSelectionListener,
 		if (arg0.getSource() == dewisDialogControl.getDialog()
 				.getCancelButton()) {
 			dewisDialogControl.getDialog().closeWindow();
-			mainControl.setEnabled(true);
 		}
 		if (arg0.getSource() == dewisDialogControl.getDialog().getOkButton()) {
 			int[] indices = dewisDialogControl.getSpielerDewisView().getList()
@@ -108,7 +107,7 @@ public class DewisDialogActionListenerControl implements ListSelectionListener,
 			}
 
 			dewisDialogControl.getDialog().closeWindow();
-			mainControl.setEnabled(true);
+//			mainControl.setEnabled(true);
 			try {
 				mainControl.getSpielerLadenControl().updateSpielerListe();
 			} catch (SQLException e) {

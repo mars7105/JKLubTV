@@ -342,6 +342,9 @@ public class MainControl extends JFrame {
 		if (this.getInfoController() == null) {
 			this.setInfoController(new InfoControl(this));
 		}
+		if (this.eigenschaftenControl == null) {
+			this.eigenschaftenControl = new EigenschaftenControl(this);
+		}
 		SQLiteDAOFactory.setDB_PATH("");
 		this.setTitle(Messages.getString("MainControl.8"));
 	}

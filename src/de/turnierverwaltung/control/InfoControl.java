@@ -76,13 +76,14 @@ public class InfoControl {
 	}
 
 	public void makeInfoDialog() {
-		EigenschaftenControl eigenschaftenControl = new EigenschaftenControl(mainControl);
-		mainControl.setEigenschaftenControl(eigenschaftenControl);
+
 		mainControl.getNaviView().getInfoButton().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				dialog = new JDialog();
+				if (dialog == null) {
+					dialog = new JDialog();
+				}
 				dialog.setAlwaysOnTop(true);
 				dialog.getContentPane().add(infoView);
 				dialog.setPreferredSize(mainControl.getPreferredSize());

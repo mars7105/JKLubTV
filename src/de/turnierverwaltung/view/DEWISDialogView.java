@@ -32,7 +32,6 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.WindowConstants;
 import javax.swing.border.EmptyBorder;
 
 public class DEWISDialogView extends JDialog {
@@ -68,7 +67,7 @@ public class DEWISDialogView extends JDialog {
 
 		this.setAlwaysOnTop(true);
 		setTitle(Messages.getString("DEWISDialogView.0")); //$NON-NLS-1$
-		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		// setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		// setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		dwzdbURI = new URI("http://www.schachbund.de/verein.html"); //$NON-NLS-1$

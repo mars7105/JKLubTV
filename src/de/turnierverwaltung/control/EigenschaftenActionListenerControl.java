@@ -30,8 +30,9 @@ public class EigenschaftenActionListenerControl {
 			public void actionPerformed(ActionEvent arg0) {
 				PropertiesControl ppC = mainControl.getPropertiesControl();
 				EigenschaftenView eigenschaftenView = mainControl.getEigenschaftenControl().getEigenschaftenView();
-				
-				dialog = new JDialog();
+				if (dialog == null) {
+					dialog = new JDialog();
+				}
 				dialog.setAlwaysOnTop(true);
 				dialog.getContentPane().add(eigenschaftenView);
 				dialog.pack();
@@ -180,30 +181,31 @@ public class EigenschaftenActionListenerControl {
 
 			}
 		});
-//		esControl.getEigenschaftenView().getSaveTableNamesButton().addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent arg0) {
-//				PropertiesControl ppC = mainControl.getPropertiesControl();
-//				ppC.setTableComumnBlack(esControl.getEigenschaftenView().getBlackTextField().getText());
-//				ppC.setTableComumnWhite(esControl.getEigenschaftenView().getWhiteTextField().getText());
-//				ppC.setTableComumnMeeting(esControl.getEigenschaftenView().getMeetingTextField().getText());
-//				ppC.setTableComumnNewDWZ(esControl.getEigenschaftenView().getNewDWZTextField().getText());
-//				ppC.setTableComumnOldDWZ(esControl.getEigenschaftenView().getOldDWZTextField().getText());
-//				ppC.setTableComumnPlayer(esControl.getEigenschaftenView().getPlayerTextField().getText());
-//				ppC.setTableComumnPoints(esControl.getEigenschaftenView().getPointsTextField().getText());
-//				ppC.setTableComumnRanking(esControl.getEigenschaftenView().getRankingTextField().getText());
-//				ppC.setTableComumnResult(esControl.getEigenschaftenView().getResultTextField().getText());
-//				ppC.setTableComumnSonnebornBerger(esControl.getEigenschaftenView().getSbbTextField().getText());
-//				ppC.setTableComumnRound(esControl.getEigenschaftenView().getRoundTextField().getText());
-//				ppC.checkCrossTableColumnForDoubles();
-//				ppC.checkMeetingTableColumnForDoubles();
-//
-//				ppC.writeProperties();
-//				esControl.setTableColumns();
-//			}
-//
-//		});
+		// esControl.getEigenschaftenView().getSaveTableNamesButton().addActionListener(new
+		// ActionListener() {
+		//
+		// @Override
+		// public void actionPerformed(ActionEvent arg0) {
+		// PropertiesControl ppC = mainControl.getPropertiesControl();
+		// ppC.setTableComumnBlack(esControl.getEigenschaftenView().getBlackTextField().getText());
+		// ppC.setTableComumnWhite(esControl.getEigenschaftenView().getWhiteTextField().getText());
+		// ppC.setTableComumnMeeting(esControl.getEigenschaftenView().getMeetingTextField().getText());
+		// ppC.setTableComumnNewDWZ(esControl.getEigenschaftenView().getNewDWZTextField().getText());
+		// ppC.setTableComumnOldDWZ(esControl.getEigenschaftenView().getOldDWZTextField().getText());
+		// ppC.setTableComumnPlayer(esControl.getEigenschaftenView().getPlayerTextField().getText());
+		// ppC.setTableComumnPoints(esControl.getEigenschaftenView().getPointsTextField().getText());
+		// ppC.setTableComumnRanking(esControl.getEigenschaftenView().getRankingTextField().getText());
+		// ppC.setTableComumnResult(esControl.getEigenschaftenView().getResultTextField().getText());
+		// ppC.setTableComumnSonnebornBerger(esControl.getEigenschaftenView().getSbbTextField().getText());
+		// ppC.setTableComumnRound(esControl.getEigenschaftenView().getRoundTextField().getText());
+		// ppC.checkCrossTableColumnForDoubles();
+		// ppC.checkMeetingTableColumnForDoubles();
+		//
+		// ppC.writeProperties();
+		// esControl.setTableColumns();
+		// }
+		//
+		// });
 
 	}
 }
