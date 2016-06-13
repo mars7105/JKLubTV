@@ -1,5 +1,6 @@
 package de.turnierverwaltung.view;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -19,6 +20,7 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -30,18 +32,20 @@ public class InfoView extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-//	private JButton lizenzenButton; 
-	private JTabbedPane lizenzenPane; 
+	// private JButton lizenzenButton;
+	private JTabbedPane lizenzenPane;
 
 	private JPanel contentPanel;
 	private JScrollPane scrollPane;
 	private JPanel centerPane;
 	JTextArea textArea;
+	private JButton okButton;
+
 	public InfoView() {
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
 		setLayout(new BorderLayout());
-		
+
 		JLabel titleLabel = new JLabel(Messages.getString("InfoView.0")); //$NON-NLS-1$
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -57,15 +61,21 @@ public class InfoView extends JPanel {
 		add(northPanel, BorderLayout.NORTH);
 		textArea = new JTextArea();
 		add(scrollPane, BorderLayout.CENTER);
+		okButton = new JButton("Ok");
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		buttonPanel.add(okButton);
+		add(buttonPanel, BorderLayout.SOUTH);
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
 		contentPanel.add(centerPane);
 
-		
 	}
+
 	public JTextArea getTextArea() {
 		return textArea;
 	}
+
 	public void setTextArea(JTextArea textArea) {
 		this.textArea = textArea;
 	}
@@ -73,10 +83,19 @@ public class InfoView extends JPanel {
 	public JTabbedPane getLizenzenPane() {
 		return lizenzenPane;
 	}
+
 	public void setLizenzenPane(JTabbedPane lizenzenPane) {
 		this.lizenzenPane = lizenzenPane;
 		scrollPane.setViewportView(lizenzenPane);
 		this.updateUI();
 	}
-	
+
+	public JButton getOkButton() {
+		return okButton;
+	}
+
+	public void setOkButton(JButton okButton) {
+		this.okButton = okButton;
+	}
+
 }

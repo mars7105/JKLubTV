@@ -40,30 +40,27 @@ public class NaviView extends JPanel {
 	private String gruppenname;
 	private JLabel gruppenLabel;
 
-	private ImageIcon dbNewIcon = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/document-new.png"))); //$NON-NLS-1$
-	private ImageIcon dbLoadIcon = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/document-open-4.png"))); //$NON-NLS-1$
-	private ImageIcon tabelleSpeichernIcon = new ImageIcon(Toolkit
-			.getDefaultToolkit().getImage(
-					getClass().getResource("/images/document-save-5.png"))); //$NON-NLS-1$
-	private ImageIcon tabelleAktualisierenIcon = new ImageIcon(Toolkit
-			.getDefaultToolkit().getImage(
-					getClass().getResource("/images/view-refresh-6.png"))); //$NON-NLS-1$
-	private ImageIcon tabelleHTMLAusgabeIcon = new ImageIcon(Toolkit
-			.getDefaultToolkit().getImage(
-					getClass().getResource("/images/homepage.png"))); //$NON-NLS-1$
-	private ImageIcon turnierNew = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/document-new.png"))); //$NON-NLS-1$
+	private ImageIcon dbNewIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-new.png"))); //$NON-NLS-1$
+	private ImageIcon dbLoadIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-open-4.png"))); //$NON-NLS-1$
+	private ImageIcon tabelleSpeichernIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-save-5.png"))); //$NON-NLS-1$
+	private ImageIcon tabelleAktualisierenIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-refresh-6.png"))); //$NON-NLS-1$
+	private ImageIcon tabelleHTMLAusgabeIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/homepage.png"))); //$NON-NLS-1$
+	private ImageIcon turnierNew = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-new.png"))); //$NON-NLS-1$
 	private JButton turnierAddButton;
-	private ImageIcon userNew = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/user-new-3.png"))); //$NON-NLS-1$
-	private ImageIcon userImport = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/document-open-4.png"))); //$NON-NLS-1$
-	private ImageIcon userExport = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/document-export.png"))); //$NON-NLS-1$
-	private ImageIcon DEWISSearch = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/db.png"))); //$NON-NLS-1$
+	private ImageIcon userNew = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-new-3.png"))); //$NON-NLS-1$
+	private ImageIcon userImport = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-open-4.png"))); //$NON-NLS-1$
+	private ImageIcon userExport = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-export.png"))); //$NON-NLS-1$
+	private ImageIcon DEWISSearch = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/db.png"))); //$NON-NLS-1$
 	private JButton spielerImport;
 	private JButton spielerExport;
 	private JButton spielerDEWISSearchButton;
@@ -71,12 +68,18 @@ public class NaviView extends JPanel {
 
 	private JButton newDatabseButton;
 	private JButton loadDatabaseButton;
-	private JLabel pathToDatabase;
+	private JButton propertiesButton;
+	private JButton infoButton;
 
-	private ImageIcon pdfIcon = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/acroread-2.png"))); //$NON-NLS-1$
-	private ImageIcon excelIcon = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/excel-1.png"))); //$NON-NLS-1$
+	private JLabel pathToDatabase;
+	private ImageIcon propertiesIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/configure-2.png"))); //$NON-NLS-1$
+	private ImageIcon infoIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png"))); //$NON-NLS-1$
+	private ImageIcon pdfIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/acroread-2.png"))); //$NON-NLS-1$
+	private ImageIcon excelIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/excel-1.png"))); //$NON-NLS-1$
 	private JButton tabelleSpeichernButton;
 	private JPanel tabellenPanel;
 	private JPanel dateiPanel;
@@ -88,13 +91,10 @@ public class NaviView extends JPanel {
 	private JButton excelSpeichernButton;
 	private JButton pairingsLoadButton;
 	private JButton pairingsSaveButton;
-	private ImageIcon pairingsLoadIcon = new ImageIcon(Toolkit
-			.getDefaultToolkit().getImage(
-					getClass().getResource(
-							"/images/media-playlist-shuffle-3.png")));
-	private ImageIcon pairingsSaveIcon = new ImageIcon(Toolkit
-			.getDefaultToolkit().getImage(
-					getClass().getResource("/images/document-save-5.png")));
+	private ImageIcon pairingsLoadIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/media-playlist-shuffle-3.png")));
+	private ImageIcon pairingsSaveIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-save-5.png")));
 	private JPanel pairingsPanel;
 	private JLabel pairingsLabel;
 	private String pairingsname;
@@ -103,21 +103,24 @@ public class NaviView extends JPanel {
 		this.setBackground(Color.LIGHT_GRAY);
 
 		this.setLayout(new BorderLayout());
-		newDatabseButton = new JButton(
-				Messages.getString("NaviView.11"), dbNewIcon); //$NON-NLS-1$
+		newDatabseButton = new JButton(Messages.getString("NaviView.11"), dbNewIcon); //$NON-NLS-1$
 		newDatabseButton.setPreferredSize(new Dimension(200, 40));
 		newDatabseButton.setHorizontalAlignment(SwingConstants.LEFT);
-		loadDatabaseButton = new JButton(
-				Messages.getString("NaviView.12"), dbLoadIcon); //$NON-NLS-1$
+		loadDatabaseButton = new JButton(Messages.getString("NaviView.12"), dbLoadIcon); //$NON-NLS-1$
 		loadDatabaseButton.setPreferredSize(new Dimension(200, 40));
 		loadDatabaseButton.setHorizontalAlignment(SwingConstants.LEFT);
 
-		tabelleSpeichernButton = new JButton(
-				Messages.getString("NaviView.13"), tabelleSpeichernIcon); //$NON-NLS-1$
+		propertiesButton = new JButton(Messages.getString("NaviView.29"), propertiesIcon); //$NON-NLS-1$
+		propertiesButton.setPreferredSize(new Dimension(200, 40));
+		propertiesButton.setHorizontalAlignment(SwingConstants.LEFT);
+		infoButton = new JButton(Messages.getString("NaviView.30"), infoIcon); //$NON-NLS-1$
+		infoButton.setPreferredSize(new Dimension(200, 40));
+		infoButton.setHorizontalAlignment(SwingConstants.LEFT);
+
+		tabelleSpeichernButton = new JButton(Messages.getString("NaviView.13"), tabelleSpeichernIcon); //$NON-NLS-1$
 		tabelleSpeichernButton.setPreferredSize(new Dimension(200, 40));
 		tabelleSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
-		tabelleAktualisierenButton = new JButton(
-				Messages.getString("NaviView.14"), tabelleAktualisierenIcon); //$NON-NLS-1$
+		tabelleAktualisierenButton = new JButton(Messages.getString("NaviView.14"), tabelleAktualisierenIcon); //$NON-NLS-1$
 		tabelleAktualisierenButton.setPreferredSize(new Dimension(200, 40));
 		tabelleAktualisierenButton.setHorizontalAlignment(SwingConstants.LEFT);
 		pdfSpeichernButton = new JButton(Messages.getString("NaviView.15"), //$NON-NLS-1$
@@ -125,40 +128,33 @@ public class NaviView extends JPanel {
 		pdfSpeichernButton.setPreferredSize(new Dimension(200, 40));
 		pdfSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
 
-		excelSpeichernButton = new JButton(
-				Messages.getString("NaviView.2"), excelIcon); //$NON-NLS-1$
+		excelSpeichernButton = new JButton(Messages.getString("NaviView.2"), excelIcon); //$NON-NLS-1$
 		excelSpeichernButton.setPreferredSize(new Dimension(200, 40));
 		excelSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
-		tabelleHTMLAusgabeButton = new JButton(
-				Messages.getString("NaviView.16"), tabelleHTMLAusgabeIcon); //$NON-NLS-1$
+		tabelleHTMLAusgabeButton = new JButton(Messages.getString("NaviView.16"), tabelleHTMLAusgabeIcon); //$NON-NLS-1$
 		tabelleHTMLAusgabeButton.setPreferredSize(new Dimension(200, 40));
 		tabelleHTMLAusgabeButton.setHorizontalAlignment(SwingConstants.LEFT);
 
-		pairingsLoadButton = new JButton(Messages.getString("NaviView.27"),
-				pairingsLoadIcon);
+		pairingsLoadButton = new JButton(Messages.getString("NaviView.27"), pairingsLoadIcon);
 		pairingsLoadButton.setPreferredSize(new Dimension(200, 40));
 		pairingsLoadButton.setHorizontalAlignment(SwingConstants.LEFT);
 
-		pairingsSaveButton = new JButton(Messages.getString("NaviView.28"),
-				pairingsSaveIcon);
+		pairingsSaveButton = new JButton(Messages.getString("NaviView.28"), pairingsSaveIcon);
 		pairingsSaveButton.setPreferredSize(new Dimension(200, 40));
 		pairingsSaveButton.setHorizontalAlignment(SwingConstants.LEFT);
 
 		dateiPanel = new JPanel();
 		dateiPanel.setBackground(Color.LIGHT_GRAY);
-		BoxLayout dateiPanelLayout = new BoxLayout(dateiPanel,
-				BoxLayout.PAGE_AXIS);
+		BoxLayout dateiPanelLayout = new BoxLayout(dateiPanel, BoxLayout.PAGE_AXIS);
 		dateiPanel.setLayout(dateiPanelLayout);
 		FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
 		// Turnierliste
-		turnierAddButton = new JButton(
-				Messages.getString("NaviView.17"), turnierNew); //$NON-NLS-1$
+		turnierAddButton = new JButton(Messages.getString("NaviView.17"), turnierNew); //$NON-NLS-1$
 		turnierAddButton.setPreferredSize(new Dimension(200, 40));
 		turnierAddButton.setHorizontalAlignment(SwingConstants.LEFT);
 		turnierListePanel = new JPanel();
 		turnierListePanel.setBackground(Color.LIGHT_GRAY);
-		BoxLayout turnierListePanelLayout = new BoxLayout(turnierListePanel,
-				BoxLayout.PAGE_AXIS);
+		BoxLayout turnierListePanelLayout = new BoxLayout(turnierListePanel, BoxLayout.PAGE_AXIS);
 		turnierListePanel.setLayout(turnierListePanelLayout);
 		JPanel panel3 = new JPanel();
 		panel3.setLayout(flowLayout);
@@ -175,14 +171,12 @@ public class NaviView extends JPanel {
 		turnierListePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		// neuer Spieler
-		spielerAddButton = new JButton(
-				Messages.getString("NaviView.19"), userNew); //$NON-NLS-1$
+		spielerAddButton = new JButton(Messages.getString("NaviView.19"), userNew); //$NON-NLS-1$
 		spielerAddButton.setPreferredSize(new Dimension(200, 40));
 		spielerAddButton.setHorizontalAlignment(SwingConstants.LEFT);
 		spielerListePanel = new JPanel();
 		spielerListePanel.setBackground(Color.LIGHT_GRAY);
-		BoxLayout spielerListePanelLayout = new BoxLayout(spielerListePanel,
-				BoxLayout.PAGE_AXIS);
+		BoxLayout spielerListePanelLayout = new BoxLayout(spielerListePanel, BoxLayout.PAGE_AXIS);
 		spielerListePanel.setLayout(spielerListePanelLayout);
 		panel3 = new JPanel();
 		panel3.setLayout(flowLayout);
@@ -199,8 +193,7 @@ public class NaviView extends JPanel {
 		spielerListePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		// Spieler Import
-		spielerImport = new JButton(
-				Messages.getString("NaviView.21"), userImport); //$NON-NLS-1$
+		spielerImport = new JButton(Messages.getString("NaviView.21"), userImport); //$NON-NLS-1$
 		spielerImport.setPreferredSize(new Dimension(200, 40));
 		spielerImport.setHorizontalAlignment(SwingConstants.LEFT);
 
@@ -212,8 +205,7 @@ public class NaviView extends JPanel {
 		spielerListePanel.add(panel3);
 
 		// Spieler Export
-		spielerExport = new JButton(
-				Messages.getString("NaviView.22"), userExport); //$NON-NLS-1$
+		spielerExport = new JButton(Messages.getString("NaviView.22"), userExport); //$NON-NLS-1$
 		spielerExport.setPreferredSize(new Dimension(200, 40));
 		spielerExport.setHorizontalAlignment(SwingConstants.LEFT);
 
@@ -225,8 +217,7 @@ public class NaviView extends JPanel {
 		spielerListePanel.add(panel3);
 
 		// DWZ Abfrage
-		spielerDEWISSearchButton = new JButton(
-				Messages.getString("NaviView.23"), DEWISSearch); //$NON-NLS-1$
+		spielerDEWISSearchButton = new JButton(Messages.getString("NaviView.23"), DEWISSearch); //$NON-NLS-1$
 		spielerDEWISSearchButton.setPreferredSize(new Dimension(200, 40));
 		spielerDEWISSearchButton.setHorizontalAlignment(SwingConstants.LEFT);
 
@@ -241,8 +232,7 @@ public class NaviView extends JPanel {
 
 		tabellenPanel = new JPanel();
 		tabellenPanel.setBackground(Color.LIGHT_GRAY);
-		BoxLayout tabellenPanelLayout = new BoxLayout(tabellenPanel,
-				BoxLayout.PAGE_AXIS);
+		BoxLayout tabellenPanelLayout = new BoxLayout(tabellenPanel, BoxLayout.PAGE_AXIS);
 		tabellenPanel.setLayout(tabellenPanelLayout);
 		JPanel panel = new JPanel();
 		flowLayout.setVgap(1);
@@ -253,6 +243,17 @@ public class NaviView extends JPanel {
 		panel2.setLayout(flowLayout);
 		panel2.setBackground(Color.LIGHT_GRAY);
 		panel2.add(loadDatabaseButton);
+
+		JPanel panel2a = new JPanel();
+		flowLayout.setVgap(1);
+		panel2a.setLayout(flowLayout);
+		panel2a.setBackground(Color.LIGHT_GRAY);
+		panel2a.add(propertiesButton);
+		JPanel panel2b = new JPanel();
+		panel2b.setLayout(flowLayout);
+		panel2b.setBackground(Color.LIGHT_GRAY);
+		panel2b.add(infoButton);
+
 		JPanel panelLabel = new JPanel();
 		panelLabel.setLayout(flowLayout);
 		panelLabel.setBackground(Color.LIGHT_GRAY);
@@ -302,6 +303,9 @@ public class NaviView extends JPanel {
 		dateiPanel.add(dateiPanelLabel);
 		dateiPanel.add(panel);
 		dateiPanel.add(panel2);
+		dateiPanel.add(panel2a);
+		dateiPanel.add(panel2b);
+
 		// dateiPanel.add(panel4b);
 		dateiPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -352,8 +356,7 @@ public class NaviView extends JPanel {
 
 		pairingsPanel = new JPanel();
 		pairingsPanel.setBackground(Color.LIGHT_GRAY);
-		BoxLayout pairingsPanelLayout = new BoxLayout(pairingsPanel,
-				BoxLayout.PAGE_AXIS);
+		BoxLayout pairingsPanelLayout = new BoxLayout(pairingsPanel, BoxLayout.PAGE_AXIS);
 		pairingsPanel.setLayout(pairingsPanelLayout);
 		JPanel pairingsPanelLabel = new JPanel();
 		pairingsPanelLabel.setPreferredSize(new Dimension(200, 30));
@@ -565,6 +568,22 @@ public class NaviView extends JPanel {
 
 	public void setPairingsPanel(JPanel pairingsPanel) {
 		this.pairingsPanel = pairingsPanel;
+	}
+
+	public JButton getPropertiesButton() {
+		return propertiesButton;
+	}
+
+	public void setPropertiesButton(JButton propertiesButton) {
+		this.propertiesButton = propertiesButton;
+	}
+
+	public JButton getInfoButton() {
+		return infoButton;
+	}
+
+	public void setInfoButton(JButton infoButton) {
+		this.infoButton = infoButton;
 	}
 
 }
