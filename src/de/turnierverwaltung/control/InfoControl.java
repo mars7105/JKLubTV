@@ -83,6 +83,9 @@ public class InfoControl {
 			public void actionPerformed(ActionEvent arg0) {
 				if (dialog == null) {
 					dialog = new JDialog();
+				} else {
+					dialog.dispose();
+					dialog = new JDialog();
 				}
 				dialog.setAlwaysOnTop(true);
 				dialog.getContentPane().add(infoView);

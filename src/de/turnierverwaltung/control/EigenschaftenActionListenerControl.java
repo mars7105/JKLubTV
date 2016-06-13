@@ -29,8 +29,12 @@ public class EigenschaftenActionListenerControl {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				PropertiesControl ppC = mainControl.getPropertiesControl();
+				mainControl.getEigenschaftenControl().setEigenschaftenView(new EigenschaftenView());
 				EigenschaftenView eigenschaftenView = mainControl.getEigenschaftenControl().getEigenschaftenView();
 				if (dialog == null) {
+					dialog = new JDialog();
+				} else {
+					dialog.dispose();
 					dialog = new JDialog();
 				}
 				dialog.setAlwaysOnTop(true);
@@ -127,7 +131,8 @@ public class EigenschaftenActionListenerControl {
 		});
 		esControl.getEigenschaftenView().getOpenDefaultPathButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				final JFileChooser fc = new JFileChooser();
+				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
+				final JFileChooser fc = new JFileChooser(path);
 				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				fc.setMultiSelectionEnabled(false);
 
