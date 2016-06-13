@@ -31,6 +31,9 @@ public class EigenschaftenActionListenerControl {
 				PropertiesControl ppC = mainControl.getPropertiesControl();
 				mainControl.getEigenschaftenControl().setEigenschaftenView(new EigenschaftenView());
 				EigenschaftenView eigenschaftenView = mainControl.getEigenschaftenControl().getEigenschaftenView();
+				mainControl.getEigenschaftenControl().setItemListenerControl(
+						new EigenschaftenItemListenerControl(mainControl, mainControl.getEigenschaftenControl()));
+				mainControl.getEigenschaftenControl().getItemListenerControl().addItemListeners();
 				if (dialog == null) {
 					dialog = new JDialog();
 				} else {
