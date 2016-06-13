@@ -102,7 +102,16 @@ public class TurnierTabelleControl {
 		}
 		this.turnierTabelle[gruppenNummer] = new TurnierTabelle(turnier,
 				mainControl.getTurnier().getGruppe()[gruppenNummer]);
-		this.turnierTabelle[gruppenNummer].createMatrix();
+		PropertiesControl ppC = mainControl.getPropertiesControl();
+		String playerColumnName = ppC.getTableComumnPlayer();
+		String oldDWZColumnName = ppC.getTableComumnOldDWZ();
+		String newDWZColumnName = ppC.getTableComumnNewDWZ();
+		String poinsColumnName = ppC.getTableComumnPoints();
+		String sbbColumnName = ppC.getTableComumnSonnebornBerger();
+		String rankingColumnName = ppC.getTableComumnRanking();
+		turnierTabelle[gruppenNummer].createMatrix(playerColumnName,
+				oldDWZColumnName, newDWZColumnName, poinsColumnName,
+				sbbColumnName, rankingColumnName);
 		if (mainControl.getPropertiesControl().getNoDWZ() == true) {
 			this.turnierTabelle[gruppenNummer].removeDWZColumn();
 		}

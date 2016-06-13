@@ -17,9 +17,12 @@ package de.turnierverwaltung.control;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.net.URISyntaxException;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.view.InfoView;
@@ -32,11 +35,12 @@ public class InfoControl {
 	private JTabbedPane lizenzenPane;
 	private InfoLizenzenView infoTexteView;
 	private InfoHomeScreenView infoHelpView;
-	private ImageIcon infoIcon = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/emblem-notice.png"))); //$NON-NLS-1$
-	private ImageIcon lizenzenIcon = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/emblem-paragraph.png"))); //$NON-NLS-1$
+	private ImageIcon infoIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png"))); //$NON-NLS-1$
+	private ImageIcon lizenzenIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-paragraph.png"))); //$NON-NLS-1$
 	private PropertiesControl propertiesControl;
+	private JDialog dialog;
 
 	/**
 	 * @param mainControl
@@ -50,33 +54,45 @@ public class InfoControl {
 		lizenzenPane = new JTabbedPane();
 		infoTexteView = new InfoLizenzenView();
 		try {
-			lizenzenPane
-					.addTab(Messages.getString("InfoController.2"), infoIcon, infoHelpView.getLizenzText()); //$NON-NLS-1$
+			lizenzenPane.addTab(Messages.getString("InfoController.2"), infoIcon, infoHelpView.getLizenzText()); //$NON-NLS-1$
 
-			lizenzenPane
-					.addTab(Messages.getString("InfoController.3"), lizenzenIcon, infoTexteView.getLizenzText()); //$NON-NLS-1$
+			lizenzenPane.addTab(Messages.getString("InfoController.3"), lizenzenIcon, infoTexteView.getLizenzText()); //$NON-NLS-1$
 			infoView.setLizenzenPane(lizenzenPane);
+			infoView.getOkButton().addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					dialog.dispose();
+
+				}
+
+			});
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		makeInfoPanel();
+		makeInfoDialog();
 
 	}
 
-	/**
-	 * 
-	 */
-	public void makeInfoPanel() {
-		JTabbedPane hauptPanel = this.mainControl.getHauptPanel();
+	public void makeInfoDialog() {
 
-		hauptPanel.addTab(
-				Messages.getString("InfoController.4"), infoIcon, infoView); //$NON-NLS-1$
-		hauptPanel.updateUI();
-		EigenschaftenControl eigenschaftenControl = new EigenschaftenControl(
-				mainControl);
-		mainControl.setEigenschaftenControl(eigenschaftenControl);
-		eigenschaftenControl.makeeigenschaftenPanel();
+		mainControl.getNaviView().getInfoButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				if (dialog == null) {
+					dialog = new JDialog();
+				}
+				dialog.setAlwaysOnTop(true);
+				dialog.getContentPane().add(infoView);
+				dialog.setPreferredSize(mainControl.getPreferredSize());
+				dialog.pack();
+				dialog.setLocationRelativeTo(null);
+				dialog.setEnabled(true);
+				dialog.setVisible(true);
+			}
+
+		});
 	}
-
 }

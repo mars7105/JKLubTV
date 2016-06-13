@@ -54,3 +54,9 @@ h2 {
 		border: 1px solid #ccc; 
 		text-align: left; 
 	}
+	div {
+		background: #eee; 
+		padding: 6px; 
+		border: 1px solid #ccc; 
+		text-align: left;		
+	}

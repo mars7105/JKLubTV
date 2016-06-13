@@ -50,6 +50,8 @@ public class PropertiesControl {
 	public static final String TABLE_COLUMN_RESULT = "tablecolumn-result";
 	public static final String TABLE_COLUMN_MEETING = "tablecolumn-meeting";
 	public static final String TABLE_COLUMN_PLAYER = "tablecolumn-player";
+	public static final String TABLE_COLUMN_ROUND = "tablecolumn-round";
+
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
@@ -80,6 +82,8 @@ public class PropertiesControl {
 		prop.setProperty(TABLE_COLUMN_RESULT, "");
 		prop.setProperty(TABLE_COLUMN_MEETING, "");
 		prop.setProperty(TABLE_COLUMN_PLAYER, "");
+		prop.setProperty(TABLE_COLUMN_ROUND, "");
+
 	}
 
 	public void checkProperties() {
@@ -192,7 +196,13 @@ public class PropertiesControl {
 					TurnierKonstanten.TABLE_COLUMN_PLAYER);
 			saveChanges = true;
 		}
-
+		if (prop.getProperty(TABLE_COLUMN_ROUND) == "") {
+			prop.setProperty(TABLE_COLUMN_ROUND,
+					TurnierKonstanten.TABLE_COLUMN_ROUND);
+			saveChanges = true;
+		}
+		checkCrossTableColumnForDoubles();
+		checkMeetingTableColumnForDoubles();
 		if (saveChanges == true) {
 			writeProperties();
 		}
@@ -440,6 +450,16 @@ public class PropertiesControl {
 		return prop.getProperty(TABLE_COLUMN_PLAYER);
 	}
 
+	public void setTableComumnRound(String tableString) {
+		prop.setProperty(TABLE_COLUMN_ROUND, tableString);
+
+	}
+
+	public String getTableComumnRound() {
+
+		return prop.getProperty(TABLE_COLUMN_ROUND);
+	}
+
 	public void setOnlyTables(boolean b) {
 		if (b == true) {
 			prop.setProperty(ONLYTABLES, TRUE);
@@ -525,5 +545,65 @@ public class PropertiesControl {
 			abstand = abstand - 1;
 		}
 		return abstand;
+	}
+
+	public void checkCrossTableColumnForDoubles() {
+		String[] tableColumns = new String[6];
+		tableColumns[0] = prop.getProperty(TABLE_COLUMN_PLAYER);
+		tableColumns[1] = prop.getProperty(TABLE_COLUMN_OLD_DWZ);
+		tableColumns[2] = prop.getProperty(TABLE_COLUMN_NEW_DWZ);
+		tableColumns[3] = prop.getProperty(TABLE_COLUMN_POINTS);
+		tableColumns[4] = prop.getProperty(TABLE_COLUMN_SONNEBORNBERGER);
+		tableColumns[5] = prop.getProperty(TABLE_COLUMN_RANKING);
+		Boolean loop = false;
+		do {
+			loop = false;
+			for (int i = 0; i < 6; i++) {
+				for (int y = 0; y < 6; y++) {
+					if (i != y) {
+						if (tableColumns[i].equals(tableColumns[y])) {
+							tableColumns[y] = tableColumns[y] + "#";
+							loop = true;
+						}
+					}
+
+				}
+			}
+		} while (loop == true);
+		prop.setProperty(TABLE_COLUMN_PLAYER, tableColumns[0]);
+		prop.setProperty(TABLE_COLUMN_OLD_DWZ, tableColumns[1]);
+		prop.setProperty(TABLE_COLUMN_NEW_DWZ, tableColumns[2]);
+		prop.setProperty(TABLE_COLUMN_POINTS, tableColumns[3]);
+		prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER, tableColumns[4]);
+		prop.setProperty(TABLE_COLUMN_RANKING, tableColumns[5]);
+	}
+
+	public void checkMeetingTableColumnForDoubles() {
+		String[] tableColumns = new String[6];
+		tableColumns[0] = prop.getProperty(TABLE_COLUMN_ROUND);
+		tableColumns[1] = prop.getProperty(TABLE_COLUMN_WHITE);
+		tableColumns[2] = prop.getProperty(TABLE_COLUMN_BLACK);
+		tableColumns[3] = prop.getProperty(TABLE_COLUMN_RESULT);
+		tableColumns[4] = prop.getProperty(TABLE_COLUMN_MEETING);
+		Boolean loop = false;
+		do {
+			loop = false;
+			for (int i = 0; i < 5; i++) {
+				for (int y = 0; y < 5; y++) {
+					if (i != y) {
+						if (tableColumns[i].equals(tableColumns[y])) {
+							tableColumns[y] = tableColumns[y] + "#";
+							loop = true;
+						}
+					}
+
+				}
+			}
+		} while (loop == true);
+		prop.setProperty(TABLE_COLUMN_ROUND, tableColumns[0]);
+		prop.setProperty(TABLE_COLUMN_WHITE, tableColumns[1]);
+		prop.setProperty(TABLE_COLUMN_BLACK, tableColumns[2]);
+		prop.setProperty(TABLE_COLUMN_RESULT, tableColumns[3]);
+		prop.setProperty(TABLE_COLUMN_MEETING, tableColumns[4]);
 	}
 }

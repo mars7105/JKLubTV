@@ -108,8 +108,7 @@ public class MainControl extends JFrame {
 	public MainControl() {
 		windowWidth = TurnierKonstanten.WINDOW_WIDTH;
 		windowHeight = TurnierKonstanten.WINDOW_HEIGHT;
-		setBounds(TurnierKonstanten.WINDOW_BOUNDS_X,
-				TurnierKonstanten.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
+		setBounds(TurnierKonstanten.WINDOW_BOUNDS_X, TurnierKonstanten.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
 		setMinimumSize(new Dimension(windowWidth / 2, windowHeight / 2));
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -117,8 +116,7 @@ public class MainControl extends JFrame {
 		languagePropertiesControl = new LanguagePropertiesControl(this);
 		if (propertiesControl.readProperties() == false) {
 			if (propertiesControl.writeProperties() == false) {
-				JOptionPane.showMessageDialog(this,
-						Messages.getString("MainControl.7")); //$NON-NLS-1$
+				JOptionPane.showMessageDialog(this, Messages.getString("MainControl.7")); //$NON-NLS-1$
 			}
 		}
 		languagePropertiesControl.checkLanguage();
@@ -134,8 +132,7 @@ public class MainControl extends JFrame {
 		return languagePropertiesControl;
 	}
 
-	public void setLanguagePropertiesControl(
-			LanguagePropertiesControl languagePropertiesControl) {
+	public void setLanguagePropertiesControl(LanguagePropertiesControl languagePropertiesControl) {
 		this.languagePropertiesControl = languagePropertiesControl;
 	}
 
@@ -167,8 +164,7 @@ public class MainControl extends JFrame {
 		return rundenEingabeFormularView;
 	}
 
-	public void setRundenEingabeFormularView(
-			RundenEingabeFormularView[] rundenEingabeFormularView) {
+	public void setRundenEingabeFormularView(RundenEingabeFormularView[] rundenEingabeFormularView) {
 		this.rundenEingabeFormularView = rundenEingabeFormularView;
 	}
 
@@ -345,8 +341,9 @@ public class MainControl extends JFrame {
 		setVisible(true);
 		if (this.getInfoController() == null) {
 			this.setInfoController(new InfoControl(this));
-		} else {
-			this.getInfoController().makeInfoPanel();
+		}
+		if (this.eigenschaftenControl == null) {
+			this.eigenschaftenControl = new EigenschaftenControl(this);
 		}
 		SQLiteDAOFactory.setDB_PATH("");
 		this.setTitle(Messages.getString("MainControl.8"));
@@ -377,8 +374,7 @@ public class MainControl extends JFrame {
 			if (this.getTurnierTableControl() == null) {
 				this.setTurnierTableControl(new TurnierTableControl(this));
 				// this.getTurnierTableControl().loadTurnierListe();
-				this.setTurnierListeLadenControl(new TurnierListeLadenControl(
-						this));
+				this.setTurnierListeLadenControl(new TurnierListeLadenControl(this));
 				try {
 					this.getTurnierListeLadenControl().loadTurnierListe();
 				} catch (SQLException e) {
@@ -390,8 +386,7 @@ public class MainControl extends JFrame {
 				this.resetApp();
 				this.setTurnierTableControl(new TurnierTableControl(this));
 				// this.getTurnierTableControl().loadTurnierListe();
-				this.setTurnierListeLadenControl(new TurnierListeLadenControl(
-						this));
+				this.setTurnierListeLadenControl(new TurnierListeLadenControl(this));
 				try {
 					this.getTurnierListeLadenControl().loadTurnierListe();
 				} catch (SQLException e) {
@@ -403,8 +398,7 @@ public class MainControl extends JFrame {
 			naviView.getSpielerListePanel().setVisible(false);
 			hauptPanel.addChangeListener(naviController.getTurnierAnsicht());
 			for (int i = 0; i < hauptPanel.getTabCount(); i++) {
-				if (hauptPanel.getTitleAt(i).equals(
-						Messages.getString("MainControl.9"))) { //$NON-NLS-1$
+				if (hauptPanel.getTitleAt(i).equals(Messages.getString("MainControl.9"))) { //$NON-NLS-1$
 					hauptPanel.setSelectedIndex(i);
 				}
 			}
@@ -460,12 +454,10 @@ public class MainControl extends JFrame {
 		propertiesControl.checkProperties();
 		Boolean ok = propertiesControl.writeProperties();
 		if (ok) {
-			JOptionPane.showMessageDialog(null,
-					Messages.getString("MainControl.11"));
+			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.11"));
 
 		} else {
-			JOptionPane.showMessageDialog(null,
-					Messages.getString("MainControl.12"));
+			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.12"));
 
 		}
 		resetApp();
@@ -523,13 +515,11 @@ public class MainControl extends JFrame {
 		this.simpleTerminTabelle = simpleTerminTabelle;
 	}
 
-	public void setSimpleTerminTabelleView(
-			SimpleTerminTabelleView[] simpleTerminTabelleView) {
+	public void setSimpleTerminTabelleView(SimpleTerminTabelleView[] simpleTerminTabelleView) {
 		this.simpleTerminTabelleView = simpleTerminTabelleView;
 	}
 
-	public void setSpielerAnzahlControl(
-			SpielerAnzahlControl spielerAnzahlControl) {
+	public void setSpielerAnzahlControl(SpielerAnzahlControl spielerAnzahlControl) {
 		this.spielerAnzahlControl = spielerAnzahlControl;
 	}
 
@@ -537,13 +527,11 @@ public class MainControl extends JFrame {
 		this.spielerAnzahlView = spielerAnzahlView;
 	}
 
-	public void setSpielerEditierenControl(
-			SpielerLadenControl spielerLadenControl) {
+	public void setSpielerEditierenControl(SpielerLadenControl spielerLadenControl) {
 		this.spielerLadenControl = spielerLadenControl;
 	}
 
-	public void setSpielerEingabeControl(
-			SpielerEingabeControl spielerEingabeControl) {
+	public void setSpielerEingabeControl(SpielerEingabeControl spielerEingabeControl) {
 		this.spielerEingabeControl = spielerEingabeControl;
 	}
 
@@ -571,8 +559,7 @@ public class MainControl extends JFrame {
 		this.terminTabelle = terminTabelle2;
 	}
 
-	public void setTerminTabelleControl(
-			TerminTabelleControl terminTabelleControl) {
+	public void setTerminTabelleControl(TerminTabelleControl terminTabelleControl) {
 		this.terminTabelleControl = terminTabelleControl;
 	}
 
@@ -580,8 +567,7 @@ public class MainControl extends JFrame {
 		this.turnier = turnier;
 	}
 
-	public void setTurnier_has_SpielerTableControl(
-			Turnier_has_SpielerTableControl turnier_has_SpielerTableControl) {
+	public void setTurnier_has_SpielerTableControl(Turnier_has_SpielerTableControl turnier_has_SpielerTableControl) {
 		this.turnier_has_SpielerTableControl = turnier_has_SpielerTableControl;
 	}
 
@@ -589,13 +575,11 @@ public class MainControl extends JFrame {
 		this.turnierControl = turnierControl;
 	}
 
-	public void setTurnierListeLadenControl(
-			TurnierListeLadenControl turnierListeLadenControl) {
+	public void setTurnierListeLadenControl(TurnierListeLadenControl turnierListeLadenControl) {
 		this.turnierListeLadenControl = turnierListeLadenControl;
 	}
 
-	public void setTurnierListeLadenView(
-			TurnierListeLadenView turnierListeLadenView) {
+	public void setTurnierListeLadenView(TurnierListeLadenView turnierListeLadenView) {
 		this.turnierListeLadenView = turnierListeLadenView;
 	}
 
@@ -603,8 +587,7 @@ public class MainControl extends JFrame {
 		this.turnierTabelle = turnierTabelle;
 	}
 
-	public void setTurnierTabelleControl(
-			TurnierTabelleControl turnierTabelleControl) {
+	public void setTurnierTabelleControl(TurnierTabelleControl turnierTabelleControl) {
 		this.turnierTabelleControl = turnierTabelleControl;
 	}
 
@@ -652,13 +635,11 @@ public class MainControl extends JFrame {
 		return rundenEingabeFormularControl;
 	}
 
-	public void setRundenEingabeFormularControl(
-			RundenEingabeFormularControl rundenEingabeFormularControl) {
+	public void setRundenEingabeFormularControl(RundenEingabeFormularControl rundenEingabeFormularControl) {
 		this.rundenEingabeFormularControl = rundenEingabeFormularControl;
 	}
 
-	public void setEigenschaftenControl(
-			EigenschaftenControl eigenschaftenControl) {
+	public void setEigenschaftenControl(EigenschaftenControl eigenschaftenControl) {
 		this.eigenschaftenControl = eigenschaftenControl;
 	}
 

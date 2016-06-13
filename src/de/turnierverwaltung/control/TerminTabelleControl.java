@@ -69,10 +69,16 @@ public class TerminTabelleControl {
 	}
 
 	public void makeSimpleTableView(int gruppenNummer) {
-
+		PropertiesControl ppC = mainControl.getPropertiesControl();
+		String roundColumnName = ppC.getTableComumnRound();
+		String whiteColumnName = ppC.getTableComumnWhite();
+		String blackColumnName = ppC.getTableComumnBlack();
+		String resultColumnName = ppC.getTableComumnResult();
+		String meetingColumnName = ppC.getTableComumnMeeting();
 		this.terminTabelle[gruppenNummer] = new TerminTabelle(turnier,
-				mainControl.getTurnier().getGruppe()[gruppenNummer]);
-		this.terminTabelle[gruppenNummer].createTerminTabelle();
+				mainControl.getTurnier().getGruppe()[gruppenNummer],
+				roundColumnName, whiteColumnName, blackColumnName,
+				resultColumnName, meetingColumnName);
 		simpleTableView[gruppenNummer] = new SimpleTerminTabelleView(
 				new SimpleTerminTabelle(this.terminTabelle[gruppenNummer]));
 		simpleTurnierTabelleView = mainControl.getSimpleTableView();

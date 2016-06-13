@@ -16,17 +16,11 @@ package de.turnierverwaltung.control;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import java.awt.Toolkit;
-import javax.swing.ImageIcon;
-import javax.swing.JTabbedPane;
 import de.turnierverwaltung.view.EigenschaftenView;
 
 public class EigenschaftenControl {
 	private MainControl mainControl;
 	private EigenschaftenView eigenschaftenView;
-	private ImageIcon eigenschaftenIcon = new ImageIcon(Toolkit
-			.getDefaultToolkit().getImage(
-					getClass().getResource("/images/configure-2.png"))); //$NON-NLS-1$
 	private int maxWidth = 0;;
 	private int columnWidht = 0;
 	private EigenschaftenActionListenerControl actionListenerControl;
@@ -38,58 +32,24 @@ public class EigenschaftenControl {
 	public EigenschaftenControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		eigenschaftenView = new EigenschaftenView();
-		actionListenerControl = new EigenschaftenActionListenerControl(
-				this.mainControl, this);
-		itemListenerControl = new EigenschaftenItemListenerControl(
-				this.mainControl, this);
+		actionListenerControl = new EigenschaftenActionListenerControl(this.mainControl, this);
+		itemListenerControl = new EigenschaftenItemListenerControl(this.mainControl, this);
 
 	}
 
-	/**
-	 * 
-	 */
-	public void makeeigenschaftenPanel() {
-		JTabbedPane hauptPanel = this.mainControl.getHauptPanel();
-		hauptPanel
-				.addTab(Messages.getString("EigenschaftenControl.1"), eigenschaftenIcon, eigenschaftenView); //$NON-NLS-1$
-		if (mainControl.getPropertiesControl() == null) {
-			mainControl
-					.setPropertiesControl(new PropertiesControl(mainControl));
-			mainControl.getPropertiesControl().readProperties();
-		}
-		eigenschaftenView.getCheckBoxHeaderFooter().setSelected(
-				mainControl.getPropertiesControl().getOnlyTables());
-		eigenschaftenView.getCheckBoxohneDWZ().setSelected(
-				mainControl.getPropertiesControl().getNoDWZ());
-		eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(
-				mainControl.getPropertiesControl().getNoFolgeDWZ());
-		eigenschaftenView.getSpielerListeAuswahlBox().setSelectedIndex(
-				mainControl.getPropertiesControl().getSpielerProTab());
-		eigenschaftenView.getTurnierListeAuswahlBox().setSelectedIndex(
-				mainControl.getPropertiesControl().getTurniereProTab());
-		if (eigenschaftenView.getCheckBoxohneDWZ().isSelected() == true) {
-			eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(true);
-			eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(false);
-			mainControl.getPropertiesControl().setNoFolgeDWZ(true);
-		}
-		if (mainControl.getPropertiesControl().getLanguage().equals("german")) { //$NON-NLS-1$
-			eigenschaftenView.getGermanLanguageCheckBox().setSelected(true);
-			eigenschaftenView.getEnglishLanguageCheckBox().setSelected(false);
-			mainControl.getLanguagePropertiesControl().setLanguageToGerman();
-		} else if (mainControl.getPropertiesControl().getLanguage()
-				.equals("english")) { //$NON-NLS-1$
-			eigenschaftenView.getGermanLanguageCheckBox().setSelected(false);
-			eigenschaftenView.getEnglishLanguageCheckBox().setSelected(true);
-			mainControl.getLanguagePropertiesControl().setLanguageToEnglish();
-		}
-		eigenschaftenView.setOpenDefaultPathLabel(mainControl
-				.getPropertiesControl().getDefaultPath());
-
-		actionListenerControl.addActionListeners();
-		itemListenerControl.addItemListeners();
-
-		hauptPanel.updateUI();
-
+	public void setTableColumns() {
+		PropertiesControl ppC = mainControl.getPropertiesControl();
+		eigenschaftenView.getWhiteTextField().setText(ppC.getTableComumnWhite());
+		eigenschaftenView.getBlackTextField().setText(ppC.getTableComumnBlack());
+		eigenschaftenView.getMeetingTextField().setText(ppC.getTableComumnMeeting());
+		eigenschaftenView.getOldDWZTextField().setText(ppC.getTableComumnOldDWZ());
+		eigenschaftenView.getNewDWZTextField().setText(ppC.getTableComumnNewDWZ());
+		eigenschaftenView.getPlayerTextField().setText(ppC.getTableComumnPlayer());
+		eigenschaftenView.getPointsTextField().setText(ppC.getTableComumnPoints());
+		eigenschaftenView.getRankingTextField().setText(ppC.getTableComumnRanking());
+		eigenschaftenView.getSbbTextField().setText(ppC.getTableComumnSonnebornBerger());
+		eigenschaftenView.getResultTextField().setText(ppC.getTableComumnResult());
+		eigenschaftenView.getRoundTextField().setText(ppC.getTableComumnRound());
 	}
 
 	public int getColumnWidht() {
@@ -118,6 +78,22 @@ public class EigenschaftenControl {
 
 	public void setMaxWidth(int maxWidth) {
 		this.maxWidth = maxWidth;
+	}
+
+	public EigenschaftenActionListenerControl getActionListenerControl() {
+		return actionListenerControl;
+	}
+
+	public void setActionListenerControl(EigenschaftenActionListenerControl actionListenerControl) {
+		this.actionListenerControl = actionListenerControl;
+	}
+
+	public EigenschaftenItemListenerControl getItemListenerControl() {
+		return itemListenerControl;
+	}
+
+	public void setItemListenerControl(EigenschaftenItemListenerControl itemListenerControl) {
+		this.itemListenerControl = itemListenerControl;
 	}
 
 }
