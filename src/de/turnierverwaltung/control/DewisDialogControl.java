@@ -17,6 +17,7 @@ package de.turnierverwaltung.control;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.Color;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -82,34 +83,44 @@ public class DewisDialogControl {
 	* 
 	*/
 	public void makeDialog() {
-		try {
-//			mainControl.setEnabled(false);
-			if (dialog == null) {
-				dialog = new DEWISDialogView();
-			}
-			dialog.getVereinsSucheButton().addActionListener(dewisDialogActionListenerControl);
-			dialog.getVereinsAuswahlOkButton().addActionListener(dewisDialogActionListenerControl);
-			dialog.getUpdateButton().addActionListener(dewisDialogActionListenerControl);
-			dialog.getUpdateButton().setEnabled(false);
-			dialog.getOkButton().addActionListener(dewisDialogActionListenerControl);
-			dialog.getCancelButton().addActionListener(dewisDialogActionListenerControl);
-			dialog.getOkButton().setEnabled(false);
-			String zps = mainControl.getPropertiesControl().getZPS();
-			if (zps.length() > 0) {
-				dialog.getVereinsSuche().setText(zps);
 
-				makeDWZListe(zps);
+		if (dialog == null) {
+			try {
+				dialog = new DEWISDialogView();
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			vereinsSuche = new DewisDialogVereinsSucheControl(mainControl);
-			if (vereinsSuche.checkifFileExist() == false) {
-				dialog.getVereinsAuswahl().setEnabled(false);
-				dialog.getVereinsAuswahlOkButton().setEnabled(false);
-				dialog.getVereinsName().setEnabled(false);
-				dialog.getVereinsName().setBackground(Color.LIGHT_GRAY);
+		} else {
+			dialog.dispose();
+			try {
+				dialog = new DEWISDialogView();
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-//			mainControl.setEnabled(true);
 		}
+		dialog.getVereinsSucheButton().addActionListener(dewisDialogActionListenerControl);
+		dialog.getVereinsAuswahlOkButton().addActionListener(dewisDialogActionListenerControl);
+		dialog.getUpdateButton().addActionListener(dewisDialogActionListenerControl);
+		dialog.getUpdateButton().setEnabled(false);
+		dialog.getOkButton().addActionListener(dewisDialogActionListenerControl);
+		dialog.getCancelButton().addActionListener(dewisDialogActionListenerControl);
+		dialog.getOkButton().setEnabled(false);
+		String zps = mainControl.getPropertiesControl().getZPS();
+		if (zps.length() > 0) {
+			dialog.getVereinsSuche().setText(zps);
+
+			makeDWZListe(zps);
+		}
+		vereinsSuche = new DewisDialogVereinsSucheControl(mainControl);
+		if (vereinsSuche.checkifFileExist() == false) {
+			dialog.getVereinsAuswahl().setEnabled(false);
+			dialog.getVereinsAuswahlOkButton().setEnabled(false);
+			dialog.getVereinsName().setEnabled(false);
+			dialog.getVereinsName().setBackground(Color.LIGHT_GRAY);
+		}
+
 	}
 
 	public void makeVereinsListe() {
