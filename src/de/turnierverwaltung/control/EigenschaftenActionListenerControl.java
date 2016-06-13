@@ -162,7 +162,14 @@ public class EigenschaftenActionListenerControl {
 						ppC.setTableComumnSonnebornBerger(esControl
 								.getEigenschaftenView().getSbbTextField()
 								.getText());
+						ppC.setTableComumnRound(esControl
+								.getEigenschaftenView().getRoundTextField()
+								.getText());
+						ppC.checkCrossTableColumnForDoubles();
+						ppC.checkMeetingTableColumnForDoubles();
+		
 						ppC.writeProperties();
+						esControl.setTableColumns();
 					}
 
 				});

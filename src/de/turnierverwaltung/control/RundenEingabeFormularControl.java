@@ -255,9 +255,16 @@ public class RundenEingabeFormularControl implements ActionListener {
 	@SuppressWarnings("unchecked")
 	public void makeNewFormular(int index) {
 
-		terminTabelle[index] = new TerminTabelle(turnier, gruppe[index]);
+		PropertiesControl ppC = mainControl.getPropertiesControl();
+		String roundColumnName = ppC.getTableComumnRound();
+		String whiteColumnName = ppC.getTableComumnWhite();
+		String blackColumnName = ppC.getTableComumnBlack();
+		String resultColumnName = ppC.getTableComumnResult();
+		String meetingColumnName = ppC.getTableComumnMeeting();
+		terminTabelle[index] = new TerminTabelle(turnier, gruppe[index],
+				roundColumnName, whiteColumnName, blackColumnName,
+				resultColumnName, meetingColumnName);
 		gruppe[index].setTeminTabelle(terminTabelle[index]);
-		terminTabelle[index].createTerminTabelle();
 
 		String[][] terminMatrix = terminTabelle[index].getTabellenMatrix();
 		rundenEingabeFormularView[index] = new RundenEingabeFormularView(

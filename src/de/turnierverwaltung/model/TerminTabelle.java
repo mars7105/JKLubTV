@@ -26,8 +26,21 @@ public class TerminTabelle {
 	private int zeilenAnzahl;
 	private String tabellenMatrix[][];
 	private TerminTabelleToHTML terminTabelleToHTML;
+	private String roundColumnName;
+	private String whiteColumnName;
+	private String blackColumnName;
+	private String resultColumnName;
+	private String meetingColumnName;
 
-	public TerminTabelle(Turnier turnier, Gruppe gruppe) {
+	public TerminTabelle(Turnier turnier, Gruppe gruppe,
+			String roundColumnName, String whiteColumnName,
+			String blackColumnName, String resultColumnName,
+			String meetingColumnName) {
+		this.roundColumnName = roundColumnName;
+		this.whiteColumnName = whiteColumnName;
+		this.blackColumnName = blackColumnName;
+		this.resultColumnName = resultColumnName;
+		this.meetingColumnName = meetingColumnName;
 		this.turnier = turnier;
 		this.gruppe = gruppe;
 		this.gruppe.getSpieler();
@@ -36,7 +49,8 @@ public class TerminTabelle {
 		calcRunden();
 		calcAnzahlSpaltenZeilen();
 		tabellenMatrix = new String[5][zeilenAnzahl];
-		createTerminTabelle();
+		createTerminTabelle(roundColumnName, whiteColumnName, blackColumnName,
+				resultColumnName, meetingColumnName);
 
 	}
 
@@ -53,12 +67,24 @@ public class TerminTabelle {
 
 	}
 
-	public void createTerminTabelle() {
-		tabellenMatrix[0][0] = TurnierKonstanten.TABLE_COLUMN_ROUND;
-		tabellenMatrix[1][0] = TurnierKonstanten.TABLE_COLUMN_WHITE;
-		tabellenMatrix[2][0] = TurnierKonstanten.TABLE_COLUMN_BLACK;
-		tabellenMatrix[3][0] = TurnierKonstanten.TABLE_COLUMN_RESULT;
-		tabellenMatrix[4][0] = TurnierKonstanten.TABLE_COLUMN_MEETING;
+	public void createTerminTabelle(String roundColumnName,
+			String whiteColumnName, String blackColumnName,
+			String resultColumnName, String meetingColumnName) {
+		this.roundColumnName = roundColumnName;
+		this.whiteColumnName = whiteColumnName;
+		this.blackColumnName = blackColumnName;
+		this.resultColumnName = resultColumnName;
+		this.meetingColumnName = meetingColumnName;
+		// tabellenMatrix[0][0] = TurnierKonstanten.TABLE_COLUMN_ROUND;
+		// tabellenMatrix[1][0] = TurnierKonstanten.TABLE_COLUMN_WHITE;
+		// tabellenMatrix[2][0] = TurnierKonstanten.TABLE_COLUMN_BLACK;
+		// tabellenMatrix[3][0] = TurnierKonstanten.TABLE_COLUMN_RESULT;
+		// tabellenMatrix[4][0] = TurnierKonstanten.TABLE_COLUMN_MEETING;
+		tabellenMatrix[0][0] = roundColumnName;
+		tabellenMatrix[1][0] = whiteColumnName;
+		tabellenMatrix[2][0] = blackColumnName;
+		tabellenMatrix[3][0] = resultColumnName;
+		tabellenMatrix[4][0] = meetingColumnName;
 		int index = 0;
 		for (int i = 0; i < spielerAnzahl - 1; i++) {
 			for (int y = i + 1; y < spielerAnzahl; y++) {
@@ -140,6 +166,46 @@ public class TerminTabelle {
 
 	public void setZeilenAnzahl(int zeilenAnzahl) {
 		this.zeilenAnzahl = zeilenAnzahl;
+	}
+
+	public String getRoundColumnName() {
+		return roundColumnName;
+	}
+
+	public void setRoundColumnName(String roundColumnName) {
+		this.roundColumnName = roundColumnName;
+	}
+
+	public String getWhiteColumnName() {
+		return whiteColumnName;
+	}
+
+	public void setWhiteColumnName(String whiteColumnName) {
+		this.whiteColumnName = whiteColumnName;
+	}
+
+	public String getBlackColumnName() {
+		return blackColumnName;
+	}
+
+	public void setBlackColumnName(String blackColumnName) {
+		this.blackColumnName = blackColumnName;
+	}
+
+	public String getResultColumnName() {
+		return resultColumnName;
+	}
+
+	public void setResultColumnName(String resultColumnName) {
+		this.resultColumnName = resultColumnName;
+	}
+
+	public String getMeetingColumnName() {
+		return meetingColumnName;
+	}
+
+	public void setMeetingColumnName(String meetingColumnName) {
+		this.meetingColumnName = meetingColumnName;
 	}
 
 }

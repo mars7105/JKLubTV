@@ -154,7 +154,7 @@ public class TurnierTabelle {
 		String[][] temp = new String[tabellenMatrix.length - 1][tabellenMatrix[0].length];
 		for (int x = 0; x < tabellenMatrix.length - 1; x++) {
 			for (int y = 0; y < tabellenMatrix[0].length; y++) {
-				if (tabellenMatrix[x][0].equals(oldDWZColumnName)) {
+				if (tabellenMatrix[x][0].equals(oldDWZColumnName) && x == 1) {
 					v = 1;
 
 				}
@@ -170,7 +170,8 @@ public class TurnierTabelle {
 		String[][] temp = new String[tabellenMatrix.length - 1][tabellenMatrix[0].length];
 		for (int x = 0; x < tabellenMatrix.length - 1; x++) {
 			for (int y = 0; y < tabellenMatrix[0].length; y++) {
-				if (tabellenMatrix[x][0].equals(newDWZColumnName)) {
+				if (tabellenMatrix[x][0].equals(newDWZColumnName)
+						&& (x == 1 || x == 2)) {
 					v = 1;
 
 				}

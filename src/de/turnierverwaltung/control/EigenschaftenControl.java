@@ -86,6 +86,16 @@ public class EigenschaftenControl {
 		eigenschaftenView.setOpenDefaultPathLabel(mainControl
 				.getPropertiesControl().getDefaultPath());
 
+		setTableColumns();
+		actionListenerControl.addActionListeners();
+		itemListenerControl.addItemListeners();
+
+		hauptPanel.updateUI();
+
+	}
+
+	public void setTableColumns() {
+		PropertiesControl ppC = mainControl.getPropertiesControl();
 		eigenschaftenView.getWhiteTextField()
 				.setText(ppC.getTableComumnWhite());
 		eigenschaftenView.getBlackTextField()
@@ -106,11 +116,8 @@ public class EigenschaftenControl {
 				ppC.getTableComumnSonnebornBerger());
 		eigenschaftenView.getResultTextField().setText(
 				ppC.getTableComumnResult());
-		actionListenerControl.addActionListeners();
-		itemListenerControl.addItemListeners();
-
-		hauptPanel.updateUI();
-
+		eigenschaftenView.getRoundTextField()
+				.setText(ppC.getTableComumnRound());
 	}
 
 	public int getColumnWidht() {

@@ -143,7 +143,6 @@ public class EigenschaftenView extends JPanel {
 		htmlAll.add(title);
 		JPanel bothPanel = new JPanel();
 		bothPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		bothPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		JPanel leftPanel = new JPanel();
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
 		leftPanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -200,6 +199,10 @@ public class EigenschaftenView extends JPanel {
 				textFieldColumns);
 		playerTextField.setPreferredSize(dimTextField);
 
+		roundTextField = new JTextField(TurnierKonstanten.TABLE_COLUMN_ROUND,
+				textFieldColumns);
+		roundTextField.setPreferredSize(dimTextField);
+
 		Dimension dim = new Dimension(175, 30);
 		JLabel oldDWZTextFieldLabel = new JLabel(
 				Messages.getString("EigenschaftenView.22") + ":");
@@ -239,17 +242,28 @@ public class EigenschaftenView extends JPanel {
 		JLabel playerTextFieldLabel = new JLabel(
 				Messages.getString("EigenschaftenView.31") + ":");
 		playerTextFieldLabel.setPreferredSize(dim);
-		JLabel leftTitleLabel = new JLabel("Kreuztabelle");
+
+		JLabel roundTextFieldLabel = new JLabel(
+				Messages.getString("EigenschaftenView.36") + ":");
+		roundTextFieldLabel.setPreferredSize(dim);
+
+		JLabel leftTitleLabel = new JLabel(Messages.getString("EigenschaftenView.37"));
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(leftTitleLabel);
 		leftPanel.add(htmlPanel);
 
-		JLabel rightTitleLabel = new JLabel("Termintabelle");
+		JLabel rightTitleLabel = new JLabel(Messages.getString("EigenschaftenView.38"));
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(rightTitleLabel);
 		rightPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(playerTextFieldLabel);
+		htmlPanel.add(playerTextField);
+		leftPanel.add(htmlPanel);
 
 		htmlPanel = new JPanel();
 		htmlPanel.add(oldDWZTextFieldLabel);
@@ -282,6 +296,12 @@ public class EigenschaftenView extends JPanel {
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(roundTextFieldLabel);
+		htmlPanel.add(roundTextField);
+		rightPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(whiteTextFieldLabel);
 		htmlPanel.add(whiteTextField);
 		rightPanel.add(htmlPanel);
@@ -311,18 +331,6 @@ public class EigenschaftenView extends JPanel {
 		htmlPanel.add(leerPanel);
 		rightPanel.add(htmlPanel);
 
-		leerPanel = new JPanel();
-		leerPanel.setPreferredSize(dim);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(leerPanel);
-		rightPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(playerTextFieldLabel);
-		htmlPanel.add(playerTextField);
-		leftPanel.add(htmlPanel);
 		saveTableNamesButton = new JButton(
 				Messages.getString("EigenschaftenView.35")); //$NON-NLS-1$
 		htmlPanel = new JPanel();

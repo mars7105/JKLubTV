@@ -137,8 +137,8 @@ public class PDFSaveControl {
 									titel, pathName,
 									turnierTabelle.getTabellenMatrix());
 
-							mainControl.getTerminTabelle()[i]
-									.createTerminTabelle();
+//							mainControl.getTerminTabelle()[i]
+//									.createTerminTabelle();
 							titel = Messages.getString("PDFSaveControler.12") //$NON-NLS-1$
 									+ mainControl.getTurnier().getTurnierName()
 									+ " - " //$NON-NLS-1$
