@@ -15,6 +15,7 @@ package de.turnierverwaltung.view;
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Cursor;
@@ -25,7 +26,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Properties;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField.AbstractFormatter;
@@ -33,14 +33,29 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
-
 import de.turnierverwaltung.model.Turnier;
 
 public class TurnierView extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel hauptPanel;
+	private JTextField turnierNameTextField;
+	private JDatePickerImpl startDatumTextField;
+	private JDatePickerImpl endDatumeTextField;
+	private JTextField gruppenAnzahlTextField;
+	private Turnier turnier;
+	private JButton okButton;
+	private String turnierName;
+	private String startDatum;
+	private String endDatum;
+	private int gruppenAnzahl;
+	private Properties property;
+	
 	public class DateLabelFormatter extends AbstractFormatter {
 
 		/**
@@ -48,11 +63,11 @@ public class TurnierView extends JPanel {
 		 */
 		private static final long serialVersionUID = 1L;
 		private String datePattern = Messages.getString("TurnierView.15"); //$NON-NLS-1$
-		private SimpleDateFormat dateFormatter = new SimpleDateFormat(
-				datePattern, Locale.getDefault() );
-		
+		private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern, Locale.getDefault());
+
 		public DateLabelFormatter() {
 		}
+
 		@Override
 		public Object stringToValue(String text) throws ParseException {
 			return dateFormatter.parseObject(text);
@@ -70,25 +85,7 @@ public class TurnierView extends JPanel {
 
 	}
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 
-	private JPanel hauptPanel;
-	private JTextField turnierNameTextField;
-	private JDatePickerImpl startDatumTextField;
-	private JDatePickerImpl endDatumeTextField;
-	private JTextField gruppenAnzahlTextField;
-	private Turnier turnier;
-	private JButton okButton;
-	// private JButton cancelButton;
-	private String turnierName;
-	private String startDatum;
-	private String endDatum;
-	private int gruppenAnzahl;
-
-	private Properties property;
 
 	/**
 	 * Create the dialog.
@@ -119,8 +116,7 @@ public class TurnierView extends JPanel {
 			hauptPanel.add(panel1);
 			panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 			{
-				JLabel lblTurniername = new JLabel(
-						Messages.getString("TurnierView.8")); //$NON-NLS-1$
+				JLabel lblTurniername = new JLabel(Messages.getString("TurnierView.8")); //$NON-NLS-1$
 				panel1.add(lblTurniername);
 			}
 			{
@@ -139,8 +135,7 @@ public class TurnierView extends JPanel {
 				panel2.add(label);
 			}
 			{
-				startDatumTextField = new JDatePickerImpl(new JDatePanelImpl(
-						new UtilDateModel(), property),
+				startDatumTextField = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), property),
 						new DateLabelFormatter());
 				panel2.add(startDatumTextField);
 			}
@@ -151,12 +146,11 @@ public class TurnierView extends JPanel {
 			panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
 			hauptPanel.add(panel3);
 
-			JLabel lblEndDatum = new JLabel(
-					Messages.getString("TurnierView.10")); //$NON-NLS-1$
+			JLabel lblEndDatum = new JLabel(Messages.getString("TurnierView.10")); //$NON-NLS-1$
 			panel3.add(lblEndDatum);
 
-			endDatumeTextField = new JDatePickerImpl(new JDatePanelImpl(
-					new UtilDateModel(), property), new DateLabelFormatter());
+			endDatumeTextField = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), property),
+					new DateLabelFormatter());
 			panel3.add(endDatumeTextField);
 		}
 		{
@@ -165,8 +159,7 @@ public class TurnierView extends JPanel {
 			panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
 			hauptPanel.add(panel4);
 
-			JLabel lblAnzahlGruppen = new JLabel(
-					Messages.getString("TurnierView.11")); //$NON-NLS-1$
+			JLabel lblAnzahlGruppen = new JLabel(Messages.getString("TurnierView.11")); //$NON-NLS-1$
 			panel4.add(lblAnzahlGruppen);
 
 			gruppenAnzahlTextField = new JTextField();

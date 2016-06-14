@@ -1,4 +1,5 @@
 package de.turnierverwaltung.view;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -61,10 +62,11 @@ public class SpielerEingabeView extends JPanel {
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
 		contentPanel.setBackground(new Color(249, 222, 112));
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		setLayout(new BorderLayout());
+
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
-//		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));
+
 		add(scrollPane, BorderLayout.CENTER);
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -76,8 +78,7 @@ public class SpielerEingabeView extends JPanel {
 		cancelButton.setActionCommand(Messages.getString("SpielerEingabeView.3")); //$NON-NLS-1$
 		buttonPane.add(cancelButton);
 
-		// contentPanel.add(buttonPane);
-		add(buttonPane);
+		add(buttonPane, BorderLayout.SOUTH);
 
 		JPanel line;
 		JPanel centerPane = new JPanel();
@@ -110,8 +111,9 @@ public class SpielerEingabeView extends JPanel {
 			dwzTextfield[i] = new JTextField(10);
 			line.add(label3);
 			line.add(dwzTextfield[i]);
-			
-			String[] ageStrings = { Messages.getString("SpielerEingabeView.10"), Messages.getString("SpielerEingabeView.11"), Messages.getString("SpielerEingabeView.12") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+
+			String[] ageStrings = { Messages.getString("SpielerEingabeView.10"), //$NON-NLS-1$
+					Messages.getString("SpielerEingabeView.11"), Messages.getString("SpielerEingabeView.12") }; //$NON-NLS-1$ //$NON-NLS-2$
 			textComboBoxAge[i] = new JComboBox<String>(ageStrings);
 			line.add(new JLabel(Messages.getString("SpielerEingabeView.13"))); //$NON-NLS-1$
 			line.add(textComboBoxAge[i]);

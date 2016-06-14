@@ -1,4 +1,6 @@
 package de.turnierverwaltung.view;
+
+import java.awt.BorderLayout;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -17,11 +19,19 @@ package de.turnierverwaltung.view;
 import java.awt.Color;
 import java.awt.FlowLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+/*
+ * Version 3.1.0
+ */
+//import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.border.EtchedBorder;
 
 public class GruppenView extends JPanel {
 
@@ -35,8 +45,11 @@ public class GruppenView extends JPanel {
 	private JButton cancelButton;
 	private JTextField[] gruppenNameTextField;
 	private String[] gruppenName;
-
-
+	/*
+	 * Version 3.1.0
+	 */
+	// private JCheckBox[] doppelteRundenCheckBox;
+	private JScrollPane scrollPane;
 
 	public GruppenView() {
 
@@ -74,13 +87,18 @@ public class GruppenView extends JPanel {
 		gruppenName = new String[this.gruppenAnzahl];
 
 		gruppenNameTextField = new JTextField[this.gruppenAnzahl];
-		setLayout(new FlowLayout());
+		/*
+		 * Version 3.1.0
+		 */
+		// JLabel doppelteRundenLabel;
+		// doppelteRundenCheckBox = new JCheckBox[this.gruppenAnzahl];
+		setLayout(new BorderLayout());
 		setBackground(new Color(249, 222, 112));
 
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		contentPanel.setBackground(new Color(249, 222, 112));
+		contentPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
-		add(contentPanel);
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -89,27 +107,52 @@ public class GruppenView extends JPanel {
 			centerPane.setBackground(new Color(249, 222, 112));
 			centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
 			for (int i = 0; i < this.gruppenAnzahl; i++) {
+
+				JPanel groupBox = new JPanel();
+				groupBox.setLayout(new FlowLayout(FlowLayout.LEFT));
+				groupBox.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 				gruppenNameTextField[i] = new JTextField();
 				gruppenNameTextField[i].setColumns(10);
-				centerPane.add(new JLabel(String.valueOf(i + 1)
-						+ Messages.getString("GruppenView.0"))); //$NON-NLS-1$
-				centerPane.add(gruppenNameTextField[i]);
+				JPanel gruppenLabelPanel = new JPanel();
+				gruppenLabelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+				gruppenLabelPanel.add(new JLabel(String.valueOf(i + 1) + Messages.getString("GruppenView.0"))); //$NON-NLS-1$
+				groupBox.add(gruppenLabelPanel);
+				groupBox.add(gruppenNameTextField[i]);
+				/*
+				 * Version 3.1.0
+				 */
+				// doppelteRundenCheckBox[i] = new JCheckBox();
+				// groupBox.add(doppelteRundenCheckBox[i]);
+				// doppelteRundenLabel = new
+				// JLabel(Messages.getString("GruppenView.5"));
+				// JPanel doppelRundigPanel = new JPanel();
+				// doppelRundigPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+				// doppelRundigPanel.add(doppelteRundenCheckBox[i]);
+				// doppelRundigPanel.add(doppelteRundenLabel);
 
+				// groupBox.add(doppelRundigPanel);
+				centerPane.add(groupBox);
 			}
+			JPanel allGroupBoxes = new JPanel();
+			allGroupBoxes.setLayout(new BorderLayout());
+			allGroupBoxes.add(centerPane, BorderLayout.NORTH);
 
-			contentPanel.add(centerPane);
-			contentPanel.add(buttonPane);
-			{
-				okButton = new JButton(Messages.getString("GruppenView.1")); //$NON-NLS-1$
-				okButton.setActionCommand(Messages.getString("GruppenView.2")); //$NON-NLS-1$
-				buttonPane.add(okButton);
-			}
-			{
-				cancelButton = new JButton(Messages.getString("GruppenView.3")); //$NON-NLS-1$
-				cancelButton.setActionCommand(Messages.getString("GruppenView.4")); //$NON-NLS-1$
-				buttonPane.add(cancelButton);
+			okButton = new JButton(Messages.getString("GruppenView.1")); //$NON-NLS-1$
+			okButton.setActionCommand(Messages.getString("GruppenView.2")); //$NON-NLS-1$
+			buttonPane.add(okButton);
 
-			}
+			cancelButton = new JButton(Messages.getString("GruppenView.3")); //$NON-NLS-1$
+			cancelButton.setActionCommand(Messages.getString("GruppenView.4")); //$NON-NLS-1$
+			buttonPane.add(cancelButton);
+
+			contentPanel.add(allGroupBoxes);
+
+			scrollPane = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+					ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			scrollPane.setViewportView(contentPanel);
+			add(scrollPane, BorderLayout.CENTER);
+			add(buttonPane, BorderLayout.SOUTH);
+
 			setVisible(true);
 		}
 	}
