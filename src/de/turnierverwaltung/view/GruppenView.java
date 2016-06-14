@@ -22,7 +22,10 @@ import java.awt.FlowLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
+/*
+ * Version 3.1.0
+ */
+//import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -42,7 +45,10 @@ public class GruppenView extends JPanel {
 	private JButton cancelButton;
 	private JTextField[] gruppenNameTextField;
 	private String[] gruppenName;
-	private JCheckBox[] doppelteRundenCheckBox;
+	/*
+	 * Version 3.1.0
+	 */
+	// private JCheckBox[] doppelteRundenCheckBox;
 	private JScrollPane scrollPane;
 
 	public GruppenView() {
@@ -81,8 +87,11 @@ public class GruppenView extends JPanel {
 		gruppenName = new String[this.gruppenAnzahl];
 
 		gruppenNameTextField = new JTextField[this.gruppenAnzahl];
-		JLabel doppelteRundenLabel;
-		doppelteRundenCheckBox = new JCheckBox[this.gruppenAnzahl];
+		/*
+		 * Version 3.1.0
+		 */
+		// JLabel doppelteRundenLabel;
+		// doppelteRundenCheckBox = new JCheckBox[this.gruppenAnzahl];
 		setLayout(new BorderLayout());
 		setBackground(new Color(249, 222, 112));
 
@@ -109,15 +118,19 @@ public class GruppenView extends JPanel {
 				gruppenLabelPanel.add(new JLabel(String.valueOf(i + 1) + Messages.getString("GruppenView.0"))); //$NON-NLS-1$
 				groupBox.add(gruppenLabelPanel);
 				groupBox.add(gruppenNameTextField[i]);
-				doppelteRundenCheckBox[i] = new JCheckBox();
-				groupBox.add(doppelteRundenCheckBox[i]);
-				doppelteRundenLabel = new JLabel(Messages.getString("GruppenView.5"));
-				JPanel doppelRundigPanel = new JPanel();
-				doppelRundigPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-				doppelRundigPanel.add(doppelteRundenCheckBox[i]);
-				doppelRundigPanel.add(doppelteRundenLabel);
+				/*
+				 * Version 3.1.0
+				 */
+				// doppelteRundenCheckBox[i] = new JCheckBox();
+				// groupBox.add(doppelteRundenCheckBox[i]);
+				// doppelteRundenLabel = new
+				// JLabel(Messages.getString("GruppenView.5"));
+				// JPanel doppelRundigPanel = new JPanel();
+				// doppelRundigPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+				// doppelRundigPanel.add(doppelteRundenCheckBox[i]);
+				// doppelRundigPanel.add(doppelteRundenLabel);
 
-				groupBox.add(doppelRundigPanel);
+				// groupBox.add(doppelRundigPanel);
 				centerPane.add(groupBox);
 			}
 			JPanel allGroupBoxes = new JPanel();
