@@ -31,7 +31,7 @@ import java.awt.BorderLayout;
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import java.awt.Color;
+//import java.awt.Color;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -131,7 +131,7 @@ public class SimpleTerminTabelleView extends JPanel {
 //		haupt.add(tabelPanel);
 		add(tabelPanel,BorderLayout.CENTER);
 
-		setBackground(new Color(249, 222, 112));
+//		setBackground(new Color(249, 222, 112));
 
 		this.setVisible(true);
 

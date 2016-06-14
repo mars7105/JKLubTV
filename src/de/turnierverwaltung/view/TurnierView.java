@@ -16,7 +16,6 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import java.awt.Color;
 import java.awt.ComponentOrientation;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
@@ -55,7 +54,7 @@ public class TurnierView extends JPanel {
 	private String endDatum;
 	private int gruppenAnzahl;
 	private Properties property;
-	
+
 	public class DateLabelFormatter extends AbstractFormatter {
 
 		/**
@@ -85,8 +84,6 @@ public class TurnierView extends JPanel {
 
 	}
 
-
-
 	/**
 	 * Create the dialog.
 	 */
@@ -99,94 +96,82 @@ public class TurnierView extends JPanel {
 		int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
 		int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 		setBounds(0, 0, windowWidth, windowHeight);
-		;
+
 		setLayout(new FlowLayout());
-		setBackground(new Color(249, 222, 112));
+		// setBackground(new Color(249, 222, 112));
 		hauptPanel = new JPanel();
 		hauptPanel.setLayout(new BoxLayout(hauptPanel, BoxLayout.PAGE_AXIS));
-		hauptPanel.setBackground(new Color(249, 222, 112));
+		// hauptPanel.setBackground(new Color(249, 222, 112));
 		hauptPanel.setVisible(true);
 		add(hauptPanel);
-		{
 
-			JPanel panel1 = new JPanel();
-			panel1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-			panel1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-			panel1.setBackground(new Color(249, 222, 112));
-			hauptPanel.add(panel1);
-			panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
-			{
-				JLabel lblTurniername = new JLabel(Messages.getString("TurnierView.8")); //$NON-NLS-1$
-				panel1.add(lblTurniername);
-			}
-			{
-				turnierNameTextField = new JTextField();
-				panel1.add(turnierNameTextField);
-				turnierNameTextField.setColumns(10);
-			}
-		}
-		{
-			JPanel panel2 = new JPanel();
-			panel2.setBackground(new Color(249, 222, 112));
-			hauptPanel.add(panel2);
-			panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
-			{
-				JLabel label = new JLabel(Messages.getString("TurnierView.9")); //$NON-NLS-1$
-				panel2.add(label);
-			}
-			{
-				startDatumTextField = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), property),
-						new DateLabelFormatter());
-				panel2.add(startDatumTextField);
-			}
-		}
-		{
-			JPanel panel3 = new JPanel();
-			panel3.setBackground(new Color(249, 222, 112));
-			panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
-			hauptPanel.add(panel3);
+		JPanel panel1 = new JPanel();
+		panel1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		panel1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+//		panel1.setBackground(new Color(249, 222, 112));
+		hauptPanel.add(panel1);
+		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 
-			JLabel lblEndDatum = new JLabel(Messages.getString("TurnierView.10")); //$NON-NLS-1$
-			panel3.add(lblEndDatum);
+		JLabel lblTurniername = new JLabel(Messages.getString("TurnierView.8")); //$NON-NLS-1$
+		panel1.add(lblTurniername);
 
-			endDatumeTextField = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), property),
-					new DateLabelFormatter());
-			panel3.add(endDatumeTextField);
-		}
-		{
-			JPanel panel4 = new JPanel();
-			panel4.setBackground(new Color(249, 222, 112));
-			panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
-			hauptPanel.add(panel4);
+		turnierNameTextField = new JTextField();
+		panel1.add(turnierNameTextField);
+		turnierNameTextField.setColumns(10);
 
-			JLabel lblAnzahlGruppen = new JLabel(Messages.getString("TurnierView.11")); //$NON-NLS-1$
-			panel4.add(lblAnzahlGruppen);
+		JPanel panel2 = new JPanel();
+//		panel2.setBackground(new Color(249, 222, 112));
+		hauptPanel.add(panel2);
+		panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 
-			gruppenAnzahlTextField = new JTextField();
+		JLabel label = new JLabel(Messages.getString("TurnierView.9")); //$NON-NLS-1$
+		panel2.add(label);
 
-			gruppenAnzahlTextField.setColumns(10);
-			panel4.add(gruppenAnzahlTextField);
-		}
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setBackground(new Color(249, 222, 112));
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			hauptPanel.add(buttonPane);
-			{
-				okButton = new JButton(Messages.getString("TurnierView.12")); //$NON-NLS-1$
-				okButton.setActionCommand(Messages.getString("TurnierView.13")); //$NON-NLS-1$
-				buttonPane.add(okButton);
+		startDatumTextField = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), property),
+				new DateLabelFormatter());
+		panel2.add(startDatumTextField);
 
-			}
-			String help = Messages.getString("TurnierView.14"); //$NON-NLS-1$
-			JPanel helpPanel = new JPanel();
-			JTextArea helpText = new JTextArea();
-			helpText.setText(help);
-			helpText.setEditable(false);
-			helpPanel.add(helpText);
-			hauptPanel.add(helpPanel);
+		JPanel panel3 = new JPanel();
+//		panel3.setBackground(new Color(249, 222, 112));
+		panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
+		hauptPanel.add(panel3);
 
-		}
+		JLabel lblEndDatum = new JLabel(Messages.getString("TurnierView.10")); //$NON-NLS-1$
+		panel3.add(lblEndDatum);
+
+		endDatumeTextField = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), property),
+				new DateLabelFormatter());
+		panel3.add(endDatumeTextField);
+
+		JPanel panel4 = new JPanel();
+//		panel4.setBackground(new Color(249, 222, 112));
+		panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
+		hauptPanel.add(panel4);
+
+		JLabel lblAnzahlGruppen = new JLabel(Messages.getString("TurnierView.11")); //$NON-NLS-1$
+		panel4.add(lblAnzahlGruppen);
+
+		gruppenAnzahlTextField = new JTextField();
+
+		gruppenAnzahlTextField.setColumns(10);
+		panel4.add(gruppenAnzahlTextField);
+
+		JPanel buttonPane = new JPanel();
+//		buttonPane.setBackground(new Color(249, 222, 112));
+		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		hauptPanel.add(buttonPane);
+
+		okButton = new JButton(Messages.getString("TurnierView.12")); //$NON-NLS-1$
+		okButton.setActionCommand(Messages.getString("TurnierView.13")); //$NON-NLS-1$
+		buttonPane.add(okButton);
+
+		String help = Messages.getString("TurnierView.14"); //$NON-NLS-1$
+		JPanel helpPanel = new JPanel();
+		JTextArea helpText = new JTextArea();
+		helpText.setText(help);
+		helpText.setEditable(false);
+		helpPanel.add(helpText);
+		hauptPanel.add(helpPanel);
 
 	}
 

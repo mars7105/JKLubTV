@@ -15,7 +15,7 @@ package de.turnierverwaltung.view;
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.text.ParseException;
@@ -101,11 +101,11 @@ public class TurnierEditierenView extends JDialog {
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-		contentPanel.setBackground(new Color(249, 222, 112));
+//		contentPanel.setBackground(new Color(249, 222, 112));
 
 		JPanel centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		centerPane.setBackground(new Color(249, 222, 112));
+//		centerPane.setBackground(new Color(249, 222, 112));
 		textFieldTurnierName.setText(turnier.getTurnierName());
 		JLabel label = new JLabel();
 		label.setPreferredSize(new Dimension(120, 10));
@@ -122,7 +122,7 @@ public class TurnierEditierenView extends JDialog {
 				property), new DateLabelFormatter());
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		centerPane.setBackground(new Color(249, 222, 112));
+//		centerPane.setBackground(new Color(249, 222, 112));
 		label = new JLabel();
 		label.setPreferredSize(new Dimension(120, 10));
 		label.setText(Messages.getString("TurnierEditierenView.12")); //$NON-NLS-1$
@@ -139,7 +139,7 @@ public class TurnierEditierenView extends JDialog {
 				property), new DateLabelFormatter());
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		centerPane.setBackground(new Color(249, 222, 112));
+//		centerPane.setBackground(new Color(249, 222, 112));
 		label = new JLabel();
 		label.setPreferredSize(new Dimension(120, 10));
 		label.setText(Messages.getString("TurnierEditierenView.13")); //$NON-NLS-1$
@@ -148,7 +148,7 @@ public class TurnierEditierenView extends JDialog {
 		contentPanel.add(centerPane);
 		buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		buttonPane.setBackground(new Color(249, 222, 112));
+//		buttonPane.setBackground(new Color(249, 222, 112));
 		// buttonPane.add(rundenEditierenButton);
 		buttonPane.add(okButton);
 		buttonPane.add(cancelButton);
@@ -156,7 +156,7 @@ public class TurnierEditierenView extends JDialog {
 		for (int i = 0; i < turnier.getAnzahlGruppen(); i++) {
 			centerPane = new JPanel();
 			centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-			centerPane.setBackground(new Color(249, 222, 112));
+//			centerPane.setBackground(new Color(249, 222, 112));
 			this.textFieldGruppenName[i] = new JTextField(15);
 			textFieldGruppenName[i].setText(turnier.getGruppe()[i]
 					.getGruppenName());
