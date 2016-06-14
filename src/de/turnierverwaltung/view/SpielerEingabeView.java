@@ -16,7 +16,7 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
@@ -61,7 +61,7 @@ public class SpielerEingabeView extends JPanel {
 
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
-		contentPanel.setBackground(new Color(249, 222, 112));
+//		contentPanel.setBackground(new Color(249, 222, 112));
 		setLayout(new BorderLayout());
 
 		scrollPane = new JScrollPane();
@@ -82,7 +82,7 @@ public class SpielerEingabeView extends JPanel {
 
 		JPanel line;
 		JPanel centerPane = new JPanel();
-		centerPane.setBackground(new Color(249, 222, 112));
+//		centerPane.setBackground(new Color(249, 222, 112));
 		contentPanel.add(centerPane);
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
 		spielerSuche = new JComboBox[this.spielerAnzahl];
@@ -90,7 +90,7 @@ public class SpielerEingabeView extends JPanel {
 			spielerID[i] = -1;
 			line = new JPanel();
 			line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
-			line.setBackground(new Color(249, 222, 112));
+//			line.setBackground(new Color(249, 222, 112));
 			JLabel label = new JLabel(" " + new Integer(i + 1).toString() //$NON-NLS-1$
 					+ Messages.getString("SpielerEingabeView.5") + Messages.getString("SpielerEingabeView.6")); //$NON-NLS-1$ //$NON-NLS-2$
 			spielerTextfield[i] = new JTextField(10);

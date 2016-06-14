@@ -14,7 +14,7 @@ package de.turnierverwaltung.view;
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
@@ -71,7 +71,7 @@ public class HTMLTabelleView extends JFrame {
 		helpText.setEditable(false);
 
 		JPanel hauptPanel = new JPanel();
-		hauptPanel.setBackground(new Color(249, 222, 112));
+//		hauptPanel.setBackground(new Color(249, 222, 112));
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(hauptPanel);
 		scrollPane.setPreferredSize(new Dimension(windowWidth, windowHeight));

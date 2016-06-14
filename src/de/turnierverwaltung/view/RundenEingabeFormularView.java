@@ -16,7 +16,7 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.FlowLayout;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -275,7 +275,7 @@ public class RundenEingabeFormularView extends JPanel {
 					JDatePanelImpl datePanel = new JDatePanelImpl(model,
 							property);
 
-					datePanel.setForeground(Color.WHITE);
+//					datePanel.setForeground(Color.WHITE);
 					datum[anzahlElemente] = new JDatePickerImpl(datePanel,
 							new DateLabelFormatter());
 					downPane.add(new JLabel(Messages
@@ -348,7 +348,7 @@ public class RundenEingabeFormularView extends JPanel {
 
 		public DateLabelFormatter() {
 			super();
-			setBackground(Color.CYAN);
+//			setBackground(Color.CYAN);
 		}
 
 		@Override

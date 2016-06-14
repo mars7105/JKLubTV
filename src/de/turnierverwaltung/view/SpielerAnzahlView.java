@@ -14,7 +14,7 @@ package de.turnierverwaltung.view;
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import java.awt.Color;
+//import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
@@ -39,10 +39,10 @@ public class SpielerAnzahlView extends JPanel {
 		anzahlSpielerTextField = new JTextField();
 //		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
 //		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
-		setBackground(new Color(249, 222, 112));
+//		setBackground(new Color(249, 222, 112));
 		setLayout(new FlowLayout());
 		contentPanel = new JPanel();
-		contentPanel.setBackground(new Color(249, 222, 112));
+//		contentPanel.setBackground(new Color(249, 222, 112));
 //		contentPanel.setBounds(0, 0, windowWidth, windowHeight);
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -50,10 +50,10 @@ public class SpielerAnzahlView extends JPanel {
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-			buttonPane.setBackground(new Color(249, 222, 112));
+//			buttonPane.setBackground(new Color(249, 222, 112));
 			JPanel centerPane = new JPanel();
 			centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
-			centerPane.setBackground(new Color(249, 222, 112));
+//			centerPane.setBackground(new Color(249, 222, 112));
 
 			contentPanel.add(centerPane);
 			contentPanel.add(buttonPane);
