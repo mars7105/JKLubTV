@@ -57,24 +57,20 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 	private ArrayList<Spieler> alleSpieler;
 	private Boolean[] readyToSave;
 	private ImageIcon gruppenIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(
-					getClass().getResource("/images/view-calendar-month.png"))); //$NON-NLS-1$
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png"))); //$NON-NLS-1$
 
 	public SpielerEingabeControl(MainControl mainControl, int selectIndex) throws SQLException {
 		int windowWidth = TurnierKonstanten.WINDOW_WIDTH - 25;
 		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 75;
 		this.mainControl = mainControl;
-		SpielerTableControl spielerTableControl = new SpielerTableControl(
-				mainControl);
+		SpielerTableControl spielerTableControl = new SpielerTableControl(mainControl);
 		alleSpieler = spielerTableControl.getAllSpieler();
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
 		this.mainControl.getHauptPanel();
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
-		tabAnzeigeView
-				.setPreferredSize(new Dimension(windowWidth, windowHeight));
-		spielerAnzahlView = this.mainControl.getSpielerAnzahlControl()
-				.getSpielerAnzahlView();
+		tabAnzeigeView.setPreferredSize(new Dimension(windowWidth, windowHeight));
+		spielerAnzahlView = this.mainControl.getSpielerAnzahlControl().getSpielerAnzahlView();
 		gruppenAnzahl = this.mainControl.getTurnier().getAnzahlGruppen();
 		spielerAnzahl = new int[gruppenAnzahl];
 
@@ -84,25 +80,19 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 		okButton = new JButton[gruppenAnzahl];
 		cancelButton = new JButton[gruppenAnzahl];
 		if (this.mainControl.getRundenEingabeFormularControl() == null) {
-			rundenEingabeFormularControl = new RundenEingabeFormularControl(
-					this.mainControl, selectIndex);
-			this.mainControl
-					.setRundenEingabeFormularControl(rundenEingabeFormularControl);
+			rundenEingabeFormularControl = new RundenEingabeFormularControl(this.mainControl, selectIndex);
+			this.mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
 		} else {
-			rundenEingabeFormularControl = this.mainControl
-					.getRundenEingabeFormularControl();
+			rundenEingabeFormularControl = this.mainControl.getRundenEingabeFormularControl();
 		}
-		rundenEingabeFormularControl = new RundenEingabeFormularControl(
-				this.mainControl, selectIndex);
-		this.mainControl
-				.setRundenEingabeFormularControl(rundenEingabeFormularControl);
+		rundenEingabeFormularControl = new RundenEingabeFormularControl(this.mainControl, selectIndex);
+		this.mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
 		readyToSave = new Boolean[gruppenAnzahl];
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			readyToSave[i] = false;
 
 		}
-		this.mainControl.getNaviView().getTabellenPanel()
-		.setVisible(false);
+		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 	}
 
 	@Override
@@ -126,8 +116,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 				int counter = -1;
 				if (testForDoubles(i) == true) {
 					for (int y = 0; y < sAnzahl; y++) {
-						if (spielerEingabeView[i].getSpielerTextfield()[y]
-								.getText().equals("Spielfrei")) {
+						if (spielerEingabeView[i].getSpielerTextfield()[y].getText().equals("Spielfrei")) {
 							correctName = false;
 						} else {
 							correctName = true;
@@ -135,15 +124,11 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 						}
 
 						if (correctName == true) {
-							name = spielerEingabeView[i].getSpielerTextfield()[y]
-									.getText();
-							kuerzel = spielerEingabeView[i]
-									.getKuerzelTextfield()[y].getText();
-							dwz = spielerEingabeView[i].getDwzTextfield()[y]
-									.getText();
+							name = spielerEingabeView[i].getSpielerTextfield()[y].getText();
+							kuerzel = spielerEingabeView[i].getKuerzelTextfield()[y].getText();
+							dwz = spielerEingabeView[i].getDwzTextfield()[y].getText();
 							spielerID = spielerEingabeView[i].getSpielerID()[y];
-							age = spielerEingabeView[i].getTextComboBoxAge()[y]
-									.getSelectedIndex();
+							age = spielerEingabeView[i].getTextComboBoxAge()[y].getSelectedIndex();
 
 							spieler[counter] = new Spieler();
 							spieler[counter].setName(name);
@@ -155,8 +140,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 								stc.updateOneSpieler(spieler[counter]);
 
 							} else {
-								spieler[counter].setSpielerId(stc
-										.insertOneSpieler(spieler[counter]));
+								spieler[counter].setSpielerId(stc.insertOneSpieler(spieler[counter]));
 							}
 						}
 					}
@@ -169,31 +153,26 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 					rundenEingabeFormularControl.makeTerminTabelle(i);
 					// rundenEingabeFormularControl.saveTurnier(i);
 				} else {
-					JOptionPane.showMessageDialog(null,
-							Messages.getString("SpielerEingabeControl.9")); //$NON-NLS-1$
+					JOptionPane.showMessageDialog(null, Messages.getString("SpielerEingabeControl.9")); //$NON-NLS-1$
 				}
 			}
 			if (arg0.getSource() == cancelButton[i]) {
 				// Custom button text
-				Object[] options = {
-						Messages.getString("SpielerEingabeControl.4"), Messages.getString("SpielerEingabeControl.5") }; //$NON-NLS-1$ //$NON-NLS-2$
-				int abfrage = JOptionPane
-						.showOptionDialog(
-								mainControl,
-								Messages.getString("SpielerEingabeControl.6") + Messages.getString("SpielerEingabeControl.7"), //$NON-NLS-1$ //$NON-NLS-2$
-								Messages.getString("SpielerEingabeControl.8"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, //$NON-NLS-1$
-								options[1]);
+				Object[] options = { Messages.getString("SpielerEingabeControl.4"), //$NON-NLS-1$
+						Messages.getString("SpielerEingabeControl.5") }; //$NON-NLS-1$
+				int abfrage = JOptionPane.showOptionDialog(mainControl,
+						Messages.getString("SpielerEingabeControl.6") + Messages.getString("SpielerEingabeControl.7"), //$NON-NLS-1$ //$NON-NLS-2$
+						Messages.getString("SpielerEingabeControl.8"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
+						JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 				if (abfrage == 0) {
 					this.mainControl.getSpielerAnzahlControl().makeNewTab(i);
 				}
 			}
 			for (int s = 0; s < spielerAnzahl[i]; s++) {
 				if (arg0.getSource() == spielerEingabeView[i].getSpielerSuche()[s]) {
-					JTextField field = spielerEingabeView[i]
-							.getSpielerTextfield()[s];
+					JTextField field = spielerEingabeView[i].getSpielerTextfield()[s];
 					@SuppressWarnings("unchecked")
-					JComboBox<String> box = spielerEingabeView[i]
-							.getSpielerSuche()[s];
+					JComboBox<String> box = spielerEingabeView[i].getSpielerSuche()[s];
 
 					field.setText((String) box.getSelectedItem());
 
@@ -205,19 +184,15 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 					textField = field.getText();
 					while (li.hasNext()) {
 						temp = li.next();
-						if (textField.regionMatches(true, 0, temp.getName(), 0,
-								textField.length())) {
+						if (textField.regionMatches(true, 0, temp.getName(), 0, textField.length())) {
 							dwz = temp.getDwz();
 							kuerzel = temp.getKuerzel();
 							spielerID = temp.getSpielerId();
 							age = temp.getAge();
-							spielerEingabeView[i].getKuerzelTextfield()[s]
-									.setText(kuerzel);
-							spielerEingabeView[i].getDwzTextfield()[s]
-									.setText(dwz);
+							spielerEingabeView[i].getKuerzelTextfield()[s].setText(kuerzel);
+							spielerEingabeView[i].getDwzTextfield()[s].setText(dwz);
 							spielerEingabeView[i].getSpielerID()[s] = spielerID;
-							spielerEingabeView[i].getTextComboBoxAge()[s]
-									.setSelectedIndex(age);
+							spielerEingabeView[i].getTextComboBoxAge()[s].setSelectedIndex(age);
 						}
 
 					}
@@ -250,10 +225,8 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 	public void keyPressed(KeyEvent e) {
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			for (int s = 0; s < spielerAnzahl[i]; s++)
-				if (e.getSource() == spielerEingabeView[i]
-						.getSpielerTextfield()[s]) {
-					spielerEingabeView[i].getSpielerSuche()[s]
-							.removeActionListener(this);
+				if (e.getSource() == spielerEingabeView[i].getSpielerTextfield()[s]) {
+					spielerEingabeView[i].getSpielerSuche()[s].removeActionListener(this);
 					spielerEingabeView[i].getSpielerSuche()[s].removeAllItems();
 
 					Spieler temp = null;
@@ -262,24 +235,20 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 
 					String textField = ""; //$NON-NLS-1$
 					String labels = ""; //$NON-NLS-1$
-					textField = spielerEingabeView[i].getSpielerTextfield()[s]
-							.getText() + e.getKeyChar();
+					textField = spielerEingabeView[i].getSpielerTextfield()[s].getText() + e.getKeyChar();
 					while (li.hasNext()) {
 						temp = li.next();
 
-						if (textField.regionMatches(true, 0, temp.getName(), 0,
-								textField.length())) {
+						if (textField.regionMatches(true, 0, temp.getName(), 0, textField.length())) {
 							labels = temp.getName();
-							spielerEingabeView[i].getSpielerSuche()[s]
-									.addItem(labels);
+							spielerEingabeView[i].getSpielerSuche()[s].addItem(labels);
 						}
 
 					}
-					if (textField.length() == 0) {
-						suchAnzeige(i);
+					if (spielerEingabeView[i].getSpielerTextfield()[s].getText().length() == 0) {
+						suchAnzeige2(i);
 					}
-					spielerEingabeView[i].getSpielerSuche()[s]
-							.addActionListener(this);
+					spielerEingabeView[i].getSpielerSuche()[s].addActionListener(this);
 
 				}
 		}
@@ -298,12 +267,9 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 	public void makeTabbedPane(int index) {
 		this.mainControl.getHauptPanel();
 
-		if (spielerAnzahlView[index].getAnzahlSpielerTextField().getText()
-				.length() > 0) {
-			spielerAnzahl[index] = this.mainControl.getSpielerAnzahlControl()
-					.getSpielerAnzahl(index);
-			spielerEingabeView[index] = new SpielerEingabeView(
-					spielerAnzahl[index]);
+		if (spielerAnzahlView[index].getAnzahlSpielerTextField().getText().length() > 0) {
+			spielerAnzahl[index] = this.mainControl.getSpielerAnzahlControl().getSpielerAnzahl(index);
+			spielerEingabeView[index] = new SpielerEingabeView(spielerAnzahl[index]);
 			okButton[index] = spielerEingabeView[index].getOkButton();
 			okButton[index].addActionListener(this);
 			cancelButton[index] = spielerEingabeView[index].getCancelButton();
@@ -311,6 +277,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 			tabAnzeigeView.setComponentAt(index, spielerEingabeView[index]);
 			tabAnzeigeView.setTitleAt(index, gruppe[index].getGruppenName());
 			tabAnzeigeView.setIconAt(index, gruppenIcon);
+
 			suchAnzeige(index);
 			// hauptPanel.updateUI();
 		}
@@ -328,10 +295,26 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 				labels = temp.getName();
 				spielerEingabeView[index].getSpielerSuche()[i].addItem(labels);
 			}
-			spielerEingabeView[index].getSpielerSuche()[i]
-					.addActionListener(this);
-			spielerEingabeView[index].getSpielerTextfield()[i]
-					.addKeyListener(this);
+			spielerEingabeView[index].getSpielerSuche()[i].addActionListener(this);
+			spielerEingabeView[index].getSpielerTextfield()[i].addKeyListener(this);
+
+		}
+	}
+	@SuppressWarnings("unchecked")
+	private void suchAnzeige2(int index) {
+		for (int i = 0; i < spielerAnzahl[index]; i++) {
+			spielerEingabeView[index].getSpielerSuche()[i].removeActionListener(this);
+			spielerEingabeView[index].getSpielerTextfield()[i].removeKeyListener(this);
+			Spieler temp = null;
+			ListIterator<Spieler> li = alleSpieler.listIterator();
+			String labels = ""; //$NON-NLS-1$
+			while (li.hasNext()) {
+				temp = li.next();
+				labels = temp.getName();
+				spielerEingabeView[index].getSpielerSuche()[i].addItem(labels);
+			}
+			spielerEingabeView[index].getSpielerSuche()[i].addActionListener(this);
+			spielerEingabeView[index].getSpielerTextfield()[i].addKeyListener(this);
 		}
 	}
 

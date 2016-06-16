@@ -109,12 +109,7 @@ public class TurnierTabelleControl {
 		turnierTabelle[gruppenNummer].createMatrix(playerColumnName, oldDWZColumnName, newDWZColumnName,
 				poinsColumnName, sbbColumnName, rankingColumnName, mainControl.getPropertiesControl().getNoDWZ(),
 				mainControl.getPropertiesControl().getNoFolgeDWZ());
-		// if (mainControl.getPropertiesControl().getNoDWZ() == true) {
-		// this.turnierTabelle[gruppenNummer].removeDWZColumn();
-		// }
-		// if (mainControl.getPropertiesControl().getNoFolgeDWZ() == true) {
-		// this.turnierTabelle[gruppenNummer].removeFolgeDWZColumn();
-		// }
+		
 		abstand = mainControl.getPropertiesControl().getTabellenAbstand();
 
 		simpleTableView[gruppenNummer] = new SimpleTurnierTabelleView(

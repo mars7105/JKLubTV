@@ -54,9 +54,9 @@ public class TurnierTableControl {
 
 	}
 
-	public boolean insertTurnier() {
-		boolean eintragGespeichert = false;
+	public int insertTurnier() {
 		this.turnier = mainControl.getTurnier();
+		turnierId = -1;
 		if (turnier.getTurnierId() == -1) {
 			String turnierName = turnier.getTurnierName();
 			String startDatum = turnier.getStartDatum();
@@ -64,9 +64,8 @@ public class TurnierTableControl {
 			int datumId = mySQLDatumDAO.insertDatum(startDatum, endDatum);
 			turnierId = mySQLTurnierDao.insertTurnier(turnierName, datumId);
 			turnier.setTurnierId(turnierId);
-			eintragGespeichert = true;
 		}
-		return eintragGespeichert;
+		return turnierId;
 	}
 
 	public ArrayList<Turnier> loadTurnierListe() throws SQLException {

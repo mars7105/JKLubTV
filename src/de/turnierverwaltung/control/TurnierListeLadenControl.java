@@ -61,6 +61,8 @@ public class TurnierListeLadenControl implements ActionListener {
 	private ArrayList<Turnier> turnierListe;
 	private int turnierIndex;
 	private int loadedTurnier;
+	private int loadedTurnierID;
+
 	private ImageIcon turnierListeIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/games-highscores.png"))); //$NON-NLS-1$
 	private ImageIcon turnierIcon = new ImageIcon(
@@ -238,12 +240,11 @@ public class TurnierListeLadenControl implements ActionListener {
 
 	public void reloadTurnier() {
 		turnier = mainControl.getTurnier();
-		if (turnier != null) {
+		if (turnier != null && loadedTurnier >= 0) {
 			for (int i = 0; i < anzahlTurniere; i++) {
-				if (turnierListe.get(i).getTurnierId() == turnier.getTurnierId()) {
-					int selectedTab = hauptPanel.getSelectedIndex();
+				if (turnierListe.get(i).getTurnierId() == loadedTurnierID) {
+
 					loadTurnier(i);
-					hauptPanel.setSelectedIndex(selectedTab);
 				}
 			}
 		}
@@ -251,6 +252,7 @@ public class TurnierListeLadenControl implements ActionListener {
 
 	public void loadTurnier(int index) {
 		loadedTurnier = index;
+
 		mainControl.setSpielerEingabeControl(null);
 		if (mainControl.getTurnier() != null) {
 			int selectedIndex = hauptPanel.getTabCount() - 1;
@@ -301,7 +303,7 @@ public class TurnierListeLadenControl implements ActionListener {
 		int selectIndex = hauptPanel.getTabCount() - 1;
 		hauptPanel.setSelectedIndex(selectIndex);
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
-
+		loadedTurnierID = turnier.getTurnierId();
 		mainControl.getEigenschaftenControl().setColumnWidhtToZero();
 
 	}
@@ -351,6 +353,14 @@ public class TurnierListeLadenControl implements ActionListener {
 		} else {
 			JOptionPane.showMessageDialog(mainControl, "Falsche Datei gewählt. "); //$NON-NLS-1$
 		}
+	}
+
+	public int getLoadedTurnierID() {
+		return loadedTurnierID;
+	}
+
+	public void setLoadedTurnierID(int loadedTurnierID) {
+		this.loadedTurnierID = loadedTurnierID;
 	}
 
 }

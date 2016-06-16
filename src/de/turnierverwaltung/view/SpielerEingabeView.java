@@ -16,6 +16,7 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 //import java.awt.Color;
 import java.awt.FlowLayout;
 
@@ -95,6 +96,9 @@ public class SpielerEingabeView extends JPanel {
 					+ Messages.getString("SpielerEingabeView.5") + Messages.getString("SpielerEingabeView.6")); //$NON-NLS-1$ //$NON-NLS-2$
 			spielerTextfield[i] = new JTextField(10);
 			spielerSuche[i] = new JComboBox();
+			Dimension dimTextField = new Dimension(170, 30);
+
+			spielerSuche[i].setPreferredSize(dimTextField);
 			spielerSuche[i].setMaximumRowCount(15);
 			spielerSuche[i].addItem(Messages.getString("SpielerEingabeView.7")); //$NON-NLS-1$
 
