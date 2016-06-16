@@ -26,7 +26,6 @@ public class TurnierTabelle {
 	private int zeile;
 	private int spalte;
 	private TurnierTabelleToHTML turnierTabelleToHTML;
-	private Boolean spielfrei;
 	private String playerColumnName;
 	private String oldDWZColumnName;
 	private String newDWZColumnName;
@@ -42,145 +41,126 @@ public class TurnierTabelle {
 		this.partien = gruppe.getPartien();
 		this.spielerAnzahl = gruppe.getSpielerAnzahl();
 		this.partienAnzahl = gruppe.getPartienAnzahl();
-		spielfrei = false;
-		checkForSpielfrei();
-		if (spielfrei) {
-			tabellenMatrix = new String[this.spielerAnzahl + 5][this.spielerAnzahl];
-		} else {
-			tabellenMatrix = new String[this.spielerAnzahl + 6][this.spielerAnzahl + 1];
-		}
+
 	}
 
-	private void checkForSpielfrei() {
+	private Boolean checkForSpielfrei() {
 		for (int i = 0; i < spielerAnzahl; i++) {
 
 			if (this.spieler[i].getSpielerId() == TurnierKonstanten.SPIELFREI_ID) {
-
-				spielfrei = true;
-
-			} else {
-				spielfrei = false;
+				return true;
 			}
 
 		}
+		return false;
 	}
 
 	public void createMatrix(String playerColumnName, String oldDWZColumnName, String newDWZColumnName,
-			String poinsColumnName, String sbbColumnName, String rankingColumnName) {
+			String poinsColumnName, String sbbColumnName, String rankingColumnName, Boolean ohneDWZ,
+			Boolean ohneFolgeDWZ) {
 		this.playerColumnName = playerColumnName;
 		this.oldDWZColumnName = oldDWZColumnName;
 		this.newDWZColumnName = newDWZColumnName;
 		this.poinsColumnName = poinsColumnName;
 		this.sbbColumnName = sbbColumnName;
 		this.rankingColumnName = rankingColumnName;
-		this.infoString = rankingColumnName + " = " + Messages.getString("TurnierTabelleToHTML.0") + oldDWZColumnName
-				+ " = " + Messages.getString("TurnierTabelleToHTML.1") + newDWZColumnName + " = "
-				+ Messages.getString("TurnierTabelleToHTML.2") + poinsColumnName + " = "
-				+ Messages.getString("TurnierTabelleToHTML.3") + sbbColumnName + " = " //$NON-NLS-2$
+
+		String ohneDWZString = oldDWZColumnName.replaceAll("<br />", "") + " = "
+				+ Messages.getString("TurnierTabelleToHTML.1");
+		String ohneFolgeDWZString = newDWZColumnName.replaceAll("<br />", "") + " = "
+				+ Messages.getString("TurnierTabelleToHTML.2");
+		int abstand = 0;
+		if (ohneDWZ == true) {
+			abstand++;
+			ohneDWZString = "";
+		}
+		if (ohneFolgeDWZ == true) {
+			abstand++;
+			ohneFolgeDWZString = "";
+		}
+		this.infoString = rankingColumnName + " = " + Messages.getString("TurnierTabelleToHTML.0") + ohneDWZString
+				+ ohneFolgeDWZString + poinsColumnName + " = " + Messages.getString("TurnierTabelleToHTML.3")
+				+ sbbColumnName + " = " //$NON-NLS-1$
 				+ Messages.getString("TurnierTabelleToHTML.4");
 		int sp = 0;
-		if (spielfrei) {
+		if (checkForSpielfrei() == true) {
+			tabellenMatrix = new String[this.spielerAnzahl + 5 - abstand][this.spielerAnzahl];
 			sp = spielerAnzahl - 1;
 		} else {
+			tabellenMatrix = new String[this.spielerAnzahl + 6 - abstand][this.spielerAnzahl + 1];
 			sp = spielerAnzahl;
 		}
-		// tabellenMatrix[0][0] = TurnierKonstanten.TABLE_COLUMN_PLAYER;
-		// //$NON-NLS-1$
-		// tabellenMatrix[1][0] = TurnierKonstanten.TABLE_COLUMN_OLD_DWZ;
-		// tabellenMatrix[2][0] = TurnierKonstanten.TABLE_COLUMN_NEW_DWZ;
-		// //$NON-NLS-1$
+
 		tabellenMatrix[0][0] = playerColumnName; // $NON-NLS-1$
-		tabellenMatrix[1][0] = oldDWZColumnName;
-		tabellenMatrix[2][0] = newDWZColumnName; // $NON-NLS-1$
-		for (int i = 3; i < sp + 3; i++) {
-			if (spieler[i - 3].getKuerzel().length() >= 2) {
-				tabellenMatrix[i][0] = spieler[i - 3].getKuerzel().substring(0, 1) + "<br />" //$NON-NLS-1$
-						+ spieler[i - 3].getKuerzel().substring(1);
+		if (ohneDWZ == false && ohneFolgeDWZ == false) {
+			tabellenMatrix[1][0] = oldDWZColumnName;
+			tabellenMatrix[2][0] = newDWZColumnName; // $NON-NLS-1$
+
+		}
+		if (ohneDWZ == false && ohneFolgeDWZ == true) {
+			tabellenMatrix[1][0] = oldDWZColumnName;
+		}
+
+		int dwzAbstand = 3 - abstand;
+		for (int i = dwzAbstand; i < (sp + dwzAbstand); i++) {
+			if (spieler[i - dwzAbstand].getKuerzel().length() >= 2) {
+				tabellenMatrix[i][0] = spieler[i - dwzAbstand].getKuerzel().substring(0, 1) + "<br />" //$NON-NLS-1$
+						+ spieler[i - dwzAbstand].getKuerzel().substring(1);
 			} else {
-				tabellenMatrix[i][0] = spieler[i - 3].getKuerzel();
+				tabellenMatrix[i][0] = spieler[i - dwzAbstand].getKuerzel();
 			}
 
 		}
 
-		// tabellenMatrix[3 + sp][0] = TurnierKonstanten.TABLE_COLUMN_POINTS;
-		// tabellenMatrix[4 + sp][0] =
-		// TurnierKonstanten.TABLE_COLUMN_SONNEBORNBERGER;
-		// tabellenMatrix[5 + sp][0] = TurnierKonstanten.TABLE_COLUMN_RANKING;
-
-		tabellenMatrix[3 + sp][0] = poinsColumnName;
-		tabellenMatrix[4 + sp][0] = sbbColumnName;
-		tabellenMatrix[5 + sp][0] = rankingColumnName;
+		tabellenMatrix[3 + sp - abstand][0] = poinsColumnName;
+		tabellenMatrix[4 + sp - abstand][0] = sbbColumnName;
+		tabellenMatrix[5 + sp - abstand][0] = rankingColumnName;
 		for (int i = 0; i < sp; i++) {
 			tabellenMatrix[0][i + 1] = spieler[i].getName();
-			if (spieler[i].getDwz() != TurnierKonstanten.KEINE_DWZ) {
-				tabellenMatrix[1][i + 1] = spieler[i].getDwz();
-			} else {
-				tabellenMatrix[1][i + 1] = ""; //$NON-NLS-1$
+			if (ohneDWZ == false) {
+				if (spieler[i].getDwz() != TurnierKonstanten.KEINE_DWZ) {
+					tabellenMatrix[1][i + 1] = spieler[i].getDwz();
+				} else {
+					tabellenMatrix[1][i + 1] = ""; //$NON-NLS-1$
+				}
 			}
-			if (spieler[i].getFolgeDWZ() > 0) {
-				tabellenMatrix[2][i + 1] = new Integer(spieler[i].getFolgeDWZ()).toString();
-			} else {
-				tabellenMatrix[3][i + 1] = ""; //$NON-NLS-1$
+			if (ohneFolgeDWZ == false) {
+				if (spieler[i].getFolgeDWZ() > 0) {
+					tabellenMatrix[2][i + 1] = new Integer(spieler[i].getFolgeDWZ()).toString();
+				} else {
+					tabellenMatrix[2][i + 1] = ""; //$NON-NLS-1$
+				}
 			}
 		}
-		for (int x = 3; x < sp + 3; x++) {
-			for (int y = 1; y < sp + 1; y++) {
-				if (x == y + 2) {
-					tabellenMatrix[x][y] = "--"; //$NON-NLS-1$
-				} else {
-					if (spieler[x - 3].getSpielerId() > -2 && spieler[y - 1].getSpielerId() > -2) {
-						for (int i = 0; i < partienAnzahl; i++) {
+		for (int x = 0; x < sp; x++) {
+			if (spieler[x].getSpielerId() != TurnierKonstanten.SPIELFREI_ID) {
+				for (int y = 0; y < sp; y++) {
+					if (spieler[y].getSpielerId() != TurnierKonstanten.SPIELFREI_ID) {
 
-							if (partien[i].getSpielerWeiss() == spieler[x - 3]
-									&& partien[i].getSpielerSchwarz() == spieler[y - 1]) {
-								tabellenMatrix[x][y] = partien[i].getErgebnisSchwarz();
+						if (x == y) {
+							tabellenMatrix[x + 3 - abstand][y + 1] = "--"; //$NON-NLS-1$
+						} else {
+							for (int i = 0; i < partienAnzahl; i++) {
 
+								if (partien[i].getSpielerWeiss() == spieler[x]
+										&& partien[i].getSpielerSchwarz() == spieler[y]) {
+									tabellenMatrix[x + 3 - abstand][y + 1] = partien[i].getErgebnisSchwarz();
+
+								}
+								if (partien[i].getSpielerSchwarz() == spieler[x]
+										&& partien[i].getSpielerWeiss() == spieler[y]) {
+									tabellenMatrix[x + 3 - abstand][y + 1] = partien[i].getErgebnisWeiss();
+
+								}
 							}
-							if (partien[i].getSpielerSchwarz() == spieler[x - 3]
-									&& partien[i].getSpielerWeiss() == spieler[y - 1]) {
-								tabellenMatrix[x][y] = partien[i].getErgebnisWeiss();
 
-							}
 						}
 					}
 
 				}
-
 			}
 		}
 
-	}
-
-	public void removeDWZColumn() {
-		int v = 0;
-		String[][] temp = new String[tabellenMatrix.length - 1][tabellenMatrix[0].length];
-		for (int x = 0; x < tabellenMatrix.length - 1; x++) {
-			for (int y = 0; y < tabellenMatrix[0].length; y++) {
-				if (tabellenMatrix[x][0].equals(oldDWZColumnName) && x == 1) {
-					v = 1;
-
-				}
-				temp[x][y] = tabellenMatrix[x + v][y];
-
-			}
-		}
-		tabellenMatrix = temp;
-	}
-
-	public void removeFolgeDWZColumn() {
-		int v = 0;
-		String[][] temp = new String[tabellenMatrix.length - 1][tabellenMatrix[0].length];
-		for (int x = 0; x < tabellenMatrix.length - 1; x++) {
-			for (int y = 0; y < tabellenMatrix[0].length; y++) {
-				if (tabellenMatrix[x][0].equals(newDWZColumnName) && (x == 1 || x == 2)) {
-					v = 1;
-
-				}
-				temp[x][y] = tabellenMatrix[x + v][y];
-
-			}
-		}
-		tabellenMatrix = temp;
 	}
 
 	public String getHTMLTable(Boolean ohneHeaderundFooter) {
