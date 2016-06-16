@@ -74,149 +74,121 @@ public class SaveTurnierControl {
 			ready = saveNewTurnier();
 			if (ready) {
 				mainControl.setNeuesTurnier(false);
+				mainControl.getTurnierListeLadenControl().loadTurnierListe();
 				mainControl.getTurnierListeLadenControl().reloadTurnier();
 			}
 			return ready;
 		} else {
-			ready = mainControl.getRundenEingabeFormularControl()
-					.checkNewTurnier();
+			ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 			if (ready) {
 				ArrayList<Partie> changedPartien;
 				if (this.mainControl.getChangedPartien() == null) {
-					JOptionPane.showMessageDialog(
-							mainControl,
+					JOptionPane.showMessageDialog(mainControl,
 							Messages.getString("SaveTurnierControl.1") //$NON-NLS-1$
-									+ this.mainControl.getTurnier()
-											.getTurnierName()
-									+ Messages
-											.getString("SaveTurnierControl.2")); //$NON-NLS-1$
+									+ this.mainControl.getTurnier().getTurnierName()
+									+ Messages.getString("SaveTurnierControl.2")); //$NON-NLS-1$
 					return false;
 				} else {
 					changedPartien = this.mainControl.getChangedPartien();
 
 				}
 
-				this.mainControl
-						.setPartienTableControl(new PartienTableControl(
-								this.mainControl));
+				this.mainControl.setPartienTableControl(new PartienTableControl(this.mainControl));
 
 				boolean saved = false;
-				DAOFactory daoFactory = DAOFactory
-						.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
+				DAOFactory daoFactory = DAOFactory.getDAOFactory(TurnierKonstanten.DATABASE_DRIVER);
 				PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
 
 				saved = mySQLPartienDAO.updatePartien(changedPartien);
 				changedPartien.clear();
 				if (saved) {
-					JOptionPane
-							.showMessageDialog(
-									mainControl,
-									Messages.getString("SaveTurnierControl.3") + this.mainControl.getTurnier().getTurnierName() + Messages.getString("SaveTurnierControl.4")); //$NON-NLS-1$ //$NON-NLS-2$
+					JOptionPane.showMessageDialog(mainControl,
+							Messages.getString("SaveTurnierControl.3") + this.mainControl.getTurnier().getTurnierName() //$NON-NLS-1$
+									+ Messages.getString("SaveTurnierControl.4")); //$NON-NLS-1$
 					return true;
 				} else {
 
-					JOptionPane.showMessageDialog(
-							mainControl,
+					JOptionPane.showMessageDialog(mainControl,
 							Messages.getString("SaveTurnierControl.5") //$NON-NLS-1$
-									+ this.mainControl.getTurnier()
-											.getTurnierName()
-									+ Messages
-											.getString("SaveTurnierControl.6")); //$NON-NLS-1$
+									+ this.mainControl.getTurnier().getTurnierName()
+									+ Messages.getString("SaveTurnierControl.6")); //$NON-NLS-1$
 					return false;
 				}
 			} else {
-				JOptionPane
-						.showMessageDialog(
-								mainControl,
-								Messages.getString("SaveTurnierControl.7") + Messages.getString("SaveTurnierControl.8")); //$NON-NLS-1$ //$NON-NLS-2$
+				JOptionPane.showMessageDialog(mainControl,
+						Messages.getString("SaveTurnierControl.7") + Messages.getString("SaveTurnierControl.8")); //$NON-NLS-1$ //$NON-NLS-2$
 				return false;
 			}
 		}
 	}
 
 	public Boolean saveNewTurnier() throws SQLException {
-
-		Boolean ready = mainControl.getRundenEingabeFormularControl()
-				.checkNewTurnier();
+		int turnierId = -1;
+		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 		if (ready) {
 
 			createAndShowGUI();
 			boolean saveOK1 = false;
 			boolean saveOK2 = false;
 			boolean saveOK4 = false;
+
 			// ladebalkenView.iterate();
 
-			this.mainControl.setTurnierTableControl(new TurnierTableControl(
-					this.mainControl));
+			this.mainControl.setTurnierTableControl(new TurnierTableControl(this.mainControl));
 
-			this.mainControl.setGruppenTableControl(new GruppenTableControl(
-					this.mainControl));
+			this.mainControl.setGruppenTableControl(new GruppenTableControl(this.mainControl));
 
-			this.mainControl.setSpielerTableControl(new SpielerTableControl(
-					this.mainControl));
+			this.mainControl.setSpielerTableControl(new SpielerTableControl(this.mainControl));
 
-			this.mainControl.setPartienTableControl(new PartienTableControl(
-					this.mainControl));
+			this.mainControl.setPartienTableControl(new PartienTableControl(this.mainControl));
 
-			this.mainControl
-					.setTurnier_has_SpielerTableControl(new Turnier_has_SpielerTableControl(
-							this.mainControl));
+			this.mainControl.setTurnier_has_SpielerTableControl(new Turnier_has_SpielerTableControl(this.mainControl));
 
-			for (int index = 0; index < this.mainControl.getTurnier()
-					.getAnzahlGruppen(); index++) {
+			for (int index = 0; index < this.mainControl.getTurnier().getAnzahlGruppen(); index++) {
 
 				ladebalkenView.iterate();
 				if (mainControl.getTurnier().getTurnierId() < 0) {
-					saveOK1 = this.mainControl.getTurnierTableControl()
-							.insertTurnier();
+					turnierId = this.mainControl.getTurnierTableControl().insertTurnier();
+					if (turnierId >= 0) {
+						saveOK1 = true;
+						mainControl.getTurnierListeLadenControl().setLoadedTurnierID(turnierId);
+					}
+
 				} else {
-					this.mainControl.getTurnierTableControl().updateTurnier(
-							this.mainControl.getTurnier());
+					this.mainControl.getTurnierTableControl().updateTurnier(this.mainControl.getTurnier());
 					saveOK1 = true;
 				}
 				ladebalkenView.iterate();
 				if (mainControl.getTurnier().getGruppe()[index].getGruppeId() < 0) {
-					saveOK2 = this.mainControl.getGruppenTableControl()
-							.insertGruppe(index);
+					saveOK2 = this.mainControl.getGruppenTableControl().insertGruppe(index);
 					ladebalkenView.iterate();
 					ladebalkenView.iterate();
-					saveOK4 = this.mainControl.getPartienTableControl()
-							.insertPartien(index);
-					this.mainControl.getTurnier_has_SpielerTableControl()
-							.insertTurnier_has_Spieler(index);
+					saveOK4 = this.mainControl.getPartienTableControl().insertPartien(index);
+					this.mainControl.getTurnier_has_SpielerTableControl().insertTurnier_has_Spieler(index);
 				} else {
-					saveOK2 = this.mainControl.getGruppenTableControl()
-							.updateGruppe(index);
+					saveOK2 = this.mainControl.getGruppenTableControl().updateGruppe(index);
 					ladebalkenView.iterate();
 					ladebalkenView.iterate();
-					saveOK4 = this.mainControl.getPartienTableControl()
-							.updatePartien(index);
+					saveOK4 = this.mainControl.getPartienTableControl().updatePartien(index);
 
 				}
 				ladebalkenView.iterate();
 				if (saveOK1 && saveOK2 && saveOK4) {
 
 				} else {
-					JOptionPane
-							.showMessageDialog(
-									mainControl,
-									Messages.getString("SaveTurnierControl.9") //$NON-NLS-1$
-											+ this.mainControl.getTurnier()
-													.getTurnierName()
-											+ Messages
-													.getString("SaveTurnierControl.10")); //$NON-NLS-1$
+					JOptionPane.showMessageDialog(mainControl,
+							Messages.getString("SaveTurnierControl.9") //$NON-NLS-1$
+									+ this.mainControl.getTurnier().getTurnierName()
+									+ Messages.getString("SaveTurnierControl.10")); //$NON-NLS-1$
 					return false;
 
 				}
 			}
 			if (saveOK1 && saveOK2 && saveOK4) {
-				JOptionPane
-						.showMessageDialog(
-								mainControl,
-								Messages.getString("SaveTurnierControl.11") + this.mainControl.getTurnier().getTurnierName() + Messages.getString("SaveTurnierControl.12")); //$NON-NLS-1$ //$NON-NLS-2$
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("SaveTurnierControl.11") //$NON-NLS-1$
+						+ this.mainControl.getTurnier().getTurnierName() + Messages.getString("SaveTurnierControl.12")); //$NON-NLS-1$
 				try {
-					mainControl.getTurnierListeLadenControl()
-							.loadTurnierListe();
+					mainControl.getTurnierListeLadenControl().loadTurnierListe();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -225,19 +197,14 @@ public class SaveTurnierControl {
 				return true;
 			} else {
 
-				JOptionPane
-						.showMessageDialog(
-								mainControl,
-								Messages.getString("SaveTurnierControl.13") + this.mainControl.getTurnier().getTurnierName() //$NON-NLS-1$
-										+ Messages
-												.getString("SaveTurnierControl.14")); //$NON-NLS-1$
+				JOptionPane.showMessageDialog(mainControl,
+						Messages.getString("SaveTurnierControl.13") + this.mainControl.getTurnier().getTurnierName() //$NON-NLS-1$
+								+ Messages.getString("SaveTurnierControl.14")); //$NON-NLS-1$
 				return false;
 			}
 		} else {
-			JOptionPane
-					.showMessageDialog(
-							mainControl,
-							Messages.getString("SaveTurnierControl.15") + Messages.getString("SaveTurnierControl.16")); //$NON-NLS-1$ //$NON-NLS-2$
+			JOptionPane.showMessageDialog(mainControl,
+					Messages.getString("SaveTurnierControl.15") + Messages.getString("SaveTurnierControl.16")); //$NON-NLS-1$ //$NON-NLS-2$
 			return false;
 		}
 	}
