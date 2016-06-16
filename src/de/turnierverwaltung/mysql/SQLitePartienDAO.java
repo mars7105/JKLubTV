@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
 
 import de.turnierverwaltung.model.Partie;
 import de.turnierverwaltung.model.Spieler;
+import de.turnierverwaltung.model.TurnierKonstanten;
 
 public class SQLitePartienDAO implements PartienDAO {
 	private Connection dbConnect;
@@ -168,7 +169,7 @@ public class SQLitePartienDAO implements PartienDAO {
 		Partie partie;
 		boolean ok = false;
 		PreparedStatement preStm = null;
-		
+
 		if (this.dbConnect != null) {
 			try {
 				this.dbConnect.setAutoCommit(false);
@@ -186,11 +187,11 @@ public class SQLitePartienDAO implements PartienDAO {
 					preStm.setInt(3, partie.getRunde());
 					preStm.setInt(4, partie.getErgebnis());
 					preStm.setString(5, partie.getSpielDatum());
-					preStm.setInt(6,partie.getPartieId());
+					preStm.setInt(6, partie.getPartieId());
 					preStm.addBatch();
 
 				}
-				
+
 				preStm.executeBatch();
 				this.dbConnect.setAutoCommit(true);
 				preStm.close();
@@ -204,11 +205,12 @@ public class SQLitePartienDAO implements PartienDAO {
 		}
 		return ok;
 	}
+
 	public boolean updatePartien(ArrayList<Partie> partien) {
 		Partie partie;
 		boolean ok = false;
 		PreparedStatement preStm = null;
-		
+
 		if (this.dbConnect != null) {
 			try {
 				this.dbConnect.setAutoCommit(false);
@@ -218,7 +220,7 @@ public class SQLitePartienDAO implements PartienDAO {
 				// + "COMMIT;";
 
 				preStm = this.dbConnect.prepareStatement(sql);
-				for(Partie ausgabe : partien) {
+				for (Partie ausgabe : partien) {
 					partie = ausgabe;
 
 					preStm.setInt(1, partie.getSpielerWeiss().getSpielerId());
@@ -226,11 +228,11 @@ public class SQLitePartienDAO implements PartienDAO {
 					preStm.setInt(3, partie.getRunde());
 					preStm.setInt(4, partie.getErgebnis());
 					preStm.setString(5, partie.getSpielDatum());
-					preStm.setInt(6,partie.getPartieId());
+					preStm.setInt(6, partie.getPartieId());
 					preStm.addBatch();
 
 				}
-				
+
 				preStm.executeBatch();
 				this.dbConnect.setAutoCommit(true);
 				preStm.close();
@@ -243,5 +245,50 @@ public class SQLitePartienDAO implements PartienDAO {
 			}
 		}
 		return ok;
+	}
+
+	@Override
+	public String getErgebnis(int SpielerIDWeiss, int SpielerIDSchwarz, int idGruppe) {
+		String sql = "Select Ergebnis " + "from partien where idGruppe=" + idGruppe + " AND idSpielerWeiss="
+				+ SpielerIDWeiss + " AND idSpielerSchwarz=" + SpielerIDSchwarz + ";";
+		Statement stmt;
+		int ergebnis = -1;
+		if (this.dbConnect != null) {
+			try {
+				stmt = this.dbConnect.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					ergebnis = rs.getInt("Ergebnis");
+
+				}
+				stmt.close();
+
+			} catch (SQLException e) {
+				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, e.getMessage());
+			}
+
+		}
+		String ergebnisString = "";
+		if (ergebnis == TurnierKonstanten.MYSQL_KEIN_ERGEBNIS) {
+			ergebnisString = TurnierKonstanten.KEIN_ERGEBNIS;
+		}
+		if (ergebnis == TurnierKonstanten.MYSQL_PARTIE_GEWINN_WEISS) {
+			ergebnisString = TurnierKonstanten.GEWINN;
+		}
+		if (ergebnis == TurnierKonstanten.MYSQL_PARTIE_GEWINN_SCHWARZ) {
+			ergebnisString = TurnierKonstanten.VERLUST;
+		}
+		if (ergebnis == TurnierKonstanten.MYSQL_PARTIE_REMIS) {
+			ergebnisString = TurnierKonstanten.REMIS;
+		}
+		if (ergebnis == TurnierKonstanten.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS) {
+			ergebnisString = TurnierKonstanten.GEWINN_KAMPFLOS;
+		}
+		if (ergebnis == TurnierKonstanten.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ) {
+			ergebnisString = TurnierKonstanten.VERLUST_KAMPFLOS;
+		}
+
+		return ergebnisString;
 	}
 }

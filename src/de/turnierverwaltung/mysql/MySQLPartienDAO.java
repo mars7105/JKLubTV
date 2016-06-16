@@ -193,4 +193,10 @@ public class MySQLPartienDAO implements PartienDAO {
 		return false;
 	}
 
+	@Override
+	public String getErgebnis(int SpielerIDWeiss, int SpielerIDSchwarz, int idGruppe) {
+
+		return null;
+	}
+
 }

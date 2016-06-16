@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -25,12 +26,14 @@ public interface PartienDAO {
 
 	public String[] findPartien(int id);
 
-	public int insertPartien(int idGruppe, String spielDatum, int Runde,
-			int ergebnis, int spielerIdweiss, int spielerIdschwarz);
+	public int insertPartien(int idGruppe, String spielDatum, int Runde, int ergebnis, int spielerIdweiss,
+			int spielerIdschwarz);
 
 	public ArrayList<Partie> selectAllPartien(int idGruppe);
 
 	public boolean updatePartien(Partie[] parties);
+
 	public boolean updatePartien(ArrayList<Partie> changedPartien);
-	
+
+	public String getErgebnis(int SpielerIDWeiss, int SpielerIDSchwarz, int idGruppe);
 }
