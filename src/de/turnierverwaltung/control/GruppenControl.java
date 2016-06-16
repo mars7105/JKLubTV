@@ -1,5 +1,6 @@
 package de.turnierverwaltung.control;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -60,8 +61,7 @@ public class GruppenControl implements ActionListener {
 		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());
 		hauptPanel.setIconAt(selectIndex, gruppenIcon);
 		hauptPanel.setSelectedIndex(selectIndex);
-		this.mainControl.getNaviView().getTabellenPanel()
-		.setVisible(false);
+		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 	}
 
 	@Override
@@ -71,13 +71,11 @@ public class GruppenControl implements ActionListener {
 			gruppenAnzahl = turnier.getAnzahlGruppen();
 			makeGruppe();
 
-			this.mainControl.setSpielerAnzahlControl(new SpielerAnzahlControl(
-					this.mainControl, selectIndex));
+			this.mainControl.setSpielerAnzahlControl(new SpielerAnzahlControl(this.mainControl, selectIndex));
 
 		}
 		if (arg0.getSource() == gruppenCancelButton) {
-			this.mainControl.setTurnierControl(new TurnierControl(
-					this.mainControl));
+			this.mainControl.setTurnierControl(new TurnierControl(this.mainControl));
 		}
 
 	}
@@ -91,8 +89,7 @@ public class GruppenControl implements ActionListener {
 
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			gruppe[i] = new Gruppe();
-			gruppe[i].setGruppenName(gruppenView.getGruppenNameTextField()[i]
-					.getText());
+			gruppe[i].setGruppenName(gruppenView.getGruppenNameTextField()[i].getText());
 
 		}
 		turnier.setGruppe(gruppe);
