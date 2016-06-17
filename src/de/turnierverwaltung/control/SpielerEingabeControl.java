@@ -227,6 +227,8 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 			for (int s = 0; s < spielerAnzahl[i]; s++)
 				if (e.getSource() == spielerEingabeView[i].getSpielerTextfield()[s]) {
 					spielerEingabeView[i].getSpielerSuche()[s].removeActionListener(this);
+					spielerEingabeView[i].getSpielerTextfield()[s].removeKeyListener(this);
+
 					spielerEingabeView[i].getSpielerSuche()[s].removeAllItems();
 
 					Spieler temp = null;
@@ -242,13 +244,15 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 						if (textField.regionMatches(true, 0, temp.getName(), 0, textField.length())) {
 							labels = temp.getName();
 							spielerEingabeView[i].getSpielerSuche()[s].addItem(labels);
+
 						}
 
 					}
+					spielerEingabeView[i].getSpielerSuche()[s].addActionListener(this);
+					spielerEingabeView[i].getSpielerTextfield()[s].addKeyListener(this);
 					if (spielerEingabeView[i].getSpielerTextfield()[s].getText().length() == 0) {
 						suchAnzeige2(i);
 					}
-					spielerEingabeView[i].getSpielerSuche()[s].addActionListener(this);
 
 				}
 		}
@@ -300,6 +304,7 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 
 		}
 	}
+
 	@SuppressWarnings("unchecked")
 	private void suchAnzeige2(int index) {
 		for (int i = 0; i < spielerAnzahl[index]; i++) {

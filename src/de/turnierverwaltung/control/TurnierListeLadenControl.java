@@ -214,7 +214,7 @@ public class TurnierListeLadenControl implements ActionListener {
 
 	public void reloadTurnier() {
 		turnier = mainControl.getTurnier();
-		if (turnier != null && loadedTurnier >= 0) {
+		if (turnier != null && loadedTurnierID >= 0) {
 			for (int i = 0; i < anzahlTurniere; i++) {
 				if (turnierListe.get(i).getTurnierId() == loadedTurnierID) {
 
