@@ -144,12 +144,12 @@ public class TurnierTabelle {
 
 								if (partien[i].getSpielerWeiss() == spieler[x]
 										&& partien[i].getSpielerSchwarz() == spieler[y]) {
-									tabellenMatrix[x + 3 - abstand][y + 1] = partien[i].getErgebnisSchwarz();
+									tabellenMatrix[x + dwzAbstand][y + 1] = partien[i].getErgebnisSchwarz();
 
 								}
 								if (partien[i].getSpielerSchwarz() == spieler[x]
 										&& partien[i].getSpielerWeiss() == spieler[y]) {
-									tabellenMatrix[x + 3 - abstand][y + 1] = partien[i].getErgebnisWeiss();
+									tabellenMatrix[x + dwzAbstand][y + 1] = partien[i].getErgebnisWeiss();
 
 								}
 							}
