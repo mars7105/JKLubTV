@@ -109,7 +109,7 @@ public class TurnierTabelleControl {
 		turnierTabelle[gruppenNummer].createMatrix(playerColumnName, oldDWZColumnName, newDWZColumnName,
 				poinsColumnName, sbbColumnName, rankingColumnName, mainControl.getPropertiesControl().getNoDWZ(),
 				mainControl.getPropertiesControl().getNoFolgeDWZ());
-		
+
 		abstand = mainControl.getPropertiesControl().getTabellenAbstand();
 
 		simpleTableView[gruppenNummer] = new SimpleTurnierTabelleView(
@@ -269,6 +269,8 @@ public class TurnierTabelleControl {
 
 		@Override
 		public void tableChanged(TableModelEvent e) {
+			abstand = mainControl.getPropertiesControl().getTabellenAbstand();
+
 			simpleTableView[gruppenNummer].getTable().getModel().removeTableModelListener(tml[gruppenNummer]);
 
 			int row = e.getFirstRow();
