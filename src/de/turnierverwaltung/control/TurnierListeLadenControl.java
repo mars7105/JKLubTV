@@ -58,7 +58,6 @@ public class TurnierListeLadenControl implements ActionListener {
 	private TabAnzeigeView tabbedPaneView;
 	private TabAnzeigeView[] tabbedPaneView2;
 	private ArrayList<Turnier> turnierListe;
-	private int loadedTurnier;
 	private int loadedTurnierID;
 
 	private ImageIcon turnierListeIcon = new ImageIcon(
@@ -70,7 +69,6 @@ public class TurnierListeLadenControl implements ActionListener {
 	private Turnier turnierEdit;
 
 	public TurnierListeLadenControl(MainControl mainControl) {
-		loadedTurnier = -1;
 		anzahlTurniere = 0;
 
 		this.mainControl = mainControl;
@@ -93,41 +91,30 @@ public class TurnierListeLadenControl implements ActionListener {
 				String turnierName = turnierEditierenView.getTextFieldTurnierName().getText();
 				String startDatum = turnierEditierenView.getStartDatumTextField().getJFormattedTextField().getText();
 				String endDatum = turnierEditierenView.getEndDatumTextField().getJFormattedTextField().getText();
-				int lastTab = hauptPanel.getTabCount() - 1;
-				if (loadedTurnier >= 0) {
-					if (turnierEdit.getTurnierId() == turnierListe.get(loadedTurnier).getTurnierId()) {
-						hauptPanel.setTitleAt(lastTab, turnierName);
-					}
 
-				}
 				turnierEdit.setTurnierName(turnierName);
 				turnierEdit.setStartDatum(startDatum);
 				turnierEdit.setEndDatum(endDatum);
 
-				
-
 				for (int i = 0; i < turnierEdit.getAnzahlGruppen(); i++) {
 
 					String gEV = turnierEditierenView.getTextFieldGruppenName()[i].getText();
-					if (loadedTurnier >= 0) {
-						if (turnierEdit.getTurnierId() == turnierListe.get(loadedTurnier).getTurnierId()) {
-							JTabbedPane temp = (JTabbedPane) hauptPanel.getComponentAt(lastTab);
-							temp.setTitleAt(i, gEV);
-						}
-					}
+
 					turnierEdit.getGruppe()[i].setGruppenName(gEV);
 				}
-				
+
 				turnierTableControl.updateTurnier(turnierEdit);
 
 				GruppenTableControl gtC = new GruppenTableControl(mainControl);
 				gtC.updateGruppen(turnierEdit);
 
-				
 				mainControl.setEnabled(true);
 				turnierEditierenView.dispose();
 				try {
 					loadTurnierListe();
+					if (turnierEdit.getTurnierId() == loadedTurnierID) {
+						reloadTurnier();
+					}
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -136,7 +123,7 @@ public class TurnierListeLadenControl implements ActionListener {
 			}
 			if (arg0.getSource() == turnierEditierenView.getCancelButton()) {
 				mainControl.setEnabled(true);
-				
+
 				turnierEditierenView.dispose();
 			}
 		}
@@ -168,7 +155,6 @@ public class TurnierListeLadenControl implements ActionListener {
 				GruppenTableControl gTC = new GruppenTableControl(mainControl);
 				turnierEdit = gTC.getGruppe(turnierEdit);
 
-				
 				turnierEditierenView = new TurnierEditierenView(turnierEdit);
 				turnierEditierenView.getOkButton().addActionListener(this);
 				turnierEditierenView.getCancelButton().addActionListener(this);
@@ -225,7 +211,6 @@ public class TurnierListeLadenControl implements ActionListener {
 	}
 
 	public void loadTurnier(int index) {
-		loadedTurnier = index;
 
 		mainControl.setSpielerEingabeControl(null);
 		if (mainControl.getTurnier() != null) {
