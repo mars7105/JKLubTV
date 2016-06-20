@@ -21,8 +21,7 @@ import de.turnierverwaltung.view.EigenschaftenView;
 public class EigenschaftenControl {
 	private MainControl mainControl;
 	private EigenschaftenView eigenschaftenView;
-	private int maxWidth = 0;;
-	private int columnWidht = 0;
+
 	private EigenschaftenActionListenerControl actionListenerControl;
 	private EigenschaftenItemListenerControl itemListenerControl;
 
@@ -52,17 +51,7 @@ public class EigenschaftenControl {
 		eigenschaftenView.getRoundTextField().setText(ppC.getTableComumnRound());
 	}
 
-	public int getColumnWidht() {
-		return columnWidht;
-	}
 
-	public void setColumnWidht(int columnWidht) {
-		this.columnWidht = columnWidht;
-	}
-
-	public void setColumnWidhtToZero() {
-		this.columnWidht = 0;
-	}
 
 	public EigenschaftenView getEigenschaftenView() {
 		return eigenschaftenView;
@@ -72,13 +61,7 @@ public class EigenschaftenControl {
 		this.eigenschaftenView = eigenschaftenView;
 	}
 
-	public int getMaxWidth() {
-		return maxWidth;
-	}
-
-	public void setMaxWidth(int maxWidth) {
-		this.maxWidth = maxWidth;
-	}
+	
 
 	public EigenschaftenActionListenerControl getActionListenerControl() {
 		return actionListenerControl;
