@@ -67,6 +67,7 @@ public class TurnierListeLadenControl implements ActionListener {
 	private ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png"))); //$NON-NLS-1$
 	private Turnier turnierEdit;
+	private boolean selectTurnierTab;
 
 	public TurnierListeLadenControl(MainControl mainControl) {
 		anzahlTurniere = 0;
@@ -79,7 +80,7 @@ public class TurnierListeLadenControl implements ActionListener {
 		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(this.mainControl));
 
 		hauptPanel = this.mainControl.getHauptPanel();
-
+		selectTurnierTab = false;
 	}
 
 	@Override
@@ -133,6 +134,7 @@ public class TurnierListeLadenControl implements ActionListener {
 			if (arg0.getSource() == turnierListeLadenView.getTurnierLadeButton()[i]) {
 				Turnier turnier = this.mainControl.getTurnier();
 				if (turnier == null) {
+					selectTurnierTab = true;
 					loadTurnier(i);
 				} else {
 					// Custom button text
@@ -144,6 +146,7 @@ public class TurnierListeLadenControl implements ActionListener {
 							Messages.getString("TurnierListeLadenControl.14"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
 							JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 					if (abfrage == 0) {
+						selectTurnierTab = true;
 						loadTurnier(i);
 					}
 				}
@@ -211,6 +214,7 @@ public class TurnierListeLadenControl implements ActionListener {
 	}
 
 	public void loadTurnier(int index) {
+		int selectedTab = hauptPanel.getSelectedIndex();
 
 		mainControl.setSpielerEingabeControl(null);
 		if (mainControl.getTurnier() != null) {
@@ -259,11 +263,14 @@ public class TurnierListeLadenControl implements ActionListener {
 		mainControl.getNaviController().setPairingIsActive(false);
 		this.mainControl.setNeuesTurnier(false);
 		hauptPanel.addTab(turnier.getTurnierName(), turnierIcon, tabbedPaneView);
-		int selectIndex = hauptPanel.getTabCount() - 1;
-		hauptPanel.setSelectedIndex(selectIndex);
-		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
+		if (selectTurnierTab == true) {
+			selectTurnierTab = false;
+			selectedTab = hauptPanel.getTabCount() - 1;
+		} else {
+			hauptPanel.setSelectedIndex(hauptPanel.getTabCount() - 1);
+		}
+		hauptPanel.setSelectedIndex(selectedTab);
 		loadedTurnierID = turnier.getTurnierId();
-		mainControl.getEigenschaftenControl().setColumnWidhtToZero();
 
 	}
 

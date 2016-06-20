@@ -15,8 +15,6 @@ public class EigenschaftenItemListenerControl {
 		this.mainControl = mainControl;
 		this.esControl = esControl;
 		this.eigenschaftenView = this.esControl.getEigenschaftenView();
-		this.esControl.getColumnWidht();
-		this.esControl.getMaxWidth();
 	}
 
 	public void addItemListeners() {
