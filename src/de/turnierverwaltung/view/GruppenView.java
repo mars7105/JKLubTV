@@ -132,10 +132,6 @@ public class GruppenView extends JPanel {
 			// groupBox.add(doppelRundigPanel);
 			centerPane.add(groupBox);
 		}
-		JPanel allGroupBoxes = new JPanel();
-		allGroupBoxes.setLayout(new BorderLayout());
-		allGroupBoxes.add(centerPane, BorderLayout.NORTH);
-
 		okButton = new JButton(Messages.getString("GruppenView.1")); //$NON-NLS-1$
 		okButton.setActionCommand(Messages.getString("GruppenView.2")); //$NON-NLS-1$
 		buttonPane.add(okButton);
@@ -143,14 +139,21 @@ public class GruppenView extends JPanel {
 		cancelButton = new JButton(Messages.getString("GruppenView.3")); //$NON-NLS-1$
 		cancelButton.setActionCommand(Messages.getString("GruppenView.4")); //$NON-NLS-1$
 		buttonPane.add(cancelButton);
+		centerPane.add(buttonPane);
+		JPanel allGroupBoxes = new JPanel();
+		allGroupBoxes.setLayout(new BorderLayout());
+		allGroupBoxes.add(centerPane, BorderLayout.NORTH);
+
+
 
 		contentPanel.add(allGroupBoxes);
+//		contentPanel.add(buttonPane);
 
 		scrollPane = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(contentPanel);
 		add(scrollPane, BorderLayout.CENTER);
-		add(buttonPane, BorderLayout.SOUTH);
+//		add(buttonPane, BorderLayout.SOUTH);
 
 		setVisible(true);
 
