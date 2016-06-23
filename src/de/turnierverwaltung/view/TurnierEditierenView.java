@@ -75,14 +75,13 @@ public class TurnierEditierenView extends JDialog {
 	private JButton okButton;
 	private JButton cancelButton;
 	private JTextField textFieldTurnierName;
-	private JPanel buttonPane;
+	private ButtonPanelView buttonPane;
 	private JDatePickerImpl startDatumTextField;
 	private JDatePickerImpl endDatumTextField;
 
 	private Properties property;
 	private JTextField[] textFieldGruppenName;
 
-	// private JButton rundenEditierenButton;
 
 	public TurnierEditierenView(Turnier turnier) {
 		// this.rundenEditierenButton = new JButton("Paarungen bearbeiten");
@@ -91,10 +90,7 @@ public class TurnierEditierenView extends JDialog {
 		property.put("text.today", Messages.getString("TurnierEditierenView.3")); //$NON-NLS-1$ //$NON-NLS-2$
 		property.put("text.month", Messages.getString("TurnierEditierenView.5")); //$NON-NLS-1$ //$NON-NLS-2$
 		property.put("text.year", Messages.getString("TurnierEditierenView.7")); //$NON-NLS-1$ //$NON-NLS-2$
-		this.okButton = new JButton(
-				Messages.getString("TurnierEditierenView.8")); //$NON-NLS-1$
-		this.cancelButton = new JButton(
-				Messages.getString("TurnierEditierenView.9")); //$NON-NLS-1$
+
 		this.textFieldTurnierName = new JTextField(20);
 		this.setAlwaysOnTop(true);
 		setTitle(Messages.getString("TurnierEditierenView.10")); //$NON-NLS-1$
@@ -146,17 +142,15 @@ public class TurnierEditierenView extends JDialog {
 		centerPane.add(label);
 		centerPane.add(endDatumTextField);
 		contentPanel.add(centerPane);
-		buttonPane = new JPanel();
-		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-//		buttonPane.setBackground(new Color(249, 222, 112));
-		// buttonPane.add(rundenEditierenButton);
-		buttonPane.add(okButton);
-		buttonPane.add(cancelButton);
+		buttonPane = new ButtonPanelView();
+		buttonPane.makeAllButtons();
+		this.okButton = buttonPane.getOkButton();
+		this.cancelButton =buttonPane.getCancelButton();
+		
 
 		for (int i = 0; i < turnier.getAnzahlGruppen(); i++) {
 			centerPane = new JPanel();
 			centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-//			centerPane.setBackground(new Color(249, 222, 112));
 			this.textFieldGruppenName[i] = new JTextField(15);
 			textFieldGruppenName[i].setText(turnier.getGruppe()[i]
 					.getGruppenName());
@@ -256,17 +250,12 @@ public class TurnierEditierenView extends JDialog {
 		this.textFieldTurnierName = textFieldTurnierName;
 	}
 
-	// public JButton getRundenEditierenButton() {
-	// return rundenEditierenButton;
-	// }
+
 
 	public JTextField[] getTextFieldGruppenName() {
 		return textFieldGruppenName;
 	}
 
-	// public void setRundenEditierenButton(JButton rundenEditierenButton) {
-	// this.rundenEditierenButton = rundenEditierenButton;
-	// }
 
 	public void setTextFieldGruppenName(JTextField[] textFieldGruppenName) {
 		this.textFieldGruppenName = textFieldGruppenName;

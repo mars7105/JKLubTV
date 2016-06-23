@@ -108,7 +108,7 @@ public class TurnierView extends JPanel {
 		JPanel panel1 = new JPanel();
 		panel1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		panel1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
-//		panel1.setBackground(new Color(249, 222, 112));
+		// panel1.setBackground(new Color(249, 222, 112));
 		hauptPanel.add(panel1);
 		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
 
@@ -120,7 +120,7 @@ public class TurnierView extends JPanel {
 		turnierNameTextField.setColumns(10);
 
 		JPanel panel2 = new JPanel();
-//		panel2.setBackground(new Color(249, 222, 112));
+		// panel2.setBackground(new Color(249, 222, 112));
 		hauptPanel.add(panel2);
 		panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
 
@@ -132,7 +132,7 @@ public class TurnierView extends JPanel {
 		panel2.add(startDatumTextField);
 
 		JPanel panel3 = new JPanel();
-//		panel3.setBackground(new Color(249, 222, 112));
+		// panel3.setBackground(new Color(249, 222, 112));
 		panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
 		hauptPanel.add(panel3);
 
@@ -144,7 +144,7 @@ public class TurnierView extends JPanel {
 		panel3.add(endDatumeTextField);
 
 		JPanel panel4 = new JPanel();
-//		panel4.setBackground(new Color(249, 222, 112));
+		// panel4.setBackground(new Color(249, 222, 112));
 		panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
 		hauptPanel.add(panel4);
 
@@ -156,14 +156,10 @@ public class TurnierView extends JPanel {
 		gruppenAnzahlTextField.setColumns(10);
 		panel4.add(gruppenAnzahlTextField);
 
-		JPanel buttonPane = new JPanel();
-//		buttonPane.setBackground(new Color(249, 222, 112));
-		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
+		ButtonPanelView buttonPane = new ButtonPanelView();
+		buttonPane.makeOKButton();
 		hauptPanel.add(buttonPane);
-
-		okButton = new JButton(Messages.getString("TurnierView.12")); //$NON-NLS-1$
-		okButton.setActionCommand(Messages.getString("TurnierView.13")); //$NON-NLS-1$
-		buttonPane.add(okButton);
+		okButton = buttonPane.getOkButton();
 
 		String help = Messages.getString("TurnierView.14"); //$NON-NLS-1$
 		JPanel helpPanel = new JPanel();

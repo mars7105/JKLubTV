@@ -1,4 +1,5 @@
 package de.turnierverwaltung.view;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -37,49 +38,38 @@ public class SpielerAnzahlView extends JPanel {
 
 	public SpielerAnzahlView(String title) {
 		anzahlSpielerTextField = new JTextField();
-//		int windowWidth = TurnierKonstanten.WINDOW_WIDTH;
-//		int windowHeight = TurnierKonstanten.WINDOW_HEIGHT - 50;
-//		setBackground(new Color(249, 222, 112));
+
 		setLayout(new FlowLayout());
 		contentPanel = new JPanel();
-//		contentPanel.setBackground(new Color(249, 222, 112));
-//		contentPanel.setBounds(0, 0, windowWidth, windowHeight);
+
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		add(contentPanel);
-		{
-			JPanel buttonPane = new JPanel();
-			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-//			buttonPane.setBackground(new Color(249, 222, 112));
-			JPanel centerPane = new JPanel();
-			centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
-//			centerPane.setBackground(new Color(249, 222, 112));
 
-			contentPanel.add(centerPane);
-			contentPanel.add(buttonPane);
-			{
-				okButton = new JButton("OK"); //$NON-NLS-1$
-				okButton.setActionCommand("OK"); //$NON-NLS-1$
+		ButtonPanelView buttonPane = new ButtonPanelView();
+		buttonPane.makeOKButton();
+		JPanel centerPane = new JPanel();
+		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
 
-				buttonPane.add(okButton);
-			}
+		contentPanel.add(centerPane);
+		contentPanel.add(buttonPane);
 
-			{
-				JLabel label = new JLabel(Messages.getString("SpielerAnzahlView.2")); //$NON-NLS-1$
-				anzahlSpielerTextField = new JTextField();
-				centerPane.add(label);
-				centerPane.add(anzahlSpielerTextField);
+		okButton = buttonPane.getOkButton();
 
-			}
-			String help = Messages.getString("SpielerAnzahlView.3"); //$NON-NLS-1$
-			JPanel helpPanel = new JPanel();
-			JTextArea helpText = new JTextArea();
-			helpText.setText(help);
-			helpText.setEditable(false);
-			helpPanel.add(helpText);
-			contentPanel.add(helpPanel);
-			updateUI();
-		}
+		JLabel label = new JLabel(Messages.getString("SpielerAnzahlView.2")); //$NON-NLS-1$
+		anzahlSpielerTextField = new JTextField();
+		centerPane.add(label);
+		centerPane.add(anzahlSpielerTextField);
+
+		String help = Messages.getString("SpielerAnzahlView.3"); //$NON-NLS-1$
+		JPanel helpPanel = new JPanel();
+		JTextArea helpText = new JTextArea();
+		helpText.setText(help);
+		helpText.setEditable(false);
+		helpPanel.add(helpText);
+		contentPanel.add(helpPanel);
+		updateUI();
+
 	}
 
 	public JTextField getAnzahlSpielerTextField() {
