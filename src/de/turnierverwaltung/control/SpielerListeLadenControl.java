@@ -30,14 +30,14 @@ import javax.swing.JTabbedPane;
 import de.turnierverwaltung.model.SortName;
 import de.turnierverwaltung.model.Spieler;
 import de.turnierverwaltung.view.SpielerEditierenView;
-import de.turnierverwaltung.view.SpielerLadenView;
+import de.turnierverwaltung.view.SpielerListeLadenView;
 
-public class SpielerLadenControl implements ActionListener {
+public class SpielerListeLadenControl implements ActionListener {
 	private MainControl mainControl;
 	// private TabAnzeigeView tabbedPaneView;
 	private JTabbedPane hauptPanel;
 	private int spielerAnzahl;
-	private SpielerLadenView spielerLadenView;
+	private SpielerListeLadenView spielerLadenView;
 	private ArrayList<Spieler> spieler;
 	private SpielerTableControl spielerTableControl;
 	private SpielerEditierenView spielerEditierenView;
@@ -46,7 +46,7 @@ public class SpielerLadenControl implements ActionListener {
 	private ImageIcon spielerListeIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-group.png"))); //$NON-NLS-1$
 
-	public SpielerLadenControl(MainControl mainControl) {
+	public SpielerListeLadenControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		new DewisDialogControl(this.mainControl);
 		hauptPanel = this.mainControl.getHauptPanel();
@@ -144,7 +144,7 @@ public class SpielerLadenControl implements ActionListener {
 		spielerAnzahl = spieler.size();
 		int selectedTab = 0;
 		if (spielerLadenView == null) {
-			spielerLadenView = new SpielerLadenView(spielerAnzahl,
+			spielerLadenView = new SpielerListeLadenView(spielerAnzahl,
 					mainControl.getPropertiesControl().getSpielerProTab());
 			hauptPanel.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, spielerLadenView); //$NON-NLS-1$
 		} else {
@@ -153,6 +153,7 @@ public class SpielerLadenControl implements ActionListener {
 			spielerLadenView.init(spieler.size());
 
 		}
+		spielerLadenView.getTitleView().setFlowLayoutLeft();
 
 		int index = 0;
 		Collections.sort(spieler, new SortName());
@@ -178,11 +179,11 @@ public class SpielerLadenControl implements ActionListener {
 		this.spieler = spieler;
 	}
 
-	public SpielerLadenView getSpielerLadenView() {
+	public SpielerListeLadenView getSpielerLadenView() {
 		return spielerLadenView;
 	}
 
-	public void setSpielerLadenView(SpielerLadenView spielerLadenView) {
+	public void setSpielerLadenView(SpielerListeLadenView spielerLadenView) {
 		this.spielerLadenView = spielerLadenView;
 	}
 

@@ -92,7 +92,7 @@ public class MainControl extends JFrame {
 	private SimpleTerminTabelleView[] simpleTerminTabelleView;
 	private TurnierListeLadenControl turnierListeLadenControl;
 	private TurnierListeLadenView turnierListeLadenView;
-	private SpielerLadenControl spielerLadenControl;
+	private SpielerListeLadenControl spielerLadenControl;
 	private StandardView standardView;
 	private NaviView naviView;
 	private NaviControl naviController;
@@ -136,11 +136,11 @@ public class MainControl extends JFrame {
 		this.languagePropertiesControl = languagePropertiesControl;
 	}
 
-	public SpielerLadenControl getSpielerLadenControl() {
+	public SpielerListeLadenControl getSpielerLadenControl() {
 		return spielerLadenControl;
 	}
 
-	public void setSpielerLadenControl(SpielerLadenControl spielerLadenControl) {
+	public void setSpielerLadenControl(SpielerListeLadenControl spielerLadenControl) {
 		this.spielerLadenControl = spielerLadenControl;
 	}
 
@@ -232,7 +232,7 @@ public class MainControl extends JFrame {
 		return spielerAnzahlView;
 	}
 
-	public SpielerLadenControl getSpielerEditierenControl() {
+	public SpielerListeLadenControl getSpielerEditierenControl() {
 		return spielerLadenControl;
 	}
 
@@ -359,7 +359,7 @@ public class MainControl extends JFrame {
 			if (this.getSpielerEditierenControl() != null) {
 				// mainControl.getSpielerEditierenControl().makePanel();
 			} else {
-				this.setSpielerEditierenControl(new SpielerLadenControl(this));
+				this.setSpielerEditierenControl(new SpielerListeLadenControl(this));
 				try {
 					this.getSpielerEditierenControl().updateSpielerListe();
 				} catch (SQLException e) {
@@ -524,7 +524,7 @@ public class MainControl extends JFrame {
 		this.spielerAnzahlView = spielerAnzahlView;
 	}
 
-	public void setSpielerEditierenControl(SpielerLadenControl spielerLadenControl) {
+	public void setSpielerEditierenControl(SpielerListeLadenControl spielerLadenControl) {
 		this.spielerLadenControl = spielerLadenControl;
 	}
 

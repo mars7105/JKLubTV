@@ -161,7 +161,7 @@ public class NaviView extends JPanel {
 		panel3.setBackground(Color.LIGHT_GRAY);
 		panel3.add(turnierAddButton);
 		TitleView titleView = new TitleView(Messages.getString("NaviView.18"));
-		titleView.setFlowLayoutLeft();
+		titleView.setNaviView();
 		// JLabel turnierListeLabel = new
 		// JLabel(Messages.getString("NaviView.18")); //$NON-NLS-1$
 		// turnierListeLabel.setBackground(Color.LIGHT_GRAY);
@@ -186,7 +186,7 @@ public class NaviView extends JPanel {
 		panel3.setBackground(Color.LIGHT_GRAY);
 		panel3.add(spielerAddButton);
 		titleView = new TitleView(Messages.getString("NaviView.20"));
-		titleView.setFlowLayoutLeft();
+		titleView.setNaviView();
 		// JLabel spielerListeLabel = new
 		// JLabel(Messages.getString("NaviView.20")); //$NON-NLS-1$
 		// spielerListeLabel.setBackground(Color.LIGHT_GRAY);
@@ -299,7 +299,7 @@ public class NaviView extends JPanel {
 		panel4k.add(pairingsSaveButton);
 
 		titleView = new TitleView(Messages.getString("NaviView.25"));
-		titleView.setFlowLayoutLeft();
+		titleView.setNaviView();
 
 		// JPanel dateiPanelLabel = new JPanel();
 		// dateiPanelLabel.setBackground(Color.LIGHT_GRAY);
@@ -331,7 +331,7 @@ public class NaviView extends JPanel {
 		// tabellenPanelLabel.setBackground(Color.LIGHT_GRAY);
 		// tabellenLabel = new JLabel(tabellenname);
 		titleView = new TitleView(tabellenname);
-		titleView.setFlowLayoutLeft();
+		titleView.setNaviView();
 		tabellenLabel = titleView.getTitleLabel();
 		// tabellenPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// tabellenPanelLabel.add(tabellenLabel);
@@ -370,16 +370,16 @@ public class NaviView extends JPanel {
 		BoxLayout pairingsPanelLayout = new BoxLayout(pairingsPanel, BoxLayout.PAGE_AXIS);
 		pairingsPanel.setLayout(pairingsPanelLayout);
 		titleView = new TitleView(pairingsname);
-		titleView.setFlowLayoutLeft();
+		titleView.setNaviView();
 
-//		JPanel pairingsPanelLabel = new JPanel();
-//		pairingsPanelLabel.setPreferredSize(new Dimension(200, 30));
-//		pairingsPanelLabel.setBackground(Color.LIGHT_GRAY);
+		// JPanel pairingsPanelLabel = new JPanel();
+		// pairingsPanelLabel.setPreferredSize(new Dimension(200, 30));
+		// pairingsPanelLabel.setBackground(Color.LIGHT_GRAY);
 
 		// pairingsLabel = new JLabel(pairingsname);
 		pairingsLabel = titleView.getTitleLabel();
-//		pairingsPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		pairingsPanelLabel.add(pairingsLabel);
+		// pairingsPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// pairingsPanelLabel.add(pairingsLabel);
 		pairingsPanel.add(titleView);
 		pairingsPanel.add(panel4k);
 

@@ -268,7 +268,7 @@ public class NaviControl implements ActionListener {
 							mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 							// mainControl.getTurnierTableControl()
 							// .loadTurnierListe();
-							mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
+							mainControl.setSpielerEditierenControl(new SpielerListeLadenControl(mainControl));
 							mainControl.getSpielerEditierenControl().updateSpielerListe();
 							mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
 							mainControl.getTurnierListeLadenControl().loadTurnierListe();
@@ -319,7 +319,7 @@ public class NaviControl implements ActionListener {
 						// mainControl.getNaviView().getTabellenPanel().setVisible(false);
 						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 						// mainControl.getTurnierTableControl().loadTurnierListe();
-						mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
+						mainControl.setSpielerEditierenControl(new SpielerListeLadenControl(mainControl));
 						mainControl.getSpielerEditierenControl().updateSpielerListe();
 						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
 

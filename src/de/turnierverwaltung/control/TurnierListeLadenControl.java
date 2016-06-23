@@ -231,7 +231,7 @@ public class TurnierListeLadenControl implements ActionListener {
 		mainControl.setSpielerTableControl(new SpielerTableControl(mainControl));
 		mainControl.getSpielerTableControl().getSpieler();
 		tabbedPaneView = new TabAnzeigeView(mainControl, Messages.getString("TurnierListeLadenControl.15"));
-
+		tabbedPaneView.getTitleView().setFlowLayoutLeft();
 		mainControl.setTabAnzeigeView(tabbedPaneView);
 		mainControl.setPartienTableControl(new PartienTableControl(mainControl));
 		for (int z = 0; z < mainControl.getTurnier().getAnzahlGruppen(); z++) {
@@ -300,7 +300,7 @@ public class TurnierListeLadenControl implements ActionListener {
 				this.turnierListeLadenView.removeAll();
 				this.turnierListeLadenView.makePanel(anzahlTurniere);
 			}
-
+			turnierListeLadenView.getTitleView().setFlowLayoutLeft();
 			// Collections.sort(turnierListe, new SortTournamentList());
 			ListIterator<Turnier> li = turnierListe.listIterator();
 			while (li.hasNext()) {
