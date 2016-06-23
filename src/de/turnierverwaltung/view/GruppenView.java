@@ -93,17 +93,17 @@ public class GruppenView extends JPanel {
 		// JLabel doppelteRundenLabel;
 		// doppelteRundenCheckBox = new JCheckBox[this.gruppenAnzahl];
 		setLayout(new BorderLayout());
-//		setBackground(new Color(249, 222, 112));
+		// setBackground(new Color(249, 222, 112));
 
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-//		contentPanel.setBackground(new Color(249, 222, 112));
+		// contentPanel.setBackground(new Color(249, 222, 112));
 		contentPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
-		JPanel buttonPane = new JPanel();
-		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-//		buttonPane.setBackground(new Color(249, 222, 112));
+		ButtonPanelView buttonPane = new ButtonPanelView();
+		buttonPane.makeAllButtons();
+
 		JPanel centerPane = new JPanel();
-//		centerPane.setBackground(new Color(249, 222, 112));
+		// centerPane.setBackground(new Color(249, 222, 112));
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
 		for (int i = 0; i < this.gruppenAnzahl; i++) {
 
@@ -132,11 +132,13 @@ public class GruppenView extends JPanel {
 			// groupBox.add(doppelRundigPanel);
 			centerPane.add(groupBox);
 		}
-		okButton = new JButton(Messages.getString("GruppenView.1")); //$NON-NLS-1$
+		okButton = buttonPane.getOkButton();
+		okButton.setText(Messages.getString("GruppenView.1")); //$NON-NLS-1$
 		okButton.setActionCommand(Messages.getString("GruppenView.2")); //$NON-NLS-1$
 		buttonPane.add(okButton);
 
-		cancelButton = new JButton(Messages.getString("GruppenView.3")); //$NON-NLS-1$
+		cancelButton = buttonPane.getCancelButton();
+		cancelButton.setText(Messages.getString("GruppenView.3")); //$NON-NLS-1$
 		cancelButton.setActionCommand(Messages.getString("GruppenView.4")); //$NON-NLS-1$
 		buttonPane.add(cancelButton);
 		centerPane.add(buttonPane);
@@ -144,16 +146,14 @@ public class GruppenView extends JPanel {
 		allGroupBoxes.setLayout(new BorderLayout());
 		allGroupBoxes.add(centerPane, BorderLayout.NORTH);
 
-
-
 		contentPanel.add(allGroupBoxes);
-//		contentPanel.add(buttonPane);
+		// contentPanel.add(buttonPane);
 
 		scrollPane = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(contentPanel);
 		add(scrollPane, BorderLayout.CENTER);
-//		add(buttonPane, BorderLayout.SOUTH);
+		// add(buttonPane, BorderLayout.SOUTH);
 
 		setVisible(true);
 

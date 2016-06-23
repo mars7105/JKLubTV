@@ -17,9 +17,6 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-//import java.awt.Color;
-import java.awt.FlowLayout;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -61,37 +58,31 @@ public class SpielerEingabeView extends JPanel {
 		textComboBoxAge = new JComboBox[this.spielerAnzahl];
 
 		contentPanel = new JPanel();
-		contentPanel.setLayout(new FlowLayout());
-//		contentPanel.setBackground(new Color(249, 222, 112));
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		setLayout(new BorderLayout());
 
-		scrollPane = new JScrollPane();
-		scrollPane.setViewportView(contentPanel);
-
-		add(scrollPane, BorderLayout.CENTER);
-		JPanel buttonPane = new JPanel();
-		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		okButton = new JButton(Messages.getString("SpielerEingabeView.0")); //$NON-NLS-1$
+		ButtonPanelView buttonPane = new ButtonPanelView();
+		buttonPane.makeAllButtons();
+		okButton = buttonPane.getOkButton();
+		okButton.setText(Messages.getString("SpielerEingabeView.0")); //$NON-NLS-1$
 		okButton.setActionCommand(Messages.getString("SpielerEingabeView.1")); //$NON-NLS-1$
 		buttonPane.add(okButton);
 
-		cancelButton = new JButton(Messages.getString("SpielerEingabeView.2")); //$NON-NLS-1$
+		cancelButton = buttonPane.getCancelButton();
+		cancelButton.setText(Messages.getString("SpielerEingabeView.2")); //$NON-NLS-1$
 		cancelButton.setActionCommand(Messages.getString("SpielerEingabeView.3")); //$NON-NLS-1$
 		buttonPane.add(cancelButton);
 
-		add(buttonPane, BorderLayout.SOUTH);
-
 		JPanel line;
 		JPanel centerPane = new JPanel();
-//		centerPane.setBackground(new Color(249, 222, 112));
-		contentPanel.add(centerPane);
+
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
 		spielerSuche = new JComboBox[this.spielerAnzahl];
 		for (int i = 0; i < this.spielerAnzahl; i++) {
 			spielerID[i] = -1;
 			line = new JPanel();
 			line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
-//			line.setBackground(new Color(249, 222, 112));
+			// line.setBackground(new Color(249, 222, 112));
 			JLabel label = new JLabel(" " + new Integer(i + 1).toString() //$NON-NLS-1$
 					+ Messages.getString("SpielerEingabeView.5") + Messages.getString("SpielerEingabeView.6")); //$NON-NLS-1$ //$NON-NLS-2$
 			spielerTextfield[i] = new JTextField(10);
@@ -125,7 +116,15 @@ public class SpielerEingabeView extends JPanel {
 			centerPane.add(line);
 
 		}
+		contentPanel.add(centerPane);
+		contentPanel.add(buttonPane);
+		JPanel all = new JPanel();
+		all.setLayout(new BorderLayout());
+		all.add(contentPanel, BorderLayout.NORTH);
+		scrollPane = new JScrollPane();
+		scrollPane.setViewportView(all);
 
+		add(scrollPane, BorderLayout.CENTER);
 	}
 
 	public JButton getCancelButton() {
