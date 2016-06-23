@@ -77,7 +77,7 @@ public class TurnierListeLadenControl implements ActionListener {
 		this.mainControl.setTurnierListeLadenView(turnierListeLadenView);
 		turnierTableControl = mainControl.getTurnierTableControl();
 
-		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(this.mainControl));
+		this.mainControl.setTabAnzeigeControl(new TabAnzeigeControl(this.mainControl, "X"));
 
 		hauptPanel = this.mainControl.getHauptPanel();
 		selectTurnierTab = false;
@@ -223,16 +223,16 @@ public class TurnierListeLadenControl implements ActionListener {
 			hauptPanel.remove(selectedIndex);
 
 		}
-		tabbedPaneView = new TabAnzeigeView(mainControl);
 
-		mainControl.setTabAnzeigeView(tabbedPaneView);
 		turnier = turnierListe.get(index);
 		mainControl.setTurnier(turnier);
 		mainControl.setGruppenTableControl(new GruppenTableControl(mainControl));
 		mainControl.getGruppenTableControl().getGruppe();
 		mainControl.setSpielerTableControl(new SpielerTableControl(mainControl));
 		mainControl.getSpielerTableControl().getSpieler();
+		tabbedPaneView = new TabAnzeigeView(mainControl, Messages.getString("TurnierListeLadenControl.15"));
 
+		mainControl.setTabAnzeigeView(tabbedPaneView);
 		mainControl.setPartienTableControl(new PartienTableControl(mainControl));
 		for (int z = 0; z < mainControl.getTurnier().getAnzahlGruppen(); z++) {
 			mainControl.getPartienTableControl().getPartien(z);
@@ -247,8 +247,9 @@ public class TurnierListeLadenControl implements ActionListener {
 		mainControl.setTerminTabelleControl(terminTabelleControl);
 
 		for (int z = 0; z < turnier.getAnzahlGruppen(); z++) {
-			tabbedPaneView2[z] = new TabAnzeigeView(mainControl);
-			tabbedPaneView.insertTab(turnier.getGruppe()[z].getGruppenName(), gruppenIcon, tabbedPaneView2[z], null, z);
+			tabbedPaneView2[z] = new TabAnzeigeView(mainControl, "Gruppen");
+			tabbedPaneView.getTabbedPane().insertTab(turnier.getGruppe()[z].getGruppenName(), gruppenIcon,
+					tabbedPaneView2[z], null, z);
 			mainControl.getTurnierTabelleControl().makeSimpleTableView(z);
 
 			mainControl.getTerminTabelleControl().makeSimpleTableView(z);

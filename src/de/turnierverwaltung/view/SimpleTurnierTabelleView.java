@@ -1,5 +1,6 @@
 package de.turnierverwaltung.view;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -48,8 +49,8 @@ public class SimpleTurnierTabelleView extends JPanel {
 		setLayout(new BorderLayout());
 		// setBackground(new Color(249, 222, 112));
 		table = new JTable(simpleTableModel);
-//		table.setPreferredSize(new Dimension(300, 300));
-//		table.setMinimumSize(new Dimension(200, 200));
+		// table.setPreferredSize(new Dimension(300, 300));
+		// table.setMinimumSize(new Dimension(200, 200));
 		// Font fnt = new Font("Arial", Font.PLAIN, 16);
 		// table.setFont(fnt);
 
@@ -62,23 +63,22 @@ public class SimpleTurnierTabelleView extends JPanel {
 		comboBox.addItem("+"); //$NON-NLS-1$
 		setColumnWidth(abstand);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-//		 table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		// table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setRowHeight(30);
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
-		// JPanel haupt = new JPanel();
-		// haupt.setLayout(new BorderLayout());
+		
 		JPanel tabelPanel = new JPanel();
-		// tabelPanel.setLayout(new BoxLayout(tabelPanel, BoxLayout.PAGE_AXIS));
 		tabelPanel.setLayout(new BorderLayout());
-		tabelPanel.add(sPane, BorderLayout.CENTER);
-
+		tabelPanel.add(sPane, BorderLayout.NORTH);
 		JPanel hinweis = new JPanel();
-		hinweis.add(new JLabel(
-				Messages.getString("SimpleTurnierTabelleView.5") + Messages.getString("SimpleTurnierTabelleView.6"))); //$NON-NLS-1$ //$NON-NLS-2$
+		hinweis.add(new JLabel(Messages.getString("SimpleTerminTabelleView.13") //$NON-NLS-1$
+				+ Messages.getString("SimpleTerminTabelleView.14"))); //$NON-NLS-1$
 		tabelPanel.add(hinweis, BorderLayout.SOUTH);
-		// haupt.add(tabelPanel,BorderLayout.CENTER);
-		add(tabelPanel, BorderLayout.CENTER);
+		JScrollPane allScrollPane = new JScrollPane();
+		allScrollPane.setViewportView(tabelPanel);
+
+		add(allScrollPane, BorderLayout.NORTH);
 
 		this.setVisible(true);
 
@@ -110,22 +110,22 @@ public class SimpleTurnierTabelleView extends JPanel {
 		for (int i = 0; i < columnCount; i++) {
 			TableColumn c = table.getColumnModel().getColumn(i);
 			if (i < 1) {
-//				c.setPreferredWidth(big);
+				// c.setPreferredWidth(big);
 			}
 			if (i >= 1 && i < 4) {
-//				c.setPreferredWidth(medium);
+				// c.setPreferredWidth(medium);
 			}
-//			if (i == 1) {
-//				c.setMinWidth(0);
-//				c.setMaxWidth(0);
-//				c.setPreferredWidth(0);
-//			}
+			// if (i == 1) {
+			// c.setMinWidth(0);
+			// c.setMaxWidth(0);
+			// c.setPreferredWidth(0);
+			// }
 			if (i >= abstand && i < punkte) {
 				c.setCellEditor(new DefaultCellEditor(comboBox));
 				c.setPreferredWidth(small);
 			}
 			if (i >= punkte) {
-//				c.setPreferredWidth(medium);
+				// c.setPreferredWidth(medium);
 			}
 
 		}

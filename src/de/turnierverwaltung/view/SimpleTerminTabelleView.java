@@ -1,5 +1,6 @@
 package de.turnierverwaltung.view;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -58,8 +59,7 @@ public class SimpleTerminTabelleView extends JPanel {
 		 */
 		private static final long serialVersionUID = 1L;
 		private String datePattern = "dd.MM.yyy"; //$NON-NLS-1$
-		private SimpleDateFormat dateFormatter = new SimpleDateFormat(
-				datePattern);
+		private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
 
 		@Override
 		public Object stringToValue(String text) throws ParseException {
@@ -93,12 +93,12 @@ public class SimpleTerminTabelleView extends JPanel {
 	public SimpleTerminTabelleView(SimpleTerminTabelle simpleTerminTabelle) {
 
 		this.simpleTerminTabelle = simpleTerminTabelle;
-//		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setLayout(new BorderLayout());
 		table = new JTable(this.simpleTerminTabelle);
-//		table.setMinimumSize(new Dimension(500,500));
-//		Font fnt = new Font("Arial", Font.PLAIN, 16);
-//		table.setFont(fnt);
+		// table.setMinimumSize(new Dimension(500,500));
+		// Font fnt = new Font("Arial", Font.PLAIN, 16);
+		// table.setFont(fnt);
 		comboBox = new JComboBox<String>();
 		comboBox.addItem(" "); //$NON-NLS-1$
 		comboBox.addItem("0 - 1"); //$NON-NLS-1$
@@ -117,21 +117,18 @@ public class SimpleTerminTabelleView extends JPanel {
 		table.setRowHeight(30);
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
-//		JPanel haupt = new JPanel();
-//		haupt.setLayout(new BorderLayout());
+		
 		JPanel tabelPanel = new JPanel();
-//		tabelPanel.setLayout(new BoxLayout(tabelPanel, BoxLayout.PAGE_AXIS));
 		tabelPanel.setLayout(new BorderLayout());
-		tabelPanel.add(sPane,BorderLayout.CENTER);
+		tabelPanel.add(sPane, BorderLayout.NORTH);
 		JPanel hinweis = new JPanel();
-		hinweis.add(new JLabel(
-				Messages.getString("SimpleTerminTabelleView.13") //$NON-NLS-1$
-						+ Messages.getString("SimpleTerminTabelleView.14"))); //$NON-NLS-1$
-		tabelPanel.add(hinweis,BorderLayout.SOUTH);
-//		haupt.add(tabelPanel);
-		add(tabelPanel,BorderLayout.CENTER);
+		hinweis.add(new JLabel(Messages.getString("SimpleTerminTabelleView.13") //$NON-NLS-1$
+				+ Messages.getString("SimpleTerminTabelleView.14"))); //$NON-NLS-1$
+		tabelPanel.add(hinweis, BorderLayout.SOUTH);
+		JScrollPane allScrollPane = new JScrollPane();
+		allScrollPane.setViewportView(tabelPanel);
 
-//		setBackground(new Color(249, 222, 112));
+		add(allScrollPane, BorderLayout.NORTH);
 
 		this.setVisible(true);
 
@@ -178,7 +175,6 @@ public class SimpleTerminTabelleView extends JPanel {
 			if (i == 3) {
 				c.setCellEditor(new DefaultCellEditor(comboBox));
 			}
-			
 
 		}
 

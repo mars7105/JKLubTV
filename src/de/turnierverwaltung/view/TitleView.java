@@ -1,5 +1,11 @@
 package de.turnierverwaltung.view;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
+
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -18,16 +24,39 @@ package de.turnierverwaltung.view;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-public class TitleView extends JPanel{
+public class TitleView extends JPanel {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JPanel titlePanel;
+	private JLabel titleLabel;
 
-	public TitleView() {
-		JLabel titleLabel = new JLabel("JKlubTV");
-		add(titleLabel);
+	public TitleView(String title) {
+
+		setLayout(new BorderLayout());
+		titleLabel = new JLabel(title);
+		titlePanel = new JPanel();
+		titlePanel.setBackground(new Color(130, 165, 195));
+		titleLabel.setForeground(new Color(255, 255, 0));
+		titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+		titlePanel.add(titleLabel);
+		add(titlePanel, BorderLayout.NORTH);
 	}
 
+	public void setFlowLayoutLeft() {
+		titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		setPreferredSize(new Dimension(200, 30));
+		this.updateUI();
+	}
+
+	public JLabel getTitleLabel() {
+		return titleLabel;
+	}
+
+	public void setTitleLabel(JLabel titleLabel) {
+		this.titleLabel = titleLabel;
+	}
+	
 }

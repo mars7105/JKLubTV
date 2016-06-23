@@ -93,14 +93,14 @@ public class TerminTabelleControl {
 		simpleTableView[gruppenNummer].getTable().getModel()
 				.addTableModelListener(tml[gruppenNummer]);
 
-		if (tabAnzeigeView2[gruppenNummer].getTabCount() == 1) {
-			tabAnzeigeView2[gruppenNummer]
+		if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() == 1) {
+			tabAnzeigeView2[gruppenNummer].getTabbedPane()
 					.insertTab(
 							Messages.getString("TerminTabelleControl.1"), terminTabelleIcon, //$NON-NLS-1$
 							simpleTableView[gruppenNummer], null, 1);
-		} else if (tabAnzeigeView2[gruppenNummer].getTabCount() > 1) {
+		} else if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() > 1) {
 
-			tabAnzeigeView2[gruppenNummer].setComponentAt(1,
+			tabAnzeigeView2[gruppenNummer].getTabbedPane().setComponentAt(1,
 					simpleTableView[gruppenNummer]);
 		}
 

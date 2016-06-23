@@ -160,13 +160,16 @@ public class NaviView extends JPanel {
 		panel3.setLayout(flowLayout);
 		panel3.setBackground(Color.LIGHT_GRAY);
 		panel3.add(turnierAddButton);
-		JLabel turnierListeLabel = new JLabel(Messages.getString("NaviView.18")); //$NON-NLS-1$
-		turnierListeLabel.setBackground(Color.LIGHT_GRAY);
-		JPanel turnierListePanelLabel = new JPanel();
-		turnierListePanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		turnierListePanelLabel.setBackground(Color.LIGHT_GRAY);
-		turnierListePanelLabel.add(turnierListeLabel);
-		turnierListePanel.add(turnierListePanelLabel);
+		TitleView titleView = new TitleView(Messages.getString("NaviView.18"));
+		titleView.setFlowLayoutLeft();
+		// JLabel turnierListeLabel = new
+		// JLabel(Messages.getString("NaviView.18")); //$NON-NLS-1$
+		// turnierListeLabel.setBackground(Color.LIGHT_GRAY);
+		// JPanel turnierListePanelLabel = new JPanel();
+		// turnierListePanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// turnierListePanelLabel.setBackground(Color.LIGHT_GRAY);
+		// turnierListePanelLabel.add(turnierListeLabel);
+		turnierListePanel.add(titleView);
 		turnierListePanel.add(panel3);
 		turnierListePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -182,13 +185,16 @@ public class NaviView extends JPanel {
 		panel3.setLayout(flowLayout);
 		panel3.setBackground(Color.LIGHT_GRAY);
 		panel3.add(spielerAddButton);
-		JLabel spielerListeLabel = new JLabel(Messages.getString("NaviView.20")); //$NON-NLS-1$
-		spielerListeLabel.setBackground(Color.LIGHT_GRAY);
-		JPanel spielerListePanelLabel = new JPanel();
-		spielerListePanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		spielerListePanelLabel.setBackground(Color.LIGHT_GRAY);
-		spielerListePanelLabel.add(spielerListeLabel);
-		spielerListePanel.add(spielerListePanelLabel);
+		titleView = new TitleView(Messages.getString("NaviView.20"));
+		titleView.setFlowLayoutLeft();
+		// JLabel spielerListeLabel = new
+		// JLabel(Messages.getString("NaviView.20")); //$NON-NLS-1$
+		// spielerListeLabel.setBackground(Color.LIGHT_GRAY);
+		// JPanel spielerListePanelLabel = new JPanel();
+		// spielerListePanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// spielerListePanelLabel.setBackground(Color.LIGHT_GRAY);
+		// spielerListePanelLabel.add(spielerListeLabel);
+		spielerListePanel.add(titleView);
 		spielerListePanel.add(panel3);
 		spielerListePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -292,15 +298,18 @@ public class NaviView extends JPanel {
 		panel4k.setBackground(Color.LIGHT_GRAY);
 		panel4k.add(pairingsSaveButton);
 
-		JPanel dateiPanelLabel = new JPanel();
-		dateiPanelLabel.setBackground(Color.LIGHT_GRAY);
-		dateiPanelLabel.setPreferredSize(new Dimension(200, 30));
+		titleView = new TitleView(Messages.getString("NaviView.25"));
+		titleView.setFlowLayoutLeft();
+
+		// JPanel dateiPanelLabel = new JPanel();
+		// dateiPanelLabel.setBackground(Color.LIGHT_GRAY);
+		// dateiPanelLabel.setPreferredSize(new Dimension(200, 30));
 
 		JLabel dateiLabel = new JLabel(Messages.getString("NaviView.25")); //$NON-NLS-1$
 		dateiLabel.setBackground(Color.LIGHT_GRAY);
-		dateiPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		dateiPanelLabel.add(dateiLabel);
-		dateiPanel.add(dateiPanelLabel);
+		// dateiPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// dateiPanelLabel.add(dateiLabel);
+		dateiPanel.add(titleView);
 		dateiPanel.add(panel);
 		dateiPanel.add(panel2);
 		dateiPanel.add(panel2a);
@@ -317,13 +326,15 @@ public class NaviView extends JPanel {
 		datenbankPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		datenbankPanelLabel.add(datenbankLabel);
 
-		JPanel tabellenPanelLabel = new JPanel();
-		tabellenPanelLabel.setPreferredSize(new Dimension(200, 30));
-		tabellenPanelLabel.setBackground(Color.LIGHT_GRAY);
-		tabellenLabel = new JLabel(tabellenname);
-
-		tabellenPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		tabellenPanelLabel.add(tabellenLabel);
+		// JPanel tabellenPanelLabel = new JPanel();
+		// tabellenPanelLabel.setPreferredSize(new Dimension(200, 30));
+		// tabellenPanelLabel.setBackground(Color.LIGHT_GRAY);
+		// tabellenLabel = new JLabel(tabellenname);
+		titleView = new TitleView(tabellenname);
+		titleView.setFlowLayoutLeft();
+		tabellenLabel = titleView.getTitleLabel();
+		// tabellenPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// tabellenPanelLabel.add(tabellenLabel);
 
 		JPanel gruppenPanelLabel = new JPanel();
 		gruppenPanelLabel.setBackground(Color.LIGHT_GRAY);
@@ -331,7 +342,7 @@ public class NaviView extends JPanel {
 		gruppenPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		gruppenPanelLabel.add(gruppenLabel);
 
-		tabellenPanel.add(tabellenPanelLabel);
+		tabellenPanel.add(titleView);
 
 		tabellenPanel.add(panel4c);
 		tabellenPanel.add(panel4d);
@@ -358,14 +369,18 @@ public class NaviView extends JPanel {
 		pairingsPanel.setBackground(Color.LIGHT_GRAY);
 		BoxLayout pairingsPanelLayout = new BoxLayout(pairingsPanel, BoxLayout.PAGE_AXIS);
 		pairingsPanel.setLayout(pairingsPanelLayout);
-		JPanel pairingsPanelLabel = new JPanel();
-		pairingsPanelLabel.setPreferredSize(new Dimension(200, 30));
-		pairingsPanelLabel.setBackground(Color.LIGHT_GRAY);
-		pairingsLabel = new JLabel(pairingsname);
+		titleView = new TitleView(pairingsname);
+		titleView.setFlowLayoutLeft();
 
-		pairingsPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		pairingsPanelLabel.add(pairingsLabel);
-		pairingsPanel.add(pairingsPanelLabel);
+//		JPanel pairingsPanelLabel = new JPanel();
+//		pairingsPanelLabel.setPreferredSize(new Dimension(200, 30));
+//		pairingsPanelLabel.setBackground(Color.LIGHT_GRAY);
+
+		// pairingsLabel = new JLabel(pairingsname);
+		pairingsLabel = titleView.getTitleLabel();
+//		pairingsPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//		pairingsPanelLabel.add(pairingsLabel);
+		pairingsPanel.add(titleView);
 		pairingsPanel.add(panel4k);
 
 		tabellenPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

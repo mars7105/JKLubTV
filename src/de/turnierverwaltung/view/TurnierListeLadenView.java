@@ -71,13 +71,11 @@ public class TurnierListeLadenView extends JPanel {
 		setLayout(new BorderLayout());
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
-		JLabel titleLabel = new JLabel(
-				Messages.getString("TurnierListeLadenView.3")); //$NON-NLS-1$
-		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		TitleView titleView = new TitleView(Messages.getString("TurnierListeLadenView.3"));
+
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.PAGE_AXIS));
-		titlepanel.add(titleLabel);
-		northPanel.add(titlepanel);
+		northPanel.add(titleView);
 
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
