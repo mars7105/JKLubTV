@@ -42,21 +42,23 @@ public class InfoView extends JPanel {
 	private JButton okButton;
 
 	public InfoView() {
+		TitleView titleView = new TitleView(Messages.getString("InfoView.0"));
+
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());
 		setLayout(new BorderLayout());
 
-		JLabel titleLabel = new JLabel(Messages.getString("InfoView.0")); //$NON-NLS-1$
-		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+//		JLabel titleLabel = new JLabel(Messages.getString("InfoView.0")); //$NON-NLS-1$
+//		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.PAGE_AXIS));
-		titlepanel.add(titleLabel);
+//		titlepanel.add(titleLabel);
 
 		lizenzenPane = new JTabbedPane();
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(lizenzenPane);
-		northPanel.add(titlepanel);
+		northPanel.add(titleView);
 		northPanel.add(topPanel);
 		add(northPanel, BorderLayout.NORTH);
 		textArea = new JTextArea();
