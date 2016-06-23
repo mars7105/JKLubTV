@@ -31,7 +31,7 @@ import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.model.Spieler;
 
-public class SpielerLadenView extends JPanel {
+public class SpielerListeLadenView extends JPanel {
 	/**
 	 * 
 	 */
@@ -55,8 +55,9 @@ public class SpielerLadenView extends JPanel {
 
 	private int spielerAnzahl;
 	private int spielerTabAnzahl;
+	private TitleView titleView;
 
-	public SpielerLadenView(int spielerAnzahl, int spielerTabAnzahl) {
+	public SpielerListeLadenView(int spielerAnzahl, int spielerTabAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
 		this.spielerTabAnzahl = spielerTabAnzahl;
 		init(this.spielerAnzahl);
@@ -69,7 +70,7 @@ public class SpielerLadenView extends JPanel {
 		setLayout(new BorderLayout());
 		spielerListe = new JTabbedPane();
 
-		TitleView titleView = new TitleView(Messages.getString("SpielerLadenView.2"));
+		 titleView = new TitleView(Messages.getString("SpielerLadenView.2"));
 
 		mainPane = new JPanel();
 		mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
@@ -189,6 +190,14 @@ public class SpielerLadenView extends JPanel {
 
 	public void setSpielerListe(JTabbedPane spielerListe) {
 		this.spielerListe = spielerListe;
+	}
+
+	public TitleView getTitleView() {
+		return titleView;
+	}
+
+	public void setTitleView(TitleView titleView) {
+		this.titleView = titleView;
 	}
 
 }

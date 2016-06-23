@@ -55,6 +55,8 @@ public class TurnierTabelleControl {
 		dimension = new Dimension[anzahlGruppen];
 		for (int i = 0; i < anzahlGruppen; i++) {
 			tabAnzeigeView2[i] = new TabAnzeigeView(mainControl, Messages.getString("TurnierTabelleControl.8"));
+			tabAnzeigeView2[i].getTitleView().setFlowLayoutLeft();
+
 			dimension[i] = tabAnzeigeView2[i].getPreferredSize();
 		}
 		this.mainControl.setTabAnzeigeView2(tabAnzeigeView2);
