@@ -1,4 +1,5 @@
 package de.turnierverwaltung.control;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -22,9 +23,9 @@ public class TabAnzeigeControl {
 	private TabAnzeigeView tabAnzeigeView;
 	private MainControl mainControl;
 
-	public TabAnzeigeControl(MainControl mainControl) {
+	public TabAnzeigeControl(MainControl mainControl, String title) {
 		this.mainControl = mainControl;
-		this.mainControl.setTabAnzeigeView(new TabAnzeigeView(this.mainControl));
+		this.mainControl.setTabAnzeigeView(new TabAnzeigeView(this.mainControl, title));
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
 	}
 

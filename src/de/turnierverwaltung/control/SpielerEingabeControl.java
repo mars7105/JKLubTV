@@ -278,9 +278,9 @@ public class SpielerEingabeControl implements ActionListener, KeyListener {
 			okButton[index].addActionListener(this);
 			cancelButton[index] = spielerEingabeView[index].getCancelButton();
 			cancelButton[index].addActionListener(this);
-			tabAnzeigeView.setComponentAt(index, spielerEingabeView[index]);
-			tabAnzeigeView.setTitleAt(index, gruppe[index].getGruppenName());
-			tabAnzeigeView.setIconAt(index, gruppenIcon);
+			tabAnzeigeView.getTabbedPane().setComponentAt(index, spielerEingabeView[index]);
+			tabAnzeigeView.getTabbedPane().setTitleAt(index, gruppe[index].getGruppenName());
+			tabAnzeigeView.getTabbedPane().setIconAt(index, gruppenIcon);
 
 			suchAnzeige(index);
 			// hauptPanel.updateUI();

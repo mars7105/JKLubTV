@@ -89,6 +89,8 @@ public class EigenschaftenView extends JPanel {
 	 * Create the panel.
 	 */
 	public EigenschaftenView() {
+		TitleView titleView = new TitleView(Messages.getString("EigenschaftenView.0"));
+
 		JTabbedPane tabbedPane = new JTabbedPane();
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -105,14 +107,15 @@ public class EigenschaftenView extends JPanel {
 		turnierListeAuswahlBox.addItem("15"); //$NON-NLS-1$
 		turnierListeAuswahlBox.addItem("20"); //$NON-NLS-1$
 
-		JLabel titleLabel = new JLabel(Messages.getString("EigenschaftenView.0")); //$NON-NLS-1$
-		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		// JLabel titleLabel = new
+		// JLabel(Messages.getString("EigenschaftenView.0")); //$NON-NLS-1$
+		// JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.PAGE_AXIS));
-		titlepanel.add(titleLabel);
+		// titlepanel.add(titleLabel);
 
-		northPanel.add(titlepanel);
+		northPanel.add(titleView);
 		northPanel.add(topPanel);
 		add(northPanel, BorderLayout.NORTH);
 		centerPane = new JPanel();
@@ -121,31 +124,49 @@ public class EigenschaftenView extends JPanel {
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		languageSupport();
-		tabbedPane.addTab("Language", htmlAll);
+		JPanel wrapper = new JPanel();
+		wrapper.setLayout(new BorderLayout());
+		wrapper.add(htmlAll, BorderLayout.NORTH);
+		tabbedPane.addTab("Language", wrapper);
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		makeHTMLEigenschaften();
-		tabbedPane.addTab(Messages.getString("EigenschaftenView.2"), htmlAll);
+		wrapper = new JPanel();
+		wrapper.setLayout(new BorderLayout());
+		wrapper.add(htmlAll, BorderLayout.NORTH);
+		tabbedPane.addTab(Messages.getString("EigenschaftenView.2"), wrapper);
 
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		tableLabel();
-		tabbedPane.addTab(Messages.getString("EigenschaftenView.21"), htmlAll);
+		wrapper = new JPanel();
+		wrapper.setLayout(new BorderLayout());
+		wrapper.add(htmlAll, BorderLayout.NORTH);
+		tabbedPane.addTab(Messages.getString("EigenschaftenView.21"), wrapper);
 
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		anzahlElemente();
-		tabbedPane.addTab(Messages.getString("EigenschaftenView.26"), htmlAll);
+		wrapper = new JPanel();
+		wrapper.setLayout(new BorderLayout());
+		wrapper.add(htmlAll, BorderLayout.NORTH);
+		tabbedPane.addTab(Messages.getString("EigenschaftenView.26"), wrapper);
 
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		defaultPath();
-		tabbedPane.addTab(Messages.getString("EigenschaftenView.20"), htmlAll);
+		wrapper = new JPanel();
+		wrapper.setLayout(new BorderLayout());
+		wrapper.add(htmlAll, BorderLayout.NORTH);
+		tabbedPane.addTab(Messages.getString("EigenschaftenView.20"), wrapper);
 
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		downloadLinks();
-		tabbedPane.addTab(Messages.getString("EigenschaftenView.5"), htmlAll);
+		wrapper = new JPanel();
+		wrapper.setLayout(new BorderLayout());
+		wrapper.add(htmlAll, BorderLayout.NORTH);
+		tabbedPane.addTab(Messages.getString("EigenschaftenView.5"), wrapper);
 
 		centerPane.add(tabbedPane, BorderLayout.NORTH);
 		ButtonPanelView buttonPane = new ButtonPanelView();
@@ -159,11 +180,13 @@ public class EigenschaftenView extends JPanel {
 	}
 
 	private void tableLabel() {
-
-		JPanel title = new JPanel();
-		title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		title.add(new JLabel(Messages.getString("EigenschaftenView.21"))); //$NON-NLS-1$
-		htmlAll.add(title);
+		TitleView titleView = new TitleView(Messages.getString("EigenschaftenView.21"));
+		titleView.setFlowLayoutLeft();
+		// JPanel title = new JPanel();
+		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// title.add(new JLabel(Messages.getString("EigenschaftenView.21")));
+		// //$NON-NLS-1$
+		htmlAll.add(titleView);
 		JPanel bothPanel = new JPanel();
 		bothPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JPanel leftPanel = new JPanel();
@@ -343,11 +366,15 @@ public class EigenschaftenView extends JPanel {
 	}
 
 	private void defaultPath() {
+		TitleView titleView = new TitleView(Messages.getString("EigenschaftenView.20"));
+		titleView.setFlowLayoutLeft();
 
-		JPanel title = new JPanel();
-		title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		title.add(new JLabel(Messages.getString("EigenschaftenView.20"))); //$NON-NLS-1$
-		htmlAll.add(title);
+		htmlAll.add(titleView);
+
+		// JPanel title = new JPanel();
+		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// title.add(new JLabel(Messages.getString("EigenschaftenView.20")));
+		// //$NON-NLS-1$
 
 		openDefaultPathButton = new JButton(Messages.getString("EigenschaftenView.19")); //$NON-NLS-1$
 		JPanel htmlPanel = new JPanel();
@@ -367,10 +394,14 @@ public class EigenschaftenView extends JPanel {
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelHeader = new JLabel("Deutsch (erst nach Neustart sichtbar)"); //$NON-NLS-1$
 		JLabel germanFlagLabel = new JLabel(germanFlag);
-		JPanel title = new JPanel();
-		title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		title.add(new JLabel("Sprache / Language")); //$NON-NLS-1$
-		htmlAll.add(title);
+		TitleView titleView = new TitleView("Sprache / Language");
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+		// JPanel title = new JPanel();
+		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// title.add(new JLabel("Sprache / Language")); //$NON-NLS-1$
+		// htmlAll.add(title);
 		germanLanguageCheckBox = new JRadioButton();
 		germanLanguageCheckBox.setSelected(true);
 		group.add(germanLanguageCheckBox);
@@ -401,10 +432,15 @@ public class EigenschaftenView extends JPanel {
 	}
 
 	private void anzahlElemente() {
-		JPanel title = new JPanel();
-		title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		title.add(new JLabel(Messages.getString("EigenschaftenView.26"))); //$NON-NLS-1$
-		htmlAll.add(title);
+		TitleView titleView = new TitleView(Messages.getString("EigenschaftenView.26"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+		// JPanel title = new JPanel();
+		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// title.add(new JLabel(Messages.getString("EigenschaftenView.26")));
+		// //$NON-NLS-1$
+		// htmlAll.add(title);
 		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(spielerListeAuswahlBox);
@@ -428,10 +464,15 @@ public class EigenschaftenView extends JPanel {
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
-		JPanel title = new JPanel();
-		title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		title.add(new JLabel(Messages.getString("EigenschaftenView.5"))); //$NON-NLS-1$
-		htmlAll.add(title);
+		TitleView titleView = new TitleView(Messages.getString("EigenschaftenView.5"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+		// JPanel title = new JPanel();
+		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// title.add(new JLabel(Messages.getString("EigenschaftenView.5")));
+		// //$NON-NLS-1$
+		// htmlAll.add(title);
 		dsbHomepageButton = new JButton();
 		dsbHomepageButton
 				.setText("<HTML><FONT color=\"#000099\"><U>http://www.schachbund.de/download.html</U></FONT></HTML>"); //$NON-NLS-1$
@@ -490,10 +531,15 @@ public class EigenschaftenView extends JPanel {
 		checkBoxHeaderFooter = new JCheckBox();
 		htmlPanel.add(checkBoxHeaderFooter);
 		htmlPanel.add(labelHeader);
-		JPanel title = new JPanel();
-		title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		title.add(new JLabel(Messages.getString("EigenschaftenView.2"))); //$NON-NLS-1$
-		htmlAll.add(title);
+		TitleView titleView = new TitleView(Messages.getString("EigenschaftenView.2"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+		// JPanel title = new JPanel();
+		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// title.add(new JLabel(Messages.getString("EigenschaftenView.2")));
+		// //$NON-NLS-1$
+		// htmlAll.add(title);
 		htmlAll.add(htmlPanel);
 
 		// ohne DWZ

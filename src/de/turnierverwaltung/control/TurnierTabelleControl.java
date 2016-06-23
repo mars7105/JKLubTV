@@ -41,19 +41,20 @@ public class TurnierTabelleControl {
 	public TurnierTabelleControl(MainControl mainControl) {
 
 		this.mainControl = mainControl;
-
 		hauptPanel = this.mainControl.getHauptPanel();
 
 		if (this.mainControl.getTabAnzeigeView() == null) {
-			this.mainControl.setTabAnzeigeView(new TabAnzeigeView(mainControl));
+			this.mainControl
+					.setTabAnzeigeView(new TabAnzeigeView(mainControl, mainControl.getTurnier().getTurnierName()));
 		}
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
+
 		// tabAnzeigeView.setBackground(new Color(249, 222, 112));
 		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
 		tabAnzeigeView2 = new TabAnzeigeView[anzahlGruppen];
 		dimension = new Dimension[anzahlGruppen];
 		for (int i = 0; i < anzahlGruppen; i++) {
-			tabAnzeigeView2[i] = new TabAnzeigeView(mainControl);
+			tabAnzeigeView2[i] = new TabAnzeigeView(mainControl, Messages.getString("TurnierTabelleControl.8"));
 			dimension[i] = tabAnzeigeView2[i].getPreferredSize();
 		}
 		this.mainControl.setTabAnzeigeView2(tabAnzeigeView2);
@@ -123,23 +124,23 @@ public class TurnierTabelleControl {
 
 		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
 		simpleTableView[gruppenNummer].setPreferredSize(dimension[gruppenNummer]);
-		if (tabAnzeigeView2[gruppenNummer].getTabCount() < 1) {
-			tabAnzeigeView2[gruppenNummer].insertTab(Messages.getString("TurnierTabelleControl.1"), turniertabelleIcon, //$NON-NLS-1$
-					simpleTableView[gruppenNummer], null, 0);
+		if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() < 1) {
+			tabAnzeigeView2[gruppenNummer].getTabbedPane().insertTab(Messages.getString("TurnierTabelleControl.1"), //$NON-NLS-1$
+					turniertabelleIcon, simpleTableView[gruppenNummer], null, 0);
 
 		} else {
 
-			tabAnzeigeView2[gruppenNummer].setComponentAt(0, simpleTableView[gruppenNummer]);
+			tabAnzeigeView2[gruppenNummer].getTabbedPane().setComponentAt(0, simpleTableView[gruppenNummer]);
 		}
 
 		mainControl.setSimpleTableView(simpleTableView);
-		if (tabAnzeigeView.getTabCount() < 1) {
-			tabAnzeigeView.insertTab(turnier.getGruppe()[gruppenNummer].getGruppenName(), null,
+		if (tabAnzeigeView.getTabbedPane().getTabCount() < 1) {
+			tabAnzeigeView.getTabbedPane().insertTab(turnier.getGruppe()[gruppenNummer].getGruppenName(), null,
 					tabAnzeigeView2[gruppenNummer], null, gruppenNummer);
 
 		} else {
 
-			tabAnzeigeView.setComponentAt(gruppenNummer, tabAnzeigeView2[gruppenNummer]);
+			tabAnzeigeView.getTabbedPane().setComponentAt(gruppenNummer, tabAnzeigeView2[gruppenNummer]);
 		}
 
 		hauptPanel.updateUI();

@@ -141,13 +141,11 @@ public class GruppenView extends JPanel {
 		allGroupBoxes.add(centerPane, BorderLayout.NORTH);
 
 		contentPanel.add(allGroupBoxes);
-		// contentPanel.add(buttonPane);
 
 		scrollPane = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(contentPanel);
 		add(scrollPane, BorderLayout.CENTER);
-		// add(buttonPane, BorderLayout.SOUTH);
 
 		setVisible(true);
 

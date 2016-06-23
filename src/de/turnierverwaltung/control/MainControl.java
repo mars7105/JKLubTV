@@ -326,7 +326,7 @@ public class MainControl extends JFrame {
 		mainPanel.setLayout(new BorderLayout());
 		this.hauptPanel = new JTabbedPane();
 		standardView = new StandardView();
-		titleView = new TitleView();
+		titleView = new TitleView("JKlubTV");
 
 		naviController = new NaviControl(this);
 

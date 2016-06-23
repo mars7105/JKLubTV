@@ -265,12 +265,12 @@ public class RundenEingabeFormularControl implements ActionListener {
 			rundenNummer[index][i].addActionListener(this);
 		}
 
-		if (tabAnzeigeView2[index].getComponentCount() == 2) {
-			tabAnzeigeView2[index].insertTab(Messages.getString("RundenEingabeFormularControl.5"), paarungenIcon, //$NON-NLS-1$
-					rundenEingabeFormularView[index], null, 2);
+		if (tabAnzeigeView2[index].getTabbedPane().getComponentCount() == 2) {
+			tabAnzeigeView2[index].getTabbedPane().insertTab(Messages.getString("RundenEingabeFormularControl.5"), //$NON-NLS-1$
+					paarungenIcon, rundenEingabeFormularView[index], null, 2);
 		} else {
-			tabAnzeigeView2[index].setComponentAt(2, rundenEingabeFormularView[index]);
-			tabAnzeigeView2[index].setIconAt(2, paarungenIcon);
+			tabAnzeigeView2[index].getTabbedPane().setComponentAt(2, rundenEingabeFormularView[index]);
+			tabAnzeigeView2[index].getTabbedPane().setIconAt(2, paarungenIcon);
 		}
 
 		rundenEingabeFormularView[index].updateUI();
@@ -284,12 +284,12 @@ public class RundenEingabeFormularControl implements ActionListener {
 
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		if (tabAnzeigeView2 != null) {
-			if (tabAnzeigeView2[index].getTabCount() < 3) {
-				tabAnzeigeView2[index].insertTab(Messages.getString("RundenEingabeFormularControl.6"), null, //$NON-NLS-1$
-						rundenEingabeFormularView[index], null, 2);
+			if (tabAnzeigeView2[index].getTabbedPane().getTabCount() < 3) {
+				tabAnzeigeView2[index].getTabbedPane().insertTab(Messages.getString("RundenEingabeFormularControl.6"), //$NON-NLS-1$
+						null, rundenEingabeFormularView[index], null, 2);
 			} else {
 
-				tabAnzeigeView2[index].setComponentAt(2, rundenEingabeFormularView[index]);
+				tabAnzeigeView2[index].getTabbedPane().setComponentAt(2, rundenEingabeFormularView[index]);
 			}
 		}
 		makeNewFormular(index);
@@ -328,11 +328,11 @@ public class RundenEingabeFormularControl implements ActionListener {
 				if (nextTab == true && mainControl.getSpielerEingabeControl().getReadyToSave()[i] == false) {
 					nextTab = false;
 
-					this.mainControl.getTabAnzeigeView().setSelectedIndex(i);
-					tabAnzeigeView2[index].removeAll();
-					tabAnzeigeView2[index].addTab("Info", new NeuesTurnierView());
+					this.mainControl.getTabAnzeigeView().getTabbedPane().setSelectedIndex(i);
+					tabAnzeigeView2[index].getTabbedPane().removeAll();
+					tabAnzeigeView2[index].getTabbedPane().addTab("Info", new NeuesTurnierView());
 
-					tabAnzeigeView2[index].updateUI();
+					tabAnzeigeView2[index].getTabbedPane().updateUI();
 				}
 			}
 		}

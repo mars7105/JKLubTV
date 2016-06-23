@@ -114,26 +114,19 @@ public class NaviControl implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if (spielerHinzufuegenView != null) {
 			if (arg0.getSource() == spielerHinzufuegenView.getOkButton()) {
-				String name = spielerHinzufuegenView.getTextFieldName()
-						.getText();
+				String name = spielerHinzufuegenView.getTextFieldName().getText();
 				if (!name.equals("Spielfrei")) {
-					String kuerzel = spielerHinzufuegenView
-							.getTextFieldKuerzel().getText();
-					String dwz = spielerHinzufuegenView.getTextFieldDwz()
-							.getText();
-					int age = spielerHinzufuegenView.getTextComboBoxAge()
-							.getSelectedIndex();
+					String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
+					String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
+					int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
 					Spieler neuerSpieler = new Spieler();
 					neuerSpieler.setName(name);
 					neuerSpieler.setKuerzel(kuerzel);
 					neuerSpieler.setDwz(dwz);
 					neuerSpieler.setAge(age);
-					SpielerTableControl stc = new SpielerTableControl(
-							mainControl);
-					neuerSpieler.setSpielerId(stc
-							.insertOneSpieler(neuerSpieler));
-					this.mainControl.getSpielerLadenControl().getSpieler()
-							.add(neuerSpieler);
+					SpielerTableControl stc = new SpielerTableControl(mainControl);
+					neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+					this.mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
 				}
 				spielerHinzufuegenView.getTextFieldName().setEditable(false);
 				spielerHinzufuegenView.getTextFieldKuerzel().setEditable(false);
@@ -146,8 +139,7 @@ public class NaviControl implements ActionListener {
 			if (arg0.getSource() == spielerHinzufuegenView.getCancelButton()) {
 				mainControl.setEnabled(true);
 				try {
-					this.mainControl.getSpielerLadenControl()
-							.updateSpielerListe();
+					this.mainControl.getSpielerLadenControl().updateSpielerListe();
 				} catch (SQLException e) {
 					mainControl.fileSQLError();
 				}
@@ -158,12 +150,9 @@ public class NaviControl implements ActionListener {
 		if (this.mainControl.getTabAnzeigeView() != null) {
 
 			if (this.mainControl.getTabAnzeigeView2() != null) {
-				if (this.mainControl.getNaviView().getTabellenPanel()
-						.isVisible() == true) {
-					aktiveGruppe = this.mainControl.getTabAnzeigeView()
-							.getSelectedIndex();
-					this.mainControl.getTabAnzeigeView2()[aktiveGruppe]
-							.getSelectedIndex();
+				if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
+					aktiveGruppe = this.mainControl.getTabAnzeigeView().getTabbedPane().getSelectedIndex();
+					this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getTabbedPane().getSelectedIndex();
 				}
 			}
 		}
@@ -180,32 +169,26 @@ public class NaviControl implements ActionListener {
 		}
 		if (arg0.getSource() == naviView.getPairingsLoadButton()) {
 
-			Boolean ready = mainControl.getRundenEingabeFormularControl()
-					.checkNewTurnier();
+			Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 			if (ready) {
 				mainControl.getNaviView().getTabellenPanel().setVisible(false);
-				RundenEingabeFormularControl pairingsControl = mainControl
-						.getRundenEingabeFormularControl();
+				RundenEingabeFormularControl pairingsControl = mainControl.getRundenEingabeFormularControl();
 				pairingsControl.init();
 				int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
-				TabAnzeigeView[] tabAnzeigeView2 = this.mainControl
-						.getTabAnzeigeView2();
+				TabAnzeigeView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 
 				for (int i = 0; i < gruppenAnzahl; i++) {
-					tabAnzeigeView2[i].setEnabledAt(0, false);
-					tabAnzeigeView2[i].setEnabledAt(1, false);
+					tabAnzeigeView2[i].getTabbedPane().setEnabledAt(0, false);
+					tabAnzeigeView2[i].getTabbedPane().setEnabledAt(1, false);
 					pairingsControl.makeRundenEditView(i);
-					tabAnzeigeView2[i].setSelectedIndex(2);
+					tabAnzeigeView2[i].getTabbedPane().setSelectedIndex(2);
 
 				}
-				this.mainControl.getNaviView().getPairingsPanel()
-						.setVisible(true);
+				this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
 				pairingIsActive = true;
 			} else {
-				JOptionPane
-						.showMessageDialog(
-								null,
-								Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$
+				JOptionPane.showMessageDialog(null,
+						Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$
 
 			}
 		}
@@ -223,21 +206,15 @@ public class NaviControl implements ActionListener {
 				mainControl.setTurnierControl(new TurnierControl(mainControl));
 			} else {
 				// Custom button text
-				Object[] options = {
-						Messages.getString("NaviController.0"), Messages.getString("NaviController.1") }; //$NON-NLS-1$ //$NON-NLS-2$
-				int abfrage = JOptionPane
-						.showOptionDialog(
-								mainControl,
-								Messages.getString("NaviController.2") //$NON-NLS-1$
-										+ Messages
-												.getString("NaviController.3"), //$NON-NLS-1$
-								Messages.getString("NaviController.4"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
-								JOptionPane.WARNING_MESSAGE, null, options,
-								options[1]);
+				Object[] options = { Messages.getString("NaviController.0"), Messages.getString("NaviController.1") }; //$NON-NLS-1$ //$NON-NLS-2$
+				int abfrage = JOptionPane.showOptionDialog(mainControl,
+						Messages.getString("NaviController.2") //$NON-NLS-1$
+								+ Messages.getString("NaviController.3"), //$NON-NLS-1$
+						Messages.getString("NaviController.4"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
+						JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 				if (abfrage == 0) {
 					// mainControl.resetApp();
-					mainControl.setTurnierControl(new TurnierControl(
-							mainControl));
+					mainControl.setTurnierControl(new TurnierControl(mainControl));
 				}
 			}
 		}
@@ -248,20 +225,16 @@ public class NaviControl implements ActionListener {
 			if (abfrage == 0) {
 				// this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 
-				String filename = JOptionPane
-						.showInputDialog(
-								null,
-								Messages.getString("NaviController.5"), Messages.getString("NaviController.6"), //$NON-NLS-1$ //$NON-NLS-2$
-								JOptionPane.PLAIN_MESSAGE);
+				String filename = JOptionPane.showInputDialog(null, Messages.getString("NaviController.5"), //$NON-NLS-1$
+						Messages.getString("NaviController.6"), //$NON-NLS-1$
+						JOptionPane.PLAIN_MESSAGE);
 
 				if (filename != null) {
 					filename += ".ktv"; //$NON-NLS-1$
-					File path = new File(mainControl.getPropertiesControl()
-							.getDefaultPath());
+					File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 					JFileChooser savefile = new JFileChooser(path);
-					FileFilter filter = new FileNameExtensionFilter(
-							Messages.getString("NaviController.8"), "ktv"); //$NON-NLS-1$ //$NON-NLS-2$
+					FileFilter filter = new FileNameExtensionFilter(Messages.getString("NaviController.8"), "ktv"); //$NON-NLS-1$ //$NON-NLS-2$
 					savefile.addChoosableFileFilter(filter);
 					savefile.setFileFilter(filter);
 					savefile.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -273,69 +246,47 @@ public class NaviControl implements ActionListener {
 						// mainControl.datenbankMenueView(false);
 						try {
 							File file = savefile.getSelectedFile();
-							writer = new BufferedWriter(new FileWriter(
-									savefile.getSelectedFile()));
+							writer = new BufferedWriter(new FileWriter(savefile.getSelectedFile()));
 							writer.write(""); //$NON-NLS-1$
 							writer.close();
 
 							// true for rewrite, false for override
 							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-							mainControl.getPropertiesControl()
-									.setPathToDatabase(
-											SQLiteDAOFactory.getDB_PATH());
-							mainControl.setTitle(Messages
-									.getString("MainControl.8") //$NON-NLS-1$
+							mainControl.getPropertiesControl().setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
+							mainControl.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
 									+ SQLiteDAOFactory.getDB_PATH());
-							mainControl.getPropertiesControl().setDefaultPath(
-									file.getParent());
-							mainControl.getEigenschaftenControl()
-									.getEigenschaftenView()
+							mainControl.getPropertiesControl().setDefaultPath(file.getParent());
+							mainControl.getEigenschaftenControl().getEigenschaftenView()
 									.setOpenDefaultPathLabel(file.getParent());
 							SQLiteControl sqlC = new SQLiteControl();
 							sqlC.createAllTables();
 							// mainControl.datenbankMenueView(true);
-							JOptionPane
-									.showMessageDialog(
-											null,
-											Messages.getString("NaviController.11"), Messages.getString("NaviController.12"), //$NON-NLS-1$ //$NON-NLS-2$
-											JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.11"), //$NON-NLS-1$
+									Messages.getString("NaviController.12"), //$NON-NLS-1$
+									JOptionPane.INFORMATION_MESSAGE);
 							this.mainControl.setNeuesTurnier(false);
-							mainControl
-									.setTurnierTableControl(new TurnierTableControl(
-											mainControl));
+							mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 							// mainControl.getTurnierTableControl()
 							// .loadTurnierListe();
-							mainControl
-									.setSpielerEditierenControl(new SpielerLadenControl(
-											mainControl));
-							mainControl.getSpielerEditierenControl()
-									.updateSpielerListe();
-							mainControl
-									.setTurnierListeLadenControl(new TurnierListeLadenControl(
-											this.mainControl));
-							mainControl.getTurnierListeLadenControl()
-									.loadTurnierListe();
+							mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
+							mainControl.getSpielerEditierenControl().updateSpielerListe();
+							mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
+							mainControl.getTurnierListeLadenControl().loadTurnierListe();
 
-							mainControl.getPropertiesControl()
-									.setPathToDatabase(
-											SQLiteDAOFactory.getDB_PATH());
-							mainControl.getPropertiesControl()
-									.writeProperties();
+							mainControl.getPropertiesControl().setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
+							mainControl.getPropertiesControl().writeProperties();
 							turnierAnsicht = new TurnierAnsicht(mainControl);
-							mainControl.getHauptPanel().addChangeListener(
-									turnierAnsicht);
+							mainControl.getHauptPanel().addChangeListener(turnierAnsicht);
 
 							naviView.updateUI();
 
 						} catch (IOException e) {
-							JOptionPane.showMessageDialog(null,
-									Messages.getString("NaviController.13")); //$NON-NLS-1$
+							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.13")); //$NON-NLS-1$
 						} catch (SQLException e) {
 							mainControl.fileSQLError();
 						}
 					} else if (sf == JFileChooser.CANCEL_OPTION) {
-						JOptionPane.showMessageDialog(null,
-								Messages.getString("NaviController.14")); //$NON-NLS-1$
+						JOptionPane.showMessageDialog(null, Messages.getString("NaviController.14")); //$NON-NLS-1$
 					}
 				}
 			}
@@ -348,12 +299,11 @@ public class NaviControl implements ActionListener {
 			if (abfrage == 0) {
 
 				// Create a file chooser
-				File path = new File(mainControl.getPropertiesControl()
-						.getDefaultPath());
+				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 				JFileChooser fc = new JFileChooser(path);
-				FileFilter filter = new FileNameExtensionFilter(
-						Messages.getString("NaviController.15"), Messages.getString("NaviController.16")); //$NON-NLS-1$ //$NON-NLS-2$
+				FileFilter filter = new FileNameExtensionFilter(Messages.getString("NaviController.15"), //$NON-NLS-1$
+						Messages.getString("NaviController.16")); //$NON-NLS-1$
 				fc.addChoosableFileFilter(filter);
 				fc.setFileFilter(filter);
 				int returnVal = fc.showOpenDialog(null);
@@ -367,46 +317,28 @@ public class NaviControl implements ActionListener {
 
 						mainControl.setNeuesTurnier(false);
 						// mainControl.getNaviView().getTabellenPanel().setVisible(false);
-						mainControl
-								.setTurnierTableControl(new TurnierTableControl(
-										mainControl));
+						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
 						// mainControl.getTurnierTableControl().loadTurnierListe();
-						mainControl
-								.setSpielerEditierenControl(new SpielerLadenControl(
-										mainControl));
-						mainControl.getSpielerEditierenControl()
-								.updateSpielerListe();
-						mainControl
-								.setTurnierListeLadenControl(new TurnierListeLadenControl(
-										this.mainControl));
+						mainControl.setSpielerEditierenControl(new SpielerLadenControl(mainControl));
+						mainControl.getSpielerEditierenControl().updateSpielerListe();
+						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
 
-						mainControl.getTurnierListeLadenControl()
-								.loadTurnierListe();
+						mainControl.getTurnierListeLadenControl().loadTurnierListe();
 
-						mainControl.getPropertiesControl().setPathToDatabase(
-								SQLiteDAOFactory.getDB_PATH());
-						mainControl.getPropertiesControl().setDefaultPath(
-								file.getParent());
-						mainControl.getEigenschaftenControl()
-								.getEigenschaftenView()
+						mainControl.getPropertiesControl().setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
+						mainControl.getPropertiesControl().setDefaultPath(file.getParent());
+						mainControl.getEigenschaftenControl().getEigenschaftenView()
 								.setOpenDefaultPathLabel(file.getParent());
 						mainControl.getPropertiesControl().writeProperties();
-						naviView.setPathToDatabase(new JLabel(SQLiteDAOFactory
-								.getDB_PATH()));
+						naviView.setPathToDatabase(new JLabel(SQLiteDAOFactory.getDB_PATH()));
 
-						mainControl.setTitle(Messages
-								.getString("MainControl.8") //$NON-NLS-1$
+						mainControl.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
 								+ SQLiteDAOFactory.getDB_PATH());
 						turnierAnsicht = new TurnierAnsicht(mainControl);
-						mainControl.getHauptPanel().addChangeListener(
-								turnierAnsicht);
-						for (int i = 0; i < mainControl.getHauptPanel()
-								.getTabCount(); i++) {
-							if (mainControl
-									.getHauptPanel()
-									.getTitleAt(i)
-									.equals(Messages
-											.getString("NaviController.17"))) { //$NON-NLS-1$
+						mainControl.getHauptPanel().addChangeListener(turnierAnsicht);
+						for (int i = 0; i < mainControl.getHauptPanel().getTabCount(); i++) {
+							if (mainControl.getHauptPanel().getTitleAt(i)
+									.equals(Messages.getString("NaviController.17"))) { //$NON-NLS-1$
 								mainControl.getHauptPanel().setSelectedIndex(i);
 							}
 						}
@@ -414,8 +346,7 @@ public class NaviControl implements ActionListener {
 						naviView.updateUI();
 
 					} else {
-						JOptionPane.showMessageDialog(null,
-								Messages.getString("NaviController.18")); //$NON-NLS-1$
+						JOptionPane.showMessageDialog(null, Messages.getString("NaviController.18")); //$NON-NLS-1$
 					}
 				} catch (SQLException e) {
 					mainControl.fileSQLError();
@@ -424,8 +355,7 @@ public class NaviControl implements ActionListener {
 
 		}
 		if (arg0.getSource() == naviView.getSpielerImport()) {
-			SpielerTableImportControl spielerImport = new SpielerTableImportControl(
-					mainControl);
+			SpielerTableImportControl spielerImport = new SpielerTableImportControl(mainControl);
 			try {
 				spielerImport.importSpielerTable();
 
@@ -435,8 +365,7 @@ public class NaviControl implements ActionListener {
 			}
 		}
 		if (arg0.getSource() == naviView.getSpielerExport()) {
-			SpielerTableExportControl spielerExport = new SpielerTableExportControl(
-					this.mainControl);
+			SpielerTableExportControl spielerExport = new SpielerTableExportControl(this.mainControl);
 			try {
 				spielerExport.exportSpielerTable();
 			} catch (SQLException e) {
@@ -457,16 +386,13 @@ public class NaviControl implements ActionListener {
 		if (arg0.getSource() == naviView.getTabelleAktualisierenButton())
 
 		{
-			Boolean ok = mainControl.getRundenEingabeFormularControl()
-					.checkNewTurnier();
+			Boolean ok = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 			if (ok) {
 				makeNewTables();
 
 			} else {
-				JOptionPane
-						.showMessageDialog(
-								null,
-								Messages.getString("NaviController.19") + Messages.getString("NaviController.20")); //$NON-NLS-1$ //$NON-NLS-2$
+				JOptionPane.showMessageDialog(null,
+						Messages.getString("NaviController.19") + Messages.getString("NaviController.20")); //$NON-NLS-1$ //$NON-NLS-2$
 			}
 
 		}
@@ -476,16 +402,14 @@ public class NaviControl implements ActionListener {
 			Boolean ok = false;
 			if (mainControl.getNeuesTurnier()) {
 				try {
-					ok = this.mainControl.getSaveTurnierControl()
-							.saveChangedPartien();
+					ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
 				} catch (SQLException e) {
 					mainControl.fileSQLError();
 				}
 
 			} else {
 				try {
-					ok = this.mainControl.getSaveTurnierControl()
-							.saveChangedPartien();
+					ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
 				} catch (SQLException e) {
 					mainControl.fileSQLError();
 				}
@@ -527,14 +451,13 @@ public class NaviControl implements ActionListener {
 
 	private void setTabsEnable(Boolean enable) {
 		int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
-		TabAnzeigeView[] tabAnzeigeView2 = this.mainControl
-				.getTabAnzeigeView2();
+		TabAnzeigeView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		mainControl.getNaviView().getTabellenPanel().setVisible(enable);
 		mainControl.getNaviView().getPairingsPanel().setVisible(!enable);
 		for (int i = 0; i < gruppenAnzahl; i++) {
-			tabAnzeigeView2[i].setEnabledAt(0, enable);
-			tabAnzeigeView2[i].setEnabledAt(1, enable);
-			tabAnzeigeView2[i].setEnabledAt(2, !enable);
+			tabAnzeigeView2[i].getTabbedPane().setEnabledAt(0, enable);
+			tabAnzeigeView2[i].getTabbedPane().setEnabledAt(1, enable);
+			tabAnzeigeView2[i].getTabbedPane().setEnabledAt(2, !enable);
 		}
 		mainControl.getTurnierListeLadenControl().reloadTurnier();
 
@@ -574,15 +497,9 @@ public class NaviControl implements ActionListener {
 		if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
 			abfrage = 1;
 			// Custom button text
-			Object[] options = {
-					Messages.getString("NaviController.24"), Messages.getString("NaviController.25") }; //$NON-NLS-1$ //$NON-NLS-2$
-			abfrage = JOptionPane
-					.showOptionDialog(
-							mainControl,
-							hinweisText,
-							Messages.getString("NaviController.26"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
-							JOptionPane.WARNING_MESSAGE, null, options,
-							options[1]);
+			Object[] options = { Messages.getString("NaviController.24"), Messages.getString("NaviController.25") }; //$NON-NLS-1$ //$NON-NLS-2$
+			abfrage = JOptionPane.showOptionDialog(mainControl, hinweisText, Messages.getString("NaviController.26"), //$NON-NLS-1$
+					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
 		}
 		if (abfrage == 0) {
@@ -607,15 +524,11 @@ public class NaviControl implements ActionListener {
 		public TurnierAnsicht(MainControl mainControl) {
 			super();
 			this.mainControl = mainControl;
-			this.mainControl.getNaviView().getTurnierListePanel()
-					.setVisible(false);
-			this.mainControl.getNaviView().getSpielerListePanel()
-					.setVisible(false);
+			this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
+			this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
 			if (this.mainControl.getNeuesTurnier() == true) {
-				this.mainControl.getNaviView().getTabellenPanel()
-						.setVisible(false);
-				this.mainControl.getNaviView().getPairingsPanel()
-						.setVisible(false);
+				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+				this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
 			}
 		}
 
@@ -626,57 +539,41 @@ public class NaviControl implements ActionListener {
 				int selectedIndex = pane.getSelectedIndex();
 				String turnierName = Messages.getString("NaviController.27"); //$NON-NLS-1$
 				if (this.mainControl.getTurnier() != null) {
-					turnierName = this.mainControl.getTurnier()
-							.getTurnierName();
+					turnierName = this.mainControl.getTurnier().getTurnierName();
 					if (pane.getTitleAt(selectedIndex).equals(turnierName)
-							|| pane.getTitleAt(selectedIndex).equals(
-									Messages.getString("NaviController.28"))) {
+							|| pane.getTitleAt(selectedIndex).equals(Messages.getString("NaviController.28"))) {
 						if (this.mainControl.getNeuesTurnier() == false) {
 							if (pairingIsActive == true) {
-								this.mainControl.getNaviView()
-										.getTabellenPanel().setVisible(false);
-								this.mainControl.getNaviView()
-										.getPairingsPanel().setVisible(true);
+								this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+								this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
 							} else {
-								this.mainControl.getNaviView()
-										.getTabellenPanel().setVisible(true);
-								this.mainControl.getNaviView()
-										.getPairingsPanel().setVisible(false);
+								this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
+								this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
 							}
 
 						} else {
-							this.mainControl.getNaviView().getTabellenPanel()
-									.setVisible(false);
-							this.mainControl.getNaviView().getPairingsPanel()
-									.setVisible(false);
+							this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+							this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
 						}
 
 					} else {
-						this.mainControl.getNaviView().getTabellenPanel()
-								.setVisible(false);
-						this.mainControl.getNaviView().getPairingsPanel()
-								.setVisible(false);
+						this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+						this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
 					}
 
 				}
 
-				if (pane.getTitleAt(selectedIndex).equals(
-						Messages.getString("NaviController.29"))) { //$NON-NLS-1$
-					this.mainControl.getNaviView().getTurnierListePanel()
-							.setVisible(true);
+				if (pane.getTitleAt(selectedIndex).equals(Messages.getString("NaviController.29"))) { //$NON-NLS-1$
+					this.mainControl.getNaviView().getTurnierListePanel().setVisible(true);
 
 				} else {
-					this.mainControl.getNaviView().getTurnierListePanel()
-							.setVisible(false);
+					this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
 				}
-				if (pane.getTitleAt(selectedIndex).equals(
-						Messages.getString("NaviController.30"))) { //$NON-NLS-1$
-					this.mainControl.getNaviView().getSpielerListePanel()
-							.setVisible(true);
+				if (pane.getTitleAt(selectedIndex).equals(Messages.getString("NaviController.30"))) { //$NON-NLS-1$
+					this.mainControl.getNaviView().getSpielerListePanel().setVisible(true);
 
 				} else {
-					this.mainControl.getNaviView().getSpielerListePanel()
-							.setVisible(false);
+					this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
 				}
 
 			}

@@ -1,5 +1,10 @@
 package de.turnierverwaltung.view;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
+
+import java.awt.BorderLayout;
+
+import javax.swing.BoxLayout;
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -15,7 +20,7 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
+import javax.swing.JPanel;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -35,15 +40,42 @@ import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.control.MainControl;
 
-public class TabAnzeigeView extends JTabbedPane {
-//	private MainControl mainControl;
+public class TabAnzeigeView extends JPanel {
+	JTabbedPane tabbedPane;
+	private TitleView titleView;
+	// private MainControl mainControl;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public TabAnzeigeView(MainControl mainCtrl) {
+	public TabAnzeigeView(MainControl mainCtrl, String title) {
+		setLayout(new BorderLayout());
+		titleView = new TitleView(title);
+		tabbedPane = new JTabbedPane();
+		JPanel all = new JPanel();
+		all.setLayout(new BoxLayout(all, BoxLayout.Y_AXIS));
 
+		all.add(titleView);
+		all.add(tabbedPane);
+		add(all, BorderLayout.NORTH);
 
 	}
+
+	public JTabbedPane getTabbedPane() {
+		return tabbedPane;
+	}
+
+	public void setTabbedPane(JTabbedPane tabbedPane) {
+		this.tabbedPane = tabbedPane;
+	}
+
+	public TitleView getTitleView() {
+		return titleView;
+	}
+
+	public void setTitleView(TitleView titleView) {
+		this.titleView = titleView;
+	}
+
 }

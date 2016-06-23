@@ -68,13 +68,12 @@ public class SpielerLadenView extends JPanel {
 		anzahlElemente = 0;
 		setLayout(new BorderLayout());
 		spielerListe = new JTabbedPane();
-		JLabel titleLabel = new JLabel(Messages.getString("SpielerLadenView.2")); //$NON-NLS-1$
-		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
-		titlepanel.add(titleLabel);
+
+		TitleView titleView = new TitleView(Messages.getString("SpielerLadenView.2"));
 
 		mainPane = new JPanel();
 		mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
-		mainPane.add(titlepanel);
+		mainPane.add(titleView);
 
 		add(mainPane, BorderLayout.NORTH);
 		spielerBearbeitenButton = new JButton[this.spielerAnzahl];
