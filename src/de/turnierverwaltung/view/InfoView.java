@@ -38,7 +38,7 @@ public class InfoView extends JPanel {
 	private JPanel contentPanel;
 	private JScrollPane scrollPane;
 	private JPanel centerPane;
-	JTextArea textArea;
+	private JTextArea textArea;
 	private JButton okButton;
 
 	public InfoView() {
@@ -62,10 +62,10 @@ public class InfoView extends JPanel {
 		textArea = new JTextArea();
 		add(scrollPane, BorderLayout.CENTER);
 		okButton = new JButton("Ok");
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		buttonPanel.add(okButton);
-		add(buttonPanel, BorderLayout.SOUTH);
+		ButtonPanelView buttonPane = new ButtonPanelView();
+		buttonPane.makeOKButton();
+		this.okButton = buttonPane.getOkButton();
+		add(buttonPane, BorderLayout.SOUTH);
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
 		contentPanel.add(centerPane);

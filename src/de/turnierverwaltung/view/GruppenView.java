@@ -133,14 +133,8 @@ public class GruppenView extends JPanel {
 			centerPane.add(groupBox);
 		}
 		okButton = buttonPane.getOkButton();
-		okButton.setText(Messages.getString("GruppenView.1")); //$NON-NLS-1$
-		okButton.setActionCommand(Messages.getString("GruppenView.2")); //$NON-NLS-1$
-		buttonPane.add(okButton);
 
 		cancelButton = buttonPane.getCancelButton();
-		cancelButton.setText(Messages.getString("GruppenView.3")); //$NON-NLS-1$
-		cancelButton.setActionCommand(Messages.getString("GruppenView.4")); //$NON-NLS-1$
-		buttonPane.add(cancelButton);
 		centerPane.add(buttonPane);
 		JPanel allGroupBoxes = new JPanel();
 		allGroupBoxes.setLayout(new BorderLayout());

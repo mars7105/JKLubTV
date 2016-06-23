@@ -64,14 +64,8 @@ public class SpielerEingabeView extends JPanel {
 		ButtonPanelView buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();
 		okButton = buttonPane.getOkButton();
-		okButton.setText(Messages.getString("SpielerEingabeView.0")); //$NON-NLS-1$
-		okButton.setActionCommand(Messages.getString("SpielerEingabeView.1")); //$NON-NLS-1$
-		buttonPane.add(okButton);
 
 		cancelButton = buttonPane.getCancelButton();
-		cancelButton.setText(Messages.getString("SpielerEingabeView.2")); //$NON-NLS-1$
-		cancelButton.setActionCommand(Messages.getString("SpielerEingabeView.3")); //$NON-NLS-1$
-		buttonPane.add(cancelButton);
 
 		JPanel line;
 		JPanel centerPane = new JPanel();

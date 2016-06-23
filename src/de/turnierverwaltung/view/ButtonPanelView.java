@@ -34,12 +34,16 @@ public class ButtonPanelView extends JPanel {
 	}
 
 	public void makeOKButton() {
-		okButton = new JButton("Ok", okIcon);
+		okButton = new JButton(Messages.getString("ButtonPanelView.0"), okIcon);
+		okButton.setActionCommand(Messages.getString("ButtonPanelView.0")); //$NON-NLS-1$
+
 		add(okButton);
 	}
 
 	public void makeCancelButton() {
-		cancelButton = new JButton("Cancel", cancelIcon);
+		cancelButton = new JButton(Messages.getString("ButtonPanelView.1"), cancelIcon);
+		cancelButton.setActionCommand(Messages.getString("ButtonPanelView.1")); //$NON-NLS-1$
+
 		add(cancelButton);
 	}
 

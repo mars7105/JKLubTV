@@ -39,14 +39,16 @@ public class SpielerEditierenView extends JDialog {
 	private JTextField textFieldName;
 	private JTextField textFieldKuerzel;
 	private JTextField textFieldDwz;
-	private JPanel buttonPane;
+	private ButtonPanelView buttonPane;
 	private JButton addSpielerButton;
 	private JComboBox<String> textComboBoxAge;
 
 	public SpielerEditierenView(Spieler spieler) {
 		this.setAlwaysOnTop(true);
-		this.okButton = new JButton(Messages.getString("SpielerEditierenView.0")); //$NON-NLS-1$
-		this.cancelButton = new JButton(Messages.getString("SpielerEditierenView.1")); //$NON-NLS-1$
+		buttonPane = new ButtonPanelView();
+		buttonPane.makeAllButtons();
+		this.okButton = buttonPane.getOkButton();
+		this.cancelButton =buttonPane.getCancelButton();
 		this.textFieldName = new JTextField(15);
 		this.textFieldKuerzel = new JTextField(15);
 		this.textFieldDwz = new JTextField(15);
@@ -106,12 +108,7 @@ public class SpielerEditierenView extends JDialog {
 		centerPane.add(textComboBoxAge);
 		contentPanel.add(centerPane);
 	
-		buttonPane = new JPanel();
-		buttonPane.setLayout(new FlowLayout());
-//		buttonPane.setBackground(new Color(249, 222, 112));
-		buttonPane.add(okButton);
-		buttonPane.add(cancelButton);
-
+	
 		
 		contentPanel.add(buttonPane);
 		add(contentPanel);

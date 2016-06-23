@@ -83,7 +83,6 @@ public class EigenschaftenView extends JPanel {
 	private JTextField blackTextField;
 	private JTextField resultTextField;
 	private JTextField meetingTextField;
-//	private JButton saveTableNamesButton;
 	private JButton okButton;
 
 	/**
@@ -149,14 +148,13 @@ public class EigenschaftenView extends JPanel {
 		tabbedPane.addTab(Messages.getString("EigenschaftenView.5"), htmlAll);
 
 		centerPane.add(tabbedPane, BorderLayout.NORTH);
-		okButton = new JButton("Ok");
-		JPanel buttonPanel = new JPanel();
-		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		buttonPanel.add(okButton);
-		centerPane.add(buttonPanel, BorderLayout.SOUTH);
+		ButtonPanelView buttonPane = new ButtonPanelView();
+		buttonPane.makeOKButton();
+		this.okButton = buttonPane.getOkButton();
+
+		centerPane.add(buttonPane, BorderLayout.SOUTH);
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(centerPane);
-		// contentPanel.add(scrollPane);
 		add(scrollPane, BorderLayout.CENTER);
 	}
 
@@ -332,14 +330,15 @@ public class EigenschaftenView extends JPanel {
 		htmlPanel.add(leerPanel);
 		rightPanel.add(htmlPanel);
 
-//		saveTableNamesButton = new JButton(Messages.getString("EigenschaftenView.35")); //$NON-NLS-1$
-//		htmlPanel = new JPanel();
-//		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		htmlPanel.add(saveTableNamesButton);
+		// saveTableNamesButton = new
+		// JButton(Messages.getString("EigenschaftenView.35")); //$NON-NLS-1$
+		// htmlPanel = new JPanel();
+		// htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// htmlPanel.add(saveTableNamesButton);
 		bothPanel.add(leftPanel);
 		bothPanel.add(rightPanel);
 		htmlAll.add(bothPanel);
-//		htmlAll.add(htmlPanel);
+		// htmlAll.add(htmlPanel);
 		htmlAll.add(new JSeparator());
 	}
 
@@ -710,13 +709,13 @@ public class EigenschaftenView extends JPanel {
 		this.pointsTextField = pointsTextField;
 	}
 
-//	public JButton getSaveTableNamesButton() {
-//		return saveTableNamesButton;
-//	}
-//
-//	public void setSaveTableNamesButton(JButton saveTableNamesButton) {
-//		this.saveTableNamesButton = saveTableNamesButton;
-//	}
+	// public JButton getSaveTableNamesButton() {
+	// return saveTableNamesButton;
+	// }
+	//
+	// public void setSaveTableNamesButton(JButton saveTableNamesButton) {
+	// this.saveTableNamesButton = saveTableNamesButton;
+	// }
 
 	public JButton getOkButton() {
 		return okButton;
@@ -736,4 +735,5 @@ public class EigenschaftenView extends JPanel {
 		}
 
 	}
+
 }

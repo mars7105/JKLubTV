@@ -38,10 +38,10 @@ public class SpielerAnzahlView extends JPanel {
 
 	public SpielerAnzahlView(String title) {
 		anzahlSpielerTextField = new JTextField();
-		
+
 		setLayout(new FlowLayout());
 		contentPanel = new JPanel();
-		
+
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		add(contentPanel);
@@ -55,10 +55,6 @@ public class SpielerAnzahlView extends JPanel {
 		contentPanel.add(buttonPane);
 
 		okButton = buttonPane.getOkButton();
-		okButton.setText("OK"); //$NON-NLS-1$
-		okButton.setActionCommand("OK"); //$NON-NLS-1$
-
-		buttonPane.add(okButton);
 
 		JLabel label = new JLabel(Messages.getString("SpielerAnzahlView.2")); //$NON-NLS-1$
 		anzahlSpielerTextField = new JTextField();

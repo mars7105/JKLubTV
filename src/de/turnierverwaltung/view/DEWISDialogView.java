@@ -48,7 +48,7 @@ public class DEWISDialogView extends JDialog {
 	private JButton okButton;
 	private JButton cancelButton;
 	private JButton updateButton;
-	private JPanel buttonPanel;
+	private ButtonPanelView buttonPane;
 	private URI dwzdbURI;
 	private JButton dwzdbButton;
 
@@ -73,8 +73,7 @@ public class DEWISDialogView extends JDialog {
 		dwzdbURI = new URI("http://www.schachbund.de/verein.html"); //$NON-NLS-1$
 
 		dwzdbButton = new JButton();
-		dwzdbButton
-				.setText("<HTML><FONT color=\"#000099\"><U>Vereinssuche (ZPS Nummer)</U></FONT></HTML>"); //$NON-NLS-1$
+		dwzdbButton.setText("<HTML><FONT color=\"#000099\"><U>Vereinssuche (ZPS Nummer)</U></FONT></HTML>"); //$NON-NLS-1$
 		// buttonDatePicker.setHorizontalAlignment(SwingConstants.LEFT);
 		// buttonDatePicker.setBorderPainted(false);
 		dwzdbButton.setOpaque(false);
@@ -92,10 +91,8 @@ public class DEWISDialogView extends JDialog {
 		suchePanel.add(zeilenPanel);
 		zeilenPanel = new JPanel();
 		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel vereinsSucheLabel = new JLabel(
-				Messages.getString("DEWISDialogView.3")); //$NON-NLS-1$
-		vereinsSucheButton = new JButton(
-				Messages.getString("DEWISDialogView.4")); //$NON-NLS-1$
+		JLabel vereinsSucheLabel = new JLabel(Messages.getString("DEWISDialogView.3")); //$NON-NLS-1$
+		vereinsSucheButton = new JButton(Messages.getString("DEWISDialogView.4")); //$NON-NLS-1$
 		zeilenPanel.add(vereinsSucheLabel);
 		suchePanel.add(zeilenPanel);
 		zeilenPanel = new JPanel();
@@ -106,7 +103,7 @@ public class DEWISDialogView extends JDialog {
 		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		zeilenPanel.add(new JLabel(Messages.getString("DEWISDialogView.1"))); //$NON-NLS-1$
 		suchePanel.add(zeilenPanel);
-		
+
 		vereinsName = new JTextField(25);
 		zeilenPanel = new JPanel();
 		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -130,17 +127,17 @@ public class DEWISDialogView extends JDialog {
 		contentPanel.add(suchePanel, BorderLayout.NORTH);
 		dsbPanel = new JPanel();
 		updateButton = new JButton(Messages.getString("DEWISDialogView.5")); //$NON-NLS-1$
-		okButton = new JButton(Messages.getString("DEWISDialogView.6")); //$NON-NLS-1$
-		cancelButton = new JButton(Messages.getString("DEWISDialogView.7")); //$NON-NLS-1$
-		buttonPanel = new JPanel();
-		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
-		buttonPanel.add(updateButton);
 
-		buttonPanel.add(okButton);
-		buttonPanel.add(cancelButton);
-		// buttonPanel.setVisible(false);
+		buttonPane = new ButtonPanelView();
+		buttonPane.makeAllButtons();
+		okButton = buttonPane.getOkButton();
+		cancelButton = buttonPane.getCancelButton();
+		okButton.setText(Messages.getString("DEWISDialogView.6")); //$NON-NLS-1$
+		cancelButton.setText(Messages.getString("DEWISDialogView.7")); //$NON-NLS-1$
+		buttonPane.add(updateButton);
+
 		contentPanel.add(dsbPanel, BorderLayout.CENTER);
-		contentPanel.add(buttonPanel, BorderLayout.SOUTH);
+		contentPanel.add(buttonPane, BorderLayout.SOUTH);
 
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		pack();
@@ -193,12 +190,12 @@ public class DEWISDialogView extends JDialog {
 		setLocationRelativeTo(null);
 	}
 
-	public JPanel getButtonPanel() {
-		return buttonPanel;
+	public ButtonPanelView getButtonPanel() {
+		return buttonPane;
 	}
 
-	public void setButtonPanel(JPanel buttonPanel) {
-		this.buttonPanel = buttonPanel;
+	public void setButtonPanel(ButtonPanelView buttonPane) {
+		this.buttonPane = buttonPane;
 	}
 
 	public JButton getOkButton() {

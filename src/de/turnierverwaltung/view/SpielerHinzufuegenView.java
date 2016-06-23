@@ -1,5 +1,6 @@
 package de.turnierverwaltung.view;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -36,29 +37,26 @@ public class SpielerHinzufuegenView extends JDialog {
 	private JTextField textFieldName;
 	private JTextField textFieldKuerzel;
 	private JTextField textFieldDwz;
-	private JPanel buttonPane;
+	private ButtonPanelView buttonPane;
 	private JPanel centerPane;
 	private JPanel contentPanel;
 	private JComboBox<String> textComboBoxAge;
 
 	public SpielerHinzufuegenView() {
-		this.okButton = new JButton(Messages.getString("SpielerHinzufuegenView.0")); //$NON-NLS-1$
-		this.cancelButton = new JButton(Messages.getString("SpielerHinzufuegenView.1")); //$NON-NLS-1$
+		buttonPane = new ButtonPanelView();
+		buttonPane.makeAllButtons();
+		this.okButton = buttonPane.getOkButton();
+		this.cancelButton = buttonPane.getCancelButton();
 
 		setTitle(Messages.getString("SpielerHinzufuegenView.2")); //$NON-NLS-1$
 		this.setAlwaysOnTop(true);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-		
 
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-//		contentPanel.setBackground(new Color(249, 222, 112));
+		// contentPanel.setBackground(new Color(249, 222, 112));
 
-		buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout());
-//		buttonPane.setBackground(new Color(249, 222, 112));
-		buttonPane.add(okButton);
-		buttonPane.add(cancelButton);
 		spielerPanel();
 
 	}
@@ -121,7 +119,7 @@ public class SpielerHinzufuegenView extends JDialog {
 		this.textFieldKuerzel = new JTextField(15);
 		this.textFieldDwz = new JTextField(15);
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		centerPane.setBackground(new Color(249, 222, 112));
+		// centerPane.setBackground(new Color(249, 222, 112));
 		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.3"))); //$NON-NLS-1$
 		centerPane.add(textFieldName);
 
@@ -130,7 +128,8 @@ public class SpielerHinzufuegenView extends JDialog {
 
 		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.5"))); //$NON-NLS-1$
 		centerPane.add(textFieldDwz);
-		String[] ageStrings = { Messages.getString("SpielerHinzufuegenView.6"), Messages.getString("SpielerHinzufuegenView.7"), Messages.getString("SpielerHinzufuegenView.8") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		String[] ageStrings = { Messages.getString("SpielerHinzufuegenView.6"), //$NON-NLS-1$
+				Messages.getString("SpielerHinzufuegenView.7"), Messages.getString("SpielerHinzufuegenView.8") }; //$NON-NLS-1$ //$NON-NLS-2$
 		this.textComboBoxAge = new JComboBox<String>(ageStrings);
 		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.9"))); //$NON-NLS-1$
 		centerPane.add(textComboBoxAge);
@@ -143,7 +142,6 @@ public class SpielerHinzufuegenView extends JDialog {
 
 		setEnabled(true);
 		setVisible(true);
-		
 
 	}
 }
