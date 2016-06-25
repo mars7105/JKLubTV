@@ -17,7 +17,7 @@ package de.turnierverwaltung.mysql;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.util.ArrayList;
 
-import de.turnierverwaltung.model.Partie;
+import de.turnierverwaltung.model.Game;
 
 public interface PartienDAO {
 	public void createPartienTable();
@@ -29,11 +29,11 @@ public interface PartienDAO {
 	public int insertPartien(int idGruppe, String spielDatum, int Runde, int ergebnis, int spielerIdweiss,
 			int spielerIdschwarz);
 
-	public ArrayList<Partie> selectAllPartien(int idGruppe);
+	public ArrayList<Game> selectAllPartien(int idGruppe);
 
-	public boolean updatePartien(Partie[] parties);
+	public boolean updatePartien(Game[] parties);
 
-	public boolean updatePartien(ArrayList<Partie> changedPartien);
+	public boolean updatePartien(ArrayList<Game> changedPartien);
 
 	public String getErgebnis(int SpielerIDWeiss, int SpielerIDSchwarz, int idGruppe);
 }

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import de.turnierverwaltung.control.PropertiesControl;
-import de.turnierverwaltung.model.Turnier;
+import de.turnierverwaltung.model.Tournament;
 
 public class MySQLTurnierDAO implements TurnierDAO {
 	private Connection dbConnect;
@@ -128,13 +128,13 @@ public class MySQLTurnierDAO implements TurnierDAO {
 	}
 
 	@Override
-	public Turnier findTurnier(int id, PropertiesControl prop) {
+	public Tournament findTurnier(int id, PropertiesControl prop) {
 		String sql = "Select Startdatum, Enddatum, Turniername, Datum_idDatum, idDatum"
 				+ "from turnier,datum "
 				+ "where idTurnier="
 				+ id
 				+ " AND Datum_idDatum = idDatum";
-		Turnier turnier = null;
+		Tournament turnier = null;
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -147,7 +147,7 @@ public class MySQLTurnierDAO implements TurnierDAO {
 					String turnierName = rs.getString("Turniername");
 					String startDatum = rs.getString("Startdatum");
 					String endDatum = rs.getString("Enddatum");
-					turnier = new Turnier(turnierId, turnierName, startDatum,
+					turnier = new Tournament(turnierId, turnierName, startDatum,
 							endDatum, prop.getOnlyTables(), prop.getNoDWZ(),
 							prop.getNoFolgeDWZ());
 
@@ -195,9 +195,9 @@ public class MySQLTurnierDAO implements TurnierDAO {
 	}
 
 	@Override
-	public ArrayList<Turnier> selectAllTurnier(PropertiesControl prop) {
+	public ArrayList<Tournament> selectAllTurnier(PropertiesControl prop) {
 		String sql = "Select * from turnier, datum where Datum_idDatum = idDatum";
-		ArrayList<Turnier> turnierListe = new ArrayList<Turnier>();
+		ArrayList<Tournament> turnierListe = new ArrayList<Tournament>();
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -210,7 +210,7 @@ public class MySQLTurnierDAO implements TurnierDAO {
 					String turnierName = rs.getString("Turniername");
 					String startDatum = rs.getString("Startdatum");
 					String endDatum = rs.getString("Enddatum");
-					turnierListe.add(new Turnier(id, turnierName, startDatum,
+					turnierListe.add(new Tournament(id, turnierName, startDatum,
 							endDatum, prop.getOnlyTables(), prop.getNoDWZ(),
 							prop.getNoFolgeDWZ()));
 
@@ -226,7 +226,7 @@ public class MySQLTurnierDAO implements TurnierDAO {
 	}
 
 	@Override
-	public boolean updateTurnier(Turnier turnier) {
+	public boolean updateTurnier(Tournament turnier) {
 		boolean ok = false;
 		String datum = "Select Datum_idDatum from turnier where idTurnier="
 				+ turnier.getTurnierId();

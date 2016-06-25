@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import de.turnierverwaltung.model.Gruppe;
+import de.turnierverwaltung.model.Group;
 
 public class SQLiteGruppenDAO implements GruppenDAO {
 	private Connection dbConnect;
@@ -80,10 +80,10 @@ public class SQLiteGruppenDAO implements GruppenDAO {
 	}
 
 	@Override
-	public Gruppe findGruppe(int id) {
+	public Group findGruppe(int id) {
 		String sql = "Select Gruppenname, TurnierId " + "from gruppen " + "where idGruppe=" + id + ";";
 
-		Gruppe gruppe = null;
+		Group gruppe = null;
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -94,7 +94,7 @@ public class SQLiteGruppenDAO implements GruppenDAO {
 				while (rs.next()) {
 
 					String gruppenName = rs.getString("Gruppenname");
-					gruppe = new Gruppe(id, gruppenName);
+					gruppe = new Group(id, gruppenName);
 
 				}
 				stmt.close();
@@ -143,9 +143,9 @@ public class SQLiteGruppenDAO implements GruppenDAO {
 	}
 
 	@Override
-	public ArrayList<Gruppe> selectAllGruppen(int idTurnier) {
+	public ArrayList<Group> selectAllGruppen(int idTurnier) {
 		String sql = "Select * from gruppen where TurnierId=" + idTurnier + ";";
-		ArrayList<Gruppe> gruppenListe = new ArrayList<Gruppe>();
+		ArrayList<Group> gruppenListe = new ArrayList<Group>();
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -156,7 +156,7 @@ public class SQLiteGruppenDAO implements GruppenDAO {
 				while (rs.next()) {
 					int idGruppe = rs.getInt("idGruppe");
 					String gruppenName = rs.getString("Gruppenname");
-					gruppenListe.add(new Gruppe(idGruppe, gruppenName));
+					gruppenListe.add(new Group(idGruppe, gruppenName));
 				}
 				stmt.close();
 
@@ -169,7 +169,7 @@ public class SQLiteGruppenDAO implements GruppenDAO {
 	}
 
 	@Override
-	public boolean updateGruppe(Gruppe gruppe) {
+	public boolean updateGruppe(Group gruppe) {
 		boolean ok = false;
 		String sql = "update gruppen set Gruppenname = ? where idGruppe=" + gruppe.getGruppeId() + ";";
 		if (this.dbConnect != null) {

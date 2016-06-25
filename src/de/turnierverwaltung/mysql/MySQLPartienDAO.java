@@ -24,8 +24,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import de.turnierverwaltung.model.Partie;
-import de.turnierverwaltung.model.Spieler;
+import de.turnierverwaltung.model.Game;
+import de.turnierverwaltung.model.Player;
 
 public class MySQLPartienDAO implements PartienDAO {
 	private Connection dbConnect;
@@ -121,10 +121,10 @@ public class MySQLPartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public ArrayList<Partie> selectAllPartien(int idGruppe) {
+	public ArrayList<Game> selectAllPartien(int idGruppe) {
 		String sql = "Select idPartie,idSpielerWeiss," + "idSpielerSchwarz, Runde, Spieldatum, Ergebnis  "
 				+ "from partien where idGruppe=" + idGruppe + " ORDER BY Runde ASC";
-		ArrayList<Partie> partieListe = new ArrayList<Partie>();
+		ArrayList<Game> partieListe = new ArrayList<Game>();
 		Statement stmt;
 		if (this.dbConnect != null) {
 			try {
@@ -137,12 +137,12 @@ public class MySQLPartienDAO implements PartienDAO {
 					int runde = rs.getInt("Runde");
 					String spielDatum = rs.getString("Spieldatum");
 					int ergebnis = rs.getInt("Ergebnis");
-					Spieler spielerWeiss = new Spieler();
+					Player spielerWeiss = new Player();
 					spielerWeiss.setSpielerId(idSpielerWeiss);
-					Spieler spielerSchwarz = new Spieler();
+					Player spielerSchwarz = new Player();
 					spielerSchwarz.setSpielerId(idSpielerSchwarz);
 
-					partieListe.add(new Partie(idPartie, spielDatum, ergebnis, runde, spielerWeiss, spielerSchwarz));
+					partieListe.add(new Game(idPartie, spielDatum, ergebnis, runde, spielerWeiss, spielerSchwarz));
 
 				}
 				stmt.close();
@@ -157,10 +157,10 @@ public class MySQLPartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public boolean updatePartien(Partie[] partien) {
+	public boolean updatePartien(Game[] partien) {
 		int anzahl = partien.length;
 		boolean ok = false;
-		Partie partie;
+		Game partie;
 		if (this.dbConnect != null) {
 			try {
 				for (int i = 0; i < anzahl; i++) {
@@ -188,7 +188,7 @@ public class MySQLPartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public boolean updatePartien(ArrayList<Partie> changedPartien) {
+	public boolean updatePartien(ArrayList<Game> changedPartien) {
 		// TODO Auto-generated method stub
 		return false;
 	}

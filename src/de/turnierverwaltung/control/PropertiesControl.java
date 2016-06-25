@@ -23,7 +23,7 @@ import java.io.StringWriter;
 import java.util.Properties;
 import java.util.prefs.Preferences;
 
-import de.turnierverwaltung.model.TurnierKonstanten;
+import de.turnierverwaltung.model.TournamentConstants;
 
 public class PropertiesControl {
 
@@ -148,57 +148,57 @@ public class PropertiesControl {
 		}
 		if (prop.getProperty(TABLE_COLUMN_OLD_DWZ) == "") {
 			prop.setProperty(TABLE_COLUMN_OLD_DWZ,
-					TurnierKonstanten.TABLE_COLUMN_OLD_DWZ);
+					TournamentConstants.TABLE_COLUMN_OLD_DWZ);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_NEW_DWZ) == "") {
 			prop.setProperty(TABLE_COLUMN_NEW_DWZ,
-					TurnierKonstanten.TABLE_COLUMN_NEW_DWZ);
+					TournamentConstants.TABLE_COLUMN_NEW_DWZ);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_POINTS) == "") {
 			prop.setProperty(TABLE_COLUMN_POINTS,
-					TurnierKonstanten.TABLE_COLUMN_POINTS);
+					TournamentConstants.TABLE_COLUMN_POINTS);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_SONNEBORNBERGER) == "") {
 			prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER,
-					TurnierKonstanten.TABLE_COLUMN_SONNEBORNBERGER);
+					TournamentConstants.TABLE_COLUMN_SONNEBORNBERGER);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_RANKING) == "") {
 			prop.setProperty(TABLE_COLUMN_RANKING,
-					TurnierKonstanten.TABLE_COLUMN_RANKING);
+					TournamentConstants.TABLE_COLUMN_RANKING);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_WHITE) == "") {
 			prop.setProperty(TABLE_COLUMN_WHITE,
-					TurnierKonstanten.TABLE_COLUMN_WHITE);
+					TournamentConstants.TABLE_COLUMN_WHITE);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_BLACK) == "") {
 			prop.setProperty(TABLE_COLUMN_BLACK,
-					TurnierKonstanten.TABLE_COLUMN_BLACK);
+					TournamentConstants.TABLE_COLUMN_BLACK);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_RESULT) == "") {
 			prop.setProperty(TABLE_COLUMN_RESULT,
-					TurnierKonstanten.TABLE_COLUMN_RESULT);
+					TournamentConstants.TABLE_COLUMN_RESULT);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_MEETING) == "") {
 			prop.setProperty(TABLE_COLUMN_MEETING,
-					TurnierKonstanten.TABLE_COLUMN_MEETING);
+					TournamentConstants.TABLE_COLUMN_MEETING);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_PLAYER) == "") {
 			prop.setProperty(TABLE_COLUMN_PLAYER,
-					TurnierKonstanten.TABLE_COLUMN_PLAYER);
+					TournamentConstants.TABLE_COLUMN_PLAYER);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_ROUND) == "") {
 			prop.setProperty(TABLE_COLUMN_ROUND,
-					TurnierKonstanten.TABLE_COLUMN_ROUND);
+					TournamentConstants.TABLE_COLUMN_ROUND);
 			saveChanges = true;
 		}
 		checkCrossTableColumnForDoubles();

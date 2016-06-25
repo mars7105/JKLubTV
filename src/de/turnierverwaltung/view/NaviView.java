@@ -160,7 +160,7 @@ public class NaviView extends JPanel {
 		panel3.setLayout(flowLayout);
 		panel3.setBackground(Color.LIGHT_GRAY);
 		panel3.add(turnierAddButton);
-		TitleView titleView = new TitleView(Messages.getString("NaviView.18"));
+		TitleLabelView titleView = new TitleLabelView(Messages.getString("NaviView.18"));
 		titleView.setNaviView();
 		// JLabel turnierListeLabel = new
 		// JLabel(Messages.getString("NaviView.18")); //$NON-NLS-1$
@@ -185,7 +185,7 @@ public class NaviView extends JPanel {
 		panel3.setLayout(flowLayout);
 		panel3.setBackground(Color.LIGHT_GRAY);
 		panel3.add(spielerAddButton);
-		titleView = new TitleView(Messages.getString("NaviView.20"));
+		titleView = new TitleLabelView(Messages.getString("NaviView.20"));
 		titleView.setNaviView();
 		// JLabel spielerListeLabel = new
 		// JLabel(Messages.getString("NaviView.20")); //$NON-NLS-1$
@@ -298,7 +298,7 @@ public class NaviView extends JPanel {
 		panel4k.setBackground(Color.LIGHT_GRAY);
 		panel4k.add(pairingsSaveButton);
 
-		titleView = new TitleView(Messages.getString("NaviView.25"));
+		titleView = new TitleLabelView(Messages.getString("NaviView.25"));
 		titleView.setNaviView();
 
 		// JPanel dateiPanelLabel = new JPanel();
@@ -330,7 +330,7 @@ public class NaviView extends JPanel {
 		// tabellenPanelLabel.setPreferredSize(new Dimension(200, 30));
 		// tabellenPanelLabel.setBackground(Color.LIGHT_GRAY);
 		// tabellenLabel = new JLabel(tabellenname);
-		titleView = new TitleView(tabellenname);
+		titleView = new TitleLabelView(tabellenname);
 		titleView.setNaviView();
 		tabellenLabel = titleView.getTitleLabel();
 		// tabellenPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -369,7 +369,7 @@ public class NaviView extends JPanel {
 		pairingsPanel.setBackground(Color.LIGHT_GRAY);
 		BoxLayout pairingsPanelLayout = new BoxLayout(pairingsPanel, BoxLayout.PAGE_AXIS);
 		pairingsPanel.setLayout(pairingsPanelLayout);
-		titleView = new TitleView(pairingsname);
+		titleView = new TitleLabelView(pairingsname);
 		titleView.setNaviView();
 
 		// JPanel pairingsPanelLabel = new JPanel();

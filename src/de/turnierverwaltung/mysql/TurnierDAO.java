@@ -19,19 +19,19 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import de.turnierverwaltung.control.PropertiesControl;
-import de.turnierverwaltung.model.Turnier;
+import de.turnierverwaltung.model.Tournament;
 
 public interface TurnierDAO {
 	public void createTurnierTable();
 
 	public boolean deleteTurnier(int id);
 
-	public Turnier findTurnier(int id, PropertiesControl prop);
+	public Tournament findTurnier(int id, PropertiesControl prop);
 
 	public int insertTurnier(String turnierName, int datumId);
 
-	public boolean updateTurnier(Turnier turnier);
+	public boolean updateTurnier(Tournament turnier);
 
-	public ArrayList<Turnier> selectAllTurnier(PropertiesControl prop) throws SQLException;
+	public ArrayList<Tournament> selectAllTurnier(PropertiesControl prop) throws SQLException;
 
 }

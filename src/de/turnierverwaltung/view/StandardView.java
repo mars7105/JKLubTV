@@ -31,7 +31,7 @@ public class StandardView extends JPanel {
 	public StandardView() {
 		this.setLayout(new BorderLayout());
 		JPanel panel = new JPanel();
-//		panel.setBackground(new Color(249, 222, 112));
+		// panel.setBackground(new Color(249, 222, 112));
 		this.add(panel, BorderLayout.CENTER);
 
 	}

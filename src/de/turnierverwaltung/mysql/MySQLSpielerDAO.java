@@ -23,8 +23,8 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import de.turnierverwaltung.model.Gruppe;
-import de.turnierverwaltung.model.Spieler;
+import de.turnierverwaltung.model.Group;
+import de.turnierverwaltung.model.Player;
 
 public class MySQLSpielerDAO implements SpielerDAO {
 	private Connection dbConnect;
@@ -78,10 +78,10 @@ public class MySQLSpielerDAO implements SpielerDAO {
 	}
 
 	@Override
-	public ArrayList<Gruppe> findSpieler(int id) {
+	public ArrayList<Group> findSpieler(int id) {
 		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe ="
 				+ id + " AND Spieler_idSpieler = idSpieler";
-		ArrayList<Gruppe> gruppenListe = new ArrayList<Gruppe>();
+		ArrayList<Group> gruppenListe = new ArrayList<Group>();
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -92,7 +92,7 @@ public class MySQLSpielerDAO implements SpielerDAO {
 				while (rs.next()) {
 					int idGruppe = rs.getInt("idGruppe");
 					String gruppenName = rs.getString("Gruppenname");
-					gruppenListe.add(new Gruppe(idGruppe, gruppenName));
+					gruppenListe.add(new Group(idGruppe, gruppenName));
 				}
 				stmt.close();
 
@@ -105,9 +105,9 @@ public class MySQLSpielerDAO implements SpielerDAO {
 	}
 
 	@Override
-	public ArrayList<Spieler> getAllSpieler() {
+	public ArrayList<Player> getAllSpieler() {
 		String sql = "Select * from spieler";
-		ArrayList<Spieler> spielerListe = new ArrayList<Spieler>();
+		ArrayList<Player> spielerListe = new ArrayList<Player>();
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -122,7 +122,7 @@ public class MySQLSpielerDAO implements SpielerDAO {
 					String dwz = rs.getString("dwz");
 					
 					spielerListe
-							.add(new Spieler(idSpieler, name, kuerzel, dwz, 0));
+							.add(new Player(idSpieler, name, kuerzel, dwz, 0));
 				}
 				stmt.close();
 
@@ -168,10 +168,10 @@ public class MySQLSpielerDAO implements SpielerDAO {
 	}
 
 	@Override
-	public ArrayList<Spieler> selectAllSpieler(int idGruppe) {
+	public ArrayList<Player> selectAllSpieler(int idGruppe) {
 		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe = "
 				+ idGruppe + " AND Spieler_idSpieler = idSpieler";
-		ArrayList<Spieler> spielerListe = new ArrayList<Spieler>();
+		ArrayList<Player> spielerListe = new ArrayList<Player>();
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -185,7 +185,7 @@ public class MySQLSpielerDAO implements SpielerDAO {
 					String kuerzel = rs.getString("kuerzel");
 					String dwz = rs.getString("dwz");
 					spielerListe
-							.add(new Spieler(idSpieler, name, kuerzel, dwz, 0));
+							.add(new Player(idSpieler, name, kuerzel, dwz, 0));
 				}
 				stmt.close();
 
@@ -199,7 +199,7 @@ public class MySQLSpielerDAO implements SpielerDAO {
 	}
 
 	@Override
-	public boolean updateSpieler(Spieler spieler) {
+	public boolean updateSpieler(Player spieler) {
 		boolean ok = false;
 		String sql = "update spieler set Name = ?, Kuerzel = ?"
 				+ ", DWZ = ? where idSpieler=" + spieler.getSpielerId();

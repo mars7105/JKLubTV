@@ -41,7 +41,7 @@ public class InfoView extends JPanel {
 	private JButton okButton;
 
 	public InfoView() {
-		TitleView titleView = new TitleView(Messages.getString("InfoView.0"));
+		TitleLabelView titleView = new TitleLabelView(Messages.getString("InfoView.0"));
 
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new FlowLayout());

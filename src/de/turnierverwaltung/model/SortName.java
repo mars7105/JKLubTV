@@ -2,10 +2,10 @@ package de.turnierverwaltung.model;
 
 import java.util.Comparator;
 
-public class SortName implements Comparator<Spieler> {
+public class SortName implements Comparator<Player> {
 
 	@Override
-	public int compare(Spieler arg0, Spieler arg1) {
+	public int compare(Player arg0, Player arg1) {
 		return arg0.getName().compareTo(arg1.getName());
 
 	}

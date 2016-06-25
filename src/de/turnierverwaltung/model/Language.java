@@ -17,7 +17,7 @@ public class Language {
 		de.turnierverwaltung.view.Messages.setLocale(locale);
 		de.turnierverwaltung.control.Messages.setLocale(locale);
 		de.turnierverwaltung.model.Messages.setLocale(locale);
-		TurnierKonstanten.setConstantLanguage();
+		TournamentConstants.setConstantLanguage();
 		Locale.setDefault(locale);
 	}
 
