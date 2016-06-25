@@ -21,7 +21,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import de.turnierverwaltung.model.TurnierTabelle;
+import de.turnierverwaltung.model.CrossTable;
 
 public class ExcelSaveControl {
 
@@ -96,7 +96,7 @@ public class ExcelSaveControl {
 
 						}
 
-						TurnierTabelle turnierTabelle = mainControl
+						CrossTable turnierTabelle = mainControl
 								.getTurnierTabelle()[i];
 
 						int spalte = this.mainControl.getSimpleTableView()[i]

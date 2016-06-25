@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import de.turnierverwaltung.model.TurnierTabelle;
+import de.turnierverwaltung.model.CrossTable;
 
 public class PDFSaveControl {
 	private MainControl mainControl;
@@ -70,7 +70,7 @@ public class PDFSaveControl {
 
 						}
 
-						TurnierTabelle turnierTabelle = mainControl
+						CrossTable turnierTabelle = mainControl
 								.getTurnierTabelle()[i];
 						int spalte = this.mainControl.getSimpleTableView()[i]
 								.getTable().getModel().getColumnCount();
@@ -90,8 +90,8 @@ public class PDFSaveControl {
 							}
 						}
 
-						PDFTabellenAusgabeControl mftKreuz = new PDFTabellenAusgabeControl();
-						PDFTabellenAusgabeControl mftTermin = new PDFTabellenAusgabeControl();
+						PDFOutputControl mftKreuz = new PDFOutputControl();
+						PDFOutputControl mftTermin = new PDFOutputControl();
 
 						if (filename != null) {
 							// filename += ".pdf";

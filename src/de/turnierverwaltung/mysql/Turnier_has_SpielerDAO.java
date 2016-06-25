@@ -16,15 +16,15 @@ package de.turnierverwaltung.mysql;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.util.ArrayList;
 
-import de.turnierverwaltung.model.Spieler;
-import de.turnierverwaltung.model.Turnier;
+import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.model.Tournament;
 
 public interface Turnier_has_SpielerDAO {
 	public void createTurnier_has_SpielerTable();
 
 	public boolean deleteTurnier_has_Spieler(ArrayList<Integer> id);
 
-	public ArrayList<Integer> findSpielerisinTurnier_has_Spieler(Spieler spieler);
+	public ArrayList<Integer> findSpielerisinTurnier_has_Spieler(Player spieler);
 
 	public String findTurnier_has_Spieler(int id);
 
@@ -32,5 +32,5 @@ public interface Turnier_has_SpielerDAO {
 
 	public ArrayList<String> selectAllTurnier_has_Spieler();
 
-	public boolean updateTurnier_has_Spieler(Turnier turnier);
+	public boolean updateTurnier_has_Spieler(Tournament turnier);
 }

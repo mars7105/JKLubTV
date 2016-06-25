@@ -26,15 +26,15 @@ import javax.swing.JDialog;
 import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.view.InfoView;
-import de.turnierverwaltung.view.InfoHomeScreenView;
-import de.turnierverwaltung.view.InfoLizenzenView;
+import de.turnierverwaltung.view.InfoHTMLView;
+import de.turnierverwaltung.view.InfoLicenseView;
 
 public class InfoControl {
 	private MainControl mainControl;
 	private InfoView infoView;
 	private JTabbedPane lizenzenPane;
-	private InfoLizenzenView infoTexteView;
-	private InfoHomeScreenView infoHelpView;
+	private InfoLicenseView infoTexteView;
+	private InfoHTMLView infoHelpView;
 	private ImageIcon infoIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png"))); //$NON-NLS-1$
 	private ImageIcon lizenzenIcon = new ImageIcon(
@@ -50,9 +50,9 @@ public class InfoControl {
 		infoView = new InfoView();
 		propertiesControl = mainControl.getPropertiesControl();
 		String lang = propertiesControl.getLanguage();
-		infoHelpView = new InfoHomeScreenView(lang);
+		infoHelpView = new InfoHTMLView(lang);
 		lizenzenPane = new JTabbedPane();
-		infoTexteView = new InfoLizenzenView();
+		infoTexteView = new InfoLicenseView();
 		try {
 			lizenzenPane.addTab(Messages.getString("InfoController.2"), infoIcon, infoHelpView.getLizenzText()); //$NON-NLS-1$
 

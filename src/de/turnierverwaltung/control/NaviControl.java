@@ -37,12 +37,12 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import de.turnierverwaltung.model.Spieler;
-import de.turnierverwaltung.model.Turnier;
+import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.NaviView;
-import de.turnierverwaltung.view.SpielerHinzufuegenView;
-import de.turnierverwaltung.view.TabAnzeigeView;
+import de.turnierverwaltung.view.NewPlayerView;
+import de.turnierverwaltung.view.TabbedPaneView;
 
 public class NaviControl implements ActionListener {
 
@@ -61,8 +61,8 @@ public class NaviControl implements ActionListener {
 	private NaviView naviView;
 	private int aktiveGruppe;
 	private JButton pdfButton;
-	private SpielerHinzufuegenView spielerHinzufuegenView;
-	private DewisDialogControl dewisDialogControl;
+	private NewPlayerView spielerHinzufuegenView;
+	private DSBDWZControl dewisDialogControl;
 	private TurnierAnsicht turnierAnsicht;
 	private boolean pairingIsActive;
 
@@ -106,7 +106,7 @@ public class NaviControl implements ActionListener {
 		scrollPane.setViewportView(naviView);
 		hauptPanel.add(scrollPane, BorderLayout.WEST);
 
-		dewisDialogControl = new DewisDialogControl(mainControl);
+		dewisDialogControl = new DSBDWZControl(mainControl);
 		hauptPanel.updateUI();
 	}
 
@@ -119,12 +119,12 @@ public class NaviControl implements ActionListener {
 					String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
 					String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
 					int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
-					Spieler neuerSpieler = new Spieler();
+					Player neuerSpieler = new Player();
 					neuerSpieler.setName(name);
 					neuerSpieler.setKuerzel(kuerzel);
 					neuerSpieler.setDwz(dwz);
 					neuerSpieler.setAge(age);
-					SpielerTableControl stc = new SpielerTableControl(mainControl);
+					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 					neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
 					this.mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
 				}
@@ -172,10 +172,10 @@ public class NaviControl implements ActionListener {
 			Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 			if (ready) {
 				mainControl.getNaviView().getTabellenPanel().setVisible(false);
-				RundenEingabeFormularControl pairingsControl = mainControl.getRundenEingabeFormularControl();
+				PairingsControl pairingsControl = mainControl.getRundenEingabeFormularControl();
 				pairingsControl.init();
 				int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
-				TabAnzeigeView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+				TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 
 				for (int i = 0; i < gruppenAnzahl; i++) {
 					tabAnzeigeView2[i].getTabbedPane().setEnabledAt(0, false);
@@ -201,9 +201,9 @@ public class NaviControl implements ActionListener {
 		}
 		if (arg0.getSource() == newTurnierButton) {
 			mainControl.setSpielerEingabeControl(null);
-			Turnier turnier = this.mainControl.getTurnier();
+			Tournament turnier = this.mainControl.getTurnier();
 			if (turnier == null) {
-				mainControl.setTurnierControl(new TurnierControl(mainControl));
+				mainControl.setTurnierControl(new NewTournamentControl(mainControl));
 			} else {
 				// Custom button text
 				Object[] options = { Messages.getString("NaviController.0"), Messages.getString("NaviController.1") }; //$NON-NLS-1$ //$NON-NLS-2$
@@ -214,7 +214,7 @@ public class NaviControl implements ActionListener {
 						JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 				if (abfrage == 0) {
 					// mainControl.resetApp();
-					mainControl.setTurnierControl(new TurnierControl(mainControl));
+					mainControl.setTurnierControl(new NewTournamentControl(mainControl));
 				}
 			}
 		}
@@ -258,19 +258,19 @@ public class NaviControl implements ActionListener {
 							mainControl.getPropertiesControl().setDefaultPath(file.getParent());
 							mainControl.getEigenschaftenControl().getEigenschaftenView()
 									.setOpenDefaultPathLabel(file.getParent());
-							SQLiteControl sqlC = new SQLiteControl();
+							SQLControl sqlC = new SQLControl();
 							sqlC.createAllTables();
 							// mainControl.datenbankMenueView(true);
 							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.11"), //$NON-NLS-1$
 									Messages.getString("NaviController.12"), //$NON-NLS-1$
 									JOptionPane.INFORMATION_MESSAGE);
 							this.mainControl.setNeuesTurnier(false);
-							mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
+							mainControl.setTurnierTableControl(new SQLTournamentControl(mainControl));
 							// mainControl.getTurnierTableControl()
 							// .loadTurnierListe();
-							mainControl.setSpielerEditierenControl(new SpielerListeLadenControl(mainControl));
+							mainControl.setSpielerEditierenControl(new PlayerListControl(mainControl));
 							mainControl.getSpielerEditierenControl().updateSpielerListe();
-							mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
+							mainControl.setTurnierListeLadenControl(new TournamentListControl(this.mainControl));
 							mainControl.getTurnierListeLadenControl().loadTurnierListe();
 
 							mainControl.getPropertiesControl().setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
@@ -317,11 +317,11 @@ public class NaviControl implements ActionListener {
 
 						mainControl.setNeuesTurnier(false);
 						// mainControl.getNaviView().getTabellenPanel().setVisible(false);
-						mainControl.setTurnierTableControl(new TurnierTableControl(mainControl));
+						mainControl.setTurnierTableControl(new SQLTournamentControl(mainControl));
 						// mainControl.getTurnierTableControl().loadTurnierListe();
-						mainControl.setSpielerEditierenControl(new SpielerListeLadenControl(mainControl));
+						mainControl.setSpielerEditierenControl(new PlayerListControl(mainControl));
 						mainControl.getSpielerEditierenControl().updateSpielerListe();
-						mainControl.setTurnierListeLadenControl(new TurnierListeLadenControl(this.mainControl));
+						mainControl.setTurnierListeLadenControl(new TournamentListControl(this.mainControl));
 
 						mainControl.getTurnierListeLadenControl().loadTurnierListe();
 
@@ -355,7 +355,7 @@ public class NaviControl implements ActionListener {
 
 		}
 		if (arg0.getSource() == naviView.getSpielerImport()) {
-			SpielerTableImportControl spielerImport = new SpielerTableImportControl(mainControl);
+			SQLImportPlayerListControl spielerImport = new SQLImportPlayerListControl(mainControl);
 			try {
 				spielerImport.importSpielerTable();
 
@@ -365,7 +365,7 @@ public class NaviControl implements ActionListener {
 			}
 		}
 		if (arg0.getSource() == naviView.getSpielerExport()) {
-			SpielerTableExportControl spielerExport = new SpielerTableExportControl(this.mainControl);
+			SQLExportPlayerListControl spielerExport = new SQLExportPlayerListControl(this.mainControl);
 			try {
 				spielerExport.exportSpielerTable();
 			} catch (SQLException e) {
@@ -373,7 +373,7 @@ public class NaviControl implements ActionListener {
 			}
 		}
 		if (arg0.getSource() == naviView.getSpielerAddButton()) {
-			spielerHinzufuegenView = new SpielerHinzufuegenView();
+			spielerHinzufuegenView = new NewPlayerView();
 
 			spielerHinzufuegenView.getOkButton().addActionListener(this);
 			spielerHinzufuegenView.getCancelButton().addActionListener(this);
@@ -451,7 +451,7 @@ public class NaviControl implements ActionListener {
 
 	private void setTabsEnable(Boolean enable) {
 		int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
-		TabAnzeigeView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+		TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		mainControl.getNaviView().getTabellenPanel().setVisible(enable);
 		mainControl.getNaviView().getPairingsPanel().setVisible(!enable);
 		for (int i = 0; i < gruppenAnzahl; i++) {
@@ -482,7 +482,7 @@ public class NaviControl implements ActionListener {
 		} catch (SQLException e) {
 			mainControl.fileSQLError();
 		}
-		spielerHinzufuegenView = new SpielerHinzufuegenView();
+		spielerHinzufuegenView = new NewPlayerView();
 
 		spielerHinzufuegenView.getOkButton().addActionListener(this);
 		spielerHinzufuegenView.getCancelButton().addActionListener(this);

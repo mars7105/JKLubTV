@@ -17,22 +17,22 @@ package de.turnierverwaltung.mysql;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import de.turnierverwaltung.model.Gruppe;
-import de.turnierverwaltung.model.Spieler;
+import de.turnierverwaltung.model.Group;
+import de.turnierverwaltung.model.Player;
 
 public interface SpielerDAO {
 	public void createSpielerTable();
 
 	public boolean deleteSpieler(int id);
 
-	public ArrayList<Gruppe> findSpieler(int id);
+	public ArrayList<Group> findSpieler(int id);
 
-	public ArrayList<Spieler> getAllSpieler() throws SQLException;
+	public ArrayList<Player> getAllSpieler() throws SQLException;
 
 	public int insertSpieler(String spielerName, String spielerDWZ,
 			String spielerKuerzel, int age);
 
-	public ArrayList<Spieler> selectAllSpieler(int idGruppe);
+	public ArrayList<Player> selectAllSpieler(int idGruppe);
 
-	public boolean updateSpieler(Spieler spieler);
+	public boolean updateSpieler(Player spieler);
 }

@@ -24,9 +24,9 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
-import de.turnierverwaltung.model.Partie;
-import de.turnierverwaltung.model.Spieler;
-import de.turnierverwaltung.model.TurnierKonstanten;
+import de.turnierverwaltung.model.Game;
+import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.model.TournamentConstants;
 
 public class SQLitePartienDAO implements PartienDAO {
 	private Connection dbConnect;
@@ -129,10 +129,10 @@ public class SQLitePartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public ArrayList<Partie> selectAllPartien(int idGruppe) {
+	public ArrayList<Game> selectAllPartien(int idGruppe) {
 		String sql = "Select idPartie,idSpielerWeiss," + "idSpielerSchwarz, Runde, Spieldatum, Ergebnis  "
 				+ "from partien where idGruppe=" + idGruppe + " ORDER BY Runde ASC;";
-		ArrayList<Partie> partieListe = new ArrayList<Partie>();
+		ArrayList<Game> partieListe = new ArrayList<Game>();
 		Statement stmt;
 		if (this.dbConnect != null) {
 			try {
@@ -145,12 +145,12 @@ public class SQLitePartienDAO implements PartienDAO {
 					int runde = rs.getInt("Runde");
 					String spielDatum = rs.getString("Spieldatum");
 					int ergebnis = rs.getInt("Ergebnis");
-					Spieler spielerWeiss = new Spieler();
+					Player spielerWeiss = new Player();
 					spielerWeiss.setSpielerId(idSpielerWeiss);
-					Spieler spielerSchwarz = new Spieler();
+					Player spielerSchwarz = new Player();
 					spielerSchwarz.setSpielerId(idSpielerSchwarz);
 
-					partieListe.add(new Partie(idPartie, spielDatum, ergebnis, runde, spielerWeiss, spielerSchwarz));
+					partieListe.add(new Game(idPartie, spielDatum, ergebnis, runde, spielerWeiss, spielerSchwarz));
 
 				}
 				stmt.close();
@@ -165,8 +165,8 @@ public class SQLitePartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public boolean updatePartien(Partie[] partien) {
-		Partie partie;
+	public boolean updatePartien(Game[] partien) {
+		Game partie;
 		boolean ok = false;
 		PreparedStatement preStm = null;
 
@@ -206,8 +206,8 @@ public class SQLitePartienDAO implements PartienDAO {
 		return ok;
 	}
 
-	public boolean updatePartien(ArrayList<Partie> partien) {
-		Partie partie;
+	public boolean updatePartien(ArrayList<Game> partien) {
+		Game partie;
 		boolean ok = false;
 		PreparedStatement preStm = null;
 
@@ -220,7 +220,7 @@ public class SQLitePartienDAO implements PartienDAO {
 				// + "COMMIT;";
 
 				preStm = this.dbConnect.prepareStatement(sql);
-				for (Partie ausgabe : partien) {
+				for (Game ausgabe : partien) {
 					partie = ausgabe;
 
 					preStm.setInt(1, partie.getSpielerWeiss().getSpielerId());
@@ -270,23 +270,23 @@ public class SQLitePartienDAO implements PartienDAO {
 
 		}
 		String ergebnisString = "";
-		if (ergebnis == TurnierKonstanten.MYSQL_KEIN_ERGEBNIS) {
-			ergebnisString = TurnierKonstanten.KEIN_ERGEBNIS;
+		if (ergebnis == TournamentConstants.MYSQL_KEIN_ERGEBNIS) {
+			ergebnisString = TournamentConstants.KEIN_ERGEBNIS;
 		}
-		if (ergebnis == TurnierKonstanten.MYSQL_PARTIE_GEWINN_WEISS) {
-			ergebnisString = TurnierKonstanten.GEWINN;
+		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_WEISS) {
+			ergebnisString = TournamentConstants.GEWINN;
 		}
-		if (ergebnis == TurnierKonstanten.MYSQL_PARTIE_GEWINN_SCHWARZ) {
-			ergebnisString = TurnierKonstanten.VERLUST;
+		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_SCHWARZ) {
+			ergebnisString = TournamentConstants.VERLUST;
 		}
-		if (ergebnis == TurnierKonstanten.MYSQL_PARTIE_REMIS) {
-			ergebnisString = TurnierKonstanten.REMIS;
+		if (ergebnis == TournamentConstants.MYSQL_PARTIE_REMIS) {
+			ergebnisString = TournamentConstants.REMIS;
 		}
-		if (ergebnis == TurnierKonstanten.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS) {
-			ergebnisString = TurnierKonstanten.GEWINN_KAMPFLOS;
+		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS) {
+			ergebnisString = TournamentConstants.GEWINN_KAMPFLOS;
 		}
-		if (ergebnis == TurnierKonstanten.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ) {
-			ergebnisString = TurnierKonstanten.VERLUST_KAMPFLOS;
+		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ) {
+			ergebnisString = TournamentConstants.VERLUST_KAMPFLOS;
 		}
 
 		return ergebnisString;

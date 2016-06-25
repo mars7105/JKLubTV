@@ -16,18 +16,18 @@ package de.turnierverwaltung.mysql;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.util.ArrayList;
 
-import de.turnierverwaltung.model.Gruppe;
+import de.turnierverwaltung.model.Group;
 
 public interface GruppenDAO {
 	public void createGruppenTable();
 
 	public boolean deleteGruppe(int id);
 
-	public Gruppe findGruppe(int id);
+	public Group findGruppe(int id);
 
 	public int insertGruppe(String gruppenName, int turnierId);
 
-	public ArrayList<Gruppe> selectAllGruppen(int idTurnier);
+	public ArrayList<Group> selectAllGruppen(int idTurnier);
 
-	public boolean updateGruppe(Gruppe gruppe);
+	public boolean updateGruppe(Group gruppe);
 }

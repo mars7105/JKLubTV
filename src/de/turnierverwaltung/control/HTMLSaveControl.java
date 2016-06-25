@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import de.turnierverwaltung.model.TurnierTabelle;
+import de.turnierverwaltung.model.CrossTable;
 
 public class HTMLSaveControl {
 
@@ -77,7 +77,7 @@ public class HTMLSaveControl {
 
 						}
 
-						TurnierTabelle turnierTabelle = mainControl
+						CrossTable turnierTabelle = mainControl
 								.getTurnierTabelle()[i];
 
 						int spalte = this.mainControl.getSimpleTableView()[i]

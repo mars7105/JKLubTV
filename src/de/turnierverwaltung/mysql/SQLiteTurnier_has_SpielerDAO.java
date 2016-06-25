@@ -24,8 +24,8 @@ import java.util.ListIterator;
 
 import javax.swing.JOptionPane;
 
-import de.turnierverwaltung.model.Spieler;
-import de.turnierverwaltung.model.Turnier;
+import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.model.Tournament;
 
 public class SQLiteTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 	private Connection dbConnect;
@@ -91,7 +91,7 @@ public class SQLiteTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 	}
 
 	@Override
-	public ArrayList<Integer> findSpielerisinTurnier_has_Spieler(Spieler spieler) {
+	public ArrayList<Integer> findSpielerisinTurnier_has_Spieler(Player spieler) {
 		ArrayList<Integer> findTurnier_has_Spieler = new ArrayList<Integer>();
 		String sql = "Select * " + "from turnier_has_spieler "
 				+ "where Spieler_idSpieler=" + spieler.getSpielerId() + ";";
@@ -161,7 +161,7 @@ public class SQLiteTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 	}
 
 	@Override
-	public boolean updateTurnier_has_Spieler(Turnier turnier) {
+	public boolean updateTurnier_has_Spieler(Tournament turnier) {
 		// TODO Automatisch generierter Methodenstub
 		return false;
 	}
