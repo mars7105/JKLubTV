@@ -93,7 +93,7 @@ public class SaveTournamentControl {
 
 				}
 
-				this.mainControl.setPartienTableControl(new SQLPartienControl(this.mainControl));
+				this.mainControl.setPartienTableControl(new SQLGamesControl(this.mainControl));
 
 				boolean saved = false;
 				DAOFactory daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
@@ -140,7 +140,7 @@ public class SaveTournamentControl {
 
 			this.mainControl.setSpielerTableControl(new SQLPlayerControl(this.mainControl));
 
-			this.mainControl.setPartienTableControl(new SQLPartienControl(this.mainControl));
+			this.mainControl.setPartienTableControl(new SQLGamesControl(this.mainControl));
 
 			this.mainControl.setTurnier_has_SpielerTableControl(new SQLTournament_has_PlayerControl(this.mainControl));
 

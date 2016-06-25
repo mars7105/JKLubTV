@@ -76,7 +76,7 @@ public class MainControl extends JFrame {
 	private SQLTournamentControl turnierTableControl;
 	private SQLPlayerControl spielerTableControl;
 	private SQLGroupsControl gruppenTableControl;
-	private SQLPartienControl partienTableControl;
+	private SQLGamesControl partienTableControl;
 	private SQLTournament_has_PlayerControl turnier_has_SpielerTableControl;
 	private CrossTable[] turnierTabelle;
 	private MeetingTable[] terminTabelle;
@@ -192,7 +192,7 @@ public class MainControl extends JFrame {
 		return paarungsTafeln;
 	}
 
-	public SQLPartienControl getPartienTableControl() {
+	public SQLGamesControl getPartienTableControl() {
 		return partienTableControl;
 	}
 
@@ -492,7 +492,7 @@ public class MainControl extends JFrame {
 		this.paarungsTafeln = paarungsTafeln;
 	}
 
-	public void setPartienTableControl(SQLPartienControl partienTableControl) {
+	public void setPartienTableControl(SQLGamesControl partienTableControl) {
 		this.partienTableControl = partienTableControl;
 	}
 
