@@ -2,9 +2,6 @@ package de.turnierverwaltung.view;
 
 import java.awt.FlowLayout;
 
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
-
 public class NaviTitleLabelView extends TitleLabelView {
 	/**
 	 * 
