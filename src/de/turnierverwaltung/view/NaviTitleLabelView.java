@@ -1,9 +1,7 @@
 package de.turnierverwaltung.view;
 
-import java.awt.FlowLayout;
-
-import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
+import java.awt.Color;
+import java.awt.Dimension;
 
 public class NaviTitleLabelView extends TitleLabelView {
 	/**
@@ -13,9 +11,11 @@ public class NaviTitleLabelView extends TitleLabelView {
 
 	public NaviTitleLabelView(String title) {
 		super(title);
-		FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
-		flowLayout.setVgap(1);
-		getTitlePanel().setLayout(flowLayout);
+		setFlowLayoutLeft();
+		getTitlePanel().setPreferredSize(new Dimension(200, 30));
+		setPreferredSize(new Dimension(200, 40));
+		setBackground(Color.LIGHT_GRAY);
+		updateUI();
 	}
 
 }
