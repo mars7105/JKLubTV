@@ -259,8 +259,8 @@ public class NaviView extends JPanel {
 
 		titleView = new NaviTitleLabelView(Messages.getString("NaviView.25"));
 
-		JLabel dateiLabel = new JLabel(Messages.getString("NaviView.25")); //$NON-NLS-1$
-		dateiLabel.setBackground(Color.LIGHT_GRAY);
+//		JLabel dateiLabel = new JLabel(Messages.getString("NaviView.25")); //$NON-NLS-1$
+//		dateiLabel.setBackground(Color.LIGHT_GRAY);
 		// dateiPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// dateiPanelLabel.add(dateiLabel);
 		dateiPanel.add(titleView);
