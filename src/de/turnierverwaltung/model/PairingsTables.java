@@ -1,4 +1,5 @@
 package de.turnierverwaltung.model;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -24,6 +25,10 @@ public class PairingsTables {
 	private int partienAnzahl;
 	private String[] paarungen;
 
+	/**
+	 * 
+	 * @param gruppe
+	 */
 	public PairingsTables(Group gruppe) {
 		this.gruppe = gruppe;
 		initValues();
@@ -172,8 +177,7 @@ public class PairingsTables {
 			spielerneu[spielerAnzahl].setName("Spielfrei");
 			spielerneu[spielerAnzahl].setKuerzel("SF");
 			spielerneu[spielerAnzahl].setDwz("0000");
-			spielerneu[spielerAnzahl]
-					.setSpielerId(TournamentConstants.SPIELFREI_ID);
+			spielerneu[spielerAnzahl].setSpielerId(TournamentConstants.SPIELFREI_ID);
 			spieler = spielerneu;
 			gruppe.setSpieler(spieler);
 			spielerAnzahl++;
@@ -195,8 +199,7 @@ public class PairingsTables {
 				spielerSchwarz = Integer.parseInt(spielerNummer[1]) - 1;
 				partien[partienNummer] = new Game();
 				partien[partienNummer].setSpielerWeiss(spieler[spielerWeiss]);
-				partien[partienNummer]
-						.setSpielerSchwarz(spieler[spielerSchwarz]);
+				partien[partienNummer].setSpielerSchwarz(spieler[spielerSchwarz]);
 				partien[partienNummer].setRunde(i + 1);
 				partienNummer++;
 			}
@@ -233,7 +236,7 @@ public class PairingsTables {
 		return spielerAnzahl;
 	}
 
-	public void initValues() {
+	private void initValues() {
 
 		this.spieler = gruppe.getSpieler();
 

@@ -7,12 +7,21 @@ import java.util.ArrayList;
 
 import com.opencsv.CSVReader;
 
+/**
+ * 
+ * @author mars
+ *
+ */
 public class DSBDWZAssociationSearchControl {
 
 	private CSVReader csvReader;
 	private String csvFilename;
 	private MainControl mainControl;
 
+	/**
+	 * 
+	 * @param mainControl
+	 */
 	public DSBDWZAssociationSearchControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
@@ -21,6 +30,11 @@ public class DSBDWZAssociationSearchControl {
 
 	}
 
+	/**
+	 * 
+	 * @param searchString
+	 * @return
+	 */
 	public ArrayList<String[]> searchForVerein(String searchString) {
 		ArrayList<String[]> foundStringList = new ArrayList<String[]>();
 
@@ -49,6 +63,10 @@ public class DSBDWZAssociationSearchControl {
 		return foundStringList;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Boolean checkifFileExist() {
 		if (csvFilename.equals("")) {
 			return false;

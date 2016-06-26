@@ -1,4 +1,5 @@
 package de.turnierverwaltung.model;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -27,6 +28,10 @@ public class MeetingTableModel extends DefaultTableModel {
 	private String tabellenMatrix[][];
 	private Object[] rowData;
 
+	/**
+	 * 
+	 * @param terminTabelle
+	 */
 	public MeetingTableModel(MeetingTable terminTabelle) {
 		super();
 		this.terminTabelle = terminTabelle;
@@ -49,6 +54,9 @@ public class MeetingTableModel extends DefaultTableModel {
 		return zeile;
 	}
 
+	/**
+	 * 
+	 */
 	private void initModelData() {
 
 		for (int i = 0; i < spalte; i++) {
@@ -73,8 +81,7 @@ public class MeetingTableModel extends DefaultTableModel {
 			icE = true;
 
 		}
-		if (this.getValueAt(rowIndex, 1).equals("Spielfrei")
-				|| this.getValueAt(rowIndex, 2).equals("Spielfrei")) {
+		if (this.getValueAt(rowIndex, 1).equals("Spielfrei") || this.getValueAt(rowIndex, 2).equals("Spielfrei")) {
 			icE = false;
 		}
 

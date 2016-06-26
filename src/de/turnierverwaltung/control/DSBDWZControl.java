@@ -38,6 +38,10 @@ public class DSBDWZControl {
 	private ArrayList<String[]> zpsItems;
 	private DSBDWZActionListenerControl dewisDialogActionListenerControl;
 
+	/**
+	 * 
+	 * @param mainControl
+	 */
 	public DSBDWZControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
@@ -123,6 +127,9 @@ public class DSBDWZControl {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void makeVereinsListe() {
 		ArrayList<String[]> vereine = vereinsSuche.searchForVerein(dialog.getVereinsName().getText());
 		zpsItems = new ArrayList<String[]>();

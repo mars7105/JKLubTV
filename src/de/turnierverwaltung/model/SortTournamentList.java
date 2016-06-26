@@ -2,6 +2,11 @@ package de.turnierverwaltung.model;
 
 import java.util.Comparator;
 
+/**
+ * 
+ * @author mars
+ *
+ */
 public class SortTournamentList implements Comparator<Tournament> {
 
 	@Override

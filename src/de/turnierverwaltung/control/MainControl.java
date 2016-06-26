@@ -50,6 +50,11 @@ import de.turnierverwaltung.view.TitleLabelView;
 import de.turnierverwaltung.view.TournamentListView;
 import de.turnierverwaltung.view.NewTournamentView;
 
+/**
+ * 
+ * @author mars
+ *
+ */
 public class MainControl extends JFrame {
 
 	/**
@@ -126,6 +131,152 @@ public class MainControl extends JFrame {
 		init();
 		makeProperties();
 
+	}
+
+	private void init() {
+		setNeuesTurnier(false);
+		mainPanel = new JPanel();
+		mainPanel.setLayout(new BorderLayout());
+		this.hauptPanel = new JTabbedPane();
+		standardView = new StandardView();
+		titleView = new TitleLabelView("JKlubTV");
+
+		naviController = new NaviControl(this);
+
+		setContentPane(mainPanel);
+
+		standardView.add(titleView, BorderLayout.NORTH);
+		mainPanel.add(standardView, BorderLayout.NORTH);
+		mainPanel.add(hauptPanel, BorderLayout.CENTER);
+		hauptPanel.updateUI();
+		mainPanel.updateUI();
+		setEnabled(true);
+		setVisible(true);
+		this.setInfoController(new InfoControl(this));
+
+		this.eigenschaftenControl = new SettingsControl(this);
+		SQLiteDAOFactory.setDB_PATH("");
+		this.setTitle(Messages.getString("MainControl.8"));
+	}
+
+	private void makeProperties() {
+		// datenbankMenueView(false);
+
+		if (propertiesControl.checkPathToDatabase() == true) {
+			// datenbankMenueView(true);
+			String path = propertiesControl.getPathToDatabase();
+			SQLiteDAOFactory.setDB_PATH(path);
+			this.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
+					+ SQLiteDAOFactory.getDB_PATH());
+
+			if (this.getSpielerEditierenControl() != null) {
+				// mainControl.getSpielerEditierenControl().makePanel();
+			} else {
+				this.setSpielerEditierenControl(new PlayerListControl(this));
+				try {
+					this.getSpielerEditierenControl().updateSpielerListe();
+				} catch (SQLException e) {
+					fileSQLError();
+				}
+			}
+			this.setNeuesTurnier(false);
+			// this.getNaviView().getTabellenPanel().setVisible(false);
+			if (this.getTurnierTableControl() == null) {
+				this.setTurnierTableControl(new SQLTournamentControl(this));
+				// this.getTurnierTableControl().loadTurnierListe();
+				this.setTurnierListeLadenControl(new TournamentListControl(this));
+				try {
+					this.getTurnierListeLadenControl().loadTurnierListe();
+				} catch (SQLException e) {
+					fileSQLError();
+				}
+				naviView.setPathToDatabase(new JLabel(path));
+
+			} else {
+				this.resetApp();
+				this.setTurnierTableControl(new SQLTournamentControl(this));
+				// this.getTurnierTableControl().loadTurnierListe();
+				this.setTurnierListeLadenControl(new TournamentListControl(this));
+				try {
+					this.getTurnierListeLadenControl().loadTurnierListe();
+				} catch (SQLException e) {
+					fileSQLError();
+				}
+				naviView.setPathToDatabase(new JLabel(path));
+			}
+			naviView.getTurnierListePanel().setVisible(false);
+			naviView.getSpielerListePanel().setVisible(false);
+			hauptPanel.addChangeListener(naviController.getTurnierAnsicht());
+			for (int i = 0; i < hauptPanel.getTabCount(); i++) {
+				if (hauptPanel.getTitleAt(i).equals(Messages.getString("MainControl.9"))) { //$NON-NLS-1$
+					hauptPanel.setSelectedIndex(i);
+				}
+			}
+		} else {
+			this.setTitle(Messages.getString("MainControl.10")); //$NON-NLS-1$
+
+		}
+	}
+
+	/**
+	 * 
+	 */
+	public void resetApp() {
+		windowWidth = 0;
+		windowHeight = 0;
+		mainView = null;
+		hauptPanel = null;
+
+		turnierControl = null;
+		turnierView = null;
+		gruppenView = null;
+		gruppenControl = null;
+		spielerAnzahlView = null;
+		spielerAnzahlControl = null;
+		spielerEingabeView = null;
+		spielerEingabeControl = null;
+		tabAnzeigeControl = null;
+		tabAnzeigeView = null;
+		tabAnzeigeView2 = null;
+		turnier = null;
+		turnierTableControl = null;
+		spielerTableControl = null;
+		gruppenTableControl = null;
+		partienTableControl = null;
+		turnier_has_SpielerTableControl = null;
+		turnierTabelle = null;
+		terminTabelle = null;
+		paarungsTafeln = null;
+		simpleTableModel = null;
+		simpleTableView = null;
+		saveTurnierControl = null;
+		turnierTabelleControl = null;
+		terminTabelleControl = null;
+		simpleTerminTabelleView = null;
+		turnierListeLadenControl = null;
+		turnierListeLadenView = null;
+		saveTurnierControl = null;
+		spielerLadenControl = null;
+		setNeuesTurnier(false);
+		System.gc();
+		init();
+
+	}
+
+	/**
+	 * 
+	 */
+	public void fileSQLError() {
+		propertiesControl.checkProperties();
+		Boolean ok = propertiesControl.writeProperties();
+		if (ok) {
+			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.11"));
+
+		} else {
+			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.12"));
+
+		}
+		resetApp();
 	}
 
 	public LanguagePropertiesControl getLanguagePropertiesControl() {
@@ -318,146 +469,6 @@ public class MainControl extends JFrame {
 
 	public void setMainPanel(JPanel mainPanel) {
 		this.mainPanel = mainPanel;
-	}
-
-	private void init() {
-		setNeuesTurnier(false);
-		mainPanel = new JPanel();
-		mainPanel.setLayout(new BorderLayout());
-		this.hauptPanel = new JTabbedPane();
-		standardView = new StandardView();
-		titleView = new TitleLabelView("JKlubTV");
-
-		naviController = new NaviControl(this);
-
-		setContentPane(mainPanel);
-
-		standardView.add(titleView, BorderLayout.NORTH);
-		mainPanel.add(standardView, BorderLayout.NORTH);
-		mainPanel.add(hauptPanel, BorderLayout.CENTER);
-		hauptPanel.updateUI();
-		mainPanel.updateUI();
-		setEnabled(true);
-		setVisible(true);
-		this.setInfoController(new InfoControl(this));
-
-		this.eigenschaftenControl = new SettingsControl(this);
-		SQLiteDAOFactory.setDB_PATH("");
-		this.setTitle(Messages.getString("MainControl.8"));
-	}
-
-	private void makeProperties() {
-		// datenbankMenueView(false);
-
-		if (propertiesControl.checkPathToDatabase() == true) {
-			// datenbankMenueView(true);
-			String path = propertiesControl.getPathToDatabase();
-			SQLiteDAOFactory.setDB_PATH(path);
-			this.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
-					+ SQLiteDAOFactory.getDB_PATH());
-
-			if (this.getSpielerEditierenControl() != null) {
-				// mainControl.getSpielerEditierenControl().makePanel();
-			} else {
-				this.setSpielerEditierenControl(new PlayerListControl(this));
-				try {
-					this.getSpielerEditierenControl().updateSpielerListe();
-				} catch (SQLException e) {
-					fileSQLError();
-				}
-			}
-			this.setNeuesTurnier(false);
-			// this.getNaviView().getTabellenPanel().setVisible(false);
-			if (this.getTurnierTableControl() == null) {
-				this.setTurnierTableControl(new SQLTournamentControl(this));
-				// this.getTurnierTableControl().loadTurnierListe();
-				this.setTurnierListeLadenControl(new TournamentListControl(this));
-				try {
-					this.getTurnierListeLadenControl().loadTurnierListe();
-				} catch (SQLException e) {
-					fileSQLError();
-				}
-				naviView.setPathToDatabase(new JLabel(path));
-
-			} else {
-				this.resetApp();
-				this.setTurnierTableControl(new SQLTournamentControl(this));
-				// this.getTurnierTableControl().loadTurnierListe();
-				this.setTurnierListeLadenControl(new TournamentListControl(this));
-				try {
-					this.getTurnierListeLadenControl().loadTurnierListe();
-				} catch (SQLException e) {
-					fileSQLError();
-				}
-				naviView.setPathToDatabase(new JLabel(path));
-			}
-			naviView.getTurnierListePanel().setVisible(false);
-			naviView.getSpielerListePanel().setVisible(false);
-			hauptPanel.addChangeListener(naviController.getTurnierAnsicht());
-			for (int i = 0; i < hauptPanel.getTabCount(); i++) {
-				if (hauptPanel.getTitleAt(i).equals(Messages.getString("MainControl.9"))) { //$NON-NLS-1$
-					hauptPanel.setSelectedIndex(i);
-				}
-			}
-		} else {
-			this.setTitle(Messages.getString("MainControl.10")); //$NON-NLS-1$
-
-		}
-	}
-
-	public void resetApp() {
-		windowWidth = 0;
-		windowHeight = 0;
-		mainView = null;
-		hauptPanel = null;
-
-		turnierControl = null;
-		turnierView = null;
-		gruppenView = null;
-		gruppenControl = null;
-		spielerAnzahlView = null;
-		spielerAnzahlControl = null;
-		spielerEingabeView = null;
-		spielerEingabeControl = null;
-		tabAnzeigeControl = null;
-		tabAnzeigeView = null;
-		tabAnzeigeView2 = null;
-		turnier = null;
-		turnierTableControl = null;
-		spielerTableControl = null;
-		gruppenTableControl = null;
-		partienTableControl = null;
-		turnier_has_SpielerTableControl = null;
-		turnierTabelle = null;
-		terminTabelle = null;
-		paarungsTafeln = null;
-		simpleTableModel = null;
-		simpleTableView = null;
-		saveTurnierControl = null;
-		turnierTabelleControl = null;
-		terminTabelleControl = null;
-		simpleTerminTabelleView = null;
-		turnierListeLadenControl = null;
-		turnierListeLadenView = null;
-		saveTurnierControl = null;
-		spielerLadenControl = null;
-		setNeuesTurnier(false);
-		System.gc();
-		init();
-
-	}
-
-	public void fileSQLError() {
-		propertiesControl.checkProperties();
-		Boolean ok = propertiesControl.writeProperties();
-		if (ok) {
-			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.11"));
-
-		} else {
-			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.12"));
-
-		}
-		resetApp();
 	}
 
 	public PropertiesControl getPropertiesControl() {

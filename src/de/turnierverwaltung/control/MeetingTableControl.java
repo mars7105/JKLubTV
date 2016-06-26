@@ -44,10 +44,13 @@ public class MeetingTableControl {
 	private Tournament turnier;
 	private MyTableModelListener tml[];
 	private ArrayList<Game> changedPartien;
-	private ImageIcon terminTabelleIcon = new ImageIcon(Toolkit
-			.getDefaultToolkit().getImage(
-					getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
+	private ImageIcon terminTabelleIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
 
+	/**
+	 * 
+	 * @param mainControl
+	 */
 	public MeetingTableControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		this.turnier = mainControl.getTurnier();
@@ -68,6 +71,10 @@ public class MeetingTableControl {
 		}
 	}
 
+	/**
+	 * 
+	 * @param gruppenNummer
+	 */
 	public void makeSimpleTableView(int gruppenNummer) {
 		PropertiesControl ppC = mainControl.getPropertiesControl();
 		String roundColumnName = ppC.getTableComumnRound();
@@ -76,32 +83,25 @@ public class MeetingTableControl {
 		String resultColumnName = ppC.getTableComumnResult();
 		String meetingColumnName = ppC.getTableComumnMeeting();
 		this.terminTabelle[gruppenNummer] = new MeetingTable(turnier,
-				mainControl.getTurnier().getGruppe()[gruppenNummer],
-				roundColumnName, whiteColumnName, blackColumnName,
+				mainControl.getTurnier().getGruppe()[gruppenNummer], roundColumnName, whiteColumnName, blackColumnName,
 				resultColumnName, meetingColumnName);
-		simpleTableView[gruppenNummer] = new MeetingTableView(
-				new MeetingTableModel(this.terminTabelle[gruppenNummer]));
+		simpleTableView[gruppenNummer] = new MeetingTableView(new MeetingTableModel(this.terminTabelle[gruppenNummer]));
 		simpleTurnierTabelleView = mainControl.getSimpleTableView();
 		mainControl.getTurnierTabelle();
 		if (tml[gruppenNummer] == null) {
-			int abstand = mainControl.getPropertiesControl()
-					.getTabellenAbstand();
-			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer,
-					abstand);
+			int abstand = mainControl.getPropertiesControl().getTabellenAbstand();
+			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer, abstand);
 		}
 
-		simpleTableView[gruppenNummer].getTable().getModel()
-				.addTableModelListener(tml[gruppenNummer]);
+		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
 
 		if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() == 1) {
-			tabAnzeigeView2[gruppenNummer].getTabbedPane()
-					.insertTab(
-							Messages.getString("TerminTabelleControl.1"), terminTabelleIcon, //$NON-NLS-1$
-							simpleTableView[gruppenNummer], null, 1);
+			tabAnzeigeView2[gruppenNummer].getTabbedPane().insertTab(Messages.getString("TerminTabelleControl.1"), //$NON-NLS-1$
+					terminTabelleIcon,
+					simpleTableView[gruppenNummer], null, 1);
 		} else if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() > 1) {
 
-			tabAnzeigeView2[gruppenNummer].getTabbedPane().setComponentAt(1,
-					simpleTableView[gruppenNummer]);
+			tabAnzeigeView2[gruppenNummer].getTabbedPane().setComponentAt(1, simpleTableView[gruppenNummer]);
 		}
 
 		hauptPanel.updateUI();
@@ -115,6 +115,11 @@ public class MeetingTableControl {
 		this.terminTabelle = terminTabelle;
 	}
 
+	/**
+	 * 
+	 * @author mars
+	 *
+	 */
 	class MyTableModelListener implements TableModelListener {
 		private int gruppenNummer;
 		private int abstand;
@@ -132,12 +137,10 @@ public class MeetingTableControl {
 			int row = e.getFirstRow();
 			int col = e.getColumn();
 			if (col == 3) {
-				String ergebniss = (String) simpleTableView[gruppenNummer]
-						.getTable().getModel().getValueAt(row, col);
-				String spielerWeiss = (String) simpleTableView[gruppenNummer]
-						.getTable().getModel().getValueAt(row, 1);
-				String spielerSchwarz = (String) simpleTableView[gruppenNummer]
-						.getTable().getModel().getValueAt(row, 2);
+				String ergebniss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, col);
+				String spielerWeiss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 1);
+				String spielerSchwarz = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row,
+						2);
 
 				String ergebnissSet = TournamentConstants.KEIN_ERGEBNIS;
 
@@ -159,19 +162,15 @@ public class MeetingTableControl {
 				if (ergebniss == TournamentConstants.PARTIE_GEWINN_KAMPFLOS_WEISS) {
 					ergebnissSet = TournamentConstants.GEWINN_KAMPFLOS;
 				}
-				for (int i = 0; i < simpleTurnierTabelleView[gruppenNummer]
-						.getTable().getModel().getRowCount(); i++) {
-					if (simpleTurnierTabelleView[gruppenNummer].getTable()
-							.getModel().getValueAt(i, 0) == spielerWeiss) {
-						for (int y = 0; y < simpleTurnierTabelleView[gruppenNummer]
-								.getTable().getModel().getRowCount(); y++) {
-							if (simpleTurnierTabelleView[gruppenNummer]
-									.getTable().getModel().getValueAt(y, 0) == spielerSchwarz) {
-								simpleTurnierTabelleView[gruppenNummer]
-										.getTable()
-										.getModel()
-										.setValueAt(ergebnissSet, i,
-												y + abstand);
+				for (int i = 0; i < simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getRowCount(); i++) {
+					if (simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getValueAt(i,
+							0) == spielerWeiss) {
+						for (int y = 0; y < simpleTurnierTabelleView[gruppenNummer].getTable().getModel()
+								.getRowCount(); y++) {
+							if (simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getValueAt(y,
+									0) == spielerSchwarz) {
+								simpleTurnierTabelleView[gruppenNummer].getTable().getModel().setValueAt(ergebnissSet,
+										i, y + abstand);
 							}
 						}
 

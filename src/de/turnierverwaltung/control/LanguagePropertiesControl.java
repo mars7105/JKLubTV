@@ -8,6 +8,11 @@ import javax.swing.JOptionPane;
 
 import de.turnierverwaltung.model.Language;
 
+/**
+ * 
+ * @author mars
+ *
+ */
 public class LanguagePropertiesControl {
 	private MainControl mainControl;
 	private PropertiesControl propertiesControl;
@@ -17,9 +22,13 @@ public class LanguagePropertiesControl {
 	private Language englishLanguage;
 	private Language germanLanguage;
 	private Language defaultLanguage;
-	private ImageIcon icon = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/emblem-notice.png")));
+	private ImageIcon icon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png")));
 
+	/**
+	 * 
+	 * @param mainControl
+	 */
 	public LanguagePropertiesControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		propertiesControl = this.mainControl.getPropertiesControl();
@@ -27,23 +36,36 @@ public class LanguagePropertiesControl {
 		englishLanguage = new Language(ENGLISH, new Locale("en", "US"));
 	}
 
+	/**
+	 * 
+	 */
 	public void setLanguageToEnglish() {
 		propertiesControl.setLanguage(englishLanguage.getLanguage());
 		englishLanguage.enableLocale();
 
 	}
 
+	/**
+	 * 
+	 */
 	public void setLanguageToGerman() {
 		propertiesControl.setLanguage(germanLanguage.getLanguage());
 		germanLanguage.enableLocale();
 
 	}
 
+	/**
+	 * 
+	 */
 	public void setLanguageToDefault() {
 		propertiesControl.setLanguage(defaultLanguage.getLanguage());
 		defaultLanguage.enableLocale();
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public Boolean checkLanguage() {
 		Boolean ok = false;
 		String language = propertiesControl.getLanguage();
@@ -64,8 +86,7 @@ public class LanguagePropertiesControl {
 
 	private void abfrage() {
 		Object[] possibilities = { "English", "German" };
-		String s = (String) JOptionPane.showInputDialog(mainControl,
-				"Which Language?\n", "Language Support",
+		String s = (String) JOptionPane.showInputDialog(mainControl, "Which Language?\n", "Language Support",
 				JOptionPane.PLAIN_MESSAGE, icon, possibilities, "ham");
 
 		defaultLanguage = englishLanguage;

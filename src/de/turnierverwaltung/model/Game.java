@@ -35,8 +35,16 @@ public class Game implements Comparable<Object> {
 		partieId = -1;
 	}
 
-	public Game(int idPartie, String spielDatum, int ergebnis, int runde, Player spielerWeiss,
-			Player spielerSchwarz) {
+	/**
+	 * 
+	 * @param idPartie
+	 * @param spielDatum
+	 * @param ergebnis
+	 * @param runde
+	 * @param spielerWeiss
+	 * @param spielerSchwarz
+	 */
+	public Game(int idPartie, String spielDatum, int ergebnis, int runde, Player spielerWeiss, Player spielerSchwarz) {
 		this.partieId = idPartie;
 		this.spielDatum = spielDatum;
 		this.spielerWeiss = spielerWeiss;
@@ -104,6 +112,9 @@ public class Game implements Comparable<Object> {
 		return status;
 	}
 
+	/**
+	 * 
+	 */
 	private void makeErgebnisse() {
 		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_WEISS) {
 			this.ergebnisWeiss = TournamentConstants.GEWINN;

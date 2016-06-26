@@ -22,12 +22,19 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import de.turnierverwaltung.model.CrossTable;
-
+/**
+ * 
+ * @author mars
+ *
+ */
 public class ExcelSaveControl {
 
 	private MainControl mainControl;
 	private Workbook wb;
-
+/**
+ * 
+ * @param mainControl
+ */
 	public ExcelSaveControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 	}

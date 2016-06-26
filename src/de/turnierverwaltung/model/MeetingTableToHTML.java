@@ -25,8 +25,16 @@ public class MeetingTableToHTML {
 	private String htmlString;
 	private int[] reihenfolge;
 
-	public MeetingTableToHTML(String[][] tabellenMatrix, String turnierName,
-			String startDatum, String endDatum, String gruppenName) {
+	/**
+	 * 
+	 * @param tabellenMatrix
+	 * @param turnierName
+	 * @param startDatum
+	 * @param endDatum
+	 * @param gruppenName
+	 */
+	public MeetingTableToHTML(String[][] tabellenMatrix, String turnierName, String startDatum, String endDatum,
+			String gruppenName) {
 		super();
 		this.tabellenMatrix = tabellenMatrix;
 		this.turnierName = turnierName;
@@ -42,19 +50,19 @@ public class MeetingTableToHTML {
 	}
 
 	private String getHTMLHeader() {
-		String headerString = "<!DOCTYPE html>\n"
-				+ "<html lang='de'>\n"
-				+ "<head>\n"
-				+ "  <meta charset='utf-8'>\n"
+		String headerString = "<!DOCTYPE html>\n" + "<html lang='de'>\n" + "<head>\n" + "  <meta charset='utf-8'>\n"
 				+ "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n"
-				+ "  <link rel='stylesheet' href='style.css'>\n" + "  <title>"
-				+ turnierName + startDatum + " bis " + endDatum + "</title>\n"
-				+ "</head>\n" + "<body>\n" + "  <h1>" + turnierName + " "
-				+ startDatum + " bis " + endDatum + "</h1>\n" + "  <h2>"
-				+ gruppenName + "</h2>\n";
+				+ "  <link rel='stylesheet' href='style.css'>\n" + "  <title>" + turnierName + startDatum + " bis "
+				+ endDatum + "</title>\n" + "</head>\n" + "<body>\n" + "  <h1>" + turnierName + " " + startDatum
+				+ " bis " + endDatum + "</h1>\n" + "  <h2>" + gruppenName + "</h2>\n";
 		return headerString;
 	}
 
+	/**
+	 * 
+	 * @param ohneHeaderundFooter
+	 * @return
+	 */
 	public String getHTMLTable(Boolean ohneHeaderundFooter) {
 		int col = this.tabellenMatrix.length;
 		reihenfolge = new int[col];
@@ -93,8 +101,7 @@ public class MeetingTableToHTML {
 
 			for (int x = 0; x < col; x++) {
 				String ausgabeWert = this.tabellenMatrix[x][y];
-				if (ausgabeWert != null && ausgabeWert != ""
-						&& ausgabeWert != " ") {
+				if (ausgabeWert != null && ausgabeWert != "" && ausgabeWert != " ") {
 					if (ausgabeWert == TournamentConstants.PARTIE_REMIS) {
 						ausgabeWert = "&frac12; - &frac12;";
 					}
@@ -105,13 +112,9 @@ public class MeetingTableToHTML {
 					}
 				} else {
 					if (y == 0) {
-						htmlString += "        <th>"
-								+ TournamentConstants.HTML_LEERZEICHEN
-								+ "</th>\n";
+						htmlString += "        <th>" + TournamentConstants.HTML_LEERZEICHEN + "</th>\n";
 					} else {
-						htmlString += "        <td>"
-								+ TournamentConstants.HTML_LEERZEICHEN
-								+ "</td>\n";
+						htmlString += "        <td>" + TournamentConstants.HTML_LEERZEICHEN + "</td>\n";
 					}
 				}
 

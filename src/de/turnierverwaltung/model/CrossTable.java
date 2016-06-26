@@ -33,7 +33,9 @@ public class CrossTable {
 	private String sbbColumnName;
 	private String rankingColumnName;
 	private String infoString;
-
+/**
+ * 
+ */
 	public CrossTable(Tournament turnier, Group gruppe) {
 		this.turnier = turnier;
 		this.gruppe = gruppe;
@@ -54,7 +56,17 @@ public class CrossTable {
 		}
 		return false;
 	}
-
+/**
+ * 
+ * @param playerColumnName
+ * @param oldDWZColumnName
+ * @param newDWZColumnName
+ * @param poinsColumnName
+ * @param sbbColumnName
+ * @param rankingColumnName
+ * @param ohneDWZ
+ * @param ohneFolgeDWZ
+ */
 	public void createMatrix(String playerColumnName, String oldDWZColumnName, String newDWZColumnName,
 			String poinsColumnName, String sbbColumnName, String rankingColumnName, Boolean ohneDWZ,
 			Boolean ohneFolgeDWZ) {
@@ -162,7 +174,11 @@ public class CrossTable {
 		}
 
 	}
-
+/**
+ * 
+ * @param ohneHeaderundFooter
+ * @return
+ */
 	public String getHTMLTable(Boolean ohneHeaderundFooter) {
 		turnierTabelleToHTML = new CrossTableToHTML(tabellenMatrix, turnier, gruppe.getGruppenName(), infoString);
 		return turnierTabelleToHTML.getHTMLTable(ohneHeaderundFooter);

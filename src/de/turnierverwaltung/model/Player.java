@@ -39,6 +39,14 @@ public class Player implements Comparable<Object> {
 		spielerId = -1;
 	}
 
+	/**
+	 * 
+	 * @param id
+	 * @param name
+	 * @param kuerzel
+	 * @param dwz
+	 * @param age
+	 */
 	public Player(int id, String name, String kuerzel, String dwz, int age) {
 		this.spielerId = id;
 		this.name = name;
@@ -100,6 +108,10 @@ public class Player implements Comparable<Object> {
 		return soberg;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public int getSort() {
 		boolean loop = true;
 
@@ -107,8 +119,7 @@ public class Player implements Comparable<Object> {
 
 			try {
 				loop = false;
-				sort = (int) (this.punkte * 1000000 + this.soberg * 100000 + Integer
-						.parseInt(this.dwz));
+				sort = (int) (this.punkte * 1000000 + this.soberg * 100000 + Integer.parseInt(this.dwz));
 			} catch (NumberFormatException e) {
 				loop = true;
 				this.dwz = TournamentConstants.KEINE_DWZ;
