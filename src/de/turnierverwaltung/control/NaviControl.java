@@ -44,6 +44,11 @@ import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.NewPlayerView;
 import de.turnierverwaltung.view.TabbedPaneView;
 
+/**
+ * 
+ * @author mars
+ *
+ */
 public class NaviControl implements ActionListener {
 
 	public static final int TURNIERTABELLE = 0;
@@ -66,6 +71,10 @@ public class NaviControl implements ActionListener {
 	private TurnierAnsicht turnierAnsicht;
 	private boolean pairingIsActive;
 
+	/**
+	 * 
+	 * @param mainControl
+	 */
 	public NaviControl(MainControl mainControl) {
 
 		this.mainControl = mainControl;
@@ -100,6 +109,9 @@ public class NaviControl implements ActionListener {
 		turnierAnsicht = new TurnierAnsicht(mainControl);
 	}
 
+	/**
+	 * 
+	 */
 	public void makeNaviPanel() {
 		JPanel hauptPanel = this.mainControl.getMainPanel();
 		JScrollPane scrollPane = new JScrollPane();
@@ -476,6 +488,9 @@ public class NaviControl implements ActionListener {
 		}
 	}
 
+	/**
+	 * 
+	 */
 	public void neuerSpieler() {
 		try {
 			this.mainControl.getSpielerLadenControl().updateSpielerListe();
@@ -517,10 +532,19 @@ public class NaviControl implements ActionListener {
 		this.turnierAnsicht = turnierAnsicht;
 	}
 
+	/**
+	 * 
+	 * @author mars
+	 *
+	 */
 	class TurnierAnsicht implements ChangeListener {
 
 		private MainControl mainControl;
 
+		/**
+		 * 
+		 * @param mainControl
+		 */
 		public TurnierAnsicht(MainControl mainControl) {
 			super();
 			this.mainControl = mainControl;

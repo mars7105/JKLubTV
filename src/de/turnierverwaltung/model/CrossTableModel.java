@@ -30,6 +30,11 @@ public class CrossTableModel extends DefaultTableModel {
 	private Object[] rowData;
 	private int abstand;
 
+	/**
+	 * 
+	 * @param turnierTabelle
+	 * @param abstand
+	 */
 	public CrossTableModel(CrossTable turnierTabelle, int abstand) {
 		super();
 		this.turnierTabelle = turnierTabelle;

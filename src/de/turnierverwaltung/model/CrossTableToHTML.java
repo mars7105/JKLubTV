@@ -27,7 +27,13 @@ public class CrossTableToHTML {
 	private String infoString;
 	private int[] reihenfolge;
 	private Tournament turnier;
-
+/**
+ * 
+ * @param tabellenMatrix
+ * @param turnier
+ * @param gruppenName
+ * @param infoString
+ */
 	public CrossTableToHTML(String[][] tabellenMatrix, Tournament turnier, String gruppenName, String infoString) {
 		this.turnier = turnier;
 		this.tabellenMatrix = tabellenMatrix;
@@ -37,12 +43,12 @@ public class CrossTableToHTML {
 		this.gruppenName = gruppenName;
 		this.infoString = infoString;
 	}
-
+	
 	private String getHTMLFooter() {
 		String footerString = "</body>\n</html>\n"; //$NON-NLS-1$
 		return footerString;
 	}
-
+	
 	private String getHTMLHeader() {
 		String headerString = "<!DOCTYPE html>\n" //$NON-NLS-1$
 				+ "<html lang='de'>\n" //$NON-NLS-1$
@@ -56,7 +62,11 @@ public class CrossTableToHTML {
 				+ gruppenName + "</h2>\n"; //$NON-NLS-1$
 		return headerString;
 	}
-
+	/**
+	 * 
+	 * @param ohneHeaderundFooter
+	 * @return
+	 */
 	public String getHTMLTable(Boolean ohneHeaderundFooter) {
 		int col = this.tabellenMatrix.length;
 		reihenfolge = new int[col];
@@ -72,7 +82,11 @@ public class CrossTableToHTML {
 		return makeTurnierTabelle(ohneHeaderundFooter);
 
 	}
-
+	/**
+	 * 
+	 * @param ohneHeaderundFooter
+	 * @return
+	 */
 	private String makeTurnierTabelle(Boolean ohneHeaderundFooter) {
 
 		int col = this.tabellenMatrix.length;

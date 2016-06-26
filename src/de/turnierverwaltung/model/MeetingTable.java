@@ -32,10 +32,18 @@ public class MeetingTable {
 	private String resultColumnName;
 	private String meetingColumnName;
 
-	public MeetingTable(Tournament turnier, Group gruppe,
-			String roundColumnName, String whiteColumnName,
-			String blackColumnName, String resultColumnName,
-			String meetingColumnName) {
+	/**
+	 * 
+	 * @param turnier
+	 * @param gruppe
+	 * @param roundColumnName
+	 * @param whiteColumnName
+	 * @param blackColumnName
+	 * @param resultColumnName
+	 * @param meetingColumnName
+	 */
+	public MeetingTable(Tournament turnier, Group gruppe, String roundColumnName, String whiteColumnName,
+			String blackColumnName, String resultColumnName, String meetingColumnName) {
 		this.roundColumnName = roundColumnName;
 		this.whiteColumnName = whiteColumnName;
 		this.blackColumnName = blackColumnName;
@@ -49,8 +57,7 @@ public class MeetingTable {
 		calcRunden();
 		calcAnzahlSpaltenZeilen();
 		tabellenMatrix = new String[5][zeilenAnzahl];
-		createTerminTabelle(roundColumnName, whiteColumnName, blackColumnName,
-				resultColumnName, meetingColumnName);
+		createTerminTabelle(roundColumnName, whiteColumnName, blackColumnName, resultColumnName, meetingColumnName);
 
 	}
 
@@ -67,8 +74,15 @@ public class MeetingTable {
 
 	}
 
-	public void createTerminTabelle(String roundColumnName,
-			String whiteColumnName, String blackColumnName,
+	/**
+	 * 
+	 * @param roundColumnName
+	 * @param whiteColumnName
+	 * @param blackColumnName
+	 * @param resultColumnName
+	 * @param meetingColumnName
+	 */
+	public void createTerminTabelle(String roundColumnName, String whiteColumnName, String blackColumnName,
 			String resultColumnName, String meetingColumnName) {
 		this.roundColumnName = roundColumnName;
 		this.whiteColumnName = whiteColumnName;
@@ -89,14 +103,10 @@ public class MeetingTable {
 		for (int i = 0; i < spielerAnzahl - 1; i++) {
 			for (int y = i + 1; y < spielerAnzahl; y++) {
 
-				tabellenMatrix[0][index + 1] = Integer.toString(partien[index]
-						.getRunde());
-				tabellenMatrix[1][index + 1] = partien[index].getSpielerWeiss()
-						.getName();
-				tabellenMatrix[2][index + 1] = partien[index]
-						.getSpielerSchwarz().getName();
-				tabellenMatrix[3][index + 1] = getErgebnisToString(partien[index]
-						.getErgebnis());
+				tabellenMatrix[0][index + 1] = Integer.toString(partien[index].getRunde());
+				tabellenMatrix[1][index + 1] = partien[index].getSpielerWeiss().getName();
+				tabellenMatrix[2][index + 1] = partien[index].getSpielerSchwarz().getName();
+				tabellenMatrix[3][index + 1] = getErgebnisToString(partien[index].getErgebnis());
 				tabellenMatrix[4][index + 1] = partien[index].getSpielDatum();
 				if (tabellenMatrix[4][index + 1] == null) {
 					tabellenMatrix[4][index + 1] = ""; //$NON-NLS-1$
@@ -129,9 +139,13 @@ public class MeetingTable {
 		return ergebnisString;
 	}
 
+	/**
+	 * 
+	 * @param ohneHeaderundFooter
+	 * @return
+	 */
 	public String getHTMLTable(Boolean ohneHeaderundFooter) {
-		terminTabelleToHTML = new MeetingTableToHTML(tabellenMatrix,
-				turnier.getTurnierName(), turnier.getStartDatum(),
+		terminTabelleToHTML = new MeetingTableToHTML(tabellenMatrix, turnier.getTurnierName(), turnier.getStartDatum(),
 				turnier.getEndDatum(), gruppe.getGruppenName());
 		return terminTabelleToHTML.getHTMLTable(ohneHeaderundFooter);
 	}

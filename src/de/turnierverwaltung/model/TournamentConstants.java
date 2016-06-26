@@ -19,6 +19,11 @@ import java.awt.Toolkit;
 
 import de.turnierverwaltung.mysql.DAOFactory;
 
+/**
+ * 
+ * @author mars
+ *
+ */
 public class TournamentConstants {
 	public static final String KEIN_ERGEBNIS = " ";
 	public static final String GEWINN = "1";
@@ -42,41 +47,29 @@ public class TournamentConstants {
 	public static final int MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ = 5;
 	public static final int MYSQL_KEIN_ERGEBNIS = 0;
 	public static final int DATABASE_DRIVER = DAOFactory.SQLITE;
-	public static final int WINDOW_HEIGHT = Toolkit.getDefaultToolkit()
-			.getScreenSize().height - 150;
+	public static final int WINDOW_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height - 150;
 	public static final int WINDOW_WIDTH = setWidth();
-	public static final int WINDOW_BOUNDS_X = (Toolkit.getDefaultToolkit()
-			.getScreenSize().width - TournamentConstants.WINDOW_WIDTH) / 2;
-	public static final int WINDOW_BOUNDS_Y = (Toolkit.getDefaultToolkit()
-			.getScreenSize().height - TournamentConstants.WINDOW_HEIGHT) / 2;
+	public static final int WINDOW_BOUNDS_X = (Toolkit.getDefaultToolkit().getScreenSize().width
+			- TournamentConstants.WINDOW_WIDTH) / 2;
+	public static final int WINDOW_BOUNDS_Y = (Toolkit.getDefaultToolkit().getScreenSize().height
+			- TournamentConstants.WINDOW_HEIGHT) / 2;
 	public static final int SPIELFREI_ID = -2;
 	public static final int TAB_INFO = 0;
 	public static final int TAB_PROPERTIES = 1;
 	public static final int TAB_PLAYER_LIST = 2;
 	public static final int TAB_TOURNAMENTS_LIST = 3;
 	public static final int TAB_ACTIVE_TOURNAMENT = 4;
-	public static String TABLE_COLUMN_PLAYER = Messages
-			.getString("TurnierKonstanten.0");
-	public static String TABLE_COLUMN_OLD_DWZ = Messages
-			.getString("TurnierKonstanten.1");
-	public static String TABLE_COLUMN_NEW_DWZ = Messages
-			.getString("TurnierKonstanten.2");
-	public static String TABLE_COLUMN_POINTS = Messages
-			.getString("TurnierKonstanten.3");
-	public static String TABLE_COLUMN_SONNEBORNBERGER = Messages
-			.getString("TurnierKonstanten.4");
-	public static String TABLE_COLUMN_RANKING = Messages
-			.getString("TurnierKonstanten.5");
-	public static String TABLE_COLUMN_ROUND = Messages
-			.getString("TurnierKonstanten.6");
-	public static String TABLE_COLUMN_WHITE = Messages
-			.getString("TurnierKonstanten.7");
-	public static String TABLE_COLUMN_BLACK = Messages
-			.getString("TurnierKonstanten.8");
-	public static String TABLE_COLUMN_RESULT = Messages
-			.getString("TurnierKonstanten.9");
-	public static String TABLE_COLUMN_MEETING = Messages
-			.getString("TurnierKonstanten.10");
+	public static String TABLE_COLUMN_PLAYER = Messages.getString("TurnierKonstanten.0");
+	public static String TABLE_COLUMN_OLD_DWZ = Messages.getString("TurnierKonstanten.1");
+	public static String TABLE_COLUMN_NEW_DWZ = Messages.getString("TurnierKonstanten.2");
+	public static String TABLE_COLUMN_POINTS = Messages.getString("TurnierKonstanten.3");
+	public static String TABLE_COLUMN_SONNEBORNBERGER = Messages.getString("TurnierKonstanten.4");
+	public static String TABLE_COLUMN_RANKING = Messages.getString("TurnierKonstanten.5");
+	public static String TABLE_COLUMN_ROUND = Messages.getString("TurnierKonstanten.6");
+	public static String TABLE_COLUMN_WHITE = Messages.getString("TurnierKonstanten.7");
+	public static String TABLE_COLUMN_BLACK = Messages.getString("TurnierKonstanten.8");
+	public static String TABLE_COLUMN_RESULT = Messages.getString("TurnierKonstanten.9");
+	public static String TABLE_COLUMN_MEETING = Messages.getString("TurnierKonstanten.10");
 
 	private static int setWidth() {
 
@@ -95,8 +88,7 @@ public class TournamentConstants {
 		TABLE_COLUMN_OLD_DWZ = Messages.getString("TurnierKonstanten.1");
 		TABLE_COLUMN_NEW_DWZ = Messages.getString("TurnierKonstanten.2");
 		TABLE_COLUMN_POINTS = Messages.getString("TurnierKonstanten.3");
-		TABLE_COLUMN_SONNEBORNBERGER = Messages
-				.getString("TurnierKonstanten.4");
+		TABLE_COLUMN_SONNEBORNBERGER = Messages.getString("TurnierKonstanten.4");
 		TABLE_COLUMN_RANKING = Messages.getString("TurnierKonstanten.5");
 		TABLE_COLUMN_ROUND = Messages.getString("TurnierKonstanten.6");
 		TABLE_COLUMN_WHITE = Messages.getString("TurnierKonstanten.7");

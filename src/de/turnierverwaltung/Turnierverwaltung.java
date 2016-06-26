@@ -19,9 +19,6 @@ package de.turnierverwaltung;
 import java.awt.EventQueue;
 //import java.awt.Font;
 
-
-
-
 import javax.swing.UIManager;
 
 import com.jgoodies.looks.plastic.Plastic3DLookAndFeel;
@@ -52,8 +49,7 @@ public class Turnierverwaltung {
 			@Override
 			public void run() {
 				PlasticLookAndFeel.setPlasticTheme(new DesertGreen());
-				PlasticLookAndFeel
-						.setTabStyle(PlasticLookAndFeel.TAB_STYLE_METAL_VALUE);
+				PlasticLookAndFeel.setTabStyle(PlasticLookAndFeel.TAB_STYLE_METAL_VALUE);
 				System.setProperty("Windows.controlFont", "Segoe UI-plain-15");
 				System.setProperty("Plastic.controlFont", "Segoe UI-plain-15");
 				try {

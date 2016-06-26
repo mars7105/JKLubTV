@@ -1,4 +1,5 @@
 package de.turnierverwaltung;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -14,6 +15,11 @@ package de.turnierverwaltung;
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
+/**
+ * 
+ * @author mars
+ *
+ */
 public class ZahlGroesserAlsN extends Exception {
 	/**
 	 * 

@@ -233,7 +233,7 @@ public class TournamentListControl implements ActionListener {
 		tabbedPaneView = new TabbedPaneView(mainControl, Messages.getString("TurnierListeLadenControl.15"));
 		tabbedPaneView.getTitleView().setFlowLayoutLeft();
 		mainControl.setTabAnzeigeView(tabbedPaneView);
-		mainControl.setPartienTableControl(new SQLPartienControl(mainControl));
+		mainControl.setPartienTableControl(new SQLGamesControl(mainControl));
 		for (int z = 0; z < mainControl.getTurnier().getAnzahlGruppen(); z++) {
 			mainControl.getPartienTableControl().getPartien(z);
 		}

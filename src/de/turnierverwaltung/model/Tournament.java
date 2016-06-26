@@ -30,9 +30,12 @@ public class Tournament {
 	private Boolean noDWZCalc;
 	private Boolean noFolgeDWZCalc;
 
-	//
-	// Constructors
-	//
+	/**
+	 * 
+	 * @param onlyTables
+	 * @param noDWZCalc
+	 * @param noFolgeDWZCalc
+	 */
 	public Tournament(Boolean onlyTables, Boolean noDWZCalc, Boolean noFolgeDWZCalc) {
 		turnierId = -1;
 		this.onlyTables = onlyTables;
@@ -40,9 +43,18 @@ public class Tournament {
 		this.noFolgeDWZCalc = noFolgeDWZCalc;
 	}
 
-	public Tournament(int turnierId, String turnierName, String startDatum,
-			String endDatum, Boolean onlyTables, Boolean noDWZCalc,
-			Boolean noFolgeDWZCalc) {
+	/**
+	 * 
+	 * @param turnierId
+	 * @param turnierName
+	 * @param startDatum
+	 * @param endDatum
+	 * @param onlyTables
+	 * @param noDWZCalc
+	 * @param noFolgeDWZCalc
+	 */
+	public Tournament(int turnierId, String turnierName, String startDatum, String endDatum, Boolean onlyTables,
+			Boolean noDWZCalc, Boolean noFolgeDWZCalc) {
 		super();
 		this.turnierName = turnierName;
 		this.startDatum = startDatum;

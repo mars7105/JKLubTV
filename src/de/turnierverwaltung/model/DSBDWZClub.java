@@ -17,16 +17,22 @@ import de.fahsel.dewis.DewisFacade;
  *
  */
 public class DSBDWZClub {
-	DewisFacade dewis;
-	Club club;
-	List<de.fahsel.dewis.Player> players;
-	ArrayList<de.turnierverwaltung.model.Player> spieler;
-	String zps;
-
+	private DewisFacade dewis;
+	private Club club;
+	private List<de.fahsel.dewis.Player> players;
+	private ArrayList<de.turnierverwaltung.model.Player> spieler;
+	private String zps;
+/**
+ * 
+ * @param zps
+ */
 	public DSBDWZClub(String zps) {
 		this.zps = zps;
 	}
-
+/**
+ * 
+ * @return
+ */
 	public ArrayList<de.turnierverwaltung.model.Player> getSpieler() {
 		try {
 			// Erzeugt dei DewisFacade über die auf die API des Schachbundes

@@ -24,14 +24,14 @@ import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.PartienDAO;
 
-public class SQLPartienControl {
+public class SQLGamesControl {
 	private Tournament turnier;
 	private MainControl mainControl;
 	private DAOFactory daoFactory;
 	int turnierId;
 	int partienId[];
 
-	public SQLPartienControl(MainControl mainControl) {
+	public SQLGamesControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		turnier = this.mainControl.getTurnier();
 	}

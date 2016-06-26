@@ -29,6 +29,11 @@ import de.turnierverwaltung.view.InfoView;
 import de.turnierverwaltung.view.InfoHTMLView;
 import de.turnierverwaltung.view.InfoLicenseView;
 
+/**
+ * 
+ * @author mars
+ *
+ */
 public class InfoControl {
 	private MainControl mainControl;
 	private InfoView infoView;
@@ -75,6 +80,9 @@ public class InfoControl {
 
 	}
 
+	/**
+	 * 
+	 */
 	public void makeInfoDialog() {
 
 		mainControl.getNaviView().getInfoButton().addActionListener(new ActionListener() {

@@ -3,7 +3,6 @@ package de.turnierverwaltung.view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
@@ -52,17 +51,20 @@ public class TitleLabelView extends JPanel {
 		this.updateUI();
 	}
 
-	public void setNaviView() {
-		titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		titlePanel.setPreferredSize(new Dimension(200, 40));
-	}
-
 	public JLabel getTitleLabel() {
 		return titleLabel;
 	}
 
 	public void setTitleLabel(JLabel titleLabel) {
 		this.titleLabel = titleLabel;
+	}
+
+	public JPanel getTitlePanel() {
+		return titlePanel;
+	}
+
+	public void setTitlePanel(JPanel titlePanel) {
+		this.titlePanel = titlePanel;
 	}
 
 }

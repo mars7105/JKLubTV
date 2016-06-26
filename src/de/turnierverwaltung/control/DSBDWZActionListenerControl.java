@@ -9,13 +9,21 @@ import javax.swing.event.ListSelectionListener;
 
 import de.turnierverwaltung.model.Player;
 
-public class DSBDWZActionListenerControl implements ListSelectionListener,
-		ActionListener {
+/**
+ * 
+ * @author mars
+ *
+ */
+public class DSBDWZActionListenerControl implements ListSelectionListener, ActionListener {
 	private MainControl mainControl;
 	private DSBDWZControl dewisDialogControl;
 
-	public DSBDWZActionListenerControl(MainControl mainControl,
-			DSBDWZControl dewisDialogControl) {
+	/**
+	 * 
+	 * @param mainControl
+	 * @param dewisDialogControl
+	 */
+	public DSBDWZActionListenerControl(MainControl mainControl, DSBDWZControl dewisDialogControl) {
 		super();
 		this.mainControl = mainControl;
 		this.dewisDialogControl = dewisDialogControl;
@@ -25,8 +33,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener,
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting() == false) {
 
-			if (dewisDialogControl.getSpielerDewisView().getList()
-					.getSelectedIndex() == -1) {
+			if (dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex() == -1) {
 				// No selection, disable fire button.
 				dewisDialogControl.getDialog().getOkButton().setEnabled(false);
 
@@ -39,54 +46,40 @@ public class DSBDWZActionListenerControl implements ListSelectionListener,
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == dewisDialogControl.getDialog()
-				.getVereinsAuswahlOkButton()) {
-			if (dewisDialogControl.getDialog().getVereinsAuswahl()
-					.getItemCount() > 0) {
+		if (arg0.getSource() == dewisDialogControl.getDialog().getVereinsAuswahlOkButton()) {
+			if (dewisDialogControl.getDialog().getVereinsAuswahl().getItemCount() > 0) {
 
-				int index = dewisDialogControl.getDialog().getVereinsAuswahl()
-						.getSelectedIndex();
+				int index = dewisDialogControl.getDialog().getVereinsAuswahl().getSelectedIndex();
 				String items[] = dewisDialogControl.getZpsItems().get(index);
 				String zps = items[0];
 				dewisDialogControl.makeDWZListe(zps);
 			}
 
 		}
-		if (arg0.getSource() == dewisDialogControl.getDialog()
-				.getVereinsSucheButton()) {
-			if (dewisDialogControl.getDialog().getVereinsName().getText()
-					.length() > 0) {
+		if (arg0.getSource() == dewisDialogControl.getDialog().getVereinsSucheButton()) {
+			if (dewisDialogControl.getDialog().getVereinsName().getText().length() > 0) {
 				dewisDialogControl.makeVereinsListe();
-			} else if (dewisDialogControl.getDialog().getVereinsSuche()
-					.getText().length() > 0) {
-				String zps = dewisDialogControl.getDialog().getVereinsSuche()
-						.getText();
+			} else if (dewisDialogControl.getDialog().getVereinsSuche().getText().length() > 0) {
+				String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
 				dewisDialogControl.makeDWZListe(zps);
 			}
 
 		}
-		if (arg0.getSource() == dewisDialogControl.getDialog()
-				.getCancelButton()) {
+		if (arg0.getSource() == dewisDialogControl.getDialog().getCancelButton()) {
 			dewisDialogControl.getDialog().closeWindow();
 		}
 		if (arg0.getSource() == dewisDialogControl.getDialog().getOkButton()) {
-			int[] indices = dewisDialogControl.getSpielerDewisView().getList()
-					.getSelectedIndices();
+			int[] indices = dewisDialogControl.getSpielerDewisView().getList().getSelectedIndices();
 
 			if (dewisDialogControl.getPlayers() != null) {
 				for (int i = 0; i < indices.length; i++) {
 					Player neuerSpieler = new Player();
-					neuerSpieler = dewisDialogControl.getPlayers().get(
-							indices[i]);
-					Boolean findPlayer = dewisDialogControl.searchSpieler(
-							neuerSpieler, false);
+					neuerSpieler = dewisDialogControl.getPlayers().get(indices[i]);
+					Boolean findPlayer = dewisDialogControl.searchSpieler(neuerSpieler, false);
 					if (findPlayer == false) {
-						SQLPlayerControl stc = new SQLPlayerControl(
-								mainControl);
-						neuerSpieler.setSpielerId(stc
-								.insertOneSpieler(neuerSpieler));
-						mainControl.getSpielerLadenControl().getSpieler()
-								.add(neuerSpieler);
+						SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+						neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+						mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
 					}
 				}
 			}
@@ -96,8 +89,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener,
 				mainControl.fileSQLError();
 			}
 		}
-		if (arg0.getSource() == dewisDialogControl.getDialog()
-				.getUpdateButton()) {
+		if (arg0.getSource() == dewisDialogControl.getDialog().getUpdateButton()) {
 
 			@SuppressWarnings("unused")
 			Boolean findPlayer = true;
@@ -107,7 +99,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener,
 			}
 
 			dewisDialogControl.getDialog().closeWindow();
-//			mainControl.setEnabled(true);
+			// mainControl.setEnabled(true);
 			try {
 				mainControl.getSpielerLadenControl().updateSpielerListe();
 			} catch (SQLException e) {

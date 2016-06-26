@@ -20,6 +20,11 @@ import de.turnierverwaltung.model.CrossTable;
 import de.turnierverwaltung.view.CrossTableView;
 import de.turnierverwaltung.view.TabbedPaneView;
 
+/**
+ * 
+ * @author mars
+ *
+ */
 public class CrossTableControl {
 
 	private MainControl mainControl;
@@ -38,6 +43,10 @@ public class CrossTableControl {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/x-office-spreadsheet.png"))); //$NON-NLS-1$
 	private int abstand;
 
+	/**
+	 * 
+	 * @param mainControl
+	 */
 	public CrossTableControl(MainControl mainControl) {
 
 		this.mainControl = mainControl;
@@ -88,6 +97,10 @@ public class CrossTableControl {
 		return turnierTabelle;
 	}
 
+	/**
+	 * 
+	 * @param gruppenNummer
+	 */
 	public void makeSimpleTableView(int gruppenNummer) {
 
 		// mainControl.getMenueControl().setWarnHinweis(true);
@@ -154,49 +167,6 @@ public class CrossTableControl {
 		simpleTableView[gruppenNummer].getTable().updateUI();
 	}
 
-	// public void checkDWZVisible(int i) {
-
-	// simpleTableView[i]
-	// .getTable()
-	// .getColumn(Messages.getString("TurnierTabelleControl.2")).setMinWidth(0);
-	// //$NON-NLS-1$
-	//
-	// simpleTableView[i]
-	// .getTable()
-	// .getColumn(Messages.getString("TurnierTabelleControl.3")).setMaxWidth(0);
-	// //$NON-NLS-1$
-	// if (mainControl.getPropertiesControl().getNoDWZ() == true) {
-	// simpleTableView[i]
-	// .getTable()
-	// .getColumn(Messages.getString("TurnierTabelleControl.4")).setMinWidth(0);
-	// //$NON-NLS-1$
-	//
-	// simpleTableView[i].getTable()
-	// .getColumn(Messages.getString("TurnierTabelleControl.5")) //$NON-NLS-1$
-	// .setMaxWidth(0);
-	//
-	// simpleTableView[i].getTable().updateUI();
-	// }
-	// if (mainControl.getPropertiesControl().getNoFolgeDWZ() == true) {
-	//
-	// simpleTableView[i]
-	// .getTable()
-	// .getColumn(Messages.getString("TurnierTabelleControl.6")).setMinWidth(0);
-	// //$NON-NLS-1$
-	//
-	// simpleTableView[i].getTable()
-	// .getColumn(Messages.getString("TurnierTabelleControl.7")) //$NON-NLS-1$
-	// .setMaxWidth(0);
-	//
-	// simpleTableView[i].getTable().updateUI();
-	// }
-
-	// turnier.setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
-	// turnier.setNoFolgeDWZCalc(mainControl.getPropertiesControl()
-	// .getNoFolgeDWZ());
-
-	// }
-
 	public void berechneFolgeDWZ(int gruppenNummer) {
 		ResultDWZControl folgeDWZ = new ResultDWZControl(mainControl.getTurnier(),
 				mainControl.getTurnier().getGruppe()[gruppenNummer]);
@@ -206,6 +176,10 @@ public class CrossTableControl {
 
 	}
 
+	/**
+	 * 
+	 * @param index
+	 */
 	public void okAction(int index) {
 
 		turnier.getGruppe()[index].berechnePunkte();
@@ -225,6 +199,10 @@ public class CrossTableControl {
 		makeSimpleTableView(index);
 	}
 
+	/**
+	 * 
+	 * @param tID
+	 */
 	public void readDataFromDatabase(int tID) {
 		mainControl.getTurnierTableControl().getTurnier(tID);
 		turnier = mainControl.getTurnier();
@@ -263,9 +241,18 @@ public class CrossTableControl {
 		}
 	}
 
+	/**
+	 * 
+	 * @author mars
+	 *
+	 */
 	class MyTableModelListener implements TableModelListener {
 		private int gruppenNummer;
 
+		/**
+		 * 
+		 * @param gruppenNummer
+		 */
 		public MyTableModelListener(int gruppenNummer) {
 			this.gruppenNummer = gruppenNummer;
 		}

@@ -5,6 +5,11 @@ import java.util.Comparator;
 
 import de.fahsel.dewis.Player;
 
+/**
+ * 
+ * @author mars
+ *
+ */
 public class SortLastName implements Comparator<Player> {
 
 	public int compare(Player arg0, Player arg1) {
