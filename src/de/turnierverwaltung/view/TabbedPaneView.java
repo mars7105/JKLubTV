@@ -1,10 +1,6 @@
 package de.turnierverwaltung.view;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 
-import java.awt.BorderLayout;
-
-import javax.swing.BoxLayout;
-
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -20,7 +16,6 @@ import javax.swing.BoxLayout;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import javax.swing.JPanel;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -37,13 +32,14 @@ import javax.swing.JPanel;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import javax.swing.JTabbedPane;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
 
 import de.turnierverwaltung.control.MainControl;
 
 public class TabbedPaneView extends JPanel {
-	JTabbedPane tabbedPane;
+	private JTabbedPane tabbedPane;
 	private TitleLabelView titleView;
-	// private MainControl mainControl;
 	/**
 	 * 
 	 */
@@ -53,13 +49,11 @@ public class TabbedPaneView extends JPanel {
 		setLayout(new BorderLayout());
 		titleView = new TitleLabelView(title);
 		tabbedPane = new JTabbedPane();
-		JPanel all = new JPanel();
-		all.setLayout(new BoxLayout(all, BoxLayout.Y_AXIS));
 
-		all.add(titleView);
-		all.add(tabbedPane);
-		add(all, BorderLayout.NORTH);
+		add(titleView, BorderLayout.NORTH);
+		add(tabbedPane, BorderLayout.CENTER);
 
+		updateUI();
 	}
 
 	public JTabbedPane getTabbedPane() {
