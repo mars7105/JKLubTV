@@ -84,8 +84,7 @@ public class PairingsControl implements ActionListener {
 
 	public PairingsControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		this.mainControl.getHauptPanel();
-		this.mainControl.getTabAnzeigeView();
+
 
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
@@ -96,8 +95,7 @@ public class PairingsControl implements ActionListener {
 
 	public PairingsControl(MainControl mainControl, int selectIndex) {
 		this.mainControl = mainControl;
-		this.mainControl.getHauptPanel();
-		this.mainControl.getTabAnzeigeView();
+
 
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();

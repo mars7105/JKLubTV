@@ -1,6 +1,5 @@
 package de.turnierverwaltung.control;
 
-import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -36,7 +35,6 @@ public class CrossTableControl {
 	private TabbedPaneView[] tabAnzeigeView2;
 	private Tournament turnier;
 	private MyTableModelListener tml[];
-	private Dimension dimension[];
 	private int[] spielerAnzahl;
 	private ArrayList<Game> changedPartien;
 	private ImageIcon turniertabelleIcon = new ImageIcon(
@@ -61,12 +59,10 @@ public class CrossTableControl {
 		// tabAnzeigeView.setBackground(new Color(249, 222, 112));
 		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
 		tabAnzeigeView2 = new TabbedPaneView[anzahlGruppen];
-		dimension = new Dimension[anzahlGruppen];
 		for (int i = 0; i < anzahlGruppen; i++) {
 			tabAnzeigeView2[i] = new TabbedPaneView(mainControl, Messages.getString("TurnierTabelleControl.8"));
 			tabAnzeigeView2[i].getTitleView().setFlowLayoutLeft();
 
-			dimension[i] = tabAnzeigeView2[i].getPreferredSize();
 		}
 		this.mainControl.setTabAnzeigeView2(tabAnzeigeView2);
 		simpleTableView = new CrossTableView[anzahlGruppen];
@@ -127,10 +123,8 @@ public class CrossTableControl {
 				mainControl.getPropertiesControl().getNoFolgeDWZ());
 
 		abstand = mainControl.getPropertiesControl().getTabellenAbstand();
-
 		simpleTableView[gruppenNummer] = new CrossTableView(
 				new CrossTableModel(this.turnierTabelle[gruppenNummer], abstand), abstand);
-
 		simpleTableView[gruppenNummer].getTable().setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
 		updatePunkteCol(this.turnierTabelle[gruppenNummer].getSpalte() - 3, gruppenNummer);
@@ -138,7 +132,6 @@ public class CrossTableControl {
 		updatePlatzCol(this.turnierTabelle[gruppenNummer].getSpalte() - 1, gruppenNummer);
 
 		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
-		simpleTableView[gruppenNummer].setPreferredSize(dimension[gruppenNummer]);
 		if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() < 1) {
 			tabAnzeigeView2[gruppenNummer].getTabbedPane().insertTab(Messages.getString("TurnierTabelleControl.1"), //$NON-NLS-1$
 					turniertabelleIcon, simpleTableView[gruppenNummer], null, 0);
@@ -157,6 +150,10 @@ public class CrossTableControl {
 
 			tabAnzeigeView.getTabbedPane().setComponentAt(gruppenNummer, tabAnzeigeView2[gruppenNummer]);
 		}
+
+		// dimension[gruppenNummer] = new Dimension(
+		// tabAnzeigeView.getTabbedPane().getComponentAt(gruppenNummer).getSize());
+		// simpleTableView[gruppenNummer].get.setPreferredSize(dimension[gruppenNummer]);
 
 		hauptPanel.updateUI();
 		turnier.setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());

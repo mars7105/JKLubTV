@@ -118,17 +118,17 @@ public class MeetingTableView extends JPanel {
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
 		
-		JPanel tabelPanel = new JPanel();
-		tabelPanel.setLayout(new BorderLayout());
-		tabelPanel.add(sPane, BorderLayout.NORTH);
+//		JPanel tabelPanel = new JPanel();
+//		tabelPanel.setLayout(new BorderLayout());
+//		tabelPanel.add(sPane, BorderLayout.CENTER);
 		JPanel hinweis = new JPanel();
 		hinweis.add(new JLabel(Messages.getString("SimpleTerminTabelleView.13") //$NON-NLS-1$
 				+ Messages.getString("SimpleTerminTabelleView.14"))); //$NON-NLS-1$
-		tabelPanel.add(hinweis, BorderLayout.SOUTH);
-		JScrollPane allScrollPane = new JScrollPane();
-		allScrollPane.setViewportView(tabelPanel);
+//		JScrollPane allScrollPane = new JScrollPane();
+//		allScrollPane.setViewportView(tabelPanel);
 
-		add(allScrollPane, BorderLayout.NORTH);
+		add(sPane, BorderLayout.CENTER);
+		add(hinweis, BorderLayout.SOUTH);
 
 		this.setVisible(true);
 
