@@ -42,6 +42,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
+import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.view.TabbedPaneView;
 import de.turnierverwaltung.view.EditTournamentView;
@@ -133,24 +134,64 @@ public class TournamentListControl implements ActionListener {
 
 			if (arg0.getSource() == turnierListeLadenView.getTurnierLadeButton()[i]) {
 				Tournament turnier = this.mainControl.getTurnier();
+
 				if (turnier == null) {
 					selectTurnierTab = true;
 					loadTurnier(i);
 				} else {
-					// Custom button text
-					Object[] options = { Messages.getString("TurnierListeLadenControl.10"), //$NON-NLS-1$
-							Messages.getString("TurnierListeLadenControl.11") }; //$NON-NLS-1$
-					int abfrage = JOptionPane.showOptionDialog(mainControl,
-							Messages.getString("TurnierListeLadenControl.12") //$NON-NLS-1$
-									+ Messages.getString("TurnierListeLadenControl.13"), //$NON-NLS-1$
-							Messages.getString("TurnierListeLadenControl.14"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
-							JOptionPane.WARNING_MESSAGE, null, options, options[1]);
-					if (abfrage == 0) {
-						selectTurnierTab = true;
-						loadTurnier(i);
+					if (turnier.getTurnierId() == -1) {
+						// Custom button text
+						Object[] options = { Messages.getString("TurnierListeLadenControl.16"), //$NON-NLS-1$
+								Messages.getString("TurnierListeLadenControl.17") }; //$NON-NLS-1$
+						int abfrage = JOptionPane.showOptionDialog(mainControl,
+								Messages.getString("TurnierListeLadenControl.18") //$NON-NLS-1$
+										+ Messages.getString("TurnierListeLadenControl.19"), //$NON-NLS-1$
+								Messages.getString("TurnierListeLadenControl.20"), //$NON-NLS-1$
+								JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
+								options[1]); 
+						if (abfrage == 0) {
+
+							selectTurnierTab = true;
+							loadTurnier(i);
+						}
+					} else {
+						ArrayList<Game> changedPartien = this.mainControl.getChangedPartien();
+						if (changedPartien != null) {
+							if (changedPartien.size() > 0) {
+								// Custom button text
+								Object[] options = { Messages.getString("TurnierListeLadenControl.10"), //$NON-NLS-1$
+										Messages.getString("TurnierListeLadenControl.11") }; //$NON-NLS-1$
+								int abfrage = JOptionPane.showOptionDialog(mainControl,
+										Messages.getString("TurnierListeLadenControl.12") //$NON-NLS-1$
+												+ Messages.getString("TurnierListeLadenControl.13"), //$NON-NLS-1$
+										Messages.getString("TurnierListeLadenControl.14"), //$NON-NLS-1$
+										JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
+										options[1]);
+								if (abfrage == 0) {
+									SaveTournamentControl saveGames = new SaveTournamentControl(mainControl);
+									try {
+										Boolean saved = saveGames.saveChangedPartien();
+										if (saved == false) {
+											changedPartien.clear();
+										}
+
+									} catch (SQLException e) {
+										changedPartien.clear();
+									}
+									selectTurnierTab = true;
+									loadTurnier(i);
+								}
+							} else if (changedPartien.size() == 0) {
+								selectTurnierTab = true;
+								loadTurnier(i);
+							}
+
+						} else {
+							selectTurnierTab = true;
+							loadTurnier(i);
+						}
 					}
 				}
-
 			}
 
 			if (arg0.getSource() == turnierListeLadenView.getTurnierBearbeitenButton()[i]) {

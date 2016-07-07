@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -37,6 +38,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
@@ -217,15 +219,49 @@ public class NaviControl implements ActionListener {
 			if (turnier == null) {
 				mainControl.setTurnierControl(new NewTournamentControl(mainControl));
 			} else {
-				// Custom button text
-				Object[] options = { Messages.getString("NaviController.0"), Messages.getString("NaviController.1") }; //$NON-NLS-1$ //$NON-NLS-2$
-				int abfrage = JOptionPane.showOptionDialog(mainControl,
-						Messages.getString("NaviController.2") //$NON-NLS-1$
-								+ Messages.getString("NaviController.3"), //$NON-NLS-1$
-						Messages.getString("NaviController.4"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
-						JOptionPane.WARNING_MESSAGE, null, options, options[1]);
-				if (abfrage == 0) {
-					// mainControl.resetApp();
+				// // Custom button text
+				// Object[] options = { Messages.getString("NaviController.0"),
+				// Messages.getString("NaviController.1") }; //$NON-NLS-1$
+				// //$NON-NLS-2$
+				// int abfrage = JOptionPane.showOptionDialog(mainControl,
+				// Messages.getString("NaviController.2") //$NON-NLS-1$
+				// + Messages.getString("NaviController.3"), //$NON-NLS-1$
+				// Messages.getString("NaviController.4"),
+				// JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
+				// JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+				// if (abfrage == 0) {
+				// // mainControl.resetApp();
+				// mainControl.setTurnierControl(new
+				// NewTournamentControl(mainControl));
+				// }
+				ArrayList<Game> changedPartien = this.mainControl.getChangedPartien();
+				if (changedPartien != null) {
+					if (changedPartien.size() > 0) {
+						// Custom button text
+						Object[] options = { Messages.getString("TurnierListeLadenControl.10"), //$NON-NLS-1$
+								Messages.getString("TurnierListeLadenControl.11") }; //$NON-NLS-1$
+						int abfrage = JOptionPane.showOptionDialog(mainControl,
+								Messages.getString("TurnierListeLadenControl.12") //$NON-NLS-1$
+										+ Messages.getString("TurnierListeLadenControl.13"), //$NON-NLS-1$
+								Messages.getString("TurnierListeLadenControl.14"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
+								JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+						if (abfrage == 0) {
+							SaveTournamentControl saveGames = new SaveTournamentControl(mainControl);
+							try {
+								Boolean saved = saveGames.saveChangedPartien();
+								if (saved == false) {
+									changedPartien.clear();
+								}
+
+							} catch (SQLException e) {
+								changedPartien.clear();
+							}
+							mainControl.setTurnierControl(new NewTournamentControl(mainControl));
+						}
+					} else if (changedPartien.size() == 0) {
+						mainControl.setTurnierControl(new NewTournamentControl(mainControl));
+					}
+				} else {
 					mainControl.setTurnierControl(new NewTournamentControl(mainControl));
 				}
 			}
