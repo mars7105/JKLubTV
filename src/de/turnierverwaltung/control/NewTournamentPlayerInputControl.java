@@ -293,14 +293,21 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		do {
 			loop = false;
 			for (int i = 0; i < spieler.length; i++) {
-				int z = 0;
+				int zName = 0;
+				int zKuerzel = 0;
 				for (int y = 0; y < spieler.length; y++) {
 					if (i != y) {
-						
+
 						if (spieler[i].getName().equals(spieler[y].getName())) {
-							z++;
-							spieler[y].setName(spieler[y].getName() + "_" + new Integer(z).toString());
-							
+							zName++;
+							spieler[y].setName(spieler[y].getName() + "_" + new Integer(zName).toString());
+
+							stc.updateOneSpieler(spieler[y]);
+							loop = true;
+						}
+						if (spieler[i].getKuerzel().equals(spieler[y].getKuerzel())) {
+							zKuerzel++;
+							spieler[y].setKuerzel(spieler[y].getKuerzel() + "_" + new Integer(zKuerzel).toString());
 
 							stc.updateOneSpieler(spieler[y]);
 							loop = true;

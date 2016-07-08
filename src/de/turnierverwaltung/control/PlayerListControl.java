@@ -179,12 +179,12 @@ public class PlayerListControl implements ActionListener {
 		do {
 			loop = false;
 			for (int i = 0; i < spieler.size(); i++) {
-				int z = 0;
+				int zName = 0;
 				for (int y = 0; y < spieler.size(); y++) {
 					if (i != y) {
 						if (spieler.get(i).getName().equals(spieler.get(y).getName())) {
-							z++;
-							spieler.get(y).setName(spieler.get(y).getName() + "_" + new Integer(z).toString());
+							zName++;
+							spieler.get(y).setName(spieler.get(y).getName() + "_" + new Integer(zName).toString());
 
 							stc.updateOneSpieler(spieler.get(y));
 							loop = true;
