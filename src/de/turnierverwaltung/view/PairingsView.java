@@ -62,7 +62,7 @@ public class PairingsView extends JPanel {
 	private int gerade;
 	private int rundenanzahl;
 	private int partienanzahl;
-	private JPanel bottomPanel;
+	private JLabel statusLabel;
 
 	// private JButton reloadButton;
 
@@ -78,12 +78,9 @@ public class PairingsView extends JPanel {
 		datum = new JDatePickerImpl[anzahlZeilen];
 
 		property = new Properties();
-		property.put(
-				"text.today", Messages.getString("RundenEingabeFormularView.1")); //$NON-NLS-1$ //$NON-NLS-2$
-		property.put(
-				"text.month", Messages.getString("RundenEingabeFormularView.3")); //$NON-NLS-1$ //$NON-NLS-2$
-		property.put(
-				"text.year", Messages.getString("RundenEingabeFormularView.5")); //$NON-NLS-1$ //$NON-NLS-2$
+		property.put("text.today", Messages.getString("RundenEingabeFormularView.1")); //$NON-NLS-1$ //$NON-NLS-2$
+		property.put("text.month", Messages.getString("RundenEingabeFormularView.3")); //$NON-NLS-1$ //$NON-NLS-2$
+		property.put("text.year", Messages.getString("RundenEingabeFormularView.5")); //$NON-NLS-1$ //$NON-NLS-2$
 		ungerade = (this.spielerAnzahl + 1) % 2;
 		gerade = 1 - ungerade;
 		rundenanzahl = this.spielerAnzahl - ungerade;
@@ -142,11 +139,21 @@ public class PairingsView extends JPanel {
 		scrollPane.setViewportView(contentPanel);
 		scrollPane.setAlignmentY(TOP_ALIGNMENT);
 		add(scrollPane, BorderLayout.CENTER);
-		bottomPanel = new JPanel();
-		//		reloadButton = new JButton(Messages.getString("RundenEingabeFormularView.0")); //$NON-NLS-1$
-		bottomPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// bottomPanel.add(reloadButton);
-		add(bottomPanel, BorderLayout.SOUTH);
+
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new BorderLayout());
+
+		JPanel status = new JPanel();
+		status.setLayout(new FlowLayout(FlowLayout.LEFT));
+		status.add(new JLabel(Messages.getString("SimpleTerminTabelleView.15"))); //$NON-NLS-1$
+		statusLabel = new JLabel("0");
+		JLabel changesLabel = new JLabel(Messages.getString("SimpleTerminTabelleView.16"));
+		status.add(statusLabel);
+		status.add(changesLabel);
+		southPanel.add(status, BorderLayout.SOUTH);
+
+		southPanel.add(status, BorderLayout.WEST);
+		add(southPanel, BorderLayout.SOUTH);
 	}
 
 	private int[] getDatefromString(String zeile) {
@@ -195,13 +202,18 @@ public class PairingsView extends JPanel {
 		this.datum = datum;
 	}
 
-	// public void setOkButton(JButton okButton) {
-	// this.okButton = okButton;
-	// }
+	public JLabel getStatusLabel() {
+		return statusLabel;
+	}
+
+	public void setStatusLabel(JLabel statusLabel) {
+		this.statusLabel = statusLabel;
+		this.statusLabel.setText(this.statusLabel.getText() + " " + Messages.getString("SimpleTerminTabelleView.16"));
+
+	}
 
 	@SuppressWarnings("unchecked")
-	public void setRundenNummer(
-			@SuppressWarnings("rawtypes") JComboBox[] rundenNummer) {
+	public void setRundenNummer(@SuppressWarnings("rawtypes") JComboBox[] rundenNummer) {
 		this.rundenNummer = rundenNummer;
 	}
 
@@ -260,8 +272,7 @@ public class PairingsView extends JPanel {
 				downPane.setLayout(flowLayout);
 				downPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				// downPane.setAlignmentY(Component.TOP_ALIGNMENT);
-				if (zeile[0] != Messages
-						.getString("RundenEingabeFormularView.7")) { //$NON-NLS-1$
+				if (zeile[0] != Messages.getString("RundenEingabeFormularView.7")) { //$NON-NLS-1$
 
 					int[] dateInt;
 					UtilDateModel model = new UtilDateModel();
@@ -272,38 +283,29 @@ public class PairingsView extends JPanel {
 
 						model.setSelected(true);
 					}
-					JDatePanelImpl datePanel = new JDatePanelImpl(model,
-							property);
+					JDatePanelImpl datePanel = new JDatePanelImpl(model, property);
 
-//					datePanel.setForeground(Color.WHITE);
-					datum[anzahlElemente] = new JDatePickerImpl(datePanel,
-							new DateLabelFormatter());
-					downPane.add(new JLabel(Messages
-							.getString("RundenEingabeFormularView.8"))); //$NON-NLS-1$
+					// datePanel.setForeground(Color.WHITE);
+					datum[anzahlElemente] = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+					downPane.add(new JLabel(Messages.getString("RundenEingabeFormularView.8"))); //$NON-NLS-1$
 					downPane.add(datum[anzahlElemente]);
 					downPane.add(new JLabel(" ")); //$NON-NLS-1$
-					changeColor[anzahlElemente] = new JButton(
-							Messages.getString("RundenEingabeFormularView.10")); //$NON-NLS-1$
+					changeColor[anzahlElemente] = new JButton(Messages.getString("RundenEingabeFormularView.10")); //$NON-NLS-1$
 					downPane.add(changeColor[anzahlElemente]);
 					rundenNummer[anzahlElemente] = new JComboBox<String>();
 					for (int x = 1; x <= this.spielerAnzahl - ungerade; x++) {
-						rundenNummer[anzahlElemente].addItem(Integer
-								.toString(x));
+						rundenNummer[anzahlElemente].addItem(Integer.toString(x));
 					}
-					rundenNummer[anzahlElemente].setSelectedIndex(Integer
-							.parseInt(zeile[0]) - 1);
-					downPane.add(new JLabel(Messages
-							.getString("RundenEingabeFormularView.11"))); //$NON-NLS-1$
+					rundenNummer[anzahlElemente].setSelectedIndex(Integer.parseInt(zeile[0]) - 1);
+					downPane.add(new JLabel(Messages.getString("RundenEingabeFormularView.11"))); //$NON-NLS-1$
 					downPane.add(rundenNummer[anzahlElemente]);
 					downPane.add(new JLabel(" = ")); //$NON-NLS-1$
 					weissSpieler[anzahlElemente] = new JLabel();
 					weissSpieler[anzahlElemente]
-							.setText(Messages
-									.getString("RundenEingabeFormularView.13") + zeile[1] + " - "); //$NON-NLS-1$ //$NON-NLS-2$
+							.setText(Messages.getString("RundenEingabeFormularView.13") + zeile[1] + " - "); //$NON-NLS-1$ //$NON-NLS-2$
 					schwarzSpieler[anzahlElemente] = new JLabel();
 					schwarzSpieler[anzahlElemente]
-							.setText(Messages
-									.getString("RundenEingabeFormularView.15") + zeile[2] + " "); //$NON-NLS-1$ //$NON-NLS-2$
+							.setText(Messages.getString("RundenEingabeFormularView.15") + zeile[2] + " "); //$NON-NLS-1$ //$NON-NLS-2$
 					downPane.add(weissSpieler[anzahlElemente]);
 					downPane.add(schwarzSpieler[anzahlElemente]);
 
@@ -319,8 +321,7 @@ public class PairingsView extends JPanel {
 			}
 
 			panel.add(flowPane, BorderLayout.NORTH);
-			tabbedPane
-					.add(Messages.getString("RundenEingabeFormularView.17") + (r + 1), panel); //$NON-NLS-1$
+			tabbedPane.add(Messages.getString("RundenEingabeFormularView.17") + (r + 1), panel); //$NON-NLS-1$
 		}
 		contentPanel.add(tabbedPane, BorderLayout.CENTER);
 		contentPanel.updateUI();
@@ -343,12 +344,11 @@ public class PairingsView extends JPanel {
 		// private String datePattern = "yyyy-MM-dd";
 		private String datePattern = Messages.getString("TurnierView.15"); //$NON-NLS-1$
 
-		private SimpleDateFormat dateFormatter = new SimpleDateFormat(
-				datePattern, Locale.getDefault());
+		private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern, Locale.getDefault());
 
 		public DateLabelFormatter() {
 			super();
-//			setBackground(Color.CYAN);
+			// setBackground(Color.CYAN);
 		}
 
 		@Override

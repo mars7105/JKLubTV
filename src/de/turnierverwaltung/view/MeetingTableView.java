@@ -17,6 +17,7 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -89,6 +90,7 @@ public class MeetingTableView extends JPanel {
 	private JComboBox<String> comboBox;
 	private MeetingTableModel simpleTerminTabelle;
 	private Properties property;
+	private JLabel statusLabel;
 
 	public MeetingTableView(MeetingTableModel simpleTerminTabelle) {
 
@@ -117,18 +119,28 @@ public class MeetingTableView extends JPanel {
 		table.setRowHeight(30);
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
-		
-//		JPanel tabelPanel = new JPanel();
-//		tabelPanel.setLayout(new BorderLayout());
-//		tabelPanel.add(sPane, BorderLayout.CENTER);
+
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new BorderLayout());
+
 		JPanel hinweis = new JPanel();
+		hinweis.setLayout(new FlowLayout(FlowLayout.LEFT));
 		hinweis.add(new JLabel(Messages.getString("SimpleTerminTabelleView.13") //$NON-NLS-1$
 				+ Messages.getString("SimpleTerminTabelleView.14"))); //$NON-NLS-1$
-//		JScrollPane allScrollPane = new JScrollPane();
-//		allScrollPane.setViewportView(tabelPanel);
+		
+		southPanel.add(hinweis, BorderLayout.CENTER);
+
+		JPanel status = new JPanel();
+		status.setLayout(new FlowLayout(FlowLayout.LEFT));
+		status.add(new JLabel(Messages.getString("SimpleTerminTabelleView.15"))); //$NON-NLS-1$
+		statusLabel = new JLabel("0");
+		JLabel changesLabel = new JLabel(Messages.getString("SimpleTerminTabelleView.16"));
+		status.add(statusLabel);
+		status.add(changesLabel);
+		southPanel.add(status, BorderLayout.SOUTH);
 
 		add(sPane, BorderLayout.CENTER);
-		add(hinweis, BorderLayout.SOUTH);
+		add(southPanel, BorderLayout.SOUTH);
 
 		this.setVisible(true);
 
@@ -148,6 +160,16 @@ public class MeetingTableView extends JPanel {
 		}
 		dateInt[1] = dateInt[1] - 1;
 		return dateInt;
+
+	}
+
+	public JLabel getStatusLabel() {
+		return statusLabel;
+	}
+
+	public void setStatusLabel(JLabel statusLabel) {
+		this.statusLabel = statusLabel;
+		this.statusLabel.setText(this.statusLabel.getText() + " " + Messages.getString("SimpleTerminTabelleView.16"));
 
 	}
 

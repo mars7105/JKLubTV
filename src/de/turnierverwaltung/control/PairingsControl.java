@@ -85,7 +85,6 @@ public class PairingsControl implements ActionListener {
 	public PairingsControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 
-
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
 		gruppenAnzahl = turnier.getAnzahlGruppen();
@@ -95,7 +94,6 @@ public class PairingsControl implements ActionListener {
 
 	public PairingsControl(MainControl mainControl, int selectIndex) {
 		this.mainControl = mainControl;
-
 
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
@@ -141,6 +139,9 @@ public class PairingsControl implements ActionListener {
 				changedPartien = this.mainControl.getChangedPartien();
 
 			}
+			for (int i = 0; i < gruppenAnzahl; i++) {
+				rundenEingabeFormularView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
+			}
 		}
 	}
 
@@ -178,6 +179,9 @@ public class PairingsControl implements ActionListener {
 					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.SORTIEREN;
 
 				}
+				rundenEingabeFormularView[index].getStatusLabel()
+						.setText(new Integer(changedPartien.size()).toString());
+
 			}
 
 		}
@@ -270,6 +274,15 @@ public class PairingsControl implements ActionListener {
 			tabAnzeigeView2[index].getTabbedPane().setComponentAt(2, rundenEingabeFormularView[index]);
 			tabAnzeigeView2[index].getTabbedPane().setIconAt(2, paarungenIcon);
 		}
+		if (this.mainControl.getChangedPartien() == null) {
+			changedPartien = new ArrayList<Game>();
+			this.mainControl.setChangedPartien(changedPartien);
+		} else {
+			changedPartien = this.mainControl.getChangedPartien();
+
+		}
+
+		rundenEingabeFormularView[index].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
 
 		rundenEingabeFormularView[index].updateUI();
 	}

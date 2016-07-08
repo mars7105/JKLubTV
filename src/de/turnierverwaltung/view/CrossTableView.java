@@ -17,6 +17,7 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -42,6 +43,7 @@ public class CrossTableView extends JPanel {
 	private JButton htmlButton;
 	private JTable table;
 	private JComboBox<String> comboBox;
+	private JLabel statusLabel;
 
 	public CrossTableView(CrossTableModel simpleTableModel, int abstand) {
 
@@ -68,20 +70,38 @@ public class CrossTableView extends JPanel {
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
 
-//		JPanel tabelPanel = new JPanel();
-//		tabelPanel.setLayout(new BorderLayout());
-//		tabelPanel.add(sPane, BorderLayout.CENTER);
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new BorderLayout());
+
 		JPanel hinweis = new JPanel();
+		hinweis.setLayout(new FlowLayout(FlowLayout.LEFT));
 		hinweis.add(new JLabel(Messages.getString("SimpleTerminTabelleView.13") //$NON-NLS-1$
 				+ Messages.getString("SimpleTerminTabelleView.14"))); //$NON-NLS-1$
+		
+		southPanel.add(hinweis, BorderLayout.CENTER);
 
-//		JScrollPane allScrollPane = new JScrollPane();
-//		allScrollPane.setViewportView(tabelPanel);
+		JPanel status = new JPanel();
+		status.setLayout(new FlowLayout(FlowLayout.LEFT));
+		status.add(new JLabel(Messages.getString("SimpleTerminTabelleView.15"))); //$NON-NLS-1$
+		statusLabel = new JLabel("0");
+		JLabel changesLabel = new JLabel(Messages.getString("SimpleTerminTabelleView.16"));
+		status.add(statusLabel);
+		status.add(changesLabel);
+		southPanel.add(status, BorderLayout.SOUTH);
 
 		add(sPane, BorderLayout.CENTER);
-		add(hinweis, BorderLayout.SOUTH);
+		add(southPanel, BorderLayout.SOUTH);
 		this.setVisible(true);
 
+	}
+
+	public JLabel getStatusLabel() {
+		return statusLabel;
+	}
+
+	public void setStatusLabel(JLabel statusLabel) {
+
+		this.statusLabel = statusLabel;
 	}
 
 	public JComboBox<String> getComboBox() {

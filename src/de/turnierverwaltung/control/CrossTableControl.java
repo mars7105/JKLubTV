@@ -162,6 +162,7 @@ public class CrossTableControl {
 		berechneFolgeDWZ(gruppenNummer);
 		simpleTableView[gruppenNummer].getTable().doLayout();
 		simpleTableView[gruppenNummer].getTable().updateUI();
+		simpleTableView[gruppenNummer].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
 	}
 
 	public void berechneFolgeDWZ(int gruppenNummer) {
@@ -322,6 +323,8 @@ public class CrossTableControl {
 						updatePunkteCol(colCount - 3);
 						updateSoBergCol(colCount - 2);
 						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
+						simpleTableView[gruppenNummer].getStatusLabel()
+								.setText(new Integer(changedPartien.size()).toString());
 
 					}
 
@@ -333,6 +336,8 @@ public class CrossTableControl {
 						updateSoBergCol(colCount - 2);
 						updatePlatzCol(colCount - 1);
 						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
+						simpleTableView[gruppenNummer].getStatusLabel()
+								.setText(new Integer(changedPartien.size()).toString());
 
 					}
 				}

@@ -69,6 +69,7 @@ public class MeetingTableControl {
 			changedPartien = this.mainControl.getChangedPartien();
 
 		}
+		
 	}
 
 	/**
@@ -105,6 +106,8 @@ public class MeetingTableControl {
 		}
 
 		hauptPanel.updateUI();
+		simpleTableView[gruppenNummer].getStatusLabel()
+		.setText(new Integer(changedPartien.size()).toString());
 	}
 
 	public MeetingTable[] getTerminTabelle() {
