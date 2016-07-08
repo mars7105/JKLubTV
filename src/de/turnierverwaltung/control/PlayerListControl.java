@@ -143,6 +143,7 @@ public class PlayerListControl implements ActionListener {
 		spielerTableControl = new SQLPlayerControl(this.mainControl);
 		spieler = new ArrayList<Player>();
 		spieler = spielerTableControl.getAllSpieler();
+		testPlayerListForDoubles();
 		spielerAnzahl = spieler.size();
 		int selectedTab = 0;
 		if (spielerLadenView == null) {
@@ -170,6 +171,27 @@ public class PlayerListControl implements ActionListener {
 			spielerLadenView.getSpielerListe().setSelectedIndex(selectedTab);
 		}
 		spielerLadenView.updateUI();
+	}
+
+	private void testPlayerListForDoubles() {
+		Boolean loop = false;
+		SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+		do {
+			loop = false;
+			for (int i = 0; i < spieler.size(); i++) {
+				for (int y = 0; y < spieler.size(); y++) {
+					if (i != y) {
+						if (spieler.get(i).getName().equals(spieler.get(y).getName())) {
+							spieler.get(y).setName(spieler.get(y).getName() + "#");
+							
+							stc.updateOneSpieler(spieler.get(y));
+							loop = true;
+						}
+					}
+
+				}
+			}
+		} while (loop == true);
 	}
 
 	public ArrayList<Player> getSpieler() {

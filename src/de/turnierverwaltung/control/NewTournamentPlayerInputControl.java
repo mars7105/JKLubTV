@@ -114,6 +114,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 				spieler = new Player[sAnzahl];
 				Boolean correctName = true;
 				int counter = -1;
+
 				if (testForDoubles(i) == true) {
 					for (int y = 0; y < sAnzahl; y++) {
 						if (spielerEingabeView[i].getSpielerTextfield()[y].getText().equals("Spielfrei")) {
@@ -144,7 +145,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 							}
 						}
 					}
-
+					testPlayerListForDoubles();
 					gruppe[i].setSpieler(spieler);
 					Arrays.sort(spieler);
 					spielerEingabeView[i].removeAll();
@@ -199,7 +200,6 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 				}
 			}
 		}
-		// hauptPanel.updateUI();
 
 	}
 
@@ -285,6 +285,27 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 			suchAnzeige(index);
 			// hauptPanel.updateUI();
 		}
+	}
+
+	private void testPlayerListForDoubles() {
+		Boolean loop = false;
+		SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+		do {
+			loop = false;
+			for (int i = 0; i < spieler.length; i++) {
+				for (int y = 0; y < spieler.length; y++) {
+					if (i != y) {
+						if (spieler[i].getName().equals(spieler[y].getName())) {
+							spieler[y].setName(spieler[y].getName() + "#");
+
+							stc.updateOneSpieler(spieler[y]);
+							loop = true;
+						}
+					}
+
+				}
+			}
+		} while (loop == true);
 	}
 
 	@SuppressWarnings("unchecked")
