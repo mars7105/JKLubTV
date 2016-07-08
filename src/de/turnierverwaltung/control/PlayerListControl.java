@@ -50,6 +50,8 @@ public class PlayerListControl implements ActionListener {
 		this.mainControl = mainControl;
 		new DSBDWZControl(this.mainControl);
 		hauptPanel = this.mainControl.getHauptPanel();
+		this.mainControl.getNaviView().getDateiPanel().setVisible(true);
+		this.mainControl.getNaviView().getSpielerListePanel().setVisible(true);
 	}
 
 	@Override
@@ -144,8 +146,7 @@ public class PlayerListControl implements ActionListener {
 		spielerAnzahl = spieler.size();
 		int selectedTab = 0;
 		if (spielerLadenView == null) {
-			spielerLadenView = new PlayerListView(spielerAnzahl,
-					mainControl.getPropertiesControl().getSpielerProTab());
+			spielerLadenView = new PlayerListView(spielerAnzahl, mainControl.getPropertiesControl().getSpielerProTab());
 			hauptPanel.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, spielerLadenView); //$NON-NLS-1$
 		} else {
 			selectedTab = spielerLadenView.getSpielerListe().getSelectedIndex();

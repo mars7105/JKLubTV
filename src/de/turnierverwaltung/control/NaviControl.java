@@ -41,6 +41,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
+import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.NewPlayerView;
@@ -85,7 +86,8 @@ public class NaviControl implements ActionListener {
 		mainControl.setNaviView(naviView);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
-
+		this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
+		this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
 		newdbButton = naviView.getNewDatabseButton();
 		newdbButton.addActionListener(this);
 		loaddbButton = naviView.getLoadDatabaseButton();
@@ -219,21 +221,7 @@ public class NaviControl implements ActionListener {
 			if (turnier == null) {
 				mainControl.setTurnierControl(new NewTournamentControl(mainControl));
 			} else {
-				// // Custom button text
-				// Object[] options = { Messages.getString("NaviController.0"),
-				// Messages.getString("NaviController.1") }; //$NON-NLS-1$
-				// //$NON-NLS-2$
-				// int abfrage = JOptionPane.showOptionDialog(mainControl,
-				// Messages.getString("NaviController.2") //$NON-NLS-1$
-				// + Messages.getString("NaviController.3"), //$NON-NLS-1$
-				// Messages.getString("NaviController.4"),
-				// JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
-				// JOptionPane.WARNING_MESSAGE, null, options, options[1]);
-				// if (abfrage == 0) {
-				// // mainControl.resetApp();
-				// mainControl.setTurnierControl(new
-				// NewTournamentControl(mainControl));
-				// }
+
 				ArrayList<Game> changedPartien = this.mainControl.getChangedPartien();
 				if (changedPartien != null) {
 					if (changedPartien.size() > 0) {
@@ -280,7 +268,6 @@ public class NaviControl implements ActionListener {
 				if (filename != null) {
 					filename += ".ktv"; //$NON-NLS-1$
 					File path = new File(mainControl.getPropertiesControl().getDefaultPath());
-
 					JFileChooser savefile = new JFileChooser(path);
 					FileFilter filter = new FileNameExtensionFilter(Messages.getString("NaviController.8"), "ktv"); //$NON-NLS-1$ //$NON-NLS-2$
 					savefile.addChoosableFileFilter(filter);
@@ -324,10 +311,10 @@ public class NaviControl implements ActionListener {
 							mainControl.getPropertiesControl().setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
 							mainControl.getPropertiesControl().writeProperties();
 							turnierAnsicht = new TurnierAnsicht(mainControl);
+
 							mainControl.getHauptPanel().addChangeListener(turnierAnsicht);
 
 							naviView.updateUI();
-
 						} catch (IOException e) {
 							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.13")); //$NON-NLS-1$
 						} catch (SQLException e) {
@@ -584,8 +571,24 @@ public class NaviControl implements ActionListener {
 		public TurnierAnsicht(MainControl mainControl) {
 			super();
 			this.mainControl = mainControl;
-			this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
-			this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
+			int selectedTabIndex = this.mainControl.getHauptPanel().getSelectedIndex();
+			if (TournamentConstants.TAB_PLAYER_LIST == selectedTabIndex) {
+				this.mainControl.getNaviView().getSpielerListePanel().setVisible(true);
+				this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
+				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+
+			}
+			if (TournamentConstants.TAB_TOURNAMENTS_LIST == selectedTabIndex) {
+				this.mainControl.getNaviView().getTurnierListePanel().setVisible(true);
+				this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
+				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+
+			}
+			if (TournamentConstants.TAB_ACTIVE_TOURNAMENT == selectedTabIndex) {
+				this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
+				this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
+				this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
+			}
 			if (this.mainControl.getNeuesTurnier() == true) {
 				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 				this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
