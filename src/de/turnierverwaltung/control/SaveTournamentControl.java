@@ -76,6 +76,7 @@ public class SaveTournamentControl {
 				mainControl.setNeuesTurnier(false);
 				mainControl.getTurnierListeLadenControl().loadTurnierListe();
 				mainControl.getTurnierListeLadenControl().reloadTurnier();
+				mainControl.getTurnierListeLadenControl().loadPairingsView();
 			}
 			return ready;
 		} else {

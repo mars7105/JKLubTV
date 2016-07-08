@@ -148,7 +148,7 @@ public class TournamentListControl implements ActionListener {
 										+ Messages.getString("TurnierListeLadenControl.19"), //$NON-NLS-1$
 								Messages.getString("TurnierListeLadenControl.20"), //$NON-NLS-1$
 								JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
-								options[1]); 
+								options[1]);
 						if (abfrage == 0) {
 
 							selectTurnierTab = true;
@@ -369,6 +369,33 @@ public class TournamentListControl implements ActionListener {
 
 	public void setLoadedTurnierID(int loadedTurnierID) {
 		this.loadedTurnierID = loadedTurnierID;
+	}
+
+	public void loadPairingsView() {
+		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+		if (ready) {
+			mainControl.getNaviView().getTabellenPanel().setVisible(false);
+			PairingsControl pairingsControl = mainControl.getRundenEingabeFormularControl();
+			pairingsControl.init();
+			int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
+			TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+
+			for (int i = 0; i < gruppenAnzahl; i++) {
+				tabAnzeigeView2[i].getTabbedPane().setEnabledAt(0, false);
+				tabAnzeigeView2[i].getTabbedPane().setEnabledAt(1, false);
+				pairingsControl.makeRundenEditView(i);
+				tabAnzeigeView2[i].getTabbedPane().setSelectedIndex(2);
+
+			}
+			this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
+			this.mainControl.getNaviController().setPairingIsActive(true);
+
+		} else {
+			JOptionPane.showMessageDialog(null,
+					Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$
+
+		}
+
 	}
 
 }
