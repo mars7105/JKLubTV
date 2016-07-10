@@ -1,5 +1,6 @@
 package de.turnierverwaltung.control;
 
+import java.sql.SQLException;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -38,7 +39,7 @@ public class SQLGroupsControl {
 		mySQLGruppenDAO = daoFactory.getGruppenDAO();
 	}
 
-	public void getGruppe() {
+	public void getGruppe() throws SQLException {
 		this.turnier = this.mainControl.getTurnier();
 		gruppe = mySQLGruppenDAO.selectAllGruppen(turnier.getTurnierId());
 		Group[] group = new Group[gruppe.size()];
@@ -49,7 +50,7 @@ public class SQLGroupsControl {
 		mainControl.getTurnier().setAnzahlGruppen(gruppe.size());
 	}
 
-	public Tournament getGruppe(Tournament turnierName) {
+	public Tournament getGruppe(Tournament turnierName) throws SQLException {
 		ArrayList<Group> grp = mySQLGruppenDAO.selectAllGruppen(turnierName.getTurnierId());
 		Group[] group = new Group[grp.size()];
 		for (int i = 0; i < grp.size(); i++) {
@@ -60,7 +61,7 @@ public class SQLGroupsControl {
 		return turnierName;
 	}
 
-	public boolean insertGruppe(int gruppe) {
+	public boolean insertGruppe(int gruppe) throws SQLException {
 		boolean eintragGespeichert = false;
 		if (turnier.getGruppe()[gruppe].getGruppeId() == -1) {
 			String gruppenName = turnier.getGruppe()[gruppe].getGruppenName();
@@ -73,7 +74,7 @@ public class SQLGroupsControl {
 		return eintragGespeichert;
 	}
 
-	public boolean updateGruppe(int gruppe) {
+	public boolean updateGruppe(int gruppe) throws SQLException {
 		this.turnier = mainControl.getTurnier();
 
 		boolean saved = false;
@@ -84,7 +85,7 @@ public class SQLGroupsControl {
 
 	}
 
-	public boolean updateGruppen(Tournament turnierX) {
+	public boolean updateGruppen(Tournament turnierX) throws SQLException {
 
 		Group[] groups = turnierX.getGruppe();
 		boolean saved = false;

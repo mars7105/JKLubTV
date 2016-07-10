@@ -1,4 +1,6 @@
 package de.turnierverwaltung.mysql;
+
+import java.sql.SQLException;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -20,17 +22,17 @@ import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 
 public interface Turnier_has_SpielerDAO {
-	public void createTurnier_has_SpielerTable();
+	public void createTurnier_has_SpielerTable() throws SQLException;
 
-	public boolean deleteTurnier_has_Spieler(ArrayList<Integer> id);
+	public boolean deleteTurnier_has_Spieler(ArrayList<Integer> id) throws SQLException;
 
-	public ArrayList<Integer> findSpielerisinTurnier_has_Spieler(Player spieler);
+	public ArrayList<Integer> findSpielerisinTurnier_has_Spieler(Player spieler) throws SQLException;
 
-	public String findTurnier_has_Spieler(int id);
+	public String findTurnier_has_Spieler(int id) throws SQLException;
 
-	public int insertTurnier_has_Spieler(int idGruppe, int idSpieler);
+	public int insertTurnier_has_Spieler(int idGruppe, int idSpieler) throws SQLException;
 
-	public ArrayList<String> selectAllTurnier_has_Spieler();
+	public ArrayList<String> selectAllTurnier_has_Spieler() throws SQLException;
 
-	public boolean updateTurnier_has_Spieler(Tournament turnier);
+	public boolean updateTurnier_has_Spieler(Tournament turnier) throws SQLException;
 }

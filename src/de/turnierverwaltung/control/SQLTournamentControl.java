@@ -45,7 +45,7 @@ public class SQLTournamentControl {
 		}
 	}
 
-	public void getTurnier(int tID) {
+	public void getTurnier(int tID) throws SQLException {
 
 		turnier = mySQLTurnierDao.findTurnier(tID,
 				mainControl.getPropertiesControl());
@@ -54,7 +54,7 @@ public class SQLTournamentControl {
 
 	}
 
-	public int insertTurnier() {
+	public int insertTurnier() throws SQLException {
 		this.turnier = mainControl.getTurnier();
 		turnierId = -1;
 		if (turnier.getTurnierId() == -1) {
@@ -77,7 +77,7 @@ public class SQLTournamentControl {
 
 	}
 
-	public boolean loescheTurnier(Tournament turnier) {
+	public boolean loescheTurnier(Tournament turnier) throws SQLException {
 		boolean geloescht = false;
 
 		Object[] options = {
@@ -97,7 +97,7 @@ public class SQLTournamentControl {
 		return geloescht;
 	}
 
-	public void updateTurnier(Tournament turnier) {
+	public void updateTurnier(Tournament turnier) throws SQLException {
 		mySQLTurnierDao.updateTurnier(turnier);
 	}
 }

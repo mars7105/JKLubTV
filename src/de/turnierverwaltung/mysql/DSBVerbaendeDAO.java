@@ -1,4 +1,7 @@
 package de.turnierverwaltung.mysql;
+
+import java.sql.SQLException;
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -14,5 +17,5 @@ package de.turnierverwaltung.mysql;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 public interface DSBVerbaendeDAO {
-	public void createDSBVerbaendeTable();
+	public void createDSBVerbaendeTable() throws SQLException;
 }

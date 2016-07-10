@@ -22,8 +22,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 
@@ -33,78 +31,65 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	public SQLiteSpielerDAO() {
 		this.dbConnect = null;
 		this.dbConnect = SQLiteDAOFactory.createConnection();
-
+		alterTableAge();
 	}
 
 	@Override
-	public void createSpielerTable() {
+	public void createSpielerTable() throws SQLException {
 		String sql = "CREATE TABLE spieler (idSpieler INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-				+ " Name VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, Age INTEGER)"
-				+ ";";
+				+ " Name VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, Age INTEGER)" + ";";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
-			try {
-				// create a database connection
-				stmt = this.dbConnect.createStatement();
-				stmt.setQueryTimeout(30); // set timeout to 30 sec.
-				stmt.executeUpdate(sql);
-				stmt.close();
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
+			// create a database connection
+			stmt = this.dbConnect.createStatement();
+			stmt.setQueryTimeout(30); // set timeout to 30 sec.
+			stmt.executeUpdate(sql);
+			stmt.close();
+
 		}
 
 	}
 
 	@Override
-	public boolean deleteSpieler(int id) {
+	public boolean deleteSpieler(int id) throws SQLException {
 		boolean ok = false;
 		String sql = "delete from spieler where idSpieler=?" + ";";
 		if (this.dbConnect != null) {
-			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
-				preStm.setInt(1, id);
-				preStm.addBatch();
-				this.dbConnect.setAutoCommit(false);
-				preStm.executeBatch();
-				this.dbConnect.setAutoCommit(true);
-				preStm.close();
-				ok = true;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
+
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+			preStm.setInt(1, id);
+			preStm.addBatch();
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			preStm.close();
+			ok = true;
 
 		}
 		return ok;
 	}
 
 	@Override
-	public ArrayList<Group> findSpieler(int id) {
-		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe ="
-				+ id + " AND Spieler_idSpieler = idSpieler" + ";";
+	public ArrayList<Group> findSpieler(int id) throws SQLException {
+		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe =" + id
+				+ " AND Spieler_idSpieler = idSpieler" + ";";
 		ArrayList<Group> gruppenListe = new ArrayList<Group>();
 
 		Statement stmt;
 		if (this.dbConnect != null) {
-			try {
-				stmt = this.dbConnect.createStatement();
-				ResultSet rs = stmt.executeQuery(sql);
 
-				while (rs.next()) {
-					int idGruppe = rs.getInt("idGruppe");
-					String gruppenName = rs.getString("Gruppenname");
-					gruppenListe.add(new Group(idGruppe, gruppenName));
-				}
-				stmt.close();
+			stmt = this.dbConnect.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+			while (rs.next()) {
+				int idGruppe = rs.getInt("idGruppe");
+				String gruppenName = rs.getString("Gruppenname");
+				gruppenListe.add(new Group(idGruppe, gruppenName));
 			}
+			stmt.close();
+
 		}
 		return gruppenListe;
 	}
@@ -135,8 +120,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 				}
 
-				spielerListe
-						.add(new Player(idSpieler, name, kuerzel, dwz, age));
+				spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age));
 			}
 			stmt.close();
 
@@ -147,113 +131,91 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	}
 
 	@Override
-	public int insertSpieler(String name, String dwz, String kuerzel, int age) {
+	public int insertSpieler(String name, String dwz, String kuerzel, int age) throws SQLException {
 
 		String sql;
 		int id = -1;
 
-		sql = "Insert into spieler (DWZ, Kuerzel, Name, Age) values (?,?,?,?)"
-				+ ";";
+		sql = "Insert into spieler (DWZ, Kuerzel, Name, Age) values (?,?,?,?)" + ";";
 
 		if (this.dbConnect != null) {
-			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
-						Statement.RETURN_GENERATED_KEYS);
 
-				preStm.setString(1, dwz);
-				preStm.setString(2, kuerzel);
-				preStm.setString(3, name);
-				try {
-					preStm.setInt(4, age);
-				} catch (SQLException e) {
-					alterTableAge();
-					preStm.setInt(4, age);
-				}
-				preStm.addBatch();
-				this.dbConnect.setAutoCommit(false);
-				preStm.executeBatch();
-				this.dbConnect.setAutoCommit(true);
-				ResultSet rs = preStm.getGeneratedKeys();
-				if (rs.next()) {
-					id = rs.getInt(1);
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-				}
-				preStm.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+			preStm.setString(1, dwz);
+			preStm.setString(2, kuerzel);
+			preStm.setString(3, name);
+
+			preStm.setInt(4, age);
+
+			preStm.addBatch();
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			ResultSet rs = preStm.getGeneratedKeys();
+			if (rs.next()) {
+				id = rs.getInt(1);
 
 			}
+			preStm.close();
+
 		}
 		return id;
 	}
 
 	@Override
-	public ArrayList<Player> selectAllSpieler(int idGruppe) {
-		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe = "
-				+ idGruppe
-				+ " AND Spieler_idSpieler = idSpieler"
-				+ " ORDER BY dwz ASC;";
+	public ArrayList<Player> selectAllSpieler(int idGruppe) throws SQLException {
+		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe = " + idGruppe
+				+ " AND Spieler_idSpieler = idSpieler" + " ORDER BY dwz ASC;";
 		ArrayList<Player> spielerListe = new ArrayList<Player>();
 
 		Statement stmt;
 		if (this.dbConnect != null) {
-			try {
-				stmt = this.dbConnect.createStatement();
-				ResultSet rs = stmt.executeQuery(sql);
 
-				while (rs.next()) {
-					int idSpieler = rs.getInt("idSpieler");
-					String name = rs.getString("Name");
-					String kuerzel = rs.getString("kuerzel");
-					String dwz = rs.getString("dwz");
-					int age = 2;
-					try {
-						age = rs.getInt("Age");
-					} catch (SQLException e) {
-						alterTableAge();
-					}
-					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz,
-							age));
-				}
-				stmt.close();
+			stmt = this.dbConnect.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+			while (rs.next()) {
+				int idSpieler = rs.getInt("idSpieler");
+				String name = rs.getString("Name");
+				String kuerzel = rs.getString("kuerzel");
+				String dwz = rs.getString("dwz");
+				int age = 2;
+
+				age = rs.getInt("Age");
+
+				spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age));
 			}
+			stmt.close();
+
 		}
 		return spielerListe;
 
 	}
 
 	@Override
-	public boolean updateSpieler(Player spieler) {
+	public boolean updateSpieler(Player spieler) throws SQLException {
 		boolean ok = false;
-		String sql = "update spieler set Name = ?, Kuerzel = ?"
-				+ ", DWZ = ?, Age = ? where idSpieler="
+		String sql = "update spieler set Name = ?, Kuerzel = ?" + ", DWZ = ?, Age = ? where idSpieler="
 				+ spieler.getSpielerId() + ";";
 		if (this.dbConnect != null) {
+
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+			preStm.setString(1, spieler.getName());
+			preStm.setString(2, spieler.getKuerzel());
+			preStm.setString(3, spieler.getDwz());
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
-				preStm.setString(1, spieler.getName());
-				preStm.setString(2, spieler.getKuerzel());
-				preStm.setString(3, spieler.getDwz());
-				try {
-					preStm.setInt(4, spieler.getAge());
-				} catch (SQLException e) {
-					alterTableAge();
-				}
-				preStm.addBatch();
-				this.dbConnect.setAutoCommit(false);
-				preStm.executeBatch();
-				this.dbConnect.setAutoCommit(true);
-				preStm.close();
-				ok = true;
+				preStm.setInt(4, spieler.getAge());
 			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+				alterTableAge();
 			}
+			preStm.addBatch();
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			preStm.close();
+			ok = true;
+
 		}
 		return ok;
 	}

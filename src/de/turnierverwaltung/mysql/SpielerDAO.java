@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -21,18 +22,17 @@ import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 
 public interface SpielerDAO {
-	public void createSpielerTable();
+	public void createSpielerTable() throws SQLException;
 
-	public boolean deleteSpieler(int id);
+	public boolean deleteSpieler(int id) throws SQLException;
 
-	public ArrayList<Group> findSpieler(int id);
+	public ArrayList<Group> findSpieler(int id) throws SQLException;
 
 	public ArrayList<Player> getAllSpieler() throws SQLException;
 
-	public int insertSpieler(String spielerName, String spielerDWZ,
-			String spielerKuerzel, int age);
+	public int insertSpieler(String spielerName, String spielerDWZ, String spielerKuerzel, int age) throws SQLException;
 
-	public ArrayList<Player> selectAllSpieler(int idGruppe);
+	public ArrayList<Player> selectAllSpieler(int idGruppe) throws SQLException;
 
-	public boolean updateSpieler(Player spieler);
+	public boolean updateSpieler(Player spieler) throws SQLException;
 }

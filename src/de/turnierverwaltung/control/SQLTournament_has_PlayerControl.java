@@ -1,5 +1,7 @@
 package de.turnierverwaltung.control;
 
+import java.sql.SQLException;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -34,7 +36,7 @@ public class SQLTournament_has_PlayerControl {
 		this.mainControl = mainControl;
 	}
 
-	public void insertTurnier_has_Spieler(int gruppenNr) {
+	public void insertTurnier_has_Spieler(int gruppenNr) throws SQLException {
 		int gruppeId = 0;
 		int spielerId = 0;
 		this.turnier = mainControl.getTurnier();
@@ -53,7 +55,7 @@ public class SQLTournament_has_PlayerControl {
 
 	}
 
-	public void updateTurnier_has_Spieler(int gruppe) {
+	public void updateTurnier_has_Spieler(int gruppe) throws SQLException {
 		daoFactory = DAOFactory
 				.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		Turnier_has_SpielerDAO mySQLTurnier_has_SpielerDAO = daoFactory

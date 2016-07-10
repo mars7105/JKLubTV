@@ -105,21 +105,21 @@ public class TournamentListControl implements ActionListener {
 					turnierEdit.getGruppe()[i].setGruppenName(gEV);
 				}
 
-				turnierTableControl.updateTurnier(turnierEdit);
-
-				SQLGroupsControl gtC = new SQLGroupsControl(mainControl);
-				gtC.updateGruppen(turnierEdit);
-
-				mainControl.setEnabled(true);
-				turnierEditierenView.dispose();
 				try {
+					turnierTableControl.updateTurnier(turnierEdit);
+
+					SQLGroupsControl gtC = new SQLGroupsControl(mainControl);
+					gtC.updateGruppen(turnierEdit);
+
+					mainControl.setEnabled(true);
+					turnierEditierenView.dispose();
+
 					loadTurnierListe();
 					if (turnierEdit.getTurnierId() == loadedTurnierID) {
 						reloadTurnier();
 					}
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					mainControl.fileSQLError();
 				}
 
 			}
@@ -137,7 +137,11 @@ public class TournamentListControl implements ActionListener {
 
 				if (turnier == null) {
 					selectTurnierTab = true;
-					loadTurnier(i);
+					try {
+						loadTurnier(i);
+					} catch (SQLException e) {
+						mainControl.fileSQLError();
+					}
 				} else {
 					if (turnier.getTurnierId() == -1) {
 						// Custom button text
@@ -152,7 +156,11 @@ public class TournamentListControl implements ActionListener {
 						if (abfrage == 0) {
 
 							selectTurnierTab = true;
-							loadTurnier(i);
+							try {
+								loadTurnier(i);
+							} catch (SQLException e) {
+								mainControl.fileSQLError();
+							}
 						}
 					} else {
 						ArrayList<Game> changedPartien = this.mainControl.getChangedPartien();
@@ -179,16 +187,28 @@ public class TournamentListControl implements ActionListener {
 										changedPartien.clear();
 									}
 									selectTurnierTab = true;
-									loadTurnier(i);
+									try {
+										loadTurnier(i);
+									} catch (SQLException e) {
+										mainControl.fileSQLError();
+									}
 								}
 							} else if (changedPartien.size() == 0) {
 								selectTurnierTab = true;
-								loadTurnier(i);
+								try {
+									loadTurnier(i);
+								} catch (SQLException e) {
+									mainControl.fileSQLError();
+								}
 							}
 
 						} else {
 							selectTurnierTab = true;
-							loadTurnier(i);
+							try {
+								loadTurnier(i);
+							} catch (SQLException e) {
+								mainControl.fileSQLError();
+							}
 						}
 					}
 				}
@@ -197,13 +217,16 @@ public class TournamentListControl implements ActionListener {
 			if (arg0.getSource() == turnierListeLadenView.getTurnierBearbeitenButton()[i]) {
 				turnierEdit = turnierListe.get(i);
 				SQLGroupsControl gTC = new SQLGroupsControl(mainControl);
-				turnierEdit = gTC.getGruppe(turnierEdit);
+				try {
+					turnierEdit = gTC.getGruppe(turnierEdit);
 
-				turnierEditierenView = new EditTournamentView(turnierEdit);
-				turnierEditierenView.getOkButton().addActionListener(this);
-				turnierEditierenView.getCancelButton().addActionListener(this);
-				mainControl.setEnabled(false);
-
+					turnierEditierenView = new EditTournamentView(turnierEdit);
+					turnierEditierenView.getOkButton().addActionListener(this);
+					turnierEditierenView.getCancelButton().addActionListener(this);
+					mainControl.setEnabled(false);
+				} catch (SQLException e) {
+					mainControl.fileSQLError();
+				}
 			}
 
 			// Wichtig:
@@ -242,7 +265,7 @@ public class TournamentListControl implements ActionListener {
 		loadTurnierListe();
 	}
 
-	public void reloadTurnier() {
+	public void reloadTurnier() throws SQLException {
 		turnier = mainControl.getTurnier();
 		if (turnier != null && loadedTurnierID >= 0) {
 			for (int i = 0; i < anzahlTurniere; i++) {
@@ -254,7 +277,7 @@ public class TournamentListControl implements ActionListener {
 		}
 	}
 
-	public void loadTurnier(int index) {
+	public void loadTurnier(int index) throws SQLException {
 		int selectedTab = hauptPanel.getSelectedIndex();
 
 		mainControl.setSpielerEingabeControl(null);

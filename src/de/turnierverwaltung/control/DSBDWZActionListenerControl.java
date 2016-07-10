@@ -69,38 +69,40 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 			dewisDialogControl.getDialog().closeWindow();
 		}
 		if (arg0.getSource() == dewisDialogControl.getDialog().getOkButton()) {
-			int[] indices = dewisDialogControl.getSpielerDewisView().getList().getSelectedIndices();
+			try {
+				int[] indices = dewisDialogControl.getSpielerDewisView().getList().getSelectedIndices();
 
-			if (dewisDialogControl.getPlayers() != null) {
-				for (int i = 0; i < indices.length; i++) {
-					Player neuerSpieler = new Player();
-					neuerSpieler = dewisDialogControl.getPlayers().get(indices[i]);
-					Boolean findPlayer = dewisDialogControl.searchSpieler(neuerSpieler, false);
-					if (findPlayer == false) {
-						SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-						neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-						mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+				if (dewisDialogControl.getPlayers() != null) {
+					for (int i = 0; i < indices.length; i++) {
+						Player neuerSpieler = new Player();
+						neuerSpieler = dewisDialogControl.getPlayers().get(indices[i]);
+
+						Boolean findPlayer = dewisDialogControl.searchSpieler(neuerSpieler, false);
+						if (findPlayer == false) {
+							SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+							mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+						}
 					}
 				}
-			}
-			try {
+
 				mainControl.getSpielerLadenControl().updateSpielerListe();
 			} catch (SQLException e) {
 				mainControl.fileSQLError();
 			}
 		}
 		if (arg0.getSource() == dewisDialogControl.getDialog().getUpdateButton()) {
-
-			@SuppressWarnings("unused")
-			Boolean findPlayer = true;
-			for (Player player : dewisDialogControl.getPlayers()) {
-				findPlayer = dewisDialogControl.searchSpieler(player, true);
-
-			}
-
-			dewisDialogControl.getDialog().closeWindow();
-			// mainControl.setEnabled(true);
 			try {
+				@SuppressWarnings("unused")
+				Boolean findPlayer = true;
+				for (Player player : dewisDialogControl.getPlayers()) {
+					findPlayer = dewisDialogControl.searchSpieler(player, true);
+
+				}
+
+				dewisDialogControl.getDialog().closeWindow();
+				// mainControl.setEnabled(true);
+
 				mainControl.getSpielerLadenControl().updateSpielerListe();
 			} catch (SQLException e) {
 				mainControl.fileSQLError();

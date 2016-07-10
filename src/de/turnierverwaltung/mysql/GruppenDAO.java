@@ -1,4 +1,6 @@
 package de.turnierverwaltung.mysql;
+
+import java.sql.SQLException;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -19,15 +21,15 @@ import java.util.ArrayList;
 import de.turnierverwaltung.model.Group;
 
 public interface GruppenDAO {
-	public void createGruppenTable();
+	public void createGruppenTable() throws SQLException;
 
-	public boolean deleteGruppe(int id);
+	public boolean deleteGruppe(int id) throws SQLException;
 
-	public Group findGruppe(int id);
+	public Group findGruppe(int id) throws SQLException;
 
-	public int insertGruppe(String gruppenName, int turnierId);
+	public int insertGruppe(String gruppenName, int turnierId) throws SQLException;
 
-	public ArrayList<Group> selectAllGruppen(int idTurnier);
+	public ArrayList<Group> selectAllGruppen(int idTurnier) throws SQLException;
 
-	public boolean updateGruppe(Group gruppe);
+	public boolean updateGruppe(Group gruppe) throws SQLException;
 }

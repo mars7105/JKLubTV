@@ -1,5 +1,6 @@
 package de.turnierverwaltung.mysql;
 
+import java.sql.SQLException;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -20,20 +21,20 @@ import java.util.ArrayList;
 import de.turnierverwaltung.model.Game;
 
 public interface PartienDAO {
-	public void createPartienTable();
+	public void createPartienTable() throws SQLException;
 
-	public boolean deletePartien(int id);
+	public boolean deletePartien(int id) throws SQLException;
 
-	public String[] findPartien(int id);
+	public String[] findPartien(int id) throws SQLException;
 
 	public int insertPartien(int idGruppe, String spielDatum, int Runde, int ergebnis, int spielerIdweiss,
-			int spielerIdschwarz);
+			int spielerIdschwarz) throws SQLException;
 
-	public ArrayList<Game> selectAllPartien(int idGruppe);
+	public ArrayList<Game> selectAllPartien(int idGruppe) throws SQLException;
 
-	public boolean updatePartien(Game[] parties);
+	public boolean updatePartien(Game[] parties) throws SQLException;
 
-	public boolean updatePartien(ArrayList<Game> changedPartien);
+	public boolean updatePartien(ArrayList<Game> changedPartien) throws SQLException;
 
-	public String getErgebnis(int SpielerIDWeiss, int SpielerIDSchwarz, int idGruppe);
+	public String getErgebnis(int SpielerIDWeiss, int SpielerIDSchwarz, int idGruppe) throws SQLException;
 }

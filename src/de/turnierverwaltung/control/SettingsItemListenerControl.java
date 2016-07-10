@@ -2,6 +2,7 @@ package de.turnierverwaltung.control;
 
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.sql.SQLException;
 
 import de.turnierverwaltung.view.SettingsView;
 
@@ -62,7 +63,11 @@ public class SettingsItemListenerControl {
 						}
 						eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(true);
 					}
-					mainControl.getTurnierListeLadenControl().reloadTurnier();
+					try {
+						mainControl.getTurnierListeLadenControl().reloadTurnier();
+					} catch (SQLException e1) {
+						mainControl.fileSQLError();
+					}
 
 				}
 
@@ -92,7 +97,11 @@ public class SettingsItemListenerControl {
 
 						}
 					}
-					mainControl.getTurnierListeLadenControl().reloadTurnier();
+					try {
+						mainControl.getTurnierListeLadenControl().reloadTurnier();
+					} catch (SQLException e1) {
+						mainControl.fileSQLError();
+					}
 				}
 
 				mainControl.getPropertiesControl().writeProperties();

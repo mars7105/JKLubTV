@@ -61,25 +61,31 @@ public class PlayerListControl implements ActionListener {
 			if (arg0.getSource() == spielerEditierenView.getOkButton()) {
 				String name = spielerEditierenView.getTextFieldName().getText();
 				if (!name.equals("Spielfrei")) {
-					String kuerzel = spielerEditierenView.getTextFieldKuerzel().getText();
-					String dwz = spielerEditierenView.getTextFieldDwz().getText();
-					int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
-					spieler.get(spielerIndex).setName(name);
-					spieler.get(spielerIndex).setKuerzel(kuerzel);
-					spieler.get(spielerIndex).setDwz(dwz);
-					spieler.get(spielerIndex).setAge(age);
-					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-					stc.updateOneSpieler(spieler.get(spielerIndex));
-					mainControl.setEnabled(true);
 					try {
-						updateSpielerListe();
-					} catch (SQLException e) {
+						String kuerzel = spielerEditierenView.getTextFieldKuerzel().getText();
+						String dwz = spielerEditierenView.getTextFieldDwz().getText();
+						int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
+						spieler.get(spielerIndex).setName(name);
+						spieler.get(spielerIndex).setKuerzel(kuerzel);
+						spieler.get(spielerIndex).setDwz(dwz);
+						spieler.get(spielerIndex).setAge(age);
+						SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+
+						stc.updateOneSpieler(spieler.get(spielerIndex));
+
+						mainControl.setEnabled(true);
+						try {
+							updateSpielerListe();
+						} catch (SQLException e) {
+							mainControl.fileSQLError();
+						}
+						if (mainControl.getTurnier() != null) {
+							mainControl.getTurnierListeLadenControl().reloadTurnier();
+						}
+						spielerEditierenView.closeWindow();
+					} catch (SQLException e1) {
 						mainControl.fileSQLError();
 					}
-					if (mainControl.getTurnier() != null) {
-						mainControl.getTurnierListeLadenControl().reloadTurnier();
-					}
-					spielerEditierenView.closeWindow();
 				} else {
 					mainControl.setEnabled(true);
 					try {
@@ -120,10 +126,11 @@ public class PlayerListControl implements ActionListener {
 			for (int i = 0; i < spielerAnzahl; i++) {
 				if (arg0.getSource() == spielerLadenView.getSpielerLoeschenButton()[i]) {
 					if (mainControl.getNeuesTurnier() == false) {
-
-						SQLPlayerControl stC = new SQLPlayerControl(mainControl);
-						stC.loescheSpieler(spieler.get(i));
 						try {
+							SQLPlayerControl stC = new SQLPlayerControl(mainControl);
+
+							stC.loescheSpieler(spieler.get(i));
+
 							updateSpielerListe();
 						} catch (SQLException e) {
 							mainControl.fileSQLError();
@@ -173,7 +180,7 @@ public class PlayerListControl implements ActionListener {
 		spielerLadenView.updateUI();
 	}
 
-	private void testPlayerListForDoubles() {
+	private void testPlayerListForDoubles() throws SQLException {
 		Boolean loop = false;
 		SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 		do {

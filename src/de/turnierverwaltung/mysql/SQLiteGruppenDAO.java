@@ -22,8 +22,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import de.turnierverwaltung.model.Group;
 
 public class SQLiteGruppenDAO implements GruppenDAO {
@@ -36,158 +34,133 @@ public class SQLiteGruppenDAO implements GruppenDAO {
 	}
 
 	@Override
-	public void createGruppenTable() {
+	public void createGruppenTable() throws SQLException {
 		String sql = "CREATE TABLE gruppen (idGruppe INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
 				+ " TurnierId INTEGER, Gruppenname VARCHAR);";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
-			try {
-				// create a database connection
-				stmt = this.dbConnect.createStatement();
-				stmt.setQueryTimeout(30); // set timeout to 30 sec.
-				stmt.executeUpdate(sql);
-				stmt.close();
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
+			// create a database connection
+			stmt = this.dbConnect.createStatement();
+			stmt.setQueryTimeout(30); // set timeout to 30 sec.
+			stmt.executeUpdate(sql);
+			stmt.close();
+
 		}
 	}
 
 	@Override
-	public boolean deleteGruppe(int id) {
+	public boolean deleteGruppe(int id) throws SQLException {
 		boolean ok = false;
 		String sql = "delete from gruppen where idGruppe=?;";
 		if (this.dbConnect != null) {
-			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
-				preStm.setInt(1, id);
-				preStm.addBatch();
-				this.dbConnect.setAutoCommit(false);
-				preStm.executeBatch();
-				this.dbConnect.setAutoCommit(true);
-				preStm.close();
-				ok = true;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
+
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+			preStm.setInt(1, id);
+			preStm.addBatch();
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			preStm.close();
+			ok = true;
 
 		}
 		return ok;
 	}
 
 	@Override
-	public Group findGruppe(int id) {
+	public Group findGruppe(int id) throws SQLException {
 		String sql = "Select Gruppenname, TurnierId " + "from gruppen " + "where idGruppe=" + id + ";";
 
 		Group gruppe = null;
 
 		Statement stmt;
 		if (this.dbConnect != null) {
-			try {
-				stmt = this.dbConnect.createStatement();
-				ResultSet rs = stmt.executeQuery(sql);
 
-				while (rs.next()) {
+			stmt = this.dbConnect.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
 
-					String gruppenName = rs.getString("Gruppenname");
-					gruppe = new Group(id, gruppenName);
+			while (rs.next()) {
 
-				}
-				stmt.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+				String gruppenName = rs.getString("Gruppenname");
+				gruppe = new Group(id, gruppenName);
 
 			}
+			stmt.close();
+
 		}
 		return gruppe;
 	}
 
 	@Override
-	public int insertGruppe(String gruppenName, int turnierId) {
+	public int insertGruppe(String gruppenName, int turnierId) throws SQLException {
 		String sql;
 		int id = -1;
 
 		sql = "Insert into gruppen (Gruppenname, TurnierId) values (?,?);";
 		id = -1;
 		if (this.dbConnect != null) {
-			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-				preStm.setString(1, gruppenName);
-				preStm.setInt(2, turnierId);
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-				preStm.addBatch();
-				this.dbConnect.setAutoCommit(false);
-				preStm.executeBatch();
-				this.dbConnect.setAutoCommit(true);
-				ResultSet rs = preStm.getGeneratedKeys();
-				if (rs.next()) {
-					id = rs.getInt(1);
+			preStm.setString(1, gruppenName);
+			preStm.setInt(2, turnierId);
 
-				}
-				preStm.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+			preStm.addBatch();
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			ResultSet rs = preStm.getGeneratedKeys();
+			if (rs.next()) {
+				id = rs.getInt(1);
 
 			}
+			preStm.close();
 
 		}
 		return id;
 	}
 
 	@Override
-	public ArrayList<Group> selectAllGruppen(int idTurnier) {
+	public ArrayList<Group> selectAllGruppen(int idTurnier) throws SQLException {
 		String sql = "Select * from gruppen where TurnierId=" + idTurnier + ";";
 		ArrayList<Group> gruppenListe = new ArrayList<Group>();
 
 		Statement stmt;
 		if (this.dbConnect != null) {
-			try {
-				stmt = this.dbConnect.createStatement();
-				ResultSet rs = stmt.executeQuery(sql);
 
-				while (rs.next()) {
-					int idGruppe = rs.getInt("idGruppe");
-					String gruppenName = rs.getString("Gruppenname");
-					gruppenListe.add(new Group(idGruppe, gruppenName));
-				}
-				stmt.close();
+			stmt = this.dbConnect.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+			while (rs.next()) {
+				int idGruppe = rs.getInt("idGruppe");
+				String gruppenName = rs.getString("Gruppenname");
+				gruppenListe.add(new Group(idGruppe, gruppenName));
 			}
+			stmt.close();
+
 		}
 		return gruppenListe;
 	}
 
 	@Override
-	public boolean updateGruppe(Group gruppe) {
+	public boolean updateGruppe(Group gruppe) throws SQLException {
 		boolean ok = false;
 		String sql = "update gruppen set Gruppenname = ? where idGruppe=" + gruppe.getGruppeId() + ";";
 		if (this.dbConnect != null) {
-			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
-				preStm.setString(1, gruppe.getGruppenName());
-				preStm.addBatch();
-				this.dbConnect.setAutoCommit(false);
-				preStm.executeBatch();
-				this.dbConnect.setAutoCommit(true);
-				preStm.close();
-				ok = true;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
+
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+			preStm.setString(1, gruppe.getGruppenName());
+			preStm.addBatch();
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			preStm.close();
+			ok = true;
+
 		}
 		return ok;
 	}
-	
+
 }

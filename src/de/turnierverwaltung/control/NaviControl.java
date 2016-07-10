@@ -130,26 +130,31 @@ public class NaviControl implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		if (spielerHinzufuegenView != null) {
 			if (arg0.getSource() == spielerHinzufuegenView.getOkButton()) {
-				String name = spielerHinzufuegenView.getTextFieldName().getText();
-				if (!name.equals("Spielfrei")) {
-					String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
-					String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
-					int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
-					Player neuerSpieler = new Player();
-					neuerSpieler.setName(name);
-					neuerSpieler.setKuerzel(kuerzel);
-					neuerSpieler.setDwz(dwz);
-					neuerSpieler.setAge(age);
-					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-					neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-					this.mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
-				}
-				spielerHinzufuegenView.getTextFieldName().setEditable(false);
-				spielerHinzufuegenView.getTextFieldKuerzel().setEditable(false);
-				spielerHinzufuegenView.getTextFieldDwz().setEditable(false);
-				spielerHinzufuegenView.getTextComboBoxAge().setEnabled(false);
-				spielerHinzufuegenView.spielerPanel();
+				try {
+					String name = spielerHinzufuegenView.getTextFieldName().getText();
+					if (!name.equals("Spielfrei")) {
+						String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
+						String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
+						int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
+						Player neuerSpieler = new Player();
+						neuerSpieler.setName(name);
+						neuerSpieler.setKuerzel(kuerzel);
+						neuerSpieler.setDwz(dwz);
+						neuerSpieler.setAge(age);
+						SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
+						neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+
+						this.mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+					}
+					spielerHinzufuegenView.getTextFieldName().setEditable(false);
+					spielerHinzufuegenView.getTextFieldKuerzel().setEditable(false);
+					spielerHinzufuegenView.getTextFieldDwz().setEditable(false);
+					spielerHinzufuegenView.getTextComboBoxAge().setEnabled(false);
+					spielerHinzufuegenView.spielerPanel();
+				} catch (SQLException e) {
+					mainControl.fileSQLError();
+				}
 			}
 
 			if (arg0.getSource() == spielerHinzufuegenView.getCancelButton()) {
@@ -211,7 +216,11 @@ public class NaviControl implements ActionListener {
 		if (arg0.getSource() == naviView.getPairingsSaveButton()) {
 
 			saveAndReloadTurnier();
-			setTabsEnable(true);
+			try {
+				setTabsEnable(true);
+			} catch (SQLException e) {
+				mainControl.fileSQLError();
+			}
 			pairingIsActive = false;
 
 		}
@@ -484,7 +493,7 @@ public class NaviControl implements ActionListener {
 		this.pairingIsActive = pairingIsActive;
 	}
 
-	private void setTabsEnable(Boolean enable) {
+	private void setTabsEnable(Boolean enable) throws SQLException {
 		int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
 		TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		mainControl.getNaviView().getTabellenPanel().setVisible(enable);

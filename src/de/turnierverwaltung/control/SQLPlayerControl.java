@@ -51,7 +51,7 @@ public class SQLPlayerControl {
 
 	}
 
-	public void getSpieler() {
+	public void getSpieler() throws SQLException {
 		this.turnier = this.mainControl.getTurnier();
 		ArrayList<Player> spieler = new ArrayList<Player>();
 		for (int i = 0; i < this.turnier.getAnzahlGruppen(); i++) {
@@ -75,7 +75,7 @@ public class SQLPlayerControl {
 
 	}
 
-	public int insertOneSpieler(Player spieler) {
+	public int insertOneSpieler(Player spieler) throws SQLException {
 		this.turnier = mainControl.getTurnier();
 		String spielerName = spieler.getName();
 		String spielerDWZ = spieler.getDwz();
@@ -91,7 +91,7 @@ public class SQLPlayerControl {
 		return spielerId;
 	}
 
-	public boolean insertSpieler(int gruppe) {
+	public boolean insertSpieler(int gruppe) throws SQLException {
 		boolean eintragGespeichert = false;
 		this.turnier = mainControl.getTurnier();
 		String[] spielerName = new String[turnier.getGruppe()[gruppe]
@@ -125,7 +125,7 @@ public class SQLPlayerControl {
 		return eintragGespeichert;
 	}
 
-	public boolean loescheSpieler(Player spieler) {
+	public boolean loescheSpieler(Player spieler) throws SQLException {
 		boolean geloescht = false;
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
 		Turnier_has_SpielerDAO turnier_has_spielerDAO = daoFactory
@@ -163,13 +163,13 @@ public class SQLPlayerControl {
 		return geloescht;
 	}
 
-	public void updateOneSpieler(Player spieler) {
+	public void updateOneSpieler(Player spieler) throws SQLException {
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
 
 		mySQLSpielerDAO.updateSpieler(spieler);
 	}
 
-	public boolean updateSpieler(int gruppe) {
+	public boolean updateSpieler(int gruppe) throws SQLException {
 		this.turnier = mainControl.getTurnier();
 
 		boolean saved = false;

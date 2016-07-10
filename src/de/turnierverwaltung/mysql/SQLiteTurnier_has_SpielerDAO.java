@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -22,8 +23,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-import javax.swing.JOptionPane;
-
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 
@@ -37,51 +36,42 @@ public class SQLiteTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 	}
 
 	@Override
-	public void createTurnier_has_SpielerTable() {
+	public void createTurnier_has_SpielerTable() throws SQLException {
 		String sql = "CREATE TABLE turnier_has_spieler (idturnier_has_spieler "
 				+ "INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , "
 				+ "Gruppe_idGruppe INTEGER, Spieler_idSpieler INTEGER)" + ";";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
-			try {
-				// create a database connection
-				stmt = this.dbConnect.createStatement();
-				stmt.setQueryTimeout(30); // set timeout to 30 sec.
-				stmt.executeUpdate(sql);
-				stmt.close();
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
+			// create a database connection
+			stmt = this.dbConnect.createStatement();
+			stmt.setQueryTimeout(30); // set timeout to 30 sec.
+			stmt.executeUpdate(sql);
+			stmt.close();
+
 		}
 
 	}
 
 	@Override
-	public boolean deleteTurnier_has_Spieler(ArrayList<Integer> id) {
+	public boolean deleteTurnier_has_Spieler(ArrayList<Integer> id) throws SQLException {
 		boolean ok = false;
 		String sql = "delete from turnier_has_spieler where Spieler_idSpieler=" + ";";
 		ListIterator<Integer> li = id.listIterator();
 		int idSp = -1;
 		if (id.size() > 0) {
 			if (this.dbConnect != null) {
-				try {
 
-					while (li.hasNext()) {
-						idSp = li.next();
-						PreparedStatement preStm = this.dbConnect
-								.prepareStatement(sql + idSp);
-						preStm.addBatch();
-						this.dbConnect.setAutoCommit(false);
-						preStm.executeBatch();
-						this.dbConnect.setAutoCommit(true);						preStm.close();
-						ok = true;
-					}
-				} catch (SQLException e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(null, e.getMessage());
+				while (li.hasNext()) {
+					idSp = li.next();
+					PreparedStatement preStm = this.dbConnect.prepareStatement(sql + idSp);
+					preStm.addBatch();
+					this.dbConnect.setAutoCommit(false);
+					preStm.executeBatch();
+					this.dbConnect.setAutoCommit(true);
+					preStm.close();
+					ok = true;
 				}
 
 			}
@@ -91,29 +81,24 @@ public class SQLiteTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 	}
 
 	@Override
-	public ArrayList<Integer> findSpielerisinTurnier_has_Spieler(Player spieler) {
+	public ArrayList<Integer> findSpielerisinTurnier_has_Spieler(Player spieler) throws SQLException {
 		ArrayList<Integer> findTurnier_has_Spieler = new ArrayList<Integer>();
-		String sql = "Select * " + "from turnier_has_spieler "
-				+ "where Spieler_idSpieler=" + spieler.getSpielerId() + ";";
+		String sql = "Select * " + "from turnier_has_spieler " + "where Spieler_idSpieler=" + spieler.getSpielerId()
+				+ ";";
 		Statement stmt;
 		ResultSet rs;
 		if (this.dbConnect != null) {
-			try {
-				stmt = this.dbConnect.createStatement();
-				rs = stmt.executeQuery(sql);
 
-				while (rs.next()) {
-					findTurnier_has_Spieler.add(rs.getInt("Spieler_idSpieler"));
+			stmt = this.dbConnect.createStatement();
+			rs = stmt.executeQuery(sql);
 
-				}
-
-				stmt.close();
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+			while (rs.next()) {
+				findTurnier_has_Spieler.add(rs.getInt("Spieler_idSpieler"));
 
 			}
+
+			stmt.close();
+
 		}
 		return findTurnier_has_Spieler;
 	}
@@ -125,30 +110,26 @@ public class SQLiteTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 	}
 
 	@Override
-	public int insertTurnier_has_Spieler(int idGruppe, int idSpieler) {
+	public int insertTurnier_has_Spieler(int idGruppe, int idSpieler) throws SQLException {
 		String sql;
 		sql = "Insert into turnier_has_spieler (Gruppe_idGruppe, Spieler_idSpieler) values (?,?);";
-//				+ "COMMIT;";
+		// + "COMMIT;";
 		int id = -1;
 		if (this.dbConnect != null) {
-			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
-						Statement.RETURN_GENERATED_KEYS);
-				preStm.setInt(1, idGruppe);
-				preStm.setInt(2, idSpieler);
-				preStm.addBatch();
-				this.dbConnect.setAutoCommit(false);
-				preStm.executeBatch();
-				this.dbConnect.setAutoCommit(true);				ResultSet rs = preStm.getGeneratedKeys();
-				if (rs.next()) {
-					id = rs.getInt(1);
 
-				}
-				preStm.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			preStm.setInt(1, idGruppe);
+			preStm.setInt(2, idSpieler);
+			preStm.addBatch();
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			ResultSet rs = preStm.getGeneratedKeys();
+			if (rs.next()) {
+				id = rs.getInt(1);
 
 			}
+			preStm.close();
 
 		}
 		return id;

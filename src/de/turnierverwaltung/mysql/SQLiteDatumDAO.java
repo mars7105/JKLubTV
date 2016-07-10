@@ -22,8 +22,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 public class SQLiteDatumDAO implements DatumDAO {
 	private Connection dbConnect;
 
@@ -33,111 +31,95 @@ public class SQLiteDatumDAO implements DatumDAO {
 	}
 
 	@Override
-	public void createDatumTable() {
+	public void createDatumTable() throws SQLException {
 		String sql = "CREATE TABLE datum (idDatum INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL,"
 				+ "Startdatum VARCHAR, Enddatum VARCHAR);";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
-			try {
-				// create a database connection
-				stmt = this.dbConnect.createStatement();
-				stmt.setQueryTimeout(30); // set timeout to 30 sec.
-				stmt.executeUpdate(sql);
-				stmt.close();
 
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
+			// create a database connection
+			stmt = this.dbConnect.createStatement();
+			stmt.setQueryTimeout(30); // set timeout to 30 sec.
+			stmt.executeUpdate(sql);
+			stmt.close();
+
 		}
 
 	}
 
 	@Override
-	public boolean deleteDatum(int id) {
+	public boolean deleteDatum(int id) throws SQLException {
 		boolean ok = false;
-		String sql = "delete from datum where idDatum=?;"; 
+		String sql = "delete from datum where idDatum=?;";
 		if (this.dbConnect != null) {
-			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
-				preStm.setInt(1, id);
-				preStm.addBatch();
-				this.dbConnect.setAutoCommit(false);
-				preStm.executeBatch();
-				this.dbConnect.setAutoCommit(true);				preStm.close();
-				ok = true;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
+
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+			preStm.setInt(1, id);
+			preStm.addBatch();
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			preStm.close();
+			ok = true;
 
 		}
 		return ok;
 	}
 
 	@Override
-	public String[] findDatum(int id) {
+	public String[] findDatum(int id) throws SQLException {
 		// TODO Automatisch generierter Methodenstub
 		return null;
 	}
 
 	@Override
-	public int insertDatum(String startDatum, String endDatum) {
+	public int insertDatum(String startDatum, String endDatum) throws SQLException {
 		String sql;
 		sql = "Insert into datum (Startdatum,Enddatum) values (?,?);";
 		int id = -1;
 		if (this.dbConnect != null) {
-			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
-						Statement.RETURN_GENERATED_KEYS);
-				preStm.setString(1, startDatum);
-				preStm.setString(2, endDatum);
-				preStm.addBatch();
-				this.dbConnect.setAutoCommit(false);
-				preStm.executeBatch();
-				this.dbConnect.setAutoCommit(true);
-				ResultSet rs = preStm.getGeneratedKeys();
-				if (rs.next()) {
-					id = rs.getInt(1);
 
-				}
-				preStm.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			preStm.setString(1, startDatum);
+			preStm.setString(2, endDatum);
+			preStm.addBatch();
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			ResultSet rs = preStm.getGeneratedKeys();
+			if (rs.next()) {
+				id = rs.getInt(1);
 
 			}
+			preStm.close();
 
 		}
 		return id;
 	}
 
 	@Override
-	public ArrayList<String> selectAllDatum() {
+	public ArrayList<String> selectAllDatum() throws SQLException {
 		// TODO Automatisch generierter Methodenstub
 		return null;
 	}
 
 	@Override
-	public boolean updateDatum(int idDatum, String startDatum, String endDatum) {
+	public boolean updateDatum(int idDatum, String startDatum, String endDatum) throws SQLException {
 		boolean ok = false;
-		String sql = "update datum set Startdatum = ?, Enddatum = ? where idDatum="
-				+ idDatum + ";";
+		String sql = "update datum set Startdatum = ?, Enddatum = ? where idDatum=" + idDatum + ";";
 		if (this.dbConnect != null) {
-			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
-				preStm.setString(1, startDatum);
-				preStm.setString(2, endDatum);
-				preStm.addBatch();
-				this.dbConnect.setAutoCommit(false);
-				preStm.executeBatch();
-				this.dbConnect.setAutoCommit(true);				preStm.close();
-				ok = true;
-			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
-			}
+
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+			preStm.setString(1, startDatum);
+			preStm.setString(2, endDatum);
+			preStm.addBatch();
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			preStm.close();
+			ok = true;
+
 		}
 		return ok;
 	}

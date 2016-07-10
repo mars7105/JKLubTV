@@ -1,6 +1,7 @@
 package de.turnierverwaltung.control;
 
 import java.awt.Toolkit;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -200,8 +201,9 @@ public class CrossTableControl {
 	/**
 	 * 
 	 * @param tID
+	 * @throws SQLException 
 	 */
-	public void readDataFromDatabase(int tID) {
+	public void readDataFromDatabase(int tID) throws SQLException {
 		mainControl.getTurnierTableControl().getTurnier(tID);
 		turnier = mainControl.getTurnier();
 

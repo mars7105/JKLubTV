@@ -22,15 +22,15 @@ import de.turnierverwaltung.control.PropertiesControl;
 import de.turnierverwaltung.model.Tournament;
 
 public interface TurnierDAO {
-	public void createTurnierTable();
+	public void createTurnierTable() throws SQLException;
 
-	public boolean deleteTurnier(int id);
+	public boolean deleteTurnier(int id) throws SQLException;
 
-	public Tournament findTurnier(int id, PropertiesControl prop);
+	public Tournament findTurnier(int id, PropertiesControl prop) throws SQLException;
 
-	public int insertTurnier(String turnierName, int datumId);
+	public int insertTurnier(String turnierName, int datumId) throws SQLException;
 
-	public boolean updateTurnier(Tournament turnier);
+	public boolean updateTurnier(Tournament turnier) throws SQLException;
 
 	public ArrayList<Tournament> selectAllTurnier(PropertiesControl prop) throws SQLException;
 

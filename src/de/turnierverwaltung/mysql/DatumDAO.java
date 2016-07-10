@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+import java.sql.SQLException;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -17,16 +18,16 @@ package de.turnierverwaltung.mysql;
 import java.util.ArrayList;
 
 public interface DatumDAO {
-	public void createDatumTable();
+	public void createDatumTable() throws SQLException;
 
-	public boolean deleteDatum(int id);
+	public boolean deleteDatum(int id) throws SQLException;
 
-	public String[] findDatum(int id);
+	public String[] findDatum(int id) throws SQLException;
 
-	public int insertDatum(String startDatum, String endDatum);
+	public int insertDatum(String startDatum, String endDatum) throws SQLException;
 
-	public ArrayList<String> selectAllDatum();
+	public ArrayList<String> selectAllDatum() throws SQLException;
 
-	public boolean updateDatum(int idDatum, String startDatum, String endDatum);
+	public boolean updateDatum(int idDatum, String startDatum, String endDatum) throws SQLException;
 
 }

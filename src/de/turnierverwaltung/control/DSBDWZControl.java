@@ -18,6 +18,7 @@ package de.turnierverwaltung.control;
 
 import java.awt.Color;
 import java.net.URISyntaxException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -151,8 +152,9 @@ public class DSBDWZControl {
 	 * @param updateDWZ
 	 *            = update the dwz
 	 * @return
+	 * @throws SQLException 
 	 */
-	public Boolean searchSpieler(Player neuerSpieler, Boolean updateDWZ) {
+	public Boolean searchSpieler(Player neuerSpieler, Boolean updateDWZ) throws SQLException {
 		ArrayList<Player> spieler = mainControl.getSpielerLadenControl().getSpieler();
 
 		for (Player player : spieler) {
