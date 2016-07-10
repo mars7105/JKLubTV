@@ -119,6 +119,7 @@ public class TournamentListControl implements ActionListener {
 						reloadTurnier();
 					}
 				} catch (SQLException e) {
+					turnierEditierenView.dispose();
 					mainControl.fileSQLError();
 				}
 

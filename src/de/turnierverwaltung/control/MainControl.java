@@ -267,6 +267,7 @@ public class MainControl extends JFrame {
 	 * 
 	 */
 	public void fileSQLError() {
+		propertiesControl.setPathToDatabase("");
 		propertiesControl.checkProperties();
 		Boolean ok = propertiesControl.writeProperties();
 		if (ok) {

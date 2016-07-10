@@ -74,23 +74,24 @@ public class PlayerListControl implements ActionListener {
 						stc.updateOneSpieler(spieler.get(spielerIndex));
 
 						mainControl.setEnabled(true);
-						try {
-							updateSpielerListe();
-						} catch (SQLException e) {
-							mainControl.fileSQLError();
-						}
+
+						updateSpielerListe();
+
 						if (mainControl.getTurnier() != null) {
 							mainControl.getTurnierListeLadenControl().reloadTurnier();
 						}
 						spielerEditierenView.closeWindow();
 					} catch (SQLException e1) {
+						spielerEditierenView.closeWindow();
 						mainControl.fileSQLError();
+						
 					}
 				} else {
 					mainControl.setEnabled(true);
 					try {
 						updateSpielerListe();
 					} catch (SQLException e) {
+						spielerEditierenView.closeWindow();
 						mainControl.fileSQLError();
 					}
 					spielerEditierenView.closeWindow();
