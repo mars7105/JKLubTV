@@ -98,6 +98,11 @@ public class TabbedPaneView extends JPanel {
 		/**
 		 * 
 		 */
+		private static final long serialVersionUID = 1L;
+
+		/**
+		 * 
+		 */
 
 		public TabButton() {
 			int size = 17;

@@ -43,7 +43,7 @@ public class ProgressBarRandomView extends JDialog {
 		setTitle(Messages.getString("LadebalkenView.1")); //$NON-NLS-1$
 
 		progressBar = new JProgressBar();
-		setPreferredSize(new Dimension(180,140));
+		setPreferredSize(new Dimension(180, 140));
 		// Call setStringPainted now so that the progress bar height
 		// stays the same whether or not the string is shown.
 		progressBar.setOpaque(true);
@@ -75,7 +75,7 @@ public class ProgressBarRandomView extends JDialog {
 		progressBar.setIndeterminate(true);
 		progressBar.paint(progressBar.getGraphics());
 		textLabel.paint(textLabel.getGraphics());
-		
+
 	}
 
 	public void stop() {
