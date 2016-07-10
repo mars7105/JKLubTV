@@ -41,6 +41,7 @@ import de.turnierverwaltung.view.MainView;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.PairingsView;
 import de.turnierverwaltung.view.MeetingTableView;
+import de.turnierverwaltung.view.ButtonTabComponent;
 import de.turnierverwaltung.view.CrossTableView;
 import de.turnierverwaltung.view.NewTournamentPlayerCountlView;
 import de.turnierverwaltung.view.NewTournamentPlayerInputView;
@@ -109,6 +110,7 @@ public class MainControl extends JFrame {
 	private JPanel mainPanel;
 	private SettingsControl eigenschaftenControl;
 	private LanguagePropertiesControl languagePropertiesControl;
+	private ButtonTabComponent buttonTabComponent;
 
 	public MainControl() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
@@ -149,6 +151,7 @@ public class MainControl extends JFrame {
 		mainPanel.add(standardView, BorderLayout.NORTH);
 		mainPanel.add(hauptPanel, BorderLayout.CENTER);
 		hauptPanel.updateUI();
+		buttonTabComponent = new ButtonTabComponent(hauptPanel, this, null, false);
 		mainPanel.updateUI();
 		setEnabled(true);
 		setVisible(true);
@@ -278,6 +281,14 @@ public class MainControl extends JFrame {
 
 		}
 		resetApp();
+	}
+
+	public ButtonTabComponent getButtonTabComponent() {
+		return buttonTabComponent;
+	}
+
+	public void setButtonTabComponent(ButtonTabComponent buttonTabComponent) {
+		this.buttonTabComponent = buttonTabComponent;
 	}
 
 	public LanguagePropertiesControl getLanguagePropertiesControl() {

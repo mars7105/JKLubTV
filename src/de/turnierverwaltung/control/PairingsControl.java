@@ -104,6 +104,7 @@ public class PairingsControl implements ActionListener {
 
 	@SuppressWarnings("unchecked")
 	public void init() {
+		
 		if (rundenEingabeFormularView == null) {
 			if (mainControl.getTurnierTabelleControl() == null) {
 				terminTabelle = new MeetingTable[gruppenAnzahl];
@@ -142,7 +143,9 @@ public class PairingsControl implements ActionListener {
 			for (int i = 0; i < gruppenAnzahl; i++) {
 				rundenEingabeFormularView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
 			}
+
 		}
+		
 	}
 
 	@Override
@@ -285,6 +288,7 @@ public class PairingsControl implements ActionListener {
 		rundenEingabeFormularView[index].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
 
 		rundenEingabeFormularView[index].updateUI();
+		
 	}
 
 	public void makeRundenEditView(int index) {

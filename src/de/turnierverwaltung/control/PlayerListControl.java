@@ -28,7 +28,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.model.SortName;
+import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.view.ButtonTabComponent;
 import de.turnierverwaltung.view.EditPlayerView;
 import de.turnierverwaltung.view.PlayerListView;
 
@@ -48,7 +50,6 @@ public class PlayerListControl implements ActionListener {
 
 	public PlayerListControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		new DSBDWZControl(this.mainControl);
 		hauptPanel = this.mainControl.getHauptPanel();
 		this.mainControl.getNaviView().getDateiPanel().setVisible(true);
 		this.mainControl.getNaviView().getSpielerListePanel().setVisible(true);
@@ -84,7 +85,7 @@ public class PlayerListControl implements ActionListener {
 					} catch (SQLException e1) {
 						spielerEditierenView.closeWindow();
 						mainControl.fileSQLError();
-						
+
 					}
 				} else {
 					mainControl.setEnabled(true);
@@ -156,7 +157,10 @@ public class PlayerListControl implements ActionListener {
 		int selectedTab = 0;
 		if (spielerLadenView == null) {
 			spielerLadenView = new PlayerListView(spielerAnzahl, mainControl.getPropertiesControl().getSpielerProTab());
-			hauptPanel.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, spielerLadenView); //$NON-NLS-1$
+			hauptPanel.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, spielerLadenView);
+			ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel, mainControl, spielerListeIcon, false);
+			hauptPanel.setTabComponentAt(TournamentConstants.TAB_PLAYER_LIST, buttonComp);
+
 		} else {
 			selectedTab = spielerLadenView.getSpielerListe().getSelectedIndex();
 			spielerLadenView.removeAll();

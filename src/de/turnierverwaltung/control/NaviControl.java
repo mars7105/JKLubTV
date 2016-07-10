@@ -45,6 +45,7 @@ import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.NewPlayerView;
+import de.turnierverwaltung.view.ProgressBarRandomView;
 import de.turnierverwaltung.view.TabbedPaneView;
 
 /**
@@ -73,6 +74,7 @@ public class NaviControl implements ActionListener {
 	private DSBDWZControl dewisDialogControl;
 	private TurnierAnsicht turnierAnsicht;
 	private boolean pairingIsActive;
+	private ProgressBarRandomView progressBar;
 
 	/**
 	 * 
@@ -189,7 +191,10 @@ public class NaviControl implements ActionListener {
 
 		}
 		if (arg0.getSource() == naviView.getPairingsLoadButton()) {
-
+			progressBar = new ProgressBarRandomView();
+			progressBar.pack();
+			progressBar.setVisible(true);
+			progressBar.iterate();
 			Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 			if (ready) {
 				mainControl.getNaviView().getTabellenPanel().setVisible(false);
@@ -199,6 +204,7 @@ public class NaviControl implements ActionListener {
 				TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 
 				for (int i = 0; i < gruppenAnzahl; i++) {
+					progressBar.iterate();
 					tabAnzeigeView2[i].getTabbedPane().setEnabledAt(0, false);
 					tabAnzeigeView2[i].getTabbedPane().setEnabledAt(1, false);
 					pairingsControl.makeRundenEditView(i);
@@ -207,6 +213,7 @@ public class NaviControl implements ActionListener {
 				}
 				this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
 				pairingIsActive = true;
+				progressBar.stop();
 			} else {
 				JOptionPane.showMessageDialog(null,
 						Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$

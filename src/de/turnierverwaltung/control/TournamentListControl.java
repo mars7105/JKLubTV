@@ -44,7 +44,9 @@ import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Tournament;
+import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.TabbedPaneView;
+import de.turnierverwaltung.view.ButtonTabComponent;
 import de.turnierverwaltung.view.EditTournamentView;
 import de.turnierverwaltung.view.TournamentListView;
 
@@ -69,10 +71,11 @@ public class TournamentListControl implements ActionListener {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png"))); //$NON-NLS-1$
 	private Tournament turnierEdit;
 	private boolean selectTurnierTab;
+	private ButtonTabComponent buttonTabComponent;
 
 	public TournamentListControl(MainControl mainControl) {
 		anzahlTurniere = 0;
-
+		loadedTurnierID = -1;
 		this.mainControl = mainControl;
 
 		this.mainControl.setTurnierListeLadenView(turnierListeLadenView);
@@ -82,6 +85,9 @@ public class TournamentListControl implements ActionListener {
 
 		hauptPanel = this.mainControl.getHauptPanel();
 		selectTurnierTab = false;
+		mainControl.setButtonTabComponent(new ButtonTabComponent(hauptPanel, mainControl, turnierIcon, true));
+
+		buttonTabComponent = mainControl.getButtonTabComponent();
 	}
 
 	@Override
@@ -283,12 +289,13 @@ public class TournamentListControl implements ActionListener {
 
 		mainControl.setSpielerEingabeControl(null);
 		if (mainControl.getTurnier() != null) {
-			int selectedIndex = hauptPanel.getTabCount() - 1;
+			if (hauptPanel.getTabCount() - 1 == TournamentConstants.TAB_ACTIVE_TOURNAMENT) {
+				hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
 
-			hauptPanel.remove(selectedIndex);
+			}
 
 		}
-
+		
 		turnier = turnierListe.get(index);
 		mainControl.setTurnier(turnier);
 		mainControl.setGruppenTableControl(new SQLGroupsControl(mainControl));
@@ -328,7 +335,11 @@ public class TournamentListControl implements ActionListener {
 				Messages.getString("TurnierListeLadenControl.5") + mainControl.getTurnier().getTurnierName()); //$NON-NLS-1$
 		mainControl.getNaviController().setPairingIsActive(false);
 		this.mainControl.setNeuesTurnier(false);
+
 		hauptPanel.addTab(turnier.getTurnierName(), turnierIcon, tabbedPaneView);
+		buttonTabComponent = new ButtonTabComponent(hauptPanel, mainControl, turnierIcon, true);
+
+		hauptPanel.setTabComponentAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, buttonTabComponent);
 		if (selectTurnierTab == true) {
 			selectTurnierTab = false;
 			selectedTab = hauptPanel.getTabCount() - 1;
@@ -360,6 +371,9 @@ public class TournamentListControl implements ActionListener {
 						mainControl.getPropertiesControl().getTurniereProTab());
 				hauptPanel.addTab(Messages.getString("TurnierListeLadenControl.9"), turnierListeIcon, //$NON-NLS-1$
 						turnierListeLadenView);
+				ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel, mainControl, turnierListeIcon,
+						false);
+				hauptPanel.setTabComponentAt(TournamentConstants.TAB_TOURNAMENTS_LIST, buttonComp);
 
 			} else {
 				this.turnierListeLadenView.removeAll();
