@@ -138,7 +138,7 @@ public class PlayerListView extends JPanel {
 			}
 			JPanel panel = new JPanel();
 			panel.setLayout(new BorderLayout());
-			panel.add(centerPane, BorderLayout.CENTER);
+			panel.add(centerPane, BorderLayout.NORTH);
 			JScrollPane playerScrollPane = new JScrollPane();
 			playerScrollPane.setViewportView(panel);
 			playerScrollPane.setAlignmentY(TOP_ALIGNMENT);

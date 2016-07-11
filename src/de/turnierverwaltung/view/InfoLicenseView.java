@@ -279,7 +279,7 @@ public class InfoLicenseView {
 		panel.add(new JSeparator());
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(panel);
-		all.add(scrollPane, BorderLayout.NORTH);
+		all.add(scrollPane, BorderLayout.CENTER);
 
 		return all;
 

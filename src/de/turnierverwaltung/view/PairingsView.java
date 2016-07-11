@@ -48,7 +48,6 @@ public class PairingsView extends JPanel {
 	private JPanel flowPane;
 	private JPanel downPane;
 	private JTabbedPane tabbedPane;
-	private JScrollPane scrollPane;
 	private JComboBox<String>[] rundenNummer;
 	private int spielerAnzahl;
 	private JLabel[] weissSpieler;
@@ -135,10 +134,8 @@ public class PairingsView extends JPanel {
 		// contentPanel.setBackground(new Color(249, 222, 112));
 		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		// setLayout(new BorderLayout());
-		scrollPane = new JScrollPane();
-		scrollPane.setViewportView(contentPanel);
-		scrollPane.setAlignmentY(TOP_ALIGNMENT);
-		add(scrollPane, BorderLayout.CENTER);
+		
+		add(contentPanel, BorderLayout.CENTER);
 
 		JPanel southPanel = new JPanel();
 		southPanel.setLayout(new BorderLayout());
@@ -321,19 +318,16 @@ public class PairingsView extends JPanel {
 			}
 
 			panel.add(flowPane, BorderLayout.NORTH);
-			tabbedPane.add(Messages.getString("RundenEingabeFormularView.17") + (r + 1), panel); //$NON-NLS-1$
+			JScrollPane scrollPane = new JScrollPane();
+			scrollPane.setViewportView(panel);
+			scrollPane.setAlignmentY(TOP_ALIGNMENT);
+			tabbedPane.add(Messages.getString("RundenEingabeFormularView.17") + (r + 1), scrollPane); //$NON-NLS-1$
 		}
 		contentPanel.add(tabbedPane, BorderLayout.CENTER);
 		contentPanel.updateUI();
 	}
 
-	// public JButton getReloadButton() {
-	// return reloadButton;
-	// }
-	//
-	// public void setReloadButton(JButton reloadButton) {
-	// this.reloadButton = reloadButton;
-	// }
+	
 
 	public class DateLabelFormatter extends AbstractFormatter {
 
