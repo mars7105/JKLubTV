@@ -88,6 +88,7 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 			okButton[i].addActionListener(this);
 			tabbedPaneView.getTabbedPane().addTab(title[i], spielerAnzahlView[i]);
 			gruppe[i].setSpieler(spieler[i]);
+			spielerAnzahlTextfield[i].grabFocus();
 		}
 		tabbedPaneView.updateUI();
 		hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
@@ -96,7 +97,6 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 		hauptPanel.setIconAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, gruppenIcon);
 		hauptPanel.setSelectedIndex(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-		spielerAnzahlTextfield[0].grabFocus();
 	}
 
 	@Override
@@ -144,12 +144,7 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 
 	public int getSpielerAnzahl(int indexI) throws ZahlKleinerAlsN, NumberFormatException, ZahlGroesserAlsN {
 
-		if (spielerAnzahlTextfield[indexI].getText().length() > 0) {
-
-			spielerAnzahl[indexI] = pruefeObZahlKleinerDreiIst(
-					Integer.parseInt(spielerAnzahlTextfield[indexI].getText()));
-
-		}
+		spielerAnzahl[indexI] = pruefeObZahlKleinerDreiIst(Integer.parseInt(spielerAnzahlTextfield[indexI].getText()));
 
 		return spielerAnzahl[indexI];
 	}
