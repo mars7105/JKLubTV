@@ -36,7 +36,6 @@ public class PlayerListView extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPanel;
 	private JPanel mainPane;
 	private JPanel centerPane;
 	private JButton[] spielerBearbeitenButton;
