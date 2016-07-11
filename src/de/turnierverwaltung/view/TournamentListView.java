@@ -34,10 +34,10 @@ public class TournamentListView extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPanel;
+	// private JPanel contentPanel;
 	private JPanel centerPane;
 	private JPanel line;
-	private JScrollPane scrollPane;
+	// private JScrollPane scrollPane;
 	private JButton[] turnierLadeButton;
 	private int anzahlElemente;
 	private JButton[] turnierLoeschenButton;
@@ -65,12 +65,12 @@ public class TournamentListView extends JPanel {
 		anzahlElemente = 0;
 		setLayout(new BorderLayout());
 		turnierListe = new JTabbedPane();
-		contentPanel = new JPanel();
-		contentPanel.setLayout(new BorderLayout());
+		// contentPanel = new JPanel();
+		// contentPanel.setLayout(new BorderLayout());
 		// contentPanel.setBackground(new Color(249, 222, 112));
 		setLayout(new BorderLayout());
-		scrollPane = new JScrollPane();
-		scrollPane.setViewportView(contentPanel);
+		// scrollPane = new JScrollPane();
+		// scrollPane.setViewportView(contentPanel);
 		titleView = new TitleLabelView(Messages.getString("TurnierListeLadenView.3"));
 
 		JPanel northPanel = new JPanel();
@@ -79,12 +79,12 @@ public class TournamentListView extends JPanel {
 
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
-		contentPanel.add(turnierListe, BorderLayout.NORTH);
+		// contentPanel.add(turnierListe, BorderLayout.NORTH);
 		turnierLadeButton = new JButton[anzahlTurniere];
 		turnierLoeschenButton = new JButton[anzahlTurniere];
 		turnierBearbeitenButton = new JButton[anzahlTurniere];
 		add(northPanel, BorderLayout.NORTH);
-		add(scrollPane, BorderLayout.CENTER);
+		add(turnierListe, BorderLayout.CENTER);
 	}
 
 	public TitleLabelView getTitleView() {
@@ -157,7 +157,11 @@ public class TournamentListView extends JPanel {
 			JPanel panel = new JPanel();
 			panel.setLayout(new BorderLayout());
 			panel.add(centerPane, BorderLayout.NORTH);
-			turnierListe.addTab(startIndex + " " + Messages.getString("SpielerLadenView.7") + " " + endIndex, panel);
+			JScrollPane playerScrollPane = new JScrollPane();
+			playerScrollPane.setViewportView(panel);
+			playerScrollPane.setAlignmentY(TOP_ALIGNMENT);
+			turnierListe.addTab(startIndex + " " + Messages.getString("SpielerLadenView.7") + " " + endIndex,
+					playerScrollPane);
 			centerPane = new JPanel();
 			centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
 		}

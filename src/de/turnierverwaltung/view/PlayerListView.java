@@ -38,7 +38,6 @@ public class PlayerListView extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPanel;
 	private JPanel mainPane;
-	private JScrollPane scrollPane;
 	private JPanel centerPane;
 	private JButton[] spielerBearbeitenButton;
 	private JButton[] spielerLoeschenButton;
@@ -47,11 +46,10 @@ public class PlayerListView extends JPanel {
 
 	private JTabbedPane spielerListe;
 
-	private ImageIcon userDelete = new ImageIcon(Toolkit.getDefaultToolkit()
-			.getImage(getClass().getResource("/images/user-delete-2.png"))); //$NON-NLS-1$
-	private ImageIcon userProperties = new ImageIcon(Toolkit
-			.getDefaultToolkit().getImage(
-					getClass().getResource("/images/user-properties.png"))); //$NON-NLS-1$
+	private ImageIcon userDelete = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-delete-2.png"))); //$NON-NLS-1$
+	private ImageIcon userProperties = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-properties.png"))); //$NON-NLS-1$
 
 	private int spielerAnzahl;
 	private int spielerTabAnzahl;
@@ -70,7 +68,7 @@ public class PlayerListView extends JPanel {
 		setLayout(new BorderLayout());
 		spielerListe = new JTabbedPane();
 
-		 titleView = new TitleLabelView(Messages.getString("SpielerLadenView.2"));
+		titleView = new TitleLabelView(Messages.getString("SpielerLadenView.2"));
 
 		mainPane = new JPanel();
 		mainPane.setLayout(new BoxLayout(mainPane, BoxLayout.PAGE_AXIS));
@@ -79,16 +77,11 @@ public class PlayerListView extends JPanel {
 		add(mainPane, BorderLayout.NORTH);
 		spielerBearbeitenButton = new JButton[this.spielerAnzahl];
 		spielerLoeschenButton = new JButton[this.spielerAnzahl];
-		contentPanel = new JPanel();
-		contentPanel.setLayout(new BorderLayout());
+
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
-		// contentPanel.add(centerPane, BorderLayout.NORTH);
-		contentPanel.add(spielerListe, BorderLayout.NORTH);
 
-		scrollPane = new JScrollPane();
-		scrollPane.setViewportView(contentPanel);
-		add(scrollPane, BorderLayout.CENTER);
+		add(spielerListe, BorderLayout.CENTER);
 
 	}
 
@@ -109,20 +102,16 @@ public class PlayerListView extends JPanel {
 		playerLine.setPreferredSize(new Dimension(350, 50));
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
-		JLabel sname = new JLabel(
-				Messages.getString("SpielerLadenView.3") + spieler.getName()); //$NON-NLS-1$
+		JLabel sname = new JLabel(Messages.getString("SpielerLadenView.3") + spieler.getName()); //$NON-NLS-1$
 		playerLine.add(sname);
 
-		JLabel dwz = new JLabel(
-				Messages.getString("SpielerLadenView.4") + spieler.getDwz()); //$NON-NLS-1$
+		JLabel dwz = new JLabel(Messages.getString("SpielerLadenView.4") + spieler.getDwz()); //$NON-NLS-1$
 		playerLine.add(dwz);
 		line.add(playerLine);
-		spielerBearbeitenButton[index] = new JButton(
-				Messages.getString("SpielerLadenView.5"), userProperties); //$NON-NLS-1$
+		spielerBearbeitenButton[index] = new JButton(Messages.getString("SpielerLadenView.5"), userProperties); //$NON-NLS-1$
 
 		buttonLine.add(spielerBearbeitenButton[index]);
-		spielerLoeschenButton[index] = new JButton(
-				Messages.getString("SpielerLadenView.6"), userDelete); //$NON-NLS-1$
+		spielerLoeschenButton[index] = new JButton(Messages.getString("SpielerLadenView.6"), userDelete); //$NON-NLS-1$
 		buttonLine.add(spielerLoeschenButton[index]);
 		line.add(buttonLine);
 		centerPane.add(line);
@@ -150,10 +139,12 @@ public class PlayerListView extends JPanel {
 			}
 			JPanel panel = new JPanel();
 			panel.setLayout(new BorderLayout());
-			panel.add(centerPane, BorderLayout.NORTH);
-			spielerListe.addTab(
-					startIndex + " " + Messages.getString("SpielerLadenView.7")
-							+ " " + endIndex, panel);
+			panel.add(centerPane, BorderLayout.CENTER);
+			JScrollPane playerScrollPane = new JScrollPane();
+			playerScrollPane.setViewportView(panel);
+			playerScrollPane.setAlignmentY(TOP_ALIGNMENT);
+			spielerListe.addTab(startIndex + " " + Messages.getString("SpielerLadenView.7") + " " + endIndex,
+					playerScrollPane);
 			centerPane = new JPanel();
 			centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
 		}
