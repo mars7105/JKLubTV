@@ -45,7 +45,7 @@ import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.NewPlayerView;
-import de.turnierverwaltung.view.ProgressBarRandomView;
+import de.turnierverwaltung.view.ProgressBarView;
 import de.turnierverwaltung.view.TabbedPaneView;
 
 /**
@@ -74,7 +74,7 @@ public class NaviControl implements ActionListener {
 	private DSBDWZControl dewisDialogControl;
 	private TurnierAnsicht turnierAnsicht;
 	private boolean pairingIsActive;
-	private ProgressBarRandomView progressBar;
+	private ProgressBarView progressBar;
 
 	/**
 	 * 
@@ -191,16 +191,19 @@ public class NaviControl implements ActionListener {
 
 		}
 		if (arg0.getSource() == naviView.getPairingsLoadButton()) {
-			progressBar = new ProgressBarRandomView();
-			progressBar.pack();
-			progressBar.setVisible(true);
-			progressBar.iterate();
+
 			Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 			if (ready) {
+				int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
+
+				progressBar = new ProgressBarView(Messages.getString("NaviController.32"),
+						Messages.getString("NaviController.31"), gruppenAnzahl);
+
 				mainControl.getNaviView().getTabellenPanel().setVisible(false);
+				progressBar.iterate(gruppenAnzahl);
+
 				PairingsControl pairingsControl = mainControl.getRundenEingabeFormularControl();
 				pairingsControl.init();
-				int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
 				TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 
 				for (int i = 0; i < gruppenAnzahl; i++) {
@@ -209,11 +212,14 @@ public class NaviControl implements ActionListener {
 					tabAnzeigeView2[i].getTabbedPane().setEnabledAt(1, false);
 					pairingsControl.makeRundenEditView(i);
 					tabAnzeigeView2[i].getTabbedPane().setSelectedIndex(2);
+					progressBar.iterate();
 
 				}
 				this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
 				pairingIsActive = true;
-				progressBar.stop();
+				progressBar.iterate(gruppenAnzahl);
+				progressBar.iterate(gruppenAnzahl);
+
 			} else {
 				JOptionPane.showMessageDialog(null,
 						Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$

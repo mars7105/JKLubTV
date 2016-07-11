@@ -48,6 +48,7 @@ import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.TabbedPaneView;
 import de.turnierverwaltung.view.ButtonTabComponent;
 import de.turnierverwaltung.view.EditTournamentView;
+import de.turnierverwaltung.view.ProgressBarView;
 import de.turnierverwaltung.view.TournamentListView;
 
 public class TournamentListControl implements ActionListener {
@@ -295,7 +296,7 @@ public class TournamentListControl implements ActionListener {
 			}
 
 		}
-		
+
 		turnier = turnierListe.get(index);
 		mainControl.setTurnier(turnier);
 		mainControl.setGruppenTableControl(new SQLGroupsControl(mainControl));
@@ -412,21 +413,32 @@ public class TournamentListControl implements ActionListener {
 	public void loadPairingsView() {
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 		if (ready) {
+			int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
+
+			ProgressBarView progressBar = new ProgressBarView(Messages.getString("NaviController.32"),
+					Messages.getString("NaviController.31"), gruppenAnzahl);
 			mainControl.getNaviView().getTabellenPanel().setVisible(false);
+			progressBar.iterate(gruppenAnzahl);
+
 			PairingsControl pairingsControl = mainControl.getRundenEingabeFormularControl();
 			pairingsControl.init();
-			int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
 			TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 
 			for (int i = 0; i < gruppenAnzahl; i++) {
+				progressBar.iterate();
+
 				tabAnzeigeView2[i].getTabbedPane().setEnabledAt(0, false);
 				tabAnzeigeView2[i].getTabbedPane().setEnabledAt(1, false);
 				pairingsControl.makeRundenEditView(i);
 				tabAnzeigeView2[i].getTabbedPane().setSelectedIndex(2);
+				progressBar.iterate();
 
 			}
+			progressBar.iterate(gruppenAnzahl);
+
 			this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
 			this.mainControl.getNaviController().setPairingIsActive(true);
+			progressBar.iterate(gruppenAnzahl);
 
 		} else {
 			JOptionPane.showMessageDialog(null,

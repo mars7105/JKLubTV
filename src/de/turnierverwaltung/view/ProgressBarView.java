@@ -1,5 +1,6 @@
 package de.turnierverwaltung.view;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -35,23 +36,38 @@ public class ProgressBarView extends JDialog {
 	private JLabel textLabel;
 	double num = 0;
 	double addNumber;
+	private int gruppenAnzahl;
+	private String message;
 
-	public ProgressBarView(String text, int gruppenAnzahl) {
-		addNumber = 20 / (double)gruppenAnzahl;
-		this.setAlwaysOnTop(true);
+	public ProgressBarView(String message, int gruppenAnzahl) {
 		setTitle(Messages.getString("LadebalkenView.0")); //$NON-NLS-1$
-		
-		progressBar = new JProgressBar(0, 100);
 
+		this.gruppenAnzahl = gruppenAnzahl;
+		this.message = message;
+		createProgressBar();
+	}
+
+	public ProgressBarView(String message, String title, int gruppenAnzahl) {
+		setTitle(title); // $NON-NLS-1$
+		this.gruppenAnzahl = gruppenAnzahl;
+		this.message = message;
+		createProgressBar();
+	}
+
+	private void createProgressBar() {
+
+		this.setAlwaysOnTop(true);
+		addNumber = 20 / (double) gruppenAnzahl;
+		textLabel = new JLabel(message);
+		progressBar = new JProgressBar(0, 100);
 		// Call setStringPainted now so that the progress bar height
 		// stays the same whether or not the string is shown.
 		progressBar.setOpaque(true);
 		progressBar.setVisible(true);
 		progressBar.setValue(0);
 		progressBar.setStringPainted(true);
-		textLabel = new JLabel(text);
 		panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel,BoxLayout.PAGE_AXIS));
+		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		panel.add(textLabel);
 		panel.add(progressBar);
 		// panel.setOpaque(true);
@@ -60,10 +76,10 @@ public class ProgressBarView extends JDialog {
 
 		// add(progressBar, BorderLayout.PAGE_START);
 		panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+		pack();
 		// setContentPane(panel);
 		setVisible(true);
 		setLocationRelativeTo(null);
-
 	}
 
 	public JProgressBar getMeinLadebalken() {
@@ -72,7 +88,24 @@ public class ProgressBarView extends JDialog {
 
 	public void iterate() {
 		num += addNumber;
-		
+
+		int value = (int) Math.round(num);
+		progressBar.setValue(value);
+		progressBar.paint(progressBar.getGraphics());
+		textLabel.paint(textLabel.getGraphics());
+		if (num >= 100) {
+			try {
+				Thread.sleep(250);
+			} catch (InterruptedException ex) {
+			}
+			this.dispose();
+		}
+
+	}
+
+	public void iterate(int loop) {
+		num += addNumber * loop;
+
 		int value = (int) Math.round(num);
 		progressBar.setValue(value);
 		progressBar.paint(progressBar.getGraphics());
