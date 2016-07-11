@@ -32,6 +32,7 @@ import de.turnierverwaltung.ZahlKleinerAlsN;
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
+import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.NewTournamentPlayerCountlView;
 import de.turnierverwaltung.view.TabbedPaneView;
 
@@ -58,14 +59,12 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 	private TabbedPaneView tabbedPaneView;
 	private Tournament turnier;
 	private Group[] gruppe;
-	private int selectIndex;
 	private Player[][] spieler;
 	private ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png"))); //$NON-NLS-1$
 
-	public NewTournamentPlayerCountControl(MainControl mainControl, int selectIndex) {
+	public NewTournamentPlayerCountControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		this.selectIndex = selectIndex;
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
 
@@ -91,57 +90,64 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 			gruppe[i].setSpieler(spieler[i]);
 		}
 		tabbedPaneView.updateUI();
-		hauptPanel.remove(this.selectIndex);
-		hauptPanel.add(this.tabbedPaneView, this.selectIndex);
-		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());
-		hauptPanel.setIconAt(selectIndex, gruppenIcon);
-		hauptPanel.setSelectedIndex(selectIndex);
+		hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		hauptPanel.add(this.tabbedPaneView, TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		hauptPanel.setTitleAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, turnier.getTurnierName());
+		hauptPanel.setIconAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, gruppenIcon);
+		hauptPanel.setSelectedIndex(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+		spielerAnzahlTextfield[0].grabFocus();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (mainControl.getSpielerEingabeControl() == null) {
-			try {
-				spielerEingabeControl = new NewTournamentPlayerInputControl(mainControl, this.selectIndex);
-			} catch (SQLException e) {
-				mainControl.fileSQLError();
-			}
-			mainControl.setSpielerEingabeControl(spielerEingabeControl);
-		}
-		for (int i = 0; i < gruppenAnzahl; i++) {
-			if (arg0.getSource() == okButton[i]) {
-				spielerAnzahl[i] = getSpielerAnzahl(i);
-				spielerEingabeControl.makeTabbedPane(i);
-				gruppe[i].setSpielerAnzahl(spielerAnzahl[i]);
-
-			}
-		}
-	}
-
-	public int getSpielerAnzahl(int indexI) {
-
+		int fehlerIndex = 0;
 		try {
-			if (spielerAnzahlTextfield[indexI].getText().length() > 0) {
-				try {
-					spielerAnzahl[indexI] = pruefeObZahlKleinerDreiIst(
-							Integer.parseInt(spielerAnzahlTextfield[indexI].getText()));
-				} catch (NumberFormatException e) {
+			if (mainControl.getSpielerEingabeControl() == null) {
+				spielerEingabeControl = new NewTournamentPlayerInputControl(mainControl);
+				mainControl.setSpielerEingabeControl(spielerEingabeControl);
+			} else {
+				spielerEingabeControl = mainControl.getSpielerEingabeControl();
+			}
 
-					JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.1")); //$NON-NLS-1$
-					spielerAnzahlTextfield[indexI].setText(""); //$NON-NLS-1$
-					spielerAnzahlTextfield[indexI].grabFocus();
-				} catch (ZahlKleinerAlsN e) {
-					JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.3")); //$NON-NLS-1$
-					spielerAnzahlTextfield[indexI].setText(""); //$NON-NLS-1$
-					spielerAnzahlTextfield[indexI].grabFocus();
-				} catch (ZahlGroesserAlsN e) {
-					JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.5")); //$NON-NLS-1$
-					spielerAnzahlTextfield[indexI].setText(""); //$NON-NLS-1$
-					spielerAnzahlTextfield[indexI].grabFocus();
+			for (int i = 0; i < gruppenAnzahl; i++) {
+				if (arg0.getSource() == okButton[i]) {
+					fehlerIndex = i;
+					spielerAnzahl[i] = getSpielerAnzahl(i);
+					spielerEingabeControl.makeTabbedPane(i);
+					gruppe[i].setSpielerAnzahl(spielerAnzahl[i]);
+
 				}
 			}
+		} catch (SQLException e) {
+			mainControl.fileSQLError();
 		} catch (NumberFormatException e) {
+			spielerAnzahl[fehlerIndex] = 0;
+			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.1")); //$NON-NLS-1$
+			spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
+			spielerAnzahlTextfield[fehlerIndex].grabFocus();
+		} catch (ZahlKleinerAlsN e) {
+			spielerAnzahl[fehlerIndex] = 0;
+
+			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.3")); //$NON-NLS-1$
+			spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
+			spielerAnzahlTextfield[fehlerIndex].grabFocus();
+		} catch (ZahlGroesserAlsN e) {
+			spielerAnzahl[fehlerIndex] = 0;
+
+			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.5")); //$NON-NLS-1$
+			spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
+			spielerAnzahlTextfield[fehlerIndex].grabFocus();
+		}
+
+	}
+
+	public int getSpielerAnzahl(int indexI) throws ZahlKleinerAlsN, NumberFormatException, ZahlGroesserAlsN {
+
+		if (spielerAnzahlTextfield[indexI].getText().length() > 0) {
+
+			spielerAnzahl[indexI] = pruefeObZahlKleinerDreiIst(
+					Integer.parseInt(spielerAnzahlTextfield[indexI].getText()));
 
 		}
 
@@ -159,6 +165,8 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 		okButton[indexI] = spielerAnzahlView[indexI].getOkButton();
 		okButton[indexI].addActionListener(this);
 		tabbedPaneView.getTabbedPane().setComponentAt(indexI, spielerAnzahlView[indexI]);
+		spielerAnzahlView[indexI].getAnzahlSpielerTextField().grabFocus();
+
 	}
 
 	public void setSpielerAnzahl(int[] spielerAnzahl) {

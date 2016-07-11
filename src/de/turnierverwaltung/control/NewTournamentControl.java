@@ -86,7 +86,7 @@ public class NewTournamentControl implements ActionListener {
 			}
 
 		}
-		
+
 		hauptPanel.addTab(Messages.getString("TurnierControl.1"), turnierIcon, this.turnierView); //$NON-NLS-1$ \
 		hauptPanel.setTabComponentAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, buttonTabComponent);
 		selectIndex = hauptPanel.getTabCount() - 1;
@@ -102,6 +102,8 @@ public class NewTournamentControl implements ActionListener {
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
 		mainControl.getNaviController().setPairingIsActive(false);
+		this.turnierView.getTurnierNameTextField().grabFocus();
+
 	}
 
 	@Override
@@ -194,7 +196,7 @@ public class NewTournamentControl implements ActionListener {
 			if (turnierName.length() > 0 && startDatum.length() > 0 && endDatum.length() > 0 && gruppenAnzahl > 0) {
 				makeTurnier();
 
-				this.mainControl.setGruppenControl(new NewTournamentGroupsControl(this.mainControl, selectIndex));
+				this.mainControl.setGruppenControl(new NewTournamentGroupsControl(this.mainControl));
 
 			}
 

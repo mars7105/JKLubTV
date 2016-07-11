@@ -191,8 +191,11 @@ public class NaviControl implements ActionListener {
 
 		}
 		if (arg0.getSource() == naviView.getPairingsLoadButton()) {
+			mainControl.setRundenEingabeFormularControl(new PairingsControl(mainControl));
 
-			Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+			PairingsControl pairingsControl = mainControl.getRundenEingabeFormularControl();
+
+			Boolean ready = pairingsControl.checkNewTurnier();
 			if (ready) {
 				int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
 
@@ -202,8 +205,6 @@ public class NaviControl implements ActionListener {
 				mainControl.getNaviView().getTabellenPanel().setVisible(false);
 				progressBar.iterate(gruppenAnzahl);
 
-				PairingsControl pairingsControl = mainControl.getRundenEingabeFormularControl();
-				pairingsControl.init();
 				TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 
 				for (int i = 0; i < gruppenAnzahl; i++) {

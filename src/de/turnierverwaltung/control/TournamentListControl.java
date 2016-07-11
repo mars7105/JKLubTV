@@ -328,8 +328,8 @@ public class TournamentListControl implements ActionListener {
 			mainControl.getTerminTabelleControl().makeSimpleTableView(z);
 			mainControl.getTurnierTabelleControl().okAction(z);
 		}
-		PairingsControl rundenEingabeFormularControl = new PairingsControl(mainControl);
-		mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
+//		PairingsControl rundenEingabeFormularControl = new PairingsControl(mainControl);
+//		mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
 		mainControl.getTurnier().setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
 		mainControl.getTurnier().setNoFolgeDWZCalc(mainControl.getPropertiesControl().getNoFolgeDWZ());
 		mainControl.getNaviView().setTabellenname(

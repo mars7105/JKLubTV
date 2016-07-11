@@ -82,17 +82,17 @@ public class PairingsControl implements ActionListener {
 	private ImageIcon paarungenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/media-playlist-shuffle-3.png"))); //$NON-NLS-1$
 
+//	public PairingsControl(MainControl mainControl) {
+//		this.mainControl = mainControl;
+//
+//		turnier = this.mainControl.getTurnier();
+//		gruppe = turnier.getGruppe();
+//		gruppenAnzahl = turnier.getAnzahlGruppen();
+//		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+//
+//	}
+
 	public PairingsControl(MainControl mainControl) {
-		this.mainControl = mainControl;
-
-		turnier = this.mainControl.getTurnier();
-		gruppe = turnier.getGruppe();
-		gruppenAnzahl = turnier.getAnzahlGruppen();
-		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
-
-	}
-
-	public PairingsControl(MainControl mainControl, int selectIndex) {
 		this.mainControl = mainControl;
 
 		turnier = this.mainControl.getTurnier();

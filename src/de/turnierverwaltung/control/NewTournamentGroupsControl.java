@@ -26,6 +26,7 @@ import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Tournament;
+import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.NewTournamentGroupsView;
 
 public class NewTournamentGroupsControl implements ActionListener {
@@ -39,12 +40,10 @@ public class NewTournamentGroupsControl implements ActionListener {
 	private Group[] gruppe;
 	private ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
-	private int selectIndex;
 
-	public NewTournamentGroupsControl(MainControl mainControl, int selectIndex) {
+	public NewTournamentGroupsControl(MainControl mainControl) {
 
 		this.mainControl = mainControl;
-		this.selectIndex = selectIndex;
 		turnier = this.mainControl.getTurnier();
 		hauptPanel = this.mainControl.getHauptPanel();
 		gruppenAnzahl = turnier.getAnzahlGruppen();
@@ -56,11 +55,11 @@ public class NewTournamentGroupsControl implements ActionListener {
 		gruppenCancelButton = this.gruppenView.getCancelButton();
 		gruppenCancelButton.addActionListener(this);
 		gruppenView.getGruppenNameTextField()[0].grabFocus();
-		hauptPanel.remove(this.selectIndex);
-		hauptPanel.add(this.gruppenView, this.selectIndex);
-		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());
-		hauptPanel.setIconAt(selectIndex, gruppenIcon);
-		hauptPanel.setSelectedIndex(selectIndex);
+		hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		hauptPanel.add(this.gruppenView, TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		hauptPanel.setTitleAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, turnier.getTurnierName());
+		hauptPanel.setIconAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, gruppenIcon);
+		hauptPanel.setSelectedIndex(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 	}
 
@@ -70,9 +69,9 @@ public class NewTournamentGroupsControl implements ActionListener {
 		if (arg0.getSource() == gruppenOKButton) {
 			gruppenAnzahl = turnier.getAnzahlGruppen();
 			makeGruppe();
-
-			this.mainControl.setSpielerAnzahlControl(new NewTournamentPlayerCountControl(this.mainControl, selectIndex));
-
+			if (mainControl.getSpielerAnzahlControl() == null) {
+				mainControl.setSpielerAnzahlControl(new NewTournamentPlayerCountControl(this.mainControl));
+			}
 		}
 		if (arg0.getSource() == gruppenCancelButton) {
 			this.mainControl.setTurnierControl(new NewTournamentControl(this.mainControl));

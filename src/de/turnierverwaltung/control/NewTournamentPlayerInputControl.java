@@ -32,6 +32,8 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import de.turnierverwaltung.ZahlGroesserAlsN;
+import de.turnierverwaltung.ZahlKleinerAlsN;
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
@@ -59,7 +61,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 	private ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png"))); //$NON-NLS-1$
 
-	public NewTournamentPlayerInputControl(MainControl mainControl, int selectIndex) throws SQLException {
+	public NewTournamentPlayerInputControl(MainControl mainControl) throws SQLException {
 		int windowWidth = TournamentConstants.WINDOW_WIDTH - 25;
 		int windowHeight = TournamentConstants.WINDOW_HEIGHT - 75;
 		this.mainControl = mainControl;
@@ -79,14 +81,9 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 		okButton = new JButton[gruppenAnzahl];
 		cancelButton = new JButton[gruppenAnzahl];
-		if (this.mainControl.getRundenEingabeFormularControl() == null) {
-			rundenEingabeFormularControl = new PairingsControl(this.mainControl, selectIndex);
-			this.mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
-		} else {
-			rundenEingabeFormularControl = this.mainControl.getRundenEingabeFormularControl();
-		}
-		rundenEingabeFormularControl = new PairingsControl(this.mainControl, selectIndex);
+		rundenEingabeFormularControl = new PairingsControl(this.mainControl);
 		this.mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
+
 		readyToSave = new Boolean[gruppenAnzahl];
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			readyToSave[i] = false;
@@ -106,17 +103,18 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			if (arg0.getSource() == okButton[i]) {
-				SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+				try {
+					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
-				sAnzahl = gruppe[i].getSpielerAnzahl();
-				gruppe[i].setRundenAnzahl(sAnzahl + ((sAnzahl % 2) - 1));
-				readyToSave[i] = true;
-				spieler = new Player[sAnzahl];
-				Boolean correctName = true;
-				int counter = -1;
+					sAnzahl = gruppe[i].getSpielerAnzahl();
+					gruppe[i].setRundenAnzahl(sAnzahl + ((sAnzahl % 2) - 1));
+					readyToSave[i] = true;
+					spieler = new Player[sAnzahl];
+					Boolean correctName = true;
+					int counter = -1;
 
-				if (testForDoubles(i) == true) {
-					try {
+					if (testForDoubles(i) == true) {
+
 						for (int y = 0; y < sAnzahl; y++) {
 							if (spielerEingabeView[i].getSpielerTextfield()[y].getText().equals("Spielfrei")) {
 								correctName = false;
@@ -155,12 +153,12 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 						rundenEingabeFormularControl.makeTerminTabelle(i);
 						// rundenEingabeFormularControl.saveTurnier(i);
-					} catch (SQLException e) {
-						// TODO Automatisch generierter Erfassungsblock
-						e.printStackTrace();
+
+					} else {
+						JOptionPane.showMessageDialog(null, Messages.getString("SpielerEingabeControl.9")); //$NON-NLS-1$
 					}
-				} else {
-					JOptionPane.showMessageDialog(null, Messages.getString("SpielerEingabeControl.9")); //$NON-NLS-1$
+				} catch (SQLException e) {
+					mainControl.fileSQLError();
 				}
 			}
 			if (arg0.getSource() == cancelButton[i]) {
@@ -274,7 +272,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 	}
 
-	public void makeTabbedPane(int index) {
+	public void makeTabbedPane(int index) throws NumberFormatException, ZahlKleinerAlsN, ZahlGroesserAlsN {
 		this.mainControl.getHauptPanel();
 
 		if (spielerAnzahlView[index].getAnzahlSpielerTextField().getText().length() > 0) {

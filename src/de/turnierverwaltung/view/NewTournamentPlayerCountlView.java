@@ -58,6 +58,7 @@ public class NewTournamentPlayerCountlView extends JPanel {
 
 		JLabel label = new JLabel(Messages.getString("SpielerAnzahlView.2")); //$NON-NLS-1$
 		anzahlSpielerTextField = new JTextField();
+		anzahlSpielerTextField.grabFocus();
 		centerPane.add(label);
 		centerPane.add(anzahlSpielerTextField);
 
