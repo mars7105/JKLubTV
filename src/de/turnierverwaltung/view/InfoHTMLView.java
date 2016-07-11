@@ -25,6 +25,7 @@ import java.net.URISyntaxException;
 import javax.swing.BoxLayout;
 import javax.swing.JEditorPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 
 public class InfoHTMLView {
@@ -68,8 +69,10 @@ public class InfoHTMLView {
 		}
 		panel.add(editorPane);
 		panel.add(new JSeparator());
-
-		all.add(panel, BorderLayout.NORTH);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportView(panel);
+		all.add(scrollPane, BorderLayout.CENTER);
+//		all.add(panel, BorderLayout.NORTH);
 		editorPane.setPreferredSize(new Dimension(500, 900));
 
 		return all;

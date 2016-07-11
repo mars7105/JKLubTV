@@ -52,7 +52,7 @@ public class InfoControl {
 	 */
 	public InfoControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		infoView = new InfoView();
+		
 		propertiesControl = mainControl.getPropertiesControl();
 		String lang = propertiesControl.getLanguage();
 		infoHelpView = new InfoHTMLView(lang);
@@ -62,20 +62,21 @@ public class InfoControl {
 			lizenzenPane.addTab(Messages.getString("InfoController.2"), infoIcon, infoHelpView.getLizenzText()); //$NON-NLS-1$
 
 			lizenzenPane.addTab(Messages.getString("InfoController.3"), lizenzenIcon, infoTexteView.getLizenzText()); //$NON-NLS-1$
-			infoView.setLizenzenPane(lizenzenPane);
-			infoView.getOkButton().addActionListener(new ActionListener() {
 
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					dialog.dispose();
-
-				}
-
-			});
 		} catch (URISyntaxException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		infoView = new InfoView(lizenzenPane);
+		infoView.getOkButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				dialog.dispose();
+
+			}
+
+		});
 		makeInfoDialog();
 
 	}

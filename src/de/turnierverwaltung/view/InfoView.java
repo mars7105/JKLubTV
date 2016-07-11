@@ -22,7 +22,6 @@ import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
 
@@ -34,17 +33,15 @@ public class InfoView extends JPanel {
 	// private JButton lizenzenButton;
 	private JTabbedPane lizenzenPane;
 
-	private JPanel contentPanel;
-	private JScrollPane scrollPane;
-	private JPanel centerPane;
 	private JTextArea textArea;
 	private JButton okButton;
 
-	public InfoView() {
+	public InfoView(JTabbedPane lizenzenPane) {
+		this.lizenzenPane = lizenzenPane;
+
 		TitleLabelView titleView = new TitleLabelView(Messages.getString("InfoView.0"));
 
-		contentPanel = new JPanel();
-		contentPanel.setLayout(new FlowLayout());
+		
 		setLayout(new BorderLayout());
 
 //		JLabel titleLabel = new JLabel(Messages.getString("InfoView.0")); //$NON-NLS-1$
@@ -54,22 +51,20 @@ public class InfoView extends JPanel {
 		northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.PAGE_AXIS));
 //		titlepanel.add(titleLabel);
 
-		lizenzenPane = new JTabbedPane();
-		scrollPane = new JScrollPane();
-		scrollPane.setViewportView(lizenzenPane);
+//		scrollPane = new JScrollPane();
+//		scrollPane.setViewportView(lizenzenPane);
 		northPanel.add(titleView);
 		northPanel.add(topPanel);
 		add(northPanel, BorderLayout.NORTH);
 		textArea = new JTextArea();
-		add(scrollPane, BorderLayout.CENTER);
+		add(lizenzenPane, BorderLayout.CENTER);
 		okButton = new JButton("Ok");
 		ButtonPanelView buttonPane = new ButtonPanelView();
 		buttonPane.makeOKButton();
 		this.okButton = buttonPane.getOkButton();
 		add(buttonPane, BorderLayout.SOUTH);
-		centerPane = new JPanel();
-		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
-		contentPanel.add(centerPane);
+		this.updateUI();
+
 
 	}
 
@@ -85,11 +80,7 @@ public class InfoView extends JPanel {
 		return lizenzenPane;
 	}
 
-	public void setLizenzenPane(JTabbedPane lizenzenPane) {
-		this.lizenzenPane = lizenzenPane;
-		scrollPane.setViewportView(lizenzenPane);
-		this.updateUI();
-	}
+	
 
 	public JButton getOkButton() {
 		return okButton;
