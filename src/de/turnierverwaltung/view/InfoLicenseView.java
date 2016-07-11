@@ -277,8 +277,11 @@ public class InfoLicenseView {
 		temp.add(poiUriPicker);
 		panel.add(temp);
 		panel.add(new JSeparator());
+		JPanel panelBorder = new JPanel();
+		panelBorder.setLayout(new BorderLayout());
+		panelBorder.add(panel, BorderLayout.NORTH);
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setViewportView(panel);
+		scrollPane.setViewportView(panelBorder);
 		all.add(scrollPane, BorderLayout.CENTER);
 
 		return all;
