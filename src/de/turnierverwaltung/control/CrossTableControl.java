@@ -201,7 +201,7 @@ public class CrossTableControl {
 	/**
 	 * 
 	 * @param tID
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public void readDataFromDatabase(int tID) throws SQLException {
 		mainControl.getTurnierTableControl().getTurnier(tID);
@@ -239,6 +239,14 @@ public class CrossTableControl {
 					Double.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getSoberg()), i, col);
 
 		}
+	}
+
+	public void updateStatus() {
+		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
+		for (int i = 0; i < anzahlGruppen; i++) {
+			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
+		}
+
 	}
 
 	/**
@@ -325,8 +333,6 @@ public class CrossTableControl {
 						updatePunkteCol(colCount - 3);
 						updateSoBergCol(colCount - 2);
 						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
-						simpleTableView[gruppenNummer].getStatusLabel()
-								.setText(new Integer(changedPartien.size()).toString());
 
 					}
 
@@ -338,15 +344,16 @@ public class CrossTableControl {
 						updateSoBergCol(colCount - 2);
 						updatePlatzCol(colCount - 1);
 						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
-						simpleTableView[gruppenNummer].getStatusLabel()
-								.setText(new Integer(changedPartien.size()).toString());
 
 					}
+
 				}
 			}
 			mainControl.getTerminTabelleControl().makeSimpleTableView(gruppenNummer);
 			simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
 
+			mainControl.getTerminTabelleControl().updateStatus();
+			updateStatus();
 		}
 
 		private void updatePunkteCol(int col) {

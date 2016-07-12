@@ -69,7 +69,7 @@ public class MeetingTableControl {
 			changedPartien = this.mainControl.getChangedPartien();
 
 		}
-		
+
 	}
 
 	/**
@@ -98,16 +98,14 @@ public class MeetingTableControl {
 
 		if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() == 1) {
 			tabAnzeigeView2[gruppenNummer].getTabbedPane().insertTab(Messages.getString("TerminTabelleControl.1"), //$NON-NLS-1$
-					terminTabelleIcon,
-					simpleTableView[gruppenNummer], null, 1);
+					terminTabelleIcon, simpleTableView[gruppenNummer], null, 1);
 		} else if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() > 1) {
 
 			tabAnzeigeView2[gruppenNummer].getTabbedPane().setComponentAt(1, simpleTableView[gruppenNummer]);
 		}
 
 		hauptPanel.updateUI();
-		simpleTableView[gruppenNummer].getStatusLabel()
-		.setText(new Integer(changedPartien.size()).toString());
+
 	}
 
 	public MeetingTable[] getTerminTabelle() {
@@ -116,6 +114,14 @@ public class MeetingTableControl {
 
 	public void setTerminTabelle(MeetingTable[] terminTabelle) {
 		this.terminTabelle = terminTabelle;
+	}
+
+	public void updateStatus() {
+		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
+		for (int i = 0; i < anzahlGruppen; i++) {
+			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
+		}
+
 	}
 
 	/**
@@ -179,9 +185,11 @@ public class MeetingTableControl {
 
 					}
 				}
-
+				mainControl.getTurnierTabelleControl().updateStatus();
+				updateStatus();
 			}
 		}
 
 	}
+
 }
