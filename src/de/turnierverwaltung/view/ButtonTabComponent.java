@@ -34,7 +34,6 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 import de.turnierverwaltung.control.MainControl;
-import de.turnierverwaltung.control.Messages;
 import de.turnierverwaltung.control.SaveTournamentControl;
 import de.turnierverwaltung.model.Game;
 
@@ -137,12 +136,15 @@ public class ButtonTabComponent extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			int i = pane.indexOfTabComponent(ButtonTabComponent.this);
 			if (i != -1) {
-				if (checkForChangedGames() == 0) {
+
+				int abfrage = checkForChangedGames();
+				if (abfrage == 0 || abfrage == 1) {
 					pane.remove(i);
 					mainControl.setTurnier(null);
 					mainControl.getTurnierListeLadenControl().setLoadedTurnierID(-1);
 
 				}
+
 			}
 		}
 
@@ -152,12 +154,12 @@ public class ButtonTabComponent extends JPanel {
 			if (changedPartien != null) {
 				if (changedPartien.size() > 0) {
 					// Custom button text
-					Object[] options = { Messages.getString("TurnierListeLadenControl.21"), //$NON-NLS-1$
-							Messages.getString("TurnierListeLadenControl.11") }; //$NON-NLS-1$
+					Object[] options = { Messages.getString("ButtonTabComponent.0"), //$NON-NLS-1$
+							Messages.getString("ButtonTabComponent.1") }; //$NON-NLS-1$
 					abfrage = JOptionPane.showOptionDialog(mainControl,
-							Messages.getString("TurnierListeLadenControl.12") //$NON-NLS-1$
-									+ Messages.getString("TurnierListeLadenControl.13"), //$NON-NLS-1$
-							Messages.getString("TurnierListeLadenControl.14"), //$NON-NLS-1$
+							Messages.getString("ButtonTabComponent.2") //$NON-NLS-1$
+									+ Messages.getString("ButtonTabComponent.3"), //$NON-NLS-1$
+							Messages.getString("ButtonTabComponent.4"), //$NON-NLS-1$
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 					if (abfrage == 0) {
 						SaveTournamentControl saveGames = new SaveTournamentControl(mainControl);
@@ -171,6 +173,9 @@ public class ButtonTabComponent extends JPanel {
 							changedPartien.clear();
 						}
 
+					}
+					if (abfrage == 1) {
+						changedPartien.clear();
 					}
 				}
 
