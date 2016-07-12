@@ -1,5 +1,7 @@
 package de.turnierverwaltung.view;
 
+import java.awt.BorderLayout;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -30,8 +32,11 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
+
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
@@ -103,7 +108,7 @@ public class NewTournamentView extends JPanel {
 		hauptPanel.setLayout(new BoxLayout(hauptPanel, BoxLayout.PAGE_AXIS));
 		// hauptPanel.setBackground(new Color(249, 222, 112));
 		hauptPanel.setVisible(true);
-		add(hauptPanel);
+//		add(hauptPanel);
 
 		JPanel panel1 = new JPanel();
 		panel1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -168,6 +173,10 @@ public class NewTournamentView extends JPanel {
 		helpText.setEditable(false);
 		helpPanel.add(helpText);
 		hauptPanel.add(helpPanel);
+		JScrollPane scrollPane = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setViewportView(hauptPanel);
+		add(scrollPane, BorderLayout.CENTER);
 
 	}
 

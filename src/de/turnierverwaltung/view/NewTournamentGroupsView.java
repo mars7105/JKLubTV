@@ -92,7 +92,7 @@ public class NewTournamentGroupsView extends JPanel {
 		 */
 		// JLabel doppelteRundenLabel;
 		// doppelteRundenCheckBox = new JCheckBox[this.gruppenAnzahl];
-		setLayout(new BorderLayout());
+		setLayout(new FlowLayout());
 		// setBackground(new Color(249, 222, 112));
 
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
@@ -145,7 +145,7 @@ public class NewTournamentGroupsView extends JPanel {
 		scrollPane = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(contentPanel);
-		add(scrollPane, BorderLayout.CENTER);
+		add(scrollPane);
 
 		setVisible(true);
 

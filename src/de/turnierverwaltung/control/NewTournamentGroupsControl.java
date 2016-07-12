@@ -67,11 +67,9 @@ public class NewTournamentGroupsControl implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 
 		if (arg0.getSource() == gruppenOKButton) {
-			gruppenAnzahl = turnier.getAnzahlGruppen();
 			makeGruppe();
-			if (mainControl.getSpielerAnzahlControl() == null) {
-				mainControl.setSpielerAnzahlControl(new NewTournamentPlayerCountControl(this.mainControl));
-			}
+
+			mainControl.setSpielerAnzahlControl(new NewTournamentPlayerCountControl(this.mainControl));
 		}
 		if (arg0.getSource() == gruppenCancelButton) {
 			this.mainControl.setTurnierControl(new NewTournamentControl(this.mainControl));

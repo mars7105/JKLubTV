@@ -1,5 +1,6 @@
 package de.turnierverwaltung.view;
 
+import java.awt.BorderLayout;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -22,8 +23,10 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
 public class NewTournamentPlayerCountlView extends JPanel {
@@ -37,30 +40,29 @@ public class NewTournamentPlayerCountlView extends JPanel {
 	private JTextField anzahlSpielerTextField;
 
 	public NewTournamentPlayerCountlView(String title) {
-		anzahlSpielerTextField = new JTextField();
 
 		setLayout(new FlowLayout());
 		contentPanel = new JPanel();
 
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		add(contentPanel);
+		
 
 		ButtonPanelView buttonPane = new ButtonPanelView();
 		buttonPane.makeOKButton();
 		JPanel centerPane = new JPanel();
-		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
+		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.X_AXIS));
 
-		contentPanel.add(centerPane);
-		contentPanel.add(buttonPane);
-
+		
 		okButton = buttonPane.getOkButton();
 
 		JLabel label = new JLabel(Messages.getString("SpielerAnzahlView.2")); //$NON-NLS-1$
-		anzahlSpielerTextField = new JTextField();
+		anzahlSpielerTextField = new JTextField(5);
 		anzahlSpielerTextField.grabFocus();
 		centerPane.add(label);
 		centerPane.add(anzahlSpielerTextField);
+		contentPanel.add(centerPane);
+		contentPanel.add(buttonPane);
 
 		String help = Messages.getString("SpielerAnzahlView.3"); //$NON-NLS-1$
 		JPanel helpPanel = new JPanel();
@@ -69,6 +71,11 @@ public class NewTournamentPlayerCountlView extends JPanel {
 		helpText.setEditable(false);
 		helpPanel.add(helpText);
 		contentPanel.add(helpPanel);
+		JScrollPane scrollPane = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		scrollPane.setViewportView(contentPanel);
+		add(scrollPane);
+
 		updateUI();
 
 	}

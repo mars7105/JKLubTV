@@ -88,15 +88,20 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 			okButton[i].addActionListener(this);
 			tabbedPaneView.getTabbedPane().addTab(title[i], spielerAnzahlView[i]);
 			gruppe[i].setSpieler(spieler[i]);
+			spielerAnzahlTextfield[i].setText("");
 			spielerAnzahlTextfield[i].grabFocus();
 		}
-		tabbedPaneView.updateUI();
+		// tabbedPaneView.updateUI();
 		hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
-		hauptPanel.add(this.tabbedPaneView, TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		hauptPanel.add(tabbedPaneView, TournamentConstants.TAB_ACTIVE_TOURNAMENT);
 		hauptPanel.setTitleAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, turnier.getTurnierName());
 		hauptPanel.setIconAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, gruppenIcon);
 		hauptPanel.setSelectedIndex(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+		tabbedPaneView.getTabbedPane().setSelectedIndex(0);
+		spielerAnzahlTextfield[0].setText("");
+		spielerAnzahlTextfield[0].grabFocus();
 	}
 
 	@Override
@@ -171,4 +176,13 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 	public void setSpielerAnzahlView(NewTournamentPlayerCountlView[] spielerAnzahlView) {
 		this.spielerAnzahlView = spielerAnzahlView;
 	}
+
+	public JTextField[] getSpielerAnzahlTextfield() {
+		return spielerAnzahlTextfield;
+	}
+
+	public void setSpielerAnzahlTextfield(JTextField[] spielerAnzahlTextfield) {
+		this.spielerAnzahlTextfield = spielerAnzahlTextfield;
+	}
+
 }
