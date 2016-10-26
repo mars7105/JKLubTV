@@ -25,6 +25,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import de.turnierverwaltung.model.Game;
+import de.turnierverwaltung.model.ICalendar;
 import de.turnierverwaltung.model.MeetingTableModel;
 import de.turnierverwaltung.model.MeetingTable;
 import de.turnierverwaltung.model.Tournament;
@@ -46,6 +47,7 @@ public class MeetingTableControl {
 	private ArrayList<Game> changedPartien;
 	private ImageIcon terminTabelleIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
+	private ICalendar iCalendar[];
 
 	/**
 	 * 
@@ -69,7 +71,7 @@ public class MeetingTableControl {
 			changedPartien = this.mainControl.getChangedPartien();
 
 		}
-
+		iCalendar = new ICalendar[anzahlGruppen];
 	}
 
 	/**
@@ -83,9 +85,10 @@ public class MeetingTableControl {
 		String blackColumnName = ppC.getTableComumnBlack();
 		String resultColumnName = ppC.getTableComumnResult();
 		String meetingColumnName = ppC.getTableComumnMeeting();
+		iCalendar[gruppenNummer] = new ICalendar();
 		this.terminTabelle[gruppenNummer] = new MeetingTable(turnier,
 				mainControl.getTurnier().getGruppe()[gruppenNummer], roundColumnName, whiteColumnName, blackColumnName,
-				resultColumnName, meetingColumnName);
+				resultColumnName, meetingColumnName, iCalendar[gruppenNummer]);
 		simpleTableView[gruppenNummer] = new MeetingTableView(new MeetingTableModel(this.terminTabelle[gruppenNummer]));
 		simpleTurnierTabelleView = mainControl.getSimpleTableView();
 		mainControl.getTurnierTabelle();

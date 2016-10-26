@@ -31,6 +31,7 @@ public class MeetingTable {
 	private String blackColumnName;
 	private String resultColumnName;
 	private String meetingColumnName;
+	private ICalendar iCalendar;
 
 	/**
 	 * 
@@ -43,7 +44,7 @@ public class MeetingTable {
 	 * @param meetingColumnName
 	 */
 	public MeetingTable(Tournament turnier, Group gruppe, String roundColumnName, String whiteColumnName,
-			String blackColumnName, String resultColumnName, String meetingColumnName) {
+			String blackColumnName, String resultColumnName, String meetingColumnName, ICalendar iCalendar) {
 		this.roundColumnName = roundColumnName;
 		this.whiteColumnName = whiteColumnName;
 		this.blackColumnName = blackColumnName;
@@ -54,10 +55,13 @@ public class MeetingTable {
 		this.gruppe.getSpieler();
 		this.spielerAnzahl = this.gruppe.getSpielerAnzahl();
 		this.partien = gruppe.getPartien();
+		this.iCalendar = iCalendar;
 		calcRunden();
 		calcAnzahlSpaltenZeilen();
 		tabellenMatrix = new String[5][zeilenAnzahl];
-		createTerminTabelle(roundColumnName, whiteColumnName, blackColumnName, resultColumnName, meetingColumnName);
+		this.iCalendar = new ICalendar();
+		createTerminTabelle(roundColumnName, whiteColumnName, blackColumnName, resultColumnName, meetingColumnName,
+				iCalendar);
 
 	}
 
@@ -83,12 +87,13 @@ public class MeetingTable {
 	 * @param meetingColumnName
 	 */
 	public void createTerminTabelle(String roundColumnName, String whiteColumnName, String blackColumnName,
-			String resultColumnName, String meetingColumnName) {
+			String resultColumnName, String meetingColumnName, ICalendar iCalendar) {
 		this.roundColumnName = roundColumnName;
 		this.whiteColumnName = whiteColumnName;
 		this.blackColumnName = blackColumnName;
 		this.resultColumnName = resultColumnName;
 		this.meetingColumnName = meetingColumnName;
+		this.iCalendar = iCalendar;
 		// tabellenMatrix[0][0] = TurnierKonstanten.TABLE_COLUMN_ROUND;
 		// tabellenMatrix[1][0] = TurnierKonstanten.TABLE_COLUMN_WHITE;
 		// tabellenMatrix[2][0] = TurnierKonstanten.TABLE_COLUMN_BLACK;
@@ -100,17 +105,26 @@ public class MeetingTable {
 		tabellenMatrix[3][0] = resultColumnName;
 		tabellenMatrix[4][0] = meetingColumnName;
 		int index = 0;
+		String event = "";
 		for (int i = 0; i < spielerAnzahl - 1; i++) {
 			for (int y = i + 1; y < spielerAnzahl; y++) {
-
+				event = "";
 				tabellenMatrix[0][index + 1] = Integer.toString(partien[index].getRunde());
 				tabellenMatrix[1][index + 1] = partien[index].getSpielerWeiss().getName();
 				tabellenMatrix[2][index + 1] = partien[index].getSpielerSchwarz().getName();
 				tabellenMatrix[3][index + 1] = getErgebnisToString(partien[index].getErgebnis());
 				tabellenMatrix[4][index + 1] = partien[index].getSpielDatum();
+
+				event = tabellenMatrix[0][index + 1];
+				event += tabellenMatrix[1][index + 1];
+				event += tabellenMatrix[2][index + 1];
+				event += tabellenMatrix[3][index + 1];
+
 				if (tabellenMatrix[4][index + 1] == null) {
 					tabellenMatrix[4][index + 1] = ""; //$NON-NLS-1$
 				}
+				String datum = tabellenMatrix[4][index + 1];
+				this.iCalendar.addEvent(datum, event);
 				index++;
 			}
 		}
@@ -148,6 +162,14 @@ public class MeetingTable {
 		terminTabelleToHTML = new MeetingTableToHTML(tabellenMatrix, turnier.getTurnierName(), turnier.getStartDatum(),
 				turnier.getEndDatum(), gruppe.getGruppenName());
 		return terminTabelleToHTML.getHTMLTable(ohneHeaderundFooter);
+	}
+
+	public ICalendar getiCalendar() {
+		return iCalendar;
+	}
+
+	public void setiCalendar(ICalendar iCalendar) {
+		this.iCalendar = iCalendar;
 	}
 
 	public int getSpaltenAnzahl() {

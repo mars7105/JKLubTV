@@ -1,6 +1,5 @@
 package de.turnierverwaltung.view;
 
-import java.awt.BorderLayout;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //

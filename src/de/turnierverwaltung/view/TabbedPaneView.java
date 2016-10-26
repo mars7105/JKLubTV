@@ -32,26 +32,9 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import javax.swing.JTabbedPane;
-import javax.swing.plaf.basic.BasicButtonUI;
 
-import java.awt.BasicStroke;
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-
-import javax.swing.AbstractButton;
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JPanel;
-
 import de.turnierverwaltung.control.MainControl;
 
 public class TabbedPaneView extends JPanel {
@@ -73,8 +56,6 @@ public class TabbedPaneView extends JPanel {
 		updateUI();
 	}
 
-	
-
 	public JTabbedPane getTabbedPane() {
 		return tabbedPane;
 	}
@@ -90,6 +71,5 @@ public class TabbedPaneView extends JPanel {
 	public void setTitleView(TitleLabelView titleView) {
 		this.titleView = titleView;
 	}
-
 
 }

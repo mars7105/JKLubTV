@@ -45,6 +45,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 
 import de.turnierverwaltung.ZahlKleinerAlsN;
 import de.turnierverwaltung.model.Group;
+import de.turnierverwaltung.model.ICalendar;
 import de.turnierverwaltung.model.PairingsTables;
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Player;
@@ -81,16 +82,16 @@ public class PairingsControl implements ActionListener {
 	private int[][] changedGroups;
 	private ImageIcon paarungenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/media-playlist-shuffle-3.png"))); //$NON-NLS-1$
-
-//	public PairingsControl(MainControl mainControl) {
-//		this.mainControl = mainControl;
-//
-//		turnier = this.mainControl.getTurnier();
-//		gruppe = turnier.getGruppe();
-//		gruppenAnzahl = turnier.getAnzahlGruppen();
-//		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
-//
-//	}
+	private ICalendar iCalendar[];
+	// public PairingsControl(MainControl mainControl) {
+	// this.mainControl = mainControl;
+	//
+	// turnier = this.mainControl.getTurnier();
+	// gruppe = turnier.getGruppe();
+	// gruppenAnzahl = turnier.getAnzahlGruppen();
+	// tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+	//
+	// }
 
 	public PairingsControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -98,13 +99,14 @@ public class PairingsControl implements ActionListener {
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
 		gruppenAnzahl = turnier.getAnzahlGruppen();
+		iCalendar = new ICalendar[gruppenAnzahl];
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		init();
 	}
 
 	@SuppressWarnings("unchecked")
 	public void init() {
-		
+
 		if (rundenEingabeFormularView == null) {
 			if (mainControl.getTurnierTabelleControl() == null) {
 				terminTabelle = new MeetingTable[gruppenAnzahl];
@@ -145,7 +147,7 @@ public class PairingsControl implements ActionListener {
 			}
 
 		}
-		
+
 	}
 
 	@Override
@@ -250,8 +252,9 @@ public class PairingsControl implements ActionListener {
 		String blackColumnName = ppC.getTableComumnBlack();
 		String resultColumnName = ppC.getTableComumnResult();
 		String meetingColumnName = ppC.getTableComumnMeeting();
+		iCalendar[index] = new ICalendar();
 		terminTabelle[index] = new MeetingTable(turnier, gruppe[index], roundColumnName, whiteColumnName,
-				blackColumnName, resultColumnName, meetingColumnName);
+				blackColumnName, resultColumnName, meetingColumnName, iCalendar[index]);
 		gruppe[index].setTeminTabelle(terminTabelle[index]);
 
 		String[][] terminMatrix = terminTabelle[index].getTabellenMatrix();
@@ -288,7 +291,7 @@ public class PairingsControl implements ActionListener {
 		rundenEingabeFormularView[index].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
 
 		rundenEingabeFormularView[index].updateUI();
-		
+
 	}
 
 	public void makeRundenEditView(int index) {

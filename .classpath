@@ -10,5 +10,6 @@
 	<classpathentry kind="lib" path="lib/itextpdf-5.5.6.jar"/>
 	<classpathentry kind="lib" path="lib/opencsv-3.7.jar"/>
 	<classpathentry kind="lib" path="lib/poi-3.14-20160307.jar"/>
+	<classpathentry kind="lib" path="/home/schmuck/git/JKLubTV/lib/ical4j-2.0-beta1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

@@ -60,6 +60,8 @@ public class NaviView extends JPanel {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-export.png"))); //$NON-NLS-1$
 	private ImageIcon DEWISSearch = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/db.png"))); //$NON-NLS-1$
+	private ImageIcon iCalendarIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
 	private JButton spielerImport;
 	private JButton spielerExport;
 	private JButton spielerDEWISSearchButton;
@@ -85,6 +87,8 @@ public class NaviView extends JPanel {
 	private JButton tabelleAktualisierenButton;
 	private JButton tabelleHTMLAusgabeButton;
 	private JButton pdfSpeichernButton;
+	private JButton iCalendarSpeichernButton;
+
 	private JPanel turnierListePanel;
 	private JPanel spielerListePanel;
 	private JButton excelSpeichernButton;
@@ -128,6 +132,11 @@ public class NaviView extends JPanel {
 		pdfSpeichernButton.setPreferredSize(new Dimension(200, 40));
 		pdfSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
 
+		iCalendarSpeichernButton = new JButton(Messages.getString("NaviView.31"), //$NON-NLS-1$
+				iCalendarIcon);
+		iCalendarSpeichernButton.setPreferredSize(new Dimension(200, 40));
+		iCalendarSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
+		
 		excelSpeichernButton = new JButton(Messages.getString("NaviView.2"), excelIcon); //$NON-NLS-1$
 		excelSpeichernButton.setPreferredSize(new Dimension(200, 40));
 		excelSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -249,7 +258,8 @@ public class NaviView extends JPanel {
 
 		NaviPanelElementView panel4g = new NaviPanelElementView();
 		panel4g.add(excelSpeichernButton);
-
+		NaviPanelElementView panel4i = new NaviPanelElementView();
+		panel4i.add(iCalendarSpeichernButton);
 		NaviPanelElementView panel4h = new NaviPanelElementView();
 		panel4h.setBackground(Color.LIGHT_GRAY);
 		panel4h.add(pairingsLoadButton);
@@ -297,6 +307,7 @@ public class NaviView extends JPanel {
 		tabellenPanel.add(panel4e);
 		tabellenPanel.add(panel4f);
 		tabellenPanel.add(panel4g);
+		tabellenPanel.add(panel4i);
 		minusminus = new JLabel(" ");
 		minusminusPanel = new NaviPanelElementView();
 
