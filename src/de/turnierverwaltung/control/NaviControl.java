@@ -47,6 +47,7 @@ import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.NewPlayerView;
 import de.turnierverwaltung.view.ProgressBarView;
 import de.turnierverwaltung.view.TabbedPaneView;
+import net.fortuna.ical4j.model.ValidationException;
 
 /**
  * 
@@ -75,6 +76,7 @@ public class NaviControl implements ActionListener {
 	private TurnierAnsicht turnierAnsicht;
 	private boolean pairingIsActive;
 	private ProgressBarView progressBar;
+	private JButton iCalendarButton;
 
 	/**
 	 * 
@@ -107,6 +109,9 @@ public class NaviControl implements ActionListener {
 		naviView.getTabelleSpeichernButton().addActionListener(this);
 		naviView.getTabelleHTMLAusgabeButton().addActionListener(this);
 		naviView.getExcelSpeichernButton().addActionListener(this);
+		iCalendarButton = naviView.getiCalendarSpeichernButton();
+		iCalendarButton.addActionListener(this);
+
 		naviView.getPairingsLoadButton().addActionListener(this);
 		naviView.getPairingsSaveButton().addActionListener(this);
 		pairingIsActive = false;
@@ -185,6 +190,20 @@ public class NaviControl implements ActionListener {
 			pdfsave.savePDFFile();
 
 		}
+		if (arg0.getSource() == iCalendarButton) {
+			ICalendarSaveControl iCalendarsave = new ICalendarSaveControl(this.mainControl);
+			try {
+				iCalendarsave.saveiCalendarFile();
+			} catch (IOException e) {
+				// TODO Automatisch generierter Erfassungsblock
+				e.printStackTrace();
+			} catch (ValidationException e) {
+				// TODO Automatisch generierter Erfassungsblock
+				e.printStackTrace();
+			}
+
+		}
+		
 		if (arg0.getSource() == naviView.getExcelSpeichernButton()) {
 			ExcelSaveControl excelsave = new ExcelSaveControl(this.mainControl);
 			excelsave.saveExcelFile();

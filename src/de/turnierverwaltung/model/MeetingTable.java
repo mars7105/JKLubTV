@@ -44,7 +44,7 @@ public class MeetingTable {
 	 * @param meetingColumnName
 	 */
 	public MeetingTable(Tournament turnier, Group gruppe, String roundColumnName, String whiteColumnName,
-			String blackColumnName, String resultColumnName, String meetingColumnName, ICalendar iCalendar) {
+			String blackColumnName, String resultColumnName, String meetingColumnName) {
 		this.roundColumnName = roundColumnName;
 		this.whiteColumnName = whiteColumnName;
 		this.blackColumnName = blackColumnName;
@@ -55,13 +55,11 @@ public class MeetingTable {
 		this.gruppe.getSpieler();
 		this.spielerAnzahl = this.gruppe.getSpielerAnzahl();
 		this.partien = gruppe.getPartien();
-		this.iCalendar = iCalendar;
+		this.iCalendar = new ICalendar();
 		calcRunden();
 		calcAnzahlSpaltenZeilen();
 		tabellenMatrix = new String[5][zeilenAnzahl];
-		this.iCalendar = new ICalendar();
-		createTerminTabelle(roundColumnName, whiteColumnName, blackColumnName, resultColumnName, meetingColumnName,
-				iCalendar);
+		createTerminTabelle();
 
 	}
 
@@ -86,40 +84,30 @@ public class MeetingTable {
 	 * @param resultColumnName
 	 * @param meetingColumnName
 	 */
-	public void createTerminTabelle(String roundColumnName, String whiteColumnName, String blackColumnName,
-			String resultColumnName, String meetingColumnName, ICalendar iCalendar) {
-		this.roundColumnName = roundColumnName;
-		this.whiteColumnName = whiteColumnName;
-		this.blackColumnName = blackColumnName;
-		this.resultColumnName = resultColumnName;
-		this.meetingColumnName = meetingColumnName;
-		this.iCalendar = iCalendar;
-		// tabellenMatrix[0][0] = TurnierKonstanten.TABLE_COLUMN_ROUND;
-		// tabellenMatrix[1][0] = TurnierKonstanten.TABLE_COLUMN_WHITE;
-		// tabellenMatrix[2][0] = TurnierKonstanten.TABLE_COLUMN_BLACK;
-		// tabellenMatrix[3][0] = TurnierKonstanten.TABLE_COLUMN_RESULT;
-		// tabellenMatrix[4][0] = TurnierKonstanten.TABLE_COLUMN_MEETING;
+	private void createTerminTabelle() {
+
 		tabellenMatrix[0][0] = roundColumnName;
 		tabellenMatrix[1][0] = whiteColumnName;
 		tabellenMatrix[2][0] = blackColumnName;
 		tabellenMatrix[3][0] = resultColumnName;
 		tabellenMatrix[4][0] = meetingColumnName;
 		int index = 0;
-		String event = "";
+
 		for (int i = 0; i < spielerAnzahl - 1; i++) {
 			for (int y = i + 1; y < spielerAnzahl; y++) {
-				event = "";
+				String event = "";
 				tabellenMatrix[0][index + 1] = Integer.toString(partien[index].getRunde());
 				tabellenMatrix[1][index + 1] = partien[index].getSpielerWeiss().getName();
 				tabellenMatrix[2][index + 1] = partien[index].getSpielerSchwarz().getName();
 				tabellenMatrix[3][index + 1] = getErgebnisToString(partien[index].getErgebnis());
 				tabellenMatrix[4][index + 1] = partien[index].getSpielDatum();
 
-				event = tabellenMatrix[0][index + 1];
-				event += tabellenMatrix[1][index + 1];
-				event += tabellenMatrix[2][index + 1];
-				event += tabellenMatrix[3][index + 1];
-
+				event = tabellenMatrix[0][index + 1] + ". Runde ";
+				event += tabellenMatrix[1][index + 1] + " - ";
+				event += tabellenMatrix[2][index + 1] + " ";
+				if (tabellenMatrix[3][index + 1].length() > 0) {
+					event += " Ergebnis: " + tabellenMatrix[3][index + 1];
+				}
 				if (tabellenMatrix[4][index + 1] == null) {
 					tabellenMatrix[4][index + 1] = ""; //$NON-NLS-1$
 				}

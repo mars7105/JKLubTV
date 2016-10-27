@@ -541,4 +541,12 @@ public class NaviView extends JPanel {
 		this.infoButton = infoButton;
 	}
 
+	public JButton getiCalendarSpeichernButton() {
+		return iCalendarSpeichernButton;
+	}
+
+	public void setiCalendarSpeichernButton(JButton iCalendarSpeichernButton) {
+		this.iCalendarSpeichernButton = iCalendarSpeichernButton;
+	}
+
 }

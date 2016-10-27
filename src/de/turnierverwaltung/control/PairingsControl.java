@@ -45,7 +45,6 @@ import org.jdatepicker.impl.JDatePickerImpl;
 
 import de.turnierverwaltung.ZahlKleinerAlsN;
 import de.turnierverwaltung.model.Group;
-import de.turnierverwaltung.model.ICalendar;
 import de.turnierverwaltung.model.PairingsTables;
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Player;
@@ -82,7 +81,6 @@ public class PairingsControl implements ActionListener {
 	private int[][] changedGroups;
 	private ImageIcon paarungenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/media-playlist-shuffle-3.png"))); //$NON-NLS-1$
-	private ICalendar iCalendar[];
 	// public PairingsControl(MainControl mainControl) {
 	// this.mainControl = mainControl;
 	//
@@ -99,7 +97,6 @@ public class PairingsControl implements ActionListener {
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
 		gruppenAnzahl = turnier.getAnzahlGruppen();
-		iCalendar = new ICalendar[gruppenAnzahl];
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		init();
 	}
@@ -252,11 +249,10 @@ public class PairingsControl implements ActionListener {
 		String blackColumnName = ppC.getTableComumnBlack();
 		String resultColumnName = ppC.getTableComumnResult();
 		String meetingColumnName = ppC.getTableComumnMeeting();
-		iCalendar[index] = new ICalendar();
 		terminTabelle[index] = new MeetingTable(turnier, gruppe[index], roundColumnName, whiteColumnName,
-				blackColumnName, resultColumnName, meetingColumnName, iCalendar[index]);
+				blackColumnName, resultColumnName, meetingColumnName);
 		gruppe[index].setTeminTabelle(terminTabelle[index]);
-
+		mainControl.setTerminTabelle(terminTabelle);
 		String[][] terminMatrix = terminTabelle[index].getTabellenMatrix();
 		rundenEingabeFormularView[index] = new PairingsView(spielerAnzahl[index]);
 		this.mainControl.setRundenEingabeFormularView(rundenEingabeFormularView);
