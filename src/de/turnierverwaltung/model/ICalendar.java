@@ -24,22 +24,7 @@ public class ICalendar {
 
 	public void addEvent(String datum, String event) throws NumberFormatException {
 		if (datum.length() > 0) {
-			// TimeZoneRegistry registry =
-			// TimeZoneRegistryFactory.getInstance().createRegistry();
-			// TimeZone timezone = registry.getTimeZone("Australia/Melbourne");
-			java.util.Calendar cal = java.util.Calendar.getInstance();
-			// int year = Integer.parseInt(datum.substring(0, 1));
-
-			int day = Integer.parseInt(datum.substring(0, 2));
-			int month = Integer.parseInt(datum.substring(3, 5)) - 1;
-			int year = Integer.parseInt(datum.substring(6, 10));
-			cal.set(java.util.Calendar.YEAR, year);
-			cal.set(java.util.Calendar.MONTH, month);
-			cal.set(java.util.Calendar.DAY_OF_MONTH, day);
-			// DateTime dt = new DateTime(cal.getTime());
-			VEvent ev = new VEvent(new Date(cal.getTime()), event);
-			// initialise as an all-day event..
-//			ev.getProperties().getProperty(Property.DTSTART).getParameters().add(Value.DATE);
+			VEvent ev = checkDate(datum, event);
 			calendar.getComponents().add(ev);
 		}
 	}
@@ -51,5 +36,31 @@ public class ICalendar {
 		CalendarOutputter outputter = new CalendarOutputter();
 		outputter.setValidating(false);
 		outputter.output(calendar, fout);
+	}
+
+	private VEvent checkDate(String datum, String event) {
+		java.util.Calendar cal = java.util.Calendar.getInstance();
+		if (datum.contains("-")) {
+
+			int day = Integer.parseInt(datum.substring(8, 10));
+			int month = Integer.parseInt(datum.substring(5, 7)) - 1;
+			int year = Integer.parseInt(datum.substring(0, 4));
+			cal.set(java.util.Calendar.YEAR, year);
+			cal.set(java.util.Calendar.MONTH, month);
+			cal.set(java.util.Calendar.DAY_OF_MONTH, day);
+
+		} else {
+
+			int day = Integer.parseInt(datum.substring(0, 2));
+			int month = Integer.parseInt(datum.substring(3, 5)) - 1;
+			int year = Integer.parseInt(datum.substring(6, 10));
+			cal.set(java.util.Calendar.YEAR, year);
+			cal.set(java.util.Calendar.MONTH, month);
+			cal.set(java.util.Calendar.DAY_OF_MONTH, day);
+
+		}
+		VEvent ev = new VEvent(new Date(cal.getTime()), new Date(cal.getTime()), event);
+
+		return ev;
 	}
 }
