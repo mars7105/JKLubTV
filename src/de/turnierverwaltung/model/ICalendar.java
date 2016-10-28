@@ -40,6 +40,9 @@ public class ICalendar {
 
 	private VEvent checkDate(String datum, String event) {
 		java.util.Calendar cal = java.util.Calendar.getInstance();
+		VEvent ev = null;
+		Date stStart = null;
+		Date stEnd = null;
 		if (datum.contains("-")) {
 
 			int day = Integer.parseInt(datum.substring(8, 10));
@@ -48,7 +51,10 @@ public class ICalendar {
 			cal.set(java.util.Calendar.YEAR, year);
 			cal.set(java.util.Calendar.MONTH, month);
 			cal.set(java.util.Calendar.DAY_OF_MONTH, day);
-
+			stStart = new Date(cal.getTime());
+			cal.set(java.util.Calendar.DAY_OF_MONTH, day + 1);
+			stEnd = new Date(cal.getTime());
+			
 		} else {
 
 			int day = Integer.parseInt(datum.substring(0, 2));
@@ -57,10 +63,10 @@ public class ICalendar {
 			cal.set(java.util.Calendar.YEAR, year);
 			cal.set(java.util.Calendar.MONTH, month);
 			cal.set(java.util.Calendar.DAY_OF_MONTH, day);
-
-		}
-		VEvent ev = new VEvent(new Date(cal.getTime()), new Date(cal.getTime()), event);
-
+			stStart = new Date(cal.getTime());
+			cal.set(java.util.Calendar.DAY_OF_MONTH, day + 1);
+			stEnd = new Date(cal.getTime());		}
+		ev = new VEvent(stStart, stEnd, event);
 		return ev;
 	}
 }
