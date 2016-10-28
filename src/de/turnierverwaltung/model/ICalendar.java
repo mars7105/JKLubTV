@@ -54,7 +54,7 @@ public class ICalendar {
 			stStart = new Date(cal.getTime());
 			cal.set(java.util.Calendar.DAY_OF_MONTH, day + 1);
 			stEnd = new Date(cal.getTime());
-			
+
 		} else {
 
 			int day = Integer.parseInt(datum.substring(0, 2));
@@ -65,7 +65,8 @@ public class ICalendar {
 			cal.set(java.util.Calendar.DAY_OF_MONTH, day);
 			stStart = new Date(cal.getTime());
 			cal.set(java.util.Calendar.DAY_OF_MONTH, day + 1);
-			stEnd = new Date(cal.getTime());		}
+			stEnd = new Date(cal.getTime());
+		}
 		ev = new VEvent(stStart, stEnd, event);
 		return ev;
 	}

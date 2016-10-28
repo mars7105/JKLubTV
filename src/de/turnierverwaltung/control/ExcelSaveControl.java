@@ -22,6 +22,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 import de.turnierverwaltung.model.CrossTable;
+
 /**
  * 
  * @author mars
@@ -31,10 +32,11 @@ public class ExcelSaveControl {
 
 	private MainControl mainControl;
 	private Workbook wb;
-/**
- * 
- * @param mainControl
- */
+
+	/**
+	 * 
+	 * @param mainControl
+	 */
 	public ExcelSaveControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 	}
@@ -43,214 +45,194 @@ public class ExcelSaveControl {
 	 * 
 	 */
 	public void saveExcelFile() {
-		Boolean ready = mainControl.getRundenEingabeFormularControl()
-				.checkNewTurnier();
+		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 		if (ready) {
-			int anzahlGruppen = this.mainControl.getTurnier()
-					.getAnzahlGruppen();
-			String filename = JOptionPane
-					.showInputDialog(
-							mainControl,
-							Messages.getString("HTMLSaveControler.0"), Messages.getString("HTMLSaveControler.1"), //$NON-NLS-1$ //$NON-NLS-2$
-							JOptionPane.PLAIN_MESSAGE);
-			if (filename != null) {
-				File path = new File(mainControl.getPropertiesControl()
-						.getDefaultPath());
+			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
+			String filename = mainControl.getTurnier().getTurnierName();
 
-				JFileChooser savefile = new JFileChooser(path);
-				FileFilter filter = new FileNameExtensionFilter("XLS", "xls"); //$NON-NLS-1$ //$NON-NLS-2$
-				savefile.addChoosableFileFilter(filter);
-				savefile.setFileFilter(filter);
-				savefile.setSelectedFile(new File(filename));
-				savefile.setDialogType(JFileChooser.SAVE_DIALOG);
+			File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
-				int sf = savefile.showSaveDialog(null);
-				if (sf == JFileChooser.APPROVE_OPTION) {
-					// create a new file
-					OutputStream out;
+			JFileChooser savefile = new JFileChooser(path);
+			FileFilter filter = new FileNameExtensionFilter("XLS", "xls"); //$NON-NLS-1$ //$NON-NLS-2$
+			savefile.addChoosableFileFilter(filter);
+			savefile.setFileFilter(filter);
+			savefile.setSelectedFile(new File(filename));
+			savefile.setDialogType(JFileChooser.SAVE_DIALOG);
 
-					wb = new HSSFWorkbook();
-					Font font = wb.createFont();
-					// set font 1 to 12 point type
-					font.setFontHeightInPoints((short) 12);
-					// make it blue
-					font.setColor((short) 0xc);
-					Sheet[] s = new Sheet[anzahlGruppen];
-					Sheet[] s2 = new Sheet[anzahlGruppen];
+			int sf = savefile.showSaveDialog(null);
+			if (sf == JFileChooser.APPROVE_OPTION) {
+				// create a new file
+				OutputStream out;
 
-					CellStyle cellStyle = wb.createCellStyle();
-					cellStyle.setBorderBottom(CellStyle.BORDER_MEDIUM);
-					cellStyle.setBottomBorderColor(IndexedColors.BLACK
-							.getIndex());
-					cellStyle.setBorderLeft(CellStyle.BORDER_MEDIUM);
-					cellStyle
-							.setLeftBorderColor(IndexedColors.BLACK.getIndex());
-					cellStyle.setBorderRight(CellStyle.BORDER_MEDIUM);
-					cellStyle.setRightBorderColor(IndexedColors.BLACK
-							.getIndex());
-					cellStyle.setBorderTop(CellStyle.BORDER_MEDIUM);
-					cellStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-					cellStyle.setFont(font);
-					// cellStyle.setShrinkToFit(true);
-					for (int i = 0; i < anzahlGruppen; i++) {
+				wb = new HSSFWorkbook();
+				Font font = wb.createFont();
+				// set font 1 to 12 point type
+				font.setFontHeightInPoints((short) 12);
+				// make it blue
+				font.setColor((short) 0xc);
+				Sheet[] s = new Sheet[anzahlGruppen];
+				Sheet[] s2 = new Sheet[anzahlGruppen];
 
-						if (this.mainControl.getTurnierTabelle()[i] == null) {
-							this.mainControl.getTurnierTabelleControl()
-									.makeSimpleTableView(i);
+				CellStyle cellStyle = wb.createCellStyle();
+				cellStyle.setBorderBottom(CellStyle.BORDER_MEDIUM);
+				cellStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
+				cellStyle.setBorderLeft(CellStyle.BORDER_MEDIUM);
+				cellStyle.setLeftBorderColor(IndexedColors.BLACK.getIndex());
+				cellStyle.setBorderRight(CellStyle.BORDER_MEDIUM);
+				cellStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
+				cellStyle.setBorderTop(CellStyle.BORDER_MEDIUM);
+				cellStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+				cellStyle.setFont(font);
+				// cellStyle.setShrinkToFit(true);
+				for (int i = 0; i < anzahlGruppen; i++) {
 
-							this.mainControl.getTerminTabelleControl()
-									.makeSimpleTableView(i);
+					if (this.mainControl.getTurnierTabelle()[i] == null) {
+						this.mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
 
-						}
-
-						CrossTable turnierTabelle = mainControl
-								.getTurnierTabelle()[i];
-
-						int spalte = this.mainControl.getSimpleTableView()[i]
-								.getTable().getModel().getColumnCount();
-						int zeile = this.mainControl.getSimpleTableView()[i]
-								.getTable().getModel().getRowCount();
-						int spalte2 = this.mainControl.getTerminTabelle()[i]
-								.getSpaltenAnzahl();
-						int zeile2 = this.mainControl.getTerminTabelle()[i]
-								.getZeilenAnzahl();
-						s[i] = wb.createSheet(this.mainControl.getTurnier()
-								.getGruppe()[i].getGruppenName()
-								+ " - Kreuztabelle");
-						s2[i] = wb.createSheet(this.mainControl.getTurnier()
-								.getGruppe()[i].getGruppenName()
-								+ " - Termintabelle");
-						PrintSetup ps = s[i].getPrintSetup();
-
-						s[i].setAutobreaks(true);
-
-						ps.setFitHeight((short) 1);
-						ps.setFitWidth((short) 1);
-						PrintSetup ps2 = s2[i].getPrintSetup();
-
-						s2[i].setAutobreaks(true);
-
-						ps2.setFitHeight((short) 1);
-						ps2.setFitWidth((short) 1);
-						// declare a row object reference
-						Row r = null;
-						// declare a cell object reference
-						Cell c = null;
-						short rownum;
-						String rep;
-
-						// declare a row object reference
-						Row r2 = null;
-						// declare a cell object reference
-						Cell c2 = null;
-						short rownum2;
-
-						for (int y = 0; y < zeile + 1; y++) {
-							rownum = (short) y;
-							// create a row
-							r = s[i].createRow(rownum);
-							int inc = 0;
-							short cellnum;
-							for (int x = 0; x < spalte; x++) {
-
-								if (y < zeile) {
-									turnierTabelle.getTabellenMatrix()[x][y + 1] = (String) this.mainControl
-											.getSimpleTableView()[i].getTable()
-											.getValueAt(y, x);
-								}
-								cellnum = (short) (x - inc);
-								// create a numeric cell
-								c = r.createCell(cellnum);
-
-								c.setCellStyle(cellStyle);
-
-								rep = (String) turnierTabelle
-										.getTabellenMatrix()[x][y];
-								rep = rep.replaceAll("<br />", "");
-								c.setCellValue(rep);
-								s[i].autoSizeColumn((x - inc));
-
-							}
-
-							r.setHeight((short) (r.getHeight() * 2));
-
-						}
-						for (int y = 0; y < zeile2; y++) {
-							rownum2 = (short) y;
-							// create a row
-							r2 = s2[i].createRow(rownum2);
-
-							short cellnum2;
-							for (int x = 0; x < spalte2; x++) {
-								cellnum2 = (short) x;
-								// create a numeric cell
-								c2 = r2.createCell(cellnum2);
-
-								c2.setCellStyle(cellStyle);
-
-								c2.setCellValue((String) this.mainControl
-										.getTerminTabelleControl()
-										.getTerminTabelle()[i]
-										.getTabellenMatrix()[x][y]);
-
-								s2[i].autoSizeColumn(x);
-							}
-
-							r2.setHeight((short) (r2.getHeight() * 2));
-
-						}
+						this.mainControl.getTerminTabelleControl().makeSimpleTableView(i);
 
 					}
-					File filename1 = new File(savefile.getCurrentDirectory()
-							+ "/" //$NON-NLS-1$
-							+ filename
-							+ Messages.getString("HTMLSaveControler.5") //$NON-NLS-1$
-							+ mainControl.getTurnier().getTurnierName()
-							+ ".xls"); //$NON-NLS-1$
+
+					CrossTable turnierTabelle = mainControl.getTurnierTabelle()[i];
+
+					int spalte = this.mainControl.getSimpleTableView()[i].getTable().getModel().getColumnCount();
+					int zeile = this.mainControl.getSimpleTableView()[i].getTable().getModel().getRowCount();
+					int spalte2 = this.mainControl.getTerminTabelle()[i].getSpaltenAnzahl();
+					int zeile2 = this.mainControl.getTerminTabelle()[i].getZeilenAnzahl();
+					s[i] = wb.createSheet(
+							this.mainControl.getTurnier().getGruppe()[i].getGruppenName() + " - Kreuztabelle");
+					s2[i] = wb.createSheet(
+							this.mainControl.getTurnier().getGruppe()[i].getGruppenName() + " - Termintabelle");
+					PrintSetup ps = s[i].getPrintSetup();
+
+					s[i].setAutobreaks(true);
+
+					ps.setFitHeight((short) 1);
+					ps.setFitWidth((short) 1);
+					PrintSetup ps2 = s2[i].getPrintSetup();
+
+					s2[i].setAutobreaks(true);
+
+					ps2.setFitHeight((short) 1);
+					ps2.setFitWidth((short) 1);
+					// declare a row object reference
+					Row r = null;
+					// declare a cell object reference
+					Cell c = null;
+					short rownum;
+					String rep;
+
+					// declare a row object reference
+					Row r2 = null;
+					// declare a cell object reference
+					Cell c2 = null;
+					short rownum2;
+
+					for (int y = 0; y < zeile + 1; y++) {
+						rownum = (short) y;
+						// create a row
+						r = s[i].createRow(rownum);
+						int inc = 0;
+						short cellnum;
+						for (int x = 0; x < spalte; x++) {
+
+							if (y < zeile) {
+								turnierTabelle.getTabellenMatrix()[x][y
+										+ 1] = (String) this.mainControl.getSimpleTableView()[i].getTable()
+												.getValueAt(y, x);
+							}
+							cellnum = (short) (x - inc);
+							// create a numeric cell
+							c = r.createCell(cellnum);
+
+							c.setCellStyle(cellStyle);
+
+							rep = (String) turnierTabelle.getTabellenMatrix()[x][y];
+							rep = rep.replaceAll("<br />", "");
+							c.setCellValue(rep);
+							s[i].autoSizeColumn((x - inc));
+
+						}
+
+						r.setHeight((short) (r.getHeight() * 2));
+
+					}
+					for (int y = 0; y < zeile2; y++) {
+						rownum2 = (short) y;
+						// create a row
+						r2 = s2[i].createRow(rownum2);
+
+						short cellnum2;
+						for (int x = 0; x < spalte2; x++) {
+							cellnum2 = (short) x;
+							// create a numeric cell
+							c2 = r2.createCell(cellnum2);
+
+							c2.setCellStyle(cellStyle);
+
+							c2.setCellValue((String) this.mainControl.getTerminTabelleControl().getTerminTabelle()[i]
+									.getTabellenMatrix()[x][y]);
+
+							s2[i].autoSizeColumn(x);
+						}
+
+						r2.setHeight((short) (r2.getHeight() * 2));
+
+					}
+
+				}
+				File filename1 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
+						+ filename + Messages.getString("HTMLSaveControler.5") //$NON-NLS-1$
+						+ mainControl.getTurnier().getTurnierName() + ".xls"); //$NON-NLS-1$
+				int n = 0;
+				if (filename1.exists()) {
+					Object[] options = { "Ja", "Nein" };
+					n = JOptionPane.showOptionDialog(null,
+							"Datei existiert: \n" + filename1 + "\nMöchten Sie die Datei überschreiben?",
+							"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+							options[1]);
+
+				}
+				if (n == 0) {
+
 					try {
 						out = new FileOutputStream(filename1);
 
-						// write the workbook to the output stream
-						// close our file (don't blow out our file
-						// handles
 						wb.write(out);
 						out.close();
 
 					} catch (IOException e) {
-						JOptionPane.showMessageDialog(null,
-								Messages.getString("HTMLSaveControler.16")); //$NON-NLS-1$
+						JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.16")); //$NON-NLS-1$
 					}
-					JOptionPane.showMessageDialog(null,
-							Messages.getString("HTMLSaveControler.18")); //$NON-NLS-1$
-					// first check if Desktop is supported by
-					// Platform or not
-					if (!Desktop.isDesktopSupported())
-
-					{
-						JOptionPane.showMessageDialog(null,
-								Messages.getString("HTMLSaveControler.19"), //$NON-NLS-1$
-								Messages.getString("HTMLSaveControler.20"), //$NON-NLS-1$
-								JOptionPane.INFORMATION_MESSAGE);
-					} else
-
-					{
-						Desktop desktop = Desktop.getDesktop();
-
-						try {
-							desktop.open(savefile.getCurrentDirectory());
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-
-						}
-					}
-
 				}
+
+				JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.18")); //$NON-NLS-1$
+				// first check if Desktop is supported by
+				// Platform or not
+				if (!Desktop.isDesktopSupported())
+
+				{
+					JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.19"), //$NON-NLS-1$
+							Messages.getString("HTMLSaveControler.20"), //$NON-NLS-1$
+							JOptionPane.INFORMATION_MESSAGE);
+				} else
+
+				{
+					Desktop desktop = Desktop.getDesktop();
+
+					try {
+						desktop.open(savefile.getCurrentDirectory());
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+
+					}
+				}
+
 			}
+
 		} else {
-			JOptionPane
-					.showMessageDialog(
-							null,
-							Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$
+			JOptionPane.showMessageDialog(null,
+					Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		}
 

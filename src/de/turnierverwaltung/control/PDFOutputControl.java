@@ -1,5 +1,7 @@
 package de.turnierverwaltung.control;
 
+import java.io.File;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -19,6 +21,8 @@ package de.turnierverwaltung.control;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
+import javax.swing.JOptionPane;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -44,63 +48,82 @@ public class PDFOutputControl {
 	 * @throws DocumentException
 	 * @throws IOException
 	 */
-	public void createTurnierPdf(Tournament turnier, String titel,
-			String absolutePath, String[][] tabellenMatrix) {
-		// step 1
-		Document document = new Document();
-		// step 2
-		try {
-			PdfWriter.getInstance(document, new FileOutputStream(absolutePath));
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void createTurnierPdf(Tournament turnier, String titel, String absolutePath, String[][] tabellenMatrix) {
+		int n = 0;
+		File file = new File(absolutePath);
+		if (file.exists()) {
+			Object[] options = { "Ja", "Nein" };
+			n = JOptionPane.showOptionDialog(null,
+					"Datei existiert: \n" + file + "\nMöchten Sie die Datei überschreiben?", "Dateioperation",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+
 		}
-		// step 3
-		document.open();
-		// step 4
-		try {
-			document.add(new Paragraph(titel));
-			document.add(new Paragraph(" ")); //$NON-NLS-1$
-			document.add(createTurnierTabelle(turnier, tabellenMatrix));
-		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (n == 0) {
+			// step 1
+			Document document = new Document();
+			// step 2
+			try {
+				PdfWriter.getInstance(document, new FileOutputStream(absolutePath));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// step 3
+			document.open();
+			// step 4
+			try {
+				document.add(new Paragraph(titel));
+				document.add(new Paragraph(" ")); //$NON-NLS-1$
+				document.add(createTurnierTabelle(turnier, tabellenMatrix));
+			} catch (DocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// step 5
+			document.close();
 		}
-		// step 5
-		document.close();
 	}
 
-	public void createTerminPdf(String titel, String absolutePath,
-			String[][] tabellenMatrix) {
-		// step 1
-		Document document = new Document();
-		// step 2
-		try {
-			PdfWriter.getInstance(document, new FileOutputStream(absolutePath));
-		} catch (FileNotFoundException | DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	public void createTerminPdf(String titel, String absolutePath, String[][] tabellenMatrix) {
+		int n = 0;
+		File file = new File(absolutePath);
+		if (file.exists()) {
+			Object[] options = { "Ja", "Nein" };
+			n = JOptionPane.showOptionDialog(null,
+					"Datei existiert: \n" + file + "\nMöchten Sie die Datei überschreiben?", "Dateioperation",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
+
 		}
-		// step 3
-		document.open();
-		// step 4
-		try {
-			document.add(new Paragraph(titel));
-			document.add(new Paragraph(" ")); //$NON-NLS-1$
-			document.add(createTerminTabelle(tabellenMatrix));
-		} catch (DocumentException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (n == 0) {
+			// step 1
+			Document document = new Document();
+			// step 2
+			try {
+				PdfWriter.getInstance(document, new FileOutputStream(absolutePath));
+			} catch (FileNotFoundException | DocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// step 3
+			document.open();
+			// step 4
+			try {
+				document.add(new Paragraph(titel));
+				document.add(new Paragraph(" ")); //$NON-NLS-1$
+				document.add(createTerminTabelle(tabellenMatrix));
+			} catch (DocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// step 5
+			document.close();
 		}
-		// step 5
-		document.close();
 	}
 
-	public static PdfPTable createTurnierTabelle(Tournament turnier,
-			String[][] stringTable) throws DocumentException {
+	public static PdfPTable createTurnierTabelle(Tournament turnier, String[][] stringTable) throws DocumentException {
 		int spalten = stringTable[0].length;
 		int zeilen = stringTable.length;
 		for (int i = 0; i < zeilen; i++) {
@@ -154,8 +177,7 @@ public class PDFOutputControl {
 
 	}
 
-	public static PdfPTable createTerminTabelle(String[][] stringTable)
-			throws DocumentException {
+	public static PdfPTable createTerminTabelle(String[][] stringTable) throws DocumentException {
 		int spalten = stringTable[0].length;
 		int zeilen = stringTable.length;
 		for (int i = 0; i < zeilen; i++) {
