@@ -182,8 +182,7 @@ public class ExcelSaveControl {
 
 				}
 				File filename1 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
-						+ filename + Messages.getString("HTMLSaveControler.5") //$NON-NLS-1$
-						+ mainControl.getTurnier().getTurnierName() + ".xls"); //$NON-NLS-1$
+						+ filename + ".xls"); //$NON-NLS-1$
 				int n = 0;
 				if (filename1.exists()) {
 					Object[] options = { "Ja", "Nein" };
