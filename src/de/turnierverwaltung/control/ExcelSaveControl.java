@@ -185,9 +185,10 @@ public class ExcelSaveControl {
 						+ filename + ".xls"); //$NON-NLS-1$
 				int n = 0;
 				if (filename1.exists()) {
-					Object[] options = { "Ja", "Nein" };
+					Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
 					n = JOptionPane.showOptionDialog(null,
-							"Datei existiert: \n" + filename1 + "\nMöchten Sie die Datei überschreiben?",
+							Messages.getString("SaveDialog.0") + filename1.getAbsolutePath()
+									+ Messages.getString("SaveDialog.1"),
 							"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
 							options[1]);
 

@@ -105,18 +105,22 @@ public class HTMLSaveControl {
 								+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".html"); //$NON-NLS-1$
 						int n1 = 0;
 						if (filename1.exists()) {
-							Object[] options = { "Ja", "Nein" };
+							Object[] options = { Messages.getString("SaveDialog.2"),
+									Messages.getString("SaveDialog.3") };
 							n1 = JOptionPane.showOptionDialog(null,
-									"Datei existiert: \n" + filename1 + "\nMöchten Sie die Datei überschreiben?",
+									Messages.getString("SaveDialog.0") + filename1.getAbsolutePath()
+											+ Messages.getString("SaveDialog.1"),
 									"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
 									options, options[1]);
 
 						}
 						int n2 = 0;
 						if (filename2.exists()) {
-							Object[] options = { "Ja", "Nein" };
+							Object[] options = { Messages.getString("SaveDialog.2"),
+									Messages.getString("SaveDialog.3") };
 							n2 = JOptionPane.showOptionDialog(null,
-									"Datei existiert: \n" + filename2 + "\nMöchten Sie die Datei überschreiben?",
+									Messages.getString("SaveDialog.0") + filename2.getAbsolutePath()
+											+ Messages.getString("SaveDialog.1"),
 									"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
 									options, options[1]);
 

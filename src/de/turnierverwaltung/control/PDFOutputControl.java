@@ -52,11 +52,11 @@ public class PDFOutputControl {
 		int n = 0;
 		File file = new File(absolutePath);
 		if (file.exists()) {
-			Object[] options = { "Ja", "Nein" };
+			Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
 			n = JOptionPane.showOptionDialog(null,
-					"Datei existiert: \n" + file + "\nMöchten Sie die Datei überschreiben?", "Dateioperation",
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-
+					Messages.getString("SaveDialog.0") + file.getAbsolutePath() + Messages.getString("SaveDialog.1"),
+					"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+					options[1]);
 		}
 		if (n == 0) {
 			// step 1
@@ -91,11 +91,11 @@ public class PDFOutputControl {
 		int n = 0;
 		File file = new File(absolutePath);
 		if (file.exists()) {
-			Object[] options = { "Ja", "Nein" };
+			Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
 			n = JOptionPane.showOptionDialog(null,
-					"Datei existiert: \n" + file + "\nMöchten Sie die Datei überschreiben?", "Dateioperation",
-					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[1]);
-
+					Messages.getString("SaveDialog.0") + file.getAbsolutePath() + Messages.getString("SaveDialog.1"),
+					"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+					options[1]);
 		}
 		if (n == 0) {
 			// step 1

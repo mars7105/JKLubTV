@@ -46,9 +46,9 @@ public class ICalendarSaveControl {
 							+ mainControl.getTurnier().getTurnierName() + ".ics";
 					File file = new File(fileName);
 					if (file.exists()) {
-						Object[] options = { "Ja", "Nein" };
+						Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
 						int n = JOptionPane.showOptionDialog(null,
-								"Datei existiert: \n" + fileName + "\nMöchten Sie die Datei überschreiben?",
+								Messages.getString("SaveDialog.0") + fileName + Messages.getString("SaveDialog.1"),
 								"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
 								options, options[1]);
 						if (n == 0) {
