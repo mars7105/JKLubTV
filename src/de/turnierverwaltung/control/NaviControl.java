@@ -197,11 +197,9 @@ public class NaviControl implements ActionListener {
 			try {
 				iCalendarsave.saveiCalendarFile();
 			} catch (IOException e) {
-				// TODO Automatisch generierter Erfassungsblock
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("NaviController.32"));
 			} catch (ValidationException e) {
-				// TODO Automatisch generierter Erfassungsblock
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("NaviController.32"));
 			}
 
 		}
@@ -212,7 +210,7 @@ public class NaviControl implements ActionListener {
 				json.uploadJSONFile();
 				JOptionPane.showMessageDialog(mainControl, "Daten hochgeladen!");
 			} catch (IOException e) {
-				JOptionPane.showMessageDialog(mainControl, "Fehler!");
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("NaviController.32"));
 			}
 
 		}
