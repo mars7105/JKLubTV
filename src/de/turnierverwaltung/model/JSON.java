@@ -16,15 +16,16 @@ public class JSON {
 		// TODO Automatisch generierter Konstruktorstub
 	}
 
-	public void createJSON(String pathName, String[][] tabellenMatrix, String name, int index) throws IOException {
+	public void createJSON(String pathName, String[][] tabellenMatrix, String name) throws IOException {
 		Gson gson = new Gson();
 
-		int zeilen = tabellenMatrix.length;
-		for (int i = 0; i < zeilen; i++) {
-			String replacedStr = tabellenMatrix[i][0].replaceAll("<br />", "");
-			tabellenMatrix[i][0] = replacedStr;
-		}
-		postRequest("http://olaf-trint.mamuck.de/test/index.php", gson.toJson(tabellenMatrix), name, index);
+		// int zeilen = tabellenMatrix.length;
+		// for (int i = 0; i < zeilen; i++) {
+		// String replacedStr = tabellenMatrix[i][0].replaceAll("<br />", "");
+		// tabellenMatrix[i][0] = replacedStr;
+		// }
+		String[][] mirrorMatrix = mirrorArray(tabellenMatrix);
+		postRequest("http://olaf-trint.mamuck.de/test/index.php", gson.toJson(mirrorMatrix), name);
 		saveFile(pathName, gson.toJson(tabellenMatrix));
 	}
 
@@ -49,13 +50,24 @@ public class JSON {
 		}
 	}
 
-	public void postRequest(String url, String jsonString, String name, int index) {
+	public void postRequest(String url, String jsonString, String name) {
 		PostRequest postRequest = new PostRequest();
 		try {
-			postRequest.sendJSONStringToServer(url, jsonString, name, index);
+			postRequest.sendJSONStringToServer(url, jsonString, name);
 		} catch (IOException e) {
 			// TODO Automatisch generierter Erfassungsblock
 			e.printStackTrace();
 		}
+	}
+
+	private String[][] mirrorArray(String[][] array) {
+		String[][] newArray = new String[array[0].length][array.length];
+		for (int x = 0; x < array.length; x++) {
+			for (int y = 0; y < array[0].length; y++) {
+				newArray[y][x] = array[x][y];
+			}
+		}
+		return newArray;
+
 	}
 }

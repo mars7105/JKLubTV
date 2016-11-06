@@ -75,7 +75,7 @@ public class JSONSaveControl {
 						mainControl.getTurnier().getGruppe()[i].getGruppenName();
 						String pathName = filename1.getAbsolutePath();
 						try {
-							mftKreuz.createJSON(pathName, turnierTabelle.getTabellenMatrix(), "Kreuztabelle", i);
+							mftKreuz.createJSON(pathName, turnierTabelle.getTabellenMatrix(), "Kreuztabelle"  + new Integer(i));
 						} catch (IOException e) {
 							// TODO Automatisch generierter Erfassungsblock
 							e.printStackTrace();
@@ -84,7 +84,7 @@ public class JSONSaveControl {
 						pathName = filename2.getAbsolutePath();
 						try {
 							mftTermin.createJSON(pathName, mainControl.getTerminTabelle()[i].getTabellenMatrix(),
-									"Termintabelle", i);
+									"Termintabelle" + new Integer(i));
 						} catch (IOException e) {
 							// TODO Automatisch generierter Erfassungsblock
 							e.printStackTrace();

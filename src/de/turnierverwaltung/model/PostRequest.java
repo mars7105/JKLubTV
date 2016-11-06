@@ -1,7 +1,9 @@
 package de.turnierverwaltung.model;
 
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -13,10 +15,9 @@ public class PostRequest {
 		super();
 	}
 
-	public void sendJSONStringToServer(String urlString, String jsonString, String name, int index) throws IOException {
+	public void sendJSONStringToServer(String urlString, String jsonString, String name) throws IOException {
 		// String body = URLEncoder.encode(jsonString, "UTF-8");
-		String param = "name=" + URLEncoder.encode(name, "UTF-8") + new Integer(index) + "&json="
-				+ URLEncoder.encode(jsonString, "UTF-8");
+		String param = "name=" + URLEncoder.encode(name, "UTF-8") + "&json=" + URLEncoder.encode(jsonString, "UTF-8");
 		URL url = new URL(urlString);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
@@ -41,12 +42,11 @@ public class PostRequest {
 		// System.out.println(param);
 		// clean up
 		os.flush();
-		// BufferedReader reader = new BufferedReader(new
-		// InputStreamReader(connection.getInputStream()));
-		//
-		// for (String line; (line = reader.readLine()) != null;) {
-		// System.out.println(line);
-		// }
+		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+		for (String line; (line = reader.readLine()) != null;) {
+			System.out.println(line);
+		}
 
 		os.close();
 		// reader.close();
