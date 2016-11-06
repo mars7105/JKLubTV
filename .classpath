@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="/home/schmuck/workspace/JKlubTV/JKLubTV/lib/commons-logging-1.1.3.jar"/>
 	<classpathentry kind="lib" path="/home/schmuck/workspace/JKlubTV/JKLubTV/lib/groovy-all-2.1.7.jar"/>
 	<classpathentry kind="lib" path="/home/schmuck/workspace/JKlubTV/JKLubTV/lib/ical4j-1.0.6.jar"/>
+	<classpathentry kind="lib" path="/home/schmuck/workspace/JKlubTV/JKLubTV/lib/gson-2.8.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

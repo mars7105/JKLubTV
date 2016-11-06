@@ -46,7 +46,10 @@ public class ExcelSaveControl {
 	 */
 	public void saveExcelFile() {
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+
 		if (ready) {
+			JSONSaveControl jsonSave = new JSONSaveControl(mainControl);
+			jsonSave.saveJSONFile();
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 			String filename = mainControl.getTurnier().getTurnierName();
 
@@ -181,6 +184,7 @@ public class ExcelSaveControl {
 					}
 
 				}
+
 				File filename1 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 						+ filename + ".xls"); //$NON-NLS-1$
 				int n = 0;
