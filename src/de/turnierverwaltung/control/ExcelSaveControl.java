@@ -48,8 +48,7 @@ public class ExcelSaveControl {
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 
 		if (ready) {
-			JSONSaveControl jsonSave = new JSONSaveControl(mainControl);
-			jsonSave.saveJSONFile();
+
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 			String filename = mainControl.getTurnier().getTurnierName();
 

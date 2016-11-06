@@ -45,12 +45,13 @@ public class PostRequest {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
 
 		for (String line; (line = reader.readLine()) != null;) {
-			System.out.println(line);
+			if (line.equals("ERROR!")) {
+				throw new IOException();
+			}
 		}
 
 		os.close();
-		// reader.close();
+		reader.close();
 		connection.disconnect();
-
 	}
 }
