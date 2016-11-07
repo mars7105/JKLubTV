@@ -2420,7 +2420,7 @@ jQuery.sibling = function(n, elem){
 	return r;
 };
 
-return;
+//return;
 
 window.Sizzle = Sizzle;
 

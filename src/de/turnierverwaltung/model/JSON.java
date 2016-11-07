@@ -1,13 +1,7 @@
 package de.turnierverwaltung.model;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import javax.swing.JOptionPane;
-
 import com.google.gson.Gson;
-import de.turnierverwaltung.control.Messages;
 
 public class JSON {
 
@@ -15,14 +9,14 @@ public class JSON {
 
 	}
 
-	public void postRequest(String url, String[][] tabellenMatrix, String name) throws IOException {
+	public void postRequest(String url, String[][] tabellenMatrix, String name, Boolean configFlag) throws IOException {
 		Gson gson = new Gson();
 
 		String[][] mirrorMatrix = mirrorArray(tabellenMatrix);
 
 		PostRequest postRequest = new PostRequest();
 
-		postRequest.sendJSONStringToServer(url, gson.toJson(mirrorMatrix), name);
+		postRequest.sendJSONStringToServer(url, gson.toJson(mirrorMatrix), name, configFlag);
 
 	}
 

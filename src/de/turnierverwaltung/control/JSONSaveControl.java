@@ -53,10 +53,15 @@ public class JSONSaveControl {
 				jsonMeetingName = "meetingtable" + new Integer(i);
 
 				url = "http://olaf-trint.mamuck.de/test/receiveJSON.php";
+				Boolean configFlag;
+				if (i == 0) {
+					configFlag = true;
+				} else {
+					configFlag = false;
+				}
+				jsonCross.postRequest(url, turnierTabelle.getTabellenMatrix(), jsonCrossName, configFlag);
 
-				jsonCross.postRequest(url, turnierTabelle.getTabellenMatrix(), jsonCrossName);
-
-				jsonMeeting.postRequest(url, meetingTable.getTabellenMatrix(), jsonMeetingName);
+				jsonMeeting.postRequest(url, meetingTable.getTabellenMatrix(), jsonMeetingName, false);
 
 			}
 

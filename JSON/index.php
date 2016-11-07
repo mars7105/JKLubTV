@@ -3,43 +3,36 @@
 <head>
 <title>JSON to HTML Table Demo</title>
 <script src="scripts/jquery-1.3.2.debug.js" type="text/javascript"></script>
+
 <script src="scripts/json.htmTable.js" type="text/javascript"></script>
 <script src="scripts/json.debug.js" type="text/javascript"></script>
+<script src="config.js" type="text/javascript"></script>
+
 <link href="styles/default.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript">
 	$(document).ready(
 			function() {
-				jQuery.getJSON("jsonFiles/crosstable0.json", function(data) {
-					$('#crossGrid').append(
-							CreateTableView(data, "lightPro", false)).fadeIn();
+				$.each( jsonFiles, function( index, value ){
+					jQuery.getJSON(value, function(data) {
+						$('#Grid').append('<div id=' + '"table' + index + '"' + '>' + CreateTableView(data, "lightPro", false)) + '</div>';
+					});
+				   
 				});
-				jQuery.getJSON("jsonFiles/meetingtable0.json", function(data) {
-					$('#meetingGrid').append(
-							CreateTableView(data, "lightPro", false)).fadeIn();
-				});
-
-				$('#crossDynamicGridLoading').hide();
-				$('#meetingDynamicGridLoading').hide();
+			
+				$('#DynamicGridLoading').hide();
 			});
 </script>
 
 </head>
 <body>
-	<h2>Kreuztabelle</h2>
+	<h2 class="tableCSS">Kreuztabelle</h2>
 	<form id="form1">
-		<div id="crossGrid">
-			<div id="crossDynamicGridLoading">
+		<div id="Grid">
+			<div id="DynamicGridLoading">
 				<img src="images/loading.gif" /><span> Loading Data... </span>
 			</div>
 		</div>
 	</form>
-	<h2>Termintabelle</h2>
-	<form id="form2">
-		<div id="meetingGrid">
-			<div id="meetingDynamicGridLoading">
-				<img src="images/loading.gif" /><span> Loading Data... </span>
-			</div>
-		</div>
-	</form>
+
 </body>
 </html>

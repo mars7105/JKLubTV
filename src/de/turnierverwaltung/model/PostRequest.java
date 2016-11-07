@@ -15,9 +15,17 @@ public class PostRequest {
 		super();
 	}
 
-	public void sendJSONStringToServer(String urlString, String jsonString, String name) throws IOException {
+	public void sendJSONStringToServer(String urlString, String jsonString, String name, Boolean configFlag)
+			throws IOException {
+		String cFlag = "";
+		if (configFlag == true) {
+			cFlag = "true";
+		} else {
+			cFlag = "false";
+		}
 		// String body = URLEncoder.encode(jsonString, "UTF-8");
-		String param = "name=" + URLEncoder.encode(name, "UTF-8") + "&json=" + URLEncoder.encode(jsonString, "UTF-8");
+		String param = "name=" + URLEncoder.encode(name, "UTF-8") + "&json=" + URLEncoder.encode(jsonString, "UTF-8")
+				+ "&configFlag=" + cFlag;
 		URL url = new URL(urlString);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
