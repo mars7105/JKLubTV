@@ -4,6 +4,7 @@ if (! empty ( $_GET ['param'] ) && ! empty ( $_SESSION ['content'] )) {
 	showMenu ();
 } else {
 	createHTMLTables ();
+	showMenu ();
 }
 function showMenu() {
 	$param = $_GET ['param'];
@@ -13,13 +14,12 @@ function showMenu() {
 	$table = file_get_contents ( $files [$param - 1] );
 	$content .= $table;
 	echo $content;
+	session_destroy ();
 }
 function createHTMLTables() {
 	include 'config.php';
 	$file [] = array ();
-	$content = '<div class="container theme-showcase" role="main">' . "\n" . 
-
-	'<!-- Main jumbotron for a primary marketing message or call to action -->' . "\n";
+	$content = '';
 	
 	$index = 0;
 	$content .= '   <!-- Fixed navbar -->
@@ -32,10 +32,13 @@ function createHTMLTables() {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="https://www.barmbeker-schachklub.de/">Barmbeker Schachklub</a>
+          <p class="navbar-brand">JKlubTV Frontend</p>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">';
+          <ul class="nav navbar-nav">			
+			<li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Turniere <span class="caret"></span></a>
+              <ul class="dropdown-menu">';
 	foreach ( $jsonFiles as $filename ) {
 		if ($index > 0) {
 			$table = '';
@@ -44,16 +47,16 @@ function createHTMLTables() {
 			$json = fread ( $handle, filesize ( $filename ) );
 			fclose ( $handle );
 			$data = json_decode ( $json, true );
-			// var_dump($data);
-			$table .= '	<div class="page-header">' . "\n";
-			$table .= '		<h1> ' . $title [$index] . ' </h1>' . "\n";
+			$table .= '	<div class="panel panel-default"><div class="panel-heading">' . "\n";
+			$table .= '		<h1 class="panel-title"> ' . $title [$index] . ' </h1>' . "\n";
 			$table .= '	</div>' . "\n";
 			
-			$table .= '	<div class="page-header"><h2> ' . $groupname [$index] . ' </h2></div>' . "\n";
+			$table .= '<div class="panel-body"><div class="panel panel-success">
+            <div class="panel-heading">
+              <h3 class="panel-title"> ' . $groupname [$index] . ' - ' . $tabletype [$index] . "</h3>\n";
 			
-			$table .= '	<div class="page-header"><h2> ' . $tabletype [$index] . ' </h2></div>' . "\n";
-			
-			$table .= '<div class="row"><div class="col-md-6"><table class="table table-bordered">' . "\n";
+			$table .= '</div>
+            <div class="panel-body"><div class="row"><div class="col-md-6"><table class="table table-bordered lightPro">' . "\n";
 			$counter = 0;
 			foreach ( $data as $jsons ) {
 				$table .= '  <tr>' . "\n";
@@ -68,24 +71,26 @@ function createHTMLTables() {
 				$table .= '  </tr>' . "\n";
 				$counter ++;
 			}
-			$table .= '</table></div></div>' . "\n";
+			$table .= '</table></div></div></div> </div> </div>
+          </div>' . "\n";
 			$file [$index - 1] = 'tables/' . $groupname [$index] . '-' . $tabletype [$index] . '.html';
 			$linkname [$index - 1] = $groupname [$index] . '-' . $tabletype [$index];
 			file_put_contents ( $file [$index - 1], $table );
-			// $content .= '<a href="index.php?param=' . $index . '" >' . $linkname [$index - 1] . '</a>' . "\n";
 			
 			$content .= '<li><a href="index.php?param=' . $index . '" >' . $linkname [$index - 1] . '</a></li>';
 		}
 		
 		$index ++;
 	}
-	$content .= '</ul>
-	</div><!--/.nav-collapse -->
-	</div>
-	</nav>';
+	$content .= '    </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>';
+	$content .= '<div class="container theme-showcase" role="main">' . "\n" . '<!-- Main jumbotron for a primary marketing message or call to action -->' . "\n";
 	$_SESSION ['content'] = $content;
 	$_SESSION ['files'] = $file;
-	echo $content;
 }
 ?>
 	
