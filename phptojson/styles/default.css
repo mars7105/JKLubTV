@@ -3,9 +3,6 @@
 	margin: 10px;
 	border-collapse: collapse;
 	border: 1px solid #333;
-	font-family: "Trebuchet MS", Verdana, Arial, Helvetica, sans-serif;
-	font-size: 1em;
-	color: #000;
 	empty-cells: show;
 	background-color: #fff;
 	border-collapse: collapse;
@@ -13,8 +10,7 @@
 
 .lightPro caption {
 	caption-side: top;
-	font-size: 0.9em;
-	font-style: italic;
+	
 	text-align: right;
 	padding: 0.5em 0;
 }
@@ -23,25 +19,18 @@
 	border: 1px dotted #666;
 	padding: 0.1em 0.3em;
 	text-align: left;
-	color: #055f81;
 }
 
 .lightPro th[scope=col] {
-	color: #fff;
-	background-color: #582E00;
-	text-transform: uppercase;
-	font-size: 1.1em;
 	border-bottom: 1px dotted #FFF;
 	border-right: 1px dotted #FFF;
 	padding-left: 6px;
 }
 
 .lightPro th[scope=row] {
-	width: 140px;
 	background-color: #eee;
 	border-right: 2px solid #333;
 	font-size: 1.2em;
-	color: #582E00;
 }
 
 .lightPro tr.alt th[scope=row], .lightPro tr.alt td {

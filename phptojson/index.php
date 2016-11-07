@@ -9,7 +9,7 @@
 <meta name="author" content="">
 <link rel="icon" href="../../favicon.ico">
 
-<title>Theme Template for Bootstrap</title>
+<title>Turnier Ergebnisse</title>
 
 <!-- Bootstrap core CSS -->
 <link href="dist/css/bootstrap.min.css" rel="stylesheet">
@@ -21,6 +21,7 @@
 
 <!-- Custom styles for this template -->
 <link href="styles/theme.css" rel="stylesheet">
+<link href="styles/default.css" rel="stylesheet">
 
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
