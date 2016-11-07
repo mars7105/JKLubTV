@@ -9,14 +9,15 @@ public class JSON {
 
 	}
 
-	public void postRequest(String url, String[][] tabellenMatrix, String name, Boolean configFlag) throws IOException {
+	public void postRequest(String url, String[][] tabellenMatrix, String name, Boolean configFlag, String[] title)
+			throws IOException {
 		Gson gson = new Gson();
 
 		String[][] mirrorMatrix = mirrorArray(tabellenMatrix);
 
 		PostRequest postRequest = new PostRequest();
 
-		postRequest.sendJSONStringToServer(url, gson.toJson(mirrorMatrix), name, configFlag);
+		postRequest.sendJSONStringToServer(url, gson.toJson(mirrorMatrix), name, configFlag, title);
 
 	}
 

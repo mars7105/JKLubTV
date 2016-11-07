@@ -15,8 +15,8 @@ public class PostRequest {
 		super();
 	}
 
-	public void sendJSONStringToServer(String urlString, String jsonString, String name, Boolean configFlag)
-			throws IOException {
+	public void sendJSONStringToServer(String urlString, String jsonString, String name, Boolean configFlag,
+			String[] title) throws IOException {
 		String cFlag = "";
 		if (configFlag == true) {
 			cFlag = "true";
@@ -25,7 +25,7 @@ public class PostRequest {
 		}
 		// String body = URLEncoder.encode(jsonString, "UTF-8");
 		String param = "name=" + URLEncoder.encode(name, "UTF-8") + "&json=" + URLEncoder.encode(jsonString, "UTF-8")
-				+ "&configFlag=" + cFlag;
+				+ "&configFlag=" + cFlag + "&title=" + title[0] + "&groupname=" + title[1] + "&tabletype=" + title[2];
 		URL url = new URL(urlString);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 

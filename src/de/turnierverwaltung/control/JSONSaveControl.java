@@ -49,19 +49,31 @@ public class JSONSaveControl {
 
 				jsonCross = new JSON();
 				jsonCrossName = "crosstable" + new Integer(i);
+				String[] jsonCrossTitle = new String[3];
+				jsonCrossTitle[0] = mainControl.getTurnier().getTurnierName();
+				jsonCrossTitle[1] = mainControl.getTurnier().getGruppe()[i].getGruppenName();
+				jsonCrossTitle[2] = Messages.getString("NaviController.34");
+
 				jsonMeeting = new JSON();
 				jsonMeetingName = "meetingtable" + new Integer(i);
+				String[] jsonMeetingTitle = new String[3];
+				jsonMeetingTitle[0] = mainControl.getTurnier().getTurnierName();
+				jsonMeetingTitle[1] = mainControl.getTurnier().getGruppe()[i].getGruppenName();
+				jsonMeetingTitle[2] = Messages.getString("NaviController.35");
+				
+				url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
 
-				url = "http://olaf-trint.mamuck.de/test/receiveJSON.php";
 				Boolean configFlag;
 				if (i == 0) {
 					configFlag = true;
 				} else {
 					configFlag = false;
 				}
-				jsonCross.postRequest(url, turnierTabelle.getTabellenMatrix(), jsonCrossName, configFlag);
+				jsonCross.postRequest(url, turnierTabelle.getTabellenMatrix(), jsonCrossName, configFlag,
+						jsonCrossTitle);
 
-				jsonMeeting.postRequest(url, meetingTable.getTabellenMatrix(), jsonMeetingName, false);
+				jsonMeeting.postRequest(url, meetingTable.getTabellenMatrix(), jsonMeetingName, false,
+						jsonMeetingTitle);
 
 			}
 
