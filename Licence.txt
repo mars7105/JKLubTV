@@ -1,0 +1,30 @@
+JKlubTV ist freie Software, Sie können sie weitergeben und/oder 
+verändern, solange Sie sich an die Regeln der 
+GNU General Public License halten, so wie sie von 
+der Free Software Foundation festgelegt wurden;
+entweder in Version 3 der Lizenz oder 
+(nach Ihrem Ermessen) in jeder folgenden Version.
+JKlubTV wurde in der Hoffnung veröffentlicht,
+dass Sie es als nützlich empfinden,
+jedoch OHNE JEGLICHE GARANTIE AUF FUNKTIONSFÄHIGKEIT
+UND OHNE RECHTSANSPRUCH BEI FEHLERHAFTEM VERHALTEN
+DER SOFTWARE. Lesen Sie die GNU General Public License
+für weiterführende Informationen.
+
+Erstellt von: Martin Schmuck m_schmuck@gmx.net
+
+//JKlubTV - Ein Programm zum verwalten von Schach Turnieren
+//Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
+//
+//This program is free software: you can redistribute it and/or modify
+//it under the terms of the GNU General Public License as published by
+//the Free Software Foundation, either version 3 of the License, or
+//(at your option) any later version.
+//
+//This program is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//GNU General Public License for more details.
+//
+//You should have received a copy of the GNU General Public License
+//along with this program.  If not, see <http://www.gnu.org/licenses/>.
