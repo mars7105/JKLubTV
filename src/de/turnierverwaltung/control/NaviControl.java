@@ -77,6 +77,7 @@ public class NaviControl implements ActionListener {
 	private boolean pairingIsActive;
 	private ProgressBarView progressBar;
 	private JButton iCalendarButton;
+	private JButton jsonButton;
 
 	/**
 	 * 
@@ -111,7 +112,8 @@ public class NaviControl implements ActionListener {
 		naviView.getExcelSpeichernButton().addActionListener(this);
 		iCalendarButton = naviView.getiCalendarSpeichernButton();
 		iCalendarButton.addActionListener(this);
-
+		jsonButton = naviView.getJsonSpeichernButton();
+		jsonButton.addActionListener(this);
 		naviView.getPairingsLoadButton().addActionListener(this);
 		naviView.getPairingsSaveButton().addActionListener(this);
 		pairingIsActive = false;
@@ -195,15 +197,23 @@ public class NaviControl implements ActionListener {
 			try {
 				iCalendarsave.saveiCalendarFile();
 			} catch (IOException e) {
-				// TODO Automatisch generierter Erfassungsblock
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("NaviController.32"));
 			} catch (ValidationException e) {
-				// TODO Automatisch generierter Erfassungsblock
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("NaviController.32"));
 			}
 
 		}
-		
+		if (arg0.getSource() == jsonButton) {
+			JSONSaveControl json = new JSONSaveControl(this.mainControl);
+
+			try {
+				json.uploadJSONFile();
+				JOptionPane.showMessageDialog(mainControl, "Daten hochgeladen!");
+			} catch (IOException e) {
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("NaviController.32"));
+			}
+
+		}
 		if (arg0.getSource() == naviView.getExcelSpeichernButton()) {
 			ExcelSaveControl excelsave = new ExcelSaveControl(this.mainControl);
 			excelsave.saveExcelFile();

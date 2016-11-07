@@ -62,6 +62,9 @@ public class NaviView extends JPanel {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/db.png"))); //$NON-NLS-1$
 	private ImageIcon iCalendarIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
+	private ImageIcon jsonIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/json_file.png"))); //$NON-NLS-1$
+
 	private JButton spielerImport;
 	private JButton spielerExport;
 	private JButton spielerDEWISSearchButton;
@@ -88,7 +91,7 @@ public class NaviView extends JPanel {
 	private JButton tabelleHTMLAusgabeButton;
 	private JButton pdfSpeichernButton;
 	private JButton iCalendarSpeichernButton;
-
+	private JButton jsonSpeichernButton;
 	private JPanel turnierListePanel;
 	private JPanel spielerListePanel;
 	private JButton excelSpeichernButton;
@@ -136,7 +139,12 @@ public class NaviView extends JPanel {
 				iCalendarIcon);
 		iCalendarSpeichernButton.setPreferredSize(new Dimension(200, 40));
 		iCalendarSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
-		
+
+		jsonSpeichernButton = new JButton(Messages.getString("NaviView.32"), //$NON-NLS-1$
+				jsonIcon);
+		jsonSpeichernButton.setPreferredSize(new Dimension(200, 40));
+		jsonSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
+
 		excelSpeichernButton = new JButton(Messages.getString("NaviView.2"), excelIcon); //$NON-NLS-1$
 		excelSpeichernButton.setPreferredSize(new Dimension(200, 40));
 		excelSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -169,7 +177,7 @@ public class NaviView extends JPanel {
 
 		panel3.add(turnierAddButton);
 		NaviTitleLabelView titleView = new NaviTitleLabelView(Messages.getString("NaviView.18"));
-		
+
 		turnierListePanel.add(titleView);
 		turnierListePanel.add(panel3);
 		turnierListePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -260,6 +268,8 @@ public class NaviView extends JPanel {
 		panel4g.add(excelSpeichernButton);
 		NaviPanelElementView panel4i = new NaviPanelElementView();
 		panel4i.add(iCalendarSpeichernButton);
+		NaviPanelElementView panel4m = new NaviPanelElementView();
+		panel4m.add(jsonSpeichernButton);
 		NaviPanelElementView panel4h = new NaviPanelElementView();
 		panel4h.setBackground(Color.LIGHT_GRAY);
 		panel4h.add(pairingsLoadButton);
@@ -269,8 +279,9 @@ public class NaviView extends JPanel {
 
 		titleView = new NaviTitleLabelView(Messages.getString("NaviView.25"));
 
-//		JLabel dateiLabel = new JLabel(Messages.getString("NaviView.25")); //$NON-NLS-1$
-//		dateiLabel.setBackground(Color.LIGHT_GRAY);
+		// JLabel dateiLabel = new JLabel(Messages.getString("NaviView.25"));
+		// //$NON-NLS-1$
+		// dateiLabel.setBackground(Color.LIGHT_GRAY);
 		// dateiPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// dateiPanelLabel.add(dateiLabel);
 		dateiPanel.add(titleView);
@@ -308,6 +319,7 @@ public class NaviView extends JPanel {
 		tabellenPanel.add(panel4f);
 		tabellenPanel.add(panel4g);
 		tabellenPanel.add(panel4i);
+		tabellenPanel.add(panel4m);
 		minusminus = new JLabel(" ");
 		minusminusPanel = new NaviPanelElementView();
 
@@ -547,6 +559,14 @@ public class NaviView extends JPanel {
 
 	public void setiCalendarSpeichernButton(JButton iCalendarSpeichernButton) {
 		this.iCalendarSpeichernButton = iCalendarSpeichernButton;
+	}
+
+	public JButton getJsonSpeichernButton() {
+		return jsonSpeichernButton;
+	}
+
+	public void setJsonSpeichernButton(JButton jsonSpeichernButton) {
+		this.jsonSpeichernButton = jsonSpeichernButton;
 	}
 
 }

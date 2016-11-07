@@ -60,8 +60,11 @@ public class InfoLicenseView {
 	private JButton buttonpoi;
 	private URI iCal4jUri;
 	private JButton buttoniCal4j;
+	private URI gsonUri;
+	private JButton buttonGson;
 
 	class OpenUrlAction implements ActionListener {
+
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if (e.getSource() == buttonDatePicker) {
@@ -94,7 +97,9 @@ public class InfoLicenseView {
 			if (e.getSource() == buttoniCal4j) {
 				open(iCal4jUri);
 			}
-
+			if (e.getSource() == buttonGson) {
+				open(gsonUri);
+			}
 		}
 
 	}
@@ -300,6 +305,25 @@ public class InfoLicenseView {
 		temp.add(iCal4jUriPicker);
 		panel.add(temp);
 		panel.add(new JSeparator());
+
+		gsonUri = new URI("https://github.com/google/gson"); //$NON-NLS-1$
+		JLabel gsonUriPicker = new JLabel(
+				"10. A Java serialization/deserialization library that can convert Java Objects into JSON and back. -> \nhttps://github.com/google/gson\n"); //$NON-NLS-1$
+		buttonGson = new JButton();
+		buttonGson.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>"); //$NON-NLS-1$
+
+		buttonGson.setOpaque(false);
+		buttonGson.setToolTipText(gsonUri.toString());
+		buttonGson.addActionListener(new OpenUrlAction());
+		temp = new JPanel();
+		temp.setBackground(Color.WHITE);
+		temp.setLayout(new FlowLayout(FlowLayout.LEFT));
+		temp.add(buttonGson);
+
+		temp.add(gsonUriPicker);
+		panel.add(temp);
+		panel.add(new JSeparator());
+
 		JPanel panelBorder = new JPanel();
 		panelBorder.setLayout(new BorderLayout());
 		panelBorder.add(panel, BorderLayout.NORTH);
