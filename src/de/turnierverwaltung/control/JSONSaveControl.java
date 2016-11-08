@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import de.turnierverwaltung.model.CrossTable;
 import de.turnierverwaltung.model.JSON;
 import de.turnierverwaltung.model.MeetingTable;
+import de.turnierverwaltung.view.JSONConfigView;
 
 public class JSONSaveControl {
 	private MainControl mainControl;
@@ -21,7 +22,8 @@ public class JSONSaveControl {
 	}
 
 	public void uploadJSONFile() throws IOException {
-
+		JSONConfigView jsonView = new JSONConfigView();
+		
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 
 		if (ready) {
@@ -60,7 +62,7 @@ public class JSONSaveControl {
 				jsonMeetingTitle[0] = mainControl.getTurnier().getTurnierName();
 				jsonMeetingTitle[1] = mainControl.getTurnier().getGruppe()[i].getGruppenName();
 				jsonMeetingTitle[2] = Messages.getString("NaviController.35");
-				
+
 				url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
 
 				Boolean configFlag;
