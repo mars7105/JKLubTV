@@ -6,12 +6,11 @@ import javax.swing.JOptionPane;
 import de.turnierverwaltung.model.CrossTable;
 import de.turnierverwaltung.model.JSON;
 import de.turnierverwaltung.model.MeetingTable;
-import de.turnierverwaltung.view.JSONConfigView;
 
 public class JSONSaveControl {
 	private MainControl mainControl;
 	private String url;
-	private String jsonCrossName;
+	private String jsonFileName;
 	private String jsonMeetingName;
 	private JSON jsonCross;
 	private JSON jsonMeeting;
@@ -22,8 +21,8 @@ public class JSONSaveControl {
 	}
 
 	public void uploadJSONFile() throws IOException {
-		JSONConfigView jsonView = new JSONConfigView();
-		
+		// JSONConfigView jsonView = new JSONConfigView();
+
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 
 		if (ready) {
@@ -50,18 +49,25 @@ public class JSONSaveControl {
 				}
 
 				jsonCross = new JSON();
-				jsonCrossName = "crosstable" + new Integer(i);
-				String[] jsonCrossTitle = new String[3];
-				jsonCrossTitle[0] = mainControl.getTurnier().getTurnierName();
-				jsonCrossTitle[1] = mainControl.getTurnier().getGruppe()[i].getGruppenName();
-				jsonCrossTitle[2] = Messages.getString("NaviController.34");
-
-				jsonMeeting = new JSON();
-				jsonMeetingName = "meetingtable" + new Integer(i);
-				String[] jsonMeetingTitle = new String[3];
-				jsonMeetingTitle[0] = mainControl.getTurnier().getTurnierName();
-				jsonMeetingTitle[1] = mainControl.getTurnier().getGruppe()[i].getGruppenName();
-				jsonMeetingTitle[2] = Messages.getString("NaviController.35");
+				jsonFileName = "json_" + new Integer(i);
+				// String[] jsonCrossTitle = new String[3];
+				String tournamentName = mainControl.getTurnier().getTurnierName();
+				String groupName = mainControl.getTurnier().getGruppe()[i].getGruppenName();
+				String jsonCrossTitle = Messages.getString("NaviController.34");
+				String jsonMeetingtitle = Messages.getString("NaviController.35");
+				String startDate = mainControl.getTurnier().getStartDatum();
+				String endDate = mainControl.getTurnier().getEndDatum();
+				String menuName = "BBK 2016";
+				String regularities = "regularities";
+				String crossTableText = "crossTableText";
+				String meetingTableText = "meetingTableText";
+				// jsonMeeting = new JSON();
+				// jsonMeetingName = "meetingtable" + new Integer(i);
+				// String[] jsonMeetingTitle = new String[3];
+				// jsonMeetingTitle[0] =
+				// mainControl.getTurnier().getTurnierName();
+				// jsonMeetingTitle[1] =
+				// mainControl.getTurnier().getGruppe()[i].getGruppenName();
 
 				url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
 
@@ -71,11 +77,16 @@ public class JSONSaveControl {
 				} else {
 					configFlag = false;
 				}
-				jsonCross.postRequest(url, turnierTabelle.getTabellenMatrix(), jsonCrossName, configFlag,
-						jsonCrossTitle);
-
-				jsonMeeting.postRequest(url, meetingTable.getTabellenMatrix(), jsonMeetingName, false,
-						jsonMeetingTitle);
+				// jsonCross.postRequest(url, jsonFileName,
+				// turnierTabelle.getTabellenMatrix(), jsonCrossTitle,
+				// meetingTable.getTabellenMatrix(), jsonMeetingName,
+				// jsonMeetingTitle, configFlag);
+				jsonCross.postRequest(url, tournamentName, groupName, startDate, endDate, menuName, crossTableText,
+						meetingTableText, regularities, jsonFileName, turnierTabelle.getTabellenMatrix(),
+						jsonCrossTitle, meetingTable.getTabellenMatrix(), jsonMeetingtitle, configFlag);
+				// jsonMeeting.postRequest(url,
+				// meetingTable.getTabellenMatrix(), jsonMeetingName, false,
+				// jsonMeetingTitle);
 
 			}
 
@@ -96,11 +107,11 @@ public class JSONSaveControl {
 	}
 
 	public String getJsonCrossName() {
-		return jsonCrossName;
+		return jsonFileName;
 	}
 
 	public void setJsonCrossName(String jsonCrossName) {
-		this.jsonCrossName = jsonCrossName;
+		this.jsonFileName = jsonCrossName;
 	}
 
 	public String getJsonMeetingName() {

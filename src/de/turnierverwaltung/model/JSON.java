@@ -9,16 +9,25 @@ public class JSON {
 
 	}
 
-	public void postRequest(String url, String[][] tabellenMatrix, String name, Boolean configFlag, String[] title)
-			throws IOException {
+	public void postRequest(String url, String tournamentName, String groupName, String startDate, String endDate,
+			String menuName, String crossTableText, String meetingTableText, String regularities, String jsonFileName,
+			String[][] crossTableMatrix, String jsonCrossTitle, String[][] meetingTableMatrix, String jsonMeetingtitle,
+			Boolean configFlag) throws IOException {
 		Gson gson = new Gson();
 
-		String[][] mirrorMatrix = mirrorArray(tabellenMatrix);
+		String[][] crossTable = mirrorArray(crossTableMatrix);
+		String[][] meetingTable = mirrorArray(meetingTableMatrix);
 
+		JSONObject jsonObject = new JSONObject(tournamentName, groupName, menuName, crossTableText, crossTable,
+				meetingTableText, meetingTable, startDate, endDate, regularities, jsonCrossTitle, jsonMeetingtitle);
 		PostRequest postRequest = new PostRequest();
-
-		postRequest.sendJSONStringToServer(url, gson.toJson(mirrorMatrix), name, configFlag, title);
-
+		String cflag = "";
+		if (configFlag) {
+			cflag = "true";
+		} else {
+			cflag = "false";
+		}
+		postRequest.sendJSONStringToServer(url, gson.toJson(jsonObject), jsonFileName, cflag, menuName);
 	}
 
 	private String[][] mirrorArray(String[][] array) {

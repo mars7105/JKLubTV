@@ -1,10 +1,9 @@
 package de.turnierverwaltung.model;
 
 public class JSONObject {
-	private String category;
-	private String tournament;
-	private String group;
-	private String tableType;
+	private String tournamentName;
+	private String groupName;
+	private String menuName;
 	private String crossTableText;
 	private String[][] crossTable;
 	private String meetingTableText;
@@ -12,66 +11,56 @@ public class JSONObject {
 	private String startDate;
 	private String endDate;
 	private String regularities;
+	private long timeStamp;
+	private String jsonCrossTitle;
+	private String jsonMeetingtitle;
 
 	public JSONObject() {
 
 	}
 
-	public JSONObject(String category, String tournament, String group, String tableType, String tableText,
+	public JSONObject(String tournamentName, String groupName, String menuName, String crossTableText,
 			String[][] crossTable, String meetingTableText, String[][] meetingTable, String startDate, String endDate,
-			String regularities) {
+			String regularities, String jsonCrossTitle, String jsonMeetingtitle) {
 		super();
-		this.category = category;
-		this.tournament = tournament;
-		this.group = group;
-		this.tableType = tableType;
-		this.crossTableText = tableText;
+
+		this.tournamentName = tournamentName;
+		this.groupName = groupName;
+		this.menuName = menuName;
+		this.crossTableText = crossTableText;
 		this.crossTable = crossTable;
 		this.meetingTableText = meetingTableText;
 		this.meetingTable = meetingTable;
 		this.startDate = startDate;
 		this.endDate = endDate;
+		this.jsonCrossTitle = jsonCrossTitle;
+		this.jsonMeetingtitle = jsonMeetingtitle;
+		this.timeStamp = System.currentTimeMillis() / 1000;
 		this.regularities = regularities;
 	}
 
-	public String getCategory() {
-		return category;
+	public String getTournamentName() {
+		return tournamentName;
 	}
 
-	public void setCategory(String category) {
-		this.category = category;
+	public void setTournamentName(String tournamentName) {
+		this.tournamentName = tournamentName;
 	}
 
-	public String getTournament() {
-		return tournament;
+	public String getGroupName() {
+		return groupName;
 	}
 
-	public void setTournament(String tournament) {
-		this.tournament = tournament;
+	public void setGroupName(String groupName) {
+		this.groupName = groupName;
 	}
 
-	public String getGroup() {
-		return group;
+	public String getMenuName() {
+		return menuName;
 	}
 
-	public void setGroup(String group) {
-		this.group = group;
-	}
-
-	public String getTableType() {
-		return tableType;
-	}
-
-	public void setTableType(String tableType) {
-		this.tableType = tableType;
-	}
-
-	public String[][] getCrossTable() {
-		return crossTable;
-	}
-
-	public void setCrossTable(String[][] crossTable) {
-		this.crossTable = crossTable;
+	public void setMenuName(String menuName) {
+		this.menuName = menuName;
 	}
 
 	public String getCrossTableText() {
@@ -80,6 +69,14 @@ public class JSONObject {
 
 	public void setCrossTableText(String crossTableText) {
 		this.crossTableText = crossTableText;
+	}
+
+	public String[][] getCrossTable() {
+		return crossTable;
+	}
+
+	public void setCrossTable(String[][] crossTable) {
+		this.crossTable = crossTable;
 	}
 
 	public String getMeetingTableText() {
@@ -120,6 +117,30 @@ public class JSONObject {
 
 	public void setRegularities(String regularities) {
 		this.regularities = regularities;
+	}
+
+	public long getTimeStamp() {
+		return timeStamp;
+	}
+
+	public void setTimeStamp(long timeStamp) {
+		this.timeStamp = timeStamp;
+	}
+
+	public String getJsonCrossTitle() {
+		return jsonCrossTitle;
+	}
+
+	public void setJsonCrossTitle(String jsonCrossTitle) {
+		this.jsonCrossTitle = jsonCrossTitle;
+	}
+
+	public String getJsonMeetingtitle() {
+		return jsonMeetingtitle;
+	}
+
+	public void setJsonMeetingtitle(String jsonMeetingtitle) {
+		this.jsonMeetingtitle = jsonMeetingtitle;
 	}
 
 }
