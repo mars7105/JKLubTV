@@ -49,12 +49,13 @@ function createHTMLTables() {
 		// var_dump ( $data );
 		
 		// CROSSTABLE
-		$table = '';
-		$table .= '	<div class="panel panel-default"><div class="panel-heading">' . "\n";
+		$table = '<div class="row">
+        <div class="col-sm-8 blog-main">	';
+		$table .= '<div class="panel panel-default"><div class="panel-heading">' . "\n";
 		$table .= '		<h1 class="panel-title"> ' . $data ["tournamentName"] . ' - ' . $data ["groupName"] . '</h1>' . "\n";
 		$table .= '	</div>' . "\n";
 		
-		$table .= '<div class="panel-body"><div class="panel panel-success">
+		$table .= '<div class="panel-body"><div class="panel panel-success ">
             <div class="panel-heading">
               <h3 class="panel-title"> ' . $data [jsonCrossTitle] . "</h3>\n";
 		
@@ -99,7 +100,7 @@ function createHTMLTables() {
 			$table .= '  </tr>' . "\n";
 			$counter ++;
 		}
-		$table .= '</table></div></div></div> </div> </div>
+		$table .= '</table>	</div></div></div></div></div>
           </div>' . "\n";
 		$fileName = 'tables/' . $data [tournamentName] . '-' . $data [groupName] . '.html';
 		
@@ -117,6 +118,15 @@ function createHTMLTables() {
 	$content .= '<div class="container theme-showcase" role="main">' . "\n" . '<!-- Main jumbotron for a primary marketing message or call to action -->' . "\n";
 	$_SESSION ['content'] = $content;
 	$_SESSION ['files'] = $file;
+}
+function wrapGreyContent($text, $text2) {
+	$wrap = '<div class="panel panel-default"><div class="panel-heading">' . "\n";
+	$wrap .= '<h1 class="panel-title">';
+	$wrap .= $text . '</h1>' . "\n";
+	// Do more
+	return $wrap;
+}
+function wrapGreenContent($text) {
 }
 ?>
 	
