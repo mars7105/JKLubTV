@@ -58,35 +58,36 @@ public class JSONSaveControl {
 				String startDate = mainControl.getTurnier().getStartDatum();
 				String endDate = mainControl.getTurnier().getEndDatum();
 				String menuName = "BBK 2016";
-				String regularities = "regularities";
-				String crossTableText = "crossTableText";
-				String meetingTableText = "meetingTableText";
-				// jsonMeeting = new JSON();
-				// jsonMeetingName = "meetingtable" + new Integer(i);
-				// String[] jsonMeetingTitle = new String[3];
-				// jsonMeetingTitle[0] =
-				// mainControl.getTurnier().getTurnierName();
-				// jsonMeetingTitle[1] =
-				// mainControl.getTurnier().getGruppe()[i].getGruppenName();
+				String[] sidePanels = new String[4];
+				sidePanels[0] = "Regularien";
+				sidePanels[1] = "Wertung:" + "<br />" + "1.) Punkte" + "<br />" + "2.) Sonneborn-Berger-Wertung"
+						+ "<br />" + "3.) direkter Vergleich" + "<br />"
+						+ "4.) um Abstieg oder Preisrang: Stichkampf * -" + "<br />" + "sonst gleiche Plazierung"
+						+ "<br />" + " " + "<br />"
+						+ "* Stichkampf: eine Schnellpartie (30 min pro Spieler) mit gegenüber Hauptturnier vertauschten Farben;"
+						+ "<br />"
+						+ "bei Gleichstand danach je eine Blitzpartie (mit stets vertauschten Farben) bis zur Entscheidung. ";
+				sidePanels[2] = "Test";
+				sidePanels[3] = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+				String[] crossTableText = new String[anzahlGruppen];
+				String[] meetingTableText = new String[anzahlGruppen];
+				for (int u = 0; u < anzahlGruppen; u++) {
+					crossTableText[u] = "crossTableText" + new Integer(u);
+					meetingTableText[u] = "meetingTableText" + new Integer(u);
+				}
 
 				url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
-
+				String siteName = "JKlubTV Demosite";
 				Boolean configFlag;
 				if (i == 0) {
 					configFlag = true;
 				} else {
 					configFlag = false;
 				}
-				// jsonCross.postRequest(url, jsonFileName,
-				// turnierTabelle.getTabellenMatrix(), jsonCrossTitle,
-				// meetingTable.getTabellenMatrix(), jsonMeetingName,
-				// jsonMeetingTitle, configFlag);
+
 				jsonCross.postRequest(url, tournamentName, groupName, startDate, endDate, menuName, crossTableText,
-						meetingTableText, regularities, jsonFileName, turnierTabelle.getTabellenMatrix(),
-						jsonCrossTitle, meetingTable.getTabellenMatrix(), jsonMeetingtitle, configFlag);
-				// jsonMeeting.postRequest(url,
-				// meetingTable.getTabellenMatrix(), jsonMeetingName, false,
-				// jsonMeetingTitle);
+						meetingTableText, sidePanels, jsonFileName, turnierTabelle.getTabellenMatrix(), jsonCrossTitle,
+						meetingTable.getTabellenMatrix(), jsonMeetingtitle, siteName, configFlag);
 
 			}
 

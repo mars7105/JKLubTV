@@ -79,7 +79,7 @@ class Wrap {
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <p class="navbar-brand">' . $h1 . '</p>
+          <p class="navbar-brand"><a href="' . $_SERVER ['PHP_SELF'] . '">' . $h1 . '</a></p>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">

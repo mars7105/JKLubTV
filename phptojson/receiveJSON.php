@@ -14,7 +14,7 @@ if (! empty ( $_POST )) {
 		array_map ( 'unlink', glob ( "jsonFiles/*.json" ) );
 		$script .= '<?php' . "\n";
 		$script .= '  $menuName = "' . $menuName . '";' . "\n";
-		$script .= '  $jsonFiles[] = array();' . "\n";
+// 		$script .= '  $jsonFiles[] = array();' . "\n";
 	}
 	$file = htmlspecialchars ( 'jsonFiles/' . $jsonFileName . '.json' );
 	$bodytag = html_entity_decode ( $string, ENT_QUOTES );

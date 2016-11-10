@@ -10,16 +10,17 @@ public class JSON {
 	}
 
 	public void postRequest(String url, String tournamentName, String groupName, String startDate, String endDate,
-			String menuName, String crossTableText, String meetingTableText, String regularities, String jsonFileName,
+			String menuName, String[] crossTableText, String[] meetingTableText, String[] sidePanels, String jsonFileName,
 			String[][] crossTableMatrix, String jsonCrossTitle, String[][] meetingTableMatrix, String jsonMeetingtitle,
-			Boolean configFlag) throws IOException {
+			String siteName, Boolean configFlag) throws IOException {
 		Gson gson = new Gson();
 
 		String[][] crossTable = mirrorArray(crossTableMatrix);
 		String[][] meetingTable = mirrorArray(meetingTableMatrix);
 
 		JSONObject jsonObject = new JSONObject(tournamentName, groupName, menuName, crossTableText, crossTable,
-				meetingTableText, meetingTable, startDate, endDate, regularities, jsonCrossTitle, jsonMeetingtitle);
+				meetingTableText, meetingTable, startDate, endDate, sidePanels, jsonCrossTitle, jsonMeetingtitle,
+				siteName);
 		PostRequest postRequest = new PostRequest();
 		String cflag = "";
 		if (configFlag) {

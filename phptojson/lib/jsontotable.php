@@ -8,6 +8,7 @@ if (! empty ( $_GET ['param'] ) && ! empty ( $_SESSION ['content'] )) {
 	showMenu ();
 }
 function showMenu() {
+	$wrapper = new Wrap ();
 	$param = $_GET ['param'];
 	$content = $_SESSION ['content'];
 	$files = $_SESSION ['files'];
@@ -18,7 +19,11 @@ function showMenu() {
 	<div class="col-sm-8 blog-main">';
 	$content .= $table;
 	$content .= '</div> <!-- col-sm-8 blog-main -->';
-	$content .= createSidebar () . '</div> <!--container -->';
+	$sidePanels = $_SESSION ['sidePanels'];
+	$sidebar .= createSidebarPanel ( $sidePanels );
+	
+	$content .= $wrapper->wrapSidebar ( $sidebar ) . '</div> <!--container -->';
+	
 	$content .= createFooter ();
 	
 	echo $content;
@@ -46,8 +51,8 @@ function createHTMLTables() {
 		$greenCrossContent = '';
 		$greenMeetingContent = '';
 		$greyH1 = $data ["tournamentName"] . ' - ' . $data ["groupName"];
-		$greenCrossH1 = $data [jsonCrossTitle];
-		$greenMeetingH1 = $data [jsonMeetingtitle];
+		$greenCrossH1 = $data ["jsonCrossTitle"];
+		$greenMeetingH1 = $data ["jsonMeetingtitle"];
 		
 		$cTable = '';
 		$cTable .= '<table class="table table-bordered well">' . "\n";
@@ -67,6 +72,8 @@ function createHTMLTables() {
 			$counter ++;
 		}
 		$cTable .= '</table>' . "\n";
+		$crossTableText = $data ["crossTableText"];
+		$cTable .= $crossTableText [$index];
 		$greenCrossContent = $wrapper->wrapGreyContent ( $greenCrossH1, $cTable );
 		
 		// MEETINGTABLE
@@ -89,55 +96,34 @@ function createHTMLTables() {
 			$counter ++;
 		}
 		$mTable .= '</table>' . "\n";
+		$meetingTableText = $data ["meetingTableText"];
+		$mTable .= $meetingTableText [$index];
 		$greenMeetingContent = $wrapper->wrapGreyContent ( $greenMeetingH1, $mTable );
-		// $allContent = wrapDarkBlueContent ( $greyH1, $greenCrossContent . $greenMeetingContent );
+		
 		$allContent = '<h1 class="well">' . $greyH1 . '</h1>';
 		$allContent .= $greenCrossContent . $greenMeetingContent;
-		$fileName = 'tables/' . $data [tournamentName] . '-' . $data [groupName] . '.html';
+		$fileName = 'tables/' . $data ["tournamentName"] . '-' . $data ["groupName"] . '.html';
 		
 		file_put_contents ( $fileName, $allContent );
 		$file [$index] = $fileName;
-		$menuLinks .= '<li><a href="index.php?param=' . $index . '" >' . $data [groupName] . '</a></li>' . "\n";
+		$menuLinks .= '<li><a href="index.php?param=' . $index . '" >' . $data ["groupName"] . '</a></li>' . "\n";
 		$index ++;
 	}
 	$menuName = $data ["menuName"];
-	$content = $wrapper->wrapNavigation ( 'JKlubTV Frontend', $menuName, $menuLinks );
-	
+	$content = $wrapper->wrapNavigation ( $data ["siteName"], $menuName, $menuLinks );
+	;
+	$_SESSION ['sidePanels'] = $data ["sidePanels"];
 	$_SESSION ['content'] = $content;
 	$_SESSION ['files'] = $file;
 }
-function createSidebar() {
+function createSidebarPanel($panelText) {
 	$wrapper = new Wrap ();
 	$sidebar = '';
-	$sidebarModule = $wrapper->wrapGreyContent ( 'About', '<p>
-								Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras
-								mattis consectetur purus sit amet fermentum. Aenean lacinia
-								bibendum nulla sed consectetur.
-							</p>' );
-	$sidebar .= $wrapper->wrapSidebarModule ( $sidebarModule );
-	$sidebarModule = $wrapper->wrapGreyContent ( 'Archives', '<ol class="list-unstyled">
-								<li><a href="#">March 2014</a></li>
-								<li><a href="#">February 2014</a></li>
-								<li><a href="#">January 2014</a></li>
-								<li><a href="#">December 2013</a></li>
-								<li><a href="#">November 2013</a></li>
-								<li><a href="#">October 2013</a></li>
-								<li><a href="#">September 2013</a></li>
-								<li><a href="#">August 2013</a></li>
-								<li><a href="#">July 2013</a></li>
-								<li><a href="#">June 2013</a></li>
-								<li><a href="#">May 2013</a></li>
-								<li><a href="#">April 2013</a></li>
-							</ol>' );
-	$sidebar .= $wrapper->wrapSidebarModule ( $sidebarModule );
-	
-	$sidebarModule = $wrapper->wrapGreyContent ( 'Elsewhere', '<ol class="list-unstyled">
-								<li><a href="#">GitHub</a></li>
-								<li><a href="#">Twitter</a></li>
-								<li><a href="#">Facebook</a></li>
-							</ol>' );
-	$sidebar .= $wrapper->wrapSidebarModule ( $sidebarModule );
-	return $wrapper->wrapSidebar ( $sidebar );
+	for($i = 0; $i < count ( $panelText ); $i = $i + 2) {
+		$sidebarModule = $wrapper->wrapGreyContent ( $panelText [$i], '<p>' . $panelText [$i + 1] . '</p>' );
+		$sidebar .= $wrapper->wrapSidebarModule ( $sidebarModule );
+	}
+	return $sidebar;
 }
 function createFooter() {
 	$wrapper = new Wrap ();
