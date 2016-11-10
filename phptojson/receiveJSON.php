@@ -3,10 +3,8 @@ $configfile = "config.php";
 if (! empty ( $_POST )) {
 	
 	$string = $_POST ["json"];
-	$name = $_POST ["name"];
-	$title = $_POST ["title"];
-	$groupname = $_POST ["groupname"];
-	$tabletype = $_POST ["tabletype"];
+	$jsonFileName = $_POST ["jsonFileName"];
+	$menuName = $_POST ["menuName"];
 	$configFlag = $_POST ["configFlag"];
 	$script = "";
 	if ($configFlag == "true") {
@@ -15,18 +13,13 @@ if (! empty ( $_POST )) {
 		array_map ( 'unlink', glob ( "tables/*.html" ) );
 		array_map ( 'unlink', glob ( "jsonFiles/*.json" ) );
 		$script .= '<?php' . "\n";
+		$script .= '  $menuName = "' . $menuName . '";' . "\n";
 		$script .= '  $jsonFiles[] = array();' . "\n";
-		$script .= '  $title[] = array();' . "\n";
-		$script .= '  $groupname[] = array();' . "\n";
-		$script .= '  $tabletype[] = array();' . "\n";
 	}
-	$file = htmlspecialchars ( 'jsonFiles/' . $name . '.json' );
+	$file = htmlspecialchars ( 'jsonFiles/' . $jsonFileName . '.json' );
 	$bodytag = html_entity_decode ( $string, ENT_QUOTES );
 	file_put_contents ( $file, $bodytag );
 	$script .= '  $jsonFiles[] = "' . $file . '";' . "\n";
-	$script .= '  $title[] = "' . $title . '";' . "\n";
-	$script .= '  $groupname[] = "' . $groupname . '";' . "\n";
-	$script .= '  $tabletype[] = "' . $tabletype . '";' . "\n";
 	
 	file_put_contents ( $configfile, $script, FILE_APPEND );
 	
