@@ -21,100 +21,110 @@ function showMenu() {
 	$content .= '</div> <!-- col-sm-8 blog-main -->';
 	$sidePanels = $_SESSION ['sidePanels'];
 	$sidebar .= createSidebarPanel ( $sidePanels );
-	
 	$content .= $wrapper->wrapSidebar ( $sidebar ) . '</div> <!--container -->';
-	
 	$content .= createFooter ();
 	
 	echo $content;
 	session_destroy ();
 }
 function createHTMLTables() {
+	$timeStampFilename = 'tables/timestamp.json';
+	$timeStamp = "0";
+	if (file_exists ( $timeStampFilename )) {
+		$timeStamphandle = fopen ( $timeStampFilename, "r" );
+		
+		$timeStampjson = fread ( $timeStamphandle, filesize ( $timeStampFilename ) );
+		fclose ( $handle );
+		$timeStamp = json_decode ( $timeStampjson, true );
+	}
+	
 	$wrapper = new Wrap ();
-	include 'config.php';
+	// include 'config.php';
+	$configJSON = 'config.json';
+	$handle = fopen ( $configJSON, "r" );
+	$json = fread ( $handle, filesize ( $configJSON ) );
+	fclose ( $handle );
+	$jsonFiles = json_decode ( $json, true );
+	
 	$file [] = array ();
 	$content = '';
 	$menuLinks = '';
 	$index = 0;
 	
-	foreach ( $jsonFiles as $filename ) {
-		
-		// liest den Inhalt einer Datei in einen String
-		$handle = fopen ( $filename, "r" );
-		$json = fread ( $handle, filesize ( $filename ) );
-		fclose ( $handle );
-		$data = json_decode ( $json, true );
-		
-		// CROSSTABLE
-		$allContent = '';
-		$greyContent = '';
-		$greenCrossContent = '';
-		$greenMeetingContent = '';
-		$greyH1 = $data ["tournamentName"] . ' - ' . $data ["groupName"];
-		$greenCrossH1 = $data ["jsonCrossTitle"];
-		$greenMeetingH1 = $data ["jsonMeetingtitle"];
-		
-		$cTable = '';
-		$cTable .= '<table class="table table-bordered well">' . "\n";
-		$counter = 0;
-		$crosstable = $data ["crossTable"];
-		foreach ( $crosstable as $jsons ) {
-			$cTable .= '  <tr>' . "\n";
+	foreach ( $jsonFiles['filename'] as $filename ) {
+		if (file_exists ( $filename )) {
+			// liest den Inhalt einer Datei in einen String
+			$handle = fopen ( $filename, "r" );
+			$json = fread ( $handle, filesize ( $filename ) );
+			fclose ( $handle );
+			$data = json_decode ( $json, true );
+			$timeStampJSON [$index] = $data ["timeStamp"];
 			
-			foreach ( $jsons as $key => $rvalue ) {
-				if ($counter == 0) {
-					$cTable .= '    <th class="alert-warning">' . $rvalue . '</th>' . "\n";
-				} else {
-					$cTable .= '    <td>' . $rvalue . '</td>' . "\n";
-				}
-			}
-			$cTable .= '  </tr>' . "\n";
-			$counter ++;
-		}
-		$cTable .= '</table>' . "\n";
-		$crossTableText = $data ["crossTableText"];
-		$cTable .= $crossTableText [$index];
-		$greenCrossContent = $wrapper->wrapGreyContent ( $greenCrossH1, $cTable );
-		
-		// MEETINGTABLE
-		
-		$mTable = '';
-		$mTable .= '<table class="table table-bordered well">' . "\n";
-		$counter = 0;
-		$meetingtable = $data ["meetingTable"];
-		foreach ( $meetingtable as $jsons ) {
-			$mTable .= '  <tr>' . "\n";
+			// CROSSTABLE
+			$allContent = '';
+			$greyContent = '';
+			$greenCrossContent = '';
+			$greenMeetingContent = '';
+			$greyH1 = $data ["tournamentName"] . ' - ' . $data ["groupName"];
+			$greenCrossH1 = $data ["jsonCrossTitle"];
+			$greenMeetingH1 = $data ["jsonMeetingtitle"];
 			
-			foreach ( $jsons as $key => $rvalue ) {
-				if ($counter == 0) {
-					$mTable .= '    <th class="alert-warning">' . $rvalue . '</th>' . "\n";
-				} else {
-					$mTable .= '    <td>' . $rvalue . '</td>' . "\n";
-				}
+			$crosstable = $data ["crossTable"];
+			$cTable = createTable ( $crosstable );
+			
+			$crossTableText = $data ["crossTableText"];
+			$cTable .= $crossTableText [$index];
+			$greenCrossContent = $wrapper->wrapGreyContent ( $greenCrossH1, $cTable );
+			
+			// MEETINGTABLE
+			$meetingtable = $data ["meetingTable"];
+			$mTable = createTable ( $meetingtable );
+			
+			$meetingTableText = $data ["meetingTableText"];
+			$mTable .= $meetingTableText [$index];
+			$greenMeetingContent = $wrapper->wrapGreyContent ( $greenMeetingH1, $mTable );
+			
+			$allContent = '<h1 class="well">' . $greyH1 . '</h1>';
+			$allContent .= $greenCrossContent . $greenMeetingContent;
+			$fileName = 'tables/' . $data ["tournamentName"] . '-' . $data ["groupName"] . '.html';
+			$file [$index] = $fileName;
+			if (strcmp ( $timeStampJSON [$index], $timeStamp [$index] ) != 0) {
+				
+				file_put_contents ( $fileName, $allContent );
 			}
-			$mTable .= '  </tr>' . "\n";
-			$counter ++;
+			$menuLinks .= '<li><a href="index.php?param=' . $index . '" >' . $data ["groupName"] . '</a></li>' . "\n";
+			$index ++;
 		}
-		$mTable .= '</table>' . "\n";
-		$meetingTableText = $data ["meetingTableText"];
-		$mTable .= $meetingTableText [$index];
-		$greenMeetingContent = $wrapper->wrapGreyContent ( $greenMeetingH1, $mTable );
-		
-		$allContent = '<h1 class="well">' . $greyH1 . '</h1>';
-		$allContent .= $greenCrossContent . $greenMeetingContent;
-		$fileName = 'tables/' . $data ["tournamentName"] . '-' . $data ["groupName"] . '.html';
-		
-		file_put_contents ( $fileName, $allContent );
-		$file [$index] = $fileName;
-		$menuLinks .= '<li><a href="index.php?param=' . $index . '" >' . $data ["groupName"] . '</a></li>' . "\n";
-		$index ++;
 	}
+	file_put_contents ( $timeStampFilename, json_encode ( $timeStampJSON ) );
+	
 	$menuName = $data ["menuName"];
 	$content = $wrapper->wrapNavigation ( $data ["siteName"], $menuName, $menuLinks );
-	;
+	
 	$_SESSION ['sidePanels'] = $data ["sidePanels"];
 	$_SESSION ['content'] = $content;
 	$_SESSION ['files'] = $file;
+}
+function createTable($table) {
+	$tempTable = '';
+	$tempTable .= '<table class="table table-bordered well">' . "\n";
+	$counter = 0;
+	// $crosstable = $data ["crossTable"];
+	foreach ( $table as $jsons ) {
+		$tempTable .= '  <tr>' . "\n";
+		
+		foreach ( $jsons as $key => $rvalue ) {
+			if ($counter == 0) {
+				$tempTable .= '    <th class="alert-warning">' . $rvalue . '</th>' . "\n";
+			} else {
+				$tempTable .= '    <td>' . $rvalue . '</td>' . "\n";
+			}
+		}
+		$tempTable .= '  </tr>' . "\n";
+		$counter ++;
+	}
+	$tempTable .= '</table>' . "\n";
+	return $tempTable;
 }
 function createSidebarPanel($panelText) {
 	$wrapper = new Wrap ();
@@ -126,7 +136,6 @@ function createSidebarPanel($panelText) {
 	return $sidebar;
 }
 function createFooter() {
-	$wrapper = new Wrap ();
 	$wrap = '
 	<footer class="blog-footer">
 		<p>

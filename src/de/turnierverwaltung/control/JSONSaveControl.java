@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.swing.JOptionPane;
 import de.turnierverwaltung.model.CrossTable;
 import de.turnierverwaltung.model.JSON;
+import de.turnierverwaltung.model.JSONFileObject;
 import de.turnierverwaltung.model.MeetingTable;
-import de.turnierverwaltung.view.JSONConfigView;
 
 public class JSONSaveControl {
 	private MainControl mainControl;
@@ -22,14 +22,18 @@ public class JSONSaveControl {
 	}
 
 	public void uploadJSONFile() throws IOException {
-		JSONConfigView jsonView = new JSONConfigView();
-		jsonView.makePanel();
+		// JSONConfigView jsonView = new JSONConfigView();
+		// jsonView.makePanel();
 
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+		url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
 
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
+			String[] filenames = new String[anzahlGruppen];
 
+			jsonCross = new JSON(url);
+			jsonCross.postStart();
 			for (int i = 0; i < anzahlGruppen; i++) {
 				if (this.mainControl.getTurnierTabelle()[i] == null) {
 					this.mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
@@ -50,9 +54,8 @@ public class JSONSaveControl {
 					}
 				}
 
-				jsonCross = new JSON();
-				jsonFileName = "json_" + new Integer(i);
-				// String[] jsonCrossTitle = new String[3];
+				jsonFileName = "json_" + new Integer(i) + ".json";
+				filenames[i] = "jsonFiles/" + jsonFileName;
 				String tournamentName = mainControl.getTurnier().getTurnierName();
 				String groupName = mainControl.getTurnier().getGruppe()[i].getGruppenName();
 				String jsonCrossTitle = Messages.getString("NaviController.34");
@@ -78,7 +81,6 @@ public class JSONSaveControl {
 					meetingTableText[u] = "meetingTableText" + new Integer(u);
 				}
 
-				url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
 				String siteName = "JKlubTV Demosite";
 				Boolean configFlag;
 				if (i == 0) {
@@ -87,11 +89,15 @@ public class JSONSaveControl {
 					configFlag = false;
 				}
 
-				jsonCross.postRequest(url, tournamentName, groupName, startDate, endDate, menuName, crossTableText,
+				jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName, crossTableText,
 						meetingTableText, sidePanels, jsonFileName, turnierTabelle.getTabellenMatrix(), jsonCrossTitle,
 						meetingTable.getTabellenMatrix(), jsonMeetingtitle, siteName, configFlag);
 
 			}
+			jsonCross.postEnd();
+			JSON jsonFileObjects = new JSON("http://projekte.mamuck.de/jklubtv/receiveFileJSON.php");
+			JSONFileObject jsonFiles = new JSONFileObject(filenames);
+			jsonFileObjects.postFileNames(jsonFiles);
 
 		} else {
 			JOptionPane.showMessageDialog(null,

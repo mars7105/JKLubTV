@@ -1,16 +1,20 @@
 package de.turnierverwaltung.model;
 
 import java.io.IOException;
+import java.net.URL;
+
 import com.google.gson.Gson;
 
 public class JSON {
+	private String url;
+	private PostRequest postRequest;
 
-	public JSON() {
-
+	public JSON(String url) {
+		this.url = url;
 	}
 
-	public void postRequest(String url, String tournamentName, String groupName, String startDate, String endDate,
-			String menuName, String[] crossTableText, String[] meetingTableText, String[] sidePanels, String jsonFileName,
+	public void postRequest(String tournamentName, String groupName, String startDate, String endDate, String menuName,
+			String[] crossTableText, String[] meetingTableText, String[] sidePanels, String jsonFileName,
 			String[][] crossTableMatrix, String jsonCrossTitle, String[][] meetingTableMatrix, String jsonMeetingtitle,
 			String siteName, Boolean configFlag) throws IOException {
 		Gson gson = new Gson();
@@ -21,14 +25,32 @@ public class JSON {
 		JSONObject jsonObject = new JSONObject(tournamentName, groupName, menuName, crossTableText, crossTable,
 				meetingTableText, meetingTable, startDate, endDate, sidePanels, jsonCrossTitle, jsonMeetingtitle,
 				siteName);
-		PostRequest postRequest = new PostRequest();
+		postRequest = new PostRequest(new URL(url));
 		String cflag = "";
 		if (configFlag) {
 			cflag = "true";
 		} else {
 			cflag = "false";
 		}
-		postRequest.sendJSONStringToServer(url, gson.toJson(jsonObject), jsonFileName, cflag);
+		postRequest.sendJSONStringToServer(gson.toJson(jsonObject), jsonFileName, cflag);
+	}
+
+	public void postFileNames(JSONFileObject filenames) throws IOException {
+		Gson gson = new Gson();
+		postRequest = new PostRequest(new URL(url));
+		postRequest.sendFilenames(gson.toJson(filenames));
+	}
+
+	public void postStart() throws IOException {
+
+		PostRequest postRequest = new PostRequest(new URL(url));
+		postRequest.sendSessionRequest(true);
+
+	}
+
+	public void postEnd() throws IOException {
+		PostRequest postRequest = new PostRequest(new URL(url));
+		postRequest.sendSessionRequest(false);
 	}
 
 	private String[][] mirrorArray(String[][] array) {
