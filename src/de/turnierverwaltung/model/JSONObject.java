@@ -4,39 +4,37 @@ public class JSONObject {
 	private String tournamentName;
 	private String groupName;
 	private String menuName;
-	private String crossTableText;
+	private String[] crossTableText;
 	private String[][] crossTable;
-	private String meetingTableText;
+	private String[] meetingTableText;
 	private String[][] meetingTable;
 	private String startDate;
 	private String endDate;
-	private String regularities;
+	private String[] sidePanels;
 	private long timeStamp;
 	private String jsonCrossTitle;
 	private String jsonMeetingtitle;
+	private String siteName;
 
-	public JSONObject() {
-
-	}
-
-	public JSONObject(String tournamentName, String groupName, String menuName, String crossTableText,
-			String[][] crossTable, String meetingTableText, String[][] meetingTable, String startDate, String endDate,
-			String regularities, String jsonCrossTitle, String jsonMeetingtitle) {
+	public JSONObject(String tournamentName, String groupName, String menuName, String[] crossTableText2,
+			String[][] crossTable, String[] meetingTableText2, String[][] meetingTable, String startDate,
+			String endDate, String sidePanels[], String jsonCrossTitle, String jsonMeetingtitle, String siteName) {
 		super();
 
 		this.tournamentName = tournamentName;
 		this.groupName = groupName;
 		this.menuName = menuName;
-		this.crossTableText = crossTableText;
+		this.crossTableText = crossTableText2;
 		this.crossTable = crossTable;
-		this.meetingTableText = meetingTableText;
+		this.meetingTableText = meetingTableText2;
 		this.meetingTable = meetingTable;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.jsonCrossTitle = jsonCrossTitle;
 		this.jsonMeetingtitle = jsonMeetingtitle;
 		this.timeStamp = System.currentTimeMillis() / 1000;
-		this.regularities = regularities;
+		this.sidePanels = sidePanels;
+		this.siteName = siteName;
 	}
 
 	public String getTournamentName() {
@@ -63,14 +61,6 @@ public class JSONObject {
 		this.menuName = menuName;
 	}
 
-	public String getCrossTableText() {
-		return crossTableText;
-	}
-
-	public void setCrossTableText(String crossTableText) {
-		this.crossTableText = crossTableText;
-	}
-
 	public String[][] getCrossTable() {
 		return crossTable;
 	}
@@ -79,11 +69,19 @@ public class JSONObject {
 		this.crossTable = crossTable;
 	}
 
-	public String getMeetingTableText() {
+	public String[] getCrossTableText() {
+		return crossTableText;
+	}
+
+	public void setCrossTableText(String[] crossTableText) {
+		this.crossTableText = crossTableText;
+	}
+
+	public String[] getMeetingTableText() {
 		return meetingTableText;
 	}
 
-	public void setMeetingTableText(String meetingTableText) {
+	public void setMeetingTableText(String[] meetingTableText) {
 		this.meetingTableText = meetingTableText;
 	}
 
@@ -111,12 +109,12 @@ public class JSONObject {
 		this.endDate = endDate;
 	}
 
-	public String getRegularities() {
-		return regularities;
+	public String[] getRegularities() {
+		return sidePanels;
 	}
 
-	public void setRegularities(String regularities) {
-		this.regularities = regularities;
+	public void setRegularities(String[] sidePanels) {
+		this.sidePanels = sidePanels;
 	}
 
 	public long getTimeStamp() {
@@ -141,6 +139,22 @@ public class JSONObject {
 
 	public void setJsonMeetingtitle(String jsonMeetingtitle) {
 		this.jsonMeetingtitle = jsonMeetingtitle;
+	}
+
+	public String[] getSidePanels() {
+		return sidePanels;
+	}
+
+	public void setSidePanels(String[] sidePanels) {
+		this.sidePanels = sidePanels;
+	}
+
+	public String getSiteName() {
+		return siteName;
+	}
+
+	public void setSiteName(String siteName) {
+		this.siteName = siteName;
 	}
 
 }
