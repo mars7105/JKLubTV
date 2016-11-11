@@ -4,9 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -20,19 +22,14 @@ public class JSONConfigView {
 	private JDialog jsonDialog;
 
 	private JPanel htmlAll;
-	private JTextField categoryTextField;
-	private JTextField tournamentTextField;
-	private JTextField groupTextField;
-	private JTextField crossTableTextField;
-	private JTextField meetingTableTextField;
-	private JTextField startDateTextField;
-	private JTextField endDateTextField;
-	private JTextField regularitiesTextField;
+	private JTextField tournamentNameTextField;
+	private JTextField menuNameTextField;
+	private JButton sidePanelsButton;
 	private JTextField uploadURLTextField;
-
 	private JButton okButton;
-
 	private JButton cancelButton;
+	private ImageIcon addImg = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-add-2.png")));
 
 	// main-Methode
 	public JSONConfigView() {
@@ -41,7 +38,7 @@ public class JSONConfigView {
 		jsonDialog = new JDialog();
 		jsonDialog.setAlwaysOnTop(true);
 		// Titel wird gesetzt
-		jsonDialog.setTitle(Messages.getString("JSONConfigView.9"));
+		jsonDialog.setTitle(Messages.getString("JSONConfigView.5"));
 		// Breite und Höhe des Fensters werden
 		// auf 200 Pixel gesetzt
 		jsonDialog.setSize(600, 500);
@@ -63,7 +60,7 @@ public class JSONConfigView {
 		jsonDialog.setVisible(true);
 	}
 
-	private void makePanel() {
+	public void makePanel() {
 
 		JPanel bothPanel = new JPanel();
 		bothPanel.setLayout(new BorderLayout());
@@ -75,82 +72,40 @@ public class JSONConfigView {
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		Dimension dimTextField = new Dimension(350, 30);
 		int textFieldColumns = 18;
-		categoryTextField = new JTextField("", textFieldColumns);
-		categoryTextField.setPreferredSize(dimTextField);
+		tournamentNameTextField = new JTextField("", textFieldColumns);
+		tournamentNameTextField.setPreferredSize(dimTextField);
 
-		tournamentTextField = new JTextField("", textFieldColumns);
-		tournamentTextField.setPreferredSize(dimTextField);
-
-		groupTextField = new JTextField("", textFieldColumns);
-		groupTextField.setPreferredSize(dimTextField);
-
-		crossTableTextField = new JTextField("", textFieldColumns);
-		crossTableTextField.setPreferredSize(dimTextField);
-
-		meetingTableTextField = new JTextField("", textFieldColumns);
-		meetingTableTextField.setPreferredSize(dimTextField);
-
-		startDateTextField = new JTextField("", textFieldColumns);
-		startDateTextField.setPreferredSize(dimTextField);
-
-		endDateTextField = new JTextField("", textFieldColumns);
-		endDateTextField.setPreferredSize(dimTextField);
-
-		regularitiesTextField = new JTextField("", textFieldColumns);
-		regularitiesTextField.setPreferredSize(dimTextField);
+		menuNameTextField = new JTextField("", textFieldColumns);
+		menuNameTextField.setPreferredSize(dimTextField);
 
 		uploadURLTextField = new JTextField("", textFieldColumns);
 		uploadURLTextField.setPreferredSize(dimTextField);
+		sidePanelsButton = new JButton(Messages.getString("JSONConfigView.0"), addImg);
 
 		Dimension dim = new Dimension(175, 30);
-		JLabel categoryTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.0") + ":");
-		categoryTextFieldLabel.setPreferredSize(dim);
+
 		JLabel tournamentTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.1") + ":");
 		tournamentTextFieldLabel.setPreferredSize(dim);
 
-		JLabel groupTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.2") + ":");
-		groupTextFieldLabel.setPreferredSize(dim);
+		JLabel menuNameTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.2") + ":");
+		menuNameTextFieldLabel.setPreferredSize(dim);
 
-		JLabel crossTableTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.3") + ":");
-		crossTableTextFieldLabel.setPreferredSize(dim);
-
-		JLabel meetingTableTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.4") + ":");
-		meetingTableTextFieldLabel.setPreferredSize(dim);
-		
-		JLabel uploadURLTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.5") + ":");
+		JLabel uploadURLTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.3") + ":");
 		uploadURLTextFieldLabel.setPreferredSize(dim);
 
-		JLabel startDateTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.6") + ":");
-		startDateTextFieldLabel.setPreferredSize(dim);
-
-		JLabel endDateTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.7") + ":");
-		endDateTextFieldLabel.setPreferredSize(dim);
-
-		JLabel regularitiesTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.8") + ":");
-		regularitiesTextFieldLabel.setPreferredSize(dim);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(categoryTextFieldLabel);
-		htmlPanel.add(categoryTextField);
-		leftPanel.add(htmlPanel);
+		JLabel sidePanelsLabel = new JLabel(Messages.getString("JSONConfigView.4") + ":");
+		sidePanelsLabel.setPreferredSize(dim);
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(tournamentTextFieldLabel);
-		htmlPanel.add(tournamentTextField);
+		htmlPanel.add(tournamentNameTextField);
 		leftPanel.add(htmlPanel);
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(groupTextFieldLabel);
-		htmlPanel.add(groupTextField);
-		leftPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(crossTableTextFieldLabel);
-		htmlPanel.add(crossTableTextField);
+		htmlPanel.add(menuNameTextFieldLabel);
+		htmlPanel.add(menuNameTextField);
 		leftPanel.add(htmlPanel);
 
 		htmlPanel = new JPanel();
@@ -161,26 +116,8 @@ public class JSONConfigView {
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(meetingTableTextFieldLabel);
-		htmlPanel.add(meetingTableTextField);
-		leftPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(startDateTextFieldLabel);
-		htmlPanel.add(startDateTextField);
-		leftPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(endDateTextFieldLabel);
-		htmlPanel.add(endDateTextField);
-		leftPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(regularitiesTextFieldLabel);
-		htmlPanel.add(regularitiesTextField);
+		htmlPanel.add(sidePanelsLabel);
+		htmlPanel.add(sidePanelsButton);
 		leftPanel.add(htmlPanel);
 
 		bothPanel.add(leftPanel, BorderLayout.NORTH);
@@ -194,70 +131,6 @@ public class JSONConfigView {
 
 	public void setJsonDialog(JDialog jsonDialog) {
 		this.jsonDialog = jsonDialog;
-	}
-
-	public JTextField getCategoryTextField() {
-		return categoryTextField;
-	}
-
-	public void setCategoryTextField(JTextField categoryTextField) {
-		this.categoryTextField = categoryTextField;
-	}
-
-	public JTextField getTournamentTextField() {
-		return tournamentTextField;
-	}
-
-	public void setTournamentTextField(JTextField tournamentTextField) {
-		this.tournamentTextField = tournamentTextField;
-	}
-
-	public JTextField getGroupTextField() {
-		return groupTextField;
-	}
-
-	public void setGroupTextField(JTextField groupTextField) {
-		this.groupTextField = groupTextField;
-	}
-
-	public JTextField getCrossTableTextField() {
-		return crossTableTextField;
-	}
-
-	public void setCrossTableTextField(JTextField crossTableTextField) {
-		this.crossTableTextField = crossTableTextField;
-	}
-
-	public JTextField getMeetingTableTextField() {
-		return meetingTableTextField;
-	}
-
-	public void setMeetingTableTextField(JTextField meetingTableTextField) {
-		this.meetingTableTextField = meetingTableTextField;
-	}
-
-	public JTextField getStartDateTextField() {
-		return startDateTextField;
-	}
-
-	public void setStartDateTextField(JTextField startDateTextField) {
-		this.startDateTextField = startDateTextField;
-	}
-
-	public JTextField getEndDateTextField() {
-		return endDateTextField;
-	}
-
-	public void setEndDateTextField(JTextField endDateTextField) {
-		this.endDateTextField = endDateTextField;
-	}
-
-	public JTextField getRegularitiesTextField() {
-		return regularitiesTextField;
-	}
-
-	public void setRegularitiesTextField(JTextField regularitiesTextField) {
-		this.regularitiesTextField = regularitiesTextField;
 	}
 
 	public JTextField getUploadURLTextField() {
@@ -282,6 +155,30 @@ public class JSONConfigView {
 
 	public void setCancelButton(JButton cancelButton) {
 		this.cancelButton = cancelButton;
+	}
+
+	public JTextField getTournamentNameTextField() {
+		return tournamentNameTextField;
+	}
+
+	public void setTournamentNameTextField(JTextField tournamentNameTextField) {
+		this.tournamentNameTextField = tournamentNameTextField;
+	}
+
+	public JTextField getMenuNameTextField() {
+		return menuNameTextField;
+	}
+
+	public void setMenuNameTextField(JTextField menuNameTextField) {
+		this.menuNameTextField = menuNameTextField;
+	}
+
+	public JButton getSidePanelsButton() {
+		return sidePanelsButton;
+	}
+
+	public void setSidePanelsButton(JButton sidePanelsButton) {
+		this.sidePanelsButton = sidePanelsButton;
 	}
 
 }

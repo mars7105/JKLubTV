@@ -28,7 +28,7 @@ public class JSON {
 		} else {
 			cflag = "false";
 		}
-		postRequest.sendJSONStringToServer(url, gson.toJson(jsonObject), jsonFileName, cflag, menuName);
+		postRequest.sendJSONStringToServer(url, gson.toJson(jsonObject), jsonFileName, cflag);
 	}
 
 	private String[][] mirrorArray(String[][] array) {

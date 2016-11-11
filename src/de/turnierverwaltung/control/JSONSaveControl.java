@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import de.turnierverwaltung.model.CrossTable;
 import de.turnierverwaltung.model.JSON;
 import de.turnierverwaltung.model.MeetingTable;
+import de.turnierverwaltung.view.JSONConfigView;
 
 public class JSONSaveControl {
 	private MainControl mainControl;
@@ -21,7 +22,8 @@ public class JSONSaveControl {
 	}
 
 	public void uploadJSONFile() throws IOException {
-		// JSONConfigView jsonView = new JSONConfigView();
+		JSONConfigView jsonView = new JSONConfigView();
+		jsonView.makePanel();
 
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 

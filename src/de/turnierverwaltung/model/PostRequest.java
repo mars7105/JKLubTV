@@ -15,66 +15,12 @@ public class PostRequest {
 		super();
 	}
 
-	// public void sendJSONStringToServer(String urlString, String jsonString,
-	// String name, Boolean configFlag,
-	// String[] title) throws IOException {
-	// String cFlag = "";
-	// if (configFlag == true) {
-	// cFlag = "true";
-	// } else {
-	// cFlag = "false";
-	// }
-	// // String body = URLEncoder.encode(jsonString, "UTF-8");
-	// String param = "name=" + URLEncoder.encode(name, "UTF-8") + "&json=" +
-	// URLEncoder.encode(jsonString, "UTF-8")
-	// + "&configFlag=" + cFlag + "&title=" + title[0] + "&groupname=" +
-	// title[1] + "&tabletype=" + title[2];
-	// URL url = new URL(urlString);
-	// HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-	//
-	// connection.setReadTimeout(10000 /* milliseconds */ );
-	// connection.setConnectTimeout(15000 /* milliseconds */ );
-	// connection.setRequestMethod("POST");
-	// connection.setDoInput(true);
-	// connection.setDoOutput(true);
-	// connection.setUseCaches(false);
-	//
-	// connection.setFixedLengthStreamingMode(param.getBytes().length);
-	//
-	// connection.setRequestProperty("Content-Type",
-	// "application/x-www-form-urlencoded");
-	// connection.setRequestProperty("Content-Length",
-	// String.valueOf(param.length()));
-	//
-	// // open
-	// connection.connect();
-	//
-	// // setup send
-	// OutputStream os = new BufferedOutputStream(connection.getOutputStream());
-	// os.write(param.getBytes());
-	// // System.out.println(param);
-	// // clean up
-	// os.flush();
-	// BufferedReader reader = new BufferedReader(new
-	// InputStreamReader(connection.getInputStream()));
-	//
-	// for (String line; (line = reader.readLine()) != null;) {
-	// if (line.equals("ERROR!")) {
-	// throw new IOException();
-	// }
-	// }
-	//
-	// os.close();
-	// reader.close();
-	// connection.disconnect();
-	// }
-
-	public void sendJSONStringToServer(String urlString, String jsonString, String jsonFileName, String configFlag,
-			String menuName) throws IOException {
+	public void sendJSONStringToServer(String urlString, String jsonString, String jsonFileName, String configFlag)
+			throws IOException {
 
 		// String body = URLEncoder.encode(jsonString, "UTF-8");
 		String param = "jsonFileName=" + URLEncoder.encode(jsonFileName, "UTF-8") + "&json="
-				+ URLEncoder.encode(jsonString, "UTF-8") + "&configFlag=" + configFlag + "&menuName=" + menuName;
+				+ URLEncoder.encode(jsonString, "UTF-8") + "&configFlag=" + configFlag;
 		URL url = new URL(urlString);
 		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
