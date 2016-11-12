@@ -97,7 +97,7 @@ class Wrap {
 		return $wrap;
 	}
 	public function wrapSidebar($body) {
-		$wrap = '<div class="col-sm-3 col-sm-offset-1 blog-sidebar">' . $body . '</div>';
+		$wrap = '<div class="col-md-4 blog-sidebar">' . $body . '</div>';
 		return $wrap;
 	}
 	public function wrapSidebarModule($body) {

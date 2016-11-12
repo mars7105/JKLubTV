@@ -16,7 +16,7 @@ function showMenu() {
 	$table = file_get_contents ( $files [$param] );
 	$content .= '<div class="container theme-showcase" role="main">
 	<!-- Main jumbotron for a primary marketing message or call to action -->
-	<div class="col-sm-8 blog-main">';
+	<div class="col-md-8">';
 	$content .= $table;
 	$content .= '</div> <!-- col-sm-8 blog-main -->';
 	$sidePanels = $_SESSION ['sidePanels'];
