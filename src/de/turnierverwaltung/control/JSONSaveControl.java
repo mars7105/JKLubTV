@@ -22,8 +22,8 @@ public class JSONSaveControl {
 	}
 
 	public void uploadJSONFile() throws IOException {
-		// JSONConfigView jsonView = new JSONConfigView();
-		// jsonView.makePanel();
+		JSONConfigControl jsonConfigView = new JSONConfigControl(mainControl);
+		jsonConfigView.makeDialog();
 
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 		url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";

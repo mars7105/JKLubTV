@@ -28,6 +28,7 @@ public class JSONConfigView {
 	private JTextField uploadURLTextField;
 	private JButton okButton;
 	private JButton cancelButton;
+	private ButtonPanelView buttonPane;
 	private ImageIcon addImg = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-add-2.png")));
 
@@ -47,17 +48,23 @@ public class JSONConfigView {
 		// Wir lassen unseren Dialog anzeigen
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BorderLayout());
-		makePanel();
-		ButtonPanelView buttonPane = new ButtonPanelView();
+		Dimension dimTextField = new Dimension(350, 30);
+		int textFieldColumns = 18;
+		tournamentNameTextField = new JTextField("", textFieldColumns);
+		tournamentNameTextField.setPreferredSize(dimTextField);
+
+		menuNameTextField = new JTextField("", textFieldColumns);
+		menuNameTextField.setPreferredSize(dimTextField);
+
+		uploadURLTextField = new JTextField("", textFieldColumns);
+		uploadURLTextField.setPreferredSize(dimTextField);
+		sidePanelsButton = new JButton(Messages.getString("JSONConfigView.0"), addImg);
+
+		buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();
 		okButton = buttonPane.getOkButton();
 		cancelButton = buttonPane.getCancelButton();
-		htmlAll.add(buttonPane, BorderLayout.SOUTH);
-		jsonDialog.add(htmlAll);
-		jsonDialog.pack();
-		jsonDialog.setLocationRelativeTo(null);
-		jsonDialog.setEnabled(true);
-		jsonDialog.setVisible(true);
+
 	}
 
 	public void makePanel() {
@@ -70,17 +77,6 @@ public class JSONConfigView {
 
 		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		Dimension dimTextField = new Dimension(350, 30);
-		int textFieldColumns = 18;
-		tournamentNameTextField = new JTextField("", textFieldColumns);
-		tournamentNameTextField.setPreferredSize(dimTextField);
-
-		menuNameTextField = new JTextField("", textFieldColumns);
-		menuNameTextField.setPreferredSize(dimTextField);
-
-		uploadURLTextField = new JTextField("", textFieldColumns);
-		uploadURLTextField.setPreferredSize(dimTextField);
-		sidePanelsButton = new JButton(Messages.getString("JSONConfigView.0"), addImg);
 
 		Dimension dim = new Dimension(175, 30);
 
@@ -122,7 +118,12 @@ public class JSONConfigView {
 
 		bothPanel.add(leftPanel, BorderLayout.NORTH);
 		htmlAll.add(bothPanel, BorderLayout.CENTER);
-
+		htmlAll.add(buttonPane, BorderLayout.SOUTH);
+		jsonDialog.add(htmlAll);
+		jsonDialog.pack();
+		jsonDialog.setLocationRelativeTo(null);
+		jsonDialog.setEnabled(true);
+		jsonDialog.setVisible(true);
 	}
 
 	public JDialog getJsonDialog() {
