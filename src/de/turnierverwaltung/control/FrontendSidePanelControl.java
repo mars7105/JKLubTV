@@ -2,11 +2,14 @@ package de.turnierverwaltung.control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import de.turnierverwaltung.model.Sidepanel;
 import de.turnierverwaltung.view.FrontendSidePanelView;
 
 public class FrontendSidePanelControl implements ActionListener {
@@ -18,6 +21,7 @@ public class FrontendSidePanelControl implements ActionListener {
 	private JButton okButton;
 	private String headerText;
 	private String bodyText;
+	private ArrayList<Sidepanel> sideP;
 
 	public FrontendSidePanelControl() {
 		sidePanel = new FrontendSidePanelView();
@@ -34,7 +38,7 @@ public class FrontendSidePanelControl implements ActionListener {
 	}
 
 	public void makeDialog() {
-		sidePanel.makeDialog();
+		sidePanel.makeDialog(sideP);
 
 	}
 
@@ -68,6 +72,22 @@ public class FrontendSidePanelControl implements ActionListener {
 	public void setBodyText(String bodyText) {
 
 		bodyTextArea.setText(bodyText);
+	}
+
+	public ArrayList<Sidepanel> getSideP() {
+		return sideP;
+	}
+
+	public void setSideP(ArrayList<Sidepanel> sideP) {
+		this.sideP = sideP;
+	}
+
+	public FrontendSidePanelView getSidePanel() {
+		return sidePanel;
+	}
+
+	public void setSidePanel(FrontendSidePanelView sidePanel) {
+		this.sidePanel = sidePanel;
 	}
 
 }

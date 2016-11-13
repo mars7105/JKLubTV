@@ -71,9 +71,7 @@ public class JSONConfigControl implements ActionListener {
 
 			// this.turnier = this.mainControl.getTurnier();
 			ArrayList<Sidepanel> sidepanelItems = new ArrayList<Sidepanel>();
-			if (sidePanel != null) {
 
-			}
 			try {
 				sidepanelItems = sidepanelDAO.selectAllSidepanel(this.mainControl.getTurnier().getTurnierId());
 			} catch (SQLException e1) {
@@ -94,6 +92,19 @@ public class JSONConfigControl implements ActionListener {
 		}
 		if (e.getSource() == sidePanelsButton) {
 			sidePanel = new FrontendSidePanelControl();
+			JSONSaveControl json = new JSONSaveControl(this.mainControl);
+
+			// this.turnier = this.mainControl.getTurnier();
+			ArrayList<Sidepanel> sidepanelItems = new ArrayList<Sidepanel>();
+
+			try {
+				sidepanelItems = sidepanelDAO.selectAllSidepanel(this.mainControl.getTurnier().getTurnierId());
+			} catch (SQLException e1) {
+				// TODO Automatisch generierter Erfassungsblock
+				e1.printStackTrace();
+			}
+			sidePanel.setSideP(sidepanelItems);
+
 			sidePanel.makeDialog();
 			String header = null;
 			String body = null;

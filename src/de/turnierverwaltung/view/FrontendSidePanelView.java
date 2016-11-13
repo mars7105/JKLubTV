@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -13,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import de.turnierverwaltung.model.Sidepanel;
 
 public class FrontendSidePanelView {
 
@@ -36,7 +39,7 @@ public class FrontendSidePanelView {
 		jsonDialog.setSize(600, 500);
 		// Dialog wird auf modal gesetzt
 		jsonDialog.setModal(true);
-		// Wir lassen unseren Dialog anzeigen
+		jsonDialog.setLayout(new BorderLayout());
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BorderLayout());
 		Dimension dimTextField = new Dimension(350, 30);
@@ -60,7 +63,7 @@ public class FrontendSidePanelView {
 
 	}
 
-	public void makeDialog() {
+	public void makeDialog(ArrayList<Sidepanel> sidepanel) {
 		JPanel bothPanel = new JPanel();
 		bothPanel.setLayout(new BorderLayout());
 		JPanel leftPanel = new JPanel();
@@ -93,7 +96,10 @@ public class FrontendSidePanelView {
 		bothPanel.add(leftPanel, BorderLayout.NORTH);
 		htmlAll.add(bothPanel, BorderLayout.CENTER);
 		htmlAll.add(buttonPane, BorderLayout.SOUTH);
-		jsonDialog.add(htmlAll);
+		jsonDialog.add(htmlAll, BorderLayout.EAST);
+
+		TreeDemo treedemo = new TreeDemo(sidepanel);
+		jsonDialog.add(treedemo, BorderLayout.WEST);
 		jsonDialog.pack();
 		jsonDialog.setLocationRelativeTo(null);
 		jsonDialog.setEnabled(true);
