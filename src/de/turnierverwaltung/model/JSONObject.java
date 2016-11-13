@@ -2,12 +2,12 @@ package de.turnierverwaltung.model;
 
 public class JSONObject {
 	private String tournamentName;
-	private String groupName;
+	private String[] groupName;
 	private String menuName;
 	private String[] crossTableText;
-	private String[][] crossTable;
+	private String[][][] crossTable;
 	private String[] meetingTableText;
-	private String[][] meetingTable;
+	private String[][][] meetingTable;
 	private String startDate;
 	private String endDate;
 	private String[] sidePanels;
@@ -16,8 +16,8 @@ public class JSONObject {
 	private String jsonMeetingtitle;
 	private String siteName;
 
-	public JSONObject(String tournamentName, String groupName, String menuName, String[] crossTableText2,
-			String[][] crossTable, String[] meetingTableText2, String[][] meetingTable, String startDate,
+	public JSONObject(String tournamentName, String[] groupName, String menuName, String[] crossTableText2,
+			String[][][] crossTable, String[] meetingTableText2, String[][][] meetingTable, String startDate,
 			String endDate, String sidePanels[], String jsonCrossTitle, String jsonMeetingtitle, String siteName) {
 		super();
 
@@ -45,28 +45,12 @@ public class JSONObject {
 		this.tournamentName = tournamentName;
 	}
 
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
-
 	public String getMenuName() {
 		return menuName;
 	}
 
 	public void setMenuName(String menuName) {
 		this.menuName = menuName;
-	}
-
-	public String[][] getCrossTable() {
-		return crossTable;
-	}
-
-	public void setCrossTable(String[][] crossTable) {
-		this.crossTable = crossTable;
 	}
 
 	public String[] getCrossTableText() {
@@ -83,14 +67,6 @@ public class JSONObject {
 
 	public void setMeetingTableText(String[] meetingTableText) {
 		this.meetingTableText = meetingTableText;
-	}
-
-	public String[][] getMeetingTable() {
-		return meetingTable;
-	}
-
-	public void setMeetingTable(String[][] meetingTable) {
-		this.meetingTable = meetingTable;
 	}
 
 	public String getStartDate() {
@@ -155,6 +131,30 @@ public class JSONObject {
 
 	public void setSiteName(String siteName) {
 		this.siteName = siteName;
+	}
+
+	public String[] getGroupName() {
+		return groupName;
+	}
+
+	public void setGroupName(String[] groupName) {
+		this.groupName = groupName;
+	}
+
+	public String[][][] getCrossTable() {
+		return crossTable;
+	}
+
+	public void setCrossTable(String[][][] crossTable) {
+		this.crossTable = crossTable;
+	}
+
+	public String[][][] getMeetingTable() {
+		return meetingTable;
+	}
+
+	public void setMeetingTable(String[][][] meetingTable) {
+		this.meetingTable = meetingTable;
 	}
 
 }
