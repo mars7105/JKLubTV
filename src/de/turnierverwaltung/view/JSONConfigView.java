@@ -22,14 +22,18 @@ public class JSONConfigView {
 	private JDialog jsonDialog;
 
 	private JPanel htmlAll;
-	private JTextField tournamentNameTextField;
+	// private JTextField tournamentNameTextField;
 	private JTextField menuNameTextField;
 	private JButton sidePanelsButton;
+	private JButton connectionTestButton;
 	private JTextField uploadURLTextField;
 	private JButton okButton;
 	private JButton cancelButton;
+	private ButtonPanelView buttonPane;
 	private ImageIcon addImg = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-add-2.png")));
+	private ImageIcon connectionTestImg = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/homepage.png")));
 
 	// main-Methode
 	public JSONConfigView() {
@@ -47,17 +51,26 @@ public class JSONConfigView {
 		// Wir lassen unseren Dialog anzeigen
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BorderLayout());
-		makePanel();
-		ButtonPanelView buttonPane = new ButtonPanelView();
+		Dimension dimTextField = new Dimension(350, 30);
+		int textFieldColumns = 18;
+		// tournamentNameTextField = new JTextField("", textFieldColumns);
+		// tournamentNameTextField.setPreferredSize(dimTextField);
+		ContextMenuMouseListener cmmL = new ContextMenuMouseListener();
+
+		menuNameTextField = new JTextField("", textFieldColumns);
+		menuNameTextField.setPreferredSize(dimTextField);
+		menuNameTextField.addMouseListener(cmmL);
+
+		uploadURLTextField = new JTextField("", textFieldColumns);
+		uploadURLTextField.setPreferredSize(dimTextField);
+		uploadURLTextField.addMouseListener(cmmL);
+		sidePanelsButton = new JButton(Messages.getString("JSONConfigView.0"), addImg);
+		connectionTestButton = new JButton(Messages.getString("JSONConfigView.6"), connectionTestImg);
+		buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();
 		okButton = buttonPane.getOkButton();
 		cancelButton = buttonPane.getCancelButton();
-		htmlAll.add(buttonPane, BorderLayout.SOUTH);
-		jsonDialog.add(htmlAll);
-		jsonDialog.pack();
-		jsonDialog.setLocationRelativeTo(null);
-		jsonDialog.setEnabled(true);
-		jsonDialog.setVisible(true);
+
 	}
 
 	public void makePanel() {
@@ -70,22 +83,11 @@ public class JSONConfigView {
 
 		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		Dimension dimTextField = new Dimension(350, 30);
-		int textFieldColumns = 18;
-		tournamentNameTextField = new JTextField("", textFieldColumns);
-		tournamentNameTextField.setPreferredSize(dimTextField);
-
-		menuNameTextField = new JTextField("", textFieldColumns);
-		menuNameTextField.setPreferredSize(dimTextField);
-
-		uploadURLTextField = new JTextField("", textFieldColumns);
-		uploadURLTextField.setPreferredSize(dimTextField);
-		sidePanelsButton = new JButton(Messages.getString("JSONConfigView.0"), addImg);
 
 		Dimension dim = new Dimension(175, 30);
 
-		JLabel tournamentTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.1") + ":");
-		tournamentTextFieldLabel.setPreferredSize(dim);
+		JLabel connectionTestButtonLabel = new JLabel(Messages.getString("JSONConfigView.7") + ":");
+		connectionTestButtonLabel.setPreferredSize(dim);
 
 		JLabel menuNameTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.2") + ":");
 		menuNameTextFieldLabel.setPreferredSize(dim);
@@ -95,12 +97,6 @@ public class JSONConfigView {
 
 		JLabel sidePanelsLabel = new JLabel(Messages.getString("JSONConfigView.4") + ":");
 		sidePanelsLabel.setPreferredSize(dim);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(tournamentTextFieldLabel);
-		htmlPanel.add(tournamentNameTextField);
-		leftPanel.add(htmlPanel);
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -116,13 +112,24 @@ public class JSONConfigView {
 
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(connectionTestButtonLabel);
+		htmlPanel.add(connectionTestButton);
+		leftPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(sidePanelsLabel);
 		htmlPanel.add(sidePanelsButton);
 		leftPanel.add(htmlPanel);
 
 		bothPanel.add(leftPanel, BorderLayout.NORTH);
 		htmlAll.add(bothPanel, BorderLayout.CENTER);
-
+		htmlAll.add(buttonPane, BorderLayout.SOUTH);
+		jsonDialog.add(htmlAll);
+		jsonDialog.pack();
+		jsonDialog.setLocationRelativeTo(null);
+		jsonDialog.setEnabled(true);
+		jsonDialog.setVisible(true);
 	}
 
 	public JDialog getJsonDialog() {
@@ -157,12 +164,12 @@ public class JSONConfigView {
 		this.cancelButton = cancelButton;
 	}
 
-	public JTextField getTournamentNameTextField() {
-		return tournamentNameTextField;
+	public JButton getConnectionTestButton() {
+		return connectionTestButton;
 	}
 
-	public void setTournamentNameTextField(JTextField tournamentNameTextField) {
-		this.tournamentNameTextField = tournamentNameTextField;
+	public void setConnectionTestButton(JButton connectionTestButton) {
+		this.connectionTestButton = connectionTestButton;
 	}
 
 	public JTextField getMenuNameTextField() {

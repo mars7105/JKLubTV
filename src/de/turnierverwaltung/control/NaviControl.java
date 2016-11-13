@@ -204,15 +204,10 @@ public class NaviControl implements ActionListener {
 
 		}
 		if (arg0.getSource() == jsonButton) {
-			JSONSaveControl json = new JSONSaveControl(this.mainControl);
-
-			try {
-				json.uploadJSONFile();
-				JOptionPane.showMessageDialog(mainControl, "Daten hochgeladen!");
-			} catch (IOException e) {
-				JOptionPane.showMessageDialog(mainControl, Messages.getString("NaviController.32"));
-			}
-
+			JSONConfigControl jsonConfigControl = new JSONConfigControl(mainControl);
+			jsonConfigControl.makeDialog();
+			
+			
 		}
 		if (arg0.getSource() == naviView.getExcelSpeichernButton()) {
 			ExcelSaveControl excelsave = new ExcelSaveControl(this.mainControl);

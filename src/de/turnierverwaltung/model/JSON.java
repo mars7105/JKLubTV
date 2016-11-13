@@ -1,6 +1,8 @@
 package de.turnierverwaltung.model;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.google.gson.Gson;
@@ -16,7 +18,7 @@ public class JSON {
 	public void postRequest(String tournamentName, String groupName, String startDate, String endDate, String menuName,
 			String[] crossTableText, String[] meetingTableText, String[] sidePanels, String jsonFileName,
 			String[][] crossTableMatrix, String jsonCrossTitle, String[][] meetingTableMatrix, String jsonMeetingtitle,
-			String siteName, Boolean configFlag) throws IOException {
+			String siteName, Boolean configFlag) throws IOException, FileNotFoundException {
 		Gson gson = new Gson();
 
 		String[][] crossTable = mirrorArray(crossTableMatrix);
@@ -41,14 +43,14 @@ public class JSON {
 		postRequest.sendFilenames(gson.toJson(filenames));
 	}
 
-	public void postStart() throws IOException {
+	public void postStart() throws IOException, FileNotFoundException {
 
 		PostRequest postRequest = new PostRequest(new URL(url));
 		postRequest.sendSessionRequest(true);
 
 	}
 
-	public void postEnd() throws IOException {
+	public void postEnd() throws IOException, FileNotFoundException {
 		PostRequest postRequest = new PostRequest(new URL(url));
 		postRequest.sendSessionRequest(false);
 	}
@@ -62,5 +64,14 @@ public class JSON {
 		}
 		return newArray;
 
+	}
+
+	public Boolean testConnection() throws IOException, FileNotFoundException {
+		Boolean testConnection = false;
+
+		postRequest = new PostRequest(new URL(url));
+		testConnection = postRequest.testConnection();
+
+		return testConnection;
 	}
 }
