@@ -10,7 +10,6 @@ import de.turnierverwaltung.model.MeetingTable;
 
 public class JSONSaveControl {
 	private MainControl mainControl;
-	private String url;
 	private String jsonFileName;
 	private String jsonMeetingName;
 	private JSON jsonCross;
@@ -21,18 +20,16 @@ public class JSONSaveControl {
 		this.mainControl = mainControl;
 	}
 
-	public void uploadJSONFile() throws IOException {
-		JSONConfigControl jsonConfigView = new JSONConfigControl(mainControl);
-		jsonConfigView.makeDialog();
+	public void uploadJSONFile(String url, String menuName) throws IOException {
 
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
-		url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
+		// url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
 
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 			String[] filenames = new String[anzahlGruppen];
 
-			jsonCross = new JSON(url);
+			jsonCross = new JSON(url + "/receiveJSON.php");
 			jsonCross.postStart();
 			for (int i = 0; i < anzahlGruppen; i++) {
 				if (this.mainControl.getTurnierTabelle()[i] == null) {
@@ -62,7 +59,7 @@ public class JSONSaveControl {
 				String jsonMeetingtitle = Messages.getString("NaviController.35");
 				String startDate = mainControl.getTurnier().getStartDatum();
 				String endDate = mainControl.getTurnier().getEndDatum();
-				String menuName = "BBK 2016";
+				// menuName = "BBK 2016";
 				String[] sidePanels = new String[4];
 				sidePanels[0] = "Regularien";
 				sidePanels[1] = "Wertung:" + "<br />" + "1.) Punkte" + "<br />" + "2.) Sonneborn-Berger-Wertung"
@@ -95,7 +92,7 @@ public class JSONSaveControl {
 
 			}
 			jsonCross.postEnd();
-			JSON jsonFileObjects = new JSON("http://projekte.mamuck.de/jklubtv/receiveFileJSON.php");
+			JSON jsonFileObjects = new JSON(url + "/receiveFileJSON.php");
 			JSONFileObject jsonFiles = new JSONFileObject(filenames);
 			jsonFileObjects.postFileNames(jsonFiles);
 
@@ -105,14 +102,6 @@ public class JSONSaveControl {
 
 		}
 
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public void setUrl(String url) {
-		this.url = url;
 	}
 
 	public String getJsonCrossName() {
