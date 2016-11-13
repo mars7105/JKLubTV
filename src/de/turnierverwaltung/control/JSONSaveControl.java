@@ -8,6 +8,7 @@ import de.turnierverwaltung.model.CrossTable;
 import de.turnierverwaltung.model.JSON;
 import de.turnierverwaltung.model.JSONFileObject;
 import de.turnierverwaltung.model.MeetingTable;
+import de.turnierverwaltung.model.Sidepanel;
 
 public class JSONSaveControl {
 	private MainControl mainControl;
@@ -21,8 +22,7 @@ public class JSONSaveControl {
 		this.mainControl = mainControl;
 	}
 
-	public void uploadJSONFile(String url, String menuName, ArrayList<String> header, ArrayList<String> body)
-			throws IOException {
+	public void uploadJSONFile(String url, String menuName, ArrayList<Sidepanel> sidepanelItems) throws IOException {
 
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 		// url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
@@ -107,11 +107,17 @@ public class JSONSaveControl {
 			}
 			jsonFileName = "json_file" + ".json";
 			filenames = "jsonFiles/" + jsonFileName;
-			String[] headerstrArray = (String[]) header.toArray(new String[header.size()]);
-			String[] bodystrArray = (String[]) body.toArray(new String[body.size()]);
+			int index = 0;
+			String[] header = new String[sidepanelItems.size()];
+			String[] body = new String[sidepanelItems.size()];
+			for (Sidepanel item : sidepanelItems) {
+				header[index] = item.getHeader();
+				body[index] = item.getBody();
+				index++;
+			}
 			jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName, crossTableText,
-					meetingTableText, headerstrArray, bodystrArray, jsonFileName, ctableMatrix, jsonCrossTitle,
-					mtableMatrix, jsonMeetingtitle, siteName, configFlag);
+					meetingTableText, header, body, jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix,
+					jsonMeetingtitle, siteName, configFlag);
 			jsonCross.postEnd();
 			JSON jsonFileObjects = new JSON(url + "/receiveFileJSON.php");
 			JSONFileObject jsonFiles = new JSONFileObject(filenames);

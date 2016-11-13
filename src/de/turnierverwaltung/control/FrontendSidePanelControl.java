@@ -2,8 +2,6 @@ package de.turnierverwaltung.control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JTextArea;
@@ -18,9 +16,8 @@ public class FrontendSidePanelControl implements ActionListener {
 	private JTextArea bodyTextArea;
 	private JButton cancelButton;
 	private JButton okButton;
-	private ArrayList<String> headerText;
-	private ArrayList<String> bodyText;
-	private int index;
+	private String headerText;
+	private String bodyText;
 
 	public FrontendSidePanelControl() {
 		sidePanel = new FrontendSidePanelView();
@@ -32,8 +29,8 @@ public class FrontendSidePanelControl implements ActionListener {
 
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
-		headerText = new ArrayList<String>();
-		bodyText = new ArrayList<String>();
+		headerText = "";
+		bodyText = "";
 	}
 
 	public void makeDialog() {
@@ -45,16 +42,17 @@ public class FrontendSidePanelControl implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == cancelButton) {
 			jsonDialog.dispose();
+			headerText = null;
+			bodyText = null;
 		}
 		if (e.getSource() == okButton) {
-			headerText.add(headerTextField.getText());
-			bodyText.add(bodyTextArea.getText());
-			index += 2;
+			headerText = headerTextField.getText();
+			bodyText = bodyTextArea.getText();
 			jsonDialog.dispose();
 		}
 	}
 
-	public ArrayList<String> getHeaderText() {
+	public String getHeaderText() {
 		return headerText;
 	}
 
@@ -63,7 +61,7 @@ public class FrontendSidePanelControl implements ActionListener {
 		headerTextField.setText(headerText);
 	}
 
-	public ArrayList<String> getBodyText() {
+	public String getBodyText() {
 		return bodyText;
 	}
 

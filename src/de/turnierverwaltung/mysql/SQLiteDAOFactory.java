@@ -104,4 +104,10 @@ public class SQLiteDAOFactory extends DAOFactory {
 		return DB_PATH;
 	}
 
+	@Override
+	public SidepanelDAO getSidepanelDAO() {
+		SidepanelDAO sitepanelDAO = new SQLiteSidepanelDAO();
+		return sitepanelDAO;
+	}
+
 }

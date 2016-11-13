@@ -91,4 +91,10 @@ public class MySQLDAOFactory extends DAOFactory {
 		return turnierDAO;
 	}
 
+	@Override
+	public SidepanelDAO getSidepanelDAO() {
+		// TODO Automatisch generierter Methodenstub
+		return null;
+	}
+
 }
