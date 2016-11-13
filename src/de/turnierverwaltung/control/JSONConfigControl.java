@@ -3,13 +3,13 @@ package de.turnierverwaltung.control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import de.turnierverwaltung.model.JSON;
-import de.turnierverwaltung.view.FrontendSidePanelView;
 import de.turnierverwaltung.view.JSONConfigView;
 
 public class JSONConfigControl implements ActionListener {
@@ -24,6 +24,7 @@ public class JSONConfigControl implements ActionListener {
 	private JButton connectionTestButton;
 	private JTextField uploadURLTextField;
 	private MainControl mainControl;
+	private FrontendSidePanelControl sidePanel;
 
 	public JSONConfigControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -40,8 +41,9 @@ public class JSONConfigControl implements ActionListener {
 		uploadURLTextField = jsonView.getUploadURLTextField();
 		connectionTestButton = jsonView.getConnectionTestButton();
 		connectionTestButton.addActionListener(this);
-		menuName = "Menu";
-		uploadURL = "http://example.com";
+		menuName = mainControl.getPropertiesControl().getFrontendMenuname();
+
+		uploadURL = mainControl.getPropertiesControl().getFrontendURL();
 
 		menuNameTextField.setText(menuName);
 		uploadURLTextField.setText(uploadURL);
@@ -59,17 +61,25 @@ public class JSONConfigControl implements ActionListener {
 			uploadURL = jsonView.getUploadURLTextField().getText();
 			jsonView.getJsonDialog().dispose();
 			JSONSaveControl json = new JSONSaveControl(this.mainControl);
-
+			ArrayList<String> header = null;
+			ArrayList<String> body = null;
+			if (sidePanel != null) {
+				header = sidePanel.getHeaderText();
+				body = sidePanel.getBodyText();
+			}
 			try {
-				json.uploadJSONFile(uploadURL, menuName);
-				JOptionPane.showMessageDialog(mainControl, "Daten hochgeladen!");
+				json.uploadJSONFile(uploadURL, menuName,header,body);
+				mainControl.getPropertiesControl().setFrontendMenuname(menuName);
+				mainControl.getPropertiesControl().setFrontendURL(uploadURL);
+				mainControl.getPropertiesControl().writeProperties();
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.0"));
 			} catch (IOException exc) {
-				JOptionPane.showMessageDialog(mainControl, Messages.getString("NaviController.32"));
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.2"));
 			}
 
 		}
 		if (e.getSource() == sidePanelsButton) {
-			FrontendSidePanelView sidePanel = new FrontendSidePanelView();
+			sidePanel = new FrontendSidePanelControl();
 			sidePanel.makeDialog();
 		}
 		if (e.getSource() == connectionTestButton) {
@@ -78,12 +88,12 @@ public class JSONConfigControl implements ActionListener {
 			try {
 				Boolean testConnection = jsonCross.testConnection();
 				if (testConnection == true) {
-					JOptionPane.showMessageDialog(mainControl, "Test ok!");
+					JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.1"));
 				} else {
-					JOptionPane.showMessageDialog(mainControl, "Verbindungsfehler! Falsche URL?");
+					JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.2"));
 				}
 			} catch (IOException e1) {
-				JOptionPane.showMessageDialog(mainControl, "Verbindungsfehler! Falsche URL?");
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.2"));
 			}
 		}
 		if (e.getSource() == cancelButton) {
@@ -107,6 +117,14 @@ public class JSONConfigControl implements ActionListener {
 
 	public void setUploadURL(String uploadURL) {
 		this.uploadURL = uploadURL;
+	}
+
+	public FrontendSidePanelControl getSidePanel() {
+		return sidePanel;
+	}
+
+	public void setSidePanel(FrontendSidePanelControl sidePanel) {
+		this.sidePanel = sidePanel;
 	}
 
 }

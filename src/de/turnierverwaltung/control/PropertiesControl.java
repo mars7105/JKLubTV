@@ -51,6 +51,8 @@ public class PropertiesControl {
 	public static final String TABLE_COLUMN_MEETING = "tablecolumn-meeting";
 	public static final String TABLE_COLUMN_PLAYER = "tablecolumn-player";
 	public static final String TABLE_COLUMN_ROUND = "tablecolumn-round";
+	public static final String FRONTEND_MENUNAME = "frontend-menuname";
+	public static final String FRONTEND_URL = "frontend-url";
 
 	private Properties prop;
 	private Boolean NoWritableProperties;
@@ -83,7 +85,8 @@ public class PropertiesControl {
 		prop.setProperty(TABLE_COLUMN_MEETING, "");
 		prop.setProperty(TABLE_COLUMN_PLAYER, "");
 		prop.setProperty(TABLE_COLUMN_ROUND, "");
-
+		prop.setProperty(FRONTEND_MENUNAME, "");
+		prop.setProperty(FRONTEND_URL, "");
 	}
 
 	public void checkProperties() {
@@ -199,6 +202,16 @@ public class PropertiesControl {
 		if (prop.getProperty(TABLE_COLUMN_ROUND) == "") {
 			prop.setProperty(TABLE_COLUMN_ROUND,
 					TournamentConstants.TABLE_COLUMN_ROUND);
+			saveChanges = true;
+		}
+		if (prop.getProperty(FRONTEND_MENUNAME) == "") {
+			prop.setProperty(FRONTEND_MENUNAME,
+					TournamentConstants.FRONTEND_MENUNAME);
+			saveChanges = true;
+		}
+		if (prop.getProperty(FRONTEND_URL) == "") {
+			prop.setProperty(FRONTEND_URL,
+					TournamentConstants.FRONTEND_URL);
 			saveChanges = true;
 		}
 		checkCrossTableColumnForDoubles();
@@ -535,7 +548,20 @@ public class PropertiesControl {
 	public void setLanguage(String language) {
 		prop.setProperty(LANGUAGE, language);
 	}
+	public void setFrontendURL(String absolutePath) {
+		prop.setProperty(FRONTEND_URL, absolutePath);
+	}
 
+	public String getFrontendURL() {
+		return prop.getProperty(FRONTEND_URL);
+	}
+	public void setFrontendMenuname(String absolutePath) {
+		prop.setProperty(FRONTEND_MENUNAME, absolutePath);
+	}
+
+	public String getFrontendMenuname() {
+		return prop.getProperty(FRONTEND_MENUNAME);
+	}
 	public int getTabellenAbstand() {
 		int abstand = 3;
 		if (getNoDWZ() == true) {
