@@ -2,7 +2,6 @@ package de.turnierverwaltung.model;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 import com.google.gson.Gson;
