@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import de.turnierverwaltung.model.JSON;
+import de.turnierverwaltung.view.FrontendSidePanelView;
 import de.turnierverwaltung.view.JSONConfigView;
 
 public class JSONConfigControl implements ActionListener {
@@ -68,7 +69,8 @@ public class JSONConfigControl implements ActionListener {
 
 		}
 		if (e.getSource() == sidePanelsButton) {
-
+			FrontendSidePanelView sidePanel = new FrontendSidePanelView();
+			sidePanel.makeDialog();
 		}
 		if (e.getSource() == connectionTestButton) {
 			String url = uploadURLTextField.getText();
