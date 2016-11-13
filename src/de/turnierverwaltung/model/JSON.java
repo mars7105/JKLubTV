@@ -14,15 +14,19 @@ public class JSON {
 		this.url = url;
 	}
 
-	public void postRequest(String tournamentName, String groupName, String startDate, String endDate, String menuName,
-			String[] crossTableText, String[] meetingTableText, String[] sidePanels, String jsonFileName,
-			String[][] crossTableMatrix, String jsonCrossTitle, String[][] meetingTableMatrix, String jsonMeetingtitle,
-			String siteName, Boolean configFlag) throws IOException, FileNotFoundException {
+	public void postRequest(String tournamentName, String[] groupName, String startDate, String endDate,
+			String menuName, String[] crossTableText, String[] meetingTableText, String[] sidePanels,
+			String jsonFileName, String[][][] crossTableMatrix, String jsonCrossTitle, String[][][] meetingTableMatrix,
+			String jsonMeetingtitle, String siteName, Boolean configFlag) throws IOException, FileNotFoundException {
 		Gson gson = new Gson();
+		String[][][] crossTable = new String[crossTableMatrix.length][][];
+		String[][][] meetingTable = new String[meetingTableMatrix.length][][];
 
-		String[][] crossTable = mirrorArray(crossTableMatrix);
-		String[][] meetingTable = mirrorArray(meetingTableMatrix);
+		for (int i = 0; i < crossTableMatrix.length; i++) {
 
+			crossTable[i] = mirrorArray(crossTableMatrix[i]);
+			meetingTable[i] = mirrorArray(meetingTableMatrix[i]);
+		}
 		JSONObject jsonObject = new JSONObject(tournamentName, groupName, menuName, crossTableText, crossTable,
 				meetingTableText, meetingTable, startDate, endDate, sidePanels, jsonCrossTitle, jsonMeetingtitle,
 				siteName);
