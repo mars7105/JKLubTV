@@ -10,7 +10,8 @@ public class JSONObject {
 	private String[][][] meetingTable;
 	private String startDate;
 	private String endDate;
-	private String[] sidePanels;
+	private String[] sidePanelsheader;
+	private String[] sidePanelsbody;
 	private long timeStamp;
 	private String jsonCrossTitle;
 	private String jsonMeetingtitle;
@@ -18,7 +19,8 @@ public class JSONObject {
 
 	public JSONObject(String tournamentName, String[] groupName, String menuName, String[] crossTableText2,
 			String[][][] crossTable, String[] meetingTableText2, String[][][] meetingTable, String startDate,
-			String endDate, String sidePanels[], String jsonCrossTitle, String jsonMeetingtitle, String siteName) {
+			String endDate, String[] header, String[] body, String jsonCrossTitle, String jsonMeetingtitle,
+			String siteName) {
 		super();
 
 		this.tournamentName = tournamentName;
@@ -33,7 +35,8 @@ public class JSONObject {
 		this.jsonCrossTitle = jsonCrossTitle;
 		this.jsonMeetingtitle = jsonMeetingtitle;
 		this.timeStamp = System.currentTimeMillis() / 1000;
-		this.sidePanels = sidePanels;
+		this.sidePanelsheader = header;
+		this.sidePanelsbody = body;
 		this.siteName = siteName;
 	}
 
@@ -85,14 +88,6 @@ public class JSONObject {
 		this.endDate = endDate;
 	}
 
-	public String[] getRegularities() {
-		return sidePanels;
-	}
-
-	public void setRegularities(String[] sidePanels) {
-		this.sidePanels = sidePanels;
-	}
-
 	public long getTimeStamp() {
 		return timeStamp;
 	}
@@ -117,12 +112,20 @@ public class JSONObject {
 		this.jsonMeetingtitle = jsonMeetingtitle;
 	}
 
-	public String[] getSidePanels() {
-		return sidePanels;
+	public String[] getSidePanelsheader() {
+		return sidePanelsheader;
 	}
 
-	public void setSidePanels(String[] sidePanels) {
-		this.sidePanels = sidePanels;
+	public void setSidePanelsheader(String[] sidePanelsheader) {
+		this.sidePanelsheader = sidePanelsheader;
+	}
+
+	public String[] getSidePanelsbody() {
+		return sidePanelsbody;
+	}
+
+	public void setSidePanelsbody(String[] sidePanelsbody) {
+		this.sidePanelsbody = sidePanelsbody;
 	}
 
 	public String getSiteName() {

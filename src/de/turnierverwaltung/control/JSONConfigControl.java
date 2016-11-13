@@ -3,13 +3,18 @@ package de.turnierverwaltung.control;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import de.turnierverwaltung.model.JSON;
-import de.turnierverwaltung.view.FrontendSidePanelView;
+import de.turnierverwaltung.model.Sidepanel;
+import de.turnierverwaltung.model.TournamentConstants;
+import de.turnierverwaltung.mysql.DAOFactory;
+import de.turnierverwaltung.mysql.SidepanelDAO;
 import de.turnierverwaltung.view.JSONConfigView;
 
 public class JSONConfigControl implements ActionListener {
@@ -24,6 +29,8 @@ public class JSONConfigControl implements ActionListener {
 	private JButton connectionTestButton;
 	private JTextField uploadURLTextField;
 	private MainControl mainControl;
+	private FrontendSidePanelControl sidePanel;
+	private SidepanelDAO sidepanelDAO;
 
 	public JSONConfigControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -40,12 +47,14 @@ public class JSONConfigControl implements ActionListener {
 		uploadURLTextField = jsonView.getUploadURLTextField();
 		connectionTestButton = jsonView.getConnectionTestButton();
 		connectionTestButton.addActionListener(this);
-		menuName = "Menu";
-		uploadURL = "http://example.com";
+		menuName = mainControl.getPropertiesControl().getFrontendMenuname();
+
+		uploadURL = mainControl.getPropertiesControl().getFrontendURL();
 
 		menuNameTextField.setText(menuName);
 		uploadURLTextField.setText(uploadURL);
-
+		DAOFactory daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
+		sidepanelDAO = daoFactory.getSidepanelDAO();
 	}
 
 	public void makeDialog() {
@@ -60,17 +69,44 @@ public class JSONConfigControl implements ActionListener {
 			jsonView.getJsonDialog().dispose();
 			JSONSaveControl json = new JSONSaveControl(this.mainControl);
 
+			// this.turnier = this.mainControl.getTurnier();
+			ArrayList<Sidepanel> sidepanelItems = new ArrayList<Sidepanel>();
+			if (sidePanel != null) {
+
+			}
 			try {
-				json.uploadJSONFile(uploadURL, menuName);
-				JOptionPane.showMessageDialog(mainControl, "Daten hochgeladen!");
+				sidepanelItems = sidepanelDAO.selectAllSidepanel(this.mainControl.getTurnier().getTurnierId());
+			} catch (SQLException e1) {
+				// TODO Automatisch generierter Erfassungsblock
+				e1.printStackTrace();
+			}
+
+			try {
+				json.uploadJSONFile(uploadURL, menuName, sidepanelItems);
+				mainControl.getPropertiesControl().setFrontendMenuname(menuName);
+				mainControl.getPropertiesControl().setFrontendURL(uploadURL);
+				mainControl.getPropertiesControl().writeProperties();
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.0"));
 			} catch (IOException exc) {
-				JOptionPane.showMessageDialog(mainControl, Messages.getString("NaviController.32"));
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.2"));
 			}
 
 		}
 		if (e.getSource() == sidePanelsButton) {
-			FrontendSidePanelView sidePanel = new FrontendSidePanelView();
+			sidePanel = new FrontendSidePanelControl();
 			sidePanel.makeDialog();
+			String header = null;
+			String body = null;
+			header = sidePanel.getHeaderText();
+			body = sidePanel.getBodyText();
+			if (header != null) {
+				try {
+					sidepanelDAO.insertSidepanel(new Sidepanel(header, body), mainControl.getTurnier().getTurnierId());
+				} catch (SQLException e1) {
+					// TODO Automatisch generierter Erfassungsblock
+					e1.printStackTrace();
+				}
+			}
 		}
 		if (e.getSource() == connectionTestButton) {
 			String url = uploadURLTextField.getText();
@@ -78,12 +114,12 @@ public class JSONConfigControl implements ActionListener {
 			try {
 				Boolean testConnection = jsonCross.testConnection();
 				if (testConnection == true) {
-					JOptionPane.showMessageDialog(mainControl, "Test ok!");
+					JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.1"));
 				} else {
-					JOptionPane.showMessageDialog(mainControl, "Verbindungsfehler! Falsche URL?");
+					JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.2"));
 				}
 			} catch (IOException e1) {
-				JOptionPane.showMessageDialog(mainControl, "Verbindungsfehler! Falsche URL?");
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.2"));
 			}
 		}
 		if (e.getSource() == cancelButton) {
@@ -107,6 +143,14 @@ public class JSONConfigControl implements ActionListener {
 
 	public void setUploadURL(String uploadURL) {
 		this.uploadURL = uploadURL;
+	}
+
+	public FrontendSidePanelControl getSidePanel() {
+		return sidePanel;
+	}
+
+	public void setSidePanel(FrontendSidePanelControl sidePanel) {
+		this.sidePanel = sidePanel;
 	}
 
 }

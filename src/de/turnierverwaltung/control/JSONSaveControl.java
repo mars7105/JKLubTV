@@ -1,12 +1,14 @@
 package de.turnierverwaltung.control;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import de.turnierverwaltung.model.CrossTable;
 import de.turnierverwaltung.model.JSON;
 import de.turnierverwaltung.model.JSONFileObject;
 import de.turnierverwaltung.model.MeetingTable;
+import de.turnierverwaltung.model.Sidepanel;
 
 public class JSONSaveControl {
 	private MainControl mainControl;
@@ -20,7 +22,7 @@ public class JSONSaveControl {
 		this.mainControl = mainControl;
 	}
 
-	public void uploadJSONFile(String url, String menuName) throws IOException {
+	public void uploadJSONFile(String url, String menuName, ArrayList<Sidepanel> sidepanelItems) throws IOException {
 
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 		// url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
@@ -38,16 +40,29 @@ public class JSONSaveControl {
 			String jsonMeetingtitle = Messages.getString("NaviController.35");
 			String startDate = mainControl.getTurnier().getStartDatum();
 			String endDate = mainControl.getTurnier().getEndDatum();
-			String[] sidePanels = new String[4];
-			sidePanels[0] = "Regularien";
-			sidePanels[1] = "Wertung:" + "<br />" + "1.) Punkte" + "<br />" + "2.) Sonneborn-Berger-Wertung" + "<br />"
-					+ "3.) direkter Vergleich" + "<br />" + "4.) um Abstieg oder Preisrang: Stichkampf * -" + "<br />"
-					+ "sonst gleiche Plazierung" + "<br />" + " " + "<br />"
-					+ "* Stichkampf: eine Schnellpartie (30 min pro Spieler) mit gegenüber Hauptturnier vertauschten Farben;"
-					+ "<br />"
-					+ "bei Gleichstand danach je eine Blitzpartie (mit stets vertauschten Farben) bis zur Entscheidung. ";
-			sidePanels[2] = "Test";
-			sidePanels[3] = "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.";
+
+			// sidePanels[0] = "Regularien";
+			// sidePanels[1] = "Wertung:" + "<br />" + "1.) Punkte" + "<br />" +
+			// "2.) Sonneborn-Berger-Wertung" + "<br />"
+			// + "3.) direkter Vergleich" + "<br />" + "4.) um Abstieg oder
+			// Preisrang: Stichkampf * -" + "<br />"
+			// + "sonst gleiche Plazierung" + "<br />" + " " + "<br />"
+			// + "* Stichkampf: eine Schnellpartie (30 min pro Spieler) mit
+			// gegenüber Hauptturnier vertauschten Farben;"
+			// + "<br />"
+			// + "bei Gleichstand danach je eine Blitzpartie (mit stets
+			// vertauschten Farben) bis zur Entscheidung. ";
+			// sidePanels[2] = "Test";
+			// sidePanels[3] = "Lorem ipsum dolor sit amet, consetetur
+			// sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
+			// labore et dolore magna aliquyam erat, sed diam voluptua. At vero
+			// eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
+			// gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
+			// amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
+			// sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
+			// aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
+			// duo dolores et ea rebum. Stet clita kasd gubergren, no sea
+			// takimata sanctus est Lorem ipsum dolor sit amet.";
 			String[] crossTableText = new String[anzahlGruppen];
 			String[] meetingTableText = new String[anzahlGruppen];
 			for (int u = 0; u < anzahlGruppen; u++) {
@@ -86,16 +101,22 @@ public class JSONSaveControl {
 
 				groupName[i] = mainControl.getTurnier().getGruppe()[i].getGruppenName();
 
-				ctableMatrix[i] = turnierTabelle[i]
-						.getTabellenMatrix();
-				mtableMatrix[i] = meetingTable[i]
-						.getTabellenMatrix();
+				ctableMatrix[i] = turnierTabelle[i].getTabellenMatrix();
+				mtableMatrix[i] = meetingTable[i].getTabellenMatrix();
 
 			}
 			jsonFileName = "json_file" + ".json";
 			filenames = "jsonFiles/" + jsonFileName;
+			int index = 0;
+			String[] header = new String[sidepanelItems.size()];
+			String[] body = new String[sidepanelItems.size()];
+			for (Sidepanel item : sidepanelItems) {
+				header[index] = item.getHeader();
+				body[index] = item.getBody();
+				index++;
+			}
 			jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName, crossTableText,
-					meetingTableText, sidePanels, jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix,
+					meetingTableText, header, body, jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix,
 					jsonMeetingtitle, siteName, configFlag);
 			jsonCross.postEnd();
 			JSON jsonFileObjects = new JSON(url + "/receiveFileJSON.php");
