@@ -46,6 +46,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 
 import java.util.ArrayList;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -67,6 +68,7 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 	private static String lineStyle = "Horizontal";
 
 	private int selectedItem;
+	private ButtonSavePanelView buttonPanel;
 
 	public TreeDemo(ArrayList<Sidepanel> sidePanel, JTextField headerTextField, JTextArea bodyTextArea,
 			JPanel htmlAll) {
@@ -92,8 +94,14 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 			tree.putClientProperty("JTree.lineStyle", lineStyle);
 		}
 		tree.expandRow(1);
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		panel.add(tree, BorderLayout.CENTER);
+		buttonPanel = new ButtonSavePanelView();
+		panel.add(buttonPanel, BorderLayout.SOUTH);
+
 		// Create the scroll pane and add the tree to it.
-		JScrollPane treeView = new JScrollPane(tree);
+		JScrollPane treeView = new JScrollPane(panel);
 
 		JScrollPane htmlView = new JScrollPane(htmlAll);
 
@@ -186,7 +194,7 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 		DefaultMutableTreeNode book = null;
 
 		category = new DefaultMutableTreeNode("Seitenpanel");
-		
+
 		int index = 0;
 		for (Sidepanel sideP : sidePanel) {
 			book = new DefaultMutableTreeNode(new BookInfo(sideP.getHeader(), sideP.getBody(), index));
@@ -195,7 +203,7 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 
 		}
 		top.add(category);
-		
+
 	}
 
 	public int getSelectedItem() {
@@ -204,6 +212,14 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 
 	public void setSelectedItem(int selectedItem) {
 		this.selectedItem = selectedItem;
+	}
+
+	public ButtonSavePanelView getButtonPanel() {
+		return buttonPanel;
+	}
+
+	public void setButtonPanel(ButtonSavePanelView buttonPanel) {
+		this.buttonPanel = buttonPanel;
 	}
 
 }

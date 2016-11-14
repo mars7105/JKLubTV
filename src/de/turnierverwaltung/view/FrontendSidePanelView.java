@@ -26,6 +26,9 @@ public class FrontendSidePanelView {
 	private ButtonPanelView buttonPane;
 	private JButton cancelButton;
 	private JButton okButton;
+	private JButton addButton;
+	private JButton saveButton;
+	private JButton deleteButton;
 	private TreeDemo treedemo;
 
 	public FrontendSidePanelView() {
@@ -97,9 +100,12 @@ public class FrontendSidePanelView {
 		bothPanel.add(leftPanel, BorderLayout.NORTH);
 		htmlAll.add(bothPanel, BorderLayout.CENTER);
 		htmlAll.add(buttonPane, BorderLayout.SOUTH);
-//		jsonDialog.add(htmlAll, BorderLayout.EAST);
+		// jsonDialog.add(htmlAll, BorderLayout.EAST);
 
 		treedemo = new TreeDemo(sidepanel, headerTextField, bodyTextArea, htmlAll);
+		addButton = treedemo.getButtonPanel().getAddButton();
+		saveButton = treedemo.getButtonPanel().getSaveButton();
+		deleteButton = treedemo.getButtonPanel().getDeleteButton();
 		jsonDialog.add(treedemo, BorderLayout.CENTER);
 		jsonDialog.pack();
 		jsonDialog.setLocationRelativeTo(null);
@@ -153,6 +159,30 @@ public class FrontendSidePanelView {
 
 	public void setTreedemo(TreeDemo treedemo) {
 		this.treedemo = treedemo;
+	}
+
+	public JButton getAddButton() {
+		return addButton;
+	}
+
+	public void setAddButton(JButton addButton) {
+		this.addButton = addButton;
+	}
+
+	public JButton getSaveButton() {
+		return saveButton;
+	}
+
+	public void setSaveButton(JButton saveButton) {
+		this.saveButton = saveButton;
+	}
+
+	public JButton getDeleteButton() {
+		return deleteButton;
+	}
+
+	public void setDeleteButton(JButton deleteButton) {
+		this.deleteButton = deleteButton;
 	}
 
 }

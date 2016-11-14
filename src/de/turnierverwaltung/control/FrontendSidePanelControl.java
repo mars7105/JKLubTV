@@ -29,6 +29,9 @@ public class FrontendSidePanelControl implements ActionListener {
 	private int selectedIndex;
 	private MainControl mainControl;
 	private SidepanelDAO sidepanelDAO;
+	private JButton addButton;
+	private JButton saveButton;
+	private JButton deleteButton;
 
 	public FrontendSidePanelControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -43,6 +46,13 @@ public class FrontendSidePanelControl implements ActionListener {
 
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
+		
+		addButton = sidePanel.getAddButton();
+		addButton.addActionListener(this);
+		saveButton = sidePanel.getSaveButton();
+		saveButton.addActionListener(this);
+		deleteButton = sidePanel.getDeleteButton();
+		deleteButton.addActionListener(this);
 		headerText = "";
 		bodyText = "";
 	}
