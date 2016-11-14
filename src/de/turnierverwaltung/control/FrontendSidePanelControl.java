@@ -46,13 +46,8 @@ public class FrontendSidePanelControl implements ActionListener {
 
 		okButton.addActionListener(this);
 		cancelButton.addActionListener(this);
-		
-		addButton = sidePanel.getAddButton();
-		addButton.addActionListener(this);
-		saveButton = sidePanel.getSaveButton();
-		saveButton.addActionListener(this);
-		deleteButton = sidePanel.getDeleteButton();
-		deleteButton.addActionListener(this);
+
+
 		headerText = "";
 		bodyText = "";
 	}
@@ -68,11 +63,26 @@ public class FrontendSidePanelControl implements ActionListener {
 		}
 
 		sidePanel.makeDialog(sideP);
-
+		addButton = sidePanel.getAddButton();
+		addButton.addActionListener(this);
+		saveButton = sidePanel.getSaveButton();
+		saveButton.addActionListener(this);
+		deleteButton = sidePanel.getDeleteButton();
+		deleteButton.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		if (e.getSource() == addButton) {
+
+		}
+		if (e.getSource() == saveButton) {
+
+		}
+		if (e.getSource() == deleteButton) {
+
+		}
+
 		if (e.getSource() == cancelButton) {
 			jsonDialog.dispose();
 			headerText = null;
