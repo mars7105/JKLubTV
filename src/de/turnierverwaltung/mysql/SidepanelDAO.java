@@ -16,7 +16,7 @@ public interface SidepanelDAO {
 
 	public int insertSidepanel(Sidepanel sitepanel, int turnierId) throws SQLException;
 
-	public ArrayList<Sidepanel> selectAllSidepanel(int idSidepanel) throws SQLException;
+	public ArrayList<Sidepanel> selectAllSidepanel(int idTurnier) throws SQLException;
 
 	public boolean updateSidepanel(Sidepanel sitepanel) throws SQLException;
 

@@ -92,6 +92,7 @@ public class JSONConfigControl implements ActionListener {
 		}
 		if (e.getSource() == sidePanelsButton) {
 			sidePanel = new FrontendSidePanelControl(mainControl);
+			
 			// JSONSaveControl json = new JSONSaveControl(this.mainControl);
 
 			// this.turnier = this.mainControl.getTurnier();

@@ -15,6 +15,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import de.turnierverwaltung.control.DynamicTreeDemo;
 import de.turnierverwaltung.model.Sidepanel;
 
 public class FrontendSidePanelView {
@@ -26,12 +27,15 @@ public class FrontendSidePanelView {
 	private ButtonPanelView buttonPane;
 	private JButton cancelButton;
 	private JButton okButton;
-	private JButton addButton;
-	private JButton saveButton;
-	private JButton deleteButton;
-	private TreeDemo treedemo;
 
-	public FrontendSidePanelView() {
+	private ButtonSavePanelView buttonPanel;
+	private JButton saveButton;
+	private JButton addButton;
+	private JButton deleteButton;
+	private DynamicTreeDemo dynTree;
+
+	public FrontendSidePanelView(ArrayList<Sidepanel> sidepanel, DynamicTreeDemo dynTree) {
+		this.dynTree = dynTree;
 		// Erzeugung eines neuen Frames mit
 		// dem Titel Beispiel JDialog
 		jsonDialog = new JDialog();
@@ -64,10 +68,14 @@ public class FrontendSidePanelView {
 		buttonPane.makeAllButtons();
 		okButton = buttonPane.getOkButton();
 		cancelButton = buttonPane.getCancelButton();
+		buttonPanel = new ButtonSavePanelView();
+		addButton = buttonPanel.getAddButton();
+		saveButton = buttonPanel.getSaveButton();
+		deleteButton = buttonPanel.getDeleteButton();
 
 	}
 
-	public void makeDialog(ArrayList<Sidepanel> sidepanel) {
+	public void makeDialog() {
 		JPanel bothPanel = new JPanel();
 		bothPanel.setLayout(new BorderLayout());
 		JPanel leftPanel = new JPanel();
@@ -100,13 +108,10 @@ public class FrontendSidePanelView {
 		bothPanel.add(leftPanel, BorderLayout.NORTH);
 		htmlAll.add(bothPanel, BorderLayout.CENTER);
 		htmlAll.add(buttonPane, BorderLayout.SOUTH);
-		// jsonDialog.add(htmlAll, BorderLayout.EAST);
 
-		treedemo = new TreeDemo(sidepanel, headerTextField, bodyTextArea, htmlAll);
-		addButton = treedemo.getButtonPanel().getAddButton();
-		saveButton = treedemo.getButtonPanel().getSaveButton();
-		deleteButton = treedemo.getButtonPanel().getDeleteButton();
-		jsonDialog.add(treedemo, BorderLayout.CENTER);
+		jsonDialog.add(htmlAll, BorderLayout.EAST);
+
+		jsonDialog.add(dynTree, BorderLayout.CENTER);
 		jsonDialog.pack();
 		jsonDialog.setLocationRelativeTo(null);
 		jsonDialog.setEnabled(true);
@@ -153,12 +158,12 @@ public class FrontendSidePanelView {
 		this.okButton = okButton;
 	}
 
-	public TreeDemo getTreedemo() {
-		return treedemo;
+	public JButton getSaveButton() {
+		return saveButton;
 	}
 
-	public void setTreedemo(TreeDemo treedemo) {
-		this.treedemo = treedemo;
+	public void setSaveButton(JButton saveButton) {
+		this.saveButton = saveButton;
 	}
 
 	public JButton getAddButton() {
@@ -167,14 +172,6 @@ public class FrontendSidePanelView {
 
 	public void setAddButton(JButton addButton) {
 		this.addButton = addButton;
-	}
-
-	public JButton getSaveButton() {
-		return saveButton;
-	}
-
-	public void setSaveButton(JButton saveButton) {
-		this.saveButton = saveButton;
 	}
 
 	public JButton getDeleteButton() {
