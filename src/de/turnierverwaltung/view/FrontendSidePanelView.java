@@ -26,6 +26,7 @@ public class FrontendSidePanelView {
 	private ButtonPanelView buttonPane;
 	private JButton cancelButton;
 	private JButton okButton;
+	private TreeDemo treedemo;
 
 	public FrontendSidePanelView() {
 		// Erzeugung eines neuen Frames mit
@@ -96,10 +97,10 @@ public class FrontendSidePanelView {
 		bothPanel.add(leftPanel, BorderLayout.NORTH);
 		htmlAll.add(bothPanel, BorderLayout.CENTER);
 		htmlAll.add(buttonPane, BorderLayout.SOUTH);
-		jsonDialog.add(htmlAll, BorderLayout.EAST);
+//		jsonDialog.add(htmlAll, BorderLayout.EAST);
 
-		TreeDemo treedemo = new TreeDemo(sidepanel);
-		jsonDialog.add(treedemo, BorderLayout.WEST);
+		treedemo = new TreeDemo(sidepanel, headerTextField, bodyTextArea, htmlAll);
+		jsonDialog.add(treedemo, BorderLayout.CENTER);
 		jsonDialog.pack();
 		jsonDialog.setLocationRelativeTo(null);
 		jsonDialog.setEnabled(true);
@@ -144,6 +145,14 @@ public class FrontendSidePanelView {
 
 	public void setOkButton(JButton okButton) {
 		this.okButton = okButton;
+	}
+
+	public TreeDemo getTreedemo() {
+		return treedemo;
+	}
+
+	public void setTreedemo(TreeDemo treedemo) {
+		this.treedemo = treedemo;
 	}
 
 }

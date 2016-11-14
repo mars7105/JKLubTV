@@ -31,22 +31,11 @@
 
 package de.turnierverwaltung.view;
 
-/**
- * This application that requires the following additional files:
- *   TreeDemoHelp.html
- *    arnold.html
- *    bloch.html
- *    chan.html
- *    jls.html
- *    swingtutorial.html
- *    tutorial.html
- *    tutorialcont.html
- *    vm.html
- */
-import javax.swing.JEditorPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreeSelectionModel;
@@ -56,9 +45,7 @@ import de.turnierverwaltung.model.Sidepanel;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 
-import java.net.URL;
 import java.util.ArrayList;
-import java.io.IOException;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 
@@ -67,19 +54,28 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 	 * 
 	 */
 	private static final long serialVersionUID = -1102504985625598532L;
-	private JEditorPane htmlPane;
+	// private JEditorPane htmlPane;
 	private JTree tree;
-	private String helpURL;
+	// private String helpURL;
 	private static boolean DEBUG = false;
 	private ArrayList<Sidepanel> sidePanel;
+	private JTextField headerTextField;
+	private JTextArea bodyTextArea;
 	// Optionally play with line styles. Possible values are
 	// "Angled" (the default), "Horizontal", and "None".
 	private static boolean playWithLineStyle = false;
 	private static String lineStyle = "Horizontal";
 
-	public TreeDemo(ArrayList<Sidepanel> sidePanel) {
+	private int selectedItem;
+
+	public TreeDemo(ArrayList<Sidepanel> sidePanel, JTextField headerTextField, JTextArea bodyTextArea,
+			JPanel htmlAll) {
+
 		super(new GridLayout(1, 0));
+		selectedItem = -1;
 		this.sidePanel = sidePanel;
+		this.headerTextField = headerTextField;
+		this.bodyTextArea = bodyTextArea;
 		// Create the nodes.
 		DefaultMutableTreeNode top = new DefaultMutableTreeNode("Webseite");
 		createNodes(top);
@@ -95,26 +91,22 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 			System.out.println("line style = " + lineStyle);
 			tree.putClientProperty("JTree.lineStyle", lineStyle);
 		}
-
+		tree.expandRow(1);
 		// Create the scroll pane and add the tree to it.
 		JScrollPane treeView = new JScrollPane(tree);
 
-		// Create the HTML viewing pane.
-		htmlPane = new JEditorPane();
-		htmlPane.setEditable(false);
-		initHelp();
-		JScrollPane htmlView = new JScrollPane(htmlPane);
+		JScrollPane htmlView = new JScrollPane(htmlAll);
 
 		// Add the scroll panes to a split pane.
-		JSplitPane splitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		splitPane.setTopComponent(treeView);
 		splitPane.setBottomComponent(htmlView);
 
 		Dimension minimumSize = new Dimension(100, 50);
 		htmlView.setMinimumSize(minimumSize);
 		treeView.setMinimumSize(minimumSize);
-		splitPane.setDividerLocation(100);
-		splitPane.setPreferredSize(new Dimension(500, 300));
+		splitPane.setDividerLocation(200);
+		splitPane.setPreferredSize(new Dimension(800, 600));
 
 		// Add the split pane to this panel.
 		add(splitPane);
@@ -130,7 +122,8 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 		Object nodeInfo = node.getUserObject();
 		if (node.isLeaf()) {
 			BookInfo book = (BookInfo) nodeInfo;
-			displayURL(book.getBody());
+			displayURL(book.getHeader(), book.getBody(), book.getIndex());
+			selectedItem = book.getIndex();
 			if (DEBUG) {
 				System.out.print(book.getBody() + ":  \n    ");
 			}
@@ -145,10 +138,17 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 	private class BookInfo {
 		public String header;
 		public String body;
+		public int index;
 
-		public BookInfo(String header, String body) {
+		public BookInfo(String header, String body, int index) {
 			this.header = header;
 			this.body = body;
+			this.index = index;
+		}
+
+		public String getHeader() {
+			// TODO Automatisch generierter Methodenstub
+			return header;
 		}
 
 		public String getBody() {
@@ -159,26 +159,21 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 			return header;
 
 		}
-	}
 
-	private void initHelp() {
-		String s = "TreeDemoHelp.html";
-		// helpURL = getClass().getResource(s);
-		if (helpURL == null) {
-			System.err.println("Couldn't open help file: " + s);
-		} else if (DEBUG) {
-			System.out.println("Help URL is " + helpURL);
+		public int getIndex() {
+			return index;
 		}
 
-		 displayURL(helpURL);
 	}
 
-	private void displayURL(String url) {
+	private void displayURL(String hdr, String bdy, int index) {
 
-		if (url != null) {
-			htmlPane.setText(url);
+		if (hdr != null) {
+			// htmlPane.setText(bdy);
+			headerTextField.setText(hdr);
+			bodyTextArea.setText(bdy);
 		} else { // null url
-			htmlPane.setText("File Not Found");
+			// htmlPane.setText("File Not Found");
 			if (DEBUG) {
 				System.out.println("Attempted to display a null URL.");
 			}
@@ -191,13 +186,24 @@ public class TreeDemo extends JPanel implements TreeSelectionListener {
 		DefaultMutableTreeNode book = null;
 
 		category = new DefaultMutableTreeNode("Seitenpanel");
-		top.add(category);
+		
+		int index = 0;
 		for (Sidepanel sideP : sidePanel) {
-			book = new DefaultMutableTreeNode(new BookInfo(sideP.getHeader(), sideP.getBody()));
+			book = new DefaultMutableTreeNode(new BookInfo(sideP.getHeader(), sideP.getBody(), index));
 			category.add(book);
+			index++;
 
 		}
+		top.add(category);
+		
+	}
 
+	public int getSelectedItem() {
+		return selectedItem;
+	}
+
+	public void setSelectedItem(int selectedItem) {
+		this.selectedItem = selectedItem;
 	}
 
 }
