@@ -3,15 +3,12 @@ package de.turnierverwaltung.model;
 public class Sidepanel {
 	private String header;
 	private String body;
+	private int idSidepanel;
 
-	public Sidepanel() {
-		super();
-		// TODO Automatisch generierter Konstruktorstub
-	}
-
-	public Sidepanel(String header, String body) {
+	public Sidepanel(String header, String body, int idSidepanel) {
 		this.header = header;
 		this.body = body;
+		this.idSidepanel = idSidepanel;
 	}
 
 	public String getHeader() {
@@ -28,6 +25,14 @@ public class Sidepanel {
 
 	public void setBody(String body) {
 		this.body = body;
+	}
+
+	public int getIdSidepanel() {
+		return idSidepanel;
+	}
+
+	public void setIdSidepanel(int idSidepanel) {
+		this.idSidepanel = idSidepanel;
 	}
 
 }

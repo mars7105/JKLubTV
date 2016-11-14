@@ -18,6 +18,6 @@ public interface SidepanelDAO {
 
 	public ArrayList<Sidepanel> selectAllSidepanel(int idSidepanel) throws SQLException;
 
-	public boolean updateSidepanel(int idSidepanel, Sidepanel sitepanel) throws SQLException;
+	public boolean updateSidepanel(Sidepanel sitepanel) throws SQLException;
 
 }

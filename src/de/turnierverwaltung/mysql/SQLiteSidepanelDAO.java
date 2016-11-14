@@ -104,8 +104,8 @@ public class SQLiteSidepanelDAO implements SidepanelDAO {
 	@Override
 	public ArrayList<Sidepanel> selectAllSidepanel(int idTurnier) throws SQLException {
 		createSidepanelTable();
-		String sql = "Select header, body, idTurnier " + "from sidepanel, turnier where idTurnier =" + idTurnier
-				+ " ORDER BY idSidepanel ASC;";
+		String sql = "Select idSidepanel, header, body, idTurnier " + "from sidepanel, turnier where idTurnier ="
+				+ idTurnier + " ORDER BY idSidepanel ASC;";
 		ArrayList<Sidepanel> sidepanelListe = new ArrayList<Sidepanel>();
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -113,13 +113,13 @@ public class SQLiteSidepanelDAO implements SidepanelDAO {
 			stmt = this.dbConnect.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				// int idSidepanel = rs.getInt("idSidepanel");
+				int idSidepanel = rs.getInt("idSidepanel");
 				String header = rs.getString("header");
 				String body = rs.getString("body");
 				// int SidePanelID = rs.getInt("SidePanelID");
 				// int turnierid = rs.getInt("idTurnier");
 
-				Sidepanel sidepanel = new Sidepanel(header, body);
+				Sidepanel sidepanel = new Sidepanel(header, body, idSidepanel);
 				sidepanelListe.add(sidepanel);
 
 			}
@@ -130,8 +130,9 @@ public class SQLiteSidepanelDAO implements SidepanelDAO {
 	}
 
 	@Override
-	public boolean updateSidepanel(int idSidepanel, Sidepanel sitepanel) throws SQLException {
+	public boolean updateSidepanel(Sidepanel sitepanel) throws SQLException {
 		createSidepanelTable();
+		int idSidepanel = sitepanel.getIdSidepanel();
 		boolean ok = false;
 		String sql = "update sidepanel set header = ?, body = ? where idSidepanel=" + idSidepanel + ";";
 		if (this.dbConnect != null) {
