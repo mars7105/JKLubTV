@@ -43,7 +43,7 @@ public class JSONConfigView {
 
 	// main-Methode
 	public JSONConfigView() {
-		buttonSize = new Dimension(270, 60);
+		buttonSize = new Dimension(200, 40);
 		// Erzeugung eines neuen Frames mit
 		// dem Titel Beispiel JDialog
 		jsonDialog = new JDialog();
