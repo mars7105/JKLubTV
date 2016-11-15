@@ -43,6 +43,7 @@ import de.turnierverwaltung.view.PairingsView;
 import de.turnierverwaltung.view.MeetingTableView;
 import de.turnierverwaltung.view.ButtonTabComponent;
 import de.turnierverwaltung.view.CrossTableView;
+import de.turnierverwaltung.view.FrontendSidePanelView;
 import de.turnierverwaltung.view.NewTournamentPlayerCountlView;
 import de.turnierverwaltung.view.NewTournamentPlayerInputView;
 import de.turnierverwaltung.view.StandardView;
@@ -66,7 +67,7 @@ public class MainControl extends JFrame {
 	private int windowHeight;
 	private MainView mainView;
 	private JTabbedPane hauptPanel;
-
+	private FrontendSidePanelView frontendSidePanelView;
 	private NewTournamentControl turnierControl;
 	private NewTournamentView turnierView;
 	private NewTournamentGroupsView gruppenView;
@@ -281,6 +282,14 @@ public class MainControl extends JFrame {
 
 		}
 		resetApp();
+	}
+
+	public FrontendSidePanelView getFrontendSidePanelView() {
+		return frontendSidePanelView;
+	}
+
+	public void setFrontendSidePanelView(FrontendSidePanelView frontendSidePanelView) {
+		this.frontendSidePanelView = frontendSidePanelView;
 	}
 
 	public ButtonTabComponent getButtonTabComponent() {

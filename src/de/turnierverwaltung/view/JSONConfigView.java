@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -14,7 +15,7 @@ import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-
+import javax.swing.SwingConstants;
 import de.turnierverwaltung.view.Messages;
 
 public class JSONConfigView {
@@ -31,12 +32,15 @@ public class JSONConfigView {
 	private JButton cancelButton;
 	private ButtonPanelView buttonPane;
 	private ImageIcon addImg = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-add-2.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-edit.png")));
 	private ImageIcon connectionTestImg = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/homepage.png")));
+	private Dimension buttonSize;
+	private ArrayList<JButton> groupButtons;
 
 	// main-Methode
 	public JSONConfigView() {
+		buttonSize = new Dimension(200, 40);
 		// Erzeugung eines neuen Frames mit
 		// dem Titel Beispiel JDialog
 		jsonDialog = new JDialog();
@@ -69,7 +73,17 @@ public class JSONConfigView {
 		buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();
 		okButton = buttonPane.getOkButton();
+		okButton.setText(Messages.getString("JSONConfigView.8"));
 		cancelButton = buttonPane.getCancelButton();
+
+		groupButtons = new ArrayList<JButton>();
+	}
+
+	public void makeGroupButtons(String groupName) {
+		JButton groupButton = new JButton(groupName, addImg);
+		groupButton.setPreferredSize(buttonSize);
+		groupButton.setHorizontalAlignment(SwingConstants.LEFT);
+		groupButtons.add(groupButton);
 
 	}
 
@@ -81,10 +95,7 @@ public class JSONConfigView {
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
 		leftPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-		JPanel htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-		Dimension dim = new Dimension(175, 30);
+		Dimension dim = new Dimension(150, 30);
 
 		JLabel connectionTestButtonLabel = new JLabel(Messages.getString("JSONConfigView.7") + ":");
 		connectionTestButtonLabel.setPreferredSize(dim);
@@ -98,7 +109,7 @@ public class JSONConfigView {
 		JLabel sidePanelsLabel = new JLabel(Messages.getString("JSONConfigView.4") + ":");
 		sidePanelsLabel.setPreferredSize(dim);
 
-		htmlPanel = new JPanel();
+		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(menuNameTextFieldLabel);
 		htmlPanel.add(menuNameTextField);
@@ -110,17 +121,31 @@ public class JSONConfigView {
 		htmlPanel.add(uploadURLTextField);
 		leftPanel.add(htmlPanel);
 
+		connectionTestButton.setPreferredSize(buttonSize);
+		connectionTestButton.setHorizontalAlignment(SwingConstants.LEFT);
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(connectionTestButtonLabel);
 		htmlPanel.add(connectionTestButton);
 		leftPanel.add(htmlPanel);
 
+		sidePanelsButton.setPreferredSize(buttonSize);
+		sidePanelsButton.setHorizontalAlignment(SwingConstants.LEFT);
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(sidePanelsLabel);
 		htmlPanel.add(sidePanelsButton);
 		leftPanel.add(htmlPanel);
+
+		for (JButton groupButton : groupButtons) {
+			htmlPanel = new JPanel();
+			htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+			JLabel groupPanelLabel = new JLabel(groupButton.getText() + ":");
+			groupPanelLabel.setPreferredSize(dim);
+			htmlPanel.add(groupPanelLabel);
+			htmlPanel.add(groupButton);
+			leftPanel.add(htmlPanel);
+		}
 
 		bothPanel.add(leftPanel, BorderLayout.NORTH);
 		htmlAll.add(bothPanel, BorderLayout.CENTER);
@@ -186,6 +211,14 @@ public class JSONConfigView {
 
 	public void setSidePanelsButton(JButton sidePanelsButton) {
 		this.sidePanelsButton = sidePanelsButton;
+	}
+
+	public ArrayList<JButton> getGroupButtons() {
+		return groupButtons;
+	}
+
+	public void setGroupButtons(ArrayList<JButton> groupButtons) {
+		this.groupButtons = groupButtons;
 	}
 
 }

@@ -2,7 +2,6 @@ package de.turnierverwaltung.control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -11,9 +10,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import de.turnierverwaltung.model.Sidepanel;
-import de.turnierverwaltung.model.TournamentConstants;
-import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.SidepanelDAO;
 import de.turnierverwaltung.view.FrontendSidePanelView;
 
 public class FrontendSidePanelControl implements ActionListener {
@@ -21,92 +17,53 @@ public class FrontendSidePanelControl implements ActionListener {
 	private JDialog jsonDialog;
 	private JTextField headerTextField;
 	private JTextArea bodyTextArea;
-	private JButton cancelButton;
+//	private JButton cancelButton;
 	private JButton okButton;
 	private String headerText;
 	private String bodyText;
 	private ArrayList<Sidepanel> sideP;
 	private int selectedIndex;
 	private MainControl mainControl;
-	private SidepanelDAO sidepanelDAO;
-	private JButton addButton;
-	private JButton saveButton;
-	private JButton deleteButton;
+	private DynamicTreeDemo dynTree;
 
 	public FrontendSidePanelControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		DAOFactory daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
-		sidepanelDAO = daoFactory.getSidepanelDAO();
-		sidePanel = new FrontendSidePanelView();
+		dynTree = new DynamicTreeDemo(mainControl);
+
+		sidePanel = new FrontendSidePanelView(sideP, dynTree);
+		this.mainControl.setFrontendSidePanelView(sidePanel);
+		// dynTree.setSidePanelView(sidePanel);
 		jsonDialog = sidePanel.getJsonDialog();
 		headerTextField = sidePanel.getHeaderTextField();
 		bodyTextArea = sidePanel.getBodyTextArea();
-		cancelButton = sidePanel.getCancelButton();
+//		cancelButton = sidePanel.getCancelButton();
 		okButton = sidePanel.getOkButton();
 
 		okButton.addActionListener(this);
-		cancelButton.addActionListener(this);
-		
-		addButton = sidePanel.getAddButton();
-		addButton.addActionListener(this);
-		saveButton = sidePanel.getSaveButton();
-		saveButton.addActionListener(this);
-		deleteButton = sidePanel.getDeleteButton();
-		deleteButton.addActionListener(this);
+//		cancelButton.addActionListener(this);
+
 		headerText = "";
 		bodyText = "";
 	}
 
 	public void makeDialog() {
-		new ArrayList<Sidepanel>();
 
-		try {
-			sideP = sidepanelDAO.selectAllSidepanel(this.mainControl.getTurnier().getTurnierId());
-		} catch (SQLException e1) {
-			// TODO Automatisch generierter Erfassungsblock
-			e1.printStackTrace();
-		}
-
-		sidePanel.makeDialog(sideP);
+		sidePanel.makeDialog();
 
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getSource() == cancelButton) {
-			jsonDialog.dispose();
-			headerText = null;
-			bodyText = null;
-		}
+
+//		if (e.getSource() == cancelButton) {
+//			jsonDialog.dispose();
+//			headerText = null;
+//			bodyText = null;
+//		}
 		if (e.getSource() == okButton) {
-			headerText = headerTextField.getText();
-			bodyText = bodyTextArea.getText();
-			selectedIndex = sidePanel.getTreedemo().getSelectedItem();
+
 			jsonDialog.dispose();
-			String header = null;
-			String body = null;
-			header = getHeaderText();
-			body = getBodyText();
-			if (header != null) {
-				if (selectedIndex < 0) {
-					try {
-						sidepanelDAO.insertSidepanel(new Sidepanel(header, body, 0),
-								mainControl.getTurnier().getTurnierId());
-					} catch (SQLException e1) {
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					}
-				} else {
-					try {
-						sideP.get(selectedIndex).setHeader(header);
-						sideP.get(selectedIndex).setBody(body);
-						sidepanelDAO.updateSidepanel(sideP.get(selectedIndex));
-					} catch (SQLException e1) {
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					}
-				}
-			}
+
 		}
 	}
 
