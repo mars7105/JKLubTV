@@ -76,7 +76,7 @@ public class DynamicTreeDemo extends JPanel implements ActionListener {
 	public DynamicTreeDemo(MainControl mainControl) {
 		super(new BorderLayout());
 		this.mainControl = mainControl;
-
+		selectedRow = 0;
 		DAOFactory daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		sidepanelDAO = daoFactory.getSidepanelDAO();
 
@@ -159,8 +159,17 @@ public class DynamicTreeDemo extends JPanel implements ActionListener {
 
 		if (ADD_COMMAND.equals(command)) {
 			// Add button clicked
-
-			Sidepanel temp = new Sidepanel(" ", " ", 0);
+			String header = "new item";
+			String body = "";
+			if (selectedRow == 0) {
+				header = mainControl.getFrontendSidePanelView().getHeaderTextField().getText();
+				body = mainControl.getFrontendSidePanelView().getBodyTextArea().getText();
+				if (header.isEmpty()) {
+					header = "new item";
+					body = "";
+				}
+			}
+			Sidepanel temp = new Sidepanel(header, body, 0);
 
 			try {
 
@@ -178,7 +187,7 @@ public class DynamicTreeDemo extends JPanel implements ActionListener {
 			String headerText = mainControl.getFrontendSidePanelView().getHeaderTextField().getText();
 			String bodyText = mainControl.getFrontendSidePanelView().getBodyTextArea().getText();
 
-			if (headerText != null) {
+			if (headerText != null && selectedRow > 0) {
 				try {
 					sidepanel.get(selectedRow - 1).setHeader(headerText);
 					sidepanel.get(selectedRow - 1).setBody(bodyText);
@@ -188,12 +197,14 @@ public class DynamicTreeDemo extends JPanel implements ActionListener {
 					treePanel.removeCurrentNode();
 
 					treePanel.getTreeModel().reload();
-
+					resetTreeSelect();
 				} catch (SQLException e1) {
 					// TODO Automatisch generierter Erfassungsblock
 					e1.printStackTrace();
-				}
+				} catch (IndexOutOfBoundsException e2) {
 
+				}
+				
 			}
 
 		} else if (REMOVE_COMMAND.equals(command)) {
@@ -213,8 +224,15 @@ public class DynamicTreeDemo extends JPanel implements ActionListener {
 				// TODO Automatisch generierter Erfassungsblock
 				e1.printStackTrace();
 			}
-			treePanel.getTreeModel().reload();
+			resetTreeSelect();
 		}
+	}
+
+	private void resetTreeSelect() {
+		selectedRow = 0;
+		mainControl.getFrontendSidePanelView().getHeaderTextField().setText("");
+		mainControl.getFrontendSidePanelView().getBodyTextArea().setText("");
+		treePanel.getTreeModel().reload();
 	}
 
 	public FrontendSidePanelView getSidePanelView() {

@@ -31,6 +31,7 @@ public class JSONConfigControl implements ActionListener {
 	private MainControl mainControl;
 	private FrontendSidePanelControl sidePanel;
 	private SidepanelDAO sidepanelDAO;
+	private ArrayList<JButton> groupButtons;
 
 	public JSONConfigControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -53,16 +54,30 @@ public class JSONConfigControl implements ActionListener {
 
 		menuNameTextField.setText(menuName);
 		uploadURLTextField.setText(uploadURL);
+		int gruppenAnzahl = this.mainControl.getTurnier().getAnzahlGruppen();
+		for (int i = 0; i < gruppenAnzahl; i++) {
+			jsonView.makeGroupButtons(this.mainControl.getTurnier().getGruppe()[i].getGruppenName());
+		}
+		groupButtons = jsonView.getGroupButtons();
+		for (JButton groupButton : groupButtons) {
+			groupButton.addActionListener(this);
+		}
 		DAOFactory daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		sidepanelDAO = daoFactory.getSidepanelDAO();
 	}
 
 	public void makeDialog() {
+
 		jsonView.makePanel();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		for (JButton groupButton : groupButtons) {
+			if (e.getSource() == groupButton) {
+				System.out.println(groupButton.getText());
+			}
+		}
 		if (e.getSource() == okButton) {
 			menuName = jsonView.getMenuNameTextField().getText();
 			uploadURL = jsonView.getUploadURLTextField().getText();
@@ -92,11 +107,11 @@ public class JSONConfigControl implements ActionListener {
 		}
 		if (e.getSource() == sidePanelsButton) {
 			sidePanel = new FrontendSidePanelControl(mainControl);
-			
+
 			// JSONSaveControl json = new JSONSaveControl(this.mainControl);
 
 			// this.turnier = this.mainControl.getTurnier();
-			
+
 			sidePanel.makeDialog();
 
 		}

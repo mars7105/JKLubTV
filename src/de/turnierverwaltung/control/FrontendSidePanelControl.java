@@ -17,7 +17,7 @@ public class FrontendSidePanelControl implements ActionListener {
 	private JDialog jsonDialog;
 	private JTextField headerTextField;
 	private JTextArea bodyTextArea;
-	private JButton cancelButton;
+//	private JButton cancelButton;
 	private JButton okButton;
 	private String headerText;
 	private String bodyText;
@@ -36,11 +36,11 @@ public class FrontendSidePanelControl implements ActionListener {
 		jsonDialog = sidePanel.getJsonDialog();
 		headerTextField = sidePanel.getHeaderTextField();
 		bodyTextArea = sidePanel.getBodyTextArea();
-		cancelButton = sidePanel.getCancelButton();
+//		cancelButton = sidePanel.getCancelButton();
 		okButton = sidePanel.getOkButton();
 
 		okButton.addActionListener(this);
-		cancelButton.addActionListener(this);
+//		cancelButton.addActionListener(this);
 
 		headerText = "";
 		bodyText = "";
@@ -55,11 +55,11 @@ public class FrontendSidePanelControl implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-		if (e.getSource() == cancelButton) {
-			jsonDialog.dispose();
-			headerText = null;
-			bodyText = null;
-		}
+//		if (e.getSource() == cancelButton) {
+//			jsonDialog.dispose();
+//			headerText = null;
+//			bodyText = null;
+//		}
 		if (e.getSource() == okButton) {
 
 			jsonDialog.dispose();

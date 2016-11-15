@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -25,7 +26,7 @@ public class FrontendSidePanelView {
 	private JTextArea bodyTextArea;
 	private JPanel htmlAll;
 	private ButtonPanelView buttonPane;
-	private JButton cancelButton;
+	// private JButton cancelButton;
 	private JButton okButton;
 
 	private ButtonSavePanelView buttonPanel;
@@ -51,6 +52,7 @@ public class FrontendSidePanelView {
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BorderLayout());
 		Dimension dimTextField = new Dimension(350, 30);
+//		Dimension dimTextArea = new Dimension(350, 350);
 		int textFieldColumns = 18;
 		int textFieldRows = 18;
 
@@ -61,13 +63,13 @@ public class FrontendSidePanelView {
 		headerTextField.addMouseListener(cmmL);
 
 		bodyTextArea = new JTextArea("", textFieldRows, textFieldColumns);
-		bodyTextArea.setPreferredSize(dimTextField);
+//		bodyTextArea.setPreferredSize(dimTextArea);
 		bodyTextArea.addMouseListener(cmmL);
 
 		buttonPane = new ButtonPanelView();
-		buttonPane.makeAllButtons();
+		buttonPane.makeOKButton();
 		okButton = buttonPane.getOkButton();
-		cancelButton = buttonPane.getCancelButton();
+		// cancelButton = buttonPane.getCancelButton();
 		buttonPanel = new ButtonSavePanelView();
 		addButton = buttonPanel.getAddButton();
 		saveButton = buttonPanel.getSaveButton();
@@ -79,39 +81,65 @@ public class FrontendSidePanelView {
 		JPanel bothPanel = new JPanel();
 		bothPanel.setLayout(new BorderLayout());
 		JPanel leftPanel = new JPanel();
-		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
+		leftPanel.setLayout(new BorderLayout());
 		leftPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
 		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-		Dimension dim = new Dimension(175, 30);
-
+		// Dimension dim = new Dimension(350, 30);
+		// Dimension dimTextArea = new Dimension(350, 350);
 		JLabel headerTextFieldLabel = new JLabel(Messages.getString("FrontendSidePanelView.1") + ":");
-		headerTextFieldLabel.setPreferredSize(dim);
+		// headerTextFieldLabel.setPreferredSize(dim);
+		headerTextFieldLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		JLabel bodyTextAreaLabel = new JLabel(Messages.getString("FrontendSidePanelView.2") + ":");
-		bodyTextAreaLabel.setPreferredSize(dim);
+		// bodyTextAreaLabel.setPreferredSize(dim);
+		bodyTextAreaLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(headerTextFieldLabel);
+		// htmlPanel.setPreferredSize(dim);
+		htmlPanel.setLayout(new BoxLayout(htmlPanel, BoxLayout.PAGE_AXIS));
+		JPanel labelPanel = new JPanel();
+		labelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		labelPanel.add(headerTextFieldLabel);
+		htmlPanel.add(labelPanel);
 		htmlPanel.add(headerTextField);
-		leftPanel.add(htmlPanel);
+		leftPanel.add(htmlPanel, BorderLayout.NORTH);
 
 		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(bodyTextAreaLabel);
-		htmlPanel.add(bodyTextArea);
-		leftPanel.add(htmlPanel);
+		htmlPanel.setLayout(new BoxLayout(htmlPanel, BoxLayout.PAGE_AXIS));
+		// htmlPanel.setPreferredSize(dimTextArea);
+		labelPanel = new JPanel();
+		labelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		labelPanel.add(bodyTextAreaLabel);
+		htmlPanel.add(labelPanel);
+		Dimension dimTextArea = new Dimension(350, 350);
+		JScrollPane scrollPane = new JScrollPane(bodyTextArea);
+		scrollPane.setPreferredSize(dimTextArea);
+		htmlPanel.add(scrollPane);
+		leftPanel.add(htmlPanel, BorderLayout.CENTER);
 
 		bothPanel.add(leftPanel, BorderLayout.NORTH);
 		htmlAll.add(bothPanel, BorderLayout.CENTER);
-		htmlAll.add(buttonPane, BorderLayout.SOUTH);
+		// htmlAll.add(buttonPane, BorderLayout.SOUTH);
 
-		jsonDialog.add(htmlAll, BorderLayout.EAST);
+		Dimension dimdyn = new Dimension(200, 480);
+		dynTree.setPreferredSize(dimdyn);
+		JPanel left = new JPanel();
+		JPanel right = new JPanel();
 
-		jsonDialog.add(dynTree, BorderLayout.CENTER);
+		left.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+
+		right.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		right.add(htmlAll);
+		left.add(dynTree);
+
+		jsonDialog.add(right, BorderLayout.CENTER);
+
+		jsonDialog.add(left, BorderLayout.WEST);
+		buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+		jsonDialog.add(buttonPane, BorderLayout.SOUTH);
 		jsonDialog.pack();
 		jsonDialog.setLocationRelativeTo(null);
 		jsonDialog.setEnabled(true);
@@ -142,13 +170,13 @@ public class FrontendSidePanelView {
 		this.bodyTextArea = bodyTextArea;
 	}
 
-	public JButton getCancelButton() {
-		return cancelButton;
-	}
-
-	public void setCancelButton(JButton cancelButton) {
-		this.cancelButton = cancelButton;
-	}
+	// public JButton getCancelButton() {
+	// return cancelButton;
+	// }
+	//
+	// public void setCancelButton(JButton cancelButton) {
+	// this.cancelButton = cancelButton;
+	// }
 
 	public JButton getOkButton() {
 		return okButton;

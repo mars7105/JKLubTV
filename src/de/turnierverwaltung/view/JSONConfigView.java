@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -31,12 +32,18 @@ public class JSONConfigView {
 	private JButton cancelButton;
 	private ButtonPanelView buttonPane;
 	private ImageIcon addImg = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-add-2.png")));
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-edit.png")));
 	private ImageIcon connectionTestImg = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/homepage.png")));
+	private ImageIcon buttonGroupImg = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-group.png")));
+	private JPanel groupPanel;
+	private Dimension buttonSize;
+	private ArrayList<JButton> groupButtons;
 
 	// main-Methode
 	public JSONConfigView() {
+		buttonSize = new Dimension(270, 60);
 		// Erzeugung eines neuen Frames mit
 		// dem Titel Beispiel JDialog
 		jsonDialog = new JDialog();
@@ -69,8 +76,19 @@ public class JSONConfigView {
 		buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();
 		okButton = buttonPane.getOkButton();
+		okButton.setText(Messages.getString("JSONConfigView.8"));
 		cancelButton = buttonPane.getCancelButton();
+		groupPanel = new JPanel();
+		groupPanel.setLayout(new BoxLayout(groupPanel, BoxLayout.PAGE_AXIS));
+		groupButtons = new ArrayList<JButton>();
+	}
 
+	public void makeGroupButtons(String groupName) {
+		JButton groupButton = new JButton(groupName, buttonGroupImg);
+		groupButton.setPreferredSize(buttonSize);
+		groupButtons.add(groupButton);
+		
+		groupPanel.add(groupButton);
 	}
 
 	public void makePanel() {
@@ -81,8 +99,8 @@ public class JSONConfigView {
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
 		leftPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 
-		JPanel htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// JPanel htmlPanel = new JPanel();
+		// htmlPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
 
 		Dimension dim = new Dimension(175, 30);
 
@@ -98,7 +116,10 @@ public class JSONConfigView {
 		JLabel sidePanelsLabel = new JLabel(Messages.getString("JSONConfigView.4") + ":");
 		sidePanelsLabel.setPreferredSize(dim);
 
-		htmlPanel = new JPanel();
+		JLabel groupPanelLabel = new JLabel(Messages.getString("JSONConfigView.9") + ":");
+		groupPanelLabel.setPreferredSize(dim);
+
+		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(menuNameTextFieldLabel);
 		htmlPanel.add(menuNameTextField);
@@ -110,16 +131,24 @@ public class JSONConfigView {
 		htmlPanel.add(uploadURLTextField);
 		leftPanel.add(htmlPanel);
 
+		connectionTestButton.setPreferredSize(buttonSize);
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(connectionTestButtonLabel);
 		htmlPanel.add(connectionTestButton);
 		leftPanel.add(htmlPanel);
 
+		sidePanelsButton.setPreferredSize(buttonSize);
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(sidePanelsLabel);
 		htmlPanel.add(sidePanelsButton);
+		leftPanel.add(htmlPanel);
+		
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(groupPanelLabel);
+		htmlPanel.add(groupPanel);
 		leftPanel.add(htmlPanel);
 
 		bothPanel.add(leftPanel, BorderLayout.NORTH);
@@ -186,6 +215,14 @@ public class JSONConfigView {
 
 	public void setSidePanelsButton(JButton sidePanelsButton) {
 		this.sidePanelsButton = sidePanelsButton;
+	}
+
+	public ArrayList<JButton> getGroupButtons() {
+		return groupButtons;
+	}
+
+	public void setGroupButtons(ArrayList<JButton> groupButtons) {
+		this.groupButtons = groupButtons;
 	}
 
 }
