@@ -15,7 +15,6 @@ import de.turnierverwaltung.model.Sidepanel;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.SidepanelDAO;
-import de.turnierverwaltung.view.FrontendTableTextView;
 import de.turnierverwaltung.view.JSONConfigView;
 
 public class JSONConfigControl implements ActionListener {
@@ -33,6 +32,11 @@ public class JSONConfigControl implements ActionListener {
 	private FrontendSidePanelControl sidePanel;
 	private SidepanelDAO sidepanelDAO;
 	private ArrayList<JButton> groupButtons;
+	private String[] crossHeader;
+	private String[] crossBody;
+	private String[] meetingHeader;
+	private String[] meetingBody;
+	private FrontendTableTextControl[] ftC;
 
 	public JSONConfigControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -56,8 +60,18 @@ public class JSONConfigControl implements ActionListener {
 		menuNameTextField.setText(menuName);
 		uploadURLTextField.setText(uploadURL);
 		int gruppenAnzahl = this.mainControl.getTurnier().getAnzahlGruppen();
+		crossHeader = new String[gruppenAnzahl];
+		crossBody = new String[gruppenAnzahl];
+		meetingHeader = new String[gruppenAnzahl];
+		meetingBody = new String[gruppenAnzahl];
+		ftC = new FrontendTableTextControl[gruppenAnzahl];
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			jsonView.makeGroupButtons(this.mainControl.getTurnier().getGruppe()[i].getGruppenName());
+			crossHeader[i] = "";
+			crossBody[i] = "";
+			meetingHeader[i] = "";
+			meetingBody[i] = "";
+			ftC[i] = new FrontendTableTextControl();
 		}
 		groupButtons = jsonView.getGroupButtons();
 		for (JButton groupButton : groupButtons) {
@@ -74,11 +88,19 @@ public class JSONConfigControl implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		int index = 0;
 		for (JButton groupButton : groupButtons) {
 			if (e.getSource() == groupButton) {
-				System.out.println(groupButton.getText());
-				FrontendTableTextControl ftC = new FrontendTableTextControl();
+				// System.out.println(groupButton.getText());
+
+				ftC[index].makeDialog();
+				crossHeader[index] = ftC[index].getCrossHeader().getText();
+				crossBody[index] = ftC[index].getCrossBody().getText();
+				meetingHeader[index] = ftC[index].getMeetingHeader().getText();
+				meetingBody[index] = ftC[index].getMeetingBody().getText();
+
 			}
+			index++;
 		}
 		if (e.getSource() == okButton) {
 			menuName = jsonView.getMenuNameTextField().getText();
@@ -97,7 +119,8 @@ public class JSONConfigControl implements ActionListener {
 			}
 
 			try {
-				json.uploadJSONFile(uploadURL, menuName, sidepanelItems);
+				json.uploadJSONFile(uploadURL, menuName, sidepanelItems, crossHeader, crossBody, meetingHeader,
+						meetingBody);
 				mainControl.getPropertiesControl().setFrontendMenuname(menuName);
 				mainControl.getPropertiesControl().setFrontendURL(uploadURL);
 				mainControl.getPropertiesControl().writeProperties();
@@ -160,6 +183,38 @@ public class JSONConfigControl implements ActionListener {
 
 	public void setSidePanel(FrontendSidePanelControl sidePanel) {
 		this.sidePanel = sidePanel;
+	}
+
+	public String[] getCrossHeader() {
+		return crossHeader;
+	}
+
+	public void setCrossHeader(String[] crossHeader) {
+		this.crossHeader = crossHeader;
+	}
+
+	public String[] getCrossBody() {
+		return crossBody;
+	}
+
+	public void setCrossBody(String[] crossBody) {
+		this.crossBody = crossBody;
+	}
+
+	public String[] getMeetingHeader() {
+		return meetingHeader;
+	}
+
+	public void setMeetingHeader(String[] meetingHeader) {
+		this.meetingHeader = meetingHeader;
+	}
+
+	public String[] getMeetingBody() {
+		return meetingBody;
+	}
+
+	public void setMeetingBody(String[] meetingBody) {
+		this.meetingBody = meetingBody;
 	}
 
 }

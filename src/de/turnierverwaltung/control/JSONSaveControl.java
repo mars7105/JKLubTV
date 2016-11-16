@@ -22,7 +22,8 @@ public class JSONSaveControl {
 		this.mainControl = mainControl;
 	}
 
-	public void uploadJSONFile(String url, String menuName, ArrayList<Sidepanel> sidepanelItems) throws IOException {
+	public void uploadJSONFile(String url, String menuName, ArrayList<Sidepanel> sidepanelItems, String[] crossHeader,
+			String[] crossBody, String[] meetingHeader, String[] meetingBody) throws IOException {
 
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 		// url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
@@ -63,12 +64,13 @@ public class JSONSaveControl {
 			// aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
 			// duo dolores et ea rebum. Stet clita kasd gubergren, no sea
 			// takimata sanctus est Lorem ipsum dolor sit amet.";
-			String[] crossTableText = new String[anzahlGruppen];
-			String[] meetingTableText = new String[anzahlGruppen];
-			for (int u = 0; u < anzahlGruppen; u++) {
-				crossTableText[u] = "crossTableText" + new Integer(u);
-				meetingTableText[u] = "meetingTableText" + new Integer(u);
-			}
+
+			// String[] crossTableText = new String[anzahlGruppen];
+			// String[] meetingTableText = new String[anzahlGruppen];
+			// for (int u = 0; u < anzahlGruppen; u++) {
+			// crossTableText[u] = "crossTableText" + new Integer(u);
+			// meetingTableText[u] = "meetingTableText" + new Integer(u);
+			// }
 			String siteName = "JKlubTV Demosite";
 			Boolean configFlag = true;
 
@@ -115,9 +117,9 @@ public class JSONSaveControl {
 				body[index] = item.getBody();
 				index++;
 			}
-			jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName, crossTableText,
-					meetingTableText, header, body, jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix,
-					jsonMeetingtitle, siteName, configFlag);
+			jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName, crossBody, meetingBody,
+					header, body, jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix, jsonMeetingtitle, siteName,
+					configFlag);
 			jsonCross.postEnd();
 			JSON jsonFileObjects = new JSON(url + "/receiveFileJSON.php");
 			JSONFileObject jsonFiles = new JSONFileObject(filenames);
