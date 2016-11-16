@@ -15,6 +15,7 @@ import de.turnierverwaltung.model.Sidepanel;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.SidepanelDAO;
+import de.turnierverwaltung.view.FrontendTableTextView;
 import de.turnierverwaltung.view.JSONConfigView;
 
 public class JSONConfigControl implements ActionListener {
@@ -76,6 +77,7 @@ public class JSONConfigControl implements ActionListener {
 		for (JButton groupButton : groupButtons) {
 			if (e.getSource() == groupButton) {
 				System.out.println(groupButton.getText());
+				FrontendTableTextControl ftC = new FrontendTableTextControl();
 			}
 		}
 		if (e.getSource() == okButton) {
