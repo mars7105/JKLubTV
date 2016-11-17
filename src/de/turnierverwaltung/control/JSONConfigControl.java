@@ -61,7 +61,10 @@ public class JSONConfigControl implements ActionListener {
 		menuName = mainControl.getPropertiesControl().getFrontendMenuname();
 
 		uploadURL = mainControl.getPropertiesControl().getFrontendURL();
-
+		username = mainControl.getPropertiesControl().getUsername();
+		jsonView.getUsernameTextField().setText(username);
+		password = mainControl.getPropertiesControl().getPassword();
+		jsonView.getPasswordTextField().setText(password);
 		menuNameTextField.setText(menuName);
 		uploadURLTextField.setText(uploadURL);
 		int gruppenAnzahl = this.mainControl.getTurnier().getAnzahlGruppen();
@@ -122,8 +125,7 @@ public class JSONConfigControl implements ActionListener {
 			try {
 				sidepanelItems = sidepanelDAO.selectAllSidepanel(this.mainControl.getTurnier().getTurnierId());
 			} catch (SQLException e1) {
-				// TODO Automatisch generierter Erfassungsblock
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(mainControl, "Database error");
 			}
 
 			try {
@@ -134,18 +136,15 @@ public class JSONConfigControl implements ActionListener {
 				mainControl.getPropertiesControl().setUsername(username);
 				mainControl.getPropertiesControl().setPassword(password);
 				mainControl.getPropertiesControl().writeProperties();
-				JOptionPane.showMessageDialog(mainControl, "ready");
+				JOptionPane.showMessageDialog(mainControl, json.getJsonCross().getPostRequest().getOutput());
 			} catch (IOException exc) {
-				JOptionPane.showMessageDialog(mainControl, "error");
+				JOptionPane.showMessageDialog(mainControl, json.getJsonCross().getPostRequest().getOutput());
+				
 			}
 
 		}
 		if (e.getSource() == sidePanelsButton) {
 			sidePanel = new FrontendSidePanelControl(mainControl);
-
-			// JSONSaveControl json = new JSONSaveControl(this.mainControl);
-
-			// this.turnier = this.mainControl.getTurnier();
 
 			sidePanel.makeDialog();
 
@@ -160,11 +159,10 @@ public class JSONConfigControl implements ActionListener {
 				if (testConnection == true) {
 					JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.1"));
 				} else {
-					JOptionPane.showMessageDialog(mainControl, "false");
+					JOptionPane.showMessageDialog(mainControl, jsonCross.getPostRequest().getOutput());
 				}
 			} catch (IOException e1) {
-				JOptionPane.showMessageDialog(mainControl, "error");
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(mainControl, jsonCross.getPostRequest().getOutput());
 			}
 		}
 		if (e.getSource() == cancelButton) {

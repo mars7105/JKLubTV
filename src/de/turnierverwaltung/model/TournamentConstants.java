@@ -61,6 +61,8 @@ public class TournamentConstants {
 	public static final int TAB_ACTIVE_TOURNAMENT = 2;
 	public static final String FRONTEND_MENUNAME = "MENU";
 	public static final String FRONTEND_URL = "http://www.example.com";
+	public static final String FRONTEND_USERNAME = "";
+	public static final String FRONTEND_PASSWORD = "";
 	public static String TABLE_COLUMN_PLAYER = Messages.getString("TurnierKonstanten.0");
 	public static String TABLE_COLUMN_OLD_DWZ = Messages.getString("TurnierKonstanten.1");
 	public static String TABLE_COLUMN_NEW_DWZ = Messages.getString("TurnierKonstanten.2");

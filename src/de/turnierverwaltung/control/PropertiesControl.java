@@ -53,7 +53,8 @@ public class PropertiesControl {
 	public static final String TABLE_COLUMN_ROUND = "tablecolumn-round";
 	public static final String FRONTEND_MENUNAME = "frontend-menuname";
 	public static final String FRONTEND_URL = "frontend-url";
-
+	public static final String FRONTEND_PASSWORD = "frontend-password";
+	public static final String FRONTEND_USERNAME = "frontend-username" + "";
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
@@ -87,6 +88,8 @@ public class PropertiesControl {
 		prop.setProperty(TABLE_COLUMN_ROUND, "");
 		prop.setProperty(FRONTEND_MENUNAME, "");
 		prop.setProperty(FRONTEND_URL, "");
+		prop.setProperty(FRONTEND_USERNAME, "");
+		prop.setProperty(FRONTEND_PASSWORD, "");
 	}
 
 	public void checkProperties() {
@@ -108,13 +111,11 @@ public class PropertiesControl {
 			spielerProTab = 1;
 			saveChanges = true;
 		}
-		if (prop.getProperty(PATHTODATABASE) != ""
-				&& checkPathToDatabase() == false) {
+		if (prop.getProperty(PATHTODATABASE) != "" && checkPathToDatabase() == false) {
 			prop.setProperty(PATHTODATABASE, "");
 			saveChanges = true;
 		}
-		if (prop.getProperty(PATHTOVEREINECSV) != ""
-				&& checkPathToVereineCSV() == false) {
+		if (prop.getProperty(PATHTOVEREINECSV) != "" && checkPathToVereineCSV() == false) {
 			prop.setProperty(PATHTOVEREINECSV, "");
 			saveChanges = true;
 		}
@@ -123,18 +124,15 @@ public class PropertiesControl {
 			prop.setProperty(DEFAULTPATH, "");
 			saveChanges = true;
 		}
-		if (!(prop.getProperty(ONLYTABLES).equals(TRUE) || prop.getProperty(
-				ONLYTABLES).equals(FALSE))) {
+		if (!(prop.getProperty(ONLYTABLES).equals(TRUE) || prop.getProperty(ONLYTABLES).equals(FALSE))) {
 			prop.setProperty(ONLYTABLES, FALSE);
 			saveChanges = true;
 		}
-		if (!(prop.getProperty(NODWZ).equals(TRUE) || prop.getProperty(NODWZ)
-				.equals(FALSE))) {
+		if (!(prop.getProperty(NODWZ).equals(TRUE) || prop.getProperty(NODWZ).equals(FALSE))) {
 			prop.setProperty(NODWZ, FALSE);
 			saveChanges = true;
 		}
-		if (!(prop.getProperty(NOFOLGEDWZ).equals(TRUE) || prop.getProperty(
-				NOFOLGEDWZ).equals(FALSE))) {
+		if (!(prop.getProperty(NOFOLGEDWZ).equals(TRUE) || prop.getProperty(NOFOLGEDWZ).equals(FALSE))) {
 			prop.setProperty(NOFOLGEDWZ, FALSE);
 			saveChanges = true;
 		}
@@ -150,68 +148,63 @@ public class PropertiesControl {
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_OLD_DWZ) == "") {
-			prop.setProperty(TABLE_COLUMN_OLD_DWZ,
-					TournamentConstants.TABLE_COLUMN_OLD_DWZ);
+			prop.setProperty(TABLE_COLUMN_OLD_DWZ, TournamentConstants.TABLE_COLUMN_OLD_DWZ);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_NEW_DWZ) == "") {
-			prop.setProperty(TABLE_COLUMN_NEW_DWZ,
-					TournamentConstants.TABLE_COLUMN_NEW_DWZ);
+			prop.setProperty(TABLE_COLUMN_NEW_DWZ, TournamentConstants.TABLE_COLUMN_NEW_DWZ);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_POINTS) == "") {
-			prop.setProperty(TABLE_COLUMN_POINTS,
-					TournamentConstants.TABLE_COLUMN_POINTS);
+			prop.setProperty(TABLE_COLUMN_POINTS, TournamentConstants.TABLE_COLUMN_POINTS);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_SONNEBORNBERGER) == "") {
-			prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER,
-					TournamentConstants.TABLE_COLUMN_SONNEBORNBERGER);
+			prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER, TournamentConstants.TABLE_COLUMN_SONNEBORNBERGER);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_RANKING) == "") {
-			prop.setProperty(TABLE_COLUMN_RANKING,
-					TournamentConstants.TABLE_COLUMN_RANKING);
+			prop.setProperty(TABLE_COLUMN_RANKING, TournamentConstants.TABLE_COLUMN_RANKING);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_WHITE) == "") {
-			prop.setProperty(TABLE_COLUMN_WHITE,
-					TournamentConstants.TABLE_COLUMN_WHITE);
+			prop.setProperty(TABLE_COLUMN_WHITE, TournamentConstants.TABLE_COLUMN_WHITE);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_BLACK) == "") {
-			prop.setProperty(TABLE_COLUMN_BLACK,
-					TournamentConstants.TABLE_COLUMN_BLACK);
+			prop.setProperty(TABLE_COLUMN_BLACK, TournamentConstants.TABLE_COLUMN_BLACK);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_RESULT) == "") {
-			prop.setProperty(TABLE_COLUMN_RESULT,
-					TournamentConstants.TABLE_COLUMN_RESULT);
+			prop.setProperty(TABLE_COLUMN_RESULT, TournamentConstants.TABLE_COLUMN_RESULT);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_MEETING) == "") {
-			prop.setProperty(TABLE_COLUMN_MEETING,
-					TournamentConstants.TABLE_COLUMN_MEETING);
+			prop.setProperty(TABLE_COLUMN_MEETING, TournamentConstants.TABLE_COLUMN_MEETING);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_PLAYER) == "") {
-			prop.setProperty(TABLE_COLUMN_PLAYER,
-					TournamentConstants.TABLE_COLUMN_PLAYER);
+			prop.setProperty(TABLE_COLUMN_PLAYER, TournamentConstants.TABLE_COLUMN_PLAYER);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_ROUND) == "") {
-			prop.setProperty(TABLE_COLUMN_ROUND,
-					TournamentConstants.TABLE_COLUMN_ROUND);
+			prop.setProperty(TABLE_COLUMN_ROUND, TournamentConstants.TABLE_COLUMN_ROUND);
 			saveChanges = true;
 		}
 		if (prop.getProperty(FRONTEND_MENUNAME) == "") {
-			prop.setProperty(FRONTEND_MENUNAME,
-					TournamentConstants.FRONTEND_MENUNAME);
+			prop.setProperty(FRONTEND_MENUNAME, TournamentConstants.FRONTEND_MENUNAME);
 			saveChanges = true;
 		}
 		if (prop.getProperty(FRONTEND_URL) == "") {
-			prop.setProperty(FRONTEND_URL,
-					TournamentConstants.FRONTEND_URL);
+			prop.setProperty(FRONTEND_URL, TournamentConstants.FRONTEND_URL);
+			saveChanges = true;
+		}
+		if (prop.getProperty(FRONTEND_USERNAME) == "") {
+			prop.setProperty(FRONTEND_USERNAME, TournamentConstants.FRONTEND_USERNAME);
+			saveChanges = true;
+		}
+		if (prop.getProperty(FRONTEND_PASSWORD) == "") {
+			prop.setProperty(FRONTEND_PASSWORD, TournamentConstants.FRONTEND_PASSWORD);
 			saveChanges = true;
 		}
 		checkCrossTableColumnForDoubles();
@@ -548,6 +541,7 @@ public class PropertiesControl {
 	public void setLanguage(String language) {
 		prop.setProperty(LANGUAGE, language);
 	}
+
 	public void setFrontendURL(String absolutePath) {
 		prop.setProperty(FRONTEND_URL, absolutePath);
 	}
@@ -555,6 +549,7 @@ public class PropertiesControl {
 	public String getFrontendURL() {
 		return prop.getProperty(FRONTEND_URL);
 	}
+
 	public void setFrontendMenuname(String absolutePath) {
 		prop.setProperty(FRONTEND_MENUNAME, absolutePath);
 	}
@@ -562,6 +557,7 @@ public class PropertiesControl {
 	public String getFrontendMenuname() {
 		return prop.getProperty(FRONTEND_MENUNAME);
 	}
+
 	public int getTabellenAbstand() {
 		int abstand = 3;
 		if (getNoDWZ() == true) {
@@ -634,12 +630,20 @@ public class PropertiesControl {
 	}
 
 	public void setUsername(String username) {
-		// TODO Automatisch generierter Methodenstub
-		
+		prop.setProperty(FRONTEND_USERNAME, username);
+
 	}
 
 	public void setPassword(String password) {
-		// TODO Automatisch generierter Methodenstub
-		
+		prop.setProperty(FRONTEND_PASSWORD, password);
+
+	}
+
+	public String getUsername() {
+		return prop.getProperty(FRONTEND_USERNAME);
+	}
+
+	public String getPassword() {
+		return prop.getProperty(FRONTEND_PASSWORD);
 	}
 }
