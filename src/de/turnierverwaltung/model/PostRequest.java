@@ -11,19 +11,24 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 public class PostRequest {
-	URL url;
+	private String url;
+	private String username;
+	private String password;
+	private String output;
+	// private HttpURLConnection connection;
 
-	public PostRequest(URL url) {
-		this.url = url;
+	public PostRequest(String url, String username, String password) throws IOException {
+		this.url = url + "/";
+		this.username = username;
+		this.password = password;
+
 	}
 
-	public void sendJSONStringToServer(String jsonString, String jsonFileName, String configFlag) throws IOException {
-
-		// String body = URLEncoder.encode(jsonString, "UTF-8");
-		String param = "jsonFileName=" + URLEncoder.encode(jsonFileName, "UTF-8") + "&json="
-				+ URLEncoder.encode(jsonString, "UTF-8") + "&configFlag=" + URLEncoder.encode(configFlag, "UTF-8");
-
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+	public void login() throws IOException {
+		URL urlPath = new URL(url + "checklogin.php");
+		String param = "myusername=" + URLEncoder.encode(username, "UTF-8") + "&mypassword="
+				+ URLEncoder.encode(password, "UTF-8");
+		HttpURLConnection connection = (HttpURLConnection) urlPath.openConnection();
 
 		connection.setReadTimeout(10000 /* milliseconds */ );
 		connection.setConnectTimeout(15000 /* milliseconds */ );
@@ -34,7 +39,50 @@ public class PostRequest {
 
 		connection.setFixedLengthStreamingMode(param.getBytes().length);
 
-		connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+		connection.setRequestProperty("Content-Type", "multipart/form-data");
+		connection.setRequestProperty("Content-Length", String.valueOf(param.length()));
+
+		// open
+		connection.connect();
+
+		// setup send
+
+		OutputStream os = new BufferedOutputStream(connection.getOutputStream());
+
+		os.write(param.getBytes());
+
+		// System.out.println(param);
+		// clean up
+		os.flush();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+
+		output = "";
+		for (String line; (line = reader.readLine()) != null;) {
+			output = line;
+			if (!line.equals("Login") && !line.equals("Wrong Username or Password")) {
+				throw new IOException();
+			}
+		}
+
+		reader.close();
+		connection.disconnect();
+	}
+
+	public void logout() throws IOException {
+		URL urlPath = new URL(url + "logout.php");
+		String param = "Logout=" + URLEncoder.encode("true", "UTF-8");
+		HttpURLConnection connection = (HttpURLConnection) urlPath.openConnection();
+
+		connection.setReadTimeout(10000 /* milliseconds */ );
+		connection.setConnectTimeout(15000 /* milliseconds */ );
+		connection.setRequestMethod("POST");
+		connection.setDoInput(true);
+		connection.setDoOutput(true);
+		connection.setUseCaches(false);
+
+		connection.setFixedLengthStreamingMode(param.getBytes().length);
+
+		connection.setRequestProperty("Content-Type", "multipart/form-data");
 		connection.setRequestProperty("Content-Length", String.valueOf(param.length()));
 
 		// open
@@ -47,9 +95,11 @@ public class PostRequest {
 		// clean up
 		os.flush();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
+		output = "";
 		for (String line; (line = reader.readLine()) != null;) {
-			if (!line.equals("Ok")) {
+			output = line;
+			System.out.println(line);
+			if (!line.equals("Logout")) {
 				throw new IOException();
 			}
 		}
@@ -59,15 +109,13 @@ public class PostRequest {
 		connection.disconnect();
 	}
 
-	public void sendSessionRequest(Boolean request) throws IOException {
-		String param = "";
-		if (request == true) {
-			param = "sessionStart=" + URLEncoder.encode("true", "UTF-8");
-		} else {
-			param = "sessionEnd=" + URLEncoder.encode("true", "UTF-8");
-		}
+	public void sendJSONStringToServer(String jsonString, String jsonFileName, String configFlag) throws IOException {
 
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		// String body = URLEncoder.encode(jsonString, "UTF-8");
+		String param = "jsonFileName=" + URLEncoder.encode(jsonFileName, "UTF-8") + "&json="
+				+ URLEncoder.encode(jsonString, "UTF-8") + "&configFlag=" + URLEncoder.encode(configFlag, "UTF-8");
+		URL urlPath = new URL(url + "receiveJSON.php");
+		HttpURLConnection connection = (HttpURLConnection) urlPath.openConnection();
 
 		connection.setReadTimeout(10000 /* milliseconds */ );
 		connection.setConnectTimeout(15000 /* milliseconds */ );
@@ -91,8 +139,9 @@ public class PostRequest {
 		// clean up
 		os.flush();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
+		output = "";
 		for (String line; (line = reader.readLine()) != null;) {
+			output = line;
 			if (!line.equals("Ok")) {
 				throw new IOException();
 			}
@@ -105,8 +154,8 @@ public class PostRequest {
 
 	public void sendFilenames(String filenames) throws IOException {
 		String param = "jsonFiles=" + URLEncoder.encode(filenames, "UTF-8");
-
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		URL urlPath = new URL(url + "receiveFileJSON.php");
+		HttpURLConnection connection = (HttpURLConnection) urlPath.openConnection();
 
 		connection.setReadTimeout(10000 /* milliseconds */ );
 		connection.setConnectTimeout(15000 /* milliseconds */ );
@@ -117,7 +166,7 @@ public class PostRequest {
 
 		connection.setFixedLengthStreamingMode(param.getBytes().length);
 
-		connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+		connection.setRequestProperty("Content-Type", "multipart/form-data");
 		connection.setRequestProperty("Content-Length", String.valueOf(param.length()));
 
 		// open
@@ -130,8 +179,9 @@ public class PostRequest {
 		// clean up
 		os.flush();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
+		output = "";
 		for (String line; (line = reader.readLine()) != null;) {
+			output = line;
 			if (!line.equals("Ok")) {
 				throw new IOException();
 			}
@@ -145,10 +195,10 @@ public class PostRequest {
 
 	public Boolean testConnection() throws IOException, FileNotFoundException {
 		Boolean testConnection = false;
-
+		URL urlPath = new URL(url + "testconnection.php");
 		String param = "test=" + URLEncoder.encode("true", "UTF-8");
 
-		HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+		HttpURLConnection connection = (HttpURLConnection) urlPath.openConnection();
 
 		connection.setReadTimeout(10000 /* milliseconds */ );
 		connection.setConnectTimeout(15000 /* milliseconds */ );
@@ -159,7 +209,7 @@ public class PostRequest {
 
 		connection.setFixedLengthStreamingMode(param.getBytes().length);
 
-		connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+		connection.setRequestProperty("Content-Type", "multipart/form-data");
 		connection.setRequestProperty("Content-Length", String.valueOf(param.length()));
 
 		// open
@@ -172,9 +222,11 @@ public class PostRequest {
 		// clean up
 		os.flush();
 		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-
+		output = "";
 		for (String line; (line = reader.readLine()) != null;) {
-			if (!line.equals("Test Ok")) {
+			output = line;
+			if (!line.equals("Test Ok") && !line.equals("Test Error") && !line.equals("Wrong Username or Password!")) {
+
 				throw new IOException();
 			}
 		}
@@ -183,6 +235,14 @@ public class PostRequest {
 		reader.close();
 		connection.disconnect();
 		return testConnection;
+	}
+
+	public String getOutput() {
+		return output;
+	}
+
+	public void setOutput(String output) {
+		this.output = output;
 	}
 
 }

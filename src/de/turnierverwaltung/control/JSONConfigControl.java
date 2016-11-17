@@ -37,6 +37,8 @@ public class JSONConfigControl implements ActionListener {
 	private String[] meetingHeader;
 	private String[] meetingBody;
 	private FrontendTableTextControl[] ftC;
+	private String username;
+	private String password;
 
 	public JSONConfigControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -51,8 +53,11 @@ public class JSONConfigControl implements ActionListener {
 		sidePanelsButton.addActionListener(this);
 		menuNameTextField = jsonView.getMenuNameTextField();
 		uploadURLTextField = jsonView.getUploadURLTextField();
+		jsonView.getUsernameTextField();
+		jsonView.getPasswordTextField();
 		connectionTestButton = jsonView.getConnectionTestButton();
 		connectionTestButton.addActionListener(this);
+
 		menuName = mainControl.getPropertiesControl().getFrontendMenuname();
 
 		uploadURL = mainControl.getPropertiesControl().getFrontendURL();
@@ -105,7 +110,10 @@ public class JSONConfigControl implements ActionListener {
 		if (e.getSource() == okButton) {
 			menuName = jsonView.getMenuNameTextField().getText();
 			uploadURL = jsonView.getUploadURLTextField().getText();
+			username = jsonView.getUsernameTextField().getText();
+			password = jsonView.getPasswordTextField().getText();
 			jsonView.getJsonDialog().dispose();
+
 			JSONSaveControl json = new JSONSaveControl(this.mainControl);
 
 			// this.turnier = this.mainControl.getTurnier();
@@ -119,14 +127,16 @@ public class JSONConfigControl implements ActionListener {
 			}
 
 			try {
-				json.uploadJSONFile(uploadURL, menuName, sidepanelItems, crossHeader, crossBody, meetingHeader,
-						meetingBody);
+				json.uploadJSONFile(uploadURL, username, password, menuName, sidepanelItems, crossHeader, crossBody,
+						meetingHeader, meetingBody);
 				mainControl.getPropertiesControl().setFrontendMenuname(menuName);
 				mainControl.getPropertiesControl().setFrontendURL(uploadURL);
+				mainControl.getPropertiesControl().setUsername(username);
+				mainControl.getPropertiesControl().setPassword(password);
 				mainControl.getPropertiesControl().writeProperties();
-				JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.0"));
+				JOptionPane.showMessageDialog(mainControl, "ready");
 			} catch (IOException exc) {
-				JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.2"));
+				JOptionPane.showMessageDialog(mainControl, "error");
 			}
 
 		}
@@ -141,17 +151,20 @@ public class JSONConfigControl implements ActionListener {
 
 		}
 		if (e.getSource() == connectionTestButton) {
-			String url = uploadURLTextField.getText();
-			JSON jsonCross = new JSON(url + "/receiveJSON.php");
+			String url = jsonView.getUploadURLTextField().getText();
+			username = jsonView.getUsernameTextField().getText();
+			password = jsonView.getPasswordTextField().getText();
+			JSON jsonCross = new JSON(url, username, password);
 			try {
 				Boolean testConnection = jsonCross.testConnection();
 				if (testConnection == true) {
 					JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.1"));
 				} else {
-					JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.2"));
+					JOptionPane.showMessageDialog(mainControl, "false");
 				}
 			} catch (IOException e1) {
-				JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.2"));
+				JOptionPane.showMessageDialog(mainControl, "error");
+				e1.printStackTrace();
 			}
 		}
 		if (e.getSource() == cancelButton) {

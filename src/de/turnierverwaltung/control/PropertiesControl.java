@@ -632,4 +632,14 @@ public class PropertiesControl {
 		prop.setProperty(TABLE_COLUMN_RESULT, tableColumns[3]);
 		prop.setProperty(TABLE_COLUMN_MEETING, tableColumns[4]);
 	}
+
+	public void setUsername(String username) {
+		// TODO Automatisch generierter Methodenstub
+		
+	}
+
+	public void setPassword(String password) {
+		// TODO Automatisch generierter Methodenstub
+		
+	}
 }

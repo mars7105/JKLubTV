@@ -2,16 +2,19 @@ package de.turnierverwaltung.model;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
-
 import com.google.gson.Gson;
 
 public class JSON {
 	private String url;
 	private PostRequest postRequest;
+	private String username;
+	private String password;
 
-	public JSON(String url) {
+	public JSON(String url, String username, String password) {
 		this.url = url;
+		this.username = username;
+		this.password = password;
+
 	}
 
 	public void postRequest(String tournamentName, String[] groupName, String startDate, String endDate,
@@ -30,7 +33,8 @@ public class JSON {
 		JSONObject jsonObject = new JSONObject(tournamentName, groupName, menuName, crossTableText, crossTable,
 				meetingTableText, meetingTable, startDate, endDate, header, body, jsonCrossTitle, jsonMeetingtitle,
 				siteName);
-		postRequest = new PostRequest(new URL(url));
+		postRequest = new PostRequest(url, username, password);
+		postRequest.login();
 		String cflag = "";
 		if (configFlag) {
 			cflag = "true";
@@ -38,24 +42,16 @@ public class JSON {
 			cflag = "false";
 		}
 		postRequest.sendJSONStringToServer(gson.toJson(jsonObject), jsonFileName, cflag);
+		postRequest.logout();
 	}
 
 	public void postFileNames(JSONFileObject filenames) throws IOException {
 		Gson gson = new Gson();
-		postRequest = new PostRequest(new URL(url));
+		
+		postRequest = new PostRequest(url, username, password);
+		postRequest.login();
 		postRequest.sendFilenames(gson.toJson(filenames));
-	}
-
-	public void postStart() throws IOException, FileNotFoundException {
-
-		PostRequest postRequest = new PostRequest(new URL(url));
-		postRequest.sendSessionRequest(true);
-
-	}
-
-	public void postEnd() throws IOException, FileNotFoundException {
-		PostRequest postRequest = new PostRequest(new URL(url));
-		postRequest.sendSessionRequest(false);
+		postRequest.logout();
 	}
 
 	private String[][] mirrorArray(String[][] array) {
@@ -72,9 +68,19 @@ public class JSON {
 	public Boolean testConnection() throws IOException, FileNotFoundException {
 		Boolean testConnection = false;
 
-		postRequest = new PostRequest(new URL(url));
+		postRequest = new PostRequest(url, username, password);
+		postRequest.login();
 		testConnection = postRequest.testConnection();
-
+		postRequest.logout();
 		return testConnection;
 	}
+
+	public PostRequest getPostRequest() {
+		return postRequest;
+	}
+
+	public void setPostRequest(PostRequest postRequest) {
+		this.postRequest = postRequest;
+	}
+	
 }
