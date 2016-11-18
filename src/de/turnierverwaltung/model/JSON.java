@@ -37,8 +37,8 @@ public class JSON {
 		Boolean testConnection = false;
 
 		testConnection = postRequest.sendJSONStringToServer(gson.toJson(jsonObject), jsonFileName);
-//		postRequest.logout();
-//		postRequest.setOutput("JSON File uploladed.");
+		// postRequest.logout();
+		// postRequest.setOutput("JSON File uploladed.");
 
 		return testConnection;
 	}
@@ -49,9 +49,17 @@ public class JSON {
 		postRequest = new PostRequest(url, username, password);
 
 		testConnection = postRequest.sendFilenames(gson.toJson(filenames));
-//		postRequest.logout();
-//		postRequest.setOutput("Filenames uploladed.");
+		// postRequest.logout();
+		// postRequest.setOutput("Filenames uploladed.");
 
+		return testConnection;
+	}
+
+	public Boolean makeTables() throws IOException {
+		Boolean testConnection = false;
+		postRequest = new PostRequest(url, username, password);
+
+		testConnection = postRequest.makeHTMLTables();
 		return testConnection;
 	}
 
@@ -72,8 +80,7 @@ public class JSON {
 		postRequest = new PostRequest(url, username, password);
 
 		testConnection = postRequest.testConnection();
-//		postRequest.logout();
-		
+		// postRequest.logout();
 
 		return testConnection;
 	}

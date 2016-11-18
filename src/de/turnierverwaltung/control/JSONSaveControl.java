@@ -16,7 +16,6 @@ public class JSONSaveControl {
 	private String jsonMeetingName;
 	private JSON jsonCross;
 	private JSON jsonMeeting;
-	
 
 	public JSONSaveControl(MainControl mainControl) {
 
@@ -96,6 +95,7 @@ public class JSONSaveControl {
 			JSON jsonFileObjects = new JSON(url, username, password);
 			JSONFileObject jsonFiles = new JSONFileObject(filenames);
 			jsonFileObjects.postFileNames(jsonFiles);
+			jsonFileObjects.makeTables();
 
 		} else {
 			JOptionPane.showMessageDialog(null,

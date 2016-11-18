@@ -17,7 +17,7 @@ public class PostRequest {
 	private String loginParam;
 
 	public PostRequest(String url, String username, String password) throws IOException {
-		this.url = url + "/";
+		this.url = url + "/lib/";
 		loginParam = "login=" + URLEncoder.encode("true", "UTF-8") + "&username=" + URLEncoder.encode(username, "UTF-8")
 				+ "&password=" + URLEncoder.encode(password, "UTF-8");
 		output = "";
@@ -105,6 +105,54 @@ public class PostRequest {
 		for (String line; (line = reader.readLine()) != null;) {
 			output = line;
 			// System.out.println(line);
+
+		}
+
+		if (output.equals("Ok")) {
+			connectionOK = true;
+		} else {
+			connectionOK = false;
+		}
+
+		reader.close();
+		connection.disconnect();
+		return connectionOK;
+
+	}
+
+	public Boolean makeHTMLTables() throws IOException {
+		Boolean connectionOK = false;
+		String param = loginParam + "&maketables=" + URLEncoder.encode("true", "UTF-8");
+		URL urlPath = new URL(url + "jsontotable.php");
+		HttpURLConnection connection = (HttpURLConnection) urlPath.openConnection();
+//		connection.setInstanceFollowRedirects(false);
+//		connection.setReadTimeout(10000 /* milliseconds */ );
+//		connection.setConnectTimeout(15000 /* milliseconds */ );
+		connection.setRequestMethod("POST");
+		connection.setDoInput(true);
+		connection.setDoOutput(true);
+		connection.setUseCaches(false);
+
+		connection.setFixedLengthStreamingMode(param.getBytes().length);
+
+		connection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+		connection.setRequestProperty("Content-Length", String.valueOf(param.length()));
+
+		// open
+		connection.connect();
+
+		// setup send
+		OutputStream os = new BufferedOutputStream(connection.getOutputStream());
+		os.write(param.getBytes());
+		// System.out.println(param);
+		// clean up
+		os.flush();
+		os.close();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+		output = "";
+		for (String line; (line = reader.readLine()) != null;) {
+			output = line;
+			 System.out.println(line);
 
 		}
 
