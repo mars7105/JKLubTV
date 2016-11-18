@@ -2,19 +2,22 @@ package de.turnierverwaltung.model;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
-
 import com.google.gson.Gson;
 
 public class JSON {
 	private String url;
 	private PostRequest postRequest;
+	private String username;
+	private String password;
 
-	public JSON(String url) {
+	public JSON(String url, String username, String password) {
 		this.url = url;
+		this.username = username;
+		this.password = password;
+
 	}
 
-	public void postRequest(String tournamentName, String[] groupName, String startDate, String endDate,
+	public Boolean postRequest(String tournamentName, String[] groupName, String startDate, String endDate,
 			String menuName, String[] crossTableText, String[] meetingTableText, String[] header, String[] body,
 			String jsonFileName, String[][][] crossTableMatrix, String jsonCrossTitle, String[][][] meetingTableMatrix,
 			String jsonMeetingtitle, String siteName, Boolean configFlag) throws IOException, FileNotFoundException {
@@ -30,32 +33,26 @@ public class JSON {
 		JSONObject jsonObject = new JSONObject(tournamentName, groupName, menuName, crossTableText, crossTable,
 				meetingTableText, meetingTable, startDate, endDate, header, body, jsonCrossTitle, jsonMeetingtitle,
 				siteName);
-		postRequest = new PostRequest(new URL(url));
-		String cflag = "";
-		if (configFlag) {
-			cflag = "true";
-		} else {
-			cflag = "false";
-		}
-		postRequest.sendJSONStringToServer(gson.toJson(jsonObject), jsonFileName, cflag);
+		postRequest = new PostRequest(url, username, password);
+		Boolean testConnection = false;
+
+		testConnection = postRequest.sendJSONStringToServer(gson.toJson(jsonObject), jsonFileName);
+//		postRequest.logout();
+//		postRequest.setOutput("JSON File uploladed.");
+
+		return testConnection;
 	}
 
-	public void postFileNames(JSONFileObject filenames) throws IOException {
+	public Boolean postFileNames(JSONFileObject filenames) throws IOException {
 		Gson gson = new Gson();
-		postRequest = new PostRequest(new URL(url));
-		postRequest.sendFilenames(gson.toJson(filenames));
-	}
+		Boolean testConnection = false;
+		postRequest = new PostRequest(url, username, password);
 
-	public void postStart() throws IOException, FileNotFoundException {
+		testConnection = postRequest.sendFilenames(gson.toJson(filenames));
+//		postRequest.logout();
+//		postRequest.setOutput("Filenames uploladed.");
 
-		PostRequest postRequest = new PostRequest(new URL(url));
-		postRequest.sendSessionRequest(true);
-
-	}
-
-	public void postEnd() throws IOException, FileNotFoundException {
-		PostRequest postRequest = new PostRequest(new URL(url));
-		postRequest.sendSessionRequest(false);
+		return testConnection;
 	}
 
 	private String[][] mirrorArray(String[][] array) {
@@ -72,9 +69,21 @@ public class JSON {
 	public Boolean testConnection() throws IOException, FileNotFoundException {
 		Boolean testConnection = false;
 
-		postRequest = new PostRequest(new URL(url));
+		postRequest = new PostRequest(url, username, password);
+
 		testConnection = postRequest.testConnection();
+//		postRequest.logout();
+		
 
 		return testConnection;
 	}
+
+	public PostRequest getPostRequest() {
+		return postRequest;
+	}
+
+	public void setPostRequest(PostRequest postRequest) {
+		this.postRequest = postRequest;
+	}
+
 }

@@ -58,7 +58,7 @@ import de.turnierverwaltung.view.ButtonSavePanelView;
 import de.turnierverwaltung.view.DynamicTree;
 import de.turnierverwaltung.view.FrontendSidePanelView;
 
-public class DynamicTreeDemo extends JPanel implements ActionListener {
+public class SidePanelControl extends JPanel implements ActionListener {
 	/**
 	 * 
 	 */
@@ -73,7 +73,7 @@ public class DynamicTreeDemo extends JPanel implements ActionListener {
 	private FrontendSidePanelView sidePanelView;
 	private int selectedRow;
 
-	public DynamicTreeDemo(MainControl mainControl) {
+	public SidePanelControl(MainControl mainControl) {
 		super(new BorderLayout());
 		this.mainControl = mainControl;
 		selectedRow = 0;

@@ -16,13 +16,16 @@ public class JSONSaveControl {
 	private String jsonMeetingName;
 	private JSON jsonCross;
 	private JSON jsonMeeting;
+	
 
 	public JSONSaveControl(MainControl mainControl) {
 
 		this.mainControl = mainControl;
 	}
 
-	public void uploadJSONFile(String url, String menuName, ArrayList<Sidepanel> sidepanelItems) throws IOException {
+	public void uploadJSONFile(String url, String username, String password, String menuName,
+			ArrayList<Sidepanel> sidepanelItems, String[] crossHeader, String[] crossBody, String[] meetingHeader,
+			String[] meetingBody) throws IOException {
 
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 		// url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
@@ -30,8 +33,7 @@ public class JSONSaveControl {
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 
-			jsonCross = new JSON(url + "/receiveJSON.php");
-			jsonCross.postStart();
+			jsonCross = new JSON(url, username, password);
 			String groupName[] = new String[anzahlGruppen];
 			CrossTable[] turnierTabelle = new CrossTable[anzahlGruppen];
 			MeetingTable[] meetingTable = new MeetingTable[anzahlGruppen];
@@ -41,34 +43,6 @@ public class JSONSaveControl {
 			String startDate = mainControl.getTurnier().getStartDatum();
 			String endDate = mainControl.getTurnier().getEndDatum();
 
-			// sidePanels[0] = "Regularien";
-			// sidePanels[1] = "Wertung:" + "<br />" + "1.) Punkte" + "<br />" +
-			// "2.) Sonneborn-Berger-Wertung" + "<br />"
-			// + "3.) direkter Vergleich" + "<br />" + "4.) um Abstieg oder
-			// Preisrang: Stichkampf * -" + "<br />"
-			// + "sonst gleiche Plazierung" + "<br />" + " " + "<br />"
-			// + "* Stichkampf: eine Schnellpartie (30 min pro Spieler) mit
-			// gegenüber Hauptturnier vertauschten Farben;"
-			// + "<br />"
-			// + "bei Gleichstand danach je eine Blitzpartie (mit stets
-			// vertauschten Farben) bis zur Entscheidung. ";
-			// sidePanels[2] = "Test";
-			// sidePanels[3] = "Lorem ipsum dolor sit amet, consetetur
-			// sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut
-			// labore et dolore magna aliquyam erat, sed diam voluptua. At vero
-			// eos et accusam et justo duo dolores et ea rebum. Stet clita kasd
-			// gubergren, no sea takimata sanctus est Lorem ipsum dolor sit
-			// amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr,
-			// sed diam nonumy eirmod tempor invidunt ut labore et dolore magna
-			// aliquyam erat, sed diam voluptua. At vero eos et accusam et justo
-			// duo dolores et ea rebum. Stet clita kasd gubergren, no sea
-			// takimata sanctus est Lorem ipsum dolor sit amet.";
-			String[] crossTableText = new String[anzahlGruppen];
-			String[] meetingTableText = new String[anzahlGruppen];
-			for (int u = 0; u < anzahlGruppen; u++) {
-				crossTableText[u] = "crossTableText" + new Integer(u);
-				meetingTableText[u] = "meetingTableText" + new Integer(u);
-			}
 			String siteName = "JKlubTV Demosite";
 			Boolean configFlag = true;
 
@@ -115,11 +89,11 @@ public class JSONSaveControl {
 				body[index] = item.getBody();
 				index++;
 			}
-			jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName, crossTableText,
-					meetingTableText, header, body, jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix,
-					jsonMeetingtitle, siteName, configFlag);
-			jsonCross.postEnd();
-			JSON jsonFileObjects = new JSON(url + "/receiveFileJSON.php");
+			jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName, crossBody, meetingBody,
+					header, body, jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix, jsonMeetingtitle, siteName,
+					configFlag);
+			// jsonCross.postEnd();
+			JSON jsonFileObjects = new JSON(url, username, password);
 			JSONFileObject jsonFiles = new JSONFileObject(filenames);
 			jsonFileObjects.postFileNames(jsonFiles);
 

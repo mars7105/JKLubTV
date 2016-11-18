@@ -28,6 +28,8 @@ public class JSONConfigView {
 	private JButton sidePanelsButton;
 	private JButton connectionTestButton;
 	private JTextField uploadURLTextField;
+	private JTextField usernameTextField;
+	private JTextField passwordTextField;
 	private JButton okButton;
 	private JButton cancelButton;
 	private ButtonPanelView buttonPane;
@@ -68,6 +70,15 @@ public class JSONConfigView {
 		uploadURLTextField = new JTextField("", textFieldColumns);
 		uploadURLTextField.setPreferredSize(dimTextField);
 		uploadURLTextField.addMouseListener(cmmL);
+
+		usernameTextField = new JTextField("", textFieldColumns);
+		usernameTextField.setPreferredSize(dimTextField);
+		usernameTextField.addMouseListener(cmmL);
+
+		passwordTextField = new JTextField("", textFieldColumns);
+		passwordTextField.setPreferredSize(dimTextField);
+		passwordTextField.addMouseListener(cmmL);
+
 		sidePanelsButton = new JButton(Messages.getString("JSONConfigView.0"), addImg);
 		connectionTestButton = new JButton(Messages.getString("JSONConfigView.6"), connectionTestImg);
 		buttonPane = new ButtonPanelView();
@@ -106,6 +117,12 @@ public class JSONConfigView {
 		JLabel uploadURLTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.3") + ":");
 		uploadURLTextFieldLabel.setPreferredSize(dim);
 
+		JLabel usernameTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.10") + ":");
+		usernameTextFieldLabel.setPreferredSize(dim);
+
+		JLabel passwordTextFieldLabel = new JLabel(Messages.getString("JSONConfigView.11") + ":");
+		passwordTextFieldLabel.setPreferredSize(dim);
+
 		JLabel sidePanelsLabel = new JLabel(Messages.getString("JSONConfigView.4") + ":");
 		sidePanelsLabel.setPreferredSize(dim);
 
@@ -119,6 +136,18 @@ public class JSONConfigView {
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(uploadURLTextFieldLabel);
 		htmlPanel.add(uploadURLTextField);
+		leftPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(usernameTextFieldLabel);
+		htmlPanel.add(usernameTextField);
+		leftPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(passwordTextFieldLabel);
+		htmlPanel.add(passwordTextField);
 		leftPanel.add(htmlPanel);
 
 		connectionTestButton.setPreferredSize(buttonSize);
@@ -219,6 +248,22 @@ public class JSONConfigView {
 
 	public void setGroupButtons(ArrayList<JButton> groupButtons) {
 		this.groupButtons = groupButtons;
+	}
+
+	public JTextField getUsernameTextField() {
+		return usernameTextField;
+	}
+
+	public void setUsernameTextField(JTextField usernameTextField) {
+		this.usernameTextField = usernameTextField;
+	}
+
+	public JTextField getPasswordTextField() {
+		return passwordTextField;
+	}
+
+	public void setPasswordTextField(JTextField passwordTextField) {
+		this.passwordTextField = passwordTextField;
 	}
 
 }

@@ -17,30 +17,26 @@ public class FrontendSidePanelControl implements ActionListener {
 	private JDialog jsonDialog;
 	private JTextField headerTextField;
 	private JTextArea bodyTextArea;
-//	private JButton cancelButton;
 	private JButton okButton;
 	private String headerText;
 	private String bodyText;
 	private ArrayList<Sidepanel> sideP;
 	private int selectedIndex;
 	private MainControl mainControl;
-	private DynamicTreeDemo dynTree;
+	private SidePanelControl dynTree;
 
 	public FrontendSidePanelControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		dynTree = new DynamicTreeDemo(mainControl);
+		dynTree = new SidePanelControl(mainControl);
 
 		sidePanel = new FrontendSidePanelView(sideP, dynTree);
 		this.mainControl.setFrontendSidePanelView(sidePanel);
-		// dynTree.setSidePanelView(sidePanel);
 		jsonDialog = sidePanel.getJsonDialog();
 		headerTextField = sidePanel.getHeaderTextField();
 		bodyTextArea = sidePanel.getBodyTextArea();
-//		cancelButton = sidePanel.getCancelButton();
 		okButton = sidePanel.getOkButton();
 
 		okButton.addActionListener(this);
-//		cancelButton.addActionListener(this);
 
 		headerText = "";
 		bodyText = "";
@@ -55,11 +51,7 @@ public class FrontendSidePanelControl implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
-//		if (e.getSource() == cancelButton) {
-//			jsonDialog.dispose();
-//			headerText = null;
-//			bodyText = null;
-//		}
+
 		if (e.getSource() == okButton) {
 
 			jsonDialog.dispose();

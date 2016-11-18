@@ -16,7 +16,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-import de.turnierverwaltung.control.DynamicTreeDemo;
+import de.turnierverwaltung.control.SidePanelControl;
 import de.turnierverwaltung.model.Sidepanel;
 
 public class FrontendSidePanelView {
@@ -33,9 +33,9 @@ public class FrontendSidePanelView {
 	private JButton saveButton;
 	private JButton addButton;
 	private JButton deleteButton;
-	private DynamicTreeDemo dynTree;
+	private SidePanelControl dynTree;
 
-	public FrontendSidePanelView(ArrayList<Sidepanel> sidepanel, DynamicTreeDemo dynTree) {
+	public FrontendSidePanelView(ArrayList<Sidepanel> sidepanel, SidePanelControl dynTree) {
 		this.dynTree = dynTree;
 		// Erzeugung eines neuen Frames mit
 		// dem Titel Beispiel JDialog
@@ -52,7 +52,7 @@ public class FrontendSidePanelView {
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BorderLayout());
 		Dimension dimTextField = new Dimension(350, 30);
-//		Dimension dimTextArea = new Dimension(350, 350);
+		// Dimension dimTextArea = new Dimension(350, 350);
 		int textFieldColumns = 18;
 		int textFieldRows = 18;
 
@@ -63,7 +63,7 @@ public class FrontendSidePanelView {
 		headerTextField.addMouseListener(cmmL);
 
 		bodyTextArea = new JTextArea("", textFieldRows, textFieldColumns);
-//		bodyTextArea.setPreferredSize(dimTextArea);
+		// bodyTextArea.setPreferredSize(dimTextArea);
 		bodyTextArea.addMouseListener(cmmL);
 
 		buttonPane = new ButtonPanelView();
@@ -169,14 +169,6 @@ public class FrontendSidePanelView {
 	public void setBodyTextArea(JTextArea bodyTextArea) {
 		this.bodyTextArea = bodyTextArea;
 	}
-
-	// public JButton getCancelButton() {
-	// return cancelButton;
-	// }
-	//
-	// public void setCancelButton(JButton cancelButton) {
-	// this.cancelButton = cancelButton;
-	// }
 
 	public JButton getOkButton() {
 		return okButton;
