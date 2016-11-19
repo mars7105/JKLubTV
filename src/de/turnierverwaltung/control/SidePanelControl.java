@@ -53,7 +53,7 @@ import javax.swing.tree.TreeSelectionModel;
 import de.turnierverwaltung.model.Sidepanel;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.SidepanelDAO;
+import de.turnierverwaltung.mysql.WebsiteContentDAO;
 import de.turnierverwaltung.view.ButtonSavePanelView;
 import de.turnierverwaltung.view.DynamicTree;
 import de.turnierverwaltung.view.FrontendSidePanelView;
@@ -69,7 +69,7 @@ public class SidePanelControl extends JPanel implements ActionListener {
 	private ArrayList<Sidepanel> sidepanel;
 	private DynamicTree treePanel;
 	private MainControl mainControl;
-	private SidepanelDAO sidepanelDAO;
+	private WebsiteContentDAO sidepanelDAO;
 	private FrontendSidePanelView sidePanelView;
 	private int selectedRow;
 

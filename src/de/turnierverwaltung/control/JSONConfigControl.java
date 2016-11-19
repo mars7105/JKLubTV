@@ -14,7 +14,7 @@ import de.turnierverwaltung.model.JSON;
 import de.turnierverwaltung.model.Sidepanel;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.SidepanelDAO;
+import de.turnierverwaltung.mysql.WebsiteContentDAO;
 import de.turnierverwaltung.view.JSONConfigView;
 
 public class JSONConfigControl implements ActionListener {
@@ -30,7 +30,7 @@ public class JSONConfigControl implements ActionListener {
 	private JTextField uploadURLTextField;
 	private MainControl mainControl;
 	private FrontendSidePanelControl sidePanel;
-	private SidepanelDAO sidepanelDAO;
+	private WebsiteContentDAO sidepanelDAO;
 	private ArrayList<JButton> groupButtons;
 	private String[] crossHeader;
 	private String[] crossBody;

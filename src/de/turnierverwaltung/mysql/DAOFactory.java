@@ -44,6 +44,6 @@ public abstract class DAOFactory {
 
 	public abstract TurnierDAO getTurnierDAO();
 
-	public abstract SidepanelDAO getSidepanelDAO();
+	public abstract WebsiteContentDAO getSidepanelDAO();
 
 }
