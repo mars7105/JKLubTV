@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 
 import de.turnierverwaltung.model.JSON;
 import de.turnierverwaltung.model.Sidepanel;
+import de.turnierverwaltung.model.TableContent;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.WebsiteContentDAO;
@@ -122,7 +123,16 @@ public class JSONConfigControl implements ActionListener {
 			// this.turnier = this.mainControl.getTurnier();
 			ArrayList<Sidepanel> sidepanelItems = new ArrayList<Sidepanel>();
 
+			ArrayList<TableContent> tableContentItems = new ArrayList<TableContent>();
+			ArrayList<ArrayList> tableContentgroups = new ArrayList<ArrayList>();
+
 			try {
+				int anzahlgruppen = mainControl.getTurnier().getAnzahlGruppen();
+				for (int i = 0; i < anzahlgruppen; i++) {
+					tableContentItems = sidepanelDAO
+							.selectAllTableContent(this.mainControl.getTurnier().getGruppe()[i].getGruppeId());
+					tableContentgroups.add(tableContentItems);
+				}
 				sidepanelItems = sidepanelDAO.selectAllSidepanel(this.mainControl.getTurnier().getTurnierId());
 			} catch (SQLException e1) {
 				JOptionPane.showMessageDialog(mainControl, "Database error");
@@ -139,7 +149,7 @@ public class JSONConfigControl implements ActionListener {
 				JOptionPane.showMessageDialog(mainControl, json.getJsonCross().getPostRequest().getOutput());
 			} catch (IOException exc) {
 				JOptionPane.showMessageDialog(mainControl, json.getJsonCross().getPostRequest().getOutput());
-				
+
 			}
 
 		}
