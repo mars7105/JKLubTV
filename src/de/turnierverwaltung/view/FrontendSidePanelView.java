@@ -34,6 +34,7 @@ public class FrontendSidePanelView {
 	private JButton addButton;
 	private JButton deleteButton;
 	private SidePanelControl dynTree;
+	private ColorSelectorView colorSelectorPanel;
 
 	public FrontendSidePanelView(ArrayList<Sidepanel> sidepanel, SidePanelControl dynTree) {
 		this.dynTree = dynTree;
@@ -74,7 +75,7 @@ public class FrontendSidePanelView {
 		addButton = buttonPanel.getAddButton();
 		saveButton = buttonPanel.getSaveButton();
 		deleteButton = buttonPanel.getDeleteButton();
-
+		colorSelectorPanel = new ColorSelectorView();
 	}
 
 	public void makeDialog() {
@@ -97,6 +98,10 @@ public class FrontendSidePanelView {
 		// bodyTextAreaLabel.setPreferredSize(dim);
 		bodyTextAreaLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
+		JLabel colorSelectorLabel = new JLabel(Messages.getString("FrontendSidePanelView.3") + ":");
+		// bodyTextAreaLabel.setPreferredSize(dim);
+		bodyTextAreaLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
 		htmlPanel = new JPanel();
 		// htmlPanel.setPreferredSize(dim);
 		htmlPanel.setLayout(new BoxLayout(htmlPanel, BoxLayout.PAGE_AXIS));
@@ -105,8 +110,17 @@ public class FrontendSidePanelView {
 		labelPanel.add(headerTextFieldLabel);
 		htmlPanel.add(labelPanel);
 		htmlPanel.add(headerTextField);
-		leftPanel.add(htmlPanel, BorderLayout.NORTH);
+		//leftPanel.add(htmlPanel, BorderLayout.NORTH);
 
+//		htmlPanel = new JPanel();
+//		htmlPanel.setLayout(new BoxLayout(htmlPanel, BoxLayout.PAGE_AXIS));
+		labelPanel = new JPanel();
+		labelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		labelPanel.add(colorSelectorLabel);
+		htmlPanel.add(labelPanel);
+		htmlPanel.add(colorSelectorPanel);
+		leftPanel.add(htmlPanel, BorderLayout.NORTH);
+		
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new BoxLayout(htmlPanel, BoxLayout.PAGE_AXIS));
 		// htmlPanel.setPreferredSize(dimTextArea);
@@ -119,6 +133,8 @@ public class FrontendSidePanelView {
 		scrollPane.setPreferredSize(dimTextArea);
 		htmlPanel.add(scrollPane);
 		leftPanel.add(htmlPanel, BorderLayout.CENTER);
+
+		
 
 		bothPanel.add(leftPanel, BorderLayout.NORTH);
 		htmlAll.add(bothPanel, BorderLayout.CENTER);
@@ -200,6 +216,14 @@ public class FrontendSidePanelView {
 
 	public void setDeleteButton(JButton deleteButton) {
 		this.deleteButton = deleteButton;
+	}
+
+	public ColorSelectorView getColorSelectorPanel() {
+		return colorSelectorPanel;
+	}
+
+	public void setColorSelectorPanel(ColorSelectorView colorSelectorPanel) {
+		this.colorSelectorPanel = colorSelectorPanel;
 	}
 
 }

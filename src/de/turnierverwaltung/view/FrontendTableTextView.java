@@ -29,6 +29,8 @@ public class FrontendTableTextView {
 	private JTextArea bodyMeetingTextArea;
 
 	private JTabbedPane tabPane;
+	private ColorSelectorView crossColorSelectorPanel;
+	private ColorSelectorView meetingColorSelectorPanel;
 
 	public FrontendTableTextView() {
 		// Erzeugung eines neuen Frames mit
@@ -73,7 +75,8 @@ public class FrontendTableTextView {
 
 		bodyMeetingTextArea = new JTextArea("", textFieldRows, textFieldColumns);
 		bodyMeetingTextArea.addMouseListener(cmmL2);
-
+		crossColorSelectorPanel = new ColorSelectorView();
+		meetingColorSelectorPanel = new ColorSelectorView();
 	}
 
 	public void makeDialog() {
@@ -108,6 +111,10 @@ public class FrontendTableTextView {
 		JLabel bodyTextAreaLabel = new JLabel(Messages.getString("FrontendTableTextView.2") + ":");
 		bodyTextAreaLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
+		JLabel crossColorSelectorLabel = new JLabel(Messages.getString("FrontendSidePanelView.3") + ":");
+		// bodyTextAreaLabel.setPreferredSize(dim);
+		crossColorSelectorLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new BoxLayout(htmlPanel, BoxLayout.PAGE_AXIS));
 		JPanel labelPanel = new JPanel();
@@ -115,6 +122,12 @@ public class FrontendTableTextView {
 		labelPanel.add(headerTextFieldLabel);
 		htmlPanel.add(labelPanel);
 		htmlPanel.add(headerCrossTextField);
+		// leftPanel.add(htmlPanel, BorderLayout.NORTH);
+		labelPanel = new JPanel();
+		labelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		labelPanel.add(crossColorSelectorLabel);
+		htmlPanel.add(labelPanel);
+		htmlPanel.add(crossColorSelectorPanel);
 		leftPanel.add(htmlPanel, BorderLayout.NORTH);
 
 		htmlPanel = new JPanel();
@@ -157,6 +170,10 @@ public class FrontendTableTextView {
 		JLabel bodyTextAreaLabel = new JLabel(Messages.getString("FrontendTableTextView.2") + ":");
 		bodyTextAreaLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
 
+		JLabel meetingColorSelectorLabel = new JLabel(Messages.getString("FrontendSidePanelView.3") + ":");
+		// bodyTextAreaLabel.setPreferredSize(dim);
+		meetingColorSelectorLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new BoxLayout(htmlPanel, BoxLayout.PAGE_AXIS));
 		JPanel labelPanel = new JPanel();
@@ -164,8 +181,15 @@ public class FrontendTableTextView {
 		labelPanel.add(headerTextFieldLabel);
 		htmlPanel.add(labelPanel);
 		htmlPanel.add(headerMeetingTextField);
+//		leftPanel.add(htmlPanel, BorderLayout.NORTH);
+		
+		labelPanel = new JPanel();
+		labelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		labelPanel.add(meetingColorSelectorLabel);
+		htmlPanel.add(labelPanel);
+		htmlPanel.add(meetingColorSelectorPanel);
 		leftPanel.add(htmlPanel, BorderLayout.NORTH);
-
+		
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new BoxLayout(htmlPanel, BoxLayout.PAGE_AXIS));
 		labelPanel = new JPanel();
@@ -235,6 +259,22 @@ public class FrontendTableTextView {
 
 	public void setJsonDialog(JDialog jsonDialog) {
 		this.jsonDialog = jsonDialog;
+	}
+
+	public ColorSelectorView getCrossColorSelectorPanel() {
+		return crossColorSelectorPanel;
+	}
+
+	public void setCrossColorSelectorPanel(ColorSelectorView crossColorSelectorPanel) {
+		this.crossColorSelectorPanel = crossColorSelectorPanel;
+	}
+
+	public ColorSelectorView getMeetingColorSelectorPanel() {
+		return meetingColorSelectorPanel;
+	}
+
+	public void setMeetingColorSelectorPanel(ColorSelectorView meetingColorSelectorPanel) {
+		this.meetingColorSelectorPanel = meetingColorSelectorPanel;
 	}
 
 }

@@ -16,10 +16,10 @@ import de.turnierverwaltung.model.Sidepanel;
  * @author schmuck
  *
  */
-public class SQLiteSidepanelDAO implements SidepanelDAO {
+public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 	private Connection dbConnect;
 
-	public SQLiteSidepanelDAO() {
+	public SQLiteWebRightContentDAO() {
 		this.dbConnect = null;
 		this.dbConnect = SQLiteDAOFactory.createConnection();
 	}

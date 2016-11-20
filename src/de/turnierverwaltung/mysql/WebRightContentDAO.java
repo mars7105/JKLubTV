@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import de.turnierverwaltung.model.Sidepanel;
 
-public interface SidepanelDAO {
+public interface WebRightContentDAO {
 	public void createSidepanelTable() throws SQLException;
 
 	public boolean deleteSidepanel(int id) throws SQLException;

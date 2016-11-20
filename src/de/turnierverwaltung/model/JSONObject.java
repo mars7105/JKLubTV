@@ -4,8 +4,10 @@ public class JSONObject {
 	private String tournamentName;
 	private String[] groupName;
 	private String menuName;
+	private String[] crossHeader;
 	private String[] crossTableText;
 	private String[][][] crossTable;
+	private String[] meetingHeader;
 	private String[] meetingTableText;
 	private String[][][] meetingTable;
 	private String startDate;
@@ -17,12 +19,13 @@ public class JSONObject {
 	private String jsonMeetingtitle;
 	private String siteName;
 
-	public JSONObject(String tournamentName, String[] groupName, String menuName, String[] crossTableText2,
-			String[][][] crossTable, String[] meetingTableText2, String[][][] meetingTable, String startDate,
-			String endDate, String[] header, String[] body, String jsonCrossTitle, String jsonMeetingtitle,
-			String siteName) {
+	public JSONObject(String tournamentName, String[] groupName, String menuName, String[] crossHeader,
+			String[] crossTableText2, String[][][] crossTable, String[] meetingHeader, String[] meetingTableText2,
+			String[][][] meetingTable, String startDate, String endDate, String[] header, String[] body,
+			String jsonCrossTitle, String jsonMeetingtitle, String siteName) {
 		super();
-
+		this.crossHeader = crossHeader;
+		this.meetingHeader = meetingHeader;
 		this.tournamentName = tournamentName;
 		this.groupName = groupName;
 		this.menuName = menuName;
@@ -158,6 +161,22 @@ public class JSONObject {
 
 	public void setMeetingTable(String[][][] meetingTable) {
 		this.meetingTable = meetingTable;
+	}
+
+	public String[] getCrossHeader() {
+		return crossHeader;
+	}
+
+	public void setCrossHeader(String[] crossHeader) {
+		this.crossHeader = crossHeader;
+	}
+
+	public String[] getMeetingHeader() {
+		return meetingHeader;
+	}
+
+	public void setMeetingHeader(String[] meetingHeader) {
+		this.meetingHeader = meetingHeader;
 	}
 
 }

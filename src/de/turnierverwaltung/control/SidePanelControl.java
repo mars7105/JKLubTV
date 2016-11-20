@@ -53,7 +53,7 @@ import javax.swing.tree.TreeSelectionModel;
 import de.turnierverwaltung.model.Sidepanel;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.SidepanelDAO;
+import de.turnierverwaltung.mysql.WebRightContentDAO;
 import de.turnierverwaltung.view.ButtonSavePanelView;
 import de.turnierverwaltung.view.DynamicTree;
 import de.turnierverwaltung.view.FrontendSidePanelView;
@@ -69,7 +69,7 @@ public class SidePanelControl extends JPanel implements ActionListener {
 	private ArrayList<Sidepanel> sidepanel;
 	private DynamicTree treePanel;
 	private MainControl mainControl;
-	private SidepanelDAO sidepanelDAO;
+	private WebRightContentDAO sidepanelDAO;
 	private FrontendSidePanelView sidePanelView;
 	private int selectedRow;
 
@@ -78,7 +78,7 @@ public class SidePanelControl extends JPanel implements ActionListener {
 		this.mainControl = mainControl;
 		selectedRow = 0;
 		DAOFactory daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
-		sidepanelDAO = daoFactory.getSidepanelDAO();
+		sidepanelDAO = daoFactory.getWebRightContentDAO();
 
 		try {
 			sidepanel = sidepanelDAO.selectAllSidepanel(this.mainControl.getTurnier().getTurnierId());
@@ -122,7 +122,7 @@ public class SidePanelControl extends JPanel implements ActionListener {
 
 				int[] row = treePanel.getTree().getSelectionRows();
 				for (int i = 0; i < row.length; i++) {
-					System.out.println(row[i]);
+//					System.out.println(row[i]);
 					if (row.length == 1) {
 						selectedRow = row[i];
 					}
