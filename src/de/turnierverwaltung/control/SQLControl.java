@@ -22,7 +22,7 @@ import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.DatumDAO;
 import de.turnierverwaltung.mysql.GruppenDAO;
 import de.turnierverwaltung.mysql.PartienDAO;
-import de.turnierverwaltung.mysql.WebsiteContentDAO;
+import de.turnierverwaltung.mysql.WebRightContentDAO;
 import de.turnierverwaltung.mysql.SpielerDAO;
 import de.turnierverwaltung.mysql.TurnierDAO;
 import de.turnierverwaltung.mysql.Turnier_has_SpielerDAO;
@@ -35,7 +35,7 @@ public class SQLControl {
 	private PartienDAO mySQLPartienDAO;
 	private GruppenDAO mySQLGruppenDAO;
 	private Turnier_has_SpielerDAO mySQLTurnier_has_SpielerDAO;
-	private WebsiteContentDAO sidePanelDAO;
+	private WebRightContentDAO sidePanelDAO;
 
 	public SQLControl() {
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
@@ -45,7 +45,7 @@ public class SQLControl {
 		mySQLPartienDAO = daoFactory.getPartienDAO();
 		mySQLGruppenDAO = daoFactory.getGruppenDAO();
 		mySQLTurnier_has_SpielerDAO = daoFactory.getTurnier_has_SpielerDAO();
-		sidePanelDAO = daoFactory.getSidepanelDAO();
+		sidePanelDAO = daoFactory.getWebRightContentDAO();
 	}
 
 	public void createAllTables() throws SQLException {

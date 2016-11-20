@@ -105,9 +105,15 @@ public class SQLiteDAOFactory extends DAOFactory {
 	}
 
 	@Override
-	public WebsiteContentDAO getSidepanelDAO() {
-		WebsiteContentDAO sitepanelDAO = new SQLiteWebsiteContentDAO();
-		return sitepanelDAO;
+	public WebRightContentDAO getWebRightContentDAO() {
+		WebRightContentDAO webRightContentDAO = new SQLiteWebRightContentDAO();
+		return webRightContentDAO;
+	}
+
+	@Override
+	public WebMainContentDAO getWebMainContentDAO() {
+		WebMainContentDAO webMainContentDAO = new SQLiteWebMainContentDAO();
+		return webMainContentDAO;
 	}
 
 }

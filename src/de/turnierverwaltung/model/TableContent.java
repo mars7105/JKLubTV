@@ -5,12 +5,14 @@ public class TableContent {
 	private String body;
 	private int idTableContent;
 	private int tableType;
+	private int idGroup;
 
-	public TableContent(String header, String body, int idTableContent, int tableType) {
-		super();
+	public TableContent(String header, String body, int idTableContent, int tableType, int idGroup) {
+
 		this.header = header;
 		this.body = body;
 		this.idTableContent = idTableContent;
+		this.idGroup = idGroup;
 		this.tableType = tableType;
 	}
 
@@ -44,6 +46,14 @@ public class TableContent {
 
 	public void setTableType(int tableType) {
 		this.tableType = tableType;
+	}
+
+	public int getIdGroup() {
+		return idGroup;
+	}
+
+	public void setIdGroup(int idGroup) {
+		this.idGroup = idGroup;
 	}
 
 }

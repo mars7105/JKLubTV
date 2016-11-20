@@ -2,6 +2,7 @@ package de.turnierverwaltung.control;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 import de.turnierverwaltung.model.CrossTable;
@@ -9,6 +10,8 @@ import de.turnierverwaltung.model.JSON;
 import de.turnierverwaltung.model.JSONFileObject;
 import de.turnierverwaltung.model.MeetingTable;
 import de.turnierverwaltung.model.Sidepanel;
+import de.turnierverwaltung.model.TableContent;
+import de.turnierverwaltung.model.TournamentConstants;
 
 public class JSONSaveControl {
 	private MainControl mainControl;
@@ -23,8 +26,8 @@ public class JSONSaveControl {
 	}
 
 	public void uploadJSONFile(String url, String username, String password, String menuName,
-			ArrayList<Sidepanel> sidepanelItems, String[] crossHeader, String[] crossBody, String[] meetingHeader,
-			String[] meetingBody) throws IOException {
+			ArrayList<Sidepanel> sidepanelItems, ArrayList<ArrayList<TableContent>> tableContentgroups)
+			throws IOException {
 
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 		// url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
@@ -88,16 +91,39 @@ public class JSONSaveControl {
 				body[index] = item.getBody();
 				index++;
 			}
-			jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName, crossBody, meetingBody,
-					header, body, jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix, jsonMeetingtitle, siteName,
-					configFlag);
+
+			String[] crossHeader = new String[anzahlGruppen];
+			String[] crossBody = new String[anzahlGruppen];
+			String[] meetingHeader = new String[anzahlGruppen];
+			String[] meetingBody = new String[anzahlGruppen];
+			int i = 0;
+			for (Iterator<ArrayList<TableContent>> iterator = tableContentgroups.iterator(); iterator.hasNext();) {
+				ArrayList<TableContent> tableContentList = iterator.next();
+				for (TableContent tableContentItem : tableContentList) {
+					if (tableContentItem.getTableType() == TournamentConstants.CROSSTABLETYPE) {
+						crossHeader[i] = tableContentItem.getHeader();
+						crossBody[i] = tableContentItem.getBody();
+					}
+					if (tableContentItem.getTableType() == TournamentConstants.MEETINGTABLETYPE) {
+						meetingHeader[i] = tableContentItem.getHeader();
+						meetingBody[i] = tableContentItem.getBody();
+					}
+
+				}
+				i++;
+			}
+			jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName, crossHeader, crossBody,
+					meetingHeader, meetingBody, header, body, jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix,
+					jsonMeetingtitle, siteName, configFlag);
 			// jsonCross.postEnd();
 			JSON jsonFileObjects = new JSON(url, username, password);
 			JSONFileObject jsonFiles = new JSONFileObject(filenames);
 			jsonFileObjects.postFileNames(jsonFiles);
 			jsonFileObjects.makeTables();
 
-		} else {
+		} else
+
+		{
 			JOptionPane.showMessageDialog(null,
 					Messages.getString("PDFSaveControler.19") + Messages.getString("PDFSaveControler.20")); //$NON-NLS-1$ //$NON-NLS-2$
 

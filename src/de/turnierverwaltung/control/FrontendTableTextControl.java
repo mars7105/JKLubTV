@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import de.turnierverwaltung.view.ColorSelectorView;
 import de.turnierverwaltung.view.FrontendTableTextView;
 
 public class FrontendTableTextControl implements ActionListener {
@@ -19,6 +20,8 @@ public class FrontendTableTextControl implements ActionListener {
 	private JTextArea crossBody;
 	private JTextField meetingHeader;
 	private JTextArea meetingBody;
+	private ColorSelectorView crossColorSelector;
+	private ColorSelectorView meetingColorSelector;
 
 	public FrontendTableTextControl() {
 		fd = new FrontendTableTextView();
@@ -29,6 +32,8 @@ public class FrontendTableTextControl implements ActionListener {
 		crossBody = fd.getBodyCrossTextArea();
 		meetingHeader = fd.getHeaderMeetingTextField();
 		meetingBody = fd.getBodyMeetingTextArea();
+		crossColorSelector = fd.getCrossColorSelectorPanel();
+		meetingColorSelector = fd.getCrossColorSelectorPanel();
 	}
 
 	public void makeDialog() {
@@ -39,7 +44,7 @@ public class FrontendTableTextControl implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		
+
 		dialog.dispose();
 	}
 
@@ -73,6 +78,22 @@ public class FrontendTableTextControl implements ActionListener {
 
 	public void setMeetingBody(JTextArea meetingBody) {
 		this.meetingBody = meetingBody;
+	}
+
+	public ColorSelectorView getCrossColorSelector() {
+		return crossColorSelector;
+	}
+
+	public void setCrossColorSelector(ColorSelectorView crossColorSelector) {
+		this.crossColorSelector = crossColorSelector;
+	}
+
+	public ColorSelectorView getMeetingColorSelector() {
+		return meetingColorSelector;
+	}
+
+	public void setMeetingColorSelector(ColorSelectorView meetingColorSelector) {
+		this.meetingColorSelector = meetingColorSelector;
 	}
 
 }

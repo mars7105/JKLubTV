@@ -92,9 +92,16 @@ public class MySQLDAOFactory extends DAOFactory {
 	}
 
 	@Override
-	public WebsiteContentDAO getSidepanelDAO() {
+	public WebRightContentDAO getWebRightContentDAO() {
 		// TODO Automatisch generierter Methodenstub
 		return null;
 	}
+
+	@Override
+	public WebMainContentDAO getWebMainContentDAO() {
+		// TODO Automatisch generierter Methodenstub
+		return null;
+	}
+
 
 }

@@ -10,6 +10,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import de.turnierverwaltung.model.Sidepanel;
+import de.turnierverwaltung.view.ColorSelectorView;
 import de.turnierverwaltung.view.FrontendSidePanelView;
 
 public class FrontendSidePanelControl implements ActionListener {
@@ -24,6 +25,7 @@ public class FrontendSidePanelControl implements ActionListener {
 	private int selectedIndex;
 	private MainControl mainControl;
 	private SidePanelControl dynTree;
+	private ColorSelectorView colorSelector;
 
 	public FrontendSidePanelControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -34,6 +36,7 @@ public class FrontendSidePanelControl implements ActionListener {
 		jsonDialog = sidePanel.getJsonDialog();
 		headerTextField = sidePanel.getHeaderTextField();
 		bodyTextArea = sidePanel.getBodyTextArea();
+		colorSelector = sidePanel.getColorSelectorPanel();
 		okButton = sidePanel.getOkButton();
 
 		okButton.addActionListener(this);
@@ -50,7 +53,6 @@ public class FrontendSidePanelControl implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-
 
 		if (e.getSource() == okButton) {
 
@@ -99,6 +101,14 @@ public class FrontendSidePanelControl implements ActionListener {
 
 	public void setSelectedIndex(int selectedIndex) {
 		this.selectedIndex = selectedIndex;
+	}
+
+	public ColorSelectorView getColorSelector() {
+		return colorSelector;
+	}
+
+	public void setColorSelector(ColorSelectorView colorSelector) {
+		this.colorSelector = colorSelector;
 	}
 
 }
