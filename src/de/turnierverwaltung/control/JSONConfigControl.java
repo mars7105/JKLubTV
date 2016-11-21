@@ -94,9 +94,14 @@ public class JSONConfigControl implements ActionListener {
 			groupButton.addActionListener(this);
 		}
 		DAOFactory daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
-		webRightContent = daoFactory.getWebRightContentDAO();
-		webMainContent = daoFactory.getWebMainContentDAO();
+		try {
+			webRightContent = daoFactory.getWebRightContentDAO();
 
+			webMainContent = daoFactory.getWebMainContentDAO();
+		} catch (SQLException e) {
+			// TODO Automatisch generierter Erfassungsblock
+			e.printStackTrace();
+		}
 	}
 
 	public void makeDialog() {
@@ -148,15 +153,50 @@ public class JSONConfigControl implements ActionListener {
 						TournamentConstants.CROSSTABLETYPE, groupID);
 				TableContent tableMeetingContent = new TableContent(meetingHeader[index], meetingBody[index], 0,
 						TournamentConstants.MEETINGTABLETYPE, groupID);
+				Boolean updatetableCrossContent = false;
+				Boolean updatetableMeetingContent = false;
+				for (TableContent tableContent : tableContentItems) {
 
-				try {
-					webMainContent.insertTableContent(tableCrossContent, groupID);
-					webMainContent.insertTableContent(tableMeetingContent, groupID);
-				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(mainControl, "Database error");
-					e1.printStackTrace();
+					if (tableContent.getIdGroup() == tableCrossContent.getIdGroup()
+							&& tableContent.getTableType() == tableCrossContent.getTableType()) {
+						tableCrossContent.setIdTableContent(tableContent.getIdTableContent());
+						try {
+							webMainContent.updateTableContent(tableCrossContent);
+							updatetableCrossContent = true;
+						} catch (SQLException e1) {
+							JOptionPane.showMessageDialog(mainControl, "Database error");
+							e1.printStackTrace();
+						}
+					}
+					if (tableContent.getIdGroup() == tableMeetingContent.getIdGroup()
+							&& tableContent.getTableType() == tableMeetingContent.getTableType()) {
+						tableMeetingContent.setIdTableContent(tableContent.getIdTableContent());
+						try {
+							webMainContent.updateTableContent(tableMeetingContent);
+							updatetableMeetingContent = true;
+						} catch (SQLException e1) {
+							JOptionPane.showMessageDialog(mainControl, "Database error");
+							e1.printStackTrace();
+						}
+					}
 				}
+				if (updatetableCrossContent == false) {
+					try {
+						webMainContent.insertTableContent(tableCrossContent, groupID);
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(mainControl, "Database error");
+						e1.printStackTrace();
+					}
+				}
+				if (updatetableMeetingContent == false) {
+					try {
 
+						webMainContent.insertTableContent(tableMeetingContent, groupID);
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(mainControl, "Database error");
+						e1.printStackTrace();
+					}
+				}
 			}
 			index++;
 		}

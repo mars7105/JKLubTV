@@ -19,9 +19,10 @@ import de.turnierverwaltung.model.TableContent;
 public class SQLiteWebMainContentDAO implements WebMainContentDAO {
 	private Connection dbConnect;
 
-	public SQLiteWebMainContentDAO() {
+	public SQLiteWebMainContentDAO() throws SQLException {
 		this.dbConnect = null;
 		this.dbConnect = SQLiteDAOFactory.createConnection();
+		createTableContentTable();
 	}
 
 	@Override
@@ -44,7 +45,7 @@ public class SQLiteWebMainContentDAO implements WebMainContentDAO {
 
 	@Override
 	public boolean deleteTableContent(int idTableContent) throws SQLException {
-		createTableContentTable();
+
 		boolean ok = false;
 		String sql = "delete from tableContent where idTableContent=?;";
 		if (this.dbConnect != null) {
@@ -63,9 +64,27 @@ public class SQLiteWebMainContentDAO implements WebMainContentDAO {
 	}
 
 	@Override
-	public ArrayList<TableContent> findTableContent(int id) throws SQLException {
-		// TODO Automatisch generierter Methodenstub
-		return null;
+	public TableContent findTableContent(int id) throws SQLException {
+		TableContent tableContent = null;
+		String sql = "Select * from tableContent where idTableContent =" + id + ";";
+		Statement stmt;
+		if (this.dbConnect != null) {
+
+			stmt = this.dbConnect.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				int idTableContent = rs.getInt("idTableContent");
+				String header = rs.getString("header");
+				String body = rs.getString("body");
+				int tableType = rs.getInt("tableType");
+				int groupId = rs.getInt("GroupId");
+				tableContent = new TableContent(header, body, idTableContent, tableType, groupId);
+
+			}
+			stmt.close();
+
+		}
+		return tableContent;
 	}
 
 	@Override
@@ -76,7 +95,6 @@ public class SQLiteWebMainContentDAO implements WebMainContentDAO {
 
 	@Override
 	public int insertTableContent(TableContent tableContent, int groupId) throws SQLException {
-		createTableContentTable();
 		String sql;
 		sql = "Insert into tableContent (header,body,GroupId,tableType) values (?,?,?,?);";
 		int id = -1;
@@ -104,7 +122,6 @@ public class SQLiteWebMainContentDAO implements WebMainContentDAO {
 
 	@Override
 	public ArrayList<TableContent> selectAllTableContent(int groupId) throws SQLException {
-		createTableContentTable();
 		String sql = "Select * from tableContent, gruppen where GroupId =" + groupId + " ORDER BY idTableContent ASC;";
 		ArrayList<TableContent> tableContentListe = new ArrayList<TableContent>();
 		Statement stmt;
@@ -130,7 +147,6 @@ public class SQLiteWebMainContentDAO implements WebMainContentDAO {
 
 	@Override
 	public boolean updateTableContent(TableContent tableContent) throws SQLException {
-		createTableContentTable();
 		int idtableContent = tableContent.getIdTableContent();
 		boolean ok = false;
 		String sql = "update tableContent set header = ?, body = ?, tableType = ? where idTableContent="

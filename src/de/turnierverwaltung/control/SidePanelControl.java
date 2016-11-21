@@ -78,9 +78,10 @@ public class SidePanelControl extends JPanel implements ActionListener {
 		this.mainControl = mainControl;
 		selectedRow = 0;
 		DAOFactory daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
-		sidepanelDAO = daoFactory.getWebRightContentDAO();
+		
 
 		try {
+			sidepanelDAO = daoFactory.getWebRightContentDAO();
 			sidepanel = sidepanelDAO.selectAllSidepanel(this.mainControl.getTurnier().getTurnierId());
 		} catch (SQLException e1) {
 			// TODO Automatisch generierter Erfassungsblock

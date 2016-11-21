@@ -10,7 +10,7 @@ public interface WebRightContentDAO {
 
 	public boolean deleteSidepanel(int id) throws SQLException;
 
-	public ArrayList<Sidepanel> findSidepanel(int id) throws SQLException;
+	public Sidepanel findSidepanel(int id) throws SQLException;
 
 	public ArrayList<Sidepanel> getAllSidepanel() throws SQLException;
 

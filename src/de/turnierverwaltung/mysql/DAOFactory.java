@@ -1,5 +1,7 @@
 package de.turnierverwaltung.mysql;
 
+import java.sql.SQLException;
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -45,7 +47,7 @@ public abstract class DAOFactory {
 
 	public abstract TurnierDAO getTurnierDAO();
 
-	public abstract WebRightContentDAO getWebRightContentDAO();
+	public abstract WebRightContentDAO getWebRightContentDAO() throws SQLException;
 
-	public abstract WebMainContentDAO getWebMainContentDAO();
+	public abstract WebMainContentDAO getWebMainContentDAO() throws SQLException;
 }

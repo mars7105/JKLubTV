@@ -37,7 +37,7 @@ public class SQLControl {
 	private Turnier_has_SpielerDAO mySQLTurnier_has_SpielerDAO;
 	private WebRightContentDAO sidePanelDAO;
 
-	public SQLControl() {
+	public SQLControl() throws SQLException {
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		mySQLTurnierDAO = daoFactory.getTurnierDAO();
 		mySQLSpielerDAO = daoFactory.getSpielerDAO();
