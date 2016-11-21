@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 import de.turnierverwaltung.model.Sidepanel;
 import de.turnierverwaltung.view.ColorSelectorView;
 import de.turnierverwaltung.view.FrontendSidePanelView;
+import de.turnierverwaltung.view.WebsiteConfigView;
 
 public class FrontendSidePanelControl implements ActionListener {
 	private FrontendSidePanelView sidePanel;
@@ -29,26 +30,38 @@ public class FrontendSidePanelControl implements ActionListener {
 
 	public FrontendSidePanelControl(MainControl mainControl) {
 		this.mainControl = mainControl;
+
 		dynTree = new SidePanelControl(mainControl);
 
 		sidePanel = new FrontendSidePanelView(sideP, dynTree);
 		this.mainControl.setFrontendSidePanelView(sidePanel);
-		jsonDialog = sidePanel.getJsonDialog();
+		// jsonDialog = sidePanel.getJsonDialog();
+
 		headerTextField = sidePanel.getHeaderTextField();
 		bodyTextArea = sidePanel.getBodyTextArea();
 		colorSelector = sidePanel.getColorSelectorPanel();
-		okButton = sidePanel.getOkButton();
 
-		okButton.addActionListener(this);
+		// okButton.addActionListener(this);
 
 		headerText = "";
 		bodyText = "";
 	}
 
 	public void makeDialog() {
-
 		sidePanel.makeDialog();
 
+		WebsiteConfigView webconfigView = null;
+		if (mainControl.getWebconfigView() == null) {
+			webconfigView = new WebsiteConfigView();
+			mainControl.setWebconfigView(webconfigView);
+		} else {
+			webconfigView = mainControl.getWebconfigView();
+		}
+
+		jsonDialog = webconfigView.getDialog();
+		okButton = webconfigView.getOkButton();
+		okButton.addActionListener(this);
+		webconfigView.getTabbedPane().addTab("Website Righ Content", sidePanel.getMainPanel());
 	}
 
 	@Override
@@ -109,6 +122,14 @@ public class FrontendSidePanelControl implements ActionListener {
 
 	public void setColorSelector(ColorSelectorView colorSelector) {
 		this.colorSelector = colorSelector;
+	}
+
+	public JDialog getJsonDialog() {
+		return jsonDialog;
+	}
+
+	public void setJsonDialog(JDialog jsonDialog) {
+		this.jsonDialog = jsonDialog;
 	}
 
 }

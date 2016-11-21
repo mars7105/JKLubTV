@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -21,13 +20,13 @@ import de.turnierverwaltung.model.Sidepanel;
 
 public class FrontendSidePanelView {
 
-	private JDialog jsonDialog;
+	private JPanel mainPanel;
 	private JTextField headerTextField;
 	private JTextArea bodyTextArea;
 	private JPanel htmlAll;
-	private ButtonPanelView buttonPane;
+//	private ButtonPanelView buttonPane;
 	// private JButton cancelButton;
-	private JButton okButton;
+//	private JButton okButton;
 
 	private ButtonSavePanelView buttonPanel;
 	private JButton saveButton;
@@ -40,16 +39,16 @@ public class FrontendSidePanelView {
 		this.dynTree = dynTree;
 		// Erzeugung eines neuen Frames mit
 		// dem Titel Beispiel JDialog
-		jsonDialog = new JDialog();
-		jsonDialog.setAlwaysOnTop(true);
+		mainPanel = new JPanel();
+		// jsonDialog.setAlwaysOnTop(true);
 		// Titel wird gesetzt
-		jsonDialog.setTitle(Messages.getString("FrontendSidePanelView.0"));
+		// jsonDialog.setTitle(Messages.getString("FrontendSidePanelView.0"));
 		// Breite und Höhe des Fensters werden
 		// auf 200 Pixel gesetzt
-		jsonDialog.setSize(600, 500);
+		mainPanel.setSize(600, 500);
 		// Dialog wird auf modal gesetzt
-		jsonDialog.setModal(true);
-		jsonDialog.setLayout(new BorderLayout());
+		// jsonDialog.setModal(true);
+		mainPanel.setLayout(new BorderLayout());
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BorderLayout());
 		Dimension dimTextField = new Dimension(350, 30);
@@ -67,9 +66,9 @@ public class FrontendSidePanelView {
 		// bodyTextArea.setPreferredSize(dimTextArea);
 		bodyTextArea.addMouseListener(cmmL);
 
-		buttonPane = new ButtonPanelView();
-		buttonPane.makeOKButton();
-		okButton = buttonPane.getOkButton();
+//		buttonPane = new ButtonPanelView();
+//		buttonPane.makeOKButton();
+//		okButton = buttonPane.getOkButton();
 		// cancelButton = buttonPane.getCancelButton();
 		buttonPanel = new ButtonSavePanelView();
 		addButton = buttonPanel.getAddButton();
@@ -110,17 +109,17 @@ public class FrontendSidePanelView {
 		labelPanel.add(headerTextFieldLabel);
 		htmlPanel.add(labelPanel);
 		htmlPanel.add(headerTextField);
-		//leftPanel.add(htmlPanel, BorderLayout.NORTH);
+		// leftPanel.add(htmlPanel, BorderLayout.NORTH);
 
-//		htmlPanel = new JPanel();
-//		htmlPanel.setLayout(new BoxLayout(htmlPanel, BoxLayout.PAGE_AXIS));
+		// htmlPanel = new JPanel();
+		// htmlPanel.setLayout(new BoxLayout(htmlPanel, BoxLayout.PAGE_AXIS));
 		labelPanel = new JPanel();
 		labelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		labelPanel.add(colorSelectorLabel);
 		htmlPanel.add(labelPanel);
 		htmlPanel.add(colorSelectorPanel);
 		leftPanel.add(htmlPanel, BorderLayout.NORTH);
-		
+
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new BoxLayout(htmlPanel, BoxLayout.PAGE_AXIS));
 		// htmlPanel.setPreferredSize(dimTextArea);
@@ -133,8 +132,6 @@ public class FrontendSidePanelView {
 		scrollPane.setPreferredSize(dimTextArea);
 		htmlPanel.add(scrollPane);
 		leftPanel.add(htmlPanel, BorderLayout.CENTER);
-
-		
 
 		bothPanel.add(leftPanel, BorderLayout.NORTH);
 		htmlAll.add(bothPanel, BorderLayout.CENTER);
@@ -151,23 +148,15 @@ public class FrontendSidePanelView {
 		right.add(htmlAll);
 		left.add(dynTree);
 
-		jsonDialog.add(right, BorderLayout.CENTER);
+		mainPanel.add(right, BorderLayout.CENTER);
 
-		jsonDialog.add(left, BorderLayout.WEST);
-		buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		jsonDialog.add(buttonPane, BorderLayout.SOUTH);
-		jsonDialog.pack();
-		jsonDialog.setLocationRelativeTo(null);
-		jsonDialog.setEnabled(true);
-		jsonDialog.setVisible(true);
-	}
-
-	public JDialog getJsonDialog() {
-		return jsonDialog;
-	}
-
-	public void setJsonDialog(JDialog jsonDialog) {
-		this.jsonDialog = jsonDialog;
+		mainPanel.add(left, BorderLayout.WEST);
+//		buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+//		mainPanel.add(buttonPane, BorderLayout.SOUTH);
+		// jsonDialog.pack();
+		// jsonDialog.setLocationRelativeTo(null);
+		mainPanel.setEnabled(true);
+		mainPanel.setVisible(true);
 	}
 
 	public JTextField getHeaderTextField() {
@@ -186,13 +175,13 @@ public class FrontendSidePanelView {
 		this.bodyTextArea = bodyTextArea;
 	}
 
-	public JButton getOkButton() {
-		return okButton;
-	}
-
-	public void setOkButton(JButton okButton) {
-		this.okButton = okButton;
-	}
+//	public JButton getOkButton() {
+//		return okButton;
+//	}
+//
+//	public void setOkButton(JButton okButton) {
+//		this.okButton = okButton;
+//	}
 
 	public JButton getSaveButton() {
 		return saveButton;
@@ -224,6 +213,14 @@ public class FrontendSidePanelView {
 
 	public void setColorSelectorPanel(ColorSelectorView colorSelectorPanel) {
 		this.colorSelectorPanel = colorSelectorPanel;
+	}
+
+	public JPanel getMainPanel() {
+		return mainPanel;
+	}
+
+	public void setMainPanel(JPanel mainPanel) {
+		this.mainPanel = mainPanel;
 	}
 
 }

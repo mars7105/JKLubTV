@@ -18,6 +18,7 @@ import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.WebMainContentDAO;
 import de.turnierverwaltung.mysql.WebRightContentDAO;
 import de.turnierverwaltung.view.JSONConfigView;
+import de.turnierverwaltung.view.WebsiteConfigView;
 
 public class JSONConfigControl implements ActionListener {
 	private JSONConfigView jsonView;
@@ -34,14 +35,13 @@ public class JSONConfigControl implements ActionListener {
 	private FrontendSidePanelControl sidePanel;
 	private WebRightContentDAO webRightContent;
 	private WebMainContentDAO webMainContent;
-	private ArrayList<JButton> groupButtons;
 	private String[] crossHeader;
 	private String[] crossBody;
 	private int[] crossColor;
 	private String[] meetingHeader;
 	private String[] meetingBody;
 	private int[] meetingColor;
-	private FrontendTableTextControl ftC;
+	private FrontendTableTextControl[] ftC;
 	private String username;
 	private String password;
 
@@ -81,7 +81,7 @@ public class JSONConfigControl implements ActionListener {
 		meetingBody = new String[gruppenAnzahl];
 
 		for (int i = 0; i < gruppenAnzahl; i++) {
-			jsonView.makeGroupButtons(this.mainControl.getTurnier().getGruppe()[i].getGruppenName());
+			// jsonView.makeGroupButtons(this.mainControl.getTurnier().getGruppe()[i].getGruppenName());
 			crossHeader[i] = "";
 			crossBody[i] = "";
 			crossColor[i] = 0;
@@ -89,10 +89,10 @@ public class JSONConfigControl implements ActionListener {
 			meetingBody[i] = "";
 			meetingColor[i] = 0;
 		}
-		groupButtons = jsonView.getGroupButtons();
-		for (JButton groupButton : groupButtons) {
-			groupButton.addActionListener(this);
-		}
+//		groupButtons = jsonView.getGroupButtons();
+//		for (JButton groupButton : groupButtons) {
+//			groupButton.addActionListener(this);
+//		}
 		DAOFactory daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		try {
 			webRightContent = daoFactory.getWebRightContentDAO();
@@ -102,6 +102,10 @@ public class JSONConfigControl implements ActionListener {
 			// TODO Automatisch generierter Erfassungsblock
 			e.printStackTrace();
 		}
+		// sidePanel = new FrontendSidePanelControl(mainControl);
+		//
+		// sidePanel.makeDialog();
+		// makeGroupContentView();
 	}
 
 	public void makeDialog() {
@@ -109,52 +113,70 @@ public class JSONConfigControl implements ActionListener {
 		jsonView.makePanel();
 	}
 
+	public void makeGroupContentView() {
+		int anzahlgruppen = mainControl.getTurnier().getAnzahlGruppen();
+		ftC = new FrontendTableTextControl[anzahlgruppen];
+
+		// ArrayList<ArrayList<TableContent>> tableContentgroups = new
+		// ArrayList<ArrayList<TableContent>>();
+
+		for (int i = 0; i < anzahlgruppen; i++) {
+			ArrayList<TableContent> tableContentItems = new ArrayList<TableContent>();
+			ftC[i] = new FrontendTableTextControl(mainControl);
+			try {
+				int groupID = mainControl.getTurnier().getGruppe()[i].getGruppeId();
+				tableContentItems = webMainContent.selectAllTableContent(groupID);
+				for (TableContent tableContent : tableContentItems) {
+					if (tableContent.getTableType() == TournamentConstants.CROSSTABLETYPE) {
+						ftC[i].getCrossHeader().setText(tableContent.getHeader());
+						ftC[i].getCrossBody().setText(tableContent.getBody());
+					}
+					if (tableContent.getTableType() == TournamentConstants.MEETINGTABLETYPE) {
+						ftC[i].getMeetingHeader().setText(tableContent.getHeader());
+						ftC[i].getMeetingBody().setText(tableContent.getBody());
+					}
+				}
+			} catch (SQLException e1) {
+				// TODO Automatisch generierter Erfassungsblock
+				e1.printStackTrace();
+			}
+
+			// tableContentgroups.add(tableContentItems);
+			ftC[i].makeDialog(mainControl.getTurnier().getGruppe()[i].getGruppenName());
+		}
+
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int index = 0;
-		for (JButton groupButton : groupButtons) {
-			if (e.getSource() == groupButton) {
-				int anzahlgruppen = mainControl.getTurnier().getAnzahlGruppen();
-				ftC = new FrontendTableTextControl();
 
-				ArrayList<TableContent> tableContentItems = new ArrayList<TableContent>();
-				ArrayList<ArrayList<TableContent>> tableContentgroups = new ArrayList<ArrayList<TableContent>>();
-
-				for (int i = 0; i < anzahlgruppen; i++) {
-					try {
-						int groupID = mainControl.getTurnier().getGruppe()[index].getGruppeId();
-						tableContentItems = webMainContent.selectAllTableContent(groupID);
-						for (TableContent tableContent : tableContentItems) {
-							if (tableContent.getTableType() == TournamentConstants.CROSSTABLETYPE) {
-								ftC.getCrossHeader().setText(tableContent.getHeader());
-								ftC.getCrossBody().setText(tableContent.getBody());
-							}
-							if (tableContent.getTableType() == TournamentConstants.MEETINGTABLETYPE) {
-								ftC.getMeetingHeader().setText(tableContent.getHeader());
-								ftC.getMeetingBody().setText(tableContent.getBody());
-							}
-						}
-					} catch (SQLException e1) {
-						// TODO Automatisch generierter Erfassungsblock
-						e1.printStackTrace();
-					}
-
-					tableContentgroups.add(tableContentItems);
-				}
-				ftC.makeDialog();
-				int groupID = mainControl.getTurnier().getGruppe()[index].getGruppeId();
-				crossHeader[index] = ftC.getCrossHeader().getText();
-				crossBody[index] = ftC.getCrossBody().getText();
-				crossColor[index] = ftC.getCrossColorSelector().getSelectedIndex();
-				meetingHeader[index] = ftC.getMeetingHeader().getText();
-				meetingBody[index] = ftC.getMeetingBody().getText();
-				meetingColor[index] = ftC.getMeetingColorSelector().getSelectedIndex();
-				TableContent tableCrossContent = new TableContent(crossHeader[index], crossBody[index], 0,
+		if (e.getSource() == okButton) {
+			int anzahlgruppen = mainControl.getTurnier().getAnzahlGruppen();
+			for (int i = 0; i < anzahlgruppen; i++) {
+				int groupID = mainControl.getTurnier().getGruppe()[i].getGruppeId();
+				crossHeader[i] = ftC[i].getCrossHeader().getText();
+				crossBody[i] = ftC[i].getCrossBody().getText();
+				crossColor[i] = ftC[i].getCrossColorSelector().getSelectedIndex();
+				meetingHeader[i] = ftC[i].getMeetingHeader().getText();
+				meetingBody[i] = ftC[i].getMeetingBody().getText();
+				meetingColor[i] = ftC[i].getMeetingColorSelector().getSelectedIndex();
+				TableContent tableCrossContent = new TableContent(crossHeader[i], crossBody[i], 0,
 						TournamentConstants.CROSSTABLETYPE, groupID);
-				TableContent tableMeetingContent = new TableContent(meetingHeader[index], meetingBody[index], 0,
+				TableContent tableMeetingContent = new TableContent(meetingHeader[i], meetingBody[i], 0,
 						TournamentConstants.MEETINGTABLETYPE, groupID);
+
 				Boolean updatetableCrossContent = false;
 				Boolean updatetableMeetingContent = false;
+
+				ArrayList<TableContent> tableContentItems = new ArrayList<TableContent>();
+
+				try {
+					tableContentItems = webMainContent
+							.selectAllTableContent(this.mainControl.getTurnier().getGruppe()[i].getGruppeId());
+
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(mainControl, "Database error");
+				}
 				for (TableContent tableContent : tableContentItems) {
 
 					if (tableContent.getIdGroup() == tableCrossContent.getIdGroup()
@@ -180,6 +202,7 @@ public class JSONConfigControl implements ActionListener {
 						}
 					}
 				}
+
 				if (updatetableCrossContent == false) {
 					try {
 						webMainContent.insertTableContent(tableCrossContent, groupID);
@@ -198,9 +221,6 @@ public class JSONConfigControl implements ActionListener {
 					}
 				}
 			}
-			index++;
-		}
-		if (e.getSource() == okButton) {
 			menuName = jsonView.getMenuNameTextField().getText();
 			uploadURL = jsonView.getUploadURLTextField().getText();
 			username = jsonView.getUsernameTextField().getText();
@@ -216,7 +236,7 @@ public class JSONConfigControl implements ActionListener {
 			ArrayList<ArrayList<TableContent>> tableContentgroups = new ArrayList<ArrayList<TableContent>>();
 
 			try {
-				int anzahlgruppen = mainControl.getTurnier().getAnzahlGruppen();
+				
 				for (int i = 0; i < anzahlgruppen; i++) {
 					tableContentItems = webMainContent
 							.selectAllTableContent(this.mainControl.getTurnier().getGruppe()[i].getGruppeId());
@@ -242,12 +262,19 @@ public class JSONConfigControl implements ActionListener {
 
 		}
 		if (e.getSource() == sidePanelsButton) {
+			WebsiteConfigView webconfigView = new WebsiteConfigView();
+			mainControl.setWebconfigView(webconfigView);
 			sidePanel = new FrontendSidePanelControl(mainControl);
 
 			sidePanel.makeDialog();
+			makeGroupContentView();
 
+			webconfigView.makeDialog();
+			
 		}
-		if (e.getSource() == connectionTestButton) {
+		if (e.getSource() == connectionTestButton)
+
+		{
 			String url = jsonView.getUploadURLTextField().getText();
 			username = jsonView.getUsernameTextField().getText();
 			password = jsonView.getPasswordTextField().getText();

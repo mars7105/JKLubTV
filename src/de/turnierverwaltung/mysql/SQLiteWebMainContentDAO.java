@@ -122,7 +122,7 @@ public class SQLiteWebMainContentDAO implements WebMainContentDAO {
 
 	@Override
 	public ArrayList<TableContent> selectAllTableContent(int groupId) throws SQLException {
-		String sql = "Select * from tableContent, gruppen where GroupId =" + groupId + " ORDER BY idTableContent ASC;";
+		String sql = "Select * from tableContent where GroupId =" + groupId + " ORDER BY idTableContent ASC;";
 		ArrayList<TableContent> tableContentListe = new ArrayList<TableContent>();
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -134,7 +134,7 @@ public class SQLiteWebMainContentDAO implements WebMainContentDAO {
 				String header = rs.getString("header");
 				String body = rs.getString("body");
 				int tableType = rs.getInt("tableType");
-
+				groupId = rs.getInt("GroupId");
 				TableContent tableContent = new TableContent(header, body, idTableContent, tableType, groupId);
 				tableContentListe.add(tableContent);
 

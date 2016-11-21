@@ -1,7 +1,5 @@
 package de.turnierverwaltung.view;
 
-import java.awt.FlowLayout;
-
 import javax.swing.JComboBox;
 
 public class ColorSelectorView extends JComboBox<String> {
