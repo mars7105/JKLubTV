@@ -69,6 +69,7 @@ public class MainControl extends JFrame {
 	private MainView mainView;
 	private JTabbedPane hauptPanel;
 	private FrontendSidePanelView frontendSidePanelView;
+	private FrontendTableTextControl[] frontendTableTextControl;
 	private NewTournamentControl turnierControl;
 	private NewTournamentView turnierView;
 	private NewTournamentGroupsView gruppenView;
@@ -284,6 +285,14 @@ public class MainControl extends JFrame {
 
 		}
 		resetApp();
+	}
+
+	public FrontendTableTextControl[] getFrontendTableTextControl() {
+		return frontendTableTextControl;
+	}
+
+	public void setFrontendTableTextControl(FrontendTableTextControl[] frontendTableTextControl) {
+		this.frontendTableTextControl = frontendTableTextControl;
 	}
 
 	public FrontendSidePanelView getFrontendSidePanelView() {

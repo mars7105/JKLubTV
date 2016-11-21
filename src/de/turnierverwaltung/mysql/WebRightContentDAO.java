@@ -18,6 +18,6 @@ public interface WebRightContentDAO {
 
 	public ArrayList<Sidepanel> selectAllSidepanel(int idTurnier) throws SQLException;
 
-	public boolean updateSidepanel(Sidepanel sitepanel) throws SQLException;
+	public boolean updateSidepanel(Sidepanel sitepanel, int turnierID) throws SQLException;
 
 }

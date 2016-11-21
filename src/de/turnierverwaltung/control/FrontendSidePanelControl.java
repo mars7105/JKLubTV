@@ -2,14 +2,20 @@ package de.turnierverwaltung.control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import de.turnierverwaltung.model.Sidepanel;
+import de.turnierverwaltung.model.TableContent;
+import de.turnierverwaltung.model.TournamentConstants;
+import de.turnierverwaltung.mysql.DAOFactory;
+import de.turnierverwaltung.mysql.WebMainContentDAO;
 import de.turnierverwaltung.view.ColorSelectorView;
 import de.turnierverwaltung.view.FrontendSidePanelView;
 import de.turnierverwaltung.view.WebsiteConfigView;
@@ -27,6 +33,14 @@ public class FrontendSidePanelControl implements ActionListener {
 	private MainControl mainControl;
 	private SidePanelControl dynTree;
 	private ColorSelectorView colorSelector;
+	private FrontendTableTextControl[] ftC;
+	private String[] crossHeader;
+	private String[] crossBody;
+	private String[] meetingHeader;
+	private int[] crossColor;
+	private String[] meetingBody;
+	private int[] meetingColor;
+	private WebMainContentDAO webMainContent;
 
 	public FrontendSidePanelControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -45,6 +59,17 @@ public class FrontendSidePanelControl implements ActionListener {
 
 		headerText = "";
 		bodyText = "";
+		// int anzahlgruppen = mainControl.getTurnier().getAnzahlGruppen();
+		DAOFactory daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
+		try {
+
+			webMainContent = daoFactory.getWebMainContentDAO();
+		} catch (SQLException e) {
+			// TODO Automatisch generierter Erfassungsblock
+			e.printStackTrace();
+		}
+
+		ftC = mainControl.getFrontendTableTextControl();
 	}
 
 	public void makeDialog() {
@@ -61,7 +86,10 @@ public class FrontendSidePanelControl implements ActionListener {
 		jsonDialog = webconfigView.getDialog();
 		okButton = webconfigView.getOkButton();
 		okButton.addActionListener(this);
-		webconfigView.getTabbedPane().addTab("Website Righ Content", sidePanel.getMainPanel());
+		// webconfigView.getTabbedPane().addTab("Right Content",
+		// sidePanel.getMainPanel());
+		webconfigView.getTabbedPane().insertTab("Right Content", null, sidePanel.getMainPanel(), null, 0);
+		webconfigView.getTabbedPane().setSelectedIndex(0);
 	}
 
 	@Override
@@ -70,6 +98,85 @@ public class FrontendSidePanelControl implements ActionListener {
 		if (e.getSource() == okButton) {
 
 			jsonDialog.dispose();
+			int anzahlgruppen = mainControl.getTurnier().getAnzahlGruppen();
+			crossHeader = new String[anzahlgruppen];
+			crossBody = new String[anzahlgruppen];
+			crossColor = new int[anzahlgruppen];
+			meetingHeader = new String[anzahlgruppen];
+			meetingBody = new String[anzahlgruppen];
+			meetingColor = new int[anzahlgruppen];
+
+			for (int i = 0; i < anzahlgruppen; i++) {
+
+				int groupID = mainControl.getTurnier().getGruppe()[i].getGruppeId();
+				crossHeader[i] = ftC[i].getCrossHeader().getText();
+				crossBody[i] = ftC[i].getCrossBody().getText();
+				crossColor[i] = ftC[i].getCrossColorSelector().getSelectedIndex();
+				meetingHeader[i] = ftC[i].getMeetingHeader().getText();
+				meetingBody[i] = ftC[i].getMeetingBody().getText();
+				meetingColor[i] = ftC[i].getMeetingColorSelector().getSelectedIndex();
+
+				TableContent tableCrossContent = new TableContent(crossHeader[i], crossBody[i], 0,
+						TournamentConstants.CROSSTABLETYPE, groupID, crossColor[i]);
+				TableContent tableMeetingContent = new TableContent(meetingHeader[i], meetingBody[i], 0,
+						TournamentConstants.MEETINGTABLETYPE, groupID, meetingColor[i]);
+
+				Boolean updatetableCrossContent = false;
+				Boolean updatetableMeetingContent = false;
+
+				ArrayList<TableContent> tableContentItems = new ArrayList<TableContent>();
+
+				try {
+					tableContentItems = webMainContent
+							.selectAllTableContent(this.mainControl.getTurnier().getGruppe()[i].getGruppeId());
+
+				} catch (SQLException e1) {
+					JOptionPane.showMessageDialog(mainControl, "Database error");
+				}
+				for (TableContent tableContent : tableContentItems) {
+
+					if (tableContent.getIdGroup() == tableCrossContent.getIdGroup()
+							&& tableContent.getTableType() == tableCrossContent.getTableType()) {
+						tableCrossContent.setIdTableContent(tableContent.getIdTableContent());
+						try {
+							webMainContent.updateTableContent(tableCrossContent);
+							updatetableCrossContent = true;
+						} catch (SQLException e1) {
+							JOptionPane.showMessageDialog(mainControl, "Database error");
+							e1.printStackTrace();
+						}
+					}
+					if (tableContent.getIdGroup() == tableMeetingContent.getIdGroup()
+							&& tableContent.getTableType() == tableMeetingContent.getTableType()) {
+						tableMeetingContent.setIdTableContent(tableContent.getIdTableContent());
+						try {
+							webMainContent.updateTableContent(tableMeetingContent);
+							updatetableMeetingContent = true;
+						} catch (SQLException e1) {
+							JOptionPane.showMessageDialog(mainControl, "Database error");
+							e1.printStackTrace();
+						}
+					}
+				}
+
+				if (updatetableCrossContent == false) {
+					try {
+						webMainContent.insertTableContent(tableCrossContent, groupID);
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(mainControl, "Database error");
+						e1.printStackTrace();
+					}
+				}
+				if (updatetableMeetingContent == false) {
+					try {
+
+						webMainContent.insertTableContent(tableMeetingContent, groupID);
+					} catch (SQLException e1) {
+						JOptionPane.showMessageDialog(mainControl, "Database error");
+						e1.printStackTrace();
+					}
+				}
+			}
 
 		}
 	}

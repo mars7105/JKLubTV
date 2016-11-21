@@ -18,11 +18,15 @@ public class JSONObject {
 	private String jsonCrossTitle;
 	private String jsonMeetingtitle;
 	private String siteName;
+	private int[] crossTableColor;
+	private int[] meetingTableColor;
+	private int[] color;
 
 	public JSONObject(String tournamentName, String[] groupName, String menuName, String[] crossHeader,
-			String[] crossTableText2, String[][][] crossTable, String[] meetingHeader, String[] meetingTableText2,
-			String[][][] meetingTable, String startDate, String endDate, String[] header, String[] body,
-			String jsonCrossTitle, String jsonMeetingtitle, String siteName) {
+			String[] crossTableText2, String[][][] crossTable, int[] crossTableColor, String[] meetingHeader,
+			String[] meetingTableText2, String[][][] meetingTable, int[] meetingTableColor, String startDate,
+			String endDate, String[] header, String[] body, int[] color, String jsonCrossTitle, String jsonMeetingtitle,
+			String siteName) {
 		super();
 		this.crossHeader = crossHeader;
 		this.meetingHeader = meetingHeader;
@@ -31,8 +35,10 @@ public class JSONObject {
 		this.menuName = menuName;
 		this.crossTableText = crossTableText2;
 		this.crossTable = crossTable;
+		this.crossTableColor = crossTableColor;
 		this.meetingTableText = meetingTableText2;
 		this.meetingTable = meetingTable;
+		this.meetingTableColor = meetingTableColor;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.jsonCrossTitle = jsonCrossTitle;
@@ -41,6 +47,7 @@ public class JSONObject {
 		this.sidePanelsheader = header;
 		this.sidePanelsbody = body;
 		this.siteName = siteName;
+		this.color = color;
 	}
 
 	public String getTournamentName() {
@@ -177,6 +184,30 @@ public class JSONObject {
 
 	public void setMeetingHeader(String[] meetingHeader) {
 		this.meetingHeader = meetingHeader;
+	}
+
+	public int[] getCrossTableColor() {
+		return crossTableColor;
+	}
+
+	public void setCrossTableColor(int[] crossTableColor) {
+		this.crossTableColor = crossTableColor;
+	}
+
+	public int[] getMeetingTableColor() {
+		return meetingTableColor;
+	}
+
+	public void setMeetingTableColor(int[] meetingTableColor) {
+		this.meetingTableColor = meetingTableColor;
+	}
+
+	public int[] getColor() {
+		return color;
+	}
+
+	public void setColor(int[] color) {
+		this.color = color;
 	}
 
 }

@@ -22,7 +22,7 @@ public class WebsiteConfigView {
 		dialog.setTitle(Messages.getString("FrontendTableTextView.0"));
 		dialog.setModal(true);
 
-		dialog.setLocationRelativeTo(null);
+		;
 		dialog.setSize(600, 500);
 		dialog.setLayout(new BorderLayout());
 		tabbedPane = new JTabbedPane();

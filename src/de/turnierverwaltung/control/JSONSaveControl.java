@@ -86,16 +86,21 @@ public class JSONSaveControl {
 			int index = 0;
 			String[] header = new String[sidepanelItems.size()];
 			String[] body = new String[sidepanelItems.size()];
+			int[] color = new int[sidepanelItems.size()];
 			for (Sidepanel item : sidepanelItems) {
 				header[index] = item.getHeader();
 				body[index] = item.getBody();
+				color[index] = item.getColor();
 				index++;
 			}
 
 			String[] crossHeader = new String[anzahlGruppen];
 			String[] crossBody = new String[anzahlGruppen];
+			int[] crossColor = new int[anzahlGruppen];
 			String[] meetingHeader = new String[anzahlGruppen];
 			String[] meetingBody = new String[anzahlGruppen];
+			int[] meetingColor = new int[anzahlGruppen];
+
 			int i = 0;
 			for (Iterator<ArrayList<TableContent>> iterator = tableContentgroups.iterator(); iterator.hasNext();) {
 				ArrayList<TableContent> tableContentList = iterator.next();
@@ -103,18 +108,20 @@ public class JSONSaveControl {
 					if (tableContentItem.getTableType() == TournamentConstants.CROSSTABLETYPE) {
 						crossHeader[i] = tableContentItem.getHeader();
 						crossBody[i] = tableContentItem.getBody();
+						crossColor[i] = tableContentItem.getColor();
 					}
 					if (tableContentItem.getTableType() == TournamentConstants.MEETINGTABLETYPE) {
 						meetingHeader[i] = tableContentItem.getHeader();
 						meetingBody[i] = tableContentItem.getBody();
+						meetingColor[i] = tableContentItem.getColor();
 					}
 
 				}
 				i++;
 			}
 			jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName, crossHeader, crossBody,
-					meetingHeader, meetingBody, header, body, jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix,
-					jsonMeetingtitle, siteName, configFlag);
+					crossColor, meetingHeader, meetingBody, meetingColor, header, body, color, jsonFileName,
+					ctableMatrix, jsonCrossTitle, mtableMatrix, jsonMeetingtitle, siteName, configFlag);
 			// jsonCross.postEnd();
 			JSON jsonFileObjects = new JSON(url, username, password);
 			JSONFileObject jsonFiles = new JSONFileObject(filenames);

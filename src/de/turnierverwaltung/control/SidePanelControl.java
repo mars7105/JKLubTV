@@ -78,7 +78,6 @@ public class SidePanelControl extends JPanel implements ActionListener {
 		this.mainControl = mainControl;
 		selectedRow = 0;
 		DAOFactory daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
-		
 
 		try {
 			sidepanelDAO = daoFactory.getWebRightContentDAO();
@@ -123,9 +122,11 @@ public class SidePanelControl extends JPanel implements ActionListener {
 
 				int[] row = treePanel.getTree().getSelectionRows();
 				for (int i = 0; i < row.length; i++) {
-//					System.out.println(row[i]);
+					// System.out.println(row[i]);
 					if (row.length == 1) {
 						selectedRow = row[i];
+					} else {
+						selectedRow = 0;
 					}
 				}
 				if (selectedRow > 0) {
@@ -133,10 +134,14 @@ public class SidePanelControl extends JPanel implements ActionListener {
 							.setText(sidepanel.get(selectedRow - 1).getHeader());
 					mainControl.getFrontendSidePanelView().getBodyTextArea()
 							.setText(sidepanel.get(selectedRow - 1).getBody());
+					mainControl.getFrontendSidePanelView().getColorSelectorPanel()
+							.setSelectedIndex(sidepanel.get(selectedRow - 1).getColor());
+					// .setText(sidepanel.get(selectedRow - 1).getBody());
 				}
 				if (selectedRow == 0) {
 					mainControl.getFrontendSidePanelView().getHeaderTextField().setText("");
 					mainControl.getFrontendSidePanelView().getBodyTextArea().setText("");
+					mainControl.getFrontendSidePanelView().getColorSelectorPanel().setSelectedIndex(0);
 				}
 			}
 
@@ -170,7 +175,8 @@ public class SidePanelControl extends JPanel implements ActionListener {
 					body = "";
 				}
 			}
-			Sidepanel temp = new Sidepanel(header, body, 0);
+			Sidepanel temp = new Sidepanel(header, body, 0,
+					mainControl.getFrontendSidePanelView().getColorSelectorPanel().getSelectedIndex());
 
 			try {
 
@@ -178,6 +184,7 @@ public class SidePanelControl extends JPanel implements ActionListener {
 				temp.setIdSidepanel(id);
 				sidepanel.add(temp);
 				treePanel.addObject(null, temp);
+			
 			} catch (SQLException e1) {
 				// TODO Automatisch generierter Erfassungsblock
 				e1.printStackTrace();
@@ -187,18 +194,21 @@ public class SidePanelControl extends JPanel implements ActionListener {
 			// treePanel.removeCurrentNode();
 			String headerText = mainControl.getFrontendSidePanelView().getHeaderTextField().getText();
 			String bodyText = mainControl.getFrontendSidePanelView().getBodyTextArea().getText();
-
+			int color = mainControl.getFrontendSidePanelView().getColorSelectorPanel().getSelectedIndex();
 			if (headerText != null && selectedRow > 0) {
 				try {
 					sidepanel.get(selectedRow - 1).setHeader(headerText);
 					sidepanel.get(selectedRow - 1).setBody(bodyText);
-					sidepanelDAO.updateSidepanel(sidepanel.get(selectedRow - 1));
+					sidepanel.get(selectedRow - 1).setColor(color);
+					sidepanelDAO.updateSidepanel(sidepanel.get(selectedRow - 1),
+							mainControl.getTurnier().getTurnierId());
 					DefaultMutableTreeNode childNode = new DefaultMutableTreeNode(headerText);
 					treePanel.getTreeModel().insertNodeInto(childNode, treePanel.getRootNode(), selectedRow);
 					treePanel.removeCurrentNode();
 
 					treePanel.getTreeModel().reload();
-					resetTreeSelect();
+//					resetTreeSelect();
+					treePanel.getTree().setSelectionRow(selectedRow);
 				} catch (SQLException e1) {
 					// TODO Automatisch generierter Erfassungsblock
 					e1.printStackTrace();
@@ -206,11 +216,13 @@ public class SidePanelControl extends JPanel implements ActionListener {
 
 				}
 				
+				
 			}
 
-		} else if (REMOVE_COMMAND.equals(command)) {
+		} else if (REMOVE_COMMAND.equals(command) && (selectedRow - 1) > 0) {
 			// Clear button clicked.
 			try {
+
 				sidepanelDAO.deleteSidepanel(sidepanel.get(selectedRow - 1).getIdSidepanel());
 				treePanel.removeCurrentNode();
 			} catch (SQLException e1) {
@@ -225,16 +237,18 @@ public class SidePanelControl extends JPanel implements ActionListener {
 				// TODO Automatisch generierter Erfassungsblock
 				e1.printStackTrace();
 			}
-			resetTreeSelect();
+			int selectItem = selectedRow;
+//			resetTreeSelect();
+			treePanel.getTree().setSelectionRow(selectItem);
 		}
 	}
 
-	private void resetTreeSelect() {
-		selectedRow = 0;
-		mainControl.getFrontendSidePanelView().getHeaderTextField().setText("");
-		mainControl.getFrontendSidePanelView().getBodyTextArea().setText("");
-		treePanel.getTreeModel().reload();
-	}
+//	private void resetTreeSelect() {
+//		selectedRow = 0;
+//		mainControl.getFrontendSidePanelView().getHeaderTextField().setText("");
+//		mainControl.getFrontendSidePanelView().getBodyTextArea().setText("");
+//		treePanel.getTreeModel().reload();
+//	}
 
 	public FrontendSidePanelView getSidePanelView() {
 		return sidePanelView;

@@ -28,7 +28,7 @@ public class SQLiteWebMainContentDAO implements WebMainContentDAO {
 	@Override
 	public void createTableContentTable() throws SQLException {
 		String sql = "CREATE TABLE IF NOT EXISTS tableContent (idTableContent INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL,"
-				+ " GroupId INTEGER, header VARCHAR, body TEXT, tableType INTEGER);";
+				+ " GroupId INTEGER, header VARCHAR, body TEXT, tableType INTEGER, color INTEGER);";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -78,7 +78,8 @@ public class SQLiteWebMainContentDAO implements WebMainContentDAO {
 				String body = rs.getString("body");
 				int tableType = rs.getInt("tableType");
 				int groupId = rs.getInt("GroupId");
-				tableContent = new TableContent(header, body, idTableContent, tableType, groupId);
+				int color = rs.getInt("color");
+				tableContent = new TableContent(header, body, idTableContent, tableType, groupId, color);
 
 			}
 			stmt.close();
@@ -96,7 +97,7 @@ public class SQLiteWebMainContentDAO implements WebMainContentDAO {
 	@Override
 	public int insertTableContent(TableContent tableContent, int groupId) throws SQLException {
 		String sql;
-		sql = "Insert into tableContent (header,body,GroupId,tableType) values (?,?,?,?);";
+		sql = "Insert into tableContent (header,body,GroupId,tableType,color) values (?,?,?,?,?);";
 		int id = -1;
 		if (this.dbConnect != null) {
 
@@ -105,6 +106,7 @@ public class SQLiteWebMainContentDAO implements WebMainContentDAO {
 			preStm.setString(2, tableContent.getBody());
 			preStm.setInt(3, groupId);
 			preStm.setInt(4, tableContent.getTableType());
+			preStm.setInt(5, tableContent.getColor());
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
@@ -135,7 +137,8 @@ public class SQLiteWebMainContentDAO implements WebMainContentDAO {
 				String body = rs.getString("body");
 				int tableType = rs.getInt("tableType");
 				groupId = rs.getInt("GroupId");
-				TableContent tableContent = new TableContent(header, body, idTableContent, tableType, groupId);
+				int color = rs.getInt("color");
+				TableContent tableContent = new TableContent(header, body, idTableContent, tableType, groupId, color);
 				tableContentListe.add(tableContent);
 
 			}
@@ -149,14 +152,16 @@ public class SQLiteWebMainContentDAO implements WebMainContentDAO {
 	public boolean updateTableContent(TableContent tableContent) throws SQLException {
 		int idtableContent = tableContent.getIdTableContent();
 		boolean ok = false;
-		String sql = "update tableContent set header = ?, body = ?, tableType = ? where idTableContent="
+		String sql = "update tableContent set header = ?, body = ?, GroupId = ?, tableType = ?, color = ? where idTableContent="
 				+ idtableContent + ";";
 		if (this.dbConnect != null) {
 
 			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
 			preStm.setString(1, tableContent.getHeader());
 			preStm.setString(2, tableContent.getBody());
-			preStm.setInt(3, tableContent.getTableType());
+			preStm.setInt(3, tableContent.getIdGroup());
+			preStm.setInt(4, tableContent.getTableType());
+			preStm.setInt(5, tableContent.getColor());
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
 			preStm.executeBatch();

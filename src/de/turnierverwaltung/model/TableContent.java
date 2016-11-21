@@ -6,14 +6,16 @@ public class TableContent {
 	private int idTableContent;
 	private int tableType;
 	private int idGroup;
+	private int color;
 
-	public TableContent(String header, String body, int idTableContent, int tableType, int idGroup) {
+	public TableContent(String header, String body, int idTableContent, int tableType, int idGroup, int color) {
 
 		this.header = header;
 		this.body = body;
 		this.idTableContent = idTableContent;
 		this.idGroup = idGroup;
 		this.tableType = tableType;
+		this.color = color;
 	}
 
 	public String getHeader() {
@@ -54,6 +56,14 @@ public class TableContent {
 
 	public void setIdGroup(int idGroup) {
 		this.idGroup = idGroup;
+	}
+
+	public int getColor() {
+		return color;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
 	}
 
 }
