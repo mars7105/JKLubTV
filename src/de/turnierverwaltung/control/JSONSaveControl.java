@@ -119,15 +119,32 @@ public class JSONSaveControl {
 				}
 				i++;
 			}
-			jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName, crossHeader, crossBody,
-					crossColor, meetingHeader, meetingBody, meetingColor, header, body, color, jsonFileName,
-					ctableMatrix, jsonCrossTitle, mtableMatrix, jsonMeetingtitle, siteName, configFlag);
-			// jsonCross.postEnd();
-			JSON jsonFileObjects = new JSON(url, username, password);
-			JSONFileObject jsonFiles = new JSONFileObject(filenames);
-			jsonFileObjects.postFileNames(jsonFiles);
-			jsonFileObjects.makeTables();
+			Boolean status1 = jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName,
+					crossHeader, crossBody, crossColor, meetingHeader, meetingBody, meetingColor, header, body, color,
+					jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix, jsonMeetingtitle, siteName, configFlag);
+			Boolean status2 = false;
+			Boolean status3 = false;
+			if (status1) {
+				JSON jsonFileObjects = new JSON(url, username, password);
+				JSONFileObject jsonFiles = new JSONFileObject(filenames);
+				status2 = jsonFileObjects.postFileNames(jsonFiles);
+				if (status2) {
+					status3 = jsonFileObjects.makeTables();
+					if (status3 == true) {
+						JOptionPane.showMessageDialog(null, "JSON Files uploaded.");
+					} else {
+						JOptionPane.showMessageDialog(null,
+								"Status Code 003: Frontend nicht richtig installiert?");
 
+					}
+				} else {
+					JOptionPane.showMessageDialog(null, "Status Code 002: Frontend nicht richtig installiert?");
+				}
+
+			} else {
+				JOptionPane.showMessageDialog(null, "Status Code 001: URL Fehlerhaft?");
+
+			}
 		} else
 
 		{
