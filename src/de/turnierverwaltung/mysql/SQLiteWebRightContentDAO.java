@@ -19,15 +19,16 @@ import de.turnierverwaltung.model.Sidepanel;
 public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 	private Connection dbConnect;
 
-	public SQLiteWebRightContentDAO() {
+	public SQLiteWebRightContentDAO() throws SQLException {
 		this.dbConnect = null;
 		this.dbConnect = SQLiteDAOFactory.createConnection();
+		createSidepanelTable();
 	}
 
 	@Override
 	public void createSidepanelTable() throws SQLException {
 		String sql = "CREATE TABLE IF NOT EXISTS sidepanel (idSidepanel INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL,"
-				+ " TurnierId INTEGER, header VARCHAR, body TEXT);";
+				+ " TurnierId INTEGER, header VARCHAR, body TEXT, color INTEGER);";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -44,7 +45,7 @@ public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 
 	@Override
 	public boolean deleteSidepanel(int id) throws SQLException {
-		createSidepanelTable();
+
 		boolean ok = false;
 		String sql = "delete from sidepanel where idSidepanel=?;";
 		if (this.dbConnect != null) {
@@ -63,9 +64,28 @@ public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 	}
 
 	@Override
-	public ArrayList<Sidepanel> findSidepanel(int id) throws SQLException {
-		// TODO Automatisch generierter Methodenstub
+	public Sidepanel findSidepanel(int id) throws SQLException {
 		return null;
+		// Sidepanel sidepanel = null;
+		// String sql = "Select * from sidepanel where idSidepanel =" + id +
+		// ";";
+		// Statement stmt;
+		// if (this.dbConnect != null) {
+		//
+		// stmt = this.dbConnect.createStatement();
+		// ResultSet rs = stmt.executeQuery(sql);
+		// while (rs.next()) {
+		// int idTableContent = rs.getInt("idSidepanel");
+		// String header = rs.getString("header");
+		// String body = rs.getString("body");
+		// int turnierId = rs.getInt("TurnierId");
+		// sidepanel = new Sidepanel(header, body, turnierId);
+		//
+		// }
+		// stmt.close();
+		//
+		// }
+		// return sidepanel;
 	}
 
 	@Override
@@ -76,9 +96,8 @@ public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 
 	@Override
 	public int insertSidepanel(Sidepanel sitepanel, int turnierId) throws SQLException {
-		createSidepanelTable();
 		String sql;
-		sql = "Insert into sidepanel (header,body,TurnierId) values (?,?,?);";
+		sql = "Insert into sidepanel (header,body,TurnierId,color) values (?,?,?,?);";
 		int id = -1;
 		if (this.dbConnect != null) {
 
@@ -86,6 +105,7 @@ public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 			preStm.setString(1, sitepanel.getHeader());
 			preStm.setString(2, sitepanel.getBody());
 			preStm.setInt(3, turnierId);
+			preStm.setInt(4, sitepanel.getColor());
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
@@ -103,8 +123,7 @@ public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 
 	@Override
 	public ArrayList<Sidepanel> selectAllSidepanel(int idTurnier) throws SQLException {
-		createSidepanelTable();
-		String sql = "Select idSidepanel, header, body, idTurnier " + "from sidepanel, turnier where idTurnier ="
+		String sql = "Select idSidepanel, header, body, TurnierId, color " + "from sidepanel where TurnierId ="
 				+ idTurnier + " ORDER BY idSidepanel ASC;";
 		ArrayList<Sidepanel> sidepanelListe = new ArrayList<Sidepanel>();
 		Statement stmt;
@@ -116,10 +135,10 @@ public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 				int idSidepanel = rs.getInt("idSidepanel");
 				String header = rs.getString("header");
 				String body = rs.getString("body");
-				// int SidePanelID = rs.getInt("SidePanelID");
-				// int turnierid = rs.getInt("idTurnier");
+				int color = rs.getInt("color");
+//				int turnierid = rs.getInt("TurnierId");
 
-				Sidepanel sidepanel = new Sidepanel(header, body, idSidepanel);
+				Sidepanel sidepanel = new Sidepanel(header, body, idSidepanel, color);
 				sidepanelListe.add(sidepanel);
 
 			}
@@ -130,16 +149,18 @@ public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 	}
 
 	@Override
-	public boolean updateSidepanel(Sidepanel sitepanel) throws SQLException {
-		createSidepanelTable();
+	public boolean updateSidepanel(Sidepanel sitepanel, int turnierID) throws SQLException {
 		int idSidepanel = sitepanel.getIdSidepanel();
 		boolean ok = false;
-		String sql = "update sidepanel set header = ?, body = ? where idSidepanel=" + idSidepanel + ";";
+		String sql = "update sidepanel set header = ?, body = ?,TurnierId = ?, color = ? where idSidepanel="
+				+ idSidepanel + ";";
 		if (this.dbConnect != null) {
 
 			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
 			preStm.setString(1, sitepanel.getHeader());
 			preStm.setString(2, sitepanel.getBody());
+			preStm.setInt(3, turnierID);
+			preStm.setInt(4, sitepanel.getColor());
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
@@ -150,5 +171,7 @@ public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 		}
 		return ok;
 	}
+
+	
 
 }

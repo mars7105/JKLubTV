@@ -11,7 +11,7 @@ public interface WebMainContentDAO {
 
 	public boolean deleteTableContent(int idTableContent) throws SQLException;
 
-	public ArrayList<TableContent> findTableContent(int groupId) throws SQLException;
+	public TableContent findTableContent(int groupId) throws SQLException;
 
 	public ArrayList<TableContent> getAllTableContent() throws SQLException;
 

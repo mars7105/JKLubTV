@@ -50,6 +50,7 @@ import de.turnierverwaltung.view.StandardView;
 import de.turnierverwaltung.view.TabbedPaneView;
 import de.turnierverwaltung.view.TitleLabelView;
 import de.turnierverwaltung.view.TournamentListView;
+import de.turnierverwaltung.view.WebsiteConfigView;
 import de.turnierverwaltung.view.NewTournamentView;
 
 /**
@@ -68,6 +69,7 @@ public class MainControl extends JFrame {
 	private MainView mainView;
 	private JTabbedPane hauptPanel;
 	private FrontendSidePanelView frontendSidePanelView;
+	private FrontendTableTextControl[] frontendTableTextControl;
 	private NewTournamentControl turnierControl;
 	private NewTournamentView turnierView;
 	private NewTournamentGroupsView gruppenView;
@@ -112,6 +114,7 @@ public class MainControl extends JFrame {
 	private SettingsControl eigenschaftenControl;
 	private LanguagePropertiesControl languagePropertiesControl;
 	private ButtonTabComponent buttonTabComponent;
+	private WebsiteConfigView webconfigView;
 
 	public MainControl() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
@@ -284,6 +287,14 @@ public class MainControl extends JFrame {
 		resetApp();
 	}
 
+	public FrontendTableTextControl[] getFrontendTableTextControl() {
+		return frontendTableTextControl;
+	}
+
+	public void setFrontendTableTextControl(FrontendTableTextControl[] frontendTableTextControl) {
+		this.frontendTableTextControl = frontendTableTextControl;
+	}
+
 	public FrontendSidePanelView getFrontendSidePanelView() {
 		return frontendSidePanelView;
 	}
@@ -298,6 +309,14 @@ public class MainControl extends JFrame {
 
 	public void setButtonTabComponent(ButtonTabComponent buttonTabComponent) {
 		this.buttonTabComponent = buttonTabComponent;
+	}
+
+	public WebsiteConfigView getWebconfigView() {
+		return webconfigView;
+	}
+
+	public void setWebconfigView(WebsiteConfigView webconfigView) {
+		this.webconfigView = webconfigView;
 	}
 
 	public LanguagePropertiesControl getLanguagePropertiesControl() {

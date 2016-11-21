@@ -1,20 +1,14 @@
 package de.turnierverwaltung.control;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import de.turnierverwaltung.view.ColorSelectorView;
 import de.turnierverwaltung.view.FrontendTableTextView;
+import de.turnierverwaltung.view.WebsiteConfigView;
 
-public class FrontendTableTextControl implements ActionListener {
+public class FrontendTableTextControl {
 
-	private JButton okButton;
-	private JDialog dialog;
 	private FrontendTableTextView fd;
 	private JTextField crossHeader;
 	private JTextArea crossBody;
@@ -22,30 +16,38 @@ public class FrontendTableTextControl implements ActionListener {
 	private JTextArea meetingBody;
 	private ColorSelectorView crossColorSelector;
 	private ColorSelectorView meetingColorSelector;
+	private MainControl mainControl;
 
-	public FrontendTableTextControl() {
+	public FrontendTableTextControl(MainControl mainControl) {
+		this.mainControl = mainControl;
 		fd = new FrontendTableTextView();
-		dialog = fd.getJsonDialog();
-		okButton = fd.getOkButton();
-		okButton.addActionListener(this);
 		crossHeader = fd.getHeaderCrossTextField();
 		crossBody = fd.getBodyCrossTextArea();
 		meetingHeader = fd.getHeaderMeetingTextField();
 		meetingBody = fd.getBodyMeetingTextArea();
 		crossColorSelector = fd.getCrossColorSelectorPanel();
-		meetingColorSelector = fd.getCrossColorSelectorPanel();
+		meetingColorSelector = fd.getMeetingColorSelectorPanel();
 	}
 
-	public void makeDialog() {
-
+	public void makeDialog(String title) {
+		fd.getHeaderCrossTextField().setText(crossHeader.getText());
+		fd.getBodyCrossTextArea().setText(crossBody.getText());
+		fd.getHeaderMeetingTextField().setText(meetingHeader.getText());
+		fd.getBodyMeetingTextArea().setText(meetingBody.getText());
+		fd.getCrossColorSelectorPanel().setSelectedIndex(crossColorSelector.getSelectedIndex());
+		fd.getMeetingColorSelectorPanel().setSelectedIndex(meetingColorSelector.getSelectedIndex());
 		fd.makeDialog();
+		WebsiteConfigView webconfigView = null;
+		if (mainControl.getWebconfigView() == null) {
+			webconfigView = new WebsiteConfigView();
+			mainControl.setWebconfigView(webconfigView);
+		} else {
+			webconfigView = mainControl.getWebconfigView();
+		}
+		webconfigView.getDialog().setLocationRelativeTo(mainControl);
+		webconfigView.getDialog();
+		webconfigView.getTabbedPane().addTab(title, fd.getMainPanel());
 
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e) {
-
-		dialog.dispose();
 	}
 
 	public JTextField getCrossHeader() {

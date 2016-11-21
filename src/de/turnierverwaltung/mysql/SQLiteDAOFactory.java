@@ -105,13 +105,13 @@ public class SQLiteDAOFactory extends DAOFactory {
 	}
 
 	@Override
-	public WebRightContentDAO getWebRightContentDAO() {
+	public WebRightContentDAO getWebRightContentDAO() throws SQLException {
 		WebRightContentDAO webRightContentDAO = new SQLiteWebRightContentDAO();
 		return webRightContentDAO;
 	}
 
 	@Override
-	public WebMainContentDAO getWebMainContentDAO() {
+	public WebMainContentDAO getWebMainContentDAO() throws SQLException {
 		WebMainContentDAO webMainContentDAO = new SQLiteWebMainContentDAO();
 		return webMainContentDAO;
 	}

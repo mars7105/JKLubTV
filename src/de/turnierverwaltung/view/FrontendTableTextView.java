@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -17,12 +15,12 @@ import javax.swing.JTextField;
 
 public class FrontendTableTextView {
 
-	private JDialog jsonDialog;
+	private JPanel mainPanel;
 	private JPanel htmlAll;
 	private JTextField headerCrossTextField;
 	private JTextArea bodyCrossTextArea;
-	private ButtonPanelView buttonPane;
-	private JButton okButton;
+//	private ButtonPanelView buttonPane;
+//	private JButton okButton;
 
 	private JPanel htmlAll2;
 	private JTextField headerMeetingTextField;
@@ -35,17 +33,17 @@ public class FrontendTableTextView {
 	public FrontendTableTextView() {
 		// Erzeugung eines neuen Frames mit
 		// dem Titel Beispiel JDialog
-		jsonDialog = new JDialog();
+		mainPanel = new JPanel();
 		tabPane = new JTabbedPane();
-		jsonDialog.setAlwaysOnTop(true);
+		// mainPanel.setAlwaysOnTop(true);
 		// Titel wird gesetzt
-		jsonDialog.setTitle(Messages.getString("FrontendTableTextView.0"));
+		// mainPanel.setTitle(Messages.getString("FrontendTableTextView.0"));
 		// Breite und Höhe des Fensters werden
 		// auf 200 Pixel gesetzt
-		jsonDialog.setSize(600, 500);
+		mainPanel.setSize(600, 500);
 		// Dialog wird auf modal gesetzt
-		jsonDialog.setModal(true);
-		jsonDialog.setLayout(new BorderLayout());
+		// mainPanel.setModal(true);
+		mainPanel.setLayout(new BorderLayout());
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BorderLayout());
 
@@ -65,9 +63,9 @@ public class FrontendTableTextView {
 		bodyCrossTextArea = new JTextArea("", textFieldRows, textFieldColumns);
 		bodyCrossTextArea.addMouseListener(cmmL);
 
-		buttonPane = new ButtonPanelView();
-		buttonPane.makeOKButton();
-		okButton = buttonPane.getOkButton();
+//		buttonPane = new ButtonPanelView();
+//		buttonPane.makeOKButton();
+//		okButton = buttonPane.getOkButton();
 
 		headerMeetingTextField = new JTextField("", textFieldColumns);
 		headerMeetingTextField.setPreferredSize(dimTextField);
@@ -84,15 +82,15 @@ public class FrontendTableTextView {
 		makeMeetingTableText();
 		JPanel main = new JPanel();
 		main.setLayout(new BorderLayout());
-		buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
+//		buttonPane.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
 		main.add(tabPane, BorderLayout.CENTER);
-		main.add(buttonPane, BorderLayout.SOUTH);
+//		main.add(buttonPane, BorderLayout.SOUTH);
 
-		jsonDialog.add(main, BorderLayout.CENTER);
-		jsonDialog.pack();
-		jsonDialog.setLocationRelativeTo(null);
-		jsonDialog.setEnabled(true);
-		jsonDialog.setVisible(true);
+		mainPanel.add(main, BorderLayout.CENTER);
+		// mainPanel.pack();
+		// mainPanel.setLocationRelativeTo(null);
+		mainPanel.setEnabled(true);
+		mainPanel.setVisible(true);
 	}
 
 	private void makeCrossTableText() {
@@ -181,15 +179,15 @@ public class FrontendTableTextView {
 		labelPanel.add(headerTextFieldLabel);
 		htmlPanel.add(labelPanel);
 		htmlPanel.add(headerMeetingTextField);
-//		leftPanel.add(htmlPanel, BorderLayout.NORTH);
-		
+		// leftPanel.add(htmlPanel, BorderLayout.NORTH);
+
 		labelPanel = new JPanel();
 		labelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		labelPanel.add(meetingColorSelectorLabel);
 		htmlPanel.add(labelPanel);
 		htmlPanel.add(meetingColorSelectorPanel);
 		leftPanel.add(htmlPanel, BorderLayout.NORTH);
-		
+
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new BoxLayout(htmlPanel, BoxLayout.PAGE_AXIS));
 		labelPanel = new JPanel();
@@ -245,20 +243,20 @@ public class FrontendTableTextView {
 		this.bodyMeetingTextArea = bodyMeetingTextArea;
 	}
 
-	public JButton getOkButton() {
-		return okButton;
+//	public JButton getOkButton() {
+//		return okButton;
+//	}
+//
+//	public void setOkButton(JButton okButton) {
+//		this.okButton = okButton;
+//	}
+
+	public JPanel getMainPanel() {
+		return mainPanel;
 	}
 
-	public void setOkButton(JButton okButton) {
-		this.okButton = okButton;
-	}
-
-	public JDialog getJsonDialog() {
-		return jsonDialog;
-	}
-
-	public void setJsonDialog(JDialog jsonDialog) {
-		this.jsonDialog = jsonDialog;
+	public void setMainPanel(JPanel mainPanel) {
+		this.mainPanel = mainPanel;
 	}
 
 	public ColorSelectorView getCrossColorSelectorPanel() {
