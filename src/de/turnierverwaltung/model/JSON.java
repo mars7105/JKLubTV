@@ -21,8 +21,9 @@ public class JSON {
 			String menuName, String[] crossHeader, String[] crossTableText, int[] crossTableColor,
 			String[] meetingHeader, String[] meetingTableText, int[] meetingTableColor, String[] header, String[] body,
 			int[] color, String jsonFileName, String[][][] crossTableMatrix, String jsonCrossTitle,
-			String[][][] meetingTableMatrix, String jsonMeetingtitle, String siteName, Boolean configFlag)
-			throws IOException, FileNotFoundException {
+			String[][][] meetingTableMatrix, String jsonMeetingtitle, String siteName, Boolean configFlag,
+			String md5Sum) throws IOException, FileNotFoundException {
+
 		Gson gson = new Gson();
 		String[][][] crossTable = new String[crossTableMatrix.length][][];
 		String[][][] meetingTable = new String[meetingTableMatrix.length][][];
@@ -34,7 +35,7 @@ public class JSON {
 		}
 		JSONObject jsonObject = new JSONObject(tournamentName, groupName, menuName, crossHeader, crossTableText,
 				crossTable, crossTableColor, meetingHeader, meetingTableText, meetingTable, meetingTableColor,
-				startDate, endDate, header, body, color, jsonCrossTitle, jsonMeetingtitle, siteName);
+				startDate, endDate, header, body, color, jsonCrossTitle, jsonMeetingtitle, siteName, md5Sum);
 		postRequest = new PostRequest(url, username, password);
 		Boolean testConnection = false;
 

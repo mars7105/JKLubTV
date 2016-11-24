@@ -119,9 +119,11 @@ public class JSONSaveControl {
 				}
 				i++;
 			}
+			String md5Sum = mainControl.getTurnier().getMd5Sum();
 			Boolean status1 = jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName,
 					crossHeader, crossBody, crossColor, meetingHeader, meetingBody, meetingColor, header, body, color,
-					jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix, jsonMeetingtitle, siteName, configFlag);
+					jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix, jsonMeetingtitle, siteName, configFlag,
+					md5Sum);
 			Boolean status2 = false;
 			Boolean status3 = false;
 			if (status1) {
@@ -133,8 +135,7 @@ public class JSONSaveControl {
 					if (status3 == true) {
 						JOptionPane.showMessageDialog(null, "JSON Files uploaded.");
 					} else {
-						JOptionPane.showMessageDialog(null,
-								"Status Code 003: Frontend nicht richtig installiert?");
+						JOptionPane.showMessageDialog(null, "Status Code 003: Frontend nicht richtig installiert?");
 
 					}
 				} else {

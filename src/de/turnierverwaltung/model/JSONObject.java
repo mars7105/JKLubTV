@@ -21,12 +21,13 @@ public class JSONObject {
 	private int[] crossTableColor;
 	private int[] meetingTableColor;
 	private int[] color;
+	private String md5Sum;
 
 	public JSONObject(String tournamentName, String[] groupName, String menuName, String[] crossHeader,
 			String[] crossTableText2, String[][][] crossTable, int[] crossTableColor, String[] meetingHeader,
 			String[] meetingTableText2, String[][][] meetingTable, int[] meetingTableColor, String startDate,
 			String endDate, String[] header, String[] body, int[] color, String jsonCrossTitle, String jsonMeetingtitle,
-			String siteName) {
+			String siteName, String md5Sum) {
 		super();
 		this.crossHeader = crossHeader;
 		this.meetingHeader = meetingHeader;
@@ -48,6 +49,7 @@ public class JSONObject {
 		this.sidePanelsbody = body;
 		this.siteName = siteName;
 		this.color = color;
+		this.md5Sum = md5Sum;
 	}
 
 	public String getTournamentName() {
@@ -208,6 +210,14 @@ public class JSONObject {
 
 	public void setColor(int[] color) {
 		this.color = color;
+	}
+
+	public String getMd5Sum() {
+		return md5Sum;
+	}
+
+	public void setMd5Sum(String md5Sum) {
+		this.md5Sum = md5Sum;
 	}
 
 }

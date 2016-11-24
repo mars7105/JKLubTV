@@ -1,5 +1,11 @@
 package de.turnierverwaltung.model;
 
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
+import org.apache.commons.codec.binary.Hex;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -29,6 +35,7 @@ public class Tournament {
 	private Boolean onlyTables;
 	private Boolean noDWZCalc;
 	private Boolean noFolgeDWZCalc;
+	private byte[] md5Sum;
 
 	/**
 	 * 
@@ -63,7 +70,27 @@ public class Tournament {
 		this.onlyTables = onlyTables;
 		this.noDWZCalc = noDWZCalc;
 		this.noFolgeDWZCalc = noFolgeDWZCalc;
+		createMD5SUM();
 
+	}
+
+	public void createMD5SUM() {
+
+		String md5String = turnierName + startDatum + endDatum + turnierId;
+		byte[] bytesOfMessage = null;
+		try {
+			bytesOfMessage = md5String.getBytes("UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		MessageDigest md = null;
+		try {
+			md = MessageDigest.getInstance("MD5");
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		md5Sum = md.digest(bytesOfMessage);
 	}
 
 	public Boolean getOnlyTables() {
@@ -136,6 +163,15 @@ public class Tournament {
 
 	public void setTurnierName(String turnierName) {
 		this.turnierName = turnierName;
+	}
+
+	public String getMd5Sum() {
+		String hexString = new String(Hex.encodeHex(md5Sum));
+		return hexString;
+	}
+
+	public void setMd5Sum(byte[] md5Sum) {
+		this.md5Sum = md5Sum;
 	}
 
 }
