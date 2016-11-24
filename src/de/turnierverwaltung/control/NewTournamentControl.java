@@ -155,6 +155,7 @@ public class NewTournamentControl implements ActionListener {
 		turnier.setStartDatum(startDatum);
 		turnier.setEndDatum(endDatum);
 		turnier.setAnzahlGruppen(gruppenAnzahl);
+		turnier.createMD5SUM();
 		this.mainControl.setTurnier(turnier);
 		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());
 	}
