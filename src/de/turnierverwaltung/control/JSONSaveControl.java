@@ -82,7 +82,7 @@ public class JSONSaveControl {
 
 			}
 			jsonFileName = "json_file" + ".json";
-			filenames = "jsonFiles/" + jsonFileName;
+			filenames = "temp/" + jsonFileName;
 			int index = 0;
 			String[] header = new String[sidepanelItems.size()];
 			String[] body = new String[sidepanelItems.size()];
