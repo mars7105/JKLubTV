@@ -35,8 +35,7 @@ public class SQLTournamentControl {
 		this.mainControl = mainControl;
 		daoFactory = DAOFactory.getDAOFactory(3);
 		if (daoFactory == null) {
-			this.mainControl.setPropertiesControl(new PropertiesControl(
-					this.mainControl));
+			this.mainControl.setPropertiesControl(new PropertiesControl(this.mainControl));
 			this.mainControl.getPropertiesControl().writeProperties();
 
 		} else {
@@ -47,8 +46,7 @@ public class SQLTournamentControl {
 
 	public void getTurnier(int tID) throws SQLException {
 
-		turnier = mySQLTurnierDao.findTurnier(tID,
-				mainControl.getPropertiesControl());
+		turnier = mySQLTurnierDao.findTurnier(tID, mainControl.getPropertiesControl());
 		mainControl.setTurnier(turnier);
 		mainControl.getGruppenTableControl().getGruppe();
 
@@ -62,7 +60,9 @@ public class SQLTournamentControl {
 			String startDatum = turnier.getStartDatum();
 			String endDatum = turnier.getEndDatum();
 			int datumId = mySQLDatumDAO.insertDatum(startDatum, endDatum);
-			turnierId = mySQLTurnierDao.insertTurnier(turnierName, datumId);
+			turnier.createMD5SUM();
+			String md5Sum = turnier.getMd5Sum();
+			turnierId = mySQLTurnierDao.insertTurnier(turnierName, datumId, md5Sum);
 			turnier.setTurnierId(turnierId);
 		}
 		return turnierId;
@@ -70,8 +70,7 @@ public class SQLTournamentControl {
 
 	public ArrayList<Tournament> loadTurnierListe() throws SQLException {
 		ArrayList<Tournament> turnierListe;
-		turnierListe = mySQLTurnierDao.selectAllTurnier(mainControl
-				.getPropertiesControl());
+		turnierListe = mySQLTurnierDao.selectAllTurnier(mainControl.getPropertiesControl());
 
 		return turnierListe;
 
@@ -80,15 +79,12 @@ public class SQLTournamentControl {
 	public boolean loescheTurnier(Tournament turnier) throws SQLException {
 		boolean geloescht = false;
 
-		Object[] options = {
-				Messages.getString("TurnierTableControl.0"), Messages.getString("TurnierTableControl.1") }; //$NON-NLS-1$ //$NON-NLS-2$
-		int abfrage = JOptionPane
-				.showOptionDialog(
-						mainControl,
-						Messages.getString("TurnierTableControl.2") + turnier.getTurnierName() //$NON-NLS-1$
-								+ "\n" + Messages.getString("TurnierTableControl.4"), Messages.getString("TurnierTableControl.5"), //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						JOptionPane.YES_NO_CANCEL_OPTION,
-						JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+		Object[] options = { Messages.getString("TurnierTableControl.0"), Messages.getString("TurnierTableControl.1") }; //$NON-NLS-1$ //$NON-NLS-2$
+		int abfrage = JOptionPane.showOptionDialog(mainControl,
+				Messages.getString("TurnierTableControl.2") + turnier.getTurnierName() //$NON-NLS-1$
+						+ "\n" + Messages.getString("TurnierTableControl.4"), //$NON-NLS-1$ //$NON-NLS-2$
+				Messages.getString("TurnierTableControl.5"), //$NON-NLS-1$
+				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 		if (abfrage == 0) {
 			geloescht = (mySQLTurnierDao.deleteTurnier(turnier.getTurnierId()));
 

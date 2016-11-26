@@ -39,7 +39,8 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 	@Override
 	public void createTurnierTable() throws SQLException {
 		String sql = "CREATE TABLE turnier (idTurnier INTEGER PRIMARY KEY "
-				+ "AUTOINCREMENT  NOT NULL , Datum_idDatum INTEGER, Turniername VARCHAR)" + ";";
+				+ "AUTOINCREMENT  NOT NULL , Datum_idDatum INTEGER, Turniername VARCHAR, md5sum VARCHAR DEFAULT(''))"
+				+ ";";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -139,9 +140,10 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 
 	@Override
 	public Tournament findTurnier(int id, PropertiesControl prop) {
-		String sql = "Select Startdatum, Enddatum, Turniername, Datum_idDatum, idDatum" + "from turnier,datum "
+		isMD5SumExist();
+		String sql = "Select Startdatum, Enddatum, Turniername, Datum_idDatum, idDatum, md5sum" + "from turnier,datum "
 				+ "where idTurnier=" + id + " AND Datum_idDatum = idDatum" + ";";
-		Tournament turnier = null;
+		Tournament tournament = null;
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -154,9 +156,14 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 					String turnierName = rs.getString("Turniername");
 					String startDatum = rs.getString("Startdatum");
 					String endDatum = rs.getString("Enddatum");
-
-					turnier = new Tournament(turnierId, turnierName, startDatum, endDatum, prop.getOnlyTables(),
+					String md5Sum = rs.getString("md5sum");
+					tournament = new Tournament(turnierId, turnierName, startDatum, endDatum, prop.getOnlyTables(),
 							prop.getNoDWZ(), prop.getNoFolgeDWZ());
+					if (md5Sum.equals("")) {
+						tournament.createMD5SUM();
+					} else {
+						tournament.setMd5Sum(md5Sum);
+					}
 
 				}
 				stmt.close();
@@ -167,14 +174,14 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 
 			}
 		}
-		return turnier;
+		return tournament;
 	}
 
 	@Override
-	public int insertTurnier(String turnierName, int datumId) {
-
+	public int insertTurnier(String turnierName, int datumId, String md5Sum) {
+		isMD5SumExist();
 		String sql;
-		sql = "Insert into turnier (Turniername, Datum_idDatum) values (?,?);";
+		sql = "Insert into turnier (Turniername, Datum_idDatum, md5sum) values (?,?,?);";
 		int id = -1;
 		if (this.dbConnect != null) {
 			try {
@@ -182,6 +189,7 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 
 				preStm.setString(1, turnierName);
 				preStm.setInt(2, datumId);
+				preStm.setString(3, md5Sum);
 				preStm.addBatch();
 				this.dbConnect.setAutoCommit(false);
 				preStm.executeBatch();
@@ -205,6 +213,7 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 
 	@Override
 	public ArrayList<Tournament> selectAllTurnier(PropertiesControl prop) throws SQLException {
+		isMD5SumExist();
 		String sql = "Select * from turnier, datum where Datum_idDatum = idDatum" + " ORDER BY idTurnier DESC" + ";";
 		ArrayList<Tournament> turnierListe = new ArrayList<Tournament>();
 
@@ -219,17 +228,32 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				String turnierName = rs.getString("Turniername");
 				String startDatum = rs.getString("Startdatum");
 				String endDatum = rs.getString("Enddatum");
-				turnierListe.add(new Tournament(id, turnierName, startDatum, endDatum, prop.getOnlyTables(),
-						prop.getNoDWZ(), prop.getNoFolgeDWZ()));
+				String md5Sum = rs.getString("md5sum");
+
+				md5Sum = rs.getString("md5sum");
+
+				Tournament tournament = new Tournament(id, turnierName, startDatum, endDatum, prop.getOnlyTables(),
+						prop.getNoDWZ(), prop.getNoFolgeDWZ());
+
+				if (md5Sum.equals("")) {
+					tournament.createMD5SUM();
+					updateTurnier(tournament);
+				} else {
+					tournament.setMd5Sum(md5Sum);
+				}
+
+				turnierListe.add(tournament);
 			}
 			stmt.close();
 
 		}
 		return turnierListe;
+
 	}
 
 	@Override
 	public boolean updateTurnier(Tournament turnier) {
+		isMD5SumExist();
 		boolean ok = false;
 		String datum = "Select Datum_idDatum from turnier where idTurnier=" + turnier.getTurnierId() + ";";
 		int datumId = -1;
@@ -253,13 +277,14 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 			}
 		}
 		// String sql0 = "BEGIN;";
-		String sql1 = "update turnier set Turniername = ?" + " where idTurnier = " + turnier.getTurnierId() + ";";
+		String sql1 = "update turnier set Turniername = ?, md5sum = ?" + " where idTurnier = " + turnier.getTurnierId()
+				+ ";";
 		String sql2 = "update datum set Startdatum = ?, Enddatum = ?" + " where idDatum = " + datumId + ";";
-
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql1);
 				preStm.setString(1, turnier.getTurnierName());
+				preStm.setString(2, turnier.getMd5Sum());
 				preStm.addBatch();
 				this.dbConnect.setAutoCommit(false);
 				preStm.executeBatch();
@@ -288,7 +313,52 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
 		}
+
 		return ok;
+	}
+
+	private void alterTableMD5Hash() {
+
+		String sql = "ALTER TABLE turnier ADD md5sum VARCHAR DEFAULT('')" + ";";
+		Statement stmt;
+		if (this.dbConnect != null) {
+			try {
+				// create a database connection
+				stmt = this.dbConnect.createStatement();
+				stmt.setQueryTimeout(30); // set timeout to 30 sec.
+				stmt.executeUpdate(sql);
+				stmt.close();
+
+			} catch (SQLException e) {
+
+			}
+		}
+	}
+
+	public void isMD5SumExist() {
+
+		String sql = "SELECT md5sum FROM turnier LIMIT 1;";
+		if (this.dbConnect != null) {
+			// Datum l�schen
+			Statement stmt;
+			ResultSet rs;
+
+			try {
+				stmt = this.dbConnect.createStatement();
+
+				rs = stmt.executeQuery(sql);
+
+				while (rs.next()) {
+					String md5Sum = rs.getString("md5sum");
+				}
+				stmt.close();
+
+			} catch (SQLException e) {
+				alterTableMD5Hash();
+
+			}
+		}
+
 	}
 
 }

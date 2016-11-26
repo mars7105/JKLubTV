@@ -22,6 +22,7 @@ public class JSONObject {
 	private int[] meetingTableColor;
 	private int[] color;
 	private String md5Sum;
+	
 
 	public JSONObject(String tournamentName, String[] groupName, String menuName, String[] crossHeader,
 			String[] crossTableText2, String[][][] crossTable, int[] crossTableColor, String[] meetingHeader,
