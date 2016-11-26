@@ -164,7 +164,7 @@ public class MySQLTurnierDAO implements TurnierDAO {
 	}
 
 	@Override
-	public int insertTurnier(String turnierName, int datumId) {
+	public int insertTurnier(String turnierName, int datumId, String md5Sum) {
 
 		String sql;
 		sql = "Insert into turnier (Turniername, Datum_idDatum) values (?,?)";

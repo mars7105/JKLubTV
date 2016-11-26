@@ -222,7 +222,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 	private void alterTableAge() {
 
-		String sql = "ALTER TABLE spieler ADD Age INTEGER  DEFAULT(2)" + ";";
+		String sql = "ALTER TABLE spieler ADD Age INTEGER DEFAULT(2)" + ";";
 		Statement stmt;
 		if (this.dbConnect != null) {
 			try {

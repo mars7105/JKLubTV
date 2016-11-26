@@ -35,7 +35,7 @@ public class Tournament {
 	private Boolean onlyTables;
 	private Boolean noDWZCalc;
 	private Boolean noFolgeDWZCalc;
-	private byte[] md5Sum;
+	private String md5Sum;
 
 	/**
 	 * 
@@ -48,6 +48,7 @@ public class Tournament {
 		this.onlyTables = onlyTables;
 		this.noDWZCalc = noDWZCalc;
 		this.noFolgeDWZCalc = noFolgeDWZCalc;
+		md5Sum = "";
 	}
 
 	/**
@@ -70,13 +71,12 @@ public class Tournament {
 		this.onlyTables = onlyTables;
 		this.noDWZCalc = noDWZCalc;
 		this.noFolgeDWZCalc = noFolgeDWZCalc;
-		createMD5SUM();
-
+		md5Sum = "";
 	}
 
 	public void createMD5SUM() {
 
-		String md5String = turnierName + startDatum + endDatum + turnierId;
+		String md5String = turnierName + startDatum + endDatum + turnierId + System.currentTimeMillis() / 1000;
 		byte[] bytesOfMessage = null;
 		try {
 			bytesOfMessage = md5String.getBytes("UTF-8");
@@ -90,7 +90,11 @@ public class Tournament {
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
-		md5Sum = md.digest(bytesOfMessage);
+		byte[] md5SumByte = md.digest(bytesOfMessage);
+		// md5Sum = md.digest(bytesOfMessage);
+
+		md5Sum = new String(Hex.encodeHex(md5SumByte));
+
 	}
 
 	public Boolean getOnlyTables() {
@@ -166,11 +170,11 @@ public class Tournament {
 	}
 
 	public String getMd5Sum() {
-		String hexString = new String(Hex.encodeHex(md5Sum));
-		return hexString;
+
+		return this.md5Sum;
 	}
 
-	public void setMd5Sum(byte[] md5Sum) {
+	public void setMd5Sum(String md5Sum) {
 		this.md5Sum = md5Sum;
 	}
 
