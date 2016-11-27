@@ -140,28 +140,31 @@ public class FrontendSidePanelControl implements ActionListener {
 						tableCrossContent.setIdTableContent(tableContent.getIdTableContent());
 						try {
 							webMainContent.updateTableContent(tableCrossContent);
-							updatetableCrossContent = true;
+
 						} catch (SQLException e1) {
 							JOptionPane.showMessageDialog(mainControl, "Database error");
 							e1.printStackTrace();
 						}
+						updatetableCrossContent = true;
 					}
 					if (tableContent.getIdGroup() == tableMeetingContent.getIdGroup()
 							&& tableContent.getTableType() == tableMeetingContent.getTableType()) {
 						tableMeetingContent.setIdTableContent(tableContent.getIdTableContent());
 						try {
 							webMainContent.updateTableContent(tableMeetingContent);
-							updatetableMeetingContent = true;
+
 						} catch (SQLException e1) {
 							JOptionPane.showMessageDialog(mainControl, "Database error");
 							e1.printStackTrace();
 						}
+						updatetableMeetingContent = true;
 					}
 				}
 
 				if (updatetableCrossContent == false) {
 					try {
-						webMainContent.insertTableContent(tableCrossContent, groupID);
+						tableCrossContent
+								.setIdTableContent(webMainContent.insertTableContent(tableCrossContent, groupID));
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(mainControl, "Database error");
 						e1.printStackTrace();
@@ -170,7 +173,8 @@ public class FrontendSidePanelControl implements ActionListener {
 				if (updatetableMeetingContent == false) {
 					try {
 
-						webMainContent.insertTableContent(tableMeetingContent, groupID);
+						tableCrossContent
+								.setIdTableContent(webMainContent.insertTableContent(tableMeetingContent, groupID));
 					} catch (SQLException e1) {
 						JOptionPane.showMessageDialog(mainControl, "Database error");
 						e1.printStackTrace();
