@@ -96,6 +96,7 @@ public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 
 	@Override
 	public int insertSidepanel(Sidepanel sitepanel, int turnierId) throws SQLException {
+		isColorExist();
 		String sql;
 		sql = "Insert into sidepanel (header,body,TurnierId,color) values (?,?,?,?);";
 		int id = -1;
@@ -123,6 +124,7 @@ public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 
 	@Override
 	public ArrayList<Sidepanel> selectAllSidepanel(int idTurnier) throws SQLException {
+		isColorExist();
 		String sql = "Select idSidepanel, header, body, TurnierId, color " + "from sidepanel where TurnierId ="
 				+ idTurnier + " ORDER BY idSidepanel ASC;";
 		ArrayList<Sidepanel> sidepanelListe = new ArrayList<Sidepanel>();
@@ -150,6 +152,7 @@ public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 
 	@Override
 	public boolean updateSidepanel(Sidepanel sitepanel, int turnierID) throws SQLException {
+		isColorExist();
 		int idSidepanel = sitepanel.getIdSidepanel();
 		boolean ok = false;
 		String sql = "update sidepanel set header = ?, body = ?,TurnierId = ?, color = ? where idSidepanel="
@@ -171,7 +174,49 @@ public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 		}
 		return ok;
 	}
+	private void alterTableColor() {
 
+		String sql = "ALTER TABLE sidepanel ADD color INTEGER DEFAULT(0)" + ";";
+		Statement stmt;
+		if (this.dbConnect != null) {
+			try {
+				// create a database connection
+				stmt = this.dbConnect.createStatement();
+				stmt.setQueryTimeout(30); // set timeout to 30 sec.
+				stmt.executeUpdate(sql);
+				stmt.close();
+
+			} catch (SQLException e) {
+
+			}
+		}
+	}
+
+	public void isColorExist() {
+
+		String sql = "SELECT color FROM sidepanel LIMIT 1;";
+		if (this.dbConnect != null) {
+			// Datum l�schen
+			Statement stmt;
+			ResultSet rs;
+
+			try {
+				stmt = this.dbConnect.createStatement();
+
+				rs = stmt.executeQuery(sql);
+
+				while (rs.next()) {
+					String color = rs.getString("color");
+				}
+				stmt.close();
+
+			} catch (SQLException e) {
+				alterTableColor();
+
+			}
+		}
+
+	}
 	
 
 }
