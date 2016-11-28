@@ -349,7 +349,9 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				rs = stmt.executeQuery(sql);
 
 				while (rs.next()) {
+					@SuppressWarnings("unused")
 					String md5Sum = rs.getString("md5sum");
+
 				}
 				stmt.close();
 
