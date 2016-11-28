@@ -78,6 +78,7 @@ public class NaviControl implements ActionListener {
 	private ProgressBarView progressBar;
 	private JButton iCalendarButton;
 	private JButton jsonButton;
+	private Boolean sortMeeting;
 
 	/**
 	 * 
@@ -137,6 +138,7 @@ public class NaviControl implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+
 		if (spielerHinzufuegenView != null) {
 			if (arg0.getSource() == spielerHinzufuegenView.getOkButton()) {
 				try {
@@ -206,8 +208,7 @@ public class NaviControl implements ActionListener {
 		if (arg0.getSource() == jsonButton) {
 			JSONConfigControl jsonConfigControl = new JSONConfigControl(mainControl);
 			jsonConfigControl.makeDialog();
-			
-			
+
 		}
 		if (arg0.getSource() == naviView.getExcelSpeichernButton()) {
 			ExcelSaveControl excelsave = new ExcelSaveControl(this.mainControl);
@@ -215,6 +216,16 @@ public class NaviControl implements ActionListener {
 
 		}
 		if (arg0.getSource() == naviView.getPairingsLoadButton()) {
+			sortMeeting = mainControl.getPropertiesControl().getSortMeetingTable();
+			Game.sortMeetingTable = false;
+			mainControl.getPropertiesControl().setSortMeetingTable(false);
+
+			try {
+				mainControl.getTurnierListeLadenControl().reloadTurnier();
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(mainControl, Messages.getString("NaviController.32"));
+
+			}
 			mainControl.setRundenEingabeFormularControl(new PairingsControl(mainControl));
 
 			PairingsControl pairingsControl = mainControl.getRundenEingabeFormularControl();
@@ -252,6 +263,8 @@ public class NaviControl implements ActionListener {
 			}
 		}
 		if (arg0.getSource() == naviView.getPairingsSaveButton()) {
+			Game.sortMeetingTable = sortMeeting;
+			mainControl.getPropertiesControl().setSortMeetingTable(sortMeeting);
 
 			saveAndReloadTurnier();
 			try {

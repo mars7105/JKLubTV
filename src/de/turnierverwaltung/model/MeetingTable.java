@@ -1,7 +1,5 @@
 package de.turnierverwaltung.model;
 
-import java.util.Arrays;
-
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -57,6 +55,7 @@ public class MeetingTable {
 		this.gruppe.getSpieler();
 		this.spielerAnzahl = this.gruppe.getSpielerAnzahl();
 		this.partien = gruppe.getPartien();
+		
 		this.iCalendar = new ICalendar();
 		calcRunden();
 		calcAnzahlSpaltenZeilen();
@@ -143,11 +142,11 @@ public class MeetingTable {
 		return ergebnisString;
 	}
 
-	public String[][] getSortedMetingTable() {
-
-		Arrays.sort(tabellenMatrix); // sortieren
-		return tabellenMatrix;
-	}
+	// public String[][] getSortedMetingTable() {
+	//
+	// Arrays.sort(tabellenMatrix); // sortieren
+	// return tabellenMatrix;
+	// }
 
 	/**
 	 * 

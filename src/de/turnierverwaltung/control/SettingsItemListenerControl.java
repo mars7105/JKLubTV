@@ -4,6 +4,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.sql.SQLException;
 
+import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.view.SettingsView;
 
 public class SettingsItemListenerControl {
@@ -107,5 +108,33 @@ public class SettingsItemListenerControl {
 				mainControl.getPropertiesControl().writeProperties();
 			}
 		});
+		eigenschaftenView.getSortMeetingTableCheckBox()
+				.setSelected(mainControl.getPropertiesControl().getSortMeetingTable());
+		Game.sortMeetingTable = mainControl.getPropertiesControl().getSortMeetingTable();
+		eigenschaftenView.getSortMeetingTableCheckBox().addItemListener(new ItemListener() {
+
+			public void itemStateChanged(ItemEvent e) {
+
+				Boolean sortMeetingTable = eigenschaftenView.getSortMeetingTableCheckBox().isSelected();
+				Game.sortMeetingTable = sortMeetingTable;
+				mainControl.getPropertiesControl().setSortMeetingTable(sortMeetingTable);
+				if (mainControl.getTurnier() != null) {
+					mainControl.getTurnier().setSortMeetingTable(sortMeetingTable);
+					if (sortMeetingTable) {
+
+						mainControl.getPropertiesControl().setSortMeetingTable(true);
+
+					}
+					try {
+						mainControl.getTurnierListeLadenControl().reloadTurnier();
+					} catch (SQLException e1) {
+						mainControl.fileSQLError();
+					}
+				}
+
+				mainControl.getPropertiesControl().writeProperties();
+			}
+		});
+
 	}
 }

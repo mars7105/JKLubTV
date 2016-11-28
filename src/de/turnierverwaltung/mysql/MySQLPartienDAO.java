@@ -142,7 +142,8 @@ public class MySQLPartienDAO implements PartienDAO {
 					Player spielerSchwarz = new Player();
 					spielerSchwarz.setSpielerId(idSpielerSchwarz);
 
-					partieListe.add(new Game(idPartie, spielDatum, ergebnis, runde, spielerWeiss, spielerSchwarz));
+					partieListe
+							.add(new Game(idPartie, spielDatum, ergebnis, runde, spielerWeiss, spielerSchwarz));
 
 				}
 				stmt.close();

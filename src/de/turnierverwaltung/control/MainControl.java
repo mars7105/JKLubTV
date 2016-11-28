@@ -40,6 +40,7 @@ import de.turnierverwaltung.view.NewTournamentGroupsView;
 import de.turnierverwaltung.view.MainView;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.PairingsView;
+import de.turnierverwaltung.view.SettingsView;
 import de.turnierverwaltung.view.MeetingTableView;
 import de.turnierverwaltung.view.ButtonTabComponent;
 import de.turnierverwaltung.view.CrossTableView;
@@ -115,6 +116,7 @@ public class MainControl extends JFrame {
 	private LanguagePropertiesControl languagePropertiesControl;
 	private ButtonTabComponent buttonTabComponent;
 	private WebsiteConfigView webconfigView;
+	private SettingsView eigenschaftenView;
 
 	public MainControl() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
@@ -175,7 +177,7 @@ public class MainControl extends JFrame {
 			SQLiteDAOFactory.setDB_PATH(path);
 			this.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
 					+ SQLiteDAOFactory.getDB_PATH());
-
+			Game.sortMeetingTable = propertiesControl.getSortMeetingTable();
 			if (this.getSpielerEditierenControl() != null) {
 				// mainControl.getSpielerEditierenControl().makePanel();
 			} else {
@@ -693,6 +695,14 @@ public class MainControl extends JFrame {
 
 	public SettingsControl getEigenschaftenControl() {
 		return eigenschaftenControl;
+	}
+
+	public SettingsView getSettingsView() {
+		return eigenschaftenView;
+	}
+
+	public void setSettingsView(SettingsView eigenschaftenView) {
+		this.eigenschaftenView = eigenschaftenView;
 	}
 
 }

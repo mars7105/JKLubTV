@@ -206,6 +206,7 @@ public class SQLiteWebRightContentDAO implements WebRightContentDAO {
 				rs = stmt.executeQuery(sql);
 
 				while (rs.next()) {
+					@SuppressWarnings("unused")
 					String color = rs.getString("color");
 				}
 				stmt.close();

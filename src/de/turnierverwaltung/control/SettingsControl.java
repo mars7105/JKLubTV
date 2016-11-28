@@ -33,7 +33,7 @@ public class SettingsControl {
 		eigenschaftenView = new SettingsView();
 		actionListenerControl = new SettingsActionListenerControl(this.mainControl, this);
 		itemListenerControl = new SettingsItemListenerControl(this.mainControl, this);
-
+		this.mainControl.setSettingsView(eigenschaftenView);
 	}
 
 	public void setTableColumns() {
@@ -51,8 +51,6 @@ public class SettingsControl {
 		eigenschaftenView.getRoundTextField().setText(ppC.getTableComumnRound());
 	}
 
-
-
 	public SettingsView getEigenschaftenView() {
 		return eigenschaftenView;
 	}
@@ -60,8 +58,6 @@ public class SettingsControl {
 	public void setEigenschaftenView(SettingsView eigenschaftenView) {
 		this.eigenschaftenView = eigenschaftenView;
 	}
-
-	
 
 	public SettingsActionListenerControl getActionListenerControl() {
 		return actionListenerControl;

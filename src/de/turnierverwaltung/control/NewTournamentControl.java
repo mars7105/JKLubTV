@@ -96,8 +96,8 @@ public class NewTournamentControl implements ActionListener {
 		Boolean noDWZCalc = this.mainControl.getPropertiesControl().getNoDWZ();
 
 		Boolean noFolgeDWZCalc = mainControl.getPropertiesControl().getNoFolgeDWZ();
-
-		turnier = new Tournament(onlyTables, noDWZCalc, noFolgeDWZCalc);
+		Boolean sortMeetingTable = mainControl.getPropertiesControl().getSortMeetingTable();
+		turnier = new Tournament(onlyTables, noDWZCalc, noFolgeDWZCalc, sortMeetingTable);
 		this.mainControl.setTurnier(turnier);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
@@ -155,7 +155,7 @@ public class NewTournamentControl implements ActionListener {
 		turnier.setStartDatum(startDatum);
 		turnier.setEndDatum(endDatum);
 		turnier.setAnzahlGruppen(gruppenAnzahl);
-		
+
 		this.mainControl.setTurnier(turnier);
 		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());
 	}

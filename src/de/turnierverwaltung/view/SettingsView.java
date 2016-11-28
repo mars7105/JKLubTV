@@ -57,6 +57,7 @@ public class SettingsView extends JPanel {
 	private JCheckBox checkBoxHeaderFooter;
 	private JCheckBox checkBoxohneDWZ;
 	private JCheckBox checkBoxohneFolgeDWZ;
+	private JCheckBox sortMeetingTableCheckBox;
 	private JRadioButton germanLanguageCheckBox;
 	private JRadioButton englishLanguageCheckBox;
 	private JPanel htmlAll;
@@ -563,6 +564,18 @@ public class SettingsView extends JPanel {
 		htmlPanel.add(labelHeader);
 
 		htmlAll.add(htmlPanel);
+		// htmlAll.add(new JSeparator());
+
+		// Termintabelle sortieren
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.39")); //$NON-NLS-1$
+		sortMeetingTableCheckBox = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(sortMeetingTableCheckBox);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
 		htmlAll.add(new JSeparator());
 
 	}
@@ -755,13 +768,13 @@ public class SettingsView extends JPanel {
 		this.pointsTextField = pointsTextField;
 	}
 
-	// public JButton getSaveTableNamesButton() {
-	// return saveTableNamesButton;
-	// }
-	//
-	// public void setSaveTableNamesButton(JButton saveTableNamesButton) {
-	// this.saveTableNamesButton = saveTableNamesButton;
-	// }
+	public JCheckBox getSortMeetingTableCheckBox() {
+		return sortMeetingTableCheckBox;
+	}
+
+	public void setSortMeetingTableCheckBox(JCheckBox sortMeetingTableCheckBox) {
+		this.sortMeetingTableCheckBox = sortMeetingTableCheckBox;
+	}
 
 	public JButton getOkButton() {
 		return okButton;

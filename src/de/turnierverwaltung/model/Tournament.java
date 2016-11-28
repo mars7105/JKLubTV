@@ -36,6 +36,7 @@ public class Tournament {
 	private Boolean noDWZCalc;
 	private Boolean noFolgeDWZCalc;
 	private String md5Sum;
+	private Boolean sortMeetingTable;
 
 	/**
 	 * 
@@ -43,11 +44,12 @@ public class Tournament {
 	 * @param noDWZCalc
 	 * @param noFolgeDWZCalc
 	 */
-	public Tournament(Boolean onlyTables, Boolean noDWZCalc, Boolean noFolgeDWZCalc) {
+	public Tournament(Boolean onlyTables, Boolean noDWZCalc, Boolean noFolgeDWZCalc, Boolean sortMeetingTable) {
 		turnierId = -1;
 		this.onlyTables = onlyTables;
 		this.noDWZCalc = noDWZCalc;
 		this.noFolgeDWZCalc = noFolgeDWZCalc;
+		this.sortMeetingTable = sortMeetingTable;
 		md5Sum = "";
 	}
 
@@ -62,7 +64,7 @@ public class Tournament {
 	 * @param noFolgeDWZCalc
 	 */
 	public Tournament(int turnierId, String turnierName, String startDatum, String endDatum, Boolean onlyTables,
-			Boolean noDWZCalc, Boolean noFolgeDWZCalc) {
+			Boolean noDWZCalc, Boolean noFolgeDWZCalc, Boolean sortMeetingTable) {
 		super();
 		this.turnierName = turnierName;
 		this.startDatum = startDatum;
@@ -71,6 +73,7 @@ public class Tournament {
 		this.onlyTables = onlyTables;
 		this.noDWZCalc = noDWZCalc;
 		this.noFolgeDWZCalc = noFolgeDWZCalc;
+		this.sortMeetingTable = sortMeetingTable;
 		md5Sum = "";
 	}
 
@@ -176,6 +179,14 @@ public class Tournament {
 
 	public void setMd5Sum(String md5Sum) {
 		this.md5Sum = md5Sum;
+	}
+
+	public Boolean getSortMeetingTable() {
+		return sortMeetingTable;
+	}
+
+	public void setSortMeetingTable(Boolean sortMeetingTable) {
+		this.sortMeetingTable = sortMeetingTable;
 	}
 
 }

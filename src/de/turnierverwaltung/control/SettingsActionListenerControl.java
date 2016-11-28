@@ -53,8 +53,8 @@ public class SettingsActionListenerControl {
 				}
 				eigenschaftenView.getCheckBoxHeaderFooter().setSelected(ppC.getOnlyTables());
 				eigenschaftenView.getCheckBoxohneDWZ().setSelected(ppC.getNoDWZ());
-				eigenschaftenView.getCheckBoxohneFolgeDWZ()
-						.setSelected(mainControl.getPropertiesControl().getNoFolgeDWZ());
+				eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(ppC.getNoFolgeDWZ());
+				eigenschaftenView.getSortMeetingTableCheckBox().setSelected(ppC.getSortMeetingTable());
 				eigenschaftenView.getSpielerListeAuswahlBox().setSelectedIndex(ppC.getSpielerProTab());
 				eigenschaftenView.getTurnierListeAuswahlBox().setSelectedIndex(ppC.getTurniereProTab());
 				if (eigenschaftenView.getCheckBoxohneDWZ().isSelected() == true) {
@@ -189,7 +189,6 @@ public class SettingsActionListenerControl {
 
 			}
 		});
-		
 
 	}
 }

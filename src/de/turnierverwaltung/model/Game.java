@@ -19,7 +19,6 @@ package de.turnierverwaltung.model;
  * Class Partie
  */
 public class Game implements Comparable<Object> {
-
 	private String spielDatum;
 	private Player spielerWeiss;
 	private Player spielerSchwarz;
@@ -30,6 +29,7 @@ public class Game implements Comparable<Object> {
 	private int runde;
 	private int partieId;
 	private int sort;
+	public static Boolean sortMeetingTable;
 
 	public Game() {
 		partieId = -1;
@@ -56,10 +56,14 @@ public class Game implements Comparable<Object> {
 
 	@Override
 	public int compareTo(Object o) {
-		int compareQuantity = ((Game) o).getSort();
+		int compareQuantity = ((Game) o).getSortToDate();
 
 		// ascending order
-		return getSort() - compareQuantity;
+		if (Game.sortMeetingTable) {
+			return getSortToDate() - compareQuantity;
+		} else {
+			return compareQuantity + getSort();
+		}
 
 		// descending order
 		// return compareQuantity - this.quantity;
@@ -91,6 +95,33 @@ public class Game implements Comparable<Object> {
 			sort = this.runde * 10;
 		} else {
 			sort = this.runde * 11;
+		}
+		return sort;
+
+	}
+
+	public int getSortToDate() {
+		if (this.spielerWeiss.getSpielerId() == TournamentConstants.SPIELFREI_ID
+				|| this.spielerSchwarz.getSpielerId() == TournamentConstants.SPIELFREI_ID) {
+			sort = this.runde * 10;
+		} else {
+			sort = this.runde * 11;
+		}
+		int[] dateInt = new int[3];
+
+		int index = 0;
+		if (spielDatum != null) {
+			if (!spielDatum.equals("")) {
+				for (String zahlenWerte : spielDatum.split("\\.")) { //$NON-NLS-1$
+
+					dateInt[index] = Integer.parseInt(zahlenWerte);
+
+					index++;
+
+				}
+				dateInt[1] = dateInt[1] - 1;
+				sort += (dateInt[0] * 100 + dateInt[1] * 10000 + dateInt[2] * 100);
+			}
 		}
 		return sort;
 
@@ -179,4 +210,5 @@ public class Game implements Comparable<Object> {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+
 }
