@@ -85,6 +85,7 @@ public class SettingsView extends JPanel {
 	private JTextField resultTextField;
 	private JTextField meetingTextField;
 	private JButton okButton;
+	private JCheckBox sortMeetingTableRoundCheckBox;
 
 	/**
 	 * Create the panel.
@@ -564,7 +565,7 @@ public class SettingsView extends JPanel {
 		htmlPanel.add(labelHeader);
 
 		htmlAll.add(htmlPanel);
-//		htmlAll.add(new JSeparator());
+		// htmlAll.add(new JSeparator());
 
 		// Termintabelle sortieren
 		labelHeader = new JLabel(Messages.getString("EigenschaftenView.39")); //$NON-NLS-1$
@@ -575,6 +576,7 @@ public class SettingsView extends JPanel {
 		htmlPanel.add(labelHeader);
 
 		htmlAll.add(htmlPanel);
+
 		htmlAll.add(new JSeparator());
 
 	}
@@ -766,8 +768,6 @@ public class SettingsView extends JPanel {
 	public void setPointsTextField(JTextField pointsTextField) {
 		this.pointsTextField = pointsTextField;
 	}
-
-	
 
 	public JCheckBox getSortMeetingTableCheckBox() {
 		return sortMeetingTableCheckBox;

@@ -133,5 +133,6 @@ public class SettingsItemListenerControl {
 				mainControl.getPropertiesControl().writeProperties();
 			}
 		});
+
 	}
 }
