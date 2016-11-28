@@ -107,5 +107,31 @@ public class SettingsItemListenerControl {
 				mainControl.getPropertiesControl().writeProperties();
 			}
 		});
+		eigenschaftenView.getSortMeetingTableCheckBox()
+				.setSelected(mainControl.getPropertiesControl().getSortMeetingTable());
+		eigenschaftenView.getSortMeetingTableCheckBox().addItemListener(new ItemListener() {
+
+			public void itemStateChanged(ItemEvent e) {
+
+				Boolean sortMeetingTable = eigenschaftenView.getSortMeetingTableCheckBox().isSelected();
+
+				mainControl.getPropertiesControl().setSortMeetingTableCheckBox(sortMeetingTable);
+				if (mainControl.getTurnier() != null) {
+					mainControl.getTurnier().setSortMeetingTable(sortMeetingTable);
+					if (sortMeetingTable) {
+
+						mainControl.getPropertiesControl().setSortMeetingTableCheckBox(true);
+
+					}
+					try {
+						mainControl.getTurnierListeLadenControl().reloadTurnier();
+					} catch (SQLException e1) {
+						mainControl.fileSQLError();
+					}
+				}
+
+				mainControl.getPropertiesControl().writeProperties();
+			}
+		});
 	}
 }

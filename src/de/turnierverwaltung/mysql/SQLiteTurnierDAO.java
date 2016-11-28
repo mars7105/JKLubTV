@@ -158,7 +158,7 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 					String endDatum = rs.getString("Enddatum");
 					String md5Sum = rs.getString("md5sum");
 					tournament = new Tournament(turnierId, turnierName, startDatum, endDatum, prop.getOnlyTables(),
-							prop.getNoDWZ(), prop.getNoFolgeDWZ());
+							prop.getNoDWZ(), prop.getNoFolgeDWZ(), prop.getSortMeetingTable());
 					if (md5Sum.equals("")) {
 						tournament.createMD5SUM();
 					} else {
@@ -233,7 +233,7 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				md5Sum = rs.getString("md5sum");
 
 				Tournament tournament = new Tournament(id, turnierName, startDatum, endDatum, prop.getOnlyTables(),
-						prop.getNoDWZ(), prop.getNoFolgeDWZ());
+						prop.getNoDWZ(), prop.getNoFolgeDWZ(), prop.getSortMeetingTable());
 
 				if (md5Sum.equals("")) {
 					tournament.createMD5SUM();

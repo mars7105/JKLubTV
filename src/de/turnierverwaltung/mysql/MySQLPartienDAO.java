@@ -121,7 +121,7 @@ public class MySQLPartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public ArrayList<Game> selectAllPartien(int idGruppe) {
+	public ArrayList<Game> selectAllPartien(int idGruppe, Boolean sortMeetingTable) {
 		String sql = "Select idPartie,idSpielerWeiss," + "idSpielerSchwarz, Runde, Spieldatum, Ergebnis  "
 				+ "from partien where idGruppe=" + idGruppe + " ORDER BY Runde ASC";
 		ArrayList<Game> partieListe = new ArrayList<Game>();
@@ -142,7 +142,8 @@ public class MySQLPartienDAO implements PartienDAO {
 					Player spielerSchwarz = new Player();
 					spielerSchwarz.setSpielerId(idSpielerSchwarz);
 
-					partieListe.add(new Game(idPartie, spielDatum, ergebnis, runde, spielerWeiss, spielerSchwarz));
+					partieListe
+							.add(new Game(idPartie, spielDatum, ergebnis, runde, spielerWeiss, spielerSchwarz, false));
 
 				}
 				stmt.close();

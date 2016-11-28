@@ -55,6 +55,7 @@ public class PropertiesControl {
 	public static final String FRONTEND_URL = "frontend-url";
 	public static final String FRONTEND_PASSWORD = "frontend-password";
 	public static final String FRONTEND_USERNAME = "frontend-username" + "";
+	private static final String SORTMEETINGTABLE = "sortmeetingtable";
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
@@ -90,6 +91,7 @@ public class PropertiesControl {
 		prop.setProperty(FRONTEND_URL, "");
 		prop.setProperty(FRONTEND_USERNAME, "");
 		prop.setProperty(FRONTEND_PASSWORD, "");
+		prop.setProperty(SORTMEETINGTABLE, "");
 	}
 
 	public void checkProperties() {
@@ -136,6 +138,11 @@ public class PropertiesControl {
 			prop.setProperty(NOFOLGEDWZ, FALSE);
 			saveChanges = true;
 		}
+		if (!(prop.getProperty(SORTMEETINGTABLE).equals(TRUE) || prop.getProperty(SORTMEETINGTABLE).equals(FALSE))) {
+			prop.setProperty(SORTMEETINGTABLE, FALSE);
+			saveChanges = true;
+		}
+
 		if (!(turniereProTab >= 0 && turniereProTab <= 3)) {
 			prop.setProperty(TURNIEREPROTAB, "1");
 			saveChanges = true;
@@ -645,5 +652,22 @@ public class PropertiesControl {
 
 	public String getPassword() {
 		return prop.getProperty(FRONTEND_PASSWORD);
+	}
+
+	public Boolean getSortMeetingTable() {
+		if (prop.getProperty(SORTMEETINGTABLE).equals(TRUE)) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public void setSortMeetingTableCheckBox(Boolean sortMeetingTable2) {
+		if (sortMeetingTable2 == true) {
+			prop.setProperty(SORTMEETINGTABLE, TRUE);
+		} else {
+			prop.setProperty(SORTMEETINGTABLE, FALSE);
+		}
 	}
 }
