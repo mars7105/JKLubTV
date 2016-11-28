@@ -19,7 +19,6 @@ package de.turnierverwaltung.model;
  * Class Partie
  */
 public class Game implements Comparable<Object> {
-
 	private String spielDatum;
 	private Player spielerWeiss;
 	private Player spielerSchwarz;
@@ -30,7 +29,7 @@ public class Game implements Comparable<Object> {
 	private int runde;
 	private int partieId;
 	private int sort;
-	private Boolean sortMeetingTable;
+	public static Boolean sortMeetingTable;
 
 	public Game() {
 		partieId = -1;
@@ -45,15 +44,13 @@ public class Game implements Comparable<Object> {
 	 * @param spielerWeiss
 	 * @param spielerSchwarz
 	 */
-	public Game(int idPartie, String spielDatum, int ergebnis, int runde, Player spielerWeiss, Player spielerSchwarz,
-			Boolean sortMeetingTable) {
+	public Game(int idPartie, String spielDatum, int ergebnis, int runde, Player spielerWeiss, Player spielerSchwarz) {
 		this.partieId = idPartie;
 		this.spielDatum = spielDatum;
 		this.spielerWeiss = spielerWeiss;
 		this.spielerSchwarz = spielerSchwarz;
 		this.runde = runde;
 		this.ergebnis = ergebnis;
-		this.sortMeetingTable = sortMeetingTable;
 		makeErgebnisse();
 	}
 
@@ -62,7 +59,7 @@ public class Game implements Comparable<Object> {
 		int compareQuantity = ((Game) o).getSortToDate();
 
 		// ascending order
-		if (sortMeetingTable) {
+		if (Game.sortMeetingTable) {
 			return getSortToDate() - compareQuantity;
 		} else {
 			return compareQuantity + getSort();
@@ -212,14 +209,6 @@ public class Game implements Comparable<Object> {
 
 	public void setStatus(String status) {
 		this.status = status;
-	}
-
-	public Boolean getSortMeetingTable() {
-		return sortMeetingTable;
-	}
-
-	public void setSortMeetingTable(Boolean sortMeetingTable) {
-		this.sortMeetingTable = sortMeetingTable;
 	}
 
 }

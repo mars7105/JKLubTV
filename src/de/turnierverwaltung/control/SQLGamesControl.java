@@ -17,6 +17,7 @@ import java.sql.SQLException;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Player;
@@ -35,16 +36,17 @@ public class SQLGamesControl {
 	public SQLGamesControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		turnier = this.mainControl.getTurnier();
+
 	}
 
 	public void getPartien(int gruppenID) throws SQLException {
+		Game.sortMeetingTable = mainControl.getPropertiesControl().getSortMeetingTable();
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
 		this.turnier = this.mainControl.getTurnier();
 		ArrayList<Game> partie = new ArrayList<Game>();
 
-		partie = mySQLPartienDAO.selectAllPartien(turnier.getGruppe()[gruppenID].getGruppeId(),
-				mainControl.getPropertiesControl().getSortMeetingTable());
+		partie = mySQLPartienDAO.selectAllPartien(turnier.getGruppe()[gruppenID].getGruppeId());
 		Game[] p = new Game[partie.size()];
 		turnier.getGruppe()[gruppenID].setPartienAnzahl(partie.size());
 		Player spielerWeiss;
@@ -64,7 +66,7 @@ public class SQLGamesControl {
 
 			}
 		}
-
+		Arrays.sort(p);
 		turnier.getGruppe()[gruppenID].setPartien(p);
 
 	}

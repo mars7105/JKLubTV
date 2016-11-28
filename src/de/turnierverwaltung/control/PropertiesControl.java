@@ -663,7 +663,7 @@ public class PropertiesControl {
 
 	}
 
-	public void setSortMeetingTableCheckBox(Boolean sortMeetingTable2) {
+	public void setSortMeetingTable(Boolean sortMeetingTable2) {
 		if (sortMeetingTable2 == true) {
 			prop.setProperty(SORTMEETINGTABLE, TRUE);
 		} else {

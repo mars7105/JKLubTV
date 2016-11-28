@@ -105,6 +105,7 @@ public class CrossTableControl {
 		if (tml[gruppenNummer] == null) {
 			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer);
 		}
+		
 		Arrays.sort(turnier.getGruppe()[gruppenNummer].getPartien());
 		spielerAnzahl[gruppenNummer] = turnier.getGruppe()[gruppenNummer].getSpielerAnzahl();
 		if (turnier.getGruppe()[gruppenNummer].getSpieler()[spielerAnzahl[gruppenNummer] - 1].getSpielerId() == -2) {

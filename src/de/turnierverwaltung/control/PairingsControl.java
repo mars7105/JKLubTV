@@ -36,6 +36,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -105,6 +106,8 @@ public class PairingsControl implements ActionListener {
 	public void init() {
 
 		if (rundenEingabeFormularView == null) {
+			
+
 			if (mainControl.getTurnierTabelleControl() == null) {
 				terminTabelle = new MeetingTable[gruppenAnzahl];
 				this.mainControl.setTerminTabelle(terminTabelle);
@@ -115,6 +118,7 @@ public class PairingsControl implements ActionListener {
 			neuesTurnier = new Boolean[gruppenAnzahl];
 			changedGroups = new int[gruppenAnzahl][3];
 			for (int i = 0; i < gruppenAnzahl; i++) {
+				
 				rundenEingabeFormularView[i] = new PairingsView(gruppe[i].getSpielerAnzahl());
 				neuesTurnier[i] = false;
 				for (int x = 0; x < 3; x++) {
@@ -149,7 +153,7 @@ public class PairingsControl implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		init();
+
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		int max;
 		int anzahl;
@@ -249,6 +253,7 @@ public class PairingsControl implements ActionListener {
 		String blackColumnName = ppC.getTableComumnBlack();
 		String resultColumnName = ppC.getTableComumnResult();
 		String meetingColumnName = ppC.getTableComumnMeeting();
+		Arrays.sort(gruppe[index].getPartien());
 		terminTabelle[index] = new MeetingTable(turnier, gruppe[index], roundColumnName, whiteColumnName,
 				blackColumnName, resultColumnName, meetingColumnName);
 		gruppe[index].setTeminTabelle(terminTabelle[index]);

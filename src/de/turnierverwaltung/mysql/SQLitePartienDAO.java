@@ -115,7 +115,7 @@ public class SQLitePartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public ArrayList<Game> selectAllPartien(int idGruppe, Boolean sortMeetingTable) throws SQLException {
+	public ArrayList<Game> selectAllPartien(int idGruppe) throws SQLException {
 		String sql = "Select idPartie,idSpielerWeiss," + "idSpielerSchwarz, Runde, Spieldatum, Ergebnis  "
 				+ "from partien where idGruppe=" + idGruppe + " ORDER BY Runde ASC;";
 		ArrayList<Game> partieListe = new ArrayList<Game>();
@@ -136,8 +136,7 @@ public class SQLitePartienDAO implements PartienDAO {
 				Player spielerSchwarz = new Player();
 				spielerSchwarz.setSpielerId(idSpielerSchwarz);
 
-				partieListe.add(new Game(idPartie, spielDatum, ergebnis, runde, spielerWeiss, spielerSchwarz,
-						sortMeetingTable));
+				partieListe.add(new Game(idPartie, spielDatum, ergebnis, runde, spielerWeiss, spielerSchwarz));
 
 			}
 			stmt.close();

@@ -30,7 +30,7 @@ public interface PartienDAO {
 	public int insertPartien(int idGruppe, String spielDatum, int Runde, int ergebnis, int spielerIdweiss,
 			int spielerIdschwarz) throws SQLException;
 
-	public ArrayList<Game> selectAllPartien(int idGruppe, Boolean sortMeetingTable) throws SQLException;
+	public ArrayList<Game> selectAllPartien(int idGruppe) throws SQLException;
 
 	public boolean updatePartien(Game[] parties) throws SQLException;
 
