@@ -85,7 +85,6 @@ public class SettingsView extends JPanel {
 	private JTextField resultTextField;
 	private JTextField meetingTextField;
 	private JButton okButton;
-	private JCheckBox sortMeetingTableRoundCheckBox;
 
 	/**
 	 * Create the panel.
