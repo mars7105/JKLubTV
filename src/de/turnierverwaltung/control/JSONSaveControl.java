@@ -31,7 +31,8 @@ public class JSONSaveControl {
 
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 		// url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
-		String filenames = "";
+		String[] filenames = new String[1];
+
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 
@@ -81,8 +82,8 @@ public class JSONSaveControl {
 				mtableMatrix[i] = meetingTable[i].getTabellenMatrix();
 
 			}
-			jsonFileName = "json_file" + ".json";
-			filenames = "temp/" + jsonFileName;
+			jsonFileName = "json-" + mainControl.getTurnier().getMd5Sum() + ".json";
+			filenames[0] = "../temp/" + jsonFileName;
 			int index = 0;
 			String[] header = new String[sidepanelItems.size()];
 			String[] body = new String[sidepanelItems.size()];
@@ -127,8 +128,13 @@ public class JSONSaveControl {
 			Boolean status2 = false;
 			Boolean status3 = false;
 			if (status1) {
+				String htmlfiles[][] = new String[1][anzahlGruppen];
+				for (int htmlindex = 0; htmlindex < anzahlGruppen; htmlindex++) {
+					htmlfiles[0][htmlindex] = new String();
+					htmlfiles[0][htmlindex] = "temp/htmlfile-" + md5Sum + "-" + htmlindex + ".html";
+				}
 				JSON jsonFileObjects = new JSON(url, username, password);
-				JSONFileObject jsonFiles = new JSONFileObject(filenames);
+				JSONFileObject jsonFiles = new JSONFileObject(filenames, htmlfiles);
 				status2 = jsonFileObjects.postFileNames(jsonFiles);
 				if (status2) {
 					status3 = jsonFileObjects.makeTables();
