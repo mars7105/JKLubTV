@@ -152,7 +152,7 @@ public class PostRequest {
 		output = "";
 		for (String line; (line = reader.readLine()) != null;) {
 			output = line;
-//			 System.out.println(line);
+			 System.out.println(line);
 //			 System.out.println("jsontotable");
 
 		}
