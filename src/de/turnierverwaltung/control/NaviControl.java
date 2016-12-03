@@ -85,9 +85,8 @@ public class NaviControl implements ActionListener {
 	 * @param mainControl
 	 */
 	public NaviControl(MainControl mainControl) {
-
 		this.mainControl = mainControl;
-
+		sortMeeting = mainControl.getPropertiesControl().getSortMeetingTable();
 		naviView = new NaviView();
 		mainControl.setNaviView(naviView);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
