@@ -77,7 +77,7 @@ public class PostRequest {
 		String param = loginParam + "&jsonFiles=" + URLEncoder.encode(filenames, "UTF-8");
 		URL urlPath = new URL(url + "receiveFileJSON.php");
 		HttpURLConnection connection = (HttpURLConnection) urlPath.openConnection();
-//		connection.setInstanceFollowRedirects(false);
+		connection.setInstanceFollowRedirects(false);
 //		connection.setReadTimeout(10000 /* milliseconds */ );
 //		connection.setConnectTimeout(15000 /* milliseconds */ );
 		connection.setRequestMethod("POST");
@@ -104,7 +104,7 @@ public class PostRequest {
 		output = "";
 		for (String line; (line = reader.readLine()) != null;) {
 			output = line;
-			// System.out.println(line);
+			 System.out.println(line);
 
 		}
 
