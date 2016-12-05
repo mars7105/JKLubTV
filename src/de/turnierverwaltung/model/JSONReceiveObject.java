@@ -25,7 +25,10 @@ public class JSONReceiveObject {
 	}
 
 	public Boolean isStatusOk() {
-		if (this.statusCode.equals("Ok")) {
+		if (statusCode == null) {
+			return false;
+		}
+		if (statusCode.equals("Ok")) {
 			return true;
 		} else {
 			return false;
