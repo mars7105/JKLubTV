@@ -177,10 +177,11 @@ public class JSONConfigControl implements ActionListener {
 				mainControl.getPropertiesControl().setUsername(username);
 				mainControl.getPropertiesControl().setPassword(password);
 				mainControl.getPropertiesControl().writeProperties();
-//				JOptionPane.showMessageDialog(mainControl, json.getJsonCross().getPostRequest().getOutput());
+				// JOptionPane.showMessageDialog(mainControl,
+				// json.getJsonCross().getPostRequest().getOutput());
 			} catch (IOException exc) {
 				JOptionPane.showMessageDialog(mainControl, "?:" + json.getJsonCross().getPostRequest().getOutput());
-
+				exc.printStackTrace();
 			}
 
 		}
