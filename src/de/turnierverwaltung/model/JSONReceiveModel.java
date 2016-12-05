@@ -20,7 +20,7 @@ public class JSONReceiveModel {
 		for (String line; (line = reader.readLine()) != null;) {
 			output += line;
 		}
-		// System.out.println(output);
+		 System.out.println(output);
 
 		reader.close();
 		Gson gson = new Gson();
