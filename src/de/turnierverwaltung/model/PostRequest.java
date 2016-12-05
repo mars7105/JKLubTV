@@ -11,24 +11,22 @@ import java.net.URLEncoder;
 
 public class PostRequest {
 	private String url;
-	private String output;
 	private String loginParam;
+	private JSONReceiveObject json;
 
 	public PostRequest(String url, String username, String password) throws IOException {
 		this.url = url + "/lib/";
 		loginParam = "login=" + URLEncoder.encode("true", "UTF-8") + "&username=" + URLEncoder.encode(username, "UTF-8")
 				+ "&password=" + URLEncoder.encode(password, "UTF-8");
-		output = "";
 
 	}
 
-	public Boolean sendJSONStringToServer(String jsonString, String jsonFileName) throws IOException {
-		Boolean connectionOK = false;
+	public JSONReceiveObject sendJSONStringToServer(String jsonString, String jsonFileName) throws IOException {
 		String param = loginParam + "&jsonFileName=" + URLEncoder.encode(jsonFileName, "UTF-8") + "&json="
 				+ URLEncoder.encode(jsonString, "UTF-8");
 		URL urlPath = new URL(url + "receiveJSON.php");
 		HttpURLConnection connection = (HttpURLConnection) urlPath.openConnection();
-		 connection.setInstanceFollowRedirects(false);
+		connection.setInstanceFollowRedirects(false);
 		// connection.setReadTimeout(10000 /* milliseconds */ );
 		// connection.setConnectTimeout(15000 /* milliseconds */ );
 		connection.setRequestMethod("POST");
@@ -52,20 +50,13 @@ public class PostRequest {
 		os.flush();
 		os.close();
 		JSONReceiveModel jsonReceive = new JSONReceiveModel();
-		JSONReceiveObject json = jsonReceive.receiveJSON(connection);
-		if (json.isStatusOk()) {
-			connectionOK = true;
-			// System.out.println(json.getStatusCode());
-		} else {
-			System.out.println(json.getStatusCode());
-			connectionOK = false;
-		}
+		json = jsonReceive.receiveJSON(connection);
+
 		connection.disconnect();
-		return connectionOK;
+		return json;
 	}
 
-	public Boolean sendFilenames(String filenames) throws IOException {
-		Boolean connectionOK = false;
+	public JSONReceiveObject sendFilenames(String filenames) throws IOException {
 		String param = loginParam + "&jsonFiles=" + URLEncoder.encode(filenames, "UTF-8");
 		URL urlPath = new URL(url + "receiveFileJSON.php");
 		HttpURLConnection connection = (HttpURLConnection) urlPath.openConnection();
@@ -93,21 +84,14 @@ public class PostRequest {
 		os.flush();
 		os.close();
 		JSONReceiveModel jsonReceive = new JSONReceiveModel();
-		JSONReceiveObject json = jsonReceive.receiveJSON(connection);
-		if (json.isStatusOk()) {
-			connectionOK = true;
-			// System.out.println(json.getStatusCode());
-		} else {
-			System.out.println(json.getStatusCode());
-			connectionOK = false;
-		}
+		json = jsonReceive.receiveJSON(connection);
+
 		connection.disconnect();
-		return connectionOK;
+		return json;
 
 	}
 
-	public Boolean makeHTMLTables() throws IOException {
-		Boolean connectionOK = false;
+	public JSONReceiveObject makeHTMLTables() throws IOException {
 		String param = loginParam + "&maketables=" + URLEncoder.encode("true", "UTF-8");
 		URL urlPath = new URL(url + "jsontotable.php");
 		HttpURLConnection connection = (HttpURLConnection) urlPath.openConnection();
@@ -135,21 +119,14 @@ public class PostRequest {
 		os.flush();
 		os.close();
 		JSONReceiveModel jsonReceive = new JSONReceiveModel();
-		JSONReceiveObject json = jsonReceive.receiveJSON(connection);
-		if (json.isStatusOk()) {
-			connectionOK = true;
-			// System.out.println(json.getStatusCode());
-		} else {
-			System.out.println(json.getStatusCode());
-			connectionOK = false;
-		}
+		json = jsonReceive.receiveJSON(connection);
+
 		connection.disconnect();
-		return connectionOK;
+		return json;
 
 	}
 
-	public Boolean testConnection() throws IOException, FileNotFoundException {
-		Boolean connectionOK = false;
+	public JSONReceiveObject testConnection() throws IOException, FileNotFoundException {
 		URL urlPath = new URL(url + "testconnection.php");
 		String param = loginParam + "&test=" + URLEncoder.encode("true", "UTF-8");
 
@@ -174,27 +151,20 @@ public class PostRequest {
 		writer.flush();
 
 		JSONReceiveModel jsonReceive = new JSONReceiveModel();
-		JSONReceiveObject json = jsonReceive.receiveJSON(connection);
-		if (json.isStatusOk()) {
-			connectionOK = true;
-			// System.out.println(json.getStatusCode());
-		} else {
-			System.out.println(json.getStatusCode());
-			connectionOK = false;
-		}
+		json = jsonReceive.receiveJSON(connection);
 
 		writer.close();
 
 		connection.disconnect();
-		return connectionOK;
+		return json;
 	}
 
 	public String getOutput() {
-		return output;
-	}
-
-	public void setOutput(String output) {
-		this.output = output;
+		if (json == null) {
+			return "Wrong URL!";
+		} else {
+			return json.getStatusCode();
+		}
 	}
 
 }
