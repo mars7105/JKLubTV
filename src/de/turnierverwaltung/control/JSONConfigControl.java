@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import de.turnierverwaltung.model.JSON;
+import de.turnierverwaltung.model.JSONReceiveObject;
 import de.turnierverwaltung.model.Sidepanel;
 import de.turnierverwaltung.model.TableContent;
 import de.turnierverwaltung.model.TournamentConstants;
@@ -204,11 +205,11 @@ public class JSONConfigControl implements ActionListener {
 			password = jsonView.getPasswordTextField().getText();
 			JSON jsonCross = new JSON(url, username, password);
 			try {
-				Boolean testConnection = jsonCross.testConnection();
-				if (testConnection == true) {
+				JSONReceiveObject testConnection = jsonCross.testConnection();
+				if (testConnection.isStatusOk() == true) {
 					JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.1"));
 				} else {
-					JOptionPane.showMessageDialog(mainControl, jsonCross.getPostRequest().getOutput());
+					JOptionPane.showMessageDialog(mainControl, testConnection.getStatusCode());
 				}
 			} catch (IOException e1) {
 				JOptionPane.showMessageDialog(mainControl, jsonCross.getPostRequest().getOutput());

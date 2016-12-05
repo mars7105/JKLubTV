@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import de.turnierverwaltung.model.CrossTable;
 import de.turnierverwaltung.model.JSON;
 import de.turnierverwaltung.model.JSONFileObject;
+import de.turnierverwaltung.model.JSONReceiveObject;
 import de.turnierverwaltung.model.MeetingTable;
 import de.turnierverwaltung.model.Sidepanel;
 import de.turnierverwaltung.model.TableContent;
@@ -121,13 +122,13 @@ public class JSONSaveControl {
 				i++;
 			}
 			String md5Sum = mainControl.getTurnier().getMd5Sum();
-			Boolean status1 = jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName,
+			JSONReceiveObject status1 = jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName,
 					crossHeader, crossBody, crossColor, meetingHeader, meetingBody, meetingColor, header, body, color,
 					jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix, jsonMeetingtitle, siteName, configFlag,
 					md5Sum);
-			Boolean status2 = false;
-			Boolean status3 = false;
-			if (status1) {
+			JSONReceiveObject status2 = null;
+			JSONReceiveObject status3 = null;
+			if (status1.isStatusOk()) {
 				String htmlfiles[][] = new String[1][anzahlGruppen];
 				for (int htmlindex = 0; htmlindex < anzahlGruppen; htmlindex++) {
 					htmlfiles[0][htmlindex] = new String();
@@ -136,20 +137,20 @@ public class JSONSaveControl {
 				JSON jsonFileObjects = new JSON(url, username, password);
 				JSONFileObject jsonFiles = new JSONFileObject(filenames, htmlfiles);
 				status2 = jsonFileObjects.postFileNames(jsonFiles);
-				if (status2) {
+				if (status2.isStatusOk()) {
 					status3 = jsonFileObjects.makeTables();
-					if (status3 == true) {
-						JOptionPane.showMessageDialog(null, "JSON Files uploaded.");
+					if (status3.isStatusOk() == true) {
+						JOptionPane.showMessageDialog(null, status3.getStatusCode());
 					} else {
-						JOptionPane.showMessageDialog(null, "Status Code 003: Frontend nicht richtig installiert?");
+						JOptionPane.showMessageDialog(null, status3.getStatusCode());
 
 					}
 				} else {
-					JOptionPane.showMessageDialog(null, "Status Code 002: Frontend nicht richtig installiert?");
+					JOptionPane.showMessageDialog(null, status2.getStatusCode());
 				}
 
 			} else {
-				JOptionPane.showMessageDialog(null, "Status Code 001: URL Fehlerhaft?");
+				JOptionPane.showMessageDialog(null, status1.getStatusCode());
 
 			}
 		} else

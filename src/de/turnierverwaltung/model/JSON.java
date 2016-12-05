@@ -17,7 +17,7 @@ public class JSON {
 
 	}
 
-	public Boolean postRequest(String tournamentName, String[] groupName, String startDate, String endDate,
+	public JSONReceiveObject postRequest(String tournamentName, String[] groupName, String startDate, String endDate,
 			String menuName, String[] crossHeader, String[] crossTableText, int[] crossTableColor,
 			String[] meetingHeader, String[] meetingTableText, int[] meetingTableColor, String[] header, String[] body,
 			int[] color, String jsonFileName, String[][][] crossTableMatrix, String jsonCrossTitle,
@@ -37,33 +37,30 @@ public class JSON {
 				crossTable, crossTableColor, meetingHeader, meetingTableText, meetingTable, meetingTableColor,
 				startDate, endDate, header, body, color, jsonCrossTitle, jsonMeetingtitle, siteName, md5Sum);
 		postRequest = new PostRequest(url, username, password);
-		Boolean testConnection = false;
 
-		testConnection = postRequest.sendJSONStringToServer(gson.toJson(jsonObject), jsonFileName);
+		JSONReceiveObject json = postRequest.sendJSONStringToServer(gson.toJson(jsonObject), jsonFileName);
 		// postRequest.logout();
 		// postRequest.setOutput("JSON File uploladed.");
 
-		return testConnection;
+		return json;
 	}
 
-	public Boolean postFileNames(JSONFileObject filenames) throws IOException {
+	public JSONReceiveObject postFileNames(JSONFileObject filenames) throws IOException {
 		Gson gson = new Gson();
-		Boolean testConnection = false;
 		postRequest = new PostRequest(url, username, password);
 
-		testConnection = postRequest.sendFilenames(gson.toJson(filenames));
+		JSONReceiveObject json = postRequest.sendFilenames(gson.toJson(filenames));
 		// postRequest.logout();
 		// postRequest.setOutput("Filenames uploladed.");
 
-		return testConnection;
+		return json;
 	}
 
-	public Boolean makeTables() throws IOException {
-		Boolean testConnection = false;
+	public JSONReceiveObject makeTables() throws IOException {
 		postRequest = new PostRequest(url, username, password);
 
-		testConnection = postRequest.makeHTMLTables();
-		return testConnection;
+		JSONReceiveObject json = postRequest.makeHTMLTables();
+		return json;
 	}
 
 	private String[][] mirrorArray(String[][] array) {
@@ -77,15 +74,14 @@ public class JSON {
 
 	}
 
-	public Boolean testConnection() throws IOException, FileNotFoundException {
-		Boolean testConnection = false;
+	public JSONReceiveObject testConnection() throws IOException, FileNotFoundException {
 
 		postRequest = new PostRequest(url, username, password);
 
-		testConnection = postRequest.testConnection();
+		JSONReceiveObject json = postRequest.testConnection();
 		// postRequest.logout();
 
-		return testConnection;
+		return json;
 	}
 
 	public PostRequest getPostRequest() {
