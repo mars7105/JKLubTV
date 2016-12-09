@@ -146,22 +146,22 @@ public class MeetingTableView extends JPanel {
 
 	}
 
-	@SuppressWarnings("unused")
-	private int[] dateStringToInt(String datum) {
-		int[] dateInt = new int[3];
-
-		int index = 0;
-		for (String zahlenWerte : datum.split("\\.")) { //$NON-NLS-1$
-
-			dateInt[index] = Integer.parseInt(zahlenWerte);
-
-			index++;
-
-		}
-		dateInt[1] = dateInt[1] - 1;
-		return dateInt;
-
-	}
+//	@SuppressWarnings("unused")
+//	private int[] dateStringToInt(String datum) {
+//		int[] dateInt = new int[3];
+//
+//		int index = 0;
+//		for (String zahlenWerte : datum.split("\\.")) { //$NON-NLS-1$
+//
+//			dateInt[index] = Integer.parseInt(zahlenWerte);
+//
+//			index++;
+//
+//		}
+//		dateInt[1] = dateInt[1] - 1;
+//		return dateInt;
+//
+//	}
 
 	public JLabel getStatusLabel() {
 		return statusLabel;
