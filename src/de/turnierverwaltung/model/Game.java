@@ -109,16 +109,17 @@ public class Game implements Comparable<Object> {
 		}
 		int[] dateInt = new int[3];
 
-		int index = 0;
+//		int index = 0;
 		if (spielDatum != null) {
 			if (!spielDatum.equals("")) {
-				for (String zahlenWerte : spielDatum.split("\\.")) { //$NON-NLS-1$
-
-					dateInt[index] = Integer.parseInt(zahlenWerte);
-
-					index++;
-
-				}
+				dateInt = getDatefromString(spielDatum);
+//				for (String zahlenWerte : spielDatum.split("\\.")) { //$NON-NLS-1$
+//
+//					dateInt[index] = Integer.parseInt(zahlenWerte);
+//
+//					index++;
+//
+//				}
 				dateInt[1] = dateInt[1] - 1;
 				sort += (dateInt[0] * 100 + dateInt[1] * 10000 + dateInt[2] * 100);
 			}
@@ -126,7 +127,35 @@ public class Game implements Comparable<Object> {
 		return sort;
 
 	}
+	private int[] getDatefromString(String zeile) {
+		String[] splitDate = null;
+		String[] dateItems = null;
+		if (zeile.contains(".")) {
+			splitDate = zeile.split("\\.");
+		}
+		if (zeile.contains("-")) {
+			splitDate = zeile.split("-");
+			dateItems = new String[splitDate.length];
+			int increment = splitDate.length;
+			for (int i = 0; i < splitDate.length; i++) {
+				increment--;
+				dateItems[increment] = splitDate[i];
+			}
+			splitDate = dateItems;
+		}
 
+		int[] dateInt = new int[splitDate.length];
+
+		for (int i = 0; i < splitDate.length; i++) {
+			if (zeile.length() > 0) {
+				dateInt[i] = Integer.parseInt(splitDate[i]);
+			} else {
+				dateInt[i] = 0;
+			}
+		}
+
+		return dateInt;
+	}
 	public String getSpielDatum() {
 		return spielDatum;
 	}
