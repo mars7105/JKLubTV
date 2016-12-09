@@ -213,6 +213,8 @@ public class JSONConfigControl implements ActionListener {
 				}
 			} catch (IOException e1) {
 				JOptionPane.showMessageDialog(mainControl, jsonCross.getPostRequest().getOutput());
+			} catch (NullPointerException ex) {
+				JOptionPane.showMessageDialog(mainControl, "Wrong URL?");
 			}
 		}
 		if (e.getSource() == cancelButton) {

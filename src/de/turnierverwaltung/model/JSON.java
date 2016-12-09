@@ -74,7 +74,7 @@ public class JSON {
 
 	}
 
-	public JSONReceiveObject testConnection() throws IOException, FileNotFoundException {
+	public JSONReceiveObject testConnection() throws IOException, FileNotFoundException, NullPointerException {
 
 		postRequest = new PostRequest(url, username, password);
 
