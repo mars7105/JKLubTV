@@ -39,4 +39,4 @@ Dieses Programm nutzt verschiedene freie Bibliotheken:
 6. Look and Feel: JGoodies
    http://www.jgoodies.com/
    
-For https: Actually, just adding jdk.tls.disabledAlgorithms=DHE, ECDHE in JDK_HOME/jre/lib/security/java.security also works and avoid all this code.
+
