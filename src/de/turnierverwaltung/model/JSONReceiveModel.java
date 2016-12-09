@@ -8,6 +8,7 @@ import java.net.HttpURLConnection;
 import com.google.gson.Gson;
 
 public class JSONReceiveModel {
+	String output;
 
 	public JSONReceiveModel() {
 
@@ -16,11 +17,11 @@ public class JSONReceiveModel {
 	public JSONReceiveObject receiveJSON(HttpURLConnection connection) throws IOException, FileNotFoundException {
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-		String output = "";
+		output = "";
 		for (String line; (line = reader.readLine()) != null;) {
 			output += line;
 		}
-//		 System.out.println(output);
+		 System.out.println(output);
 
 		reader.close();
 		Gson gson = new Gson();
@@ -35,4 +36,13 @@ public class JSONReceiveModel {
 
 		return jsonString;
 	}
+
+	public String getOutput() {
+		return output;
+	}
+
+	public void setOutput(String output) {
+		this.output = output;
+	}
+
 }

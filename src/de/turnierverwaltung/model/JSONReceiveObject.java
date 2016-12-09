@@ -3,6 +3,7 @@ package de.turnierverwaltung.model;
 public class JSONReceiveObject {
 	private String md5sum;
 	private String statusCode;
+	private String version;
 
 	public JSONReceiveObject() {
 
@@ -22,6 +23,14 @@ public class JSONReceiveObject {
 
 	public void setStatusCode(String statusCode) {
 		this.statusCode = statusCode;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
 	public Boolean isStatusOk() {
