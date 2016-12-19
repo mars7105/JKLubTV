@@ -64,6 +64,8 @@ public class NaviView extends JPanel {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
 	private ImageIcon jsonIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/json_file.png"))); //$NON-NLS-1$
+	private ImageIcon exitIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/application-exit-3.png"))); //$NON-NLS-1$
 
 	private JButton spielerImport;
 	private JButton spielerExport;
@@ -74,6 +76,7 @@ public class NaviView extends JPanel {
 	private JButton loadDatabaseButton;
 	private JButton propertiesButton;
 	private JButton infoButton;
+	private JButton exitButton;
 
 	private JLabel pathToDatabase;
 	private ImageIcon propertiesIcon = new ImageIcon(
@@ -123,6 +126,9 @@ public class NaviView extends JPanel {
 		infoButton = new JButton(Messages.getString("NaviView.30"), infoIcon); //$NON-NLS-1$
 		infoButton.setPreferredSize(new Dimension(200, 40));
 		infoButton.setHorizontalAlignment(SwingConstants.LEFT);
+		exitButton = new JButton(Messages.getString("NaviView.33"), exitIcon); //$NON-NLS-1$
+		exitButton.setPreferredSize(new Dimension(200, 40));
+		exitButton.setHorizontalAlignment(SwingConstants.LEFT);
 
 		tabelleSpeichernButton = new JButton(Messages.getString("NaviView.13"), tabelleSpeichernIcon); //$NON-NLS-1$
 		tabelleSpeichernButton.setPreferredSize(new Dimension(200, 40));
@@ -250,6 +256,11 @@ public class NaviView extends JPanel {
 
 		panel2b.add(infoButton);
 
+		NaviPanelElementView panel2c = new NaviPanelElementView();
+		panel2c.getFlowLayout().setVgap(1);
+
+		panel2c.add(exitButton);
+
 		NaviPanelElementView panelLabel = new NaviPanelElementView();
 		panelLabel.getFlowLayout().setVgap(1);
 		pathToDatabase = new JLabel(" "); //$NON-NLS-1$
@@ -289,7 +300,7 @@ public class NaviView extends JPanel {
 		dateiPanel.add(panel2);
 		dateiPanel.add(panel2a);
 		dateiPanel.add(panel2b);
-
+		dateiPanel.add(panel2c);
 		// dateiPanel.add(panel4b);
 		dateiPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -351,6 +362,14 @@ public class NaviView extends JPanel {
 
 		this.add(panel5, BorderLayout.NORTH);
 
+	}
+
+	public JButton getExitButton() {
+		return exitButton;
+	}
+
+	public void setExitButton(JButton exitButton) {
+		this.exitButton = exitButton;
 	}
 
 	public JButton getTurnierAddButton() {
