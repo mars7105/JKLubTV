@@ -67,9 +67,9 @@ public class NaviControl implements ActionListener {
 
 	private JButton newdbButton;
 	private JButton loaddbButton;
+	private JButton exitButton;
 	private JButton newTurnierButton;
 	private NaviView naviView;
-	private int aktiveGruppe;
 	private JButton pdfButton;
 	private NewPlayerView spielerHinzufuegenView;
 	private DSBDWZControl dewisDialogControl;
@@ -97,6 +97,8 @@ public class NaviControl implements ActionListener {
 		newdbButton.addActionListener(this);
 		loaddbButton = naviView.getLoadDatabaseButton();
 		loaddbButton.addActionListener(this);
+		exitButton = naviView.getExitButton();
+		exitButton.addActionListener(this);
 		newTurnierButton = naviView.getTurnierAddButton();
 		newTurnierButton.addActionListener(this);
 
@@ -117,7 +119,6 @@ public class NaviControl implements ActionListener {
 		naviView.getPairingsLoadButton().addActionListener(this);
 		naviView.getPairingsSaveButton().addActionListener(this);
 		pairingIsActive = false;
-		aktiveGruppe = 0;
 		makeNaviPanel();
 		turnierAnsicht = new TurnierAnsicht(mainControl);
 	}
@@ -178,15 +179,15 @@ public class NaviControl implements ActionListener {
 				spielerHinzufuegenView.closeWindow();
 			}
 		}
-		if (this.mainControl.getTabAnzeigeView() != null) {
-
-			if (this.mainControl.getTabAnzeigeView2() != null) {
-				if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
-					aktiveGruppe = this.mainControl.getTabAnzeigeView().getTabbedPane().getSelectedIndex();
-					this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getTabbedPane().getSelectedIndex();
-				}
-			}
-		}
+//		if (this.mainControl.getTabAnzeigeView() != null) {
+//
+//			if (this.mainControl.getTabAnzeigeView2() != null) {
+//				if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
+//					aktiveGruppe = this.mainControl.getTabAnzeigeView().getTabbedPane().getSelectedIndex();
+					// this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getTabbedPane().getSelectedIndex();
+//				}
+//			}
+//		}
 
 		if (arg0.getSource() == pdfButton) {
 			PDFSaveControl pdfsave = new PDFSaveControl(this.mainControl);
@@ -274,6 +275,7 @@ public class NaviControl implements ActionListener {
 			pairingIsActive = false;
 
 		}
+
 		if (arg0.getSource() == newTurnierButton) {
 			mainControl.setSpielerEingabeControl(null);
 			Tournament turnier = this.mainControl.getTurnier();
@@ -448,6 +450,50 @@ public class NaviControl implements ActionListener {
 			}
 
 		}
+		if (arg0.getSource() == exitButton) {
+			Tournament turnier = this.mainControl.getTurnier();
+			if (turnier != null) {
+
+				ArrayList<Game> changedPartien = this.mainControl.getChangedPartien();
+				if (changedPartien != null) {
+					if (changedPartien.size() > 0) {
+						// Custom button text
+						Object[] options = { Messages.getString("NaviController.36"),
+								Messages.getString("NaviController.37"),
+								Messages.getString("TurnierListeLadenControl.11") };
+						int abfrage = JOptionPane.showOptionDialog(mainControl,
+								Messages.getString("TurnierListeLadenControl.12") //$NON-NLS-1$
+										+ Messages.getString("TurnierListeLadenControl.13"), //$NON-NLS-1$
+								Messages.getString("TurnierListeLadenControl.14"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
+								JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+						if (abfrage == 0) {
+							SaveTournamentControl saveGames = new SaveTournamentControl(mainControl);
+							try {
+								Boolean saved = saveGames.saveChangedPartien();
+								if (saved == false) {
+									changedPartien.clear();
+								}
+								System.exit(0);
+							} catch (SQLException e) {
+								changedPartien.clear();
+							}
+
+						}
+						if (abfrage == 1) {
+							System.exit(0);
+						}
+					} else {
+						System.exit(0);
+					}
+				} else {
+					System.exit(0);
+				}
+			} else {
+				System.exit(0);
+			}
+
+		}
+
 		if (arg0.getSource() == naviView.getSpielerImport()) {
 			SQLImportPlayerListControl spielerImport = new SQLImportPlayerListControl(mainControl);
 			try {
