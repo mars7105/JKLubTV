@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -79,8 +80,8 @@ public class MySQLSpielerDAO implements SpielerDAO {
 
 	@Override
 	public ArrayList<Group> findSpieler(int id) {
-		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe ="
-				+ id + " AND Spieler_idSpieler = idSpieler";
+		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe =" + id
+				+ " AND Spieler_idSpieler = idSpieler";
 		ArrayList<Group> gruppenListe = new ArrayList<Group>();
 
 		Statement stmt;
@@ -120,9 +121,8 @@ public class MySQLSpielerDAO implements SpielerDAO {
 					String name = rs.getString("Name");
 					String kuerzel = rs.getString("kuerzel");
 					String dwz = rs.getString("dwz");
-					
-					spielerListe
-							.add(new Player(idSpieler, name, kuerzel, dwz, 0));
+
+					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, 0, ""));
 				}
 				stmt.close();
 
@@ -136,7 +136,7 @@ public class MySQLSpielerDAO implements SpielerDAO {
 	}
 
 	@Override
-	public int insertSpieler(String name, String dwz, String kuerzel, int age) {
+	public int insertSpieler(Player spieler) {
 
 		String sql;
 		int id = -1;
@@ -145,12 +145,11 @@ public class MySQLSpielerDAO implements SpielerDAO {
 
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
-						Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-				preStm.setString(1, dwz);
-				preStm.setString(2, kuerzel);
-				preStm.setString(3, name);
+				preStm.setString(1, spieler.getDwz());
+				preStm.setString(2, spieler.getKuerzel());
+				preStm.setString(3, spieler.getName());
 				preStm.executeUpdate();
 				ResultSet rs = preStm.getGeneratedKeys();
 				if (rs.next()) {
@@ -169,8 +168,8 @@ public class MySQLSpielerDAO implements SpielerDAO {
 
 	@Override
 	public ArrayList<Player> selectAllSpieler(int idGruppe) {
-		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe = "
-				+ idGruppe + " AND Spieler_idSpieler = idSpieler";
+		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe = " + idGruppe
+				+ " AND Spieler_idSpieler = idSpieler";
 		ArrayList<Player> spielerListe = new ArrayList<Player>();
 
 		Statement stmt;
@@ -184,8 +183,7 @@ public class MySQLSpielerDAO implements SpielerDAO {
 					String name = rs.getString("Name");
 					String kuerzel = rs.getString("kuerzel");
 					String dwz = rs.getString("dwz");
-					spielerListe
-							.add(new Player(idSpieler, name, kuerzel, dwz, 0));
+					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, 0, ""));
 				}
 				stmt.close();
 
@@ -201,8 +199,7 @@ public class MySQLSpielerDAO implements SpielerDAO {
 	@Override
 	public boolean updateSpieler(Player spieler) {
 		boolean ok = false;
-		String sql = "update spieler set Name = ?, Kuerzel = ?"
-				+ ", DWZ = ? where idSpieler=" + spieler.getSpielerId();
+		String sql = "update spieler set Name = ?, Kuerzel = ?" + ", DWZ = ? where idSpieler=" + spieler.getSpielerId();
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
@@ -219,4 +216,5 @@ public class MySQLSpielerDAO implements SpielerDAO {
 		}
 		return ok;
 	}
+
 }

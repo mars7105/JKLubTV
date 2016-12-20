@@ -37,7 +37,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public void createSpielerTable() throws SQLException {
 		String sql = "CREATE TABLE spieler (idSpieler INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-				+ " Name VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, Age INTEGER)" + ";";
+				+ " Name VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, Age INTEGER, Fidetitle VARCHAR)" + ";";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -119,8 +119,16 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 					alterTableAge();
 
 				}
+				String fideTitle = "";
+				try {
+					fideTitle = rs.getString("Fidetitle");
+				} catch (SQLException e) {
 
-				spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age));
+					alterTableFideTitle();
+
+				}
+
+				spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age, fideTitle));
 			}
 			stmt.close();
 
@@ -131,23 +139,23 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	}
 
 	@Override
-	public int insertSpieler(String name, String dwz, String kuerzel, int age) throws SQLException {
+	public int insertSpieler(Player spieler) throws SQLException {
 
 		String sql;
 		int id = -1;
 
-		sql = "Insert into spieler (DWZ, Kuerzel, Name, Age) values (?,?,?,?)" + ";";
+		sql = "Insert into spieler (DWZ, Kuerzel, Name, Age, Fidetitle) values (?,?,?,?,?)" + ";";
 
 		if (this.dbConnect != null) {
 
 			PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-			preStm.setString(1, dwz);
-			preStm.setString(2, kuerzel);
-			preStm.setString(3, name);
+			preStm.setString(1, spieler.getDwz());
+			preStm.setString(2, spieler.getKuerzel());
+			preStm.setString(3, spieler.getName());
 
-			preStm.setInt(4, age);
-
+			preStm.setInt(4, spieler.getAge());
+			preStm.setString(5, spieler.getFideTitle());
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
@@ -183,8 +191,10 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				int age = 2;
 
 				age = rs.getInt("Age");
+				String fideTtle = "";
+				fideTtle = rs.getString("Fidetitle");
 
-				spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age));
+				spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age, fideTtle));
 			}
 			stmt.close();
 
@@ -196,7 +206,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public boolean updateSpieler(Player spieler) throws SQLException {
 		boolean ok = false;
-		String sql = "update spieler set Name = ?, Kuerzel = ?" + ", DWZ = ?, Age = ? where idSpieler="
+		String sql = "update spieler set Name = ?, Kuerzel = ?" + ", DWZ = ?, Age = ?, Fidetitle = ? where idSpieler="
 				+ spieler.getSpielerId() + ";";
 		if (this.dbConnect != null) {
 
@@ -208,6 +218,12 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				preStm.setInt(4, spieler.getAge());
 			} catch (SQLException e) {
 				alterTableAge();
+			}
+			try {
+				preStm.setString(5, spieler.getFideTitle());
+			} catch (SQLException e) {
+				alterTableFideTitle();
+
 			}
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
@@ -223,6 +239,24 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	private void alterTableAge() {
 
 		String sql = "ALTER TABLE spieler ADD Age INTEGER DEFAULT(2)" + ";";
+		Statement stmt;
+		if (this.dbConnect != null) {
+			try {
+				// create a database connection
+				stmt = this.dbConnect.createStatement();
+				stmt.setQueryTimeout(30); // set timeout to 30 sec.
+				stmt.executeUpdate(sql);
+				stmt.close();
+
+			} catch (SQLException e) {
+
+			}
+		}
+	}
+
+	private void alterTableFideTitle() {
+
+		String sql = "ALTER TABLE spieler ADD Fidetitle VARCHAR" + ";";
 		Statement stmt;
 		if (this.dbConnect != null) {
 			try {

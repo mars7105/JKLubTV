@@ -44,8 +44,7 @@ public class SQLImportPlayerListControl {
 
 		// Create a file chooser
 		JFileChooser fc = new JFileChooser();
-		FileFilter filter = new FileNameExtensionFilter(
-				Messages.getString("SpielerTableImportController.0"), "spl"); //$NON-NLS-1$ //$NON-NLS-2$
+		FileFilter filter = new FileNameExtensionFilter(Messages.getString("SpielerTableImportController.0"), "spl"); //$NON-NLS-1$ //$NON-NLS-2$
 		fc.addChoosableFileFilter(filter);
 		fc.setFileFilter(filter);
 		int returnVal = fc.showOpenDialog(null);
@@ -58,27 +57,22 @@ public class SQLImportPlayerListControl {
 
 			// This is where a real application would open the file.
 			SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-			daoFactory = DAOFactory
-					.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
+			daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 			mySQLSpielerDAO = daoFactory.getSpielerDAO();
 			ArrayList<Player> spielerListe = mySQLSpielerDAO.getAllSpieler();
 			SQLiteDAOFactory.setDB_PATH(fileName);
-			daoFactory = DAOFactory
-					.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
+			daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 			mySQLSpielerDAO = daoFactory.getSpielerDAO();
 
 			Player oneSpieler = null;
 			ListIterator<Player> li = spielerListe.listIterator();
 			while (li.hasNext()) {
 				oneSpieler = li.next();
-				mySQLSpielerDAO.insertSpieler(oneSpieler.getName(),
-						oneSpieler.getDwz(), oneSpieler.getKuerzel(),
-						oneSpieler.getAge());
+				mySQLSpielerDAO.insertSpieler(oneSpieler);
 			}
 
 		} else {
-			JOptionPane.showMessageDialog(mainControl,
-					Messages.getString("SpielerTableImportController.3")); //$NON-NLS-1$
+			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerTableImportController.3")); //$NON-NLS-1$
 		}
 
 	}

@@ -46,11 +46,11 @@ import org.jdatepicker.impl.JDatePickerImpl;
 
 import de.turnierverwaltung.ZahlKleinerAlsN;
 import de.turnierverwaltung.model.Group;
-import de.turnierverwaltung.model.PairingsTables;
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Player;
-import de.turnierverwaltung.model.MeetingTable;
 import de.turnierverwaltung.model.Tournament;
+import de.turnierverwaltung.model.roundrobin.MeetingTable;
+import de.turnierverwaltung.model.roundrobin.PairingsTables;
 import de.turnierverwaltung.view.WaitForAllGroupsView;
 import de.turnierverwaltung.view.PairingsView;
 import de.turnierverwaltung.view.TabbedPaneView;

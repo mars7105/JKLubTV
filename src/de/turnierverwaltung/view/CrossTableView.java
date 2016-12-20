@@ -28,8 +28,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
-import de.turnierverwaltung.model.CrossTableModel;
 import de.turnierverwaltung.model.TournamentConstants;
+import de.turnierverwaltung.model.roundrobin.CrossTableModel;
 
 public class CrossTableView extends JPanel {
 

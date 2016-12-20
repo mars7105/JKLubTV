@@ -21,7 +21,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-import de.turnierverwaltung.model.CrossTable;
+import de.turnierverwaltung.model.roundrobin.CrossTable;
 
 /**
  * 

@@ -5,14 +5,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import javax.swing.JOptionPane;
-import de.turnierverwaltung.model.CrossTable;
+
 import de.turnierverwaltung.model.JSON;
 import de.turnierverwaltung.model.JSONFileObject;
 import de.turnierverwaltung.model.JSONReceiveObject;
-import de.turnierverwaltung.model.MeetingTable;
 import de.turnierverwaltung.model.Sidepanel;
 import de.turnierverwaltung.model.TableContent;
 import de.turnierverwaltung.model.TournamentConstants;
+import de.turnierverwaltung.model.roundrobin.CrossTable;
+import de.turnierverwaltung.model.roundrobin.MeetingTable;
 
 public class JSONSaveControl {
 	private MainControl mainControl;

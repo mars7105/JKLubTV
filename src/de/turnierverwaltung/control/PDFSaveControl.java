@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import de.turnierverwaltung.model.CrossTable;
+import de.turnierverwaltung.model.roundrobin.CrossTable;
 
 public class PDFSaveControl {
 	private MainControl mainControl;

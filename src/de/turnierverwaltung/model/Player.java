@@ -31,12 +31,16 @@ public class Player implements Comparable<Object> {
 	private int platz;
 	private int folgeDWZ;
 	private int age;
+	private String fideTitle;
+	private FideNorm fideNorm;
 
 	public Player() {
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
 		spielerId = -1;
+		fideNorm = new FideNorm();
+		fideTitle = fideNorm.getFideNorm()[0];
 	}
 
 	/**
@@ -47,7 +51,7 @@ public class Player implements Comparable<Object> {
 	 * @param dwz
 	 * @param age
 	 */
-	public Player(int id, String name, String kuerzel, String dwz, int age) {
+	public Player(int id, String name, String kuerzel, String dwz, int age, String fideTitle) {
 		this.spielerId = id;
 		this.name = name;
 		this.kuerzel = kuerzel;
@@ -56,6 +60,8 @@ public class Player implements Comparable<Object> {
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
+		fideNorm = new FideNorm();
+		this.fideTitle = fideTitle;
 	}
 
 	@Override
@@ -199,6 +205,14 @@ public class Player implements Comparable<Object> {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+	public String getFideTitle() {
+		return fideTitle;
+	}
+
+	public void setFideTitle(String fideTitle) {
+		this.fideTitle = fideTitle;
 	}
 
 }
