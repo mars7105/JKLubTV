@@ -40,7 +40,7 @@ public class Reihung {
 		swissPlayers.sort(new Comparator<SwissPlayer>() {
 			@Override
 			public int compare(SwissPlayer o1, SwissPlayer o2) {
-				return (int) (10 * (o1.getDWZ() - o2.getDWZ()));
+				return (int) (o1.getDWZ() - o2.getDWZ());
 			}
 		});
 
@@ -86,4 +86,13 @@ public class Reihung {
 
 	}
 
+	public void sortSwissPlayersToAlphabetical() {
+		swissPlayers.sort(new Comparator<SwissPlayer>() {
+			@Override
+			public int compare(SwissPlayer o1, SwissPlayer o2) {
+				return o1.getName().compareTo(o2.getName());
+			}
+		});
+
+	}
 }
