@@ -25,10 +25,10 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import de.turnierverwaltung.model.Game;
-import de.turnierverwaltung.model.MeetingTableModel;
-import de.turnierverwaltung.model.MeetingTable;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
+import de.turnierverwaltung.model.roundrobin.MeetingTable;
+import de.turnierverwaltung.model.roundrobin.MeetingTableModel;
 import de.turnierverwaltung.view.MeetingTableView;
 import de.turnierverwaltung.view.CrossTableView;
 import de.turnierverwaltung.view.TabbedPaneView;

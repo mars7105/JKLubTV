@@ -10,7 +10,7 @@ import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.turnierverwaltung.model.ICalendar;
-import de.turnierverwaltung.model.MeetingTable;
+import de.turnierverwaltung.model.roundrobin.MeetingTable;
 import net.fortuna.ical4j.model.ValidationException;
 
 public class ICalendarSaveControl {

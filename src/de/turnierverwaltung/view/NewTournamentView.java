@@ -40,6 +40,7 @@ import javax.swing.ScrollPaneConstants;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
+
 import de.turnierverwaltung.model.Tournament;
 
 public class NewTournamentView extends JPanel {

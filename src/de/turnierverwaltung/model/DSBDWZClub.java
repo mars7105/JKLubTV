@@ -22,17 +22,19 @@ public class DSBDWZClub {
 	private List<de.fahsel.dewis.Player> players;
 	private ArrayList<de.turnierverwaltung.model.Player> spieler;
 	private String zps;
-/**
- * 
- * @param zps
- */
+
+	/**
+	 * 
+	 * @param zps
+	 */
 	public DSBDWZClub(String zps) {
 		this.zps = zps;
 	}
-/**
- * 
- * @return
- */
+
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<de.turnierverwaltung.model.Player> getSpieler() {
 		try {
 			// Erzeugt dei DewisFacade über die auf die API des Schachbundes
@@ -60,6 +62,7 @@ public class DSBDWZClub {
 				} catch (NullPointerException e) {
 					dwz = "";
 				}
+				String fideTitle = player.getFideTitle();
 				int age = 2;
 				// test
 				Charset UTF8_CHARSET = Charset.forName("UTF-8");
@@ -68,7 +71,7 @@ public class DSBDWZClub {
 				byte[] bkuerzel = kuerzel.getBytes();
 				String kuerzelUTF8 = new String(bkuerzel, UTF8_CHARSET);
 				// Test
-				spieler.add(new de.turnierverwaltung.model.Player(id, nameUTF8, kuerzelUTF8, dwz, age));
+				spieler.add(new de.turnierverwaltung.model.Player(id, nameUTF8, kuerzelUTF8, dwz, age,fideTitle));
 			}
 
 		} catch (IOException e) {

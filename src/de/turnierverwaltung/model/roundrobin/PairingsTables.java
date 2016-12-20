@@ -1,4 +1,9 @@
-package de.turnierverwaltung.model;
+package de.turnierverwaltung.model.roundrobin;
+
+import de.turnierverwaltung.model.Game;
+import de.turnierverwaltung.model.Group;
+import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.model.TournamentConstants;
 
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net

@@ -49,8 +49,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.TableColumn;
 
-import de.turnierverwaltung.model.MeetingTableModel;
 import de.turnierverwaltung.model.TournamentConstants;
+import de.turnierverwaltung.model.roundrobin.MeetingTableModel;
 
 public class MeetingTableView extends JPanel {
 	public class DateLabelFormatter extends AbstractFormatter {
