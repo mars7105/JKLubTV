@@ -25,4 +25,14 @@ public class FideNorm {
 		this.fideNorm = fideNorm;
 	}
 
+	public int getFideNumber(Player spieler) {
+		int fideNumer = 0;
+		for (int i = 0; i < 9; i++) {
+			if (fideNorm[i].equals(spieler.getFideTitle())) {
+				fideNumer = i;
+			}
+		}
+		return fideNumer;
+	}
+
 }

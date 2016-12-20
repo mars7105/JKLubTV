@@ -3,6 +3,8 @@ package de.turnierverwaltung.model.swiss;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import de.turnierverwaltung.model.FideNorm;
+
 public class Reihung {
 	/**
 	 * Für die Auslosung werden die Spieler folgend gereiht: a. Punkte b.
@@ -50,28 +52,38 @@ public class Reihung {
 			public int compare(SwissPlayer o1, SwissPlayer o2) {
 				int fideSort1 = 0;
 				int fideSort2 = 0;
-				String[] fideNormArray = new String[9];
-				fideNormArray[0] = "";
-				fideNormArray[1] = "WCM";
-				fideNormArray[2] = "CM";
-				fideNormArray[3] = "WFM";
-				fideNormArray[4] = "FM";
-				fideNormArray[5] = "WIM";
-				fideNormArray[6] = "WGM";
-				fideNormArray[7] = "IM";
-				fideNormArray[8] = "GM";
+				FideNorm fideNorm = new FideNorm();
+				String[] fideNormArray = fideNorm.getFideNorm();
+				Boolean chechFideNorm1 = false;
+				Boolean chechFideNorm2 = false;
 				for (int i = 0; i < 9; i++) {
 					if (o1.getFideTitle().equals(fideNormArray[i])) {
 						fideSort1 = i;
+						chechFideNorm1 = true;
 					}
 					if (o2.getFideTitle().equals(fideNormArray[i])) {
 						fideSort2 = i;
+						chechFideNorm2 = true;
 					}
 				}
+				if (chechFideNorm1 == true && chechFideNorm2 == true) {
 
+				} else {
+					if (o1.getFideTitle() == null) {
+						fideSort1 = 0;
+
+					}
+					if (o2.getFideTitle() == null) {
+						fideSort2 = 0;
+
+					}
+
+				}
 				return fideSort1 - fideSort2;
 			}
+
 		});
 
 	}
+
 }

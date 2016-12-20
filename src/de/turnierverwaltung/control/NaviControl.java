@@ -38,6 +38,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import de.turnierverwaltung.model.FideNorm;
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
@@ -147,11 +148,15 @@ public class NaviControl implements ActionListener {
 						String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
 						String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
 						int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
+						int fideTitleNumber = spielerHinzufuegenView.getTextComboBoxFideTitle().getSelectedIndex();
+						FideNorm fideNorm = new FideNorm();
+						String fideTitle = fideNorm.getFideNorm()[fideTitleNumber];
 						Player neuerSpieler = new Player();
 						neuerSpieler.setName(name);
 						neuerSpieler.setKuerzel(kuerzel);
 						neuerSpieler.setDwz(dwz);
 						neuerSpieler.setAge(age);
+						neuerSpieler.setFideTitle(fideTitle);
 						SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
 						neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
@@ -162,6 +167,7 @@ public class NaviControl implements ActionListener {
 					spielerHinzufuegenView.getTextFieldKuerzel().setEditable(false);
 					spielerHinzufuegenView.getTextFieldDwz().setEditable(false);
 					spielerHinzufuegenView.getTextComboBoxAge().setEnabled(false);
+					spielerHinzufuegenView.getTextComboBoxFideTitle().setEnabled(false);
 					spielerHinzufuegenView.spielerPanel();
 				} catch (SQLException e) {
 					mainControl.fileSQLError();
@@ -179,15 +185,17 @@ public class NaviControl implements ActionListener {
 				spielerHinzufuegenView.closeWindow();
 			}
 		}
-//		if (this.mainControl.getTabAnzeigeView() != null) {
-//
-//			if (this.mainControl.getTabAnzeigeView2() != null) {
-//				if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
-//					aktiveGruppe = this.mainControl.getTabAnzeigeView().getTabbedPane().getSelectedIndex();
-					// this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getTabbedPane().getSelectedIndex();
-//				}
-//			}
-//		}
+		// if (this.mainControl.getTabAnzeigeView() != null) {
+		//
+		// if (this.mainControl.getTabAnzeigeView2() != null) {
+		// if (this.mainControl.getNaviView().getTabellenPanel().isVisible() ==
+		// true) {
+		// aktiveGruppe =
+		// this.mainControl.getTabAnzeigeView().getTabbedPane().getSelectedIndex();
+		// this.mainControl.getTabAnzeigeView2()[aktiveGruppe].getTabbedPane().getSelectedIndex();
+		// }
+		// }
+		// }
 
 		if (arg0.getSource() == pdfButton) {
 			PDFSaveControl pdfsave = new PDFSaveControl(this.mainControl);
