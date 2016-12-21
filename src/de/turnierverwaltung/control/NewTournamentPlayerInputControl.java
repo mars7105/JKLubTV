@@ -38,7 +38,6 @@ import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
-import de.turnierverwaltung.view.NewTournamentPlayerCountlView;
 import de.turnierverwaltung.view.NewTournamentPlayerInputView;
 import de.turnierverwaltung.view.TabbedPaneView;
 
@@ -46,7 +45,6 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 	private MainControl mainControl;
 	private NewTournamentPlayerInputView[] spielerEingabeView;
-	private NewTournamentPlayerCountlView[] spielerAnzahlView;
 	private JButton[] okButton;
 	private JButton[] cancelButton;
 	private int[] spielerAnzahl;
@@ -72,7 +70,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		this.mainControl.getHauptPanel();
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
 		tabAnzeigeView.setPreferredSize(new Dimension(windowWidth, windowHeight));
-		spielerAnzahlView = this.mainControl.getSpielerAnzahlControl().getSpielerAnzahlView();
+		this.mainControl.getSpielerAnzahlControl().getSpielerAnzahlView();
 		gruppenAnzahl = this.mainControl.getTurnier().getAnzahlGruppen();
 		spielerAnzahl = new int[gruppenAnzahl];
 
@@ -275,20 +273,22 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 	public void makeTabbedPane(int index) throws NumberFormatException, ZahlKleinerAlsN, ZahlGroesserAlsN {
 		this.mainControl.getHauptPanel();
 
-		if (spielerAnzahlView[index].getAnzahlSpielerTextField().getText().length() > 0) {
-			spielerAnzahl[index] = this.mainControl.getSpielerAnzahlControl().getSpielerAnzahl(index);
-			spielerEingabeView[index] = new NewTournamentPlayerInputView(spielerAnzahl[index]);
-			okButton[index] = spielerEingabeView[index].getOkButton();
-			okButton[index].addActionListener(this);
-			cancelButton[index] = spielerEingabeView[index].getCancelButton();
-			cancelButton[index].addActionListener(this);
-			tabAnzeigeView.getTabbedPane().setComponentAt(index, spielerEingabeView[index]);
-			tabAnzeigeView.getTabbedPane().setTitleAt(index, gruppe[index].getGruppenName());
-			tabAnzeigeView.getTabbedPane().setIconAt(index, gruppenIcon);
+		// if
+		// (spielerAnzahlView[index].getGruppenAnzahlComboBox().getText().length()
+		// > 0) {
+		spielerAnzahl[index] = this.mainControl.getSpielerAnzahlControl().getSpielerAnzahl(index);
+		spielerEingabeView[index] = new NewTournamentPlayerInputView(spielerAnzahl[index]);
+		okButton[index] = spielerEingabeView[index].getOkButton();
+		okButton[index].addActionListener(this);
+		cancelButton[index] = spielerEingabeView[index].getCancelButton();
+		cancelButton[index].addActionListener(this);
+		tabAnzeigeView.getTabbedPane().setComponentAt(index, spielerEingabeView[index]);
+		tabAnzeigeView.getTabbedPane().setTitleAt(index, gruppe[index].getGruppenName());
+		tabAnzeigeView.getTabbedPane().setIconAt(index, gruppenIcon);
 
-			suchAnzeige(index);
-			// hauptPanel.updateUI();
-		}
+		suchAnzeige(index);
+		// hauptPanel.updateUI();
+		// }
 	}
 
 	private void testPlayerListForDoubles() throws SQLException {

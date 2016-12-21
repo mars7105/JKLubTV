@@ -40,8 +40,6 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
-import de.turnierverwaltung.ZahlGroesserAlsN;
-import de.turnierverwaltung.ZahlKleinerAlsN;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.ButtonTabComponent;
@@ -115,16 +113,6 @@ public class NewTournamentControl implements ActionListener {
 
 	}
 
-	private static int pruefeObZahlKleinerEinsIst(int zahl) throws ZahlKleinerAlsN, ZahlGroesserAlsN {
-		if (zahl <= 0) {
-			throw new ZahlKleinerAlsN();
-		}
-		if (zahl > 15) {
-			throw new ZahlGroesserAlsN();
-		}
-		return zahl;
-	}
-
 	public String getEndDatum() {
 		return endDatum;
 	}
@@ -190,29 +178,25 @@ public class NewTournamentControl implements ActionListener {
 		startDatum = turnierView.getStartDatumTextField();
 		endDatum = turnierView.getEndDatumTextField();
 
-		try {
+		gruppenAnzahl = turnierView.getGruppenAnzahlComboBox().getSelectedIndex() + 1;
 
-			gruppenAnzahl = pruefeObZahlKleinerEinsIst(new Integer(turnierView.getGruppenAnzahlTextField().getText()));
+		if (turnierName.length() > 0 && startDatum.length() > 0 && endDatum.length() > 0 && gruppenAnzahl > 0) {
+			makeTurnier();
 
-			if (turnierName.length() > 0 && startDatum.length() > 0 && endDatum.length() > 0 && gruppenAnzahl > 0) {
-				makeTurnier();
+			this.mainControl.setGruppenControl(new NewTournamentGroupsControl(this.mainControl));
 
-				this.mainControl.setGruppenControl(new NewTournamentGroupsControl(this.mainControl));
-
+		} else {
+			String messageText = "";
+			if (turnierName.length() == 0) {
+				messageText += Messages.getString("TurnierControl.7") + "\n";
 			}
-
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(mainControl, Messages.getString("TurnierControl.2")); //$NON-NLS-1$
-			turnierView.getGruppenAnzahlTextField().setText(""); //$NON-NLS-1$
-			turnierView.getGruppenAnzahlTextField().grabFocus();
-		} catch (ZahlKleinerAlsN e) {
-			JOptionPane.showMessageDialog(mainControl, Messages.getString("TurnierControl.4")); //$NON-NLS-1$
-			turnierView.getGruppenAnzahlTextField().setText(""); //$NON-NLS-1$
-			turnierView.getGruppenAnzahlTextField().grabFocus();
-		} catch (ZahlGroesserAlsN e) {
-			JOptionPane.showMessageDialog(mainControl, Messages.getString("TurnierControl.6")); //$NON-NLS-1$
-			turnierView.getGruppenAnzahlTextField().setText(""); //$NON-NLS-1$
-			turnierView.getGruppenAnzahlTextField().grabFocus();
+			if (startDatum.length() == 0) {
+				messageText += Messages.getString("TurnierControl.8") + "\n";
+			}
+			if (endDatum.length() == 0) {
+				messageText += Messages.getString("TurnierControl.9") + "\n";
+			}
+			JOptionPane.showMessageDialog(mainControl, messageText);
 		}
 
 	}
