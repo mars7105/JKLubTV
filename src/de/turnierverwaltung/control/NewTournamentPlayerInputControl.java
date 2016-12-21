@@ -34,6 +34,7 @@ import javax.swing.JTextField;
 
 import de.turnierverwaltung.ZahlGroesserAlsN;
 import de.turnierverwaltung.ZahlKleinerAlsN;
+import de.turnierverwaltung.model.FideNorm;
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
@@ -98,6 +99,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		String kuerzel = ""; //$NON-NLS-1$
 		String dwz = ""; //$NON-NLS-1$
 		int age = 0;
+		String fideNorm = "";
 		int spielerID = 0;
 		int sAnzahl = 0;
 
@@ -129,12 +131,15 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 								dwz = spielerEingabeView[i].getDwzTextfield()[y].getText();
 								spielerID = spielerEingabeView[i].getSpielerID()[y];
 								age = spielerEingabeView[i].getTextComboBoxAge()[y].getSelectedIndex();
-
+								FideNorm fNorm = new FideNorm();
+								int fn = spielerEingabeView[i].getTextComboBoxFideTitle()[y].getSelectedIndex();
+								fideNorm = fNorm.getFideNumber(fn);
 								spieler[counter] = new Player();
 								spieler[counter].setName(name);
 								spieler[counter].setKuerzel(kuerzel);
 								spieler[counter].setDwz(dwz);
 								spieler[counter].setAge(age);
+								spieler[counter].setFideTitle(fideNorm);
 								if (spielerID >= 0) {
 									spieler[counter].setSpielerId(spielerID);
 
@@ -149,6 +154,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 						gruppe[i].setSpieler(spieler);
 						Arrays.sort(spieler);
 						spielerEingabeView[i].removeAll();
+
 						switch (turnier.getTurnierType()) {
 						case TournamentConstants.ROUNDROBIN:
 							rundenEingabeFormularControl.makeTerminTabelle(i);

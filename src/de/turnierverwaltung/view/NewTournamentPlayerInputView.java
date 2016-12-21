@@ -25,6 +25,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import de.turnierverwaltung.model.FideNorm;
+
 public class NewTournamentPlayerInputView extends JPanel {
 	/**
 	 * 
@@ -41,6 +43,7 @@ public class NewTournamentPlayerInputView extends JPanel {
 	private int spielerAnzahl;
 	private int[] spielerID;
 	private JComboBox<String>[] textComboBoxAge;
+	private JComboBox<String>[] textComboBoxFideTitle;
 
 	/**
 	 * Create the panel.
@@ -56,7 +59,7 @@ public class NewTournamentPlayerInputView extends JPanel {
 		dwzTextfield = new JTextField[this.spielerAnzahl];
 		kuerzelTextfield = new JTextField[this.spielerAnzahl];
 		textComboBoxAge = new JComboBox[this.spielerAnzahl];
-
+		textComboBoxFideTitle = new JComboBox[this.spielerAnzahl];
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		setLayout(new BorderLayout());
@@ -108,7 +111,11 @@ public class NewTournamentPlayerInputView extends JPanel {
 			line.add(textComboBoxAge[i]);
 
 			centerPane.add(line);
-
+			FideNorm fideNorm = new FideNorm();
+			String[] fideNormArray = fideNorm.getFideNorm();
+			textComboBoxFideTitle[i] = new JComboBox<String>(fideNormArray);
+			line.add(new JLabel(Messages.getString("SpielerEingabeView.14"))); //$NON-NLS-1$
+			line.add(textComboBoxFideTitle[i]);
 		}
 		contentPanel.add(centerPane);
 		contentPanel.add(buttonPane);
@@ -193,6 +200,14 @@ public class NewTournamentPlayerInputView extends JPanel {
 
 	public void setTextComboBoxAge(JComboBox<String>[] textComboBoxAge) {
 		this.textComboBoxAge = textComboBoxAge;
+	}
+
+	public JComboBox<String>[] getTextComboBoxFideTitle() {
+		return textComboBoxFideTitle;
+	}
+
+	public void setTextComboBoxFideTitle(JComboBox<String>[] textComboBoxFideTitle) {
+		this.textComboBoxFideTitle = textComboBoxFideTitle;
 	}
 
 }

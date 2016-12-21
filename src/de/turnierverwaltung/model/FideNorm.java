@@ -35,4 +35,8 @@ public class FideNorm {
 		return fideNumer;
 	}
 
+	public String getFideNumber(int fn) {
+		return fideNorm[fn];
+	}
+
 }
