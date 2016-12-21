@@ -37,7 +37,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public void createSpielerTable() throws SQLException {
 		String sql = "CREATE TABLE spieler (idSpieler INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-				+ " Name VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, Age INTEGER, Fidetitle VARCHAR)" + ";";
+				+ " Name VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, Age INTEGER, Fidetitle VARCHAR DEFAULT '')" + ";";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -125,9 +125,11 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				} catch (SQLException e) {
 
 					alterTableFideTitle();
-
+					fideTitle = "";
 				}
-
+				if (fideTitle == null) {
+					fideTitle = "";
+				}
 				spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age, fideTitle));
 			}
 			stmt.close();
@@ -191,10 +193,12 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				int age = 2;
 
 				age = rs.getInt("Age");
-				String fideTtle = "";
-				fideTtle = rs.getString("Fidetitle");
-
-				spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age, fideTtle));
+				String fideTitle = "";
+				fideTitle = rs.getString("Fidetitle");
+				if (fideTitle == null) {
+					fideTitle = "";
+				}
+				spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age, fideTitle));
 			}
 			stmt.close();
 
@@ -256,7 +260,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 	private void alterTableFideTitle() {
 
-		String sql = "ALTER TABLE spieler ADD Fidetitle VARCHAR" + ";";
+		String sql = "ALTER TABLE spieler ADD Fidetitle VARCHAR DEFAULT ''" + ";";
 		Statement stmt;
 		if (this.dbConnect != null) {
 			try {

@@ -27,6 +27,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+import de.turnierverwaltung.model.FideNorm;
+
 public class NewPlayerView extends JDialog {
 	/**
 		 * 
@@ -41,6 +43,7 @@ public class NewPlayerView extends JDialog {
 	private JPanel centerPane;
 	private JPanel contentPanel;
 	private JComboBox<String> textComboBoxAge;
+	private JComboBox<String> textComboBoxFideTitle;
 
 	public NewPlayerView() {
 		buttonPane = new ButtonPanelView();
@@ -113,6 +116,14 @@ public class NewPlayerView extends JDialog {
 		this.textComboBoxAge = textComboBoxAge;
 	}
 
+	public JComboBox<String> getTextComboBoxFideTitle() {
+		return textComboBoxFideTitle;
+	}
+
+	public void setTextComboBoxFideTitle(JComboBox<String> textComboBoxFideTitle) {
+		this.textComboBoxFideTitle = textComboBoxFideTitle;
+	}
+
 	public void spielerPanel() {
 		centerPane = new JPanel();
 		this.textFieldName = new JTextField(15);
@@ -133,6 +144,11 @@ public class NewPlayerView extends JDialog {
 		this.textComboBoxAge = new JComboBox<String>(ageStrings);
 		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.9"))); //$NON-NLS-1$
 		centerPane.add(textComboBoxAge);
+		FideNorm fideNorm = new FideNorm();
+		String[] fideNormArray = fideNorm.getFideNorm();
+		this.textComboBoxFideTitle = new JComboBox<String>(fideNormArray);
+		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.10"))); //$NON-NLS-1$
+		centerPane.add(textComboBoxFideTitle);
 		contentPanel.add(centerPane);
 		contentPanel.add(buttonPane);
 		add(contentPanel);

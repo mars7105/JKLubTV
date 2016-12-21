@@ -29,6 +29,7 @@ import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.model.SortName;
 import de.turnierverwaltung.model.TournamentConstants;
+import de.turnierverwaltung.model.FideNorm;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.view.ButtonTabComponent;
 import de.turnierverwaltung.view.EditPlayerView;
@@ -66,10 +67,15 @@ public class PlayerListControl implements ActionListener {
 						String kuerzel = spielerEditierenView.getTextFieldKuerzel().getText();
 						String dwz = spielerEditierenView.getTextFieldDwz().getText();
 						int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
+						int fideTitleNumber = spielerEditierenView.getTextComboBoxFideTitle().getSelectedIndex();
+						FideNorm fideNorm = new FideNorm();
+						String fideTitle = fideNorm.getFideNorm()[fideTitleNumber];
 						spieler.get(spielerIndex).setName(name);
 						spieler.get(spielerIndex).setKuerzel(kuerzel);
 						spieler.get(spielerIndex).setDwz(dwz);
 						spieler.get(spielerIndex).setAge(age);
+						spieler.get(spielerIndex).setFideTitle(fideTitle);
+
 						SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
 						stc.updateOneSpieler(spieler.get(spielerIndex));
