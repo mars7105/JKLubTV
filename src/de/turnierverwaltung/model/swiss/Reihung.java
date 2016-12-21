@@ -26,7 +26,14 @@ public class Reihung {
 
 	}
 
-	public void sortSwissPlayersToPoints() {
+	public void sortSwissPlayers() {
+		sortSwissPlayersToAlphabetical();
+		sortSwissPlayersToFideTitle();
+		sortSwissPlayersToTWZ();
+		sortSwissPlayersToPoints();
+	}
+
+	private void sortSwissPlayersToPoints() {
 		swissPlayers.sort(new Comparator<SwissPlayer>() {
 			@Override
 			public int compare(SwissPlayer o1, SwissPlayer o2) {
@@ -36,17 +43,17 @@ public class Reihung {
 
 	}
 
-	public void sortSwissPlayersToTWZ() {
+	private void sortSwissPlayersToTWZ() {
 		swissPlayers.sort(new Comparator<SwissPlayer>() {
 			@Override
 			public int compare(SwissPlayer o1, SwissPlayer o2) {
-				return (int) (o1.getDWZ() - o2.getDWZ());
+				return o1.getDWZ() - o2.getDWZ();
 			}
 		});
 
 	}
 
-	public void sortSwissPlayersToFideTitle() {
+	private void sortSwissPlayersToFideTitle() {
 		swissPlayers.sort(new Comparator<SwissPlayer>() {
 			@Override
 			public int compare(SwissPlayer o1, SwissPlayer o2) {
@@ -86,7 +93,7 @@ public class Reihung {
 
 	}
 
-	public void sortSwissPlayersToAlphabetical() {
+	private void sortSwissPlayersToAlphabetical() {
 		swissPlayers.sort(new Comparator<SwissPlayer>() {
 			@Override
 			public int compare(SwissPlayer o1, SwissPlayer o2) {
@@ -95,4 +102,13 @@ public class Reihung {
 		});
 
 	}
+
+	public ArrayList<SwissPlayer> getSwissPlayers() {
+		return swissPlayers;
+	}
+
+	public void setSwissPlayers(ArrayList<SwissPlayer> swissPlayers) {
+		this.swissPlayers = swissPlayers;
+	}
+
 }
