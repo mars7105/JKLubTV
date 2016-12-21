@@ -20,11 +20,11 @@ import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -36,7 +36,7 @@ public class NewTournamentPlayerCountlView extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPanel;
 	private JButton okButton;
-	private JTextField anzahlSpielerTextField;
+	private JComboBox<String> spielerAnzahlComboBox;
 
 	public NewTournamentPlayerCountlView(String title) {
 
@@ -45,21 +45,21 @@ public class NewTournamentPlayerCountlView extends JPanel {
 
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
-		
 
 		ButtonPanelView buttonPane = new ButtonPanelView();
 		buttonPane.makeOKButton();
 		JPanel centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.X_AXIS));
 
-		
 		okButton = buttonPane.getOkButton();
 
 		JLabel label = new JLabel(Messages.getString("SpielerAnzahlView.2")); //$NON-NLS-1$
-		anzahlSpielerTextField = new JTextField(5);
-		anzahlSpielerTextField.grabFocus();
+		String[] gruppenNumbers = { "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17",
+				"18", "19", "20" };
+		spielerAnzahlComboBox = new JComboBox<String>(gruppenNumbers);
+
 		centerPane.add(label);
-		centerPane.add(anzahlSpielerTextField);
+		centerPane.add(spielerAnzahlComboBox);
 		contentPanel.add(centerPane);
 		contentPanel.add(buttonPane);
 
@@ -79,16 +79,16 @@ public class NewTournamentPlayerCountlView extends JPanel {
 
 	}
 
-	public JTextField getAnzahlSpielerTextField() {
-		return anzahlSpielerTextField;
+	public JComboBox<String> getSpielerAnzahlComboBox() {
+		return spielerAnzahlComboBox;
+	}
+
+	public void setSpielerAnzahlComboBox(JComboBox<String> gruppenAnzahlComboBox) {
+		this.spielerAnzahlComboBox = gruppenAnzahlComboBox;
 	}
 
 	public JButton getOkButton() {
 		return okButton;
-	}
-
-	public void setAnzahlSpielerTextField(JTextField anzahlSpielerTextField) {
-		this.anzahlSpielerTextField = anzahlSpielerTextField;
 	}
 
 	public void setOkButton(JButton okButton) {

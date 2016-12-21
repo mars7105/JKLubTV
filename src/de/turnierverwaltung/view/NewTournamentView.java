@@ -28,7 +28,10 @@ import java.util.Calendar;
 import java.util.Locale;
 import java.util.Properties;
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -53,6 +56,7 @@ public class NewTournamentView extends JPanel {
 	private JDatePickerImpl startDatumTextField;
 	private JDatePickerImpl endDatumeTextField;
 	private JTextField gruppenAnzahlTextField;
+	private JComboBox<String> gruppenAnzahlComboBox;
 	private Tournament turnier;
 	private JButton okButton;
 	private String turnierName;
@@ -60,6 +64,8 @@ public class NewTournamentView extends JPanel {
 	private String endDatum;
 	private int gruppenAnzahl;
 	private Properties property;
+	private JCheckBox turnierTypeCheckFieldRoundRobin;
+	private JCheckBox turnierTypeCheckFieldSwiss;
 
 	public class DateLabelFormatter extends AbstractFormatter {
 
@@ -109,7 +115,7 @@ public class NewTournamentView extends JPanel {
 		hauptPanel.setLayout(new BoxLayout(hauptPanel, BoxLayout.PAGE_AXIS));
 		// hauptPanel.setBackground(new Color(249, 222, 112));
 		hauptPanel.setVisible(true);
-//		add(hauptPanel);
+		// add(hauptPanel);
 
 		JPanel panel1 = new JPanel();
 		panel1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -151,22 +157,17 @@ public class NewTournamentView extends JPanel {
 
 		JPanel panel4 = new JPanel();
 		// panel4.setBackground(new Color(249, 222, 112));
-		panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
+		panel4.setLayout(new FlowLayout(FlowLayout.LEFT));
 		hauptPanel.add(panel4);
 
 		JLabel lblAnzahlGruppen = new JLabel(Messages.getString("TurnierView.11")); //$NON-NLS-1$
 		panel4.add(lblAnzahlGruppen);
 
-		gruppenAnzahlTextField = new JTextField();
+		String[] gruppenNumbers = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15" };
+		gruppenAnzahlComboBox = new JComboBox<String>(gruppenNumbers);
 
-		gruppenAnzahlTextField.setColumns(10);
-		panel4.add(gruppenAnzahlTextField);
-
-		ButtonPanelView buttonPane = new ButtonPanelView();
-		buttonPane.makeOKButton();
-		hauptPanel.add(buttonPane);
-		okButton = buttonPane.getOkButton();
-
+		// gruppenAnzahlTextField.setColumns(10);
+		panel4.add(gruppenAnzahlComboBox);
 		String help = Messages.getString("TurnierView.14"); //$NON-NLS-1$
 		JPanel helpPanel = new JPanel();
 		JTextArea helpText = new JTextArea();
@@ -174,6 +175,28 @@ public class NewTournamentView extends JPanel {
 		helpText.setEditable(false);
 		helpPanel.add(helpText);
 		hauptPanel.add(helpPanel);
+		turnierTypeCheckFieldRoundRobin = new JCheckBox(Messages.getString("TurnierView.16"));
+		turnierTypeCheckFieldSwiss = new JCheckBox(Messages.getString("TurnierView.17"));
+		ButtonGroup bg = new ButtonGroup();
+		bg.add(turnierTypeCheckFieldRoundRobin);
+		bg.add(turnierTypeCheckFieldSwiss);
+		turnierTypeCheckFieldRoundRobin.setSelected(true);
+		JPanel panelType = new JPanel();
+		panelType.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		panelType.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
+		panelType.setLayout(new BoxLayout(panelType, BoxLayout.Y_AXIS));
+		panelType.add(turnierTypeCheckFieldRoundRobin);
+		panelType.add(turnierTypeCheckFieldSwiss);
+		JPanel panelAllType = new JPanel();
+		panelAllType.setLayout(new FlowLayout(FlowLayout.LEFT));
+		panelAllType.add(panelType);
+		hauptPanel.add(panelAllType);
+
+		ButtonPanelView buttonPane = new ButtonPanelView();
+		buttonPane.makeOKButton();
+		hauptPanel.add(buttonPane);
+		okButton = buttonPane.getOkButton();
+
 		JScrollPane scrollPane = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(hauptPanel);
@@ -194,8 +217,28 @@ public class NewTournamentView extends JPanel {
 		return gruppenAnzahl;
 	}
 
-	public JTextField getGruppenAnzahlTextField() {
-		return gruppenAnzahlTextField;
+	public JComboBox<String> getGruppenAnzahlComboBox() {
+		return gruppenAnzahlComboBox;
+	}
+
+	public void setGruppenAnzahlComboBox(JComboBox<String> gruppenAnzahlComboBox) {
+		this.gruppenAnzahlComboBox = gruppenAnzahlComboBox;
+	}
+
+	public JCheckBox getTurnierTypeCheckFieldRoundRobin() {
+		return turnierTypeCheckFieldRoundRobin;
+	}
+
+	public void setTurnierTypeCheckFieldRoundRobin(JCheckBox turnierTypeCheckFieldRoundRobin) {
+		this.turnierTypeCheckFieldRoundRobin = turnierTypeCheckFieldRoundRobin;
+	}
+
+	public JCheckBox getTurnierTypeCheckFieldSwiss() {
+		return turnierTypeCheckFieldSwiss;
+	}
+
+	public void setTurnierTypeCheckFieldSwiss(JCheckBox turnierTypeCheckFieldSwiss) {
+		this.turnierTypeCheckFieldSwiss = turnierTypeCheckFieldSwiss;
 	}
 
 	public JPanel getHauptPanel() {
@@ -236,10 +279,6 @@ public class NewTournamentView extends JPanel {
 
 	public void setGruppenAnzahl(int gruppenAnzahl) {
 		this.gruppenAnzahl = gruppenAnzahl;
-	}
-
-	public void setGruppenAnzahlTextField(JTextField gruppenAnzahlTextField) {
-		this.gruppenAnzahlTextField = gruppenAnzahlTextField;
 	}
 
 	public void setHauptPanel(JPanel hauptPanel) {

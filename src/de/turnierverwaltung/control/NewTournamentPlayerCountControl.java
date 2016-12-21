@@ -23,10 +23,9 @@ import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-
 import de.turnierverwaltung.ZahlGroesserAlsN;
 import de.turnierverwaltung.ZahlKleinerAlsN;
 import de.turnierverwaltung.model.Group;
@@ -37,16 +36,6 @@ import de.turnierverwaltung.view.NewTournamentPlayerCountlView;
 import de.turnierverwaltung.view.TabbedPaneView;
 
 public class NewTournamentPlayerCountControl implements ActionListener {
-	private static int pruefeObZahlKleinerDreiIst(int zahl) throws ZahlKleinerAlsN, ZahlGroesserAlsN {
-		if (zahl < 3) {
-			throw new ZahlKleinerAlsN();
-		}
-		if (zahl > 20) {
-			throw new ZahlGroesserAlsN();
-		}
-		return zahl;
-	}
-
 	private int gruppenAnzahl;
 	private int spielerAnzahl[];
 	private String[] title;
@@ -54,7 +43,7 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 	private NewTournamentPlayerInputControl spielerEingabeControl;
 	private MainControl mainControl;
 	private NewTournamentPlayerCountlView[] spielerAnzahlView;
-	private JTextField[] spielerAnzahlTextfield;
+	private JComboBox<String>[] spielerAnzahlComboBox;
 	private JTabbedPane hauptPanel;
 	private TabbedPaneView tabbedPaneView;
 	private Tournament turnier;
@@ -63,6 +52,7 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 	private ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png"))); //$NON-NLS-1$
 
+	@SuppressWarnings("unchecked")
 	public NewTournamentPlayerCountControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		turnier = this.mainControl.getTurnier();
@@ -77,19 +67,18 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 		this.spielerAnzahl = new int[gruppenAnzahl];
 		title = mainControl.getGruppenView().getGruppenName();
 		spielerAnzahlView = new NewTournamentPlayerCountlView[gruppenAnzahl];
-		spielerAnzahlTextfield = new JTextField[gruppenAnzahl];
+		spielerAnzahlComboBox = new JComboBox[gruppenAnzahl];
 		okButton = new JButton[gruppenAnzahl];
 		spieler = new Player[gruppenAnzahl][];
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			spieler[i] = new Player[spielerAnzahl[i]];
 			spielerAnzahlView[i] = new NewTournamentPlayerCountlView(title[i]);
-			spielerAnzahlTextfield[i] = spielerAnzahlView[i].getAnzahlSpielerTextField();
+			spielerAnzahlComboBox[i] = spielerAnzahlView[i].getSpielerAnzahlComboBox();
 			okButton[i] = spielerAnzahlView[i].getOkButton();
 			okButton[i].addActionListener(this);
 			tabbedPaneView.getTabbedPane().addTab(title[i], spielerAnzahlView[i]);
 			gruppe[i].setSpieler(spieler[i]);
-			spielerAnzahlTextfield[i].setText("");
-			spielerAnzahlTextfield[i].grabFocus();
+			spielerAnzahlComboBox[i].grabFocus();
 		}
 		// tabbedPaneView.updateUI();
 		hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
@@ -100,8 +89,8 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		tabbedPaneView.getTabbedPane().setSelectedIndex(0);
-		spielerAnzahlTextfield[0].setText("");
-		spielerAnzahlTextfield[0].grabFocus();
+		// spielerAnzahlComboBox[0].setText("");
+		spielerAnzahlComboBox[0].grabFocus();
 	}
 
 	@Override
@@ -129,28 +118,25 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 		} catch (NumberFormatException e) {
 			spielerAnzahl[fehlerIndex] = 0;
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.1")); //$NON-NLS-1$
-			spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
-			spielerAnzahlTextfield[fehlerIndex].grabFocus();
+			// spielerAnzahlComboBox[fehlerIndex].setText(""); //$NON-NLS-1$
+			spielerAnzahlComboBox[fehlerIndex].grabFocus();
 		} catch (ZahlKleinerAlsN e) {
 			spielerAnzahl[fehlerIndex] = 0;
 
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.3")); //$NON-NLS-1$
-			spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
-			spielerAnzahlTextfield[fehlerIndex].grabFocus();
+			spielerAnzahlComboBox[fehlerIndex].grabFocus();
 		} catch (ZahlGroesserAlsN e) {
 			spielerAnzahl[fehlerIndex] = 0;
 
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.5")); //$NON-NLS-1$
-			spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
-			spielerAnzahlTextfield[fehlerIndex].grabFocus();
+			spielerAnzahlComboBox[fehlerIndex].grabFocus();
 		}
 
 	}
 
 	public int getSpielerAnzahl(int indexI) throws ZahlKleinerAlsN, NumberFormatException, ZahlGroesserAlsN {
 
-		spielerAnzahl[indexI] = pruefeObZahlKleinerDreiIst(Integer.parseInt(spielerAnzahlTextfield[indexI].getText()));
-
+		spielerAnzahl[indexI] = spielerAnzahlComboBox[indexI].getSelectedIndex() + 3;
 		return spielerAnzahl[indexI];
 	}
 
@@ -161,11 +147,11 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 	public void makeNewTab(int indexI) {
 		spieler[indexI] = new Player[spielerAnzahl[indexI]];
 		spielerAnzahlView[indexI] = new NewTournamentPlayerCountlView(title[indexI]);
-		spielerAnzahlTextfield[indexI] = spielerAnzahlView[indexI].getAnzahlSpielerTextField();
+		spielerAnzahlComboBox[indexI] = spielerAnzahlView[indexI].getSpielerAnzahlComboBox();
 		okButton[indexI] = spielerAnzahlView[indexI].getOkButton();
 		okButton[indexI].addActionListener(this);
 		tabbedPaneView.getTabbedPane().setComponentAt(indexI, spielerAnzahlView[indexI]);
-		spielerAnzahlView[indexI].getAnzahlSpielerTextField().grabFocus();
+		spielerAnzahlView[indexI].getSpielerAnzahlComboBox().grabFocus();
 
 	}
 
@@ -177,12 +163,12 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 		this.spielerAnzahlView = spielerAnzahlView;
 	}
 
-	public JTextField[] getSpielerAnzahlTextfield() {
-		return spielerAnzahlTextfield;
+	public JComboBox<String>[] getSpielerAnzahlComboBox() {
+		return spielerAnzahlComboBox;
 	}
 
-	public void setSpielerAnzahlTextfield(JTextField[] spielerAnzahlTextfield) {
-		this.spielerAnzahlTextfield = spielerAnzahlTextfield;
+	public void setSpielerAnzahlComboBox(JComboBox<String>[] spielerAnzahlComboBox) {
+		this.spielerAnzahlComboBox = spielerAnzahlComboBox;
 	}
 
 }
