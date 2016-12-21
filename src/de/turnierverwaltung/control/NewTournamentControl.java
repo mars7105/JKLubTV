@@ -61,6 +61,7 @@ public class NewTournamentControl implements ActionListener {
 
 	private Tournament turnier;
 	private ButtonTabComponent buttonTabComponent;
+	private int turnierType;
 
 	public NewTournamentControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -143,7 +144,7 @@ public class NewTournamentControl implements ActionListener {
 		turnier.setStartDatum(startDatum);
 		turnier.setEndDatum(endDatum);
 		turnier.setAnzahlGruppen(gruppenAnzahl);
-
+		turnier.setTurnierType(turnierType);
 		this.mainControl.setTurnier(turnier);
 		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());
 	}
@@ -179,7 +180,7 @@ public class NewTournamentControl implements ActionListener {
 		endDatum = turnierView.getEndDatumTextField();
 
 		gruppenAnzahl = turnierView.getGruppenAnzahlComboBox().getSelectedIndex() + 1;
-
+		turnierType = turnierView.getTurnierTypeCheckField();
 		if (turnierName.length() > 0 && startDatum.length() > 0 && endDatum.length() > 0 && gruppenAnzahl > 0) {
 			makeTurnier();
 

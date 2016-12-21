@@ -2,20 +2,20 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-8-openjdk-amd64"/>
-	<classpathentry kind="lib" path="lib/jgoodies-common-1.7.0.jar"/>
-	<classpathentry kind="lib" path="lib/jgoodies-looks-2.5.3.jar"/>
-	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.8.11.1.jar"/>
-	<classpathentry kind="lib" path="lib/jdatepicker-1.3.4.jar"/>
-	<classpathentry kind="lib" path="lib/dewis.jar"/>
-	<classpathentry kind="lib" path="lib/itextpdf-5.5.6.jar"/>
-	<classpathentry kind="lib" path="lib/opencsv-3.7.jar"/>
-	<classpathentry kind="lib" path="lib/poi-3.14-20160307.jar"/>
-	<classpathentry kind="lib" path="/home/schmuck/workspace/JKlubTV/JKLubTV/lib/backport-util-concurrent-3.1.jar"/>
-	<classpathentry kind="lib" path="/home/schmuck/workspace/JKlubTV/JKLubTV/lib/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="/home/schmuck/workspace/JKlubTV/JKLubTV/lib/commons-codec-1.8.jar"/>
-	<classpathentry kind="lib" path="/home/schmuck/workspace/JKlubTV/JKLubTV/lib/commons-logging-1.1.3.jar"/>
-	<classpathentry kind="lib" path="/home/schmuck/workspace/JKlubTV/JKLubTV/lib/groovy-all-2.1.7.jar"/>
-	<classpathentry kind="lib" path="/home/schmuck/workspace/JKlubTV/JKLubTV/lib/ical4j-1.0.6.jar"/>
-	<classpathentry kind="lib" path="/home/schmuck/workspace/JKlubTV/JKLubTV/lib/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/backport-util-concurrent-3.1.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/commons-codec-1.8.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/dewis.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/groovy-all-2.1.7.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/gson-2.8.0.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/ical4j-1.0.6.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/itextpdf-5.5.6.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/jdatepicker-1.3.4.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/jgoodies-common-1.7.0.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/jgoodies-looks-2.5.3.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/opencsv-3.7.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/poi-3.14-20160307.jar"/>
+	<classpathentry kind="lib" path="/home/martin/workspace/JKLubTV/lib/sqlite-jdbc-3.8.11.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

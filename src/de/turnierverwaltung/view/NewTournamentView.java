@@ -22,11 +22,14 @@ import java.awt.ComponentOrientation;
 import java.awt.Cursor;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 import java.util.Properties;
+
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -45,6 +48,7 @@ import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
 import de.turnierverwaltung.model.Tournament;
+import de.turnierverwaltung.model.TournamentConstants;
 
 public class NewTournamentView extends JPanel {
 	/**
@@ -66,6 +70,8 @@ public class NewTournamentView extends JPanel {
 	private Properties property;
 	private JCheckBox turnierTypeCheckFieldRoundRobin;
 	private JCheckBox turnierTypeCheckFieldSwiss;
+	private ButtonGroup buttonGroup;
+	private int turnierTypeCheckField;
 
 	public class DateLabelFormatter extends AbstractFormatter {
 
@@ -175,11 +181,26 @@ public class NewTournamentView extends JPanel {
 		helpText.setEditable(false);
 		helpPanel.add(helpText);
 		hauptPanel.add(helpPanel);
+		turnierTypeCheckField = 0;
 		turnierTypeCheckFieldRoundRobin = new JCheckBox(Messages.getString("TurnierView.16"));
+		turnierTypeCheckFieldRoundRobin.addItemListener(new ItemListener() {
+
+			public void itemStateChanged(ItemEvent e) {
+				turnierTypeCheckField = TournamentConstants.ROUNDROBIN;
+			}
+
+		});
 		turnierTypeCheckFieldSwiss = new JCheckBox(Messages.getString("TurnierView.17"));
-		ButtonGroup bg = new ButtonGroup();
-		bg.add(turnierTypeCheckFieldRoundRobin);
-		bg.add(turnierTypeCheckFieldSwiss);
+		turnierTypeCheckFieldSwiss.addItemListener(new ItemListener() {
+
+			public void itemStateChanged(ItemEvent e) {
+				turnierTypeCheckField = TournamentConstants.SWISS;
+			}
+
+		});
+		buttonGroup = new ButtonGroup();
+		buttonGroup.add(turnierTypeCheckFieldRoundRobin);
+		buttonGroup.add(turnierTypeCheckFieldSwiss);
 		turnierTypeCheckFieldRoundRobin.setSelected(true);
 		JPanel panelType = new JPanel();
 		panelType.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -307,6 +328,22 @@ public class NewTournamentView extends JPanel {
 
 	public void setTurnierNameTextField(JTextField turnierNameTextField) {
 		this.turnierNameTextField = turnierNameTextField;
+	}
+
+	public ButtonGroup getButtonGroup() {
+		return buttonGroup;
+	}
+
+	public void setButtonGroup(ButtonGroup buttonGroup) {
+		this.buttonGroup = buttonGroup;
+	}
+
+	public int getTurnierTypeCheckField() {
+		return turnierTypeCheckField;
+	}
+
+	public void setTurnierTypeCheckField(int turnierTypeCheckField) {
+		this.turnierTypeCheckField = turnierTypeCheckField;
 	}
 
 }

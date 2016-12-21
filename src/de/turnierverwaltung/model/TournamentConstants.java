@@ -65,6 +65,8 @@ public class TournamentConstants {
 	public static final String FRONTEND_PASSWORD = "";
 	public static final int CROSSTABLETYPE = 0;
 	public static final int MEETINGTABLETYPE = 1;
+	public static final int ROUNDROBIN = 0;
+	public static final int SWISS = 1;
 	public static String TABLE_COLUMN_PLAYER = Messages.getString("TurnierKonstanten.0");
 	public static String TABLE_COLUMN_OLD_DWZ = Messages.getString("TurnierKonstanten.1");
 	public static String TABLE_COLUMN_NEW_DWZ = Messages.getString("TurnierKonstanten.2");

@@ -58,6 +58,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 	private Boolean[] readyToSave;
 	private ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png"))); //$NON-NLS-1$
+	private SwissControl swissControl;
 
 	public NewTournamentPlayerInputControl(MainControl mainControl) throws SQLException {
 		int windowWidth = TournamentConstants.WINDOW_WIDTH - 25;
@@ -81,7 +82,8 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		cancelButton = new JButton[gruppenAnzahl];
 		rundenEingabeFormularControl = new PairingsControl(this.mainControl);
 		this.mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
-
+		swissControl = new SwissControl(this.mainControl);
+		this.mainControl.setSwissControl(swissControl);
 		readyToSave = new Boolean[gruppenAnzahl];
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			readyToSave[i] = false;
@@ -147,10 +149,17 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 						gruppe[i].setSpieler(spieler);
 						Arrays.sort(spieler);
 						spielerEingabeView[i].removeAll();
-						// rundenEingabeFormularControl.makeRundenEditView(i);
+						switch (turnier.getTurnierType()) {
+						case TournamentConstants.ROUNDROBIN:
+							rundenEingabeFormularControl.makeTerminTabelle(i);
+							break;
+						case TournamentConstants.SWISS:
+							swissControl.addNewSwissTournamentGroup();
 
-						rundenEingabeFormularControl.makeTerminTabelle(i);
-						// rundenEingabeFormularControl.saveTurnier(i);
+							break;
+						default:
+
+						}
 
 					} else {
 						JOptionPane.showMessageDialog(null, Messages.getString("SpielerEingabeControl.9")); //$NON-NLS-1$

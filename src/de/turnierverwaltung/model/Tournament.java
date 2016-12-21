@@ -37,6 +37,7 @@ public class Tournament {
 	private Boolean noFolgeDWZCalc;
 	private String md5Sum;
 	private Boolean sortMeetingTable;
+	private int turnierType;
 
 	/**
 	 * 
@@ -187,6 +188,16 @@ public class Tournament {
 
 	public void setSortMeetingTable(Boolean sortMeetingTable) {
 		this.sortMeetingTable = sortMeetingTable;
+	}
+
+	public void setTurnierType(int turnierType) {
+		this.turnierType = turnierType;
+
+	}
+
+	public int getTurnierType() {
+		return turnierType;
+
 	}
 
 }

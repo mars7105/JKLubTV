@@ -117,6 +117,7 @@ public class MainControl extends JFrame {
 	private ButtonTabComponent buttonTabComponent;
 	private WebsiteConfigView webconfigView;
 	private SettingsView eigenschaftenView;
+	private SwissControl swissControl;
 
 	public MainControl() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
@@ -703,6 +704,15 @@ public class MainControl extends JFrame {
 
 	public void setSettingsView(SettingsView eigenschaftenView) {
 		this.eigenschaftenView = eigenschaftenView;
+	}
+
+	public void setSwissControl(SwissControl swissControl) {
+		this.swissControl = swissControl;
+
+	}
+
+	public SwissControl getSwissControl() {
+		return swissControl;
 	}
 
 }
