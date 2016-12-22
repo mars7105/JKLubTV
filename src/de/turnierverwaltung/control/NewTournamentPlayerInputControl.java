@@ -23,7 +23,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.ListIterator;
 
 import javax.swing.ImageIcon;
@@ -52,7 +52,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 	private int gruppenAnzahl;
 	private TabbedPaneView tabAnzeigeView;
 	private Tournament turnier;
-	private Group[] gruppe;
+	private ArrayList<Group> gruppe;
 	private Player[] spieler;
 	private PairingsControl rundenEingabeFormularControl;
 	private ArrayList<Player> alleSpieler;
@@ -108,13 +108,12 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 				try {
 					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
-					sAnzahl = gruppe[i].getSpielerAnzahl();
-					gruppe[i].setRundenAnzahl(sAnzahl + ((sAnzahl % 2) - 1));
+					sAnzahl = gruppe.get(i).getSpielerAnzahl();
+					gruppe.get(i).setRundenAnzahl(sAnzahl + ((sAnzahl % 2) - 1));
 					readyToSave[i] = true;
-					spieler = new Player[sAnzahl];
+					// spieler = new Player[sAnzahl];
+					Player spieler = new Player();
 					Boolean correctName = true;
-					int counter = -1;
-
 					if (testForDoubles(i) == true) {
 
 						for (int y = 0; y < sAnzahl; y++) {
@@ -122,7 +121,6 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 								correctName = false;
 							} else {
 								correctName = true;
-								counter++;
 							}
 
 							if (correctName == true) {
@@ -134,25 +132,35 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 								FideNorm fNorm = new FideNorm();
 								int fn = spielerEingabeView[i].getTextComboBoxFideTitle()[y].getSelectedIndex();
 								fideNorm = fNorm.getFideNumber(fn);
-								spieler[counter] = new Player();
-								spieler[counter].setName(name);
-								spieler[counter].setKuerzel(kuerzel);
-								spieler[counter].setDwz(dwz);
-								spieler[counter].setAge(age);
-								spieler[counter].setFideTitle(fideNorm);
-								if (spielerID >= 0) {
-									spieler[counter].setSpielerId(spielerID);
 
-									stc.updateOneSpieler(spieler[counter]);
+								spieler = new Player();
+								spieler.setName(name);
+								spieler.setKuerzel(kuerzel);
+								spieler.setDwz(dwz);
+								spieler.setAge(age);
+								spieler.setFideTitle(fideNorm);
+								if (spielerID >= 0) {
+									spieler.setSpielerId(spielerID);
+
+									stc.updateOneSpieler(spieler);
 
 								} else {
-									spieler[counter].setSpielerId(stc.insertOneSpieler(spieler[counter]));
+									spieler.setSpielerId(stc.insertOneSpieler(spieler));
 								}
 							}
 						}
 						testPlayerListForDoubles();
-						gruppe[i].setSpieler(spieler);
-						Arrays.sort(spieler);
+						gruppe.get(i).getSpieler().add(spieler);
+						gruppe.get(i).getSpieler().sort(new Comparator<Player>() {
+							public int compare(Player o1, Player o2) {
+								int compareQuantity = o1.getSort() - o2.getSort();
+
+								// ascending order
+								return compareQuantity;
+
+							}
+
+						});
 						spielerEingabeView[i].removeAll();
 
 						switch (turnier.getTurnierType()) {
@@ -221,7 +229,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 	}
 
 	private boolean testForDoubles(int index) {
-		int sAnzahl = gruppe[index].getSpielerAnzahl();
+		int sAnzahl = gruppe.get(index).getSpielerAnzahl();
 		Boolean testOK = true;
 		for (int y = 0; y < sAnzahl - 1; y++) {
 
@@ -298,7 +306,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		cancelButton[index] = spielerEingabeView[index].getCancelButton();
 		cancelButton[index].addActionListener(this);
 		tabAnzeigeView.getTabbedPane().setComponentAt(index, spielerEingabeView[index]);
-		tabAnzeigeView.getTabbedPane().setTitleAt(index, gruppe[index].getGruppenName());
+		tabAnzeigeView.getTabbedPane().setTitleAt(index, gruppe.get(index).getGruppenName());
 		tabAnzeigeView.getTabbedPane().setIconAt(index, gruppenIcon);
 
 		suchAnzeige(index);

@@ -37,6 +37,8 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import de.turnierverwaltung.model.Game;
+import de.turnierverwaltung.model.Group;
+import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.PartienDAO;
@@ -160,7 +162,9 @@ public class SaveTournamentControl {
 					saveOK1 = true;
 				}
 				ladebalkenView.iterate();
-				if (mainControl.getTurnier().getGruppe()[index].getGruppeId() < 0) {
+				Tournament turnier = this.mainControl.getTurnier();
+				Group group = turnier.getGruppe().get(index);
+				if (group.getGruppeId() < 0) {
 					saveOK2 = this.mainControl.getGruppenTableControl().insertGruppe(index);
 					ladebalkenView.iterate();
 					ladebalkenView.iterate();

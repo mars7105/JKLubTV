@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import de.turnierverwaltung.model.Game;
+import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
@@ -44,16 +45,17 @@ public class SQLGamesControl {
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
 		this.turnier = this.mainControl.getTurnier();
+		Group group = turnier.getGruppe().get(gruppenID);
 		ArrayList<Game> partie = new ArrayList<Game>();
 
-		partie = mySQLPartienDAO.selectAllPartien(turnier.getGruppe()[gruppenID].getGruppeId());
+		partie = mySQLPartienDAO.selectAllPartien(group.getGruppeId());
 		Game[] p = new Game[partie.size()];
-		turnier.getGruppe()[gruppenID].setPartienAnzahl(partie.size());
+		group.setPartienAnzahl(partie.size());
 		Player spielerWeiss;
 		Player spielerSchwarz;
-		for (int s = 0; s < turnier.getGruppe()[gruppenID].getSpielerAnzahl(); s++) {
-			spielerWeiss = turnier.getGruppe()[gruppenID].getSpieler()[s];
-			spielerSchwarz = turnier.getGruppe()[gruppenID].getSpieler()[s];
+		for (int s = 0; s < group.getSpielerAnzahl(); s++) {
+			spielerWeiss = group.getSpieler().get(s);
+			spielerSchwarz = group.getSpieler().get(s);
 			for (int i = 0; i < partie.size(); i++) {
 				p[i] = partie.get(i);
 				if (p[i].getSpielerWeiss().getSpielerId() == spielerWeiss.getSpielerId()) {
@@ -67,15 +69,17 @@ public class SQLGamesControl {
 			}
 		}
 		Arrays.sort(p);
-		turnier.getGruppe()[gruppenID].setPartien(p);
+		group.setPartien(p);
 
 	}
 
 	public boolean insertPartien(int gruppe) throws SQLException {
 		boolean eintragGespeichert = false;
+		this.turnier = this.mainControl.getTurnier();
 		turnierId = turnier.getTurnierId();
-		int idGruppe = turnier.getGruppe()[gruppe].getGruppeId();
-		int anzahlPartien = turnier.getGruppe()[gruppe].getPartienAnzahl();
+		Group group = turnier.getGruppe().get(gruppe);
+		int idGruppe = group.getGruppeId();
+		int anzahlPartien = group.getPartienAnzahl();
 		partienId = new int[anzahlPartien];
 		String[] spielDatum = new String[anzahlPartien];
 		int[] runde = new int[anzahlPartien];
@@ -86,15 +90,15 @@ public class SQLGamesControl {
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
 		for (int i = 0; i < anzahlPartien; i++) {
-			if (turnier.getGruppe()[gruppe].getPartien()[i].getPartieId() == -1) {
-				spielerIdweiss = turnier.getGruppe()[gruppe].getPartien()[i].getSpielerWeiss().getSpielerId();
-				spielerIdschwarz = turnier.getGruppe()[gruppe].getPartien()[i].getSpielerSchwarz().getSpielerId();
-				spielDatum[i] = turnier.getGruppe()[gruppe].getPartien()[i].getSpielDatum();
-				runde[i] = turnier.getGruppe()[gruppe].getPartien()[i].getRunde();
-				ergebnis[i] = turnier.getGruppe()[gruppe].getPartien()[i].getErgebnis();
+			if (group.getPartien()[i].getPartieId() == -1) {
+				spielerIdweiss = group.getPartien()[i].getSpielerWeiss().getSpielerId();
+				spielerIdschwarz = group.getPartien()[i].getSpielerSchwarz().getSpielerId();
+				spielDatum[i] = group.getPartien()[i].getSpielDatum();
+				runde[i] = group.getPartien()[i].getRunde();
+				ergebnis[i] = group.getPartien()[i].getErgebnis();
 				partienId[i] = mySQLPartienDAO.insertPartien(idGruppe, spielDatum[i], runde[i], ergebnis[i],
 						spielerIdweiss, spielerIdschwarz);
-				turnier.getGruppe()[gruppe].getPartien()[i].setPartieId(partienId[i]);
+				group.getPartien()[i].setPartieId(partienId[i]);
 				eintragGespeichert = true;
 			}
 		}
@@ -103,11 +107,13 @@ public class SQLGamesControl {
 
 	public boolean updatePartien(int gruppe) throws SQLException {
 		boolean saved = false;
+		this.turnier = this.mainControl.getTurnier();
+		Group group = turnier.getGruppe().get(gruppe);
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
 		// for (int i = 0; i < turnier.getGruppe()[gruppe].getPartienAnzahl();
 		// i++) {
-		saved = mySQLPartienDAO.updatePartien(turnier.getGruppe()[gruppe].getPartien());
+		saved = mySQLPartienDAO.updatePartien(group.getPartien());
 		// }
 		return saved;
 	}

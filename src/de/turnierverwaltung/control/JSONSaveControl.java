@@ -78,7 +78,7 @@ public class JSONSaveControl {
 					}
 				}
 
-				groupName[i] = mainControl.getTurnier().getGruppe()[i].getGruppenName();
+				groupName[i] = mainControl.getTurnier().getGruppe().get(i).getGruppenName();
 
 				ctableMatrix[i] = turnierTabelle[i].getTabellenMatrix();
 				mtableMatrix[i] = meetingTable[i].getTabellenMatrix();

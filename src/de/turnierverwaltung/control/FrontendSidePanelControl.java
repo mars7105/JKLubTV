@@ -108,7 +108,7 @@ public class FrontendSidePanelControl implements ActionListener {
 
 			for (int i = 0; i < anzahlgruppen; i++) {
 
-				int groupID = mainControl.getTurnier().getGruppe()[i].getGruppeId();
+				int groupID = mainControl.getTurnier().getGruppe().get(i).getGruppeId();
 				crossHeader[i] = ftC[i].getCrossHeader().getText();
 				crossBody[i] = ftC[i].getCrossBody().getText();
 				crossColor[i] = ftC[i].getCrossColorSelector().getSelectedIndex();
@@ -128,7 +128,7 @@ public class FrontendSidePanelControl implements ActionListener {
 
 				try {
 					tableContentItems = webMainContent
-							.selectAllTableContent(this.mainControl.getTurnier().getGruppe()[i].getGruppeId());
+							.selectAllTableContent(this.mainControl.getTurnier().getGruppe().get(i).getGruppeId());
 
 				} catch (SQLException e1) {
 					JOptionPane.showMessageDialog(mainControl, "Database error");

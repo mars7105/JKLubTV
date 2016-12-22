@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 
+import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
@@ -54,7 +55,7 @@ public class SQLPlayerControl {
 		this.turnier = this.mainControl.getTurnier();
 		ArrayList<Player> spieler = new ArrayList<Player>();
 		for (int i = 0; i < this.turnier.getAnzahlGruppen(); i++) {
-			spieler = mySQLSpielerDAO.selectAllSpieler(turnier.getGruppe()[i].getGruppeId());
+			spieler = mySQLSpielerDAO.selectAllSpieler(turnier.getGruppe().get(i).getGruppeId());
 			if (spieler.size() % 2 == 1) {
 				Player spielfrei = new Player(TournamentConstants.SPIELFREI_ID,
 						Messages.getString("SpielerTableControl.0"), Messages.getString("SpielerTableControl.1"), "0", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
@@ -62,12 +63,7 @@ public class SQLPlayerControl {
 				spieler.add(spielfrei);
 			}
 
-			Player[] gamers = new Player[spieler.size()];
-			for (int y = 0; y < spieler.size(); y++) {
-				gamers[y] = spieler.get(y);
-			}
-			this.turnier.getGruppe()[i].setSpieler(gamers);
-			this.turnier.getGruppe()[i].setSpielerAnzahl(gamers.length);
+			this.turnier.getGruppe().get(i).setSpieler(spieler);
 
 		}
 
@@ -86,26 +82,27 @@ public class SQLPlayerControl {
 
 	public boolean insertSpieler(int gruppe) throws SQLException {
 		boolean eintragGespeichert = false;
+		Group group = turnier.getGruppe().get(gruppe);
 		this.turnier = mainControl.getTurnier();
-		String[] spielerName = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
-		String[] spielerDWZ = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
-		String[] spielerKuerzel = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
-		int[] spielerAge = new int[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
-		String[] fideTitle = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+		String[] spielerName = new String[group.getSpielerAnzahl()];
+		String[] spielerDWZ = new String[group.getSpielerAnzahl()];
+		String[] spielerKuerzel = new String[group.getSpielerAnzahl()];
+		int[] spielerAge = new int[group.getSpielerAnzahl()];
+		String[] fideTitle = new String[group.getSpielerAnzahl()];
 		turnierId = turnier.getTurnierId();
-		int spielerAnzahl = turnier.getGruppe()[gruppe].getSpielerAnzahl();
+		int spielerAnzahl = group.getSpielerAnzahl();
 		spielerId = new int[spielerAnzahl];
 		for (int y = 0; y < spielerAnzahl; y++) {
-			if (turnier.getGruppe()[gruppe].getSpieler()[y].getSpielerId() == -1) {
-				spielerName[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getName();
-				spielerDWZ[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getDwz();
-				spielerKuerzel[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getKuerzel();
-				spielerAge[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getAge();
-				fideTitle[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getFideTitle();
+			if (group.getSpieler().get(y).getSpielerId() == -1) {
+				spielerName[y] = group.getSpieler().get(y).getName();
+				spielerDWZ[y] = group.getSpieler().get(y).getDwz();
+				spielerKuerzel[y] = group.getSpieler().get(y).getKuerzel();
+				spielerAge[y] = group.getSpieler().get(y).getAge();
+				fideTitle[y] = group.getSpieler().get(y).getFideTitle();
 				Player player = new Player(-1, spielerName[y], spielerKuerzel[y], spielerDWZ[y], spielerAge[y],
 						fideTitle[y]);
 				spielerId[y] = mySQLSpielerDAO.insertSpieler(player);
-				turnier.getGruppe()[gruppe].getSpieler()[y].setSpielerId(spielerId[y]);
+				group.getSpieler().get(y).setSpielerId(spielerId[y]);
 				eintragGespeichert = true;
 			}
 		}
@@ -152,11 +149,11 @@ public class SQLPlayerControl {
 
 	public boolean updateSpieler(int gruppe) throws SQLException {
 		this.turnier = mainControl.getTurnier();
-
+		Group group = turnier.getGruppe().get(gruppe);
 		boolean saved = false;
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
-		for (int i = 0; i < turnier.getGruppe()[gruppe].getSpielerAnzahl(); i++) {
-			saved = mySQLSpielerDAO.updateSpieler(turnier.getGruppe()[gruppe].getSpieler()[i]);
+		for (int i = 0; i < group.getSpielerAnzahl(); i++) {
+			saved = mySQLSpielerDAO.updateSpieler(group.getSpieler().get(i));
 		}
 		return saved;
 	}

@@ -83,8 +83,8 @@ public class MeetingTableControl {
 		String resultColumnName = ppC.getTableComumnResult();
 		String meetingColumnName = ppC.getTableComumnMeeting();
 		this.terminTabelle[gruppenNummer] = new MeetingTable(turnier,
-				mainControl.getTurnier().getGruppe()[gruppenNummer], roundColumnName, whiteColumnName, blackColumnName,
-				resultColumnName, meetingColumnName);
+				mainControl.getTurnier().getGruppe().get(gruppenNummer), roundColumnName, whiteColumnName,
+				blackColumnName, resultColumnName, meetingColumnName);
 		this.mainControl.setTerminTabelle(terminTabelle);
 		simpleTableView[gruppenNummer] = new MeetingTableView(new MeetingTableModel(this.terminTabelle[gruppenNummer]));
 		simpleTurnierTabelleView = mainControl.getSimpleTableView();

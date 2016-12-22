@@ -3,6 +3,7 @@ package de.turnierverwaltung.model;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 
 import org.apache.commons.codec.binary.Hex;
 
@@ -29,8 +30,7 @@ public class Tournament {
 	private String turnierName;
 	private String startDatum;
 	private String endDatum;
-	private int anzahlGruppen;
-	private Group[] gruppe;
+	private ArrayList<Group> gruppe;
 	private int turnierId;
 	private Boolean onlyTables;
 	private Boolean noDWZCalc;
@@ -126,14 +126,14 @@ public class Tournament {
 	}
 
 	public int getAnzahlGruppen() {
-		return anzahlGruppen;
+		return gruppe.size();
 	}
 
 	public String getEndDatum() {
 		return endDatum;
 	}
 
-	public Group[] getGruppe() {
+	public ArrayList<Group> getGruppe() {
 		return gruppe;
 	}
 
@@ -149,15 +149,11 @@ public class Tournament {
 		return turnierName;
 	}
 
-	public void setAnzahlGruppen(int anzahlGruppen) {
-		this.anzahlGruppen = anzahlGruppen;
-	}
-
 	public void setEndDatum(String endDatum) {
 		this.endDatum = endDatum;
 	}
 
-	public void setGruppe(Group[] gruppe) {
+	public void setGruppe(ArrayList<Group> gruppe) {
 		this.gruppe = gruppe;
 	}
 

@@ -19,6 +19,7 @@ package de.turnierverwaltung.control;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -37,7 +38,7 @@ public class NewTournamentGroupsControl implements ActionListener {
 	private JTabbedPane hauptPanel;
 	private int gruppenAnzahl;
 	private Tournament turnier;
-	private Group[] gruppe;
+	private ArrayList<Group> gruppe;
 	private ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
 
@@ -82,11 +83,11 @@ public class NewTournamentGroupsControl implements ActionListener {
 	}
 
 	private void makeGruppe() {
-		gruppe = new Group[gruppenAnzahl];
+		gruppe = new ArrayList<Group>();
 
 		for (int i = 0; i < gruppenAnzahl; i++) {
-			gruppe[i] = new Group();
-			gruppe[i].setGruppenName(gruppenView.getGruppenNameTextField()[i].getText());
+			gruppe.add(new Group());
+			gruppe.get(i).setGruppenName(gruppenView.getGruppenNameTextField()[i].getText());
 
 		}
 		turnier.setGruppe(gruppe);

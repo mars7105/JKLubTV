@@ -42,7 +42,7 @@ public class ICalendarSaveControl {
 			if (sf == JFileChooser.APPROVE_OPTION) {
 				for (int i = 0; i < gruppenAnzahl; i++) {
 					ICalendar iCalendar = this.meetingTable[i].getiCalendar();
-					String fileName = path + "/" + mainControl.getTurnier().getGruppe()[i].getGruppenName() + "-"
+					String fileName = path + "/" + mainControl.getTurnier().getGruppe().get(i).getGruppenName() + "-"
 							+ mainControl.getTurnier().getTurnierName() + ".ics";
 					File file = new File(fileName);
 					if (file.exists()) {

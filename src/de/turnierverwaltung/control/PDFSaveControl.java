@@ -25,6 +25,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import de.turnierverwaltung.model.Group;
+import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.roundrobin.CrossTable;
 
 public class PDFSaveControl {
@@ -77,24 +79,25 @@ public class PDFSaveControl {
 					PDFOutputControl mftTermin = new PDFOutputControl();
 
 					if (filename != null) {
-
+						Tournament turnier = this.mainControl.getTurnier();
+						Group group = turnier.getGruppe().get(i);
 						File filename1 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 								+ filename + Messages.getString("PDFSaveControler.2") //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".pdf"); //$NON-NLS-1$
+								+ group.getGruppenName() + ".pdf"); //$NON-NLS-1$
 						File filename2 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 								+ filename + Messages.getString("PDFSaveControler.8") //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".pdf"); //$NON-NLS-1$
+								+ group.getGruppenName() + ".pdf"); //$NON-NLS-1$
 
 						String titel = Messages.getString("PDFSaveControler.10") //$NON-NLS-1$
 								+ mainControl.getTurnier().getTurnierName() + " - " //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName();
+								+ group.getGruppenName();
 						String pathName = filename1.getAbsolutePath();
 						mftKreuz.createTurnierPdf(mainControl.getTurnier(), titel, pathName,
 								turnierTabelle.getTabellenMatrix());
 
 						titel = Messages.getString("PDFSaveControler.12") //$NON-NLS-1$
 								+ mainControl.getTurnier().getTurnierName() + " - " //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName();
+								+ group.getGruppenName();
 						pathName = filename2.getAbsolutePath();
 						mftTermin.createTerminPdf(titel, pathName,
 								mainControl.getTerminTabelle()[i].getTabellenMatrix());

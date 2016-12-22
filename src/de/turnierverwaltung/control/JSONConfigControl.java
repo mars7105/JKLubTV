@@ -116,7 +116,7 @@ public class JSONConfigControl implements ActionListener {
 			ftC[i] = new FrontendTableTextControl(mainControl);
 			mainControl.setFrontendTableTextControl(ftC);
 			try {
-				int groupID = mainControl.getTurnier().getGruppe()[i].getGruppeId();
+				int groupID = mainControl.getTurnier().getGruppe().get(i).getGruppeId();
 				tableContentItems = webMainContent.selectAllTableContent(groupID);
 				for (TableContent tableContent : tableContentItems) {
 					if (tableContent.getTableType() == TournamentConstants.CROSSTABLETYPE) {
@@ -135,7 +135,7 @@ public class JSONConfigControl implements ActionListener {
 				e1.printStackTrace();
 			}
 
-			ftC[i].makeDialog(mainControl.getTurnier().getGruppe()[i].getGruppenName());
+			ftC[i].makeDialog(mainControl.getTurnier().getGruppe().get(i).getGruppenName());
 		}
 
 	}
@@ -163,7 +163,7 @@ public class JSONConfigControl implements ActionListener {
 
 				for (int i = 0; i < anzahlgruppen; i++) {
 					tableContentItems = webMainContent
-							.selectAllTableContent(this.mainControl.getTurnier().getGruppe()[i].getGruppeId());
+							.selectAllTableContent(this.mainControl.getTurnier().getGruppe().get(i).getGruppeId());
 					tableContentgroups.add(tableContentItems);
 				}
 				sidepanelItems = webRightContent.selectAllSidepanel(this.mainControl.getTurnier().getTurnierId());

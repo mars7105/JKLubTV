@@ -66,7 +66,7 @@ public class PairingsControl implements ActionListener {
 
 	private MainControl mainControl;
 	private Tournament turnier;
-	private Group[] gruppe;
+	private ArrayList<Group> gruppe;
 	private Game[] partien;
 	private MeetingTable terminTabelle[];
 	private int gruppenAnzahl;
@@ -97,6 +97,7 @@ public class PairingsControl implements ActionListener {
 
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
+
 		gruppenAnzahl = turnier.getAnzahlGruppen();
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		init();
@@ -106,7 +107,6 @@ public class PairingsControl implements ActionListener {
 	public void init() {
 
 		if (rundenEingabeFormularView == null) {
-			
 
 			if (mainControl.getTurnierTabelleControl() == null) {
 				terminTabelle = new MeetingTable[gruppenAnzahl];
@@ -118,8 +118,8 @@ public class PairingsControl implements ActionListener {
 			neuesTurnier = new Boolean[gruppenAnzahl];
 			changedGroups = new int[gruppenAnzahl][3];
 			for (int i = 0; i < gruppenAnzahl; i++) {
-				
-				rundenEingabeFormularView[i] = new PairingsView(gruppe[i].getSpielerAnzahl());
+
+				rundenEingabeFormularView[i] = new PairingsView(gruppe.get(i).getSpielerAnzahl());
 				neuesTurnier[i] = false;
 				for (int x = 0; x < 3; x++) {
 
@@ -165,7 +165,7 @@ public class PairingsControl implements ActionListener {
 
 				if (arg0.getSource() == changeColor[index][i]) {
 					changeColor(index, i);
-					changedPartien.add(gruppe[index].getPartien()[i]);
+					changedPartien.add(gruppe.get(index).getPartien()[i]);
 					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
 					int selectedTab = rundenEingabeFormularView[index].getTabbedPane().getSelectedIndex();
 					makeNewFormular(index);
@@ -175,13 +175,13 @@ public class PairingsControl implements ActionListener {
 				if (arg0.getSource() == datePicker[index][i].getJDateInstantPanel()) {
 
 					changeWerte(index, i);
-					changedPartien.add(gruppe[index].getPartien()[i]);
+					changedPartien.add(gruppe.get(index).getPartien()[i]);
 					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
 
 				}
 				if (arg0.getSource() == rundenNummer[index][i]) {
 					changeWerte(index, i);
-					changedPartien.add(gruppe[index].getPartien()[i]);
+					changedPartien.add(gruppe.get(index).getPartien()[i]);
 					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.SORTIEREN;
 
 				}
@@ -197,7 +197,7 @@ public class PairingsControl implements ActionListener {
 	public void changeWerte(int index, int nummer) {
 
 		String datum;
-		partien = gruppe[index].getPartien();
+		partien = gruppe.get(index).getPartien();
 		int runde;
 
 		try {
@@ -220,7 +220,7 @@ public class PairingsControl implements ActionListener {
 	private void changeColor(int index, int nummer) {
 		Player tauscheFarbe1;
 		Player tauscheFarbe2;
-		partien = gruppe[index].getPartien();
+		partien = gruppe.get(index).getPartien();
 		tauscheFarbe1 = partien[nummer].getSpielerWeiss();
 		tauscheFarbe2 = partien[nummer].getSpielerSchwarz();
 		partien[nummer].setSpielerWeiss(tauscheFarbe2);
@@ -253,10 +253,10 @@ public class PairingsControl implements ActionListener {
 		String blackColumnName = ppC.getTableComumnBlack();
 		String resultColumnName = ppC.getTableComumnResult();
 		String meetingColumnName = ppC.getTableComumnMeeting();
-		Arrays.sort(gruppe[index].getPartien());
-		terminTabelle[index] = new MeetingTable(turnier, gruppe[index], roundColumnName, whiteColumnName,
+		Arrays.sort(gruppe.get(index).getPartien());
+		terminTabelle[index] = new MeetingTable(turnier, gruppe.get(index), roundColumnName, whiteColumnName,
 				blackColumnName, resultColumnName, meetingColumnName);
-		gruppe[index].setTeminTabelle(terminTabelle[index]);
+		gruppe.get(index).setTeminTabelle(terminTabelle[index]);
 		mainControl.setTerminTabelle(terminTabelle);
 		String[][] terminMatrix = terminTabelle[index].getTabellenMatrix();
 		rundenEingabeFormularView[index] = new PairingsView(spielerAnzahl[index]);
@@ -297,9 +297,9 @@ public class PairingsControl implements ActionListener {
 
 	public void makeRundenEditView(int index) {
 		neuesTurnier[index] = true;
-		partien = gruppe[index].getPartien();
+		partien = gruppe.get(index).getPartien();
 
-		spielerAnzahl[index] = gruppe[index].getSpielerAnzahl();
+		spielerAnzahl[index] = gruppe.get(index).getSpielerAnzahl();
 
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		if (tabAnzeigeView2 != null) {
@@ -317,9 +317,9 @@ public class PairingsControl implements ActionListener {
 	public void makeTerminTabelle(int index) {
 		init();
 		neuesTurnier[index] = true;
-		paarungsTafeln[index] = new PairingsTables(gruppe[index]);
-		gruppe[index] = paarungsTafeln[index].getGruppe();
-		spielerAnzahl[index] = gruppe[index].getSpielerAnzahl();
+		paarungsTafeln[index] = new PairingsTables(gruppe.get(index));
+		gruppe.set(index, paarungsTafeln[index].getGruppe());
+		spielerAnzahl[index] = gruppe.get(index).getSpielerAnzahl();
 
 		CrossTableControl turnierTabelleControl = new CrossTableControl(mainControl);
 		MeetingTableControl terminTabelleControl = new MeetingTableControl(mainControl);
@@ -328,9 +328,9 @@ public class PairingsControl implements ActionListener {
 		turnierTabelleControl.makeSimpleTableView(index);
 
 		terminTabelleControl.makeSimpleTableView(index);
-		partien = gruppe[index].getPartien();
+		partien = gruppe.get(index).getPartien();
 
-		spielerAnzahl[index] = gruppe[index].getSpielerAnzahl();
+		spielerAnzahl[index] = gruppe.get(index).getSpielerAnzahl();
 
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 

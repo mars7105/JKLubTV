@@ -99,10 +99,10 @@ public class HTMLSaveControl {
 					if (filename != null) {
 						File filename1 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 								+ filename + Messages.getString("HTMLSaveControler.5") //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".html"); //$NON-NLS-1$
+								+ mainControl.getTurnier().getGruppe().get(i).getGruppenName() + ".html"); //$NON-NLS-1$
 						File filename2 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 								+ filename + Messages.getString("HTMLSaveControler.8") //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".html"); //$NON-NLS-1$
+								+ mainControl.getTurnier().getGruppe().get(i).getGruppenName() + ".html"); //$NON-NLS-1$
 						int n1 = 0;
 						if (filename1.exists()) {
 							Object[] options = { Messages.getString("SaveDialog.2"),

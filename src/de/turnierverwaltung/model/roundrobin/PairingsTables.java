@@ -1,5 +1,7 @@
 package de.turnierverwaltung.model.roundrobin;
 
+import java.util.ArrayList;
+
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
@@ -24,7 +26,7 @@ public class PairingsTables {
 
 	private Group gruppe;
 	private Game[] partien;
-	private Player[] spieler;
+	private ArrayList<Player> spieler;
 	private int spielerAnzahl;
 	private int rundenAnzahl;
 	private int partienAnzahl;
@@ -174,19 +176,16 @@ public class PairingsTables {
 
 	private void createPartien() {
 		if (spielerAnzahl % 2 == 1) {
-			Player[] spielerneu = new Player[spielerAnzahl + 1];
-			for (int i = 0; i < spielerAnzahl; i++) {
-				spielerneu[i] = spieler[i];
-			}
-			spielerneu[spielerAnzahl] = new Player();
-			spielerneu[spielerAnzahl].setName("Spielfrei");
-			spielerneu[spielerAnzahl].setKuerzel("SF");
-			spielerneu[spielerAnzahl].setDwz("0000");
-			spielerneu[spielerAnzahl].setSpielerId(TournamentConstants.SPIELFREI_ID);
-			spieler = spielerneu;
+
+			Player neu = new Player();
+
+			neu.setName("Spielfrei");
+			neu.setKuerzel("SF");
+			neu.setDwz("0000");
+			neu.setSpielerId(TournamentConstants.SPIELFREI_ID);
+			spieler.add(neu);
 			gruppe.setSpieler(spieler);
 			spielerAnzahl++;
-			gruppe.setSpielerAnzahl(spielerAnzahl);
 			partienAnzahl = spielerAnzahl * (spielerAnzahl - 1) / 2;
 			Game[] partienNeu = new Game[partienAnzahl];
 			partien = partienNeu;
@@ -203,8 +202,8 @@ public class PairingsTables {
 				spielerWeiss = Integer.parseInt(spielerNummer[0]) - 1;
 				spielerSchwarz = Integer.parseInt(spielerNummer[1]) - 1;
 				partien[partienNummer] = new Game();
-				partien[partienNummer].setSpielerWeiss(spieler[spielerWeiss]);
-				partien[partienNummer].setSpielerSchwarz(spieler[spielerSchwarz]);
+				partien[partienNummer].setSpielerWeiss(spieler.get(spielerWeiss));
+				partien[partienNummer].setSpielerSchwarz(spieler.get(spielerSchwarz));
 				partien[partienNummer].setRunde(i + 1);
 				partienNummer++;
 			}
@@ -233,7 +232,7 @@ public class PairingsTables {
 		return rundenAnzahl;
 	}
 
-	public Player[] getSpieler() {
+	public ArrayList<Player> getSpieler() {
 		return spieler;
 	}
 
@@ -271,7 +270,7 @@ public class PairingsTables {
 		this.rundenAnzahl = rundenAnzahl;
 	}
 
-	public void setSpieler(Player[] spieler) {
+	public void setSpieler(ArrayList<Player> spieler) {
 		this.spieler = spieler;
 	}
 

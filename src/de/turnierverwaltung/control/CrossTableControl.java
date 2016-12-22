@@ -12,6 +12,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
 import de.turnierverwaltung.model.Game;
+import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
@@ -105,14 +106,13 @@ public class CrossTableControl {
 		if (tml[gruppenNummer] == null) {
 			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer);
 		}
-		
-		Arrays.sort(turnier.getGruppe()[gruppenNummer].getPartien());
-		spielerAnzahl[gruppenNummer] = turnier.getGruppe()[gruppenNummer].getSpielerAnzahl();
-		if (turnier.getGruppe()[gruppenNummer].getSpieler()[spielerAnzahl[gruppenNummer] - 1].getSpielerId() == -2) {
+		Group group = turnier.getGruppe().get(gruppenNummer);
+		Arrays.sort(group.getPartien());
+		spielerAnzahl[gruppenNummer] = group.getSpielerAnzahl();
+		if (group.getSpieler().get(spielerAnzahl[gruppenNummer] - 1).getSpielerId() == -2) {
 			spielerAnzahl[gruppenNummer]--;
 		}
-		this.turnierTabelle[gruppenNummer] = new CrossTable(turnier,
-				mainControl.getTurnier().getGruppe()[gruppenNummer]);
+		this.turnierTabelle[gruppenNummer] = new CrossTable(turnier, group);
 		PropertiesControl ppC = mainControl.getPropertiesControl();
 		String playerColumnName = ppC.getTableComumnPlayer();
 		String oldDWZColumnName = ppC.getTableComumnOldDWZ();
@@ -145,8 +145,8 @@ public class CrossTableControl {
 
 		mainControl.setSimpleTableView(simpleTableView);
 		if (tabAnzeigeView.getTabbedPane().getTabCount() < 1) {
-			tabAnzeigeView.getTabbedPane().insertTab(turnier.getGruppe()[gruppenNummer].getGruppenName(), null,
-					tabAnzeigeView2[gruppenNummer], null, gruppenNummer);
+			tabAnzeigeView.getTabbedPane().insertTab(group.getGruppenName(), null, tabAnzeigeView2[gruppenNummer], null,
+					gruppenNummer);
 
 		} else {
 
@@ -169,7 +169,7 @@ public class CrossTableControl {
 
 	public void berechneFolgeDWZ(int gruppenNummer) {
 		ResultDWZControl folgeDWZ = new ResultDWZControl(mainControl.getTurnier(),
-				mainControl.getTurnier().getGruppe()[gruppenNummer]);
+				mainControl.getTurnier().getGruppe().get(gruppenNummer));
 		folgeDWZ.caculateDWZ();
 		// Zweimal ausführen falls DWZ-lose Spieler dabei sind
 		folgeDWZ.caculateDWZ();
@@ -182,7 +182,7 @@ public class CrossTableControl {
 	 */
 	public void okAction(int index) {
 
-		turnier.getGruppe()[index].berechnePunkte();
+		turnier.getGruppe().get(index).berechnePunkte();
 		if (simpleTableView[index] == null) {
 			makeSimpleTableView(index);
 		}
@@ -221,7 +221,7 @@ public class CrossTableControl {
 	private void updatePlatzCol(int col, int gruppenNummer) {
 		for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
 			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
-					Integer.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getPlatz()), i, col);
+					Integer.toString(turnier.getGruppe().get(gruppenNummer).getSpieler().get(i).getPlatz()), i, col);
 
 		}
 	}
@@ -229,7 +229,7 @@ public class CrossTableControl {
 	private void updatePunkteCol(int col, int gruppenNummer) {
 		for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
 			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
-					Double.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getPunkte()), i, col);
+					Double.toString(turnier.getGruppe().get(gruppenNummer).getSpieler().get(i).getPunkte()), i, col);
 
 		}
 	}
@@ -237,7 +237,7 @@ public class CrossTableControl {
 	private void updateSoBergCol(int col, int gruppenNummer) {
 		for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
 			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
-					Double.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getSoberg()), i, col);
+					Double.toString(turnier.getGruppe().get(gruppenNummer).getSpieler().get(i).getSoberg()), i, col);
 
 		}
 	}
@@ -317,34 +317,34 @@ public class CrossTableControl {
 				ergebnissInt = TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS;
 				invertErgebnissInt = TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ;
 			}
+			Group group = turnier.getGruppe().get(gruppenNummer);
 			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(invertErgebniss, invertRow, invertCol);
 			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(ergebniss, row, col);
-			Player spy = turnier.getGruppe()[gruppenNummer].getSpieler()[spielery];
-			Player spx = turnier.getGruppe()[gruppenNummer].getSpieler()[spielerx];
-			if ((spielerx >= 0 && spielerx < turnier.getGruppe()[gruppenNummer].getSpielerAnzahl())
-					&& (spielery >= 0 && spielery < turnier.getGruppe()[gruppenNummer].getSpielerAnzahl())
-					&& (spielerx != spielery)) {
+			Player spy = group.getSpieler().get(spielery);
+			Player spx = group.getSpieler().get(spielerx);
+			if ((spielerx >= 0 && spielerx < group.getSpielerAnzahl())
+					&& (spielery >= 0 && spielery < group.getSpielerAnzahl()) && (spielerx != spielery)) {
 
-				for (int i = 0; i < turnier.getGruppe()[gruppenNummer].getPartienAnzahl(); i++) {
-					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss() == spx
-							&& turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerSchwarz() == spy) {
+				for (int i = 0; i < group.getPartienAnzahl(); i++) {
+					if (group.getPartien()[i].getSpielerWeiss() == spx
+							&& group.getPartien()[i].getSpielerSchwarz() == spy) {
 
-						turnier.getGruppe()[gruppenNummer].getPartien()[i].setErgebnis(invertErgebnissInt);
+						group.getPartien()[i].setErgebnis(invertErgebnissInt);
 
 						updatePunkteCol(colCount - 3);
 						updateSoBergCol(colCount - 2);
-						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
+						changedPartien.add(group.getPartien()[i]);
 
 					}
 
-					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss() == spy
-							&& turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerSchwarz() == spx) {
-						turnier.getGruppe()[gruppenNummer].getPartien()[i].setErgebnis(ergebnissInt);
+					if (group.getPartien()[i].getSpielerWeiss() == spy
+							&& group.getPartien()[i].getSpielerSchwarz() == spx) {
+						group.getPartien()[i].setErgebnis(ergebnissInt);
 
 						updatePunkteCol(colCount - 3);
 						updateSoBergCol(colCount - 2);
 						updatePlatzCol(colCount - 1);
-						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
+						changedPartien.add(group.getPartien()[i]);
 
 					}
 
@@ -360,21 +360,24 @@ public class CrossTableControl {
 		private void updatePunkteCol(int col) {
 			for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
 				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
-						Double.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getPunkte()), i, col);
+						Double.toString(turnier.getGruppe().get(gruppenNummer).getSpieler().get(i).getPunkte()), i,
+						col);
 			}
 		}
 
 		private void updateSoBergCol(int col) {
 			for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
 				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
-						Double.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getSoberg()), i, col);
+						Double.toString(turnier.getGruppe().get(gruppenNummer).getSpieler().get(i).getSoberg()), i,
+						col);
 			}
 		}
 
 		private void updatePlatzCol(int col) {
 			for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
 				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
-						Integer.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getPlatz()), i, col);
+						Integer.toString(turnier.getGruppe().get(gruppenNummer).getSpieler().get(i).getPlatz()), i,
+						col);
 
 			}
 		}
