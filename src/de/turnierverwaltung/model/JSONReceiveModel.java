@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 public class JSONReceiveModel {
 	String output;
@@ -27,15 +28,15 @@ public class JSONReceiveModel {
 		Gson gson = new Gson();
 		JSONReceiveObject jsonString = null;
 		if (output == "") {
-			jsonString = new JSONReceiveObject();
-			String[] md5sum = new String[1];
-			md5sum[0] = "";
-			jsonString.setMd5sum(md5sum);
-			jsonString.setStatusCode("Wrong URL?");
-			jsonString.setPhpModul("");
-			jsonString.setVersion("");
+			jsonString = null;
 		} else {
-			jsonString = gson.fromJson(output, JSONReceiveObject.class);
+			try {
+				jsonString = gson.fromJson(output, JSONReceiveObject.class);
+			} catch (JsonSyntaxException e) {
+				jsonString = null;
+			} catch (NullPointerException e2) {
+				jsonString = null;
+			}
 		}
 
 		if (jsonString == null) {

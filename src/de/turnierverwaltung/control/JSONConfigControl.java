@@ -18,6 +18,7 @@ import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.WebMainContentDAO;
 import de.turnierverwaltung.mysql.WebRightContentDAO;
+import de.turnierverwaltung.view.ConnectStatusView;
 import de.turnierverwaltung.view.JSONConfigView;
 import de.turnierverwaltung.view.WebsiteConfigView;
 
@@ -96,8 +97,7 @@ public class JSONConfigControl implements ActionListener {
 
 			webMainContent = daoFactory.getWebMainContentDAO();
 		} catch (SQLException e) {
-			// TODO Automatisch generierter Erfassungsblock
-			e.printStackTrace();
+			JOptionPane.showMessageDialog(mainControl, "Database error");
 		}
 
 	}
@@ -131,8 +131,7 @@ public class JSONConfigControl implements ActionListener {
 					}
 				}
 			} catch (SQLException e1) {
-				// TODO Automatisch generierter Erfassungsblock
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(mainControl, "Database error");
 			}
 
 			ftC[i].makeDialog(mainControl.getTurnier().getGruppe().get(i).getGruppenName());
@@ -144,7 +143,7 @@ public class JSONConfigControl implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == okButton) {
-			// mmm
+
 			menuName = jsonView.getMenuNameTextField().getText();
 			uploadURL = jsonView.getUploadURLTextField().getText();
 			username = jsonView.getUsernameTextField().getText();
@@ -168,21 +167,23 @@ public class JSONConfigControl implements ActionListener {
 				}
 				sidepanelItems = webRightContent.selectAllSidepanel(this.mainControl.getTurnier().getTurnierId());
 			} catch (SQLException e1) {
+
 				JOptionPane.showMessageDialog(mainControl, "Database error");
 			}
-
+			ConnectStatusView connectStatusView = new ConnectStatusView();
+			mainControl.setConnectStatusView(connectStatusView);
 			try {
+
 				json.uploadJSONFile(uploadURL, username, password, menuName, sidepanelItems, tableContentgroups);
 				mainControl.getPropertiesControl().setFrontendMenuname(menuName);
 				mainControl.getPropertiesControl().setFrontendURL(uploadURL);
 				mainControl.getPropertiesControl().setUsername(username);
 				mainControl.getPropertiesControl().setPassword(password);
 				mainControl.getPropertiesControl().writeProperties();
-				// JOptionPane.showMessageDialog(mainControl,
-				// json.getJsonCross().getPostRequest().getOutput());
-			} catch (IOException exc) {
-				JOptionPane.showMessageDialog(mainControl, "?:" + json.getJsonTables().getPostRequest().getOutput());
-				exc.printStackTrace();
+
+			} catch (NullPointerException eq) {
+				connectStatusView.getTextArea().append("Wrong URL?");
+
 			}
 
 		}
@@ -204,20 +205,26 @@ public class JSONConfigControl implements ActionListener {
 			username = jsonView.getUsernameTextField().getText();
 			password = jsonView.getPasswordTextField().getText();
 			JSON jsonCross = null;
+
 			try {
 				jsonCross = new JSON(url, username, password);
 
-				JSONReceiveObject testConnection = jsonCross.testConnection();
+				JSONReceiveObject testConnection;
+
+				testConnection = jsonCross.testConnection();
 				if (testConnection.isStatusOk() == true) {
+
 					JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.1"));
+
 				} else {
 					JOptionPane.showMessageDialog(mainControl, testConnection.getStatusCode());
+
 				}
-			} catch (IOException e1) {
-				JOptionPane.showMessageDialog(mainControl, jsonCross.getPostRequest().getOutput());
-			} catch (NullPointerException ex) {
+			} catch (NullPointerException | IOException e1) {
 				JOptionPane.showMessageDialog(mainControl, "Wrong URL?");
+
 			}
+
 		}
 		if (e.getSource() == cancelButton) {
 			jsonView.getJsonDialog().dispose();

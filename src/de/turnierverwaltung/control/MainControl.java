@@ -43,6 +43,7 @@ import de.turnierverwaltung.view.PairingsView;
 import de.turnierverwaltung.view.SettingsView;
 import de.turnierverwaltung.view.MeetingTableView;
 import de.turnierverwaltung.view.ButtonTabComponent;
+import de.turnierverwaltung.view.ConnectStatusView;
 import de.turnierverwaltung.view.CrossTableView;
 import de.turnierverwaltung.view.FrontendSidePanelView;
 import de.turnierverwaltung.view.NewTournamentPlayerCountlView;
@@ -118,6 +119,7 @@ public class MainControl extends JFrame {
 	private WebsiteConfigView webconfigView;
 	private SettingsView eigenschaftenView;
 	private SwissControl swissControl;
+	private ConnectStatusView connectStatusView;
 
 	public MainControl() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
@@ -713,6 +715,18 @@ public class MainControl extends JFrame {
 
 	public SwissControl getSwissControl() {
 		return swissControl;
+	}
+
+	public ConnectStatusView getConnectStatusView() {
+		if (connectStatusView == null) {
+			connectStatusView = new ConnectStatusView();
+		}
+		return connectStatusView;
+	}
+
+	public void setConnectStatusView(ConnectStatusView connectStatusView) {
+		this.connectStatusView = connectStatusView;
+
 	}
 
 }

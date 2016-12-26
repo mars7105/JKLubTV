@@ -26,16 +26,15 @@ public class JSONSaveControl {
 	}
 
 	public void uploadJSONFile(String url, String username, String password, String menuName,
-			ArrayList<Sidepanel> sidepanelItems, ArrayList<ArrayList<TableContent>> tableContentgroups)
-			throws IOException {
+			ArrayList<Sidepanel> sidepanelItems, ArrayList<ArrayList<TableContent>> tableContentgroups) {
 
 		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
 		// url = "http://projekte.mamuck.de/jklubtv/receiveJSON.php";
 		String[] filenames = new String[1];
 
 		if (ready) {
-			ConnectStatusView connectStatusView = new ConnectStatusView();
 
+			ConnectStatusView connectStatusView = mainControl.getConnectStatusView();
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 			try {
 				jsonTables = new JSON(url, username, password);
@@ -155,11 +154,14 @@ public class JSONSaveControl {
 					}
 
 				} else {
-					connectStatusView.getTextArea().append("Connect: Error" + "\n");
+					connectStatusView.getTextArea()
+							.append("Connect: " + status1.getPhpModul() + ": " + status1.getStatusCode() + "\n");
 
 				}
 			} catch (NullPointerException e) {
 				connectStatusView.getTextArea().append("Wrong URL?");
+			} catch (IOException e2) {
+				connectStatusView.getTextArea().append("Wrong URL?" + "\n" + jsonTables.getPostRequest().getOutput());
 			}
 
 		} else
