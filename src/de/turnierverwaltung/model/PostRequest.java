@@ -180,7 +180,7 @@ public class PostRequest {
 
 		JSONReceiveModel jsonReceive = new JSONReceiveModel();
 		json = jsonReceive.receiveJSON(connection);
-//		System.out.println(jsonReceive.getOutput());
+		// System.out.println(jsonReceive.getOutput());
 
 		writer.close();
 

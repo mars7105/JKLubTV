@@ -21,19 +21,32 @@ public class JSONReceiveModel {
 		for (String line; (line = reader.readLine()) != null;) {
 			output += line;
 		}
-		 System.out.println(output);
+		System.out.println(output);
 
 		reader.close();
 		Gson gson = new Gson();
 		JSONReceiveObject jsonString = null;
 		if (output == "") {
 			jsonString = new JSONReceiveObject();
-			jsonString.setMd5sum("");
+			String[] md5sum = new String[1];
+			md5sum[0] = "";
+			jsonString.setMd5sum(md5sum);
 			jsonString.setStatusCode("Wrong URL?");
+			jsonString.setPhpModul("");
+			jsonString.setVersion("");
 		} else {
 			jsonString = gson.fromJson(output, JSONReceiveObject.class);
 		}
 
+		if (jsonString == null) {
+			jsonString = new JSONReceiveObject();
+			String[] md5sum = new String[1];
+			md5sum[0] = "";
+			jsonString.setMd5sum(md5sum);
+			jsonString.setStatusCode("Wrong URL?");
+			jsonString.setPhpModul("");
+			jsonString.setVersion("");
+		}
 		return jsonString;
 	}
 
