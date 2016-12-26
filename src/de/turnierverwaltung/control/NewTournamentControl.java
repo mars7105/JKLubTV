@@ -62,6 +62,7 @@ public class NewTournamentControl implements ActionListener {
 	private Tournament turnier;
 	private ButtonTabComponent buttonTabComponent;
 	private int turnierType;
+	
 
 	public NewTournamentControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -102,7 +103,7 @@ public class NewTournamentControl implements ActionListener {
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
 		mainControl.getNaviController().setPairingIsActive(false);
 		this.turnierView.getTurnierNameTextField().grabFocus();
-
+		
 	}
 
 	@Override
@@ -183,7 +184,7 @@ public class NewTournamentControl implements ActionListener {
 		if (turnierName.length() > 0 && startDatum.length() > 0 && endDatum.length() > 0 && gruppenAnzahl > 0) {
 			makeTurnier();
 
-			this.mainControl.setGruppenControl(new NewTournamentGroupsControl(this.mainControl));
+			this.mainControl.setGruppenControl(new NewTournamentGroupsControl(this.mainControl, gruppenAnzahl));
 
 		} else {
 			String messageText = "";

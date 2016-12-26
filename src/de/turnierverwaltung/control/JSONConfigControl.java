@@ -181,7 +181,7 @@ public class JSONConfigControl implements ActionListener {
 				// JOptionPane.showMessageDialog(mainControl,
 				// json.getJsonCross().getPostRequest().getOutput());
 			} catch (IOException exc) {
-				JOptionPane.showMessageDialog(mainControl, "?:" + json.getJsonCross().getPostRequest().getOutput());
+				JOptionPane.showMessageDialog(mainControl, "?:" + json.getJsonTables().getPostRequest().getOutput());
 				exc.printStackTrace();
 			}
 
@@ -203,8 +203,10 @@ public class JSONConfigControl implements ActionListener {
 			String url = jsonView.getUploadURLTextField().getText();
 			username = jsonView.getUsernameTextField().getText();
 			password = jsonView.getPasswordTextField().getText();
-			JSON jsonCross = new JSON(url, username, password);
+			JSON jsonCross = null;
 			try {
+				jsonCross = new JSON(url, username, password);
+
 				JSONReceiveObject testConnection = jsonCross.testConnection();
 				if (testConnection.isStatusOk() == true) {
 					JOptionPane.showMessageDialog(mainControl, Messages.getString("JSONConfigControl.1"));

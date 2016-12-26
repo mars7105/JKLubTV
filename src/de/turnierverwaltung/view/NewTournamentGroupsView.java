@@ -50,6 +50,7 @@ public class NewTournamentGroupsView extends JPanel {
 	 */
 	// private JCheckBox[] doppelteRundenCheckBox;
 	private JScrollPane scrollPane;
+	private ButtonPanelView buttonPane;
 
 	public NewTournamentGroupsView() {
 
@@ -99,7 +100,7 @@ public class NewTournamentGroupsView extends JPanel {
 		// contentPanel.setBackground(new Color(249, 222, 112));
 		contentPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
-		ButtonPanelView buttonPane = new ButtonPanelView();
+		buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();
 
 		JPanel centerPane = new JPanel();
@@ -169,6 +170,14 @@ public class NewTournamentGroupsView extends JPanel {
 
 	public void setOkButton(JButton okButton) {
 		this.okButton = okButton;
+	}
+
+	public ButtonPanelView getButtonPane() {
+		return buttonPane;
+	}
+
+	public void setButtonPane(ButtonPanelView buttonPane) {
+		this.buttonPane = buttonPane;
 	}
 
 }

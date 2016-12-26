@@ -28,11 +28,12 @@ import javax.swing.JTabbedPane;
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
+import de.turnierverwaltung.view.NewTournamentAllView;
 import de.turnierverwaltung.view.NewTournamentGroupsView;
 
 public class NewTournamentGroupsControl implements ActionListener {
 	private MainControl mainControl;
-	private NewTournamentGroupsView gruppenView;
+	// private NewTournamentGroupsView gruppenView;
 	private JButton gruppenOKButton;
 	private JButton gruppenCancelButton;
 	private JTabbedPane hauptPanel;
@@ -41,23 +42,28 @@ public class NewTournamentGroupsControl implements ActionListener {
 	private ArrayList<Group> gruppe;
 	private ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
+	private NewTournamentAllView tournamentAllView;
 
-	public NewTournamentGroupsControl(MainControl mainControl) {
-
+	public NewTournamentGroupsControl(MainControl mainControl, int gruppenAnzahl) {
+		tournamentAllView = new NewTournamentAllView();
 		this.mainControl = mainControl;
 		turnier = this.mainControl.getTurnier();
 		hauptPanel = this.mainControl.getHauptPanel();
-		gruppenAnzahl = turnier.getAnzahlGruppen();
+		this.gruppenAnzahl = gruppenAnzahl;
 		this.mainControl.setGruppenView(new NewTournamentGroupsView());
-		this.gruppenView = this.mainControl.getGruppenView();
-		gruppenView.runView(gruppenAnzahl);
-		gruppenOKButton = this.gruppenView.getOkButton();
+		// this.gruppenView = this.mainControl.getGruppenView();
+		// gruppenView.runView(gruppenAnzahl);
+		gruppenOKButton = tournamentAllView.gettGroupsView().getOkButton();
 		gruppenOKButton.addActionListener(this);
-		gruppenCancelButton = this.gruppenView.getCancelButton();
+		gruppenCancelButton = tournamentAllView.gettGroupsView().getCancelButton();
 		gruppenCancelButton.addActionListener(this);
-		gruppenView.getGruppenNameTextField()[0].grabFocus();
+		tournamentAllView.gettGroupsView().getGruppenNameTextField()[0].grabFocus();
+		tournamentAllView.gettGroupsView().getButtonPane().setVisible(false);
+		
 		hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
-		hauptPanel.add(this.gruppenView, TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		hauptPanel.add(tournamentAllView, TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		// hauptPanel.add(this.gruppenView,
+		// TournamentConstants.TAB_ACTIVE_TOURNAMENT);
 		hauptPanel.setTitleAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, turnier.getTurnierName());
 		hauptPanel.setIconAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, gruppenIcon);
 		hauptPanel.setSelectedIndex(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
@@ -87,7 +93,7 @@ public class NewTournamentGroupsControl implements ActionListener {
 
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			gruppe.add(new Group());
-			gruppe.get(i).setGruppenName(gruppenView.getGruppenNameTextField()[i].getText());
+			gruppe.get(i).setGruppenName(tournamentAllView.gettGroupsView().getGruppenNameTextField()[i].getText());
 
 		}
 		turnier.setGruppe(gruppe);

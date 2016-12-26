@@ -35,19 +35,17 @@ public class PostRequest {
 		checkWebsite();
 	}
 
-	private void checkWebsite() throws IOException  {
+	private void checkWebsite() throws IOException {
+		version = "";
 		try {
 			json = versioncheck();
+			version = json.getVersion();
 		} catch (NullPointerException e) {
 			json = new JSONReceiveObject();
 			json.setStatusCode("Wrong URL?");
 			throw new NullPointerException();
 		}
 
-		version = json.getVersion();
-		if (version == null) {
-			throw new IOException();
-		}
 		if (version.equals("")) {
 			throw new IOException();
 
@@ -144,9 +142,9 @@ public class PostRequest {
 	private String createLibString() {
 		String lib = "";
 		if ((url.substring(url.length() - 1)).equals("/")) {
-			lib = "lib/";
+			lib = "jklubtv/lib/";
 		} else {
-			lib = "/lib/";
+			lib = "/jklubtv/lib/";
 		}
 		return lib;
 	}
@@ -182,7 +180,7 @@ public class PostRequest {
 
 		JSONReceiveModel jsonReceive = new JSONReceiveModel();
 		json = jsonReceive.receiveJSON(connection);
-		System.out.println(jsonReceive.getOutput());
+//		System.out.println(jsonReceive.getOutput());
 
 		writer.close();
 
