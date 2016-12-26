@@ -4,6 +4,7 @@ public class JSONReceiveObject {
 	private String md5sum;
 	private String statusCode;
 	private String version;
+	private String phpModul;
 
 	public JSONReceiveObject() {
 
@@ -48,4 +49,13 @@ public class JSONReceiveObject {
 		}
 
 	}
+
+	public String getPhpModul() {
+		return phpModul;
+	}
+
+	public void setPhpModul(String phpModul) {
+		this.phpModul = phpModul;
+	}
+
 }

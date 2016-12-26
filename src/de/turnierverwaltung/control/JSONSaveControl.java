@@ -14,6 +14,7 @@ import de.turnierverwaltung.model.TableContent;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.model.roundrobin.CrossTable;
 import de.turnierverwaltung.model.roundrobin.MeetingTable;
+import de.turnierverwaltung.view.ConnectStatusView;
 
 public class JSONSaveControl {
 	private MainControl mainControl;
@@ -33,9 +34,14 @@ public class JSONSaveControl {
 		String[] filenames = new String[1];
 
 		if (ready) {
-			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
+			ConnectStatusView connectStatusView = new ConnectStatusView();
 
-			jsonTables = new JSON(url, username, password);
+			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
+			try {
+				jsonTables = new JSON(url, username, password);
+			} catch (NullPointerException e) {
+				connectStatusView.getTextArea().append("Wrong URL?");
+			}
 			String groupName[] = new String[anzahlGruppen];
 			CrossTable[] turnierTabelle = new CrossTable[anzahlGruppen];
 			MeetingTable[] meetingTable = new MeetingTable[anzahlGruppen];
@@ -124,6 +130,9 @@ public class JSONSaveControl {
 					crossHeader, crossBody, crossColor, meetingHeader, meetingBody, meetingColor, header, body, color,
 					jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix, jsonMeetingtitle, siteName, configFlag,
 					md5Sum);
+			connectStatusView.getTextArea()
+					.append("Connect: " + status1.getPhpModul() + ": " + status1.getStatusCode() + "\n");
+
 			JSONReceiveObject status2 = null;
 			JSONReceiveObject status3 = null;
 			if (status1.isStatusOk()) {
@@ -135,20 +144,17 @@ public class JSONSaveControl {
 				JSON jsonFileObjects = new JSON(url, username, password);
 				JSONFileObject jsonFiles = new JSONFileObject(filenames, htmlfiles);
 				status2 = jsonFileObjects.postFileNames(jsonFiles);
+				connectStatusView.getTextArea()
+						.append("Connect: " + status2.getPhpModul() + ": " + status2.getStatusCode() + "\n");
 				if (status2.isStatusOk()) {
 					status3 = jsonFileObjects.makeTables();
-					if (status3.isStatusOk() == true) {
-						JOptionPane.showMessageDialog(null, status3.getStatusCode());
-					} else {
-						JOptionPane.showMessageDialog(null, status3.getStatusCode());
+					connectStatusView.getTextArea()
+							.append("Connect: " + status3.getPhpModul() + ": " + status3.getStatusCode() + "\n");
 
-					}
-				} else {
-					JOptionPane.showMessageDialog(null, status2.getStatusCode());
 				}
 
 			} else {
-				JOptionPane.showMessageDialog(null, status1.getStatusCode());
+				connectStatusView.getTextArea().append("Connect: Error" + "\n");
 
 			}
 		} else
