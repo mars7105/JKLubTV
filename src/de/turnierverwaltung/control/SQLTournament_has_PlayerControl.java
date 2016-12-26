@@ -1,6 +1,7 @@
 package de.turnierverwaltung.control;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
@@ -27,8 +28,8 @@ import de.turnierverwaltung.mysql.Turnier_has_SpielerDAO;
 public class SQLTournament_has_PlayerControl {
 	private MainControl mainControl;
 	private Tournament turnier;
-	private Group[] gruppe;
-	DAOFactory daoFactory;
+	private ArrayList<Group> gruppe;
+	private DAOFactory daoFactory;
 	int turnierId;
 	int turnier_has_Spieler;
 
@@ -41,26 +42,21 @@ public class SQLTournament_has_PlayerControl {
 		int spielerId = 0;
 		this.turnier = mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
-		daoFactory = DAOFactory
-				.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
-		Turnier_has_SpielerDAO turnier_has_SpielerDAO = daoFactory
-				.getTurnier_has_SpielerDAO();
-		gruppeId = gruppe[gruppenNr].getGruppeId();
-		Player[] spieler = gruppe[gruppenNr].getSpieler();
-		for (int i = 0; i < gruppe[gruppenNr].getSpielerAnzahl(); i++) {
-			spielerId = spieler[i].getSpielerId();
-			turnier_has_Spieler = turnier_has_SpielerDAO
-					.insertTurnier_has_Spieler(gruppeId, spielerId);
+		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
+		Turnier_has_SpielerDAO turnier_has_SpielerDAO = daoFactory.getTurnier_has_SpielerDAO();
+		gruppeId = gruppe.get(gruppenNr).getGruppeId();
+		ArrayList<Player> spieler = gruppe.get(gruppenNr).getSpieler();
+		for (int i = 0; i < gruppe.get(gruppenNr).getSpielerAnzahl(); i++) {
+			spielerId = spieler.get(i).getSpielerId();
+			turnier_has_Spieler = turnier_has_SpielerDAO.insertTurnier_has_Spieler(gruppeId, spielerId);
 		}
 
 	}
 
 	public void updateTurnier_has_Spieler(int gruppe) throws SQLException {
-		daoFactory = DAOFactory
-				.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
-		Turnier_has_SpielerDAO mySQLTurnier_has_SpielerDAO = daoFactory
-				.getTurnier_has_SpielerDAO();
-		for (int i = 0; i < turnier.getGruppe()[gruppe].getSpielerAnzahl(); i++) {
+		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
+		Turnier_has_SpielerDAO mySQLTurnier_has_SpielerDAO = daoFactory.getTurnier_has_SpielerDAO();
+		for (int i = 0; i < turnier.getGruppe().get(gruppe).getSpielerAnzahl(); i++) {
 			mySQLTurnier_has_SpielerDAO.updateTurnier_has_Spieler(turnier);
 		}
 

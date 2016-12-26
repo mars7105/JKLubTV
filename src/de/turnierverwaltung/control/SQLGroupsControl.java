@@ -42,33 +42,27 @@ public class SQLGroupsControl {
 	public void getGruppe() throws SQLException {
 		this.turnier = this.mainControl.getTurnier();
 		gruppe = mySQLGruppenDAO.selectAllGruppen(turnier.getTurnierId());
-		Group[] group = new Group[gruppe.size()];
-		for (int i = 0; i < gruppe.size(); i++) {
-			group[i] = gruppe.get(i);
-		}
-		mainControl.getTurnier().setGruppe(group);
-		mainControl.getTurnier().setAnzahlGruppen(gruppe.size());
+
+		mainControl.getTurnier().setGruppe(gruppe);
 	}
 
 	public Tournament getGruppe(Tournament turnierName) throws SQLException {
 		ArrayList<Group> grp = mySQLGruppenDAO.selectAllGruppen(turnierName.getTurnierId());
-		Group[] group = new Group[grp.size()];
-		for (int i = 0; i < grp.size(); i++) {
-			group[i] = grp.get(i);
-		}
-		turnierName.setGruppe(group);
-		turnierName.setAnzahlGruppen(group.length);
+
+		turnierName.setGruppe(grp);
 		return turnierName;
 	}
 
 	public boolean insertGruppe(int gruppe) throws SQLException {
 		boolean eintragGespeichert = false;
-		if (turnier.getGruppe()[gruppe].getGruppeId() == -1) {
-			String gruppenName = turnier.getGruppe()[gruppe].getGruppenName();
+		this.turnier = this.mainControl.getTurnier();
+		Group group = turnier.getGruppe().get(gruppe);
+		if (group.getGruppeId() == -1) {
+			String gruppenName = group.getGruppenName();
 			daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 			int turnierId = turnier.getTurnierId();
 			gruppenId = mySQLGruppenDAO.insertGruppe(gruppenName, turnierId);
-			turnier.getGruppe()[gruppe].setGruppeId(gruppenId);
+			group.setGruppeId(gruppenId);
 			eintragGespeichert = true;
 		}
 		return eintragGespeichert;
@@ -76,23 +70,23 @@ public class SQLGroupsControl {
 
 	public boolean updateGruppe(int gruppe) throws SQLException {
 		this.turnier = mainControl.getTurnier();
-
+		Group group = turnier.getGruppe().get(gruppe);
 		boolean saved = false;
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		mySQLGruppenDAO = daoFactory.getGruppenDAO();
-		saved = mySQLGruppenDAO.updateGruppe(turnier.getGruppe()[gruppe]);
+		saved = mySQLGruppenDAO.updateGruppe(group);
 		return saved;
 
 	}
 
 	public boolean updateGruppen(Tournament turnierX) throws SQLException {
 
-		Group[] groups = turnierX.getGruppe();
+		ArrayList<Group> groups = turnierX.getGruppe();
 		boolean saved = false;
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		mySQLGruppenDAO = daoFactory.getGruppenDAO();
-		for (int i = 0; i < groups.length; i++) {
-			saved = mySQLGruppenDAO.updateGruppe(turnierX.getGruppe()[i]);
+		for (int i = 0; i < groups.size(); i++) {
+			saved = mySQLGruppenDAO.updateGruppe(groups.get(i));
 
 		}
 		return saved;

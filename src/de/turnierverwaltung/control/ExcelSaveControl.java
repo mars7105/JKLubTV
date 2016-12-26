@@ -102,9 +102,9 @@ public class ExcelSaveControl {
 					int spalte2 = this.mainControl.getTerminTabelle()[i].getSpaltenAnzahl();
 					int zeile2 = this.mainControl.getTerminTabelle()[i].getZeilenAnzahl();
 					s[i] = wb.createSheet(
-							this.mainControl.getTurnier().getGruppe()[i].getGruppenName() + " - Kreuztabelle");
+							this.mainControl.getTurnier().getGruppe().get(i).getGruppenName() + " - Kreuztabelle");
 					s2[i] = wb.createSheet(
-							this.mainControl.getTurnier().getGruppe()[i].getGruppenName() + " - Termintabelle");
+							this.mainControl.getTurnier().getGruppe().get(i).getGruppenName() + " - Termintabelle");
 					PrintSetup ps = s[i].getPrintSetup();
 
 					s[i].setAutobreaks(true);

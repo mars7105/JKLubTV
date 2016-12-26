@@ -17,10 +17,7 @@ import de.turnierverwaltung.model.roundrobin.MeetingTable;
 
 public class JSONSaveControl {
 	private MainControl mainControl;
-	private String jsonFileName;
-	private String jsonMeetingName;
-	private JSON jsonCross;
-	private JSON jsonMeeting;
+	private JSON jsonTables;
 
 	public JSONSaveControl(MainControl mainControl) {
 
@@ -38,7 +35,7 @@ public class JSONSaveControl {
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 
-			jsonCross = new JSON(url, username, password);
+			jsonTables = new JSON(url, username, password);
 			String groupName[] = new String[anzahlGruppen];
 			CrossTable[] turnierTabelle = new CrossTable[anzahlGruppen];
 			MeetingTable[] meetingTable = new MeetingTable[anzahlGruppen];
@@ -78,13 +75,13 @@ public class JSONSaveControl {
 					}
 				}
 
-				groupName[i] = mainControl.getTurnier().getGruppe()[i].getGruppenName();
+				groupName[i] = mainControl.getTurnier().getGruppe().get(i).getGruppenName();
 
 				ctableMatrix[i] = turnierTabelle[i].getTabellenMatrix();
 				mtableMatrix[i] = meetingTable[i].getTabellenMatrix();
 
 			}
-			jsonFileName = "json-" + mainControl.getTurnier().getMd5Sum() + ".json";
+			String jsonFileName = "json-" + mainControl.getTurnier().getMd5Sum() + ".json";
 			filenames[0] = "../temp/" + jsonFileName;
 			int index = 0;
 			String[] header = new String[sidepanelItems.size()];
@@ -123,7 +120,7 @@ public class JSONSaveControl {
 				i++;
 			}
 			String md5Sum = mainControl.getTurnier().getMd5Sum();
-			JSONReceiveObject status1 = jsonCross.postRequest(tournamentName, groupName, startDate, endDate, menuName,
+			JSONReceiveObject status1 = jsonTables.postRequest(tournamentName, groupName, startDate, endDate, menuName,
 					crossHeader, crossBody, crossColor, meetingHeader, meetingBody, meetingColor, header, body, color,
 					jsonFileName, ctableMatrix, jsonCrossTitle, mtableMatrix, jsonMeetingtitle, siteName, configFlag,
 					md5Sum);
@@ -133,7 +130,7 @@ public class JSONSaveControl {
 				String htmlfiles[][] = new String[1][anzahlGruppen];
 				for (int htmlindex = 0; htmlindex < anzahlGruppen; htmlindex++) {
 					htmlfiles[0][htmlindex] = new String();
-					htmlfiles[0][htmlindex] = "temp/htmlfile-" + md5Sum + "-" + htmlindex + ".html";
+					htmlfiles[0][htmlindex] = "jklubtv/temp/htmlfile-" + md5Sum + "-" + htmlindex + ".html";
 				}
 				JSON jsonFileObjects = new JSON(url, username, password);
 				JSONFileObject jsonFiles = new JSONFileObject(filenames, htmlfiles);
@@ -164,36 +161,12 @@ public class JSONSaveControl {
 
 	}
 
-	public String getJsonCrossName() {
-		return jsonFileName;
+	public JSON getJsonTables() {
+		return jsonTables;
 	}
 
-	public void setJsonCrossName(String jsonCrossName) {
-		this.jsonFileName = jsonCrossName;
-	}
-
-	public String getJsonMeetingName() {
-		return jsonMeetingName;
-	}
-
-	public void setJsonMeetingName(String jsonMeetingName) {
-		this.jsonMeetingName = jsonMeetingName;
-	}
-
-	public JSON getJsonCross() {
-		return jsonCross;
-	}
-
-	public void setJsonCross(JSON jsonCross) {
-		this.jsonCross = jsonCross;
-	}
-
-	public JSON getJsonMeeting() {
-		return jsonMeeting;
-	}
-
-	public void setJsonMeeting(JSON jsonMeeting) {
-		this.jsonMeeting = jsonMeeting;
+	public void setJsonTables(JSON jsonTables) {
+		this.jsonTables = jsonTables;
 	}
 
 }

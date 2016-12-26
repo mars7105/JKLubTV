@@ -20,6 +20,7 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -47,8 +48,8 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 	private JTabbedPane hauptPanel;
 	private TabbedPaneView tabbedPaneView;
 	private Tournament turnier;
-	private Group[] gruppe;
-	private Player[][] spieler;
+	private ArrayList<Group> gruppe;
+	private ArrayList<ArrayList<Player>> spieler;
 	private ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png"))); //$NON-NLS-1$
 
@@ -69,15 +70,15 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 		spielerAnzahlView = new NewTournamentPlayerCountlView[gruppenAnzahl];
 		spielerAnzahlComboBox = new JComboBox[gruppenAnzahl];
 		okButton = new JButton[gruppenAnzahl];
-		spieler = new Player[gruppenAnzahl][];
+		spieler = new ArrayList<ArrayList<Player>>();
 		for (int i = 0; i < gruppenAnzahl; i++) {
-			spieler[i] = new Player[spielerAnzahl[i]];
+			spieler.add(new ArrayList<Player>());
 			spielerAnzahlView[i] = new NewTournamentPlayerCountlView(title[i]);
 			spielerAnzahlComboBox[i] = spielerAnzahlView[i].getSpielerAnzahlComboBox();
 			okButton[i] = spielerAnzahlView[i].getOkButton();
 			okButton[i].addActionListener(this);
 			tabbedPaneView.getTabbedPane().addTab(title[i], spielerAnzahlView[i]);
-			gruppe[i].setSpieler(spieler[i]);
+			gruppe.get(i).setSpieler(spieler.get(i));
 			spielerAnzahlComboBox[i].grabFocus();
 		}
 		// tabbedPaneView.updateUI();
@@ -109,7 +110,6 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 					fehlerIndex = i;
 					spielerAnzahl[i] = getSpielerAnzahl(i);
 					spielerEingabeControl.makeTabbedPane(i);
-					gruppe[i].setSpielerAnzahl(spielerAnzahl[i]);
 
 				}
 			}
@@ -145,7 +145,7 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 	}
 
 	public void makeNewTab(int indexI) {
-		spieler[indexI] = new Player[spielerAnzahl[indexI]];
+		spieler.get(indexI).add(new Player());
 		spielerAnzahlView[indexI] = new NewTournamentPlayerCountlView(title[indexI]);
 		spielerAnzahlComboBox[indexI] = spielerAnzahlView[indexI].getSpielerAnzahlComboBox();
 		okButton[indexI] = spielerAnzahlView[indexI].getOkButton();

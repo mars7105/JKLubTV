@@ -1,23 +1,11 @@
 package de.turnierverwaltung.model;
-//JKlubTV - Ein Programm zum verwalten von Schach Turnieren
-//Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
-//
-//This program is free software: you can redistribute it and/or modify
-//it under the terms of the GNU General Public License as published by
-//the Free Software Foundation, either version 3 of the License, or
-//(at your option) any later version.
-//
-//This program is distributed in the hope that it will be useful,
-//but WITHOUT ANY WARRANTY; without even the implied warranty of
-//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//GNU General Public License for more details.
-//
-//You should have received a copy of the GNU General Public License
-//along with this program.  If not, see <http://www.gnu.org/licenses/>.
-import java.util.Arrays;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 
 import de.turnierverwaltung.model.roundrobin.CrossTable;
 import de.turnierverwaltung.model.roundrobin.MeetingTable;
+
 /**
  * 
  * @author mars
@@ -25,23 +13,24 @@ import de.turnierverwaltung.model.roundrobin.MeetingTable;
  */
 public class Group {
 
-	
 	private int spielerAnzahl;
 	private int partienAnzahl;
 	private int rundenAnzahl;
 	private int gruppeId;
 	private String gruppenName;
-	private Player[] spieler;
+	private ArrayList<Player> spieler;
 	private Game[] partien;
 
 	private MeetingTable teminTabelle;
 	private CrossTable turnierTabelle;
-/**
- * 
- */
+
+	/**
+	 * 
+	 */
 	public Group() {
 		this.gruppeId = -1;
 	}
+
 	/**
 	 * 
 	 * @param idGruppe
@@ -51,24 +40,34 @@ public class Group {
 		this.gruppeId = idGruppe;
 		this.gruppenName = gruppenName;
 	}
+
 	/**
 	 * 
 	 */
 	private void berechnePlatz() {
-		Arrays.sort(spieler);
+		spieler.sort(new Comparator<Player>() {
+			public int compare(Player o1, Player o2) {
+				int compareQuantity = o2.getSort() - o1.getSort();
+
+				// ascending order
+				return compareQuantity;
+
+			}
+
+		});
 		for (int i = 0; i < getSpielerAnzahl(); i++) {
-			spieler[i].setPlatz(i + 1);
+			spieler.get(i).setPlatz(i + 1);
 		}
 		for (int i = 0; i < getSpielerAnzahl() - 1; i++) {
-			if (spieler[i].getPunkte() == spieler[i + 1].getPunkte()
-					&& spieler[i].getSoberg() == spieler[i + 1].getSoberg()
-					) {
-				
-				spieler[i + 1].setPlatz(spieler[i].getPlatz());
+			if (spieler.get(i).getPunkte() == spieler.get(i + 1).getPunkte()
+					&& spieler.get(i).getSoberg() == spieler.get(i + 1).getSoberg()) {
+
+				spieler.get(i + 1).setPlatz(spieler.get(i).getPlatz());
 			}
 		}
 
 	}
+
 	/**
 	 * 
 	 */
@@ -80,24 +79,23 @@ public class Group {
 		double wPunkte = 0;
 		double sPunkte = 0;
 		for (int i = 0; i < getSpielerAnzahl(); i++) {
-			spieler[i].setPunkte(0);
+			spieler.get(i).setPunkte(0);
 		}
 
 		for (int i = 0; i < partienAnzahl; i++) {
 			weiss = partien[i].getSpielerWeiss();
 			schwarz = partien[i].getSpielerSchwarz();
 			ergWeiss = partien[i].getErgebnisWeiss();
-			wPunkte = weiss.getPunkte()
-					+ convertErgebnisStringToDouble(ergWeiss);
+			wPunkte = weiss.getPunkte() + convertErgebnisStringToDouble(ergWeiss);
 			partien[i].getSpielerWeiss().setPunkte(wPunkte);
 			ergSchwarz = partien[i].getErgebnisSchwarz();
-			sPunkte = schwarz.getPunkte()
-					+ convertErgebnisStringToDouble(ergSchwarz);
+			sPunkte = schwarz.getPunkte() + convertErgebnisStringToDouble(ergSchwarz);
 			partien[i].getSpielerSchwarz().setPunkte(sPunkte);
 		}
 		berechneSoBerg();
 		berechnePlatz();
 	}
+
 	/**
 	 * 
 	 */
@@ -108,27 +106,26 @@ public class Group {
 			for (int i = 0; i < getSpielerAnzahl(); i++) {
 				for (int p = 0; p < partienAnzahl; p++) {
 					if (s != i) {
-						if (partien[p].getSpielerWeiss() == spieler[s]
-								&& partien[p].getSpielerSchwarz() == spieler[i]) {
+						if (partien[p].getSpielerWeiss() == spieler.get(s)
+								&& partien[p].getSpielerSchwarz() == spieler.get(i)) {
 
-							soberg += spieler[i].getPunkte()
-									* convertErgebnisStringToDouble(partien[p]
-											.getErgebnisWeiss());
+							soberg += spieler.get(i).getPunkte()
+									* convertErgebnisStringToDouble(partien[p].getErgebnisWeiss());
 						}
-						if (partien[p].getSpielerWeiss() == spieler[i]
-								&& partien[p].getSpielerSchwarz() == spieler[s]) {
+						if (partien[p].getSpielerWeiss() == spieler.get(i)
+								&& partien[p].getSpielerSchwarz() == spieler.get(s)) {
 
-							soberg += spieler[i].getPunkte()
-									* convertErgebnisStringToDouble(partien[p]
-											.getErgebnisSchwarz());
+							soberg += spieler.get(i).getPunkte()
+									* convertErgebnisStringToDouble(partien[p].getErgebnisSchwarz());
 						}
 					}
 				}
 			}
-			spieler[s].setSoberg(soberg);
+			spieler.get(s).setSoberg(soberg);
 
 		}
 	}
+
 	/**
 	 * 
 	 * @param erg
@@ -175,12 +172,12 @@ public class Group {
 		return rundenAnzahl;
 	}
 
-	public Player[] getSpieler() {
+	public ArrayList<Player> getSpieler() {
 		return spieler;
 	}
 
 	public int getSpielerAnzahl() {
-		return spielerAnzahl;
+		return spieler.size();
 	}
 
 	public MeetingTable getTeminTabelle() {
@@ -211,12 +208,9 @@ public class Group {
 		this.rundenAnzahl = rundenAnzahl;
 	}
 
-	public void setSpieler(Player[] spieler) {
+	public void setSpieler(ArrayList<Player> spieler) {
 		this.spieler = spieler;
-	}
-
-	public void setSpielerAnzahl(int spielerAnzahl) {
-		this.spielerAnzahl = spielerAnzahl;
+		spielerAnzahl = this.spieler.size();
 	}
 
 	public void setTeminTabelle(MeetingTable teminTabelle) {

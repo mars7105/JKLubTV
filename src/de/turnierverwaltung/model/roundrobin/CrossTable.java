@@ -1,5 +1,7 @@
 package de.turnierverwaltung.model.roundrobin;
 
+import java.util.ArrayList;
+
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Messages;
@@ -25,7 +27,7 @@ import de.turnierverwaltung.model.TournamentConstants;
 public class CrossTable {
 	private Tournament turnier;
 	private Group gruppe;
-	private Player[] spieler;
+	private ArrayList<Player> spieler;
 	private Game[] partien;
 	private int spielerAnzahl;
 	private int partienAnzahl;
@@ -40,9 +42,10 @@ public class CrossTable {
 	private String sbbColumnName;
 	private String rankingColumnName;
 	private String infoString;
-/**
- * 
- */
+
+	/**
+	 * 
+	 */
 	public CrossTable(Tournament turnier, Group gruppe) {
 		this.turnier = turnier;
 		this.gruppe = gruppe;
@@ -56,24 +59,25 @@ public class CrossTable {
 	private Boolean checkForSpielfrei() {
 		for (int i = 0; i < spielerAnzahl; i++) {
 
-			if (this.spieler[i].getSpielerId() == TournamentConstants.SPIELFREI_ID) {
+			if (this.spieler.get(i).getSpielerId() == TournamentConstants.SPIELFREI_ID) {
 				return true;
 			}
 
 		}
 		return false;
 	}
-/**
- * 
- * @param playerColumnName
- * @param oldDWZColumnName
- * @param newDWZColumnName
- * @param poinsColumnName
- * @param sbbColumnName
- * @param rankingColumnName
- * @param ohneDWZ
- * @param ohneFolgeDWZ
- */
+
+	/**
+	 * 
+	 * @param playerColumnName
+	 * @param oldDWZColumnName
+	 * @param newDWZColumnName
+	 * @param poinsColumnName
+	 * @param sbbColumnName
+	 * @param rankingColumnName
+	 * @param ohneDWZ
+	 * @param ohneFolgeDWZ
+	 */
 	public void createMatrix(String playerColumnName, String oldDWZColumnName, String newDWZColumnName,
 			String poinsColumnName, String sbbColumnName, String rankingColumnName, Boolean ohneDWZ,
 			Boolean ohneFolgeDWZ) {
@@ -122,11 +126,11 @@ public class CrossTable {
 
 		int dwzAbstand = 3 - abstand;
 		for (int i = dwzAbstand; i < (sp + dwzAbstand); i++) {
-			if (spieler[i - dwzAbstand].getKuerzel().length() >= 2) {
-				tabellenMatrix[i][0] = spieler[i - dwzAbstand].getKuerzel().substring(0, 1) + "<br />" //$NON-NLS-1$
-						+ spieler[i - dwzAbstand].getKuerzel().substring(1);
+			if (spieler.get(i - dwzAbstand).getKuerzel().length() >= 2) {
+				tabellenMatrix[i][0] = spieler.get(i - dwzAbstand).getKuerzel().substring(0, 1) + "<br />" //$NON-NLS-1$
+						+ spieler.get(i - dwzAbstand).getKuerzel().substring(1);
 			} else {
-				tabellenMatrix[i][0] = spieler[i - dwzAbstand].getKuerzel();
+				tabellenMatrix[i][0] = spieler.get(i - dwzAbstand).getKuerzel();
 			}
 
 		}
@@ -135,39 +139,39 @@ public class CrossTable {
 		tabellenMatrix[4 + sp - abstand][0] = sbbColumnName;
 		tabellenMatrix[5 + sp - abstand][0] = rankingColumnName;
 		for (int i = 0; i < sp; i++) {
-			tabellenMatrix[0][i + 1] = spieler[i].getName();
+			tabellenMatrix[0][i + 1] = spieler.get(i).getName();
 			if (ohneDWZ == false) {
-				if (spieler[i].getDwz() != TournamentConstants.KEINE_DWZ) {
-					tabellenMatrix[1][i + 1] = spieler[i].getDwz();
+				if (spieler.get(i).getDwz() != TournamentConstants.KEINE_DWZ) {
+					tabellenMatrix[1][i + 1] = spieler.get(i).getDwz();
 				} else {
 					tabellenMatrix[1][i + 1] = ""; //$NON-NLS-1$
 				}
 			}
 			if (ohneFolgeDWZ == false) {
-				if (spieler[i].getFolgeDWZ() > 0) {
-					tabellenMatrix[2][i + 1] = new Integer(spieler[i].getFolgeDWZ()).toString();
+				if (spieler.get(i).getFolgeDWZ() > 0) {
+					tabellenMatrix[2][i + 1] = new Integer(spieler.get(i).getFolgeDWZ()).toString();
 				} else {
 					tabellenMatrix[2][i + 1] = ""; //$NON-NLS-1$
 				}
 			}
 		}
 		for (int x = 0; x < sp; x++) {
-			if (spieler[x].getSpielerId() != TournamentConstants.SPIELFREI_ID) {
+			if (spieler.get(x).getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 				for (int y = 0; y < sp; y++) {
-					if (spieler[y].getSpielerId() != TournamentConstants.SPIELFREI_ID) {
+					if (spieler.get(y).getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 
 						if (x == y) {
 							tabellenMatrix[x + 3 - abstand][y + 1] = "--"; //$NON-NLS-1$
 						} else {
 							for (int i = 0; i < partienAnzahl; i++) {
 
-								if (partien[i].getSpielerWeiss() == spieler[x]
-										&& partien[i].getSpielerSchwarz() == spieler[y]) {
+								if (partien[i].getSpielerWeiss() == spieler.get(x)
+										&& partien[i].getSpielerSchwarz() == spieler.get(y)) {
 									tabellenMatrix[x + dwzAbstand][y + 1] = partien[i].getErgebnisSchwarz();
 
 								}
-								if (partien[i].getSpielerSchwarz() == spieler[x]
-										&& partien[i].getSpielerWeiss() == spieler[y]) {
+								if (partien[i].getSpielerSchwarz() == spieler.get(x)
+										&& partien[i].getSpielerWeiss() == spieler.get(y)) {
 									tabellenMatrix[x + dwzAbstand][y + 1] = partien[i].getErgebnisWeiss();
 
 								}
@@ -181,11 +185,12 @@ public class CrossTable {
 		}
 
 	}
-/**
- * 
- * @param ohneHeaderundFooter
- * @return
- */
+
+	/**
+	 * 
+	 * @param ohneHeaderundFooter
+	 * @return
+	 */
 	public String getHTMLTable(Boolean ohneHeaderundFooter) {
 		turnierTabelleToHTML = new CrossTableToHTML(tabellenMatrix, turnier, gruppe.getGruppenName(), infoString);
 		return turnierTabelleToHTML.getHTMLTable(ohneHeaderundFooter);

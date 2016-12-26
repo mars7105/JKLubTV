@@ -109,7 +109,7 @@ public class TournamentListControl implements ActionListener {
 
 					String gEV = turnierEditierenView.getTextFieldGruppenName()[i].getText();
 
-					turnierEdit.getGruppe()[i].setGruppenName(gEV);
+					turnierEdit.getGruppe().get(i).setGruppenName(gEV);
 				}
 
 				try {
@@ -321,7 +321,7 @@ public class TournamentListControl implements ActionListener {
 
 		for (int z = 0; z < turnier.getAnzahlGruppen(); z++) {
 			tabbedPaneView2[z] = new TabbedPaneView(mainControl, "Gruppen");
-			tabbedPaneView.getTabbedPane().insertTab(turnier.getGruppe()[z].getGruppenName(), gruppenIcon,
+			tabbedPaneView.getTabbedPane().insertTab(turnier.getGruppe().get(z).getGruppenName(), gruppenIcon,
 					tabbedPaneView2[z], null, z);
 			mainControl.getTurnierTabelleControl().makeSimpleTableView(z);
 
