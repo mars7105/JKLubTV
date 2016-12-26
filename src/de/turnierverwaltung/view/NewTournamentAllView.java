@@ -4,6 +4,10 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 public class NewTournamentAllView extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private NewTournamentGroupsView tGroupsView;
 	private NewTournamentPlayerInputView tPlayerInputView;
 
