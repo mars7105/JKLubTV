@@ -27,13 +27,14 @@ public class CrossTableToHTML {
 	private String infoString;
 	private int[] reihenfolge;
 	private Tournament turnier;
-/**
- * 
- * @param tabellenMatrix
- * @param turnier
- * @param gruppenName
- * @param infoString
- */
+
+	/**
+	 * 
+	 * @param tabellenMatrix
+	 * @param turnier
+	 * @param gruppenName
+	 * @param infoString
+	 */
 	public CrossTableToHTML(String[][] tabellenMatrix, Tournament turnier, String gruppenName, String infoString) {
 		this.turnier = turnier;
 		this.tabellenMatrix = tabellenMatrix;
@@ -43,12 +44,12 @@ public class CrossTableToHTML {
 		this.gruppenName = gruppenName;
 		this.infoString = infoString;
 	}
-	
+
 	private String getHTMLFooter() {
 		String footerString = "</body>\n</html>\n"; //$NON-NLS-1$
 		return footerString;
 	}
-	
+
 	private String getHTMLHeader() {
 		String headerString = "<!DOCTYPE html>\n" //$NON-NLS-1$
 				+ "<html lang='de'>\n" //$NON-NLS-1$
@@ -62,6 +63,7 @@ public class CrossTableToHTML {
 				+ gruppenName + "</h2>\n"; //$NON-NLS-1$
 		return headerString;
 	}
+
 	/**
 	 * 
 	 * @param ohneHeaderundFooter
@@ -82,6 +84,7 @@ public class CrossTableToHTML {
 		return makeTurnierTabelle(ohneHeaderundFooter);
 
 	}
+
 	/**
 	 * 
 	 * @param ohneHeaderundFooter
@@ -101,6 +104,8 @@ public class CrossTableToHTML {
 		for (int y = 0; y < row; y++) {
 			if (y == 0) {
 				htmlString += "    <thead>\n"; //$NON-NLS-1$
+				htmlString += "    <tr><th colspan='" + col + "'>" + Messages.getString("TurnierTabelleToHTML.10")
+						+ "</th></tr>\n";
 			}
 			if (y == 1) {
 				htmlString += "    <tbody>\n"; //$NON-NLS-1$
@@ -141,10 +146,13 @@ public class CrossTableToHTML {
 				htmlString += "    </thead>\n"; //$NON-NLS-1$
 			}
 		}
-		htmlString += "    </tbody>\n  </table>\n"; //$NON-NLS-1$
-		if (infoString != "") { //$NON-NLS-1$
-			htmlString += "  <div><p>" + infoString + "</p></div>\n"; //$NON-NLS-1$ //$NON-NLS-2$
+		if (infoString != "") {
+			htmlString += "    </tbody>\n<tfoot><tr><td colspan='" + col + "'>" + infoString + "</td></tr></tfoot>\n";
 		}
+		htmlString += "     </table>\n"; //$NON-NLS-1$
+//		if (infoString != "") { //$NON-NLS-1$
+//			htmlString += "  <div><p>" + infoString + "</p></div>\n"; //$NON-NLS-1$ //$NON-NLS-2$
+//		}
 		if (turnier.getOnlyTables() == false) {
 			htmlString += getHTMLFooter();
 		}

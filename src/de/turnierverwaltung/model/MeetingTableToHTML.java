@@ -93,6 +93,8 @@ public class MeetingTableToHTML {
 		for (int y = 0; y < row; y++) {
 			if (y == 0) {
 				htmlString += "    <thead>\n";
+				htmlString += "    <tr><th colspan='" + col + "'>" + Messages.getString("TurnierTabelleToHTML.11")
+						+ "</th></tr>\n";
 			}
 			if (y == 1) {
 				htmlString += "    <tbody>\n";
