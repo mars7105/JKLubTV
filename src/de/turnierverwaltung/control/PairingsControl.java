@@ -198,7 +198,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 		datum = "";
 		Date date;
 		try {
-			
+
 			try {
 				date = rundenEingabeFormularView[index].getDatum()[nummer].getDate();
 				datum = formatter.format(date);
@@ -206,7 +206,6 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 				datum = "";
 			}
 
-			
 			runde = pruefeObZahlKleinerEinsIst(Integer
 					.parseInt((String) rundenEingabeFormularView[index].getRundenNummer()[nummer].getSelectedItem()));
 			partien[nummer].setSpielDatum(datum);
@@ -418,28 +417,36 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	@Override
 	public void propertyChange(PropertyChangeEvent arg0) {
 		if (arg0.getPropertyName().equals("date")) {
-			
-		
-		init();
-		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
-		int max;
-		int anzahl;
-		for (int index = 0; index < gruppenAnzahl; index++) {
-			max = spielerAnzahl[index];
-			anzahl = max * (max - 1) / 2;
 
-			for (int i = 0; i < anzahl; i++) {
-				if (arg0.getSource() == datePicker[index][i].getJDateChooser()) {
+			init();
+			tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+			int max;
+			int anzahl;
+			for (int index = 0; index < gruppenAnzahl; index++) {
+				max = spielerAnzahl[index];
+				anzahl = max * (max - 1) / 2;
 
-					changeWerte(index, i);
-					changedPartien.add(gruppe[index].getPartien()[i]);
-					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
+				for (int i = 0; i < anzahl; i++) {
+					if (arg0.getSource() == datePicker[index][i].getJDateChooser()) {
 
+						changeWerte(index, i);
+						changedPartien.add(gruppe[index].getPartien()[i]);
+						changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
+						for (int y = i; y < (rundenEingabeFormularView[index].getTabbedPane().getSelectedIndex() + 1)
+								* max / 2; y++) {
+
+							if ((y != i) && (rundenEingabeFormularView[index].getDatum()[y].getDate() == null)) {
+								rundenEingabeFormularView[index].getDatum()[y]
+										.setDate(rundenEingabeFormularView[index].getDatum()[i].getDate());
+							}
+						}
+
+					}
 				}
+				rundenEingabeFormularView[index].getStatusLabel()
+						.setText(new Integer(changedPartien.size()).toString());
 			}
-			rundenEingabeFormularView[index].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
-		}
 		}
 	}
-	
+
 }
