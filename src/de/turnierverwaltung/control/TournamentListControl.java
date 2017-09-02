@@ -35,8 +35,11 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ListIterator;
+import java.util.Locale;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
@@ -98,8 +101,19 @@ public class TournamentListControl implements ActionListener {
 
 			if (arg0.getSource() == turnierEditierenView.getOkButton()) {
 				String turnierName = turnierEditierenView.getTextFieldTurnierName().getText();
-				String startDatum = turnierEditierenView.getStartDatumTextField().getJFormattedTextField().getText();
-				String endDatum = turnierEditierenView.getEndDatumTextField().getJFormattedTextField().getText();
+				DateFormat formatter1 = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+				DateFormat formatter2 = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+				String startDatum = "";
+				String endDatum = "";
+				try {
+
+					startDatum = formatter1.format(turnierEditierenView.getStartDatumTextField().getDate());
+					endDatum = formatter2.format(turnierEditierenView.getEndDatumTextField().getDate());
+
+				} catch (NullPointerException e2) {
+					startDatum = "";
+					endDatum = "";
+				}
 
 				turnierEdit.setTurnierName(turnierName);
 				turnierEdit.setStartDatum(startDatum);

@@ -18,25 +18,21 @@ package de.turnierverwaltung.view;
 import java.awt.BorderLayout;
 //import java.awt.Color;
 import java.awt.FlowLayout;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
-
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 
 public class PairingsView extends JPanel {
 
@@ -52,7 +48,7 @@ public class PairingsView extends JPanel {
 	private int spielerAnzahl;
 	private JLabel[] weissSpieler;
 	private JLabel[] schwarzSpieler;
-	private JDatePickerImpl[] datum;
+	private DateChooserPanel[] datum;
 	private Properties property;
 	private JButton[] changeColor;
 	private int anzahlZeilen;
@@ -74,7 +70,7 @@ public class PairingsView extends JPanel {
 		weissSpieler = new JLabel[anzahlZeilen];
 		schwarzSpieler = new JLabel[anzahlZeilen];
 
-		datum = new JDatePickerImpl[anzahlZeilen];
+		datum = new DateChooserPanel[anzahlZeilen];
 
 		property = new Properties();
 		property.put("text.today", Messages.getString("RundenEingabeFormularView.1")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -100,7 +96,7 @@ public class PairingsView extends JPanel {
 		return changeColor;
 	}
 
-	public JDatePickerImpl[] getDatum() {
+	public DateChooserPanel[] getDatum() {
 		return datum;
 	}
 
@@ -134,7 +130,7 @@ public class PairingsView extends JPanel {
 		// contentPanel.setBackground(new Color(249, 222, 112));
 		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		// setLayout(new BorderLayout());
-		
+
 		add(contentPanel, BorderLayout.CENTER);
 
 		JPanel southPanel = new JPanel();
@@ -153,36 +149,6 @@ public class PairingsView extends JPanel {
 		add(southPanel, BorderLayout.SOUTH);
 	}
 
-	private int[] getDatefromString(String zeile) {
-		String[] splitDate = null;
-		String[] dateItems = null;
-		if (zeile.contains(".")) {
-			splitDate = zeile.split("\\.");
-		}
-		if (zeile.contains("-")) {
-			splitDate = zeile.split("-");
-			dateItems = new String[splitDate.length];
-			int increment = splitDate.length;
-			for (int i = 0; i < splitDate.length; i++) {
-				increment--;
-				dateItems[increment] = splitDate[i];
-			}
-			splitDate = dateItems;
-		}
-
-		int[] dateInt = new int[splitDate.length];
-
-		for (int i = 0; i < splitDate.length; i++) {
-			if (zeile.length() > 0) {
-				dateInt[i] = Integer.parseInt(splitDate[i]);
-			} else {
-				dateInt[i] = 0;
-			}
-		}
-
-		return dateInt;
-	}
-
 	public void setAnzahlElemente(int anzahlElemente) {
 		this.anzahlElemente = anzahlElemente;
 	}
@@ -195,7 +161,7 @@ public class PairingsView extends JPanel {
 		this.changeColor = changeColor;
 	}
 
-	public void setDatum(JDatePickerImpl[] datum) {
+	public void setDatum(DateChooserPanel[] datum) {
 		this.datum = datum;
 	}
 
@@ -227,7 +193,7 @@ public class PairingsView extends JPanel {
 		weissSpieler = new JLabel[anzahlZeilen];
 		schwarzSpieler = new JLabel[anzahlZeilen];
 
-		datum = new JDatePickerImpl[anzahlZeilen];
+		datum = new DateChooserPanel[anzahlZeilen];
 	}
 
 	public void setWeissSpieler(JLabel[] weissSpieler) {
@@ -271,19 +237,24 @@ public class PairingsView extends JPanel {
 				// downPane.setAlignmentY(Component.TOP_ALIGNMENT);
 				if (zeile[0] != Messages.getString("RundenEingabeFormularView.7")) { //$NON-NLS-1$
 
-					int[] dateInt;
-					UtilDateModel model = new UtilDateModel();
+					DateChooserPanel datePanel = new DateChooserPanel();
+					datePanel.setLocale(Locale.getDefault());
+					// datePanel.setDateFormatString(zeile[4]);
+					try {
+						DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+						Date d = formatter.parse(zeile[4]);
+						datePanel.setDate(d);
 
-					if (zeile[4].length() > 0) {
-						dateInt = getDatefromString(zeile[4]);
-						model.setDate(dateInt[2], dateInt[1] - 1, dateInt[0]);
+					} catch (ParseException e) {
 
-						model.setSelected(true);
 					}
-					JDatePanelImpl datePanel = new JDatePanelImpl(model, property);
 
 					// datePanel.setForeground(Color.WHITE);
-					datum[anzahlElemente] = new JDatePickerImpl(datePanel, new DateLabelFormatter());
+					datum[anzahlElemente] = datePanel;
+					// JFormattedTextField textField = datum[anzahlElemente].getComponent(n)
+					// Color preserveBackgroundColor = Color.gray;
+					// textField.setFont(new Font("Some-Font-Name", Font.BOLD, 12));
+					// textField.setBackground(preserveBackgroundColor );
 					downPane.add(new JLabel(Messages.getString("RundenEingabeFormularView.8"))); //$NON-NLS-1$
 					downPane.add(datum[anzahlElemente]);
 					downPane.add(new JLabel(" ")); //$NON-NLS-1$
@@ -327,39 +298,4 @@ public class PairingsView extends JPanel {
 		contentPanel.updateUI();
 	}
 
-	
-
-	public class DateLabelFormatter extends AbstractFormatter {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		// private String datePattern = "yyyy-MM-dd";
-		private String datePattern = Messages.getString("TurnierView.15"); //$NON-NLS-1$
-
-		private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern, Locale.getDefault());
-
-		public DateLabelFormatter() {
-			super();
-			// setBackground(Color.CYAN);
-		}
-
-		@Override
-		public Object stringToValue(String text) throws ParseException {
-
-			return dateFormatter.parseObject(text);
-		}
-
-		@Override
-		public String valueToString(Object value) throws ParseException {
-			if (value != null) {
-				Calendar cal = (Calendar) value;
-				return dateFormatter.format(cal.getTime());
-			}
-
-			return ""; //$NON-NLS-1$
-		}
-
-	}
 }

@@ -40,7 +40,7 @@ public class NaviView extends JPanel {
 	private JLabel gruppenLabel;
 
 	private ImageIcon dbNewIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-new.png"))); //$NON-NLS-1$
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/db_add.png"))); //$NON-NLS-1$
 	private ImageIcon dbLoadIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-open-4.png"))); //$NON-NLS-1$
 	private ImageIcon tabelleSpeichernIcon = new ImageIcon(
@@ -62,6 +62,8 @@ public class NaviView extends JPanel {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/db.png"))); //$NON-NLS-1$
 	private ImageIcon iCalendarIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
+	private ImageIcon exitIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/application-exit-5.png")));
 	private JButton spielerImport;
 	private JButton spielerExport;
 	private JButton spielerDEWISSearchButton;
@@ -71,7 +73,7 @@ public class NaviView extends JPanel {
 	private JButton loadDatabaseButton;
 	private JButton propertiesButton;
 	private JButton infoButton;
-
+	private JButton exitButton;
 	private JLabel pathToDatabase;
 	private ImageIcon propertiesIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/configure-2.png"))); //$NON-NLS-1$
@@ -120,7 +122,9 @@ public class NaviView extends JPanel {
 		infoButton = new JButton(Messages.getString("NaviView.30"), infoIcon); //$NON-NLS-1$
 		infoButton.setPreferredSize(new Dimension(200, 40));
 		infoButton.setHorizontalAlignment(SwingConstants.LEFT);
-
+		exitButton = new JButton(Messages.getString("NaviView.32"), exitIcon); //$NON-NLS-1$
+		exitButton.setPreferredSize(new Dimension(200, 40));
+		exitButton.setHorizontalAlignment(SwingConstants.LEFT);
 		tabelleSpeichernButton = new JButton(Messages.getString("NaviView.13"), tabelleSpeichernIcon); //$NON-NLS-1$
 		tabelleSpeichernButton.setPreferredSize(new Dimension(200, 40));
 		tabelleSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -241,7 +245,8 @@ public class NaviView extends JPanel {
 		panel2b.getFlowLayout().setVgap(1);
 
 		panel2b.add(infoButton);
-
+		NaviPanelElementView panel2c = new NaviPanelElementView();
+		panel2c.add(exitButton);
 		NaviPanelElementView panelLabel = new NaviPanelElementView();
 		panelLabel.getFlowLayout().setVgap(1);
 		pathToDatabase = new JLabel(" "); //$NON-NLS-1$
@@ -278,7 +283,7 @@ public class NaviView extends JPanel {
 		dateiPanel.add(panel2);
 		dateiPanel.add(panel2a);
 		dateiPanel.add(panel2b);
-
+		dateiPanel.add(panel2c);
 		// dateiPanel.add(panel4b);
 		dateiPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 

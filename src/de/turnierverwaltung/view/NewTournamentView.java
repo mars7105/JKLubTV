@@ -25,6 +25,7 @@ import java.awt.Toolkit;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 import javax.swing.BoxLayout;
@@ -37,9 +38,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
-import org.jdatepicker.impl.JDatePanelImpl;
-import org.jdatepicker.impl.JDatePickerImpl;
-import org.jdatepicker.impl.UtilDateModel;
 import de.turnierverwaltung.model.Tournament;
 
 public class NewTournamentView extends JPanel {
@@ -49,8 +47,8 @@ public class NewTournamentView extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JPanel hauptPanel;
 	private JTextField turnierNameTextField;
-	private JDatePickerImpl startDatumTextField;
-	private JDatePickerImpl endDatumeTextField;
+	private DateChooserPanel startDatumTextField;
+	private DateChooserPanel endDatumeTextField;
 	private JTextField gruppenAnzahlTextField;
 	private Tournament turnier;
 	private JButton okButton;
@@ -108,7 +106,7 @@ public class NewTournamentView extends JPanel {
 		hauptPanel.setLayout(new BoxLayout(hauptPanel, BoxLayout.PAGE_AXIS));
 		// hauptPanel.setBackground(new Color(249, 222, 112));
 		hauptPanel.setVisible(true);
-//		add(hauptPanel);
+		// add(hauptPanel);
 
 		JPanel panel1 = new JPanel();
 		panel1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -132,8 +130,9 @@ public class NewTournamentView extends JPanel {
 		JLabel label = new JLabel(Messages.getString("TurnierView.9")); //$NON-NLS-1$
 		panel2.add(label);
 
-		startDatumTextField = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), property),
-				new DateLabelFormatter());
+		startDatumTextField = new DateChooserPanel();
+		startDatumTextField.setLocale(Locale.getDefault());
+
 		panel2.add(startDatumTextField);
 
 		JPanel panel3 = new JPanel();
@@ -144,8 +143,8 @@ public class NewTournamentView extends JPanel {
 		JLabel lblEndDatum = new JLabel(Messages.getString("TurnierView.10")); //$NON-NLS-1$
 		panel3.add(lblEndDatum);
 
-		endDatumeTextField = new JDatePickerImpl(new JDatePanelImpl(new UtilDateModel(), property),
-				new DateLabelFormatter());
+		endDatumeTextField = new DateChooserPanel();
+		endDatumeTextField.setLocale(Locale.getDefault());
 		panel3.add(endDatumeTextField);
 
 		JPanel panel4 = new JPanel();
@@ -184,8 +183,8 @@ public class NewTournamentView extends JPanel {
 		return endDatum;
 	}
 
-	public String getEndDatumTextField() {
-		return endDatumeTextField.getJFormattedTextField().getText();
+	public Date getEndDatumTextField() {
+		return endDatumeTextField.getDate();
 	}
 
 	public int getGruppenAnzahl() {
@@ -209,8 +208,8 @@ public class NewTournamentView extends JPanel {
 		return startDatum;
 	}
 
-	public String getStartDatumTextField() {
-		return startDatumTextField.getJFormattedTextField().getText();
+	public Date getStartDatumTextField() {
+		return startDatumTextField.getDate();
 	}
 
 	public Tournament getTurnier() {
@@ -229,7 +228,7 @@ public class NewTournamentView extends JPanel {
 		this.endDatum = endDatum;
 	}
 
-	public void setEndDatumeTextField(JDatePickerImpl endDatumeTextField) {
+	public void setEndDatumeTextField(DateChooserPanel endDatumeTextField) {
 		this.endDatumeTextField = endDatumeTextField;
 	}
 
@@ -253,7 +252,7 @@ public class NewTournamentView extends JPanel {
 		this.startDatum = startDatum;
 	}
 
-	public void setStartDatumTextField(JDatePickerImpl startDatumTextField) {
+	public void setStartDatumTextField(DateChooserPanel startDatumTextField) {
 		this.startDatumTextField = startDatumTextField;
 	}
 

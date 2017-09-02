@@ -34,6 +34,9 @@ import java.awt.Toolkit;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -186,8 +189,17 @@ public class NewTournamentControl implements ActionListener {
 	private void turnierOkButton() {
 		gruppenAnzahl = 0;
 		turnierName = turnierView.getTurnierNameTextField().getText();
-		startDatum = turnierView.getStartDatumTextField();
-		endDatum = turnierView.getEndDatumTextField();
+
+		DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+		
+
+		try {
+			startDatum = formatter.format(turnierView.getStartDatumTextField());
+			endDatum = formatter.format(turnierView.getEndDatumTextField());
+		} catch (NullPointerException e2) {
+			startDatum = "";
+			endDatum = "";
+		}
 
 		try {
 

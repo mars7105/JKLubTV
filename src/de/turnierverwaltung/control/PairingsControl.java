@@ -34,15 +34,19 @@ import java.awt.Toolkit;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Locale;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
-import org.jdatepicker.impl.JDatePickerImpl;
-
 import de.turnierverwaltung.ZahlKleinerAlsN;
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.PairingsTables;
@@ -51,10 +55,11 @@ import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.MeetingTable;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.view.WaitForAllGroupsView;
+import de.turnierverwaltung.view.DateChooserPanel;
 import de.turnierverwaltung.view.PairingsView;
 import de.turnierverwaltung.view.TabbedPaneView;
 
-public class PairingsControl implements ActionListener {
+public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 	private static int pruefeObZahlKleinerEinsIst(int zahl) throws ZahlKleinerAlsN {
 		if (zahl <= 0) {
@@ -76,7 +81,7 @@ public class PairingsControl implements ActionListener {
 	private TabbedPaneView[] tabAnzeigeView2;
 	private Boolean[] neuesTurnier;
 	private ArrayList<Game> changedPartien;
-	private JDatePickerImpl[][] datePicker;
+	private DateChooserPanel[][] datePicker;
 	private JComboBox<String>[][] rundenNummer;
 	private int[][] changedGroups;
 	private ImageIcon paarungenIcon = new ImageIcon(
@@ -128,7 +133,7 @@ public class PairingsControl implements ActionListener {
 			}
 			this.mainControl.setRundenEingabeFormularView(rundenEingabeFormularView);
 			changeColor = new JButton[gruppenAnzahl][];
-			datePicker = new JDatePickerImpl[gruppenAnzahl][];
+			datePicker = new DateChooserPanel[gruppenAnzahl][];
 			rundenNummer = new JComboBox[gruppenAnzahl][];
 			spielerAnzahl = new int[gruppenAnzahl];
 			paarungsTafeln = new PairingsTables[gruppenAnzahl];
@@ -168,13 +173,7 @@ public class PairingsControl implements ActionListener {
 					rundenEingabeFormularView[index].getTabbedPane().setSelectedIndex(selectedTab);
 
 				}
-				if (arg0.getSource() == datePicker[index][i].getJDateInstantPanel()) {
 
-					changeWerte(index, i);
-					changedPartien.add(gruppe[index].getPartien()[i]);
-					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
-
-				}
 				if (arg0.getSource() == rundenNummer[index][i]) {
 					changeWerte(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
@@ -195,9 +194,19 @@ public class PairingsControl implements ActionListener {
 		String datum;
 		partien = gruppe[index].getPartien();
 		int runde;
-
+		DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+		datum = "";
+		Date date;
 		try {
-			datum = rundenEingabeFormularView[index].getDatum()[nummer].getJFormattedTextField().getText();
+			
+			try {
+				date = rundenEingabeFormularView[index].getDatum()[nummer].getDate();
+				datum = formatter.format(date);
+			} catch (NullPointerException e2) {
+				datum = "";
+			}
+
+			
 			runde = pruefeObZahlKleinerEinsIst(Integer
 					.parseInt((String) rundenEingabeFormularView[index].getRundenNummer()[nummer].getSelectedItem()));
 			partien[nummer].setSpielDatum(datum);
@@ -224,7 +233,7 @@ public class PairingsControl implements ActionListener {
 		String datum;
 		int runde;
 		try {
-			datum = rundenEingabeFormularView[index].getDatum()[nummer].getJFormattedTextField().getText();
+			datum = rundenEingabeFormularView[index].getDatum()[nummer].getDateFormatString();
 			runde = pruefeObZahlKleinerEinsIst(Integer
 					.parseInt((String) rundenEingabeFormularView[index].getRundenNummer()[nummer].getSelectedItem()));
 			partien[nummer].setSpielDatum(datum);
@@ -265,7 +274,7 @@ public class PairingsControl implements ActionListener {
 		for (int i = 0; i < (spielerAnzahl[index] * (spielerAnzahl[index] - 1) / 2); i++) {
 
 			changeColor[index][i].addActionListener(this);
-			datePicker[index][i].getJDateInstantPanel().addActionListener(this);
+			datePicker[index][i].getJDateChooser().addPropertyChangeListener(this);
 			rundenNummer[index][i].addActionListener(this);
 		}
 
@@ -405,4 +414,32 @@ public class PairingsControl implements ActionListener {
 		}
 		return ready;
 	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent arg0) {
+		if (arg0.getPropertyName().equals("date")) {
+			
+		
+		init();
+		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+		int max;
+		int anzahl;
+		for (int index = 0; index < gruppenAnzahl; index++) {
+			max = spielerAnzahl[index];
+			anzahl = max * (max - 1) / 2;
+
+			for (int i = 0; i < anzahl; i++) {
+				if (arg0.getSource() == datePicker[index][i].getJDateChooser()) {
+
+					changeWerte(index, i);
+					changedPartien.add(gruppe[index].getPartien()[i]);
+					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
+
+				}
+			}
+			rundenEingabeFormularView[index].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
+		}
+		}
+	}
+	
 }

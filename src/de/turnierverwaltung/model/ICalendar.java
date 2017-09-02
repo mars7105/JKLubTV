@@ -23,9 +23,13 @@ public class ICalendar {
 	}
 
 	public void addEvent(String datum, String event) throws NumberFormatException {
-		if (datum.length() > 0) {
-			VEvent ev = checkDate(datum, event);
-			calendar.getComponents().add(ev);
+		try {
+			if (datum.length() > 0) {
+				VEvent ev = checkDate(datum, event);
+				calendar.getComponents().add(ev);
+			}
+		} catch (NumberFormatException e) {
+			
 		}
 	}
 
@@ -38,7 +42,7 @@ public class ICalendar {
 		outputter.output(calendar, fout);
 	}
 
-	private VEvent checkDate(String datum, String event) {
+	private VEvent checkDate(String datum, String event) throws NumberFormatException {
 		java.util.Calendar cal = java.util.Calendar.getInstance();
 		VEvent ev = null;
 		Date stStart = null;
@@ -66,6 +70,7 @@ public class ICalendar {
 			stStart = new Date(cal.getTime());
 			cal.set(java.util.Calendar.DAY_OF_MONTH, day + 1);
 			stEnd = new Date(cal.getTime());
+
 		}
 		ev = new VEvent(stStart, stEnd, event);
 		return ev;
