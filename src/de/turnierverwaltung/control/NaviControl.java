@@ -620,14 +620,12 @@ public class NaviControl implements ActionListener {
 		String hinweisText = Messages.getString("NaviController.21") //$NON-NLS-1$
 				+ Messages.getString("NaviController.22") //$NON-NLS-1$
 				+ Messages.getString("NaviController.33"); //$NON-NLS-1$
-		if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
-			abfrage = 1;
-			// Custom button text
-			Object[] options = { Messages.getString("NaviController.24"), Messages.getString("NaviController.25") }; //$NON-NLS-1$ //$NON-NLS-2$
-			abfrage = JOptionPane.showOptionDialog(mainControl, hinweisText, Messages.getString("NaviController.26"), //$NON-NLS-1$
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
-		}
+		abfrage = 1;
+		// Custom button text
+		Object[] options = { Messages.getString("NaviController.24"), Messages.getString("NaviController.25") }; //$NON-NLS-1$ //$NON-NLS-2$
+		abfrage = JOptionPane.showOptionDialog(mainControl, hinweisText, Messages.getString("NaviController.26"), //$NON-NLS-1$
+				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
 		return abfrage;
 	}
