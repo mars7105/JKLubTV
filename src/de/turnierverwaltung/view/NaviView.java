@@ -64,6 +64,8 @@ public class NaviView extends JPanel {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
 	private ImageIcon exitIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/application-exit-5.png")));
+	private ImageIcon pairingsCancelIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-cancel-3.png")));
 	private JButton spielerImport;
 	private JButton spielerExport;
 	private JButton spielerDEWISSearchButton;
@@ -96,6 +98,7 @@ public class NaviView extends JPanel {
 	private JButton excelSpeichernButton;
 	private JButton pairingsLoadButton;
 	private JButton pairingsSaveButton;
+	private JButton pairingsCancelButton;
 	private ImageIcon pairingsLoadIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/media-playlist-shuffle-3.png")));
 	private ImageIcon pairingsSaveIcon = new ImageIcon(
@@ -140,7 +143,7 @@ public class NaviView extends JPanel {
 				iCalendarIcon);
 		iCalendarSpeichernButton.setPreferredSize(new Dimension(200, 40));
 		iCalendarSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
-		
+
 		excelSpeichernButton = new JButton(Messages.getString("NaviView.2"), excelIcon); //$NON-NLS-1$
 		excelSpeichernButton.setPreferredSize(new Dimension(200, 40));
 		excelSpeichernButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -155,6 +158,10 @@ public class NaviView extends JPanel {
 		pairingsSaveButton = new JButton(Messages.getString("NaviView.28"), pairingsSaveIcon);
 		pairingsSaveButton.setPreferredSize(new Dimension(200, 40));
 		pairingsSaveButton.setHorizontalAlignment(SwingConstants.LEFT);
+
+		pairingsCancelButton = new JButton(Messages.getString("NaviView.33"), pairingsCancelIcon);
+		pairingsCancelButton.setPreferredSize(new Dimension(200, 40));
+		pairingsCancelButton.setHorizontalAlignment(SwingConstants.LEFT);
 
 		dateiPanel = new JPanel();
 		dateiPanel.setBackground(Color.LIGHT_GRAY);
@@ -173,7 +180,7 @@ public class NaviView extends JPanel {
 
 		panel3.add(turnierAddButton);
 		NaviTitleLabelView titleView = new NaviTitleLabelView(Messages.getString("NaviView.18"));
-		
+
 		turnierListePanel.add(titleView);
 		turnierListePanel.add(panel3);
 		turnierListePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -271,20 +278,17 @@ public class NaviView extends JPanel {
 
 		NaviPanelElementView panel4k = new NaviPanelElementView();
 		panel4k.add(pairingsSaveButton);
+		NaviPanelElementView panel4l = new NaviPanelElementView();
+		panel4l.add(pairingsCancelButton);
 
 		titleView = new NaviTitleLabelView(Messages.getString("NaviView.25"));
 
-//		JLabel dateiLabel = new JLabel(Messages.getString("NaviView.25")); //$NON-NLS-1$
-//		dateiLabel.setBackground(Color.LIGHT_GRAY);
-		// dateiPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// dateiPanelLabel.add(dateiLabel);
 		dateiPanel.add(titleView);
 		dateiPanel.add(panel);
 		dateiPanel.add(panel2);
 		dateiPanel.add(panel2a);
 		dateiPanel.add(panel2b);
 		dateiPanel.add(panel2c);
-		// dateiPanel.add(panel4b);
 		dateiPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		NaviPanelElementView datenbankPanelLabel = new NaviPanelElementView();
@@ -329,7 +333,7 @@ public class NaviView extends JPanel {
 
 		pairingsPanel.add(titleView);
 		pairingsPanel.add(panel4k);
-
+		pairingsPanel.add(panel4l);
 		tabellenPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pairingsPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
@@ -560,6 +564,14 @@ public class NaviView extends JPanel {
 
 	public void setExitButton(JButton exitButton) {
 		this.exitButton = exitButton;
+	}
+
+	public JButton getPairingsCancelButton() {
+		return pairingsCancelButton;
+	}
+
+	public void setPairingsCancelButton(JButton pairingsCancelButton) {
+		this.pairingsCancelButton = pairingsCancelButton;
 	}
 
 }

@@ -88,15 +88,6 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	private int[][] changedGroups;
 	private ImageIcon paarungenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/media-playlist-shuffle-3.png"))); //$NON-NLS-1$
-	// public PairingsControl(MainControl mainControl) {
-	// this.mainControl = mainControl;
-	//
-	// turnier = this.mainControl.getTurnier();
-	// gruppe = turnier.getGruppe();
-	// gruppenAnzahl = turnier.getAnzahlGruppen();
-	// tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
-	//
-	// }
 
 	public PairingsControl(MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -402,6 +393,14 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 	public void setChangedGroups(int[][] changedGroups) {
 		this.changedGroups = changedGroups;
+	}
+
+	public ArrayList<Game> getChangedPartien() {
+		return changedPartien;
+	}
+
+	public void setChangedPartien(ArrayList<Game> changedPartien) {
+		this.changedPartien = changedPartien;
 	}
 
 	public Boolean checkNewTurnier() {

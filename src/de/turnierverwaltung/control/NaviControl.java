@@ -117,6 +117,7 @@ public class NaviControl implements ActionListener {
 
 		naviView.getPairingsLoadButton().addActionListener(this);
 		naviView.getPairingsSaveButton().addActionListener(this);
+		naviView.getPairingsCancelButton().addActionListener(this);
 		pairingIsActive = false;
 		aktiveGruppe = 0;
 		makeNaviPanel();
@@ -250,7 +251,7 @@ public class NaviControl implements ActionListener {
 			}
 		}
 		if (arg0.getSource() == naviView.getPairingsSaveButton()) {
-			
+
 			saveAndReloadTurnier();
 			try {
 				setTabsEnable(true);
@@ -258,8 +259,20 @@ public class NaviControl implements ActionListener {
 				mainControl.fileSQLError();
 			}
 			pairingIsActive = false;
-			
 
+		}
+		if (arg0.getSource() == naviView.getPairingsCancelButton()) {
+			int abfrage = abbrechenHinweis();
+			if (abfrage == 0) {
+				PairingsControl pairingsControl = mainControl.getRundenEingabeFormularControl();
+				pairingsControl.getChangedPartien().clear();
+				try {
+					setTabsEnable(true);
+				} catch (SQLException e) {
+					mainControl.fileSQLError();
+				}
+				pairingIsActive = false;
+			}
 		}
 		if (arg0.getSource() == newTurnierButton) {
 			mainControl.setSpielerEingabeControl(null);
@@ -518,8 +531,7 @@ public class NaviControl implements ActionListener {
 	}
 
 	private Boolean saveAndReloadTurnier() {
-		
-		
+
 		Boolean ok = true;
 		try {
 			ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
@@ -527,7 +539,7 @@ public class NaviControl implements ActionListener {
 			ok = false;
 			e.printStackTrace();
 		}
-		
+
 		return ok;
 	}
 
@@ -616,6 +628,21 @@ public class NaviControl implements ActionListener {
 					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
 		}
+
+		return abfrage;
+	}
+
+	private int abbrechenHinweis() {
+		int abfrage = 0;
+		String hinweisText = Messages.getString("NaviController.21") //$NON-NLS-1$
+				+ Messages.getString("NaviController.22") //$NON-NLS-1$
+				+ Messages.getString("NaviController.34"); //$NON-NLS-1$
+
+		abfrage = 1;
+		// Custom button text
+		Object[] options = { Messages.getString("NaviController.24"), Messages.getString("NaviController.25") }; //$NON-NLS-1$ //$NON-NLS-2$
+		abfrage = JOptionPane.showOptionDialog(mainControl, hinweisText, Messages.getString("NaviController.26"), //$NON-NLS-1$
+				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
 		return abfrage;
 	}
