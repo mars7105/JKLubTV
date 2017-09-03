@@ -100,7 +100,7 @@ public class InfoLicenseView {
 	}
 
 	public JPanel getLizenzText() throws URISyntaxException {
-		datepickerUri = new URI("http://jdatepicker.org/"); //$NON-NLS-1$
+		datepickerUri = new URI("https://toedter.com/jcalendar/"); //$NON-NLS-1$
 		JPanel all = new JPanel(new BorderLayout());
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
@@ -144,7 +144,7 @@ public class InfoLicenseView {
 		panel.add(temp);
 		panel.add(new JSeparator());
 		JLabel labelDatePicker = new JLabel();
-		labelDatePicker.setText("1. JDatePicker -> jdatepicker-1.3.4.jar\n für die Auswahl des Datum.\n"); //$NON-NLS-1$
+		labelDatePicker.setText("1. Latest release version 1.4: jcalendar-1.4.zip\n für die Auswahl des Datum.\n"); //$NON-NLS-1$
 		buttonDatePicker = new JButton();
 		buttonDatePicker.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>"); //$NON-NLS-1$
 		buttonDatePicker.setOpaque(false);

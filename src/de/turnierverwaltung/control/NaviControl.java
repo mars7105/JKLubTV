@@ -109,7 +109,7 @@ public class NaviControl implements ActionListener {
 		pdfButton.addActionListener(this);
 		naviView.getTabelleAktualisierenButton().addActionListener(this);
 		naviView.getTabelleSpeichernButton().addActionListener(this);
-		
+
 		naviView.getTabelleHTMLAusgabeButton().addActionListener(this);
 		naviView.getExcelSpeichernButton().addActionListener(this);
 		iCalendarButton = naviView.getiCalendarSpeichernButton();
@@ -250,7 +250,7 @@ public class NaviControl implements ActionListener {
 			}
 		}
 		if (arg0.getSource() == naviView.getPairingsSaveButton()) {
-
+			
 			saveAndReloadTurnier();
 			try {
 				setTabsEnable(true);
@@ -258,6 +258,7 @@ public class NaviControl implements ActionListener {
 				mainControl.fileSQLError();
 			}
 			pairingIsActive = false;
+			
 
 		}
 		if (arg0.getSource() == newTurnierButton) {
@@ -517,7 +518,8 @@ public class NaviControl implements ActionListener {
 	}
 
 	private Boolean saveAndReloadTurnier() {
-
+		
+		
 		Boolean ok = true;
 		try {
 			ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
@@ -525,6 +527,7 @@ public class NaviControl implements ActionListener {
 			ok = false;
 			e.printStackTrace();
 		}
+		
 		return ok;
 	}
 
@@ -599,6 +602,7 @@ public class NaviControl implements ActionListener {
 		}
 		return abfrage;
 	}
+
 	private int beendenHinweis() {
 		int abfrage = 0;
 		String hinweisText = Messages.getString("NaviController.21") //$NON-NLS-1$
@@ -612,9 +616,10 @@ public class NaviControl implements ActionListener {
 					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
 		}
-		
+
 		return abfrage;
 	}
+
 	public TurnierAnsicht getTurnierAnsicht() {
 		return turnierAnsicht;
 	}
