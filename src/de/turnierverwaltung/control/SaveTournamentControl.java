@@ -103,9 +103,9 @@ public class SaveTournamentControl {
 				saved = mySQLPartienDAO.updatePartien(changedPartien);
 				changedPartien.clear();
 				if (saved) {
-					JOptionPane.showMessageDialog(mainControl,
-							Messages.getString("SaveTurnierControl.3") + this.mainControl.getTurnier().getTurnierName() //$NON-NLS-1$
-									+ Messages.getString("SaveTurnierControl.4")); //$NON-NLS-1$
+//					JOptionPane.showMessageDialog(mainControl,
+//							Messages.getString("SaveTurnierControl.3") + this.mainControl.getTurnier().getTurnierName() //$NON-NLS-1$
+//									+ Messages.getString("SaveTurnierControl.4")); //$NON-NLS-1$
 					return true;
 				} else {
 

@@ -554,4 +554,12 @@ public class NaviView extends JPanel {
 		this.iCalendarSpeichernButton = iCalendarSpeichernButton;
 	}
 
+	public JButton getExitButton() {
+		return exitButton;
+	}
+
+	public void setExitButton(JButton exitButton) {
+		this.exitButton = exitButton;
+	}
+
 }

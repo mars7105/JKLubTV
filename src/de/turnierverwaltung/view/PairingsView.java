@@ -140,6 +140,8 @@ public class PairingsView extends JPanel {
 		status.setLayout(new FlowLayout(FlowLayout.LEFT));
 		status.add(new JLabel(Messages.getString("SimpleTerminTabelleView.15"))); //$NON-NLS-1$
 		statusLabel = new JLabel("0");
+		statusLabel.setOpaque(true);
+
 		JLabel changesLabel = new JLabel(Messages.getString("SimpleTerminTabelleView.16"));
 		status.add(statusLabel);
 		status.add(changesLabel);

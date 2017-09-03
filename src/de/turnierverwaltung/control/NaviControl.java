@@ -68,6 +68,7 @@ public class NaviControl implements ActionListener {
 	private JButton newdbButton;
 	private JButton loaddbButton;
 	private JButton newTurnierButton;
+	private JButton exitButton;
 	private NaviView naviView;
 	private int aktiveGruppe;
 	private JButton pdfButton;
@@ -98,7 +99,8 @@ public class NaviControl implements ActionListener {
 		loaddbButton.addActionListener(this);
 		newTurnierButton = naviView.getTurnierAddButton();
 		newTurnierButton.addActionListener(this);
-
+		exitButton = naviView.getExitButton();
+		exitButton.addActionListener(this);
 		naviView.getSpielerAddButton().addActionListener(this);
 		naviView.getSpielerExport().addActionListener(this);
 		naviView.getSpielerImport().addActionListener(this);
@@ -107,6 +109,7 @@ public class NaviControl implements ActionListener {
 		pdfButton.addActionListener(this);
 		naviView.getTabelleAktualisierenButton().addActionListener(this);
 		naviView.getTabelleSpeichernButton().addActionListener(this);
+		
 		naviView.getTabelleHTMLAusgabeButton().addActionListener(this);
 		naviView.getExcelSpeichernButton().addActionListener(this);
 		iCalendarButton = naviView.getiCalendarSpeichernButton();
@@ -203,7 +206,7 @@ public class NaviControl implements ActionListener {
 			}
 
 		}
-		
+
 		if (arg0.getSource() == naviView.getExcelSpeichernButton()) {
 			ExcelSaveControl excelsave = new ExcelSaveControl(this.mainControl);
 			excelsave.saveExcelFile();
@@ -431,6 +434,13 @@ public class NaviControl implements ActionListener {
 			}
 
 		}
+		if (arg0.getSource() == exitButton) {
+			int abfrage = beendenHinweis();
+			if (abfrage == 0) {
+				System.exit(0);
+			}
+
+		}
 		if (arg0.getSource() == naviView.getSpielerImport()) {
 			SQLImportPlayerListControl spielerImport = new SQLImportPlayerListControl(mainControl);
 			try {
@@ -542,6 +552,7 @@ public class NaviControl implements ActionListener {
 
 	private void makeNewTables() {
 		int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
+		mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(false);
 		for (int i = 0; i < anzahlGruppen; i++) {
 
 			this.mainControl.getTurnierTabelleControl().okAction(i);
@@ -588,7 +599,22 @@ public class NaviControl implements ActionListener {
 		}
 		return abfrage;
 	}
+	private int beendenHinweis() {
+		int abfrage = 0;
+		String hinweisText = Messages.getString("NaviController.21") //$NON-NLS-1$
+				+ Messages.getString("NaviController.22") //$NON-NLS-1$
+				+ Messages.getString("NaviController.33"); //$NON-NLS-1$
+		if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
+			abfrage = 1;
+			// Custom button text
+			Object[] options = { Messages.getString("NaviController.24"), Messages.getString("NaviController.25") }; //$NON-NLS-1$ //$NON-NLS-2$
+			abfrage = JOptionPane.showOptionDialog(mainControl, hinweisText, Messages.getString("NaviController.26"), //$NON-NLS-1$
+					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
+		}
+		
+		return abfrage;
+	}
 	public TurnierAnsicht getTurnierAnsicht() {
 		return turnierAnsicht;
 	}

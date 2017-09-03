@@ -17,6 +17,7 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.DefaultCellEditor;
@@ -77,13 +78,14 @@ public class CrossTableView extends JPanel {
 		hinweis.setLayout(new FlowLayout(FlowLayout.LEFT));
 		hinweis.add(new JLabel(Messages.getString("SimpleTerminTabelleView.13") //$NON-NLS-1$
 				+ Messages.getString("SimpleTerminTabelleView.14"))); //$NON-NLS-1$
-		
+
 		southPanel.add(hinweis, BorderLayout.CENTER);
 
 		JPanel status = new JPanel();
 		status.setLayout(new FlowLayout(FlowLayout.LEFT));
 		status.add(new JLabel(Messages.getString("SimpleTerminTabelleView.15"))); //$NON-NLS-1$
 		statusLabel = new JLabel("0");
+		statusLabel.setOpaque(true);
 		JLabel changesLabel = new JLabel(Messages.getString("SimpleTerminTabelleView.16"));
 		status.add(statusLabel);
 		status.add(changesLabel);

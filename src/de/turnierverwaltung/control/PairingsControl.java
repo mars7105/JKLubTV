@@ -1,5 +1,7 @@
 package de.turnierverwaltung.control;
 
+import java.awt.Color;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -445,6 +447,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 				}
 				rundenEingabeFormularView[index].getStatusLabel()
 						.setText(new Integer(changedPartien.size()).toString());
+				rundenEingabeFormularView[index].getStatusLabel().setBackground(Color.ORANGE);
 			}
 		}
 	}

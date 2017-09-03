@@ -54,7 +54,7 @@ public class MeetingTableToHTML {
 				+ "  <meta name='viewport' content='width=device-width, initial-scale=1.0'>\n"
 				+ "  <link rel='stylesheet' href='style.css'>\n" + "  <title>" + turnierName + startDatum + " bis "
 				+ endDatum + "</title>\n" + "</head>\n" + "<body>\n" + "  <h1>" + turnierName + " " + startDatum
-				+ " bis " + endDatum + "</h1>\n" + "  <h2>" + gruppenName + "</h2>\n";
+				+ " bis " + endDatum + "</h1>\n";
 		return headerString;
 	}
 
@@ -94,11 +94,9 @@ public class MeetingTableToHTML {
 			if (y == 0) {
 				htmlString += "    <thead>\n";
 				htmlString += "    <tr><th colspan='" + col + "'>" + Messages.getString("TurnierTabelleToHTML.11")
-						+ "</th></tr>\n";
+						+ " - " + gruppenName + "</th></tr>\n</thead>\n<tbody>\n";
 			}
-			if (y == 1) {
-				htmlString += "    <tbody>\n";
-			}
+
 			htmlString += "      <tr>\n";
 
 			for (int x = 0; x < col; x++) {
@@ -107,24 +105,18 @@ public class MeetingTableToHTML {
 					if (ausgabeWert == TournamentConstants.PARTIE_REMIS) {
 						ausgabeWert = "&frac12; - &frac12;";
 					}
-					if (y == 0) {
-						htmlString += "        <th>" + ausgabeWert + "</th>\n";
-					} else {
-						htmlString += "        <td>" + ausgabeWert + "</td>\n";
-					}
+
+					htmlString += "        <td>" + ausgabeWert + "</td>\n";
+
 				} else {
-					if (y == 0) {
-						htmlString += "        <th>" + TournamentConstants.HTML_LEERZEICHEN + "</th>\n";
-					} else {
-						htmlString += "        <td>" + TournamentConstants.HTML_LEERZEICHEN + "</td>\n";
-					}
+
+					htmlString += "        <td>" + TournamentConstants.HTML_LEERZEICHEN + "</td>\n";
+
 				}
 
 			}
 			htmlString += "      </tr>\n";
-			if (y == 0) {
-				htmlString += "    </thead>\n";
-			}
+
 		}
 		htmlString += "    </tbody>\n  </table>\n";
 

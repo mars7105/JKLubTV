@@ -1,5 +1,7 @@
 package de.turnierverwaltung.control;
 
+import java.awt.Color;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -120,6 +122,7 @@ public class MeetingTableControl {
 		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
 		for (int i = 0; i < anzahlGruppen; i++) {
 			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
+			simpleTableView[i].getStatusLabel().setBackground(Color.ORANGE);
 		}
 
 	}

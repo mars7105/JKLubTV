@@ -1,5 +1,7 @@
 package de.turnierverwaltung.control;
 
+import java.awt.Color;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -156,7 +158,7 @@ public class TournamentListControl implements ActionListener {
 
 			if (arg0.getSource() == turnierListeLadenView.getTurnierLadeButton()[i]) {
 				Tournament turnier = this.mainControl.getTurnier();
-
+				
 				if (turnier == null) {
 					selectTurnierTab = true;
 					try {
@@ -341,6 +343,7 @@ public class TournamentListControl implements ActionListener {
 
 			mainControl.getTerminTabelleControl().makeSimpleTableView(z);
 			mainControl.getTurnierTabelleControl().okAction(z);
+
 		}
 		PairingsControl rundenEingabeFormularControl = new PairingsControl(mainControl);
 		mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
@@ -363,7 +366,7 @@ public class TournamentListControl implements ActionListener {
 		}
 		hauptPanel.setSelectedIndex(selectedTab);
 		loadedTurnierID = turnier.getTurnierId();
-
+		mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(false);
 	}
 
 	public void loadTurnierListe() throws SQLException {

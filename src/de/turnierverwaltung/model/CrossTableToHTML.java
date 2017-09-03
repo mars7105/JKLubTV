@@ -59,8 +59,7 @@ public class CrossTableToHTML {
 				+ "  <link rel='stylesheet' href='style.css'>\n" + "  <title>" //$NON-NLS-1$ //$NON-NLS-2$
 				+ turnierName + startDatum + Messages.getString("TurnierTabelleToHTML.9") + endDatum + "</title>\n" //$NON-NLS-1$ //$NON-NLS-2$
 				+ "</head>\n" + "<body>\n" + "  <h1>" + turnierName + " " //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$ //$NON-NLS-4$
-				+ startDatum + Messages.getString("TurnierTabelleToHTML.15") + endDatum + "</h1>\n" + "  <h2>" //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-				+ gruppenName + "</h2>\n"; //$NON-NLS-1$
+				+ startDatum + Messages.getString("TurnierTabelleToHTML.15") + endDatum + "</h1>\n";
 		return headerString;
 	}
 
@@ -105,11 +104,9 @@ public class CrossTableToHTML {
 			if (y == 0) {
 				htmlString += "    <thead>\n"; //$NON-NLS-1$
 				htmlString += "    <tr><th colspan='" + col + "'>" + Messages.getString("TurnierTabelleToHTML.10")
-						+ "</th></tr>\n";
+						+ " - " + gruppenName + "</th></tr>\n</thead>\n<tbody>\n";
 			}
-			if (y == 1) {
-				htmlString += "    <tbody>\n"; //$NON-NLS-1$
-			}
+
 			htmlString += "      <tr>\n"; //$NON-NLS-1$
 
 			for (int x = 0; x < col; x++) {
@@ -122,37 +119,29 @@ public class CrossTableToHTML {
 						ausgabeWert = "&frac12;"; //$NON-NLS-1$
 					}
 
-					if (y == 0) {
-						htmlString += "        <th>" + ausgabeWert //$NON-NLS-1$
-								+ "</th>\n"; //$NON-NLS-1$
-					} else {
-						htmlString += "        <td>" + ausgabeWert //$NON-NLS-1$
-								+ "</td>\n"; //$NON-NLS-1$
-					}
+					htmlString += "        <td>" + ausgabeWert //$NON-NLS-1$
+							+ "</td>\n"; //$NON-NLS-1$
+
 				} else {
-					if (y == 0) {
-						htmlString += "        <th>" //$NON-NLS-1$
-								+ TournamentConstants.HTML_LEERZEICHEN + "</th>\n"; //$NON-NLS-1$
-					} else {
-						htmlString += "        <td>" //$NON-NLS-1$
-								+ TournamentConstants.HTML_LEERZEICHEN + "</td>\n"; //$NON-NLS-1$
-					}
+
+					htmlString += "        <td>" //$NON-NLS-1$
+							+ TournamentConstants.HTML_LEERZEICHEN + "</td>\n"; //$NON-NLS-1$
+
 				}
 
 				// }
 			}
 			htmlString += "      </tr>\n"; //$NON-NLS-1$
-			if (y == 0) {
-				htmlString += "    </thead>\n"; //$NON-NLS-1$
-			}
+
 		}
 		if (infoString != "") {
 			htmlString += "    </tbody>\n<tfoot><tr><td colspan='" + col + "'>" + infoString + "</td></tr></tfoot>\n";
 		}
 		htmlString += "     </table>\n"; //$NON-NLS-1$
-//		if (infoString != "") { //$NON-NLS-1$
-//			htmlString += "  <div><p>" + infoString + "</p></div>\n"; //$NON-NLS-1$ //$NON-NLS-2$
-//		}
+		// if (infoString != "") { //$NON-NLS-1$
+		// htmlString += " <div><p>" + infoString + "</p></div>\n"; //$NON-NLS-1$
+		// //$NON-NLS-2$
+		// }
 		if (turnier.getOnlyTables() == false) {
 			htmlString += getHTMLFooter();
 		}

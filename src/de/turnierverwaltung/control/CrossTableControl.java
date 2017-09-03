@@ -1,5 +1,6 @@
 package de.turnierverwaltung.control;
 
+import java.awt.Color;
 import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -245,6 +246,8 @@ public class CrossTableControl {
 		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
 		for (int i = 0; i < anzahlGruppen; i++) {
 			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
+			simpleTableView[i].getStatusLabel().setBackground(Color.ORANGE);
+
 		}
 
 	}
@@ -353,6 +356,9 @@ public class CrossTableControl {
 			simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
 
 			mainControl.getTerminTabelleControl().updateStatus();
+			if (changedPartien.size() > 0) {
+				mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(true);
+			}
 			updateStatus();
 		}
 
