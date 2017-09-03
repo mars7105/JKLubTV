@@ -62,13 +62,8 @@ public class Turnierverwaltung {
 
 				// Schedule a job for the event dispatch thread:
 				// creating and showing this application's GUI.
-				javax.swing.SwingUtilities.invokeLater(new Runnable() {
-					public void run() {
-						// Set the look and feel.
-						initLookAndFeel();
 
-					}
-				});
+				initLookAndFeel();
 
 				try {
 					new MainControl();
