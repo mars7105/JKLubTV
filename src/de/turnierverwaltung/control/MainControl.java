@@ -111,6 +111,8 @@ public class MainControl extends JFrame {
 	private SettingsControl eigenschaftenControl;
 	private LanguagePropertiesControl languagePropertiesControl;
 	private ButtonTabComponent buttonTabComponent;
+	private FileMenuActionControl fileMenuActionControl;
+	private PairingsMenuActionControl pairingMenuActionControl;
 
 	public MainControl() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
@@ -145,7 +147,8 @@ public class MainControl extends JFrame {
 		titleView = new TitleLabelView("JKlubTV");
 
 		naviController = new NaviControl(this);
-
+		pairingMenuActionControl = new PairingsMenuActionControl(this);
+		fileMenuActionControl = new FileMenuActionControl(this);
 		setContentPane(mainPanel);
 
 		standardView.add(titleView, BorderLayout.NORTH);
@@ -210,7 +213,7 @@ public class MainControl extends JFrame {
 			}
 			naviView.getTurnierListePanel().setVisible(false);
 			naviView.getSpielerListePanel().setVisible(false);
-			hauptPanel.addChangeListener(naviController.getTurnierAnsicht());
+			hauptPanel.addChangeListener(fileMenuActionControl.getTurnierAnsicht());
 			for (int i = 0; i < hauptPanel.getTabCount(); i++) {
 				if (hauptPanel.getTitleAt(i).equals(Messages.getString("MainControl.9"))) { //$NON-NLS-1$
 					hauptPanel.setSelectedIndex(i);
@@ -261,6 +264,7 @@ public class MainControl extends JFrame {
 		turnierListeLadenView = null;
 		saveTurnierControl = null;
 		spielerLadenControl = null;
+		fileMenuActionControl = null;
 		setNeuesTurnier(false);
 		System.gc();
 		init();
@@ -666,6 +670,23 @@ public class MainControl extends JFrame {
 
 	public SettingsControl getEigenschaftenControl() {
 		return eigenschaftenControl;
+	}
+
+	public FileMenuActionControl getFileMenuActionControl() {
+		return fileMenuActionControl;
+	}
+
+	public void setFileMenuActionControl(FileMenuActionControl fileMenuActionControl) {
+		this.fileMenuActionControl = fileMenuActionControl;
+	}
+
+	public void setPairingMenuActionControl(PairingsMenuActionControl pairingMenuActionControl) {
+		this.pairingMenuActionControl = pairingMenuActionControl;
+	}
+
+	public PairingsMenuActionControl getPairingsMenuActionControl() {
+		// TODO Auto-generated method stub
+		return pairingMenuActionControl;
 	}
 
 }

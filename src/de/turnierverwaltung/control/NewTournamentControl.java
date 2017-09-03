@@ -104,7 +104,7 @@ public class NewTournamentControl implements ActionListener {
 		this.mainControl.setTurnier(turnier);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
-		mainControl.getNaviController().setPairingIsActive(false);
+		this.mainControl.getPairingsMenuActionControl().setPairingIsActive(false);
 		this.turnierView.getTurnierNameTextField().grabFocus();
 
 	}
@@ -191,7 +191,6 @@ public class NewTournamentControl implements ActionListener {
 		turnierName = turnierView.getTurnierNameTextField().getText();
 
 		DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-		
 
 		try {
 			startDatum = formatter.format(turnierView.getStartDatumTextField());

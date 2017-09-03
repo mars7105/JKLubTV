@@ -351,7 +351,7 @@ public class TournamentListControl implements ActionListener {
 		mainControl.getTurnier().setNoFolgeDWZCalc(mainControl.getPropertiesControl().getNoFolgeDWZ());
 		mainControl.getNaviView().setTabellenname(
 				Messages.getString("TurnierListeLadenControl.5") + mainControl.getTurnier().getTurnierName()); //$NON-NLS-1$
-		mainControl.getNaviController().setPairingIsActive(false);
+		mainControl.getPairingsMenuActionControl().setPairingIsActive(false);
 		this.mainControl.setNeuesTurnier(false);
 
 		hauptPanel.addTab(turnier.getTurnierName(), turnierIcon, tabbedPaneView);
@@ -454,7 +454,7 @@ public class TournamentListControl implements ActionListener {
 			progressBar.iterate(gruppenAnzahl);
 
 			this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
-			this.mainControl.getNaviController().setPairingIsActive(true);
+			this.mainControl.getPairingsMenuActionControl().setPairingIsActive(true);
 			progressBar.iterate(gruppenAnzahl);
 
 		} else {
