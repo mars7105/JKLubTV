@@ -242,8 +242,8 @@ public class PairingsView extends JPanel {
 					DateChooserPanel datePanel = new DateChooserPanel();
 					datePanel.setLocale(Locale.getDefault());
 					// datePanel.setDateFormatString(zeile[4]);
+					DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 					try {
-						DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 						Date d = formatter.parse(zeile[4]);
 						datePanel.setDate(d);
 

@@ -104,7 +104,7 @@ public class EditTournamentView extends JDialog {
 		centerPane.add(label);
 		centerPane.add(textFieldTurnierName);
 		contentPanel.add(centerPane);
-//		int[] datumsIntStartdatum = dateStringToInt(turnier.getStartDatum());
+		// int[] datumsIntStartdatum = dateStringToInt(turnier.getStartDatum());
 		// UtilDateModel um1 = new UtilDateModel();
 		// um1.setDate(datumsIntStartdatum[2], datumsIntStartdatum[1],
 		// datumsIntStartdatum[0]);
@@ -114,7 +114,7 @@ public class EditTournamentView extends JDialog {
 		startDatumTextField = new DateChooserPanel();
 		startDatumTextField.setLocale(Locale.getDefault());
 		DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-	
+
 		try {
 			startDatumTextField.setDate(formatter.parse(turnier.getStartDatum()));
 
@@ -131,13 +131,12 @@ public class EditTournamentView extends JDialog {
 		centerPane.add(startDatumTextField);
 		contentPanel.add(centerPane);
 
-
 		endDatumTextField = new DateChooserPanel();
 		endDatumTextField.setLocale(Locale.getDefault());
 		endDatumTextField = new DateChooserPanel();
 		endDatumTextField.setLocale(Locale.getDefault());
 		try {
-			
+
 			endDatumTextField.setDate(formatter.parse(turnier.getEndDatum()));
 
 		} catch (ParseException e) {
@@ -180,43 +179,43 @@ public class EditTournamentView extends JDialog {
 		setVisible(true);
 	}
 
-//	private int[] getDatefromString(String zeile) {
-//		String[] splitDate = null;
-//		String[] dateItems = null;
-//		if (zeile.contains(".")) {
-//			splitDate = zeile.split("\\.");
-//		}
-//		if (zeile.contains("-")) {
-//			splitDate = zeile.split("-");
-//			dateItems = new String[splitDate.length];
-//			int increment = splitDate.length;
-//			for (int i = 0; i < splitDate.length; i++) {
-//				increment--;
-//				dateItems[increment] = splitDate[i];
-//			}
-//			splitDate = dateItems;
-//		}
-//
-//		int[] dateInt = new int[splitDate.length];
-//
-//		for (int i = 0; i < splitDate.length; i++) {
-//			if (zeile.length() > 0) {
-//				dateInt[i] = Integer.parseInt(splitDate[i]);
-//			} else {
-//				dateInt[i] = 0;
-//			}
-//		}
-//
-//		return dateInt;
-//	}
+	// private int[] getDatefromString(String zeile) {
+	// String[] splitDate = null;
+	// String[] dateItems = null;
+	// if (zeile.contains(".")) {
+	// splitDate = zeile.split("\\.");
+	// }
+	// if (zeile.contains("-")) {
+	// splitDate = zeile.split("-");
+	// dateItems = new String[splitDate.length];
+	// int increment = splitDate.length;
+	// for (int i = 0; i < splitDate.length; i++) {
+	// increment--;
+	// dateItems[increment] = splitDate[i];
+	// }
+	// splitDate = dateItems;
+	// }
+	//
+	// int[] dateInt = new int[splitDate.length];
+	//
+	// for (int i = 0; i < splitDate.length; i++) {
+	// if (zeile.length() > 0) {
+	// dateInt[i] = Integer.parseInt(splitDate[i]);
+	// } else {
+	// dateInt[i] = 0;
+	// }
+	// }
+	//
+	// return dateInt;
+	// }
 
-//	private int[] dateStringToInt(String datum) {
-//		int[] dateInt = getDatefromString(datum);
-//
-//		dateInt[1] = dateInt[1] - 1;
-//		return dateInt;
-//
-//	}
+	// private int[] dateStringToInt(String datum) {
+	// int[] dateInt = getDatefromString(datum);
+	//
+	// dateInt[1] = dateInt[1] - 1;
+	// return dateInt;
+	//
+	// }
 
 	public JButton getCancelButton() {
 		return cancelButton;

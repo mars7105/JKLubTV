@@ -14,8 +14,8 @@
 	<classpathentry kind="lib" path="/home/mamuck/git/JKLubTV/lib/commons-codec-1.8.jar"/>
 	<classpathentry kind="lib" path="/home/mamuck/git/JKLubTV/lib/commons-logging-1.1.3.jar"/>
 	<classpathentry kind="lib" path="/home/mamuck/git/JKLubTV/lib/groovy-all-2.1.7.jar"/>
-	<classpathentry kind="lib" path="/home/mamuck/git/JKLubTV/lib/ical4j-1.0.6.jar"/>
 	<classpathentry kind="lib" path="/home/mamuck/git/JKLubTV/lib/junit-4.6.jar"/>
 	<classpathentry kind="lib" path="/home/mamuck/git/JKLubTV/lib/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="/home/mamuck/git/JKLubTV/lib/ical4j-1.0.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

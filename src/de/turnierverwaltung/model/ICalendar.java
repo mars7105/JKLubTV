@@ -12,6 +12,7 @@ import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Version;
 
+
 public class ICalendar {
 	private Calendar calendar;
 
