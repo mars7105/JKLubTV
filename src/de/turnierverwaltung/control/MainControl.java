@@ -117,7 +117,8 @@ public class MainControl extends JFrame {
 		windowHeight = TournamentConstants.WINDOW_HEIGHT;
 		setBounds(TournamentConstants.WINDOW_BOUNDS_X, TournamentConstants.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
 		setMinimumSize(new Dimension(windowWidth / 2, windowHeight / 2));
-
+		// Make sure we have nice window decorations.
+		setDefaultLookAndFeelDecorated(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		propertiesControl = new PropertiesControl(this);
 		languagePropertiesControl = new LanguagePropertiesControl(this);
