@@ -147,8 +147,7 @@ public class MainControl extends JFrame {
 		titleView = new TitleLabelView("JKlubTV");
 
 		naviController = new NaviControl(this);
-		pairingMenuActionControl = new PairingsMenuActionControl(this);
-		fileMenuActionControl = new FileMenuActionControl(this);
+		
 		setContentPane(mainPanel);
 
 		standardView.add(titleView, BorderLayout.NORTH);

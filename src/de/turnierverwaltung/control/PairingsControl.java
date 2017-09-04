@@ -49,17 +49,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+
 import de.turnierverwaltung.ZahlKleinerAlsN;
-import de.turnierverwaltung.model.Group;
-import de.turnierverwaltung.model.PairingsTables;
 import de.turnierverwaltung.model.Game;
-import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.MeetingTable;
+import de.turnierverwaltung.model.PairingsTables;
+import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
-import de.turnierverwaltung.view.WaitForAllGroupsView;
 import de.turnierverwaltung.view.DateChooserPanel;
 import de.turnierverwaltung.view.PairingsView;
 import de.turnierverwaltung.view.TabbedPaneView;
+import de.turnierverwaltung.view.WaitForAllGroupsView;
 
 public class PairingsControl implements ActionListener, PropertyChangeListener {
 
@@ -161,9 +162,15 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 					changeColor(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
 					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
-					int selectedTab = rundenEingabeFormularView[index].getTabbedPane().getSelectedIndex();
-					makeNewFormular(index);
-					rundenEingabeFormularView[index].getTabbedPane().setSelectedIndex(selectedTab);
+
+					rundenEingabeFormularView[index].getWeissSpieler()[i].setText("");
+					rundenEingabeFormularView[index].getWeissSpieler()[i]
+							.setText(Messages.getString("RundenEingabeFormularControl.8")
+									+ gruppe[index].getPartien()[i].getSpielerWeiss().getName() + " - ");
+					rundenEingabeFormularView[index].getSchwarzSpieler()[i].setText("");
+					rundenEingabeFormularView[index].getSchwarzSpieler()[i]
+							.setText(Messages.getString("RundenEingabeFormularControl.9")
+									+ gruppe[index].getPartien()[i].getSpielerSchwarz().getName());
 
 				}
 
@@ -222,14 +229,19 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 		tauscheFarbe2 = partien[nummer].getSpielerSchwarz();
 		partien[nummer].setSpielerWeiss(tauscheFarbe2);
 		partien[nummer].setSpielerSchwarz(tauscheFarbe1);
-		String datum;
-		int runde;
+		String datum = "";
+		int runde = 0;
+
 		try {
-			datum = rundenEingabeFormularView[index].getDatum()[nummer].getDateFormatString();
 			runde = pruefeObZahlKleinerEinsIst(Integer
 					.parseInt((String) rundenEingabeFormularView[index].getRundenNummer()[nummer].getSelectedItem()));
-			partien[nummer].setSpielDatum(datum);
-			partien[nummer].setRunde(runde);
+
+			DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+			datum = "";
+			Date date;
+
+			date = rundenEingabeFormularView[index].getDatum()[nummer].getDate();
+			datum = formatter.format(date);
 
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("RundenEingabeFormularControl.3")); //$NON-NLS-1$
@@ -237,8 +249,11 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 		} catch (ZahlKleinerAlsN e) {
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("RundenEingabeFormularControl.4")); //$NON-NLS-1$
 
+		} catch (NullPointerException e2) {
+			datum = "";
 		}
-
+		partien[nummer].setSpielDatum(datum);
+		partien[nummer].setRunde(runde);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -441,12 +456,12 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 										.setDate(rundenEingabeFormularView[index].getDatum()[i].getDate());
 							}
 						}
-
+						rundenEingabeFormularView[index].getStatusLabel()
+								.setText(new Integer(changedPartien.size()).toString());
+						rundenEingabeFormularView[index].getStatusLabel().setBackground(Color.ORANGE);
 					}
 				}
-				rundenEingabeFormularView[index].getStatusLabel()
-						.setText(new Integer(changedPartien.size()).toString());
-				rundenEingabeFormularView[index].getStatusLabel().setBackground(Color.ORANGE);
+
 			}
 		}
 	}

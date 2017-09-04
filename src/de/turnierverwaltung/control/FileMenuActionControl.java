@@ -45,6 +45,9 @@ public class FileMenuActionControl implements ActionListener {
 		loaddbButton.addActionListener(this);
 		exitButton = naviView.getExitButton();
 		exitButton.addActionListener(this);
+		turnierAnsicht = new TurnierAnsicht(mainControl);
+
+		mainControl.getHauptPanel().addChangeListener(turnierAnsicht);
 	}
 
 	@Override

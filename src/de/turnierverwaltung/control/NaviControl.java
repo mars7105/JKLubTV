@@ -70,12 +70,15 @@ public class NaviControl implements ActionListener {
 		this.mainControl = mainControl;
 
 		naviView = new NaviView();
+		
+		
 		mainControl.setNaviView(naviView);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
 		this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
 		this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
-
+		this.mainControl.setPairingMenuActionControl(new PairingsMenuActionControl(mainControl));
+		this.mainControl.setFileMenuActionControl(new FileMenuActionControl(mainControl));
 		newTurnierButton = naviView.getTurnierAddButton();
 		newTurnierButton.addActionListener(this);
 		naviView.getPairingsLoadButton().addActionListener(this);
