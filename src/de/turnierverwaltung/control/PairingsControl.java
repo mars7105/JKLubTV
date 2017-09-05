@@ -259,19 +259,21 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	@SuppressWarnings("unchecked")
 	public void makeNewFormular(int index) {
 
-		PropertiesControl ppC = mainControl.getPropertiesControl();
-		String roundColumnName = ppC.getTableComumnRound();
-		String whiteColumnName = ppC.getTableComumnWhite();
-		String blackColumnName = ppC.getTableComumnBlack();
-		String resultColumnName = ppC.getTableComumnResult();
-		String meetingColumnName = ppC.getTableComumnMeeting();
-		terminTabelle[index] = new MeetingTable(turnier, gruppe[index], roundColumnName, whiteColumnName,
-				blackColumnName, resultColumnName, meetingColumnName);
-		gruppe[index].setTeminTabelle(terminTabelle[index]);
-		mainControl.setTerminTabelle(terminTabelle);
+//		PropertiesControl ppC = mainControl.getPropertiesControl();
+//		String roundColumnName = ppC.getTableComumnRound();
+//		String whiteColumnName = ppC.getTableComumnWhite();
+//		String blackColumnName = ppC.getTableComumnBlack();
+//		String resultColumnName = ppC.getTableComumnResult();
+//		String meetingColumnName = ppC.getTableComumnMeeting();
+		terminTabelle = mainControl.getTerminTabelle();
+		
+//		terminTabelle[index] = new MeetingTable(turnier, gruppe[index], roundColumnName, whiteColumnName,
+//				blackColumnName, resultColumnName, meetingColumnName);
+//		gruppe[index].setTeminTabelle(terminTabelle[index]);
+//		mainControl.setTerminTabelle(terminTabelle);
 		String[][] terminMatrix = terminTabelle[index].getTabellenMatrix();
-		rundenEingabeFormularView[index] = new PairingsView(spielerAnzahl[index]);
-		this.mainControl.setRundenEingabeFormularView(rundenEingabeFormularView);
+//		rundenEingabeFormularView[index] = new PairingsView(spielerAnzahl[index]);
+//		this.mainControl.setRundenEingabeFormularView(rundenEingabeFormularView);
 
 		rundenEingabeFormularView[index].makeZeilen(terminMatrix);
 
