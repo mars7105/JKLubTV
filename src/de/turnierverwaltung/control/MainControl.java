@@ -113,6 +113,8 @@ public class MainControl extends JFrame {
 	private ButtonTabComponent buttonTabComponent;
 	private FileMenuActionControl fileMenuActionControl;
 	private PairingsMenuActionControl pairingMenuActionControl;
+	private PlayerListMenuActionControl playerListMenuActionControl;
+	private TournamentListMenuActionControl tournamentListMenuActionControl;
 
 	public MainControl() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
@@ -147,7 +149,7 @@ public class MainControl extends JFrame {
 		titleView = new TitleLabelView("JKlubTV");
 
 		naviController = new NaviControl(this);
-		
+
 		setContentPane(mainPanel);
 
 		standardView.add(titleView, BorderLayout.NORTH);
@@ -688,4 +690,21 @@ public class MainControl extends JFrame {
 		return pairingMenuActionControl;
 	}
 
+	public void setPlayerListMenuActionControl(PlayerListMenuActionControl playerListMenuActionControl) {
+		this.playerListMenuActionControl = playerListMenuActionControl;
+	}
+
+	public PlayerListMenuActionControl getPlayerListMenuActionControl() {
+		return this.playerListMenuActionControl;
+	}
+
+	public void setTournamentListMenuActionControl(TournamentListMenuActionControl tournamentListMenuActionControl) {
+		this.tournamentListMenuActionControl = tournamentListMenuActionControl;
+
+	}
+
+	public TournamentListMenuActionControl getTournamentListMenuActionControl() {
+		return this.tournamentListMenuActionControl;
+
+	}
 }

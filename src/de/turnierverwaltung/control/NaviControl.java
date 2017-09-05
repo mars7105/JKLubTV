@@ -21,17 +21,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import de.turnierverwaltung.model.Game;
-import de.turnierverwaltung.model.Player;
-import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.view.NaviView;
-import de.turnierverwaltung.view.NewPlayerView;
 import de.turnierverwaltung.view.ProgressBarView;
 import de.turnierverwaltung.view.TabbedPaneView;
 import net.fortuna.ical4j.model.ValidationException;
@@ -52,12 +46,9 @@ public class NaviControl implements ActionListener {
 
 	private MainControl mainControl;
 
-	private JButton newTurnierButton;
 	private NaviView naviView;
 	private int aktiveGruppe;
 	private JButton pdfButton;
-	private NewPlayerView spielerHinzufuegenView;
-	private DSBDWZControl dewisDialogControl;
 	private ProgressBarView progressBar;
 	private JButton iCalendarButton;
 
@@ -70,22 +61,18 @@ public class NaviControl implements ActionListener {
 		this.mainControl = mainControl;
 
 		naviView = new NaviView();
-		
-		
-		mainControl.setNaviView(naviView);
+
+		this.mainControl.setNaviView(naviView);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
 		this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
 		this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
-		this.mainControl.setPairingMenuActionControl(new PairingsMenuActionControl(mainControl));
-		this.mainControl.setFileMenuActionControl(new FileMenuActionControl(mainControl));
-		newTurnierButton = naviView.getTurnierAddButton();
-		newTurnierButton.addActionListener(this);
+		this.mainControl.setPairingMenuActionControl(new PairingsMenuActionControl(this.mainControl));
+		this.mainControl.setFileMenuActionControl(new FileMenuActionControl(this.mainControl));
+		this.mainControl.setPlayerListMenuActionControl(new PlayerListMenuActionControl(this.mainControl));
+		this.mainControl.setTournamentListMenuActionControl(new TournamentListMenuActionControl(mainControl));
 		naviView.getPairingsLoadButton().addActionListener(this);
-		naviView.getSpielerAddButton().addActionListener(this);
-		naviView.getSpielerExport().addActionListener(this);
-		naviView.getSpielerImport().addActionListener(this);
-		naviView.getSpielerDEWISSearchButton().addActionListener(this);
+
 		pdfButton = naviView.getPdfSpeichernButton();
 		pdfButton.addActionListener(this);
 		naviView.getTabelleAktualisierenButton().addActionListener(this);
@@ -98,7 +85,6 @@ public class NaviControl implements ActionListener {
 
 		aktiveGruppe = 0;
 		makeNaviPanel();
-		// turnierAnsicht = new TurnierAnsicht(mainControl);
 	}
 
 	/**
@@ -110,52 +96,12 @@ public class NaviControl implements ActionListener {
 		scrollPane.setViewportView(naviView);
 		hauptPanel.add(scrollPane, BorderLayout.WEST);
 
-		dewisDialogControl = new DSBDWZControl(mainControl);
 		hauptPanel.updateUI();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (spielerHinzufuegenView != null) {
-			if (arg0.getSource() == spielerHinzufuegenView.getOkButton()) {
-				try {
-					String name = spielerHinzufuegenView.getTextFieldName().getText();
-					if (!name.equals("Spielfrei")) {
-						String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
-						String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
-						int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
-						Player neuerSpieler = new Player();
-						neuerSpieler.setName(name);
-						neuerSpieler.setKuerzel(kuerzel);
-						neuerSpieler.setDwz(dwz);
-						neuerSpieler.setAge(age);
-						SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
-						neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-
-						this.mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
-					}
-					spielerHinzufuegenView.getTextFieldName().setEditable(false);
-					spielerHinzufuegenView.getTextFieldKuerzel().setEditable(false);
-					spielerHinzufuegenView.getTextFieldDwz().setEditable(false);
-					spielerHinzufuegenView.getTextComboBoxAge().setEnabled(false);
-					spielerHinzufuegenView.spielerPanel();
-				} catch (SQLException e) {
-					mainControl.fileSQLError();
-				}
-			}
-
-			if (arg0.getSource() == spielerHinzufuegenView.getCancelButton()) {
-				mainControl.setEnabled(true);
-				try {
-					this.mainControl.getSpielerLadenControl().updateSpielerListe();
-				} catch (SQLException e) {
-					mainControl.fileSQLError();
-				}
-
-				spielerHinzufuegenView.closeWindow();
-			}
-		}
 		if (this.mainControl.getTabAnzeigeView() != null) {
 
 			if (this.mainControl.getTabAnzeigeView2() != null) {
@@ -228,75 +174,6 @@ public class NaviControl implements ActionListener {
 			}
 		}
 
-		if (arg0.getSource() == newTurnierButton) {
-			mainControl.setSpielerEingabeControl(null);
-			Tournament turnier = this.mainControl.getTurnier();
-			if (turnier == null) {
-				mainControl.setTurnierControl(new NewTournamentControl(mainControl));
-			} else {
-
-				ArrayList<Game> changedPartien = this.mainControl.getChangedPartien();
-				if (changedPartien != null) {
-					if (changedPartien.size() > 0) {
-						// Custom button text
-						Object[] options = { Messages.getString("TurnierListeLadenControl.10"), //$NON-NLS-1$
-								Messages.getString("TurnierListeLadenControl.11") }; //$NON-NLS-1$
-						int abfrage = JOptionPane.showOptionDialog(mainControl,
-								Messages.getString("TurnierListeLadenControl.12") //$NON-NLS-1$
-										+ Messages.getString("TurnierListeLadenControl.13"), //$NON-NLS-1$
-								Messages.getString("TurnierListeLadenControl.14"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
-								JOptionPane.WARNING_MESSAGE, null, options, options[1]);
-						if (abfrage == 0) {
-							SaveTournamentControl saveGames = new SaveTournamentControl(mainControl);
-							try {
-								Boolean saved = saveGames.saveChangedPartien();
-								if (saved == false) {
-									changedPartien.clear();
-								}
-
-							} catch (SQLException e) {
-								changedPartien.clear();
-							}
-							mainControl.setTurnierControl(new NewTournamentControl(mainControl));
-						}
-					} else if (changedPartien.size() == 0) {
-						mainControl.setTurnierControl(new NewTournamentControl(mainControl));
-					}
-				} else {
-					mainControl.setTurnierControl(new NewTournamentControl(mainControl));
-				}
-			}
-		}
-
-		if (arg0.getSource() == naviView.getSpielerImport()) {
-			SQLImportPlayerListControl spielerImport = new SQLImportPlayerListControl(mainControl);
-			try {
-				spielerImport.importSpielerTable();
-
-				mainControl.getSpielerLadenControl().updateSpielerListe();
-			} catch (SQLException e) {
-				mainControl.fileSQLError();
-			}
-		}
-		if (arg0.getSource() == naviView.getSpielerExport()) {
-			SQLExportPlayerListControl spielerExport = new SQLExportPlayerListControl(this.mainControl);
-			try {
-				spielerExport.exportSpielerTable();
-			} catch (SQLException e) {
-				mainControl.fileSQLError();
-			}
-		}
-		if (arg0.getSource() == naviView.getSpielerAddButton()) {
-			spielerHinzufuegenView = new NewPlayerView();
-
-			spielerHinzufuegenView.getOkButton().addActionListener(this);
-			spielerHinzufuegenView.getCancelButton().addActionListener(this);
-			mainControl.setEnabled(false);
-		}
-		if (arg0.getSource() == naviView.getSpielerDEWISSearchButton()) {
-			dewisDialogControl.makeDialog();
-		}
-
 		if (arg0.getSource() == naviView.getTabelleAktualisierenButton())
 
 		{
@@ -355,22 +232,6 @@ public class NaviControl implements ActionListener {
 			mainControl.getTerminTabelleControl().makeSimpleTableView(i);
 
 		}
-	}
-
-	/**
-	 * 
-	 */
-	public void neuerSpieler() {
-		try {
-			this.mainControl.getSpielerLadenControl().updateSpielerListe();
-		} catch (SQLException e) {
-			mainControl.fileSQLError();
-		}
-		spielerHinzufuegenView = new NewPlayerView();
-
-		spielerHinzufuegenView.getOkButton().addActionListener(this);
-		spielerHinzufuegenView.getCancelButton().addActionListener(this);
-		mainControl.setEnabled(false);
 	}
 
 }

@@ -2,19 +2,70 @@ package de.turnierverwaltung.control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
-public class TournamentListMenuActionControl  implements ActionListener{
+import javax.swing.AbstractButton;
+import javax.swing.JOptionPane;
+
+import de.turnierverwaltung.model.Game;
+import de.turnierverwaltung.model.Tournament;
+import de.turnierverwaltung.view.NaviView;
+
+public class TournamentListMenuActionControl implements ActionListener {
 	private MainControl mainControl;
-	
+	private NaviView naviView;
+	private AbstractButton newTurnierButton;
+
 	public TournamentListMenuActionControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
+		naviView = this.mainControl.getNaviView();
+		newTurnierButton = naviView.getTurnierAddButton();
+		newTurnierButton.addActionListener(this);
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void actionPerformed(ActionEvent arg0) {
+		if (arg0.getSource() == newTurnierButton) {
+			mainControl.setSpielerEingabeControl(null);
+			Tournament turnier = this.mainControl.getTurnier();
+			if (turnier == null) {
+				mainControl.setTurnierControl(new NewTournamentControl(mainControl));
+			} else {
+
+				ArrayList<Game> changedPartien = this.mainControl.getChangedPartien();
+				if (changedPartien != null) {
+					if (changedPartien.size() > 0) {
+						// Custom button text
+						Object[] options = { Messages.getString("TurnierListeLadenControl.10"), //$NON-NLS-1$
+								Messages.getString("TurnierListeLadenControl.11") }; //$NON-NLS-1$
+						int abfrage = JOptionPane.showOptionDialog(mainControl,
+								Messages.getString("TurnierListeLadenControl.12") //$NON-NLS-1$
+										+ Messages.getString("TurnierListeLadenControl.13"), //$NON-NLS-1$
+								Messages.getString("TurnierListeLadenControl.14"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
+								JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+						if (abfrage == 0) {
+							SaveTournamentControl saveGames = new SaveTournamentControl(mainControl);
+							try {
+								Boolean saved = saveGames.saveChangedPartien();
+								if (saved == false) {
+									changedPartien.clear();
+								}
+
+							} catch (SQLException e) {
+								changedPartien.clear();
+							}
+							mainControl.setTurnierControl(new NewTournamentControl(mainControl));
+						}
+					} else if (changedPartien.size() == 0) {
+						mainControl.setTurnierControl(new NewTournamentControl(mainControl));
+					}
+				} else {
+					mainControl.setTurnierControl(new NewTournamentControl(mainControl));
+				}
+			}
+		}
+
 	}
 
 }

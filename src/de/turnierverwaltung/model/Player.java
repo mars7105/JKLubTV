@@ -31,12 +31,21 @@ public class Player implements Comparable<Object> {
 	private int platz;
 	private int folgeDWZ;
 	private int age;
+	private String forename;
+	private String surname;
 
 	public Player() {
+		this.name = "";
+		this.forename = "";
+		this.surname = "";
+		this.kuerzel = "";
+		this.dwz = "";
+		this.age = 0;
+
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
-		spielerId = -1;
+		this.spielerId = -1;
 	}
 
 	/**
@@ -50,12 +59,41 @@ public class Player implements Comparable<Object> {
 	public Player(int id, String name, String kuerzel, String dwz, int age) {
 		this.spielerId = id;
 		this.name = name;
+		this.forename = "";
+		this.surname = "";
 		this.kuerzel = kuerzel;
 		this.dwz = dwz;
 		this.age = age;
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
+		extractNameToForenameAndSurename();
+		extractNameToKuerzel();
+	}
+
+	/**
+	 * 
+	 * @param id
+	 * @param forename
+	 * @param surname
+	 * @param kuerzel
+	 * @param dwz
+	 * @param age
+	 */
+	public Player(int id, String forename, String surname, String kuerzel, String dwz, int age) {
+		this.spielerId = id;
+		this.forename = forename;
+		this.surname = surname;
+		this.name = "";
+		this.kuerzel = kuerzel;
+		this.dwz = dwz;
+		this.age = age;
+		this.punkte = 0;
+		this.soberg = 0;
+		this.platz = 1;
+		extractForenameAndSurenameToName();
+		extractNameToKuerzel();
+
 	}
 
 	@Override
@@ -128,6 +166,36 @@ public class Player implements Comparable<Object> {
 		return sort;
 	}
 
+	private void extractNameToForenameAndSurename() {
+
+		int i = 0;
+
+		for (String retval : name.split("\\s")) {
+			if (i == 0) {
+				forename = retval;
+			}
+
+			if (i >= 1) {
+				surname += retval + " ";
+			}
+			i++;
+		}
+
+	}
+
+	private void extractForenameAndSurenameToName() {
+
+		name = forename + " " + surname;
+
+	}
+
+	private void extractNameToKuerzel() {
+		if (forename.length() > 0 && surname.length() > 0 && kuerzel.length() == 0) {
+			kuerzel = forename.substring(0, 1) + surname.substring(0, 1);
+		}
+
+	}
+
 	public int getSpielerId() {
 		return spielerId;
 	}
@@ -146,6 +214,8 @@ public class Player implements Comparable<Object> {
 
 	public void setName(String name) {
 		this.name = name;
+		extractNameToForenameAndSurename();
+		extractNameToKuerzel();
 	}
 
 	public void setPartie(Game[] partie) {
@@ -199,6 +269,22 @@ public class Player implements Comparable<Object> {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+	public String getForename() {
+		return forename;
+	}
+
+	public void setForename(String forename) {
+		this.forename = forename;
+	}
+
+	public String getSurname() {
+		return surname;
+	}
+
+	public void setSurname(String surname) {
+		this.surname = surname;
 	}
 
 }

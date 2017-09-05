@@ -1,5 +1,6 @@
 package de.turnierverwaltung.view;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -36,6 +37,8 @@ public class EditPlayerView extends JDialog {
 	private static final long serialVersionUID = -5642277833139693453L;
 	private JButton okButton;
 	private JButton cancelButton;
+	private JTextField textFieldForename;
+	private JTextField textFieldSurname;
 	private JTextField textFieldName;
 	private JTextField textFieldKuerzel;
 	private JTextField textFieldDwz;
@@ -48,68 +51,91 @@ public class EditPlayerView extends JDialog {
 		buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();
 		this.okButton = buttonPane.getOkButton();
-		this.cancelButton =buttonPane.getCancelButton();
+		this.cancelButton = buttonPane.getCancelButton();
 		this.textFieldName = new JTextField(15);
+		this.textFieldForename = new JTextField(15);
+		this.textFieldSurname = new JTextField(15);
 		this.textFieldKuerzel = new JTextField(15);
 		this.textFieldDwz = new JTextField(15);
 		setTitle(Messages.getString("SpielerEditierenView.2")); //$NON-NLS-1$
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-	
 
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-//		contentPanel.setBackground(new Color(249, 222, 112));
+		// contentPanel.setBackground(new Color(249, 222, 112));
 
 		JPanel centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		centerPane.setBackground(new Color(249, 222, 112));
+		// centerPane.setBackground(new Color(249, 222, 112));
 		textFieldName.setText(spieler.getName());
 		JLabel label = new JLabel();
-		label.setPreferredSize(new Dimension(120,10));
+		label.setPreferredSize(new Dimension(120, 10));
 		label.setText(Messages.getString("SpielerEditierenView.3")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		centerPane.setBackground(new Color(249, 222, 112));
+		// centerPane.setBackground(new Color(249, 222, 112));
 		centerPane.add(label);
 		centerPane.add(textFieldName);
 		contentPanel.add(centerPane);
+
+		textFieldForename.setText(spieler.getForename());
+		label = new JLabel();
+		label.setPreferredSize(new Dimension(120, 10));
+		label.setText(Messages.getString("SpielerEditierenView.10")); //$NON-NLS-1$
+		centerPane = new JPanel();
+		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// centerPane.setBackground(new Color(249, 222, 112));
+		centerPane.add(label);
+		centerPane.add(textFieldForename);
+		contentPanel.add(centerPane);
+
+		textFieldSurname.setText(spieler.getSurname());
+		label = new JLabel();
+		label.setPreferredSize(new Dimension(120, 10));
+		label.setText(Messages.getString("SpielerEditierenView.11")); //$NON-NLS-1$
+		centerPane = new JPanel();
+		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// centerPane.setBackground(new Color(249, 222, 112));
+		centerPane.add(label);
+		centerPane.add(textFieldSurname);
+		contentPanel.add(centerPane);
+
 		textFieldKuerzel.setText(spieler.getKuerzel());
 		label = new JLabel();
-		label.setPreferredSize(new Dimension(120,10));
+		label.setPreferredSize(new Dimension(120, 10));
 		label.setText(Messages.getString("SpielerEditierenView.4")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		centerPane.setBackground(new Color(249, 222, 112));
+		// centerPane.setBackground(new Color(249, 222, 112));
 		centerPane.add(label);
 		centerPane.add(textFieldKuerzel);
 		contentPanel.add(centerPane);
 
 		textFieldDwz.setText(spieler.getDwz());
 		label = new JLabel();
-		label.setPreferredSize(new Dimension(120,10));
+		label.setPreferredSize(new Dimension(120, 10));
 		label.setText(Messages.getString("SpielerEditierenView.5")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		centerPane.setBackground(new Color(249, 222, 112));
+		// centerPane.setBackground(new Color(249, 222, 112));
 		centerPane.add(label);
 		centerPane.add(textFieldDwz);
 		contentPanel.add(centerPane);
 
-		String[] ageStrings = { Messages.getString("SpielerEditierenView.6"), Messages.getString("SpielerEditierenView.7"), Messages.getString("SpielerEditierenView.8") }; //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+		String[] ageStrings = { Messages.getString("SpielerEditierenView.6"), //$NON-NLS-1$
+				Messages.getString("SpielerEditierenView.7"), Messages.getString("SpielerEditierenView.8") }; //$NON-NLS-1$ //$NON-NLS-2$
 		this.textComboBoxAge = new JComboBox<String>(ageStrings);
 		this.textComboBoxAge.setSelectedIndex(spieler.getAge());
 		label = new JLabel();
-		label.setPreferredSize(new Dimension(120,10));
+		label.setPreferredSize(new Dimension(120, 10));
 		label.setText(Messages.getString("SpielerEditierenView.9")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		centerPane.setBackground(new Color(249, 222, 112));
+		// centerPane.setBackground(new Color(249, 222, 112));
 		centerPane.add(label);
 		centerPane.add(textComboBoxAge);
 		contentPanel.add(centerPane);
-	
-	
-		
+
 		contentPanel.add(buttonPane);
 		add(contentPanel);
 		contentPanel.updateUI();
@@ -180,5 +206,5 @@ public class EditPlayerView extends JDialog {
 	public void setTextComboBoxAge(JComboBox<String> textComboBoxAge) {
 		this.textComboBoxAge = textComboBoxAge;
 	}
-	
+
 }
