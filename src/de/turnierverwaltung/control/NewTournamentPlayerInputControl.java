@@ -82,7 +82,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		okButton = new JButton[gruppenAnzahl];
 		cancelButton = new JButton[gruppenAnzahl];
 		rundenEingabeFormularControl = new PairingsControl(this.mainControl);
-		this.mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
+		this.mainControl.setPairingsControl(rundenEingabeFormularControl);
 
 		readyToSave = new Boolean[gruppenAnzahl];
 		for (int i = 0; i < gruppenAnzahl; i++) {

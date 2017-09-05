@@ -56,7 +56,7 @@ import de.turnierverwaltung.view.EditTournamentView;
 import de.turnierverwaltung.view.ProgressBarView;
 import de.turnierverwaltung.view.TournamentListView;
 
-public class TournamentListControl implements ActionListener {
+public class ActionListenerTournamentItemsControl implements ActionListener {
 	private MainControl mainControl;
 	private TournamentListView turnierListeLadenView;
 	private SQLTournamentControl turnierTableControl;
@@ -79,7 +79,7 @@ public class TournamentListControl implements ActionListener {
 	private boolean selectTurnierTab;
 	private ButtonTabComponent buttonTabComponent;
 
-	public TournamentListControl(MainControl mainControl) {
+	public ActionListenerTournamentItemsControl(MainControl mainControl) {
 		anzahlTurniere = 0;
 		loadedTurnierID = -1;
 		this.mainControl = mainControl;
@@ -346,7 +346,7 @@ public class TournamentListControl implements ActionListener {
 
 		}
 		PairingsControl rundenEingabeFormularControl = new PairingsControl(mainControl);
-		mainControl.setRundenEingabeFormularControl(rundenEingabeFormularControl);
+		mainControl.setPairingsControl(rundenEingabeFormularControl);
 		mainControl.getTurnier().setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
 		mainControl.getTurnier().setNoFolgeDWZCalc(mainControl.getPropertiesControl().getNoFolgeDWZ());
 		mainControl.getNaviView().setTabellenname(
@@ -428,7 +428,7 @@ public class TournamentListControl implements ActionListener {
 	}
 
 	public void loadPairingsView() {
-		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
 			int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
 
@@ -437,7 +437,7 @@ public class TournamentListControl implements ActionListener {
 			mainControl.getNaviView().getTabellenPanel().setVisible(false);
 			progressBar.iterate(gruppenAnzahl);
 
-			PairingsControl pairingsControl = mainControl.getRundenEingabeFormularControl();
+			PairingsControl pairingsControl = mainControl.getPairingsControl();
 			pairingsControl.init();
 			TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 

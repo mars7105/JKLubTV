@@ -25,6 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.ProgressBarView;
 import de.turnierverwaltung.view.TabbedPaneView;
@@ -67,10 +68,10 @@ public class NaviControl implements ActionListener {
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
 		this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
 		this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
-		this.mainControl.setPairingMenuActionControl(new PairingsMenuActionControl(this.mainControl));
-		this.mainControl.setFileMenuActionControl(new FileMenuActionControl(this.mainControl));
-		this.mainControl.setPlayerListMenuActionControl(new PlayerListMenuActionControl(this.mainControl));
-		this.mainControl.setTournamentListMenuActionControl(new TournamentListMenuActionControl(mainControl));
+		this.mainControl.setPairingMenuActionControl(new ActionListenerPairingsMenuControl(this.mainControl));
+		this.mainControl.setFileMenuActionControl(new ActionListenerFileMenuControl(this.mainControl));
+		this.mainControl.setPlayerListMenuActionControl(new ActionListenerPlayerListControl(this.mainControl));
+		this.mainControl.setTournamentListMenuActionControl(new ActionListenerTournamentListControl(mainControl));
 		naviView.getPairingsLoadButton().addActionListener(this);
 
 		pdfButton = naviView.getPdfSpeichernButton();
@@ -137,9 +138,9 @@ public class NaviControl implements ActionListener {
 
 		}
 		if (arg0.getSource() == naviView.getPairingsLoadButton()) {
-			mainControl.setRundenEingabeFormularControl(new PairingsControl(mainControl));
+			mainControl.setPairingsControl(new PairingsControl(mainControl));
 
-			PairingsControl pairingsControl = mainControl.getRundenEingabeFormularControl();
+			PairingsControl pairingsControl = mainControl.getPairingsControl();
 
 			Boolean ready = pairingsControl.checkNewTurnier();
 			if (ready) {
@@ -177,7 +178,7 @@ public class NaviControl implements ActionListener {
 		if (arg0.getSource() == naviView.getTabelleAktualisierenButton())
 
 		{
-			Boolean ok = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+			Boolean ok = mainControl.getPairingsControl().checkNewTurnier();
 			if (ok) {
 				makeNewTables();
 

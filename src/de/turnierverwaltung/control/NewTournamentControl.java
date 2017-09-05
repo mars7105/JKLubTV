@@ -72,7 +72,7 @@ public class NewTournamentControl implements ActionListener {
 		this.mainControl.setGruppenControl(null);
 		this.mainControl.setSpielerAnzahlControl(null);
 		this.mainControl.setSpielerEingabeControl(null);
-		this.mainControl.setRundenEingabeFormularControl(null);
+		this.mainControl.setPairingsControl(null);
 		this.mainControl.setTurnierTabelleControl(null);
 		hauptPanel = this.mainControl.getHauptPanel();
 		this.mainControl.setTurnierView(new NewTournamentView());

@@ -12,12 +12,12 @@ import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.view.NaviView;
 
-public class TournamentListMenuActionControl implements ActionListener {
+public class ActionListenerTournamentListControl implements ActionListener {
 	private MainControl mainControl;
 	private NaviView naviView;
 	private AbstractButton newTurnierButton;
 
-	public TournamentListMenuActionControl(MainControl mainControl) {
+	public ActionListenerTournamentListControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
 		naviView = this.mainControl.getNaviView();

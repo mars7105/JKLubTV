@@ -45,7 +45,7 @@ public class ExcelSaveControl {
 	 * 
 	 */
 	public void saveExcelFile() {
-		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 			String filename = mainControl.getTurnier().getTurnierName();

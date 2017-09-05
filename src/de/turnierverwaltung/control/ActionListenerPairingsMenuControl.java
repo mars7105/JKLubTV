@@ -9,12 +9,12 @@ import javax.swing.JOptionPane;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.TabbedPaneView;
 
-public class PairingsMenuActionControl implements ActionListener {
+public class ActionListenerPairingsMenuControl implements ActionListener {
 	private MainControl mainControl;
 	private NaviView naviView;
 	private boolean pairingIsActive;
 
-	public PairingsMenuActionControl(MainControl mainControl) {
+	public ActionListenerPairingsMenuControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
 		naviView = mainControl.getNaviView();
@@ -40,7 +40,7 @@ public class PairingsMenuActionControl implements ActionListener {
 		if (arg0.getSource() == naviView.getPairingsCancelButton()) {
 			int abfrage = abbrechenHinweis();
 			if (abfrage == 0) {
-				PairingsControl pairingsControl = mainControl.getRundenEingabeFormularControl();
+				PairingsControl pairingsControl = mainControl.getPairingsControl();
 				pairingsControl.getChangedPartien().clear();
 				try {
 					setTabsEnable(true);

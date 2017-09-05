@@ -96,7 +96,7 @@ public class MainControl extends JFrame {
 	private PairingsView[] rundenEingabeFormularView;
 	private MeetingTableModel[] simpleTerminTabelle;
 	private MeetingTableView[] simpleTerminTabelleView;
-	private TournamentListControl turnierListeLadenControl;
+	private ActionListenerTournamentItemsControl turnierListeLadenControl;
 	private TournamentListView turnierListeLadenView;
 	private PlayerListControl spielerLadenControl;
 	private StandardView standardView;
@@ -111,10 +111,10 @@ public class MainControl extends JFrame {
 	private SettingsControl eigenschaftenControl;
 	private LanguagePropertiesControl languagePropertiesControl;
 	private ButtonTabComponent buttonTabComponent;
-	private FileMenuActionControl fileMenuActionControl;
-	private PairingsMenuActionControl pairingMenuActionControl;
-	private PlayerListMenuActionControl playerListMenuActionControl;
-	private TournamentListMenuActionControl tournamentListMenuActionControl;
+	private ActionListenerFileMenuControl fileMenuActionControl;
+	private ActionListenerPairingsMenuControl pairingMenuActionControl;
+	private ActionListenerPlayerListControl playerListMenuActionControl;
+	private ActionListenerTournamentListControl tournamentListMenuActionControl;
 
 	public MainControl() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
@@ -192,7 +192,7 @@ public class MainControl extends JFrame {
 			if (this.getTurnierTableControl() == null) {
 				this.setTurnierTableControl(new SQLTournamentControl(this));
 				// this.getTurnierTableControl().loadTurnierListe();
-				this.setTurnierListeLadenControl(new TournamentListControl(this));
+				this.setTurnierListeLadenControl(new ActionListenerTournamentItemsControl(this));
 				try {
 					this.getTurnierListeLadenControl().loadTurnierListe();
 				} catch (SQLException e) {
@@ -204,7 +204,7 @@ public class MainControl extends JFrame {
 				this.resetApp();
 				this.setTurnierTableControl(new SQLTournamentControl(this));
 				// this.getTurnierTableControl().loadTurnierListe();
-				this.setTurnierListeLadenControl(new TournamentListControl(this));
+				this.setTurnierListeLadenControl(new ActionListenerTournamentItemsControl(this));
 				try {
 					this.getTurnierListeLadenControl().loadTurnierListe();
 				} catch (SQLException e) {
@@ -449,7 +449,7 @@ public class MainControl extends JFrame {
 		return turnierControl;
 	}
 
-	public TournamentListControl getTurnierListeLadenControl() {
+	public ActionListenerTournamentItemsControl getTurnierListeLadenControl() {
 		return turnierListeLadenControl;
 	}
 
@@ -601,7 +601,7 @@ public class MainControl extends JFrame {
 		this.turnierControl = turnierControl;
 	}
 
-	public void setTurnierListeLadenControl(TournamentListControl turnierListeLadenControl) {
+	public void setTurnierListeLadenControl(ActionListenerTournamentItemsControl turnierListeLadenControl) {
 		this.turnierListeLadenControl = turnierListeLadenControl;
 	}
 
@@ -657,11 +657,11 @@ public class MainControl extends JFrame {
 		this.naviController = naviController;
 	}
 
-	public PairingsControl getRundenEingabeFormularControl() {
+	public PairingsControl getPairingsControl() {
 		return rundenEingabeFormularControl;
 	}
 
-	public void setRundenEingabeFormularControl(PairingsControl rundenEingabeFormularControl) {
+	public void setPairingsControl(PairingsControl rundenEingabeFormularControl) {
 		this.rundenEingabeFormularControl = rundenEingabeFormularControl;
 	}
 
@@ -673,37 +673,36 @@ public class MainControl extends JFrame {
 		return eigenschaftenControl;
 	}
 
-	public FileMenuActionControl getFileMenuActionControl() {
+	public ActionListenerFileMenuControl getFileMenuActionControl() {
 		return fileMenuActionControl;
 	}
 
-	public void setFileMenuActionControl(FileMenuActionControl fileMenuActionControl) {
+	public void setFileMenuActionControl(ActionListenerFileMenuControl fileMenuActionControl) {
 		this.fileMenuActionControl = fileMenuActionControl;
 	}
 
-	public void setPairingMenuActionControl(PairingsMenuActionControl pairingMenuActionControl) {
+	public void setPairingMenuActionControl(ActionListenerPairingsMenuControl pairingMenuActionControl) {
 		this.pairingMenuActionControl = pairingMenuActionControl;
 	}
 
-	public PairingsMenuActionControl getPairingsMenuActionControl() {
-		// TODO Auto-generated method stub
+	public ActionListenerPairingsMenuControl getPairingsMenuActionControl() {
 		return pairingMenuActionControl;
 	}
 
-	public void setPlayerListMenuActionControl(PlayerListMenuActionControl playerListMenuActionControl) {
+	public void setPlayerListMenuActionControl(ActionListenerPlayerListControl playerListMenuActionControl) {
 		this.playerListMenuActionControl = playerListMenuActionControl;
 	}
 
-	public PlayerListMenuActionControl getPlayerListMenuActionControl() {
+	public ActionListenerPlayerListControl getPlayerListMenuActionControl() {
 		return this.playerListMenuActionControl;
 	}
 
-	public void setTournamentListMenuActionControl(TournamentListMenuActionControl tournamentListMenuActionControl) {
+	public void setTournamentListMenuActionControl(ActionListenerTournamentListControl tournamentListMenuActionControl) {
 		this.tournamentListMenuActionControl = tournamentListMenuActionControl;
 
 	}
 
-	public TournamentListMenuActionControl getTournamentListMenuActionControl() {
+	public ActionListenerTournamentListControl getTournamentListMenuActionControl() {
 		return this.tournamentListMenuActionControl;
 
 	}

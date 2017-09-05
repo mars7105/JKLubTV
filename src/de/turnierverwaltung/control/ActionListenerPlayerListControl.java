@@ -8,13 +8,13 @@ import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.NewPlayerView;
 
-public class PlayerListMenuActionControl implements ActionListener {
+public class ActionListenerPlayerListControl implements ActionListener {
 	private MainControl mainControl;
 	private NewPlayerView spielerHinzufuegenView;
 	private NaviView naviView;
 	private DSBDWZControl dewisDialogControl;
 
-	public PlayerListMenuActionControl(MainControl mainControl) {
+	public ActionListenerPlayerListControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
 		naviView = mainControl.getNaviView();

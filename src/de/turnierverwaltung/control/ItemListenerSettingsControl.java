@@ -6,12 +6,12 @@ import java.sql.SQLException;
 
 import de.turnierverwaltung.view.SettingsView;
 
-public class SettingsItemListenerControl {
+public class ItemListenerSettingsControl {
 	private MainControl mainControl;
 	private SettingsControl esControl;
 	private SettingsView eigenschaftenView;
 
-	public SettingsItemListenerControl(MainControl mainControl, SettingsControl esControl) {
+	public ItemListenerSettingsControl(MainControl mainControl, SettingsControl esControl) {
 		super();
 		this.mainControl = mainControl;
 		this.esControl = esControl;

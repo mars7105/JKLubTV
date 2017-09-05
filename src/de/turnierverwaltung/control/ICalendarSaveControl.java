@@ -25,7 +25,7 @@ public class ICalendarSaveControl {
 	}
 
 	public void saveiCalendarFile() throws IOException, ValidationException {
-		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
 			int gruppenAnzahl = this.meetingTable.length;
 			File defaultPath = new File(mainControl.getPropertiesControl().getDefaultPath());

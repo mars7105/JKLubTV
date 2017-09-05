@@ -22,7 +22,7 @@ import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.NaviView;
 
-public class FileMenuActionControl implements ActionListener {
+public class ActionListenerFileMenuControl implements ActionListener {
 	private MainControl mainControl;
 	private JButton newdbButton;
 	private JButton loaddbButton;
@@ -31,7 +31,7 @@ public class FileMenuActionControl implements ActionListener {
 	private TurnierAnsicht turnierAnsicht;
 	private boolean pairingIsActive;
 
-	public FileMenuActionControl(MainControl mainControl) {
+	public ActionListenerFileMenuControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
 		this.naviView = mainControl.getNaviView();
@@ -102,7 +102,7 @@ public class FileMenuActionControl implements ActionListener {
 							// .loadTurnierListe();
 							mainControl.setSpielerEditierenControl(new PlayerListControl(mainControl));
 							mainControl.getSpielerEditierenControl().updateSpielerListe();
-							mainControl.setTurnierListeLadenControl(new TournamentListControl(this.mainControl));
+							mainControl.setTurnierListeLadenControl(new ActionListenerTournamentItemsControl(this.mainControl));
 							mainControl.getTurnierListeLadenControl().loadTurnierListe();
 
 							mainControl.getPropertiesControl().setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
@@ -153,7 +153,7 @@ public class FileMenuActionControl implements ActionListener {
 						// mainControl.getTurnierTableControl().loadTurnierListe();
 						mainControl.setSpielerEditierenControl(new PlayerListControl(mainControl));
 						mainControl.getSpielerEditierenControl().updateSpielerListe();
-						mainControl.setTurnierListeLadenControl(new TournamentListControl(this.mainControl));
+						mainControl.setTurnierListeLadenControl(new ActionListenerTournamentItemsControl(this.mainControl));
 
 						mainControl.getTurnierListeLadenControl().loadTurnierListe();
 

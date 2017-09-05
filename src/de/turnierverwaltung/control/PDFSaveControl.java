@@ -36,7 +36,7 @@ public class PDFSaveControl {
 	}
 
 	public void savePDFFile() {
-		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();

@@ -22,8 +22,8 @@ public class SettingsControl {
 	private MainControl mainControl;
 	private SettingsView eigenschaftenView;
 
-	private SettingsActionListenerControl actionListenerControl;
-	private SettingsItemListenerControl itemListenerControl;
+	private ActionListenerSettingsControl actionListenerControl;
+	private ItemListenerSettingsControl itemListenerControl;
 
 	/**
 	 * @param mainControl
@@ -31,8 +31,8 @@ public class SettingsControl {
 	public SettingsControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		eigenschaftenView = new SettingsView();
-		actionListenerControl = new SettingsActionListenerControl(this.mainControl, this);
-		itemListenerControl = new SettingsItemListenerControl(this.mainControl, this);
+		actionListenerControl = new ActionListenerSettingsControl(this.mainControl, this);
+		itemListenerControl = new ItemListenerSettingsControl(this.mainControl, this);
 
 	}
 
@@ -63,19 +63,19 @@ public class SettingsControl {
 
 	
 
-	public SettingsActionListenerControl getActionListenerControl() {
+	public ActionListenerSettingsControl getActionListenerControl() {
 		return actionListenerControl;
 	}
 
-	public void setActionListenerControl(SettingsActionListenerControl actionListenerControl) {
+	public void setActionListenerControl(ActionListenerSettingsControl actionListenerControl) {
 		this.actionListenerControl = actionListenerControl;
 	}
 
-	public SettingsItemListenerControl getItemListenerControl() {
+	public ItemListenerSettingsControl getItemListenerControl() {
 		return itemListenerControl;
 	}
 
-	public void setItemListenerControl(SettingsItemListenerControl itemListenerControl) {
+	public void setItemListenerControl(ItemListenerSettingsControl itemListenerControl) {
 		this.itemListenerControl = itemListenerControl;
 	}
 

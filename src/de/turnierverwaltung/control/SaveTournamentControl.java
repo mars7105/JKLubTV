@@ -80,7 +80,7 @@ public class SaveTournamentControl {
 			}
 			return ready;
 		} else {
-			ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+			ready = mainControl.getPairingsControl().checkNewTurnier();
 			if (ready) {
 				ArrayList<Game> changedPartien;
 				if (this.mainControl.getChangedPartien() == null) {
@@ -125,7 +125,7 @@ public class SaveTournamentControl {
 
 	public Boolean saveNewTurnier() throws SQLException {
 		int turnierId = -1;
-		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
 
 			createAndShowGUI();

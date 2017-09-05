@@ -11,12 +11,12 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.turnierverwaltung.view.SettingsView;
 
-public class SettingsActionListenerControl {
+public class ActionListenerSettingsControl {
 	private MainControl mainControl;
 	private SettingsControl esControl;
 	private JDialog dialog;
 
-	public SettingsActionListenerControl(MainControl mainControl, SettingsControl esControl) {
+	public ActionListenerSettingsControl(MainControl mainControl, SettingsControl esControl) {
 		super();
 		this.mainControl = mainControl;
 		this.esControl = esControl;
@@ -32,7 +32,7 @@ public class SettingsActionListenerControl {
 				mainControl.getEigenschaftenControl().setEigenschaftenView(new SettingsView());
 				SettingsView eigenschaftenView = mainControl.getEigenschaftenControl().getEigenschaftenView();
 				mainControl.getEigenschaftenControl().setItemListenerControl(
-						new SettingsItemListenerControl(mainControl, mainControl.getEigenschaftenControl()));
+						new ItemListenerSettingsControl(mainControl, mainControl.getEigenschaftenControl()));
 				mainControl.getEigenschaftenControl().getItemListenerControl().addItemListeners();
 				if (dialog == null) {
 					dialog = new JDialog();

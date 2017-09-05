@@ -55,7 +55,7 @@ public class HTMLSaveControl {
 	 * 
 	 */
 	public void saveHTMLFile() {
-		Boolean ready = mainControl.getRundenEingabeFormularControl().checkNewTurnier();
+		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 			String filename = mainControl.getTurnier().getTurnierName();
