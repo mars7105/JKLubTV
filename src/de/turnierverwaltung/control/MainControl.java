@@ -115,6 +115,7 @@ public class MainControl extends JFrame {
 	private ActionListenerPairingsMenuControl pairingMenuActionControl;
 	private ActionListenerPlayerListControl playerListMenuActionControl;
 	private ActionListenerTournamentListControl tournamentListMenuActionControl;
+	private ActionListenerTournamentEditControl actionListenerTournamentEditControl;
 
 	public MainControl() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
@@ -266,6 +267,7 @@ public class MainControl extends JFrame {
 		saveTurnierControl = null;
 		spielerLadenControl = null;
 		fileMenuActionControl = null;
+		actionListenerTournamentEditControl = null;
 		setNeuesTurnier(false);
 		System.gc();
 		init();
@@ -706,4 +708,19 @@ public class MainControl extends JFrame {
 		return this.tournamentListMenuActionControl;
 
 	}
+
+	public void setActionListenerTournamentEditControl(
+			ActionListenerTournamentEditControl actionListenerTournamentEditControl) {
+		this.actionListenerTournamentEditControl = actionListenerTournamentEditControl;
+		
+	}
+
+	public ActionListenerPairingsMenuControl getPairingMenuActionControl() {
+		return pairingMenuActionControl;
+	}
+
+	public ActionListenerTournamentEditControl getActionListenerTournamentEditControl() {
+		return actionListenerTournamentEditControl;
+	}
+	
 }
