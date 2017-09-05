@@ -45,6 +45,8 @@ public class NewPlayerView extends JDialog {
 	public NewPlayerView() {
 		buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();
+		buttonPane.getOkButton().setText(Messages.getString("SpielerHinzufuegenView.10"));
+		buttonPane.getCancelButton().setText(Messages.getString("SpielerHinzufuegenView.11"));
 		this.okButton = buttonPane.getOkButton();
 		this.cancelButton = buttonPane.getCancelButton();
 
