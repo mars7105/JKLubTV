@@ -85,9 +85,9 @@ public class EditPlayerView extends JDialog {
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// centerPane.setBackground(new Color(249, 222, 112));
-		centerPane.add(label);
-		centerPane.add(textFieldForename);
-		contentPanel.add(centerPane);
+//		centerPane.add(label);
+//		centerPane.add(textFieldForename);
+//		contentPanel.add(centerPane);
 
 		textFieldSurname.setText(spieler.getSurname());
 		label = new JLabel();
@@ -96,9 +96,9 @@ public class EditPlayerView extends JDialog {
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// centerPane.setBackground(new Color(249, 222, 112));
-		centerPane.add(label);
-		centerPane.add(textFieldSurname);
-		contentPanel.add(centerPane);
+//		centerPane.add(label);
+//		centerPane.add(textFieldSurname);
+//		contentPanel.add(centerPane);
 
 		textFieldKuerzel.setText(spieler.getKuerzel());
 		label = new JLabel();
