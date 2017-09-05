@@ -167,7 +167,8 @@ public class Player implements Comparable<Object> {
 	}
 
 	private void extractNameToForenameAndSurename() {
-
+		forename = "";
+		surname = "";
 		int i = 0;
 
 		for (String retval : name.split("\\s")) {
@@ -175,8 +176,11 @@ public class Player implements Comparable<Object> {
 				forename = retval;
 			}
 
-			if (i >= 1) {
-				surname += retval + " ";
+			if (i == 1) {
+				surname = retval;
+			}
+			if (i > 1) {
+				surname += " " + retval;
 			}
 			i++;
 		}
