@@ -17,5 +17,6 @@
 	<classpathentry kind="lib" path="/home/mamuck/git/JKLubTV/lib/junit-4.6.jar"/>
 	<classpathentry kind="lib" path="/home/mamuck/git/JKLubTV/lib/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="/home/mamuck/git/JKLubTV/lib/ical4j-1.0.6.jar"/>
+	<classpathentry kind="lib" path="/opt/jdk1.8.0_144/jre/lib/javaws.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

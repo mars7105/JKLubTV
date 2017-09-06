@@ -1,6 +1,10 @@
 package de.turnierverwaltung.view;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 
+import java.awt.BorderLayout;
+
+import javax.swing.JPanel;
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -33,8 +37,6 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import javax.swing.JTabbedPane;
 
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
 import de.turnierverwaltung.control.MainControl;
 
 public class TabbedPaneView extends JPanel {

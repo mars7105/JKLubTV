@@ -21,7 +21,6 @@
 
 package de.turnierverwaltung.view;
 
-import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.beans.PropertyChangeEvent;
@@ -29,12 +28,9 @@ import java.beans.PropertyChangeListener;
 import java.util.Date;
 import java.util.Locale;
 
-import javax.swing.JComponent;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import com.toedter.calendar.JDateChooser;
-import com.toedter.calendar.demo.TestDateEvaluator;
 
 /**
  * A demonstration panel including several JDateChoosers.
@@ -45,7 +41,7 @@ import com.toedter.calendar.demo.TestDateEvaluator;
  */
 public class DateChooserPanel extends JPanel implements PropertyChangeListener {
 	private static final long serialVersionUID = -1282280858252793253L;
-	private  final JDateChooser components;
+	private final JDateChooser components;
 
 	public DateChooserPanel() {
 		setName("JDateChooser");
@@ -57,40 +53,11 @@ public class DateChooserPanel extends JPanel implements PropertyChangeListener {
 		setLayout(gridbag);
 
 		components = new JDateChooser();
-		
-		
-		components.getJCalendar().getDayChooser()
-				.addDateEvaluator(new TestDateEvaluator());
-		components.getJCalendar().setTodayButtonVisible(
-				true);
-		components.getJCalendar().setNullDateButtonVisible(
-				true);
 
-		
+		components.getJCalendar().setTodayButtonVisible(true);
+		components.getJCalendar().setNullDateButtonVisible(true);
+		add(components);
 
-		addEntry("Default", components, gridbag);
-		
-	}
-
-	private void addEntry(String text, JComponent component, GridBagLayout grid) {
-		JLabel label = new JLabel(text + ": ", null, JLabel.RIGHT);
-		GridBagConstraints c = new GridBagConstraints();
-		c.weightx = 1.0;
-		c.fill = GridBagConstraints.BOTH;
-		grid.setConstraints(label, c);
-		add(label);
-		c.gridwidth = GridBagConstraints.REMAINDER;
-		grid.setConstraints(component, c);
-		add(component);
-		JPanel blankLine = new JPanel() {
-			private static final long serialVersionUID = 4514530330521503732L;
-
-			public Dimension getPreferredSize() {
-				return new Dimension(10, 3);
-			}
-		};
-		grid.setConstraints(blankLine, c);
-		add(blankLine);
 	}
 
 	/**
@@ -99,7 +66,7 @@ public class DateChooserPanel extends JPanel implements PropertyChangeListener {
 	 * @return Returns the dateFormatString.
 	 */
 	public String getDateFormatString() {
-		return  components.getDateFormatString();
+		return components.getDateFormatString();
 	}
 
 	/**
@@ -110,14 +77,13 @@ public class DateChooserPanel extends JPanel implements PropertyChangeListener {
 	 *            The dateFormatString to set.
 	 */
 	public void setDateFormatString(String dfString) {
-		for (int i = 0; i < 4; i++) {
-			components.setDateFormatString(dfString);
-		}
+		components.setDateFormatString(dfString);
+
 	}
 
 	/**
-	 * Returns the date. If the JDateChooser is started with an empty date and
-	 * no date is set by the user, null is returned.
+	 * Returns the date. If the JDateChooser is started with an empty date and no
+	 * date is set by the user, null is returned.
 	 * 
 	 * @return the current date
 	 */
@@ -132,9 +98,8 @@ public class DateChooserPanel extends JPanel implements PropertyChangeListener {
 	 *            the new date.
 	 */
 	public void setDate(Date date) {
-		for (int i = 0; i < 4; i++) {
-			components.setDate(date);
-		}
+		components.setDate(date);
+
 	}
 
 	public void propertyChange(PropertyChangeEvent evt) {
@@ -154,9 +119,9 @@ public class DateChooserPanel extends JPanel implements PropertyChangeListener {
 	 * Sets the locale of the first 4 JDateChoosers.
 	 */
 	public void setLocale(Locale locale) {
-		for (int i = 0; i < 5; i++) {
-			components.setLocale(locale);
-		}
+
+		components.setLocale(locale);
+
 	}
 
 	/*
@@ -174,19 +139,17 @@ public class DateChooserPanel extends JPanel implements PropertyChangeListener {
 	 * @see javax.swing.JComponent#setEnabled(boolean)
 	 */
 	public void setEnabled(boolean enabled) {
-		for (int i = 0; i < 5; i++) {
-			components.setEnabled(enabled);
-		}
+		components.setEnabled(enabled);
+
 	}
 
 	public Date getMinSelectableDate() {
-		return  components.getMinSelectableDate();
+		return components.getMinSelectableDate();
 	}
 
 	public void setMinSelectableDate(Date date) {
-		for (int i = 0; i < 4; i++) {
-			components.setMinSelectableDate(date);
-		}
+		components.setMinSelectableDate(date);
+
 	}
 
 	public Date getMaxSelectableDate() {
@@ -194,13 +157,12 @@ public class DateChooserPanel extends JPanel implements PropertyChangeListener {
 	}
 
 	public void setMaxSelectableDate(Date date) {
-		for (int i = 0; i < 4; i++) {
-			components.setMaxSelectableDate(date);
-		}
+		components.setMaxSelectableDate(date);
+
 	}
 
 	public JDateChooser getJDateChooser() {
-		return  components;
+		return components;
 	}
-	
+
 }

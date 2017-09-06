@@ -12,12 +12,12 @@ import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-import de.turnierverwaltung.model.Game;
+import de.turnierverwaltung.model.CrossTable;
 import de.turnierverwaltung.model.CrossTableModel;
+import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
-import de.turnierverwaltung.model.CrossTable;
 import de.turnierverwaltung.view.CrossTableView;
 import de.turnierverwaltung.view.TabbedPaneView;
 

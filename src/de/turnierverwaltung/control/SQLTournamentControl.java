@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 import de.turnierverwaltung.model.Tournament;
-import de.turnierverwaltung.mysql.*;
+import de.turnierverwaltung.mysql.DAOFactory;
+import de.turnierverwaltung.mysql.DatumDAO;
+import de.turnierverwaltung.mysql.TurnierDAO;
 
 public class SQLTournamentControl {
 	private MainControl mainControl;

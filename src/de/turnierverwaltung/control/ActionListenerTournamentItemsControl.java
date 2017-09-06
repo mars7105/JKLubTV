@@ -50,10 +50,10 @@ import javax.swing.JTabbedPane;
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
-import de.turnierverwaltung.view.TabbedPaneView;
 import de.turnierverwaltung.view.ButtonTabComponent;
 import de.turnierverwaltung.view.EditTournamentView;
 import de.turnierverwaltung.view.ProgressBarView;
+import de.turnierverwaltung.view.TabbedPaneView;
 import de.turnierverwaltung.view.TournamentListView;
 
 public class ActionListenerTournamentItemsControl implements ActionListener {

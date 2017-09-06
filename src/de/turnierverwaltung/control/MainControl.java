@@ -27,29 +27,29 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import de.turnierverwaltung.model.PairingsTables;
-import de.turnierverwaltung.model.Game;
-import de.turnierverwaltung.model.MeetingTableModel;
+import de.turnierverwaltung.model.CrossTable;
 import de.turnierverwaltung.model.CrossTableModel;
+import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.MeetingTable;
+import de.turnierverwaltung.model.MeetingTableModel;
+import de.turnierverwaltung.model.PairingsTables;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
-import de.turnierverwaltung.model.CrossTable;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
-import de.turnierverwaltung.view.NewTournamentGroupsView;
-import de.turnierverwaltung.view.MainView;
-import de.turnierverwaltung.view.NaviView;
-import de.turnierverwaltung.view.PairingsView;
-import de.turnierverwaltung.view.MeetingTableView;
 import de.turnierverwaltung.view.ButtonTabComponent;
 import de.turnierverwaltung.view.CrossTableView;
+import de.turnierverwaltung.view.MainView;
+import de.turnierverwaltung.view.MeetingTableView;
+import de.turnierverwaltung.view.NaviView;
+import de.turnierverwaltung.view.NewTournamentGroupsView;
 import de.turnierverwaltung.view.NewTournamentPlayerCountlView;
 import de.turnierverwaltung.view.NewTournamentPlayerInputView;
+import de.turnierverwaltung.view.NewTournamentView;
+import de.turnierverwaltung.view.PairingsView;
 import de.turnierverwaltung.view.StandardView;
 import de.turnierverwaltung.view.TabbedPaneView;
 import de.turnierverwaltung.view.TitleLabelView;
 import de.turnierverwaltung.view.TournamentListView;
-import de.turnierverwaltung.view.NewTournamentView;
 
 /**
  * 

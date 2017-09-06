@@ -42,6 +42,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+
 import de.turnierverwaltung.model.TournamentConstants;
 
 public class SettingsView extends JPanel {

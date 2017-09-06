@@ -25,9 +25,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JTabbedPane;
 
-import de.turnierverwaltung.view.InfoView;
 import de.turnierverwaltung.view.InfoHTMLView;
 import de.turnierverwaltung.view.InfoLicenseView;
+import de.turnierverwaltung.view.InfoView;
 
 /**
  * 

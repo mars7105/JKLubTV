@@ -27,9 +27,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
+import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.SortName;
 import de.turnierverwaltung.model.TournamentConstants;
-import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.view.ButtonTabComponent;
 import de.turnierverwaltung.view.EditPlayerView;
 import de.turnierverwaltung.view.PlayerListView;

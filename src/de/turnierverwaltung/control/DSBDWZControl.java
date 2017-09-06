@@ -24,9 +24,10 @@ import java.util.Collections;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
 import de.turnierverwaltung.model.DSBDWZClub;
-import de.turnierverwaltung.model.SortName;
 import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.model.SortName;
 import de.turnierverwaltung.view.DSBDWZDialogView;
 import de.turnierverwaltung.view.DSBDWZPlayerView;
 

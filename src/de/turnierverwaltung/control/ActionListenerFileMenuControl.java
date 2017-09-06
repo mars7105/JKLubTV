@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
-
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -17,7 +16,6 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.NaviView;
@@ -48,6 +46,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 		turnierAnsicht = new TurnierAnsicht(mainControl);
 
 		mainControl.getHauptPanel().addChangeListener(turnierAnsicht);
+		new FileHandler();
 	}
 
 	@Override
@@ -56,8 +55,6 @@ public class ActionListenerFileMenuControl implements ActionListener {
 
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
-				// this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-
 				String filename = JOptionPane.showInputDialog(null, Messages.getString("NaviController.5"), //$NON-NLS-1$
 						Messages.getString("NaviController.6"), //$NON-NLS-1$
 						JOptionPane.PLAIN_MESSAGE);
@@ -75,7 +72,6 @@ public class ActionListenerFileMenuControl implements ActionListener {
 					int sf = savefile.showSaveDialog(null);
 					if (sf == JFileChooser.APPROVE_OPTION) {
 						mainControl.resetApp();
-						// mainControl.datenbankMenueView(false);
 						try {
 							File file = savefile.getSelectedFile();
 							writer = new BufferedWriter(new FileWriter(savefile.getSelectedFile()));
@@ -102,7 +98,8 @@ public class ActionListenerFileMenuControl implements ActionListener {
 							// .loadTurnierListe();
 							mainControl.setSpielerEditierenControl(new PlayerListControl(mainControl));
 							mainControl.getSpielerEditierenControl().updateSpielerListe();
-							mainControl.setTurnierListeLadenControl(new ActionListenerTournamentItemsControl(this.mainControl));
+							mainControl.setTurnierListeLadenControl(
+									new ActionListenerTournamentItemsControl(this.mainControl));
 							mainControl.getTurnierListeLadenControl().loadTurnierListe();
 
 							mainControl.getPropertiesControl().setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
@@ -153,7 +150,8 @@ public class ActionListenerFileMenuControl implements ActionListener {
 						// mainControl.getTurnierTableControl().loadTurnierListe();
 						mainControl.setSpielerEditierenControl(new PlayerListControl(mainControl));
 						mainControl.getSpielerEditierenControl().updateSpielerListe();
-						mainControl.setTurnierListeLadenControl(new ActionListenerTournamentItemsControl(this.mainControl));
+						mainControl.setTurnierListeLadenControl(
+								new ActionListenerTournamentItemsControl(this.mainControl));
 
 						mainControl.getTurnierListeLadenControl().loadTurnierListe();
 
