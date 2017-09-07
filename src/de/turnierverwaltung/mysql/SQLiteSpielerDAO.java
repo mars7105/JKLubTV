@@ -301,8 +301,10 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 				rs.next();
 				if (type == false) {
+					@SuppressWarnings("unused")
 					String string = rs.getString(fieldName);
 				} else {
+					@SuppressWarnings("unused")
 					int number = rs.getInt(fieldName);
 				}
 				stmt.close();

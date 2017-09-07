@@ -24,8 +24,10 @@ public class JNLPControl {
 				// get a file with FileOpenService
 				FileContents fc = fos.openFileDialog(null, null);
 				// one way to save a file
+				@SuppressWarnings("unused")
 				FileContents newfc = fss.saveFileDialog(null, null, fc.getInputStream(), fileName);
 				// another way to save a file
+				@SuppressWarnings("unused")
 				FileContents newfc2 = fss.saveAsFileDialog(null, null, fc);
 
 			} catch (Exception e) {
