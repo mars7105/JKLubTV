@@ -21,14 +21,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
-
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.model.Player;
-import de.turnierverwaltung.model.SortName;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.ButtonTabComponent;
 import de.turnierverwaltung.view.EditPlayerView;
@@ -60,13 +57,15 @@ public class PlayerListControl implements ActionListener {
 
 		if (spielerEditierenView != null) {
 			if (arg0.getSource() == spielerEditierenView.getOkButton()) {
-				String name = spielerEditierenView.getTextFieldName().getText();
-				if (!name.equals("Spielfrei")) {
+				String foreName = spielerEditierenView.getTextFieldForename().getText();
+				String surName = spielerEditierenView.getTextFieldSurname().getText();
+				if (!surName.equals("Spielfrei")) {
 					try {
 						String kuerzel = spielerEditierenView.getTextFieldKuerzel().getText();
 						String dwz = spielerEditierenView.getTextFieldDwz().getText();
 						int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
-						spieler.get(spielerIndex).setName(name);
+						spieler.get(spielerIndex).setForename(foreName);
+						spieler.get(spielerIndex).setSurname(surName);
 						spieler.get(spielerIndex).setKuerzel(kuerzel);
 						spieler.get(spielerIndex).setDwz(dwz);
 						spieler.get(spielerIndex).setAge(age);
@@ -170,7 +169,7 @@ public class PlayerListControl implements ActionListener {
 		spielerLadenView.getTitleView().setFlowLayoutLeft();
 
 		int index = 0;
-		Collections.sort(spieler, new SortName());
+		// Collections.sort(spieler, new SortName());
 
 		for (Player player : spieler) {
 
@@ -194,9 +193,10 @@ public class PlayerListControl implements ActionListener {
 				int zName = 0;
 				for (int y = 0; y < spieler.size(); y++) {
 					if (i != y) {
-						if (spieler.get(i).getName().equals(spieler.get(y).getName())) {
+						if (spieler.get(i).getSurname().equals(spieler.get(y).getSurname())) {
 							zName++;
-							spieler.get(y).setName(spieler.get(y).getName() + "_" + new Integer(zName).toString());
+							spieler.get(y)
+									.setSurname(spieler.get(y).getSurname() + "_" + new Integer(zName).toString());
 
 							stc.updateOneSpieler(spieler.get(y));
 							loop = true;

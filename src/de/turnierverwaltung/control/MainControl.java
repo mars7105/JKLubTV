@@ -209,6 +209,7 @@ public class MainControl extends JFrame {
 				try {
 					this.getTurnierListeLadenControl().loadTurnierListe();
 				} catch (SQLException e) {
+					e.printStackTrace();
 					fileSQLError();
 				}
 				naviView.setPathToDatabase(new JLabel(path));

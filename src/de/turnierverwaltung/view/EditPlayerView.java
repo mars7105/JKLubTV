@@ -67,27 +67,27 @@ public class EditPlayerView extends JDialog {
 		JPanel centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// centerPane.setBackground(new Color(249, 222, 112));
-		textFieldName.setText(spieler.getName());
-		JLabel label = new JLabel();
-		label.setPreferredSize(new Dimension(120, 10));
-		label.setText(Messages.getString("SpielerEditierenView.3")); //$NON-NLS-1$
-		centerPane = new JPanel();
-		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// centerPane.setBackground(new Color(249, 222, 112));
-		centerPane.add(label);
-		centerPane.add(textFieldName);
-		contentPanel.add(centerPane);
+//		textFieldName.setText(spieler.getName());
+//		JLabel label = new JLabel();
+//		label.setPreferredSize(new Dimension(120, 10));
+//		label.setText(Messages.getString("SpielerEditierenView.3")); //$NON-NLS-1$
+//		centerPane = new JPanel();
+//		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+//		// centerPane.setBackground(new Color(249, 222, 112));
+//		centerPane.add(label);
+//		centerPane.add(textFieldName);
+//		contentPanel.add(centerPane);
 
 		textFieldForename.setText(spieler.getForename());
-		label = new JLabel();
+		JLabel label = new JLabel();
 		label.setPreferredSize(new Dimension(120, 10));
 		label.setText(Messages.getString("SpielerEditierenView.10")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// centerPane.setBackground(new Color(249, 222, 112));
-//		centerPane.add(label);
-//		centerPane.add(textFieldForename);
-//		contentPanel.add(centerPane);
+		centerPane.add(label);
+		centerPane.add(textFieldForename);
+		contentPanel.add(centerPane);
 
 		textFieldSurname.setText(spieler.getSurname());
 		label = new JLabel();
@@ -96,9 +96,9 @@ public class EditPlayerView extends JDialog {
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// centerPane.setBackground(new Color(249, 222, 112));
-//		centerPane.add(label);
-//		centerPane.add(textFieldSurname);
-//		contentPanel.add(centerPane);
+		centerPane.add(label);
+		centerPane.add(textFieldSurname);
+		contentPanel.add(centerPane);
 
 		textFieldKuerzel.setText(spieler.getKuerzel());
 		label = new JLabel();
@@ -205,6 +205,22 @@ public class EditPlayerView extends JDialog {
 
 	public void setTextComboBoxAge(JComboBox<String> textComboBoxAge) {
 		this.textComboBoxAge = textComboBoxAge;
+	}
+
+	public JTextField getTextFieldForename() {
+		return textFieldForename;
+	}
+
+	public void setTextFieldForename(JTextField textFieldForename) {
+		this.textFieldForename = textFieldForename;
+	}
+
+	public JTextField getTextFieldSurname() {
+		return textFieldSurname;
+	}
+
+	public void setTextFieldSurname(JTextField textFieldSurname) {
+		this.textFieldSurname = textFieldSurname;
 	}
 
 }

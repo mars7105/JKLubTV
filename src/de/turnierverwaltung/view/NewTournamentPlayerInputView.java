@@ -35,7 +35,9 @@ public class NewTournamentPlayerInputView extends JPanel {
 	private JButton okButton;
 	private JButton cancelButton;
 	private JScrollPane scrollPane;
-	private JTextField[] spielerTextfield;
+	private JTextField[] forenameTextfield;
+	private JTextField[] surnameTextfield;
+
 	private JTextField[] dwzTextfield;
 	private JTextField[] kuerzelTextfield;
 	private JComboBox<String>[] spielerSuche;
@@ -53,7 +55,8 @@ public class NewTournamentPlayerInputView extends JPanel {
 
 		this.spielerAnzahl = spielerAnzahl;
 		spielerID = new int[this.spielerAnzahl];
-		spielerTextfield = new JTextField[this.spielerAnzahl];
+		forenameTextfield = new JTextField[this.spielerAnzahl];
+		surnameTextfield = new JTextField[this.spielerAnzahl];
 		dwzTextfield = new JTextField[this.spielerAnzahl];
 		kuerzelTextfield = new JTextField[this.spielerAnzahl];
 		textComboBoxAge = new JComboBox[this.spielerAnzahl];
@@ -77,10 +80,10 @@ public class NewTournamentPlayerInputView extends JPanel {
 			spielerID[i] = -1;
 			line = new JPanel();
 			line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
-			// line.setBackground(new Color(249, 222, 112));
 			JLabel label = new JLabel(" " + new Integer(i + 1).toString() //$NON-NLS-1$
 					+ Messages.getString("SpielerEingabeView.5") + Messages.getString("SpielerEingabeView.6")); //$NON-NLS-1$ //$NON-NLS-2$
-			spielerTextfield[i] = new JTextField(10);
+			forenameTextfield[i] = new JTextField(10);
+			surnameTextfield[i] = new JTextField(10);
 			spielerSuche[i] = new JComboBox();
 			Dimension dimTextField = new Dimension(170, 30);
 
@@ -90,7 +93,8 @@ public class NewTournamentPlayerInputView extends JPanel {
 
 			line.add(spielerSuche[i]);
 			line.add(label);
-			line.add(spielerTextfield[i]);
+			line.add(forenameTextfield[i]);
+			line.add(surnameTextfield[i]);
 
 			JLabel label2 = new JLabel(Messages.getString("SpielerEingabeView.8")); //$NON-NLS-1$
 			kuerzelTextfield[i] = new JTextField(10);
@@ -151,10 +155,6 @@ public class NewTournamentPlayerInputView extends JPanel {
 		return spielerSuche;
 	}
 
-	public JTextField[] getSpielerTextfield() {
-		return spielerTextfield;
-	}
-
 	public void setCancelButton(JButton cancelButton) {
 		this.cancelButton = cancelButton;
 	}
@@ -184,16 +184,28 @@ public class NewTournamentPlayerInputView extends JPanel {
 		this.spielerSuche = spielerSuche;
 	}
 
-	public void setSpielerTextfield(JTextField[] spielerTextfield) {
-		this.spielerTextfield = spielerTextfield;
-	}
-
 	public JComboBox<String>[] getTextComboBoxAge() {
 		return textComboBoxAge;
 	}
 
 	public void setTextComboBoxAge(JComboBox<String>[] textComboBoxAge) {
 		this.textComboBoxAge = textComboBoxAge;
+	}
+
+	public JTextField[] getForenameTextfield() {
+		return forenameTextfield;
+	}
+
+	public void setForenameTextfield(JTextField[] forenameTextfield) {
+		this.forenameTextfield = forenameTextfield;
+	}
+
+	public JTextField[] getSurnameTextfield() {
+		return surnameTextfield;
+	}
+
+	public void setSurnameTextfield(JTextField[] surnameTextfield) {
+		this.surnameTextfield = surnameTextfield;
 	}
 
 }

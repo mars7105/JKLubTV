@@ -2,6 +2,7 @@ package de.turnierverwaltung.model;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.SocketException;
 
 import net.fortuna.ical4j.data.CalendarOutputter;
 import net.fortuna.ical4j.model.Calendar;
@@ -11,7 +12,7 @@ import net.fortuna.ical4j.model.component.VEvent;
 import net.fortuna.ical4j.model.property.CalScale;
 import net.fortuna.ical4j.model.property.ProdId;
 import net.fortuna.ical4j.model.property.Version;
-
+import net.fortuna.ical4j.util.UidGenerator;
 
 public class ICalendar {
 	private Calendar calendar;
@@ -27,10 +28,13 @@ public class ICalendar {
 		try {
 			if (datum.length() > 0) {
 				VEvent ev = checkDate(datum, event);
+				// Generate a UID for the event..
+				UidGenerator ug = new UidGenerator(datum);
+				ev.getProperties().add(ug.generateUid());
 				calendar.getComponents().add(ev);
 			}
-		} catch (NumberFormatException e) {
-			
+		} catch (NumberFormatException | SocketException e) {
+
 		}
 	}
 

@@ -34,13 +34,14 @@ public class NewPlayerView extends JDialog {
 	private static final long serialVersionUID = -5642277833139693453L;
 	private JButton okButton;
 	private JButton cancelButton;
-	private JTextField textFieldName;
 	private JTextField textFieldKuerzel;
 	private JTextField textFieldDwz;
 	private ButtonPanelView buttonPane;
 	private JPanel centerPane;
 	private JPanel contentPanel;
 	private JComboBox<String> textComboBoxAge;
+	private JTextField textFieldForeName;
+	private JTextField textFieldSurName;
 
 	public NewPlayerView() {
 		buttonPane = new ButtonPanelView();
@@ -83,9 +84,7 @@ public class NewPlayerView extends JDialog {
 		return textFieldKuerzel;
 	}
 
-	public JTextField getTextFieldName() {
-		return textFieldName;
-	}
+	
 
 	public void setCancelButton(JButton cancelButton) {
 		this.cancelButton = cancelButton;
@@ -103,8 +102,22 @@ public class NewPlayerView extends JDialog {
 		this.textFieldKuerzel = textFieldKuerzel;
 	}
 
-	public void setTextFieldName(JTextField name) {
-		this.textFieldName = name;
+	
+
+	public JTextField getTextFieldForeName() {
+		return textFieldForeName;
+	}
+
+	public void setTextFieldForeName(JTextField textFieldForeName) {
+		this.textFieldForeName = textFieldForeName;
+	}
+
+	public JTextField getTextFieldSurName() {
+		return textFieldSurName;
+	}
+
+	public void setTextFieldSurName(JTextField textFieldSurName) {
+		this.textFieldSurName = textFieldSurName;
 	}
 
 	public JComboBox<String> getTextComboBoxAge() {
@@ -117,14 +130,16 @@ public class NewPlayerView extends JDialog {
 
 	public void spielerPanel() {
 		centerPane = new JPanel();
-		this.textFieldName = new JTextField(15);
+		this.textFieldForeName = new JTextField(15);
+		this.textFieldSurName = new JTextField(15);
 		this.textFieldKuerzel = new JTextField(15);
 		this.textFieldDwz = new JTextField(15);
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// centerPane.setBackground(new Color(249, 222, 112));
 		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.3"))); //$NON-NLS-1$
-		centerPane.add(textFieldName);
-
+		centerPane.add(textFieldForeName);
+		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.3"))); //$NON-NLS-1$
+		centerPane.add(textFieldSurName);
 		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.4"))); //$NON-NLS-1$
 		centerPane.add(textFieldKuerzel);
 

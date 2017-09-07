@@ -21,7 +21,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 
@@ -32,12 +31,13 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 		this.dbConnect = null;
 		this.dbConnect = SQLiteDAOFactory.createConnection();
 		alterTableAge();
+		alterTableName();
 	}
 
 	@Override
 	public void createSpielerTable() throws SQLException {
 		String sql = "CREATE TABLE spieler (idSpieler INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-				+ " Name VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, Age INTEGER)" + ";";
+				+ " Name VARCHAR, Forename VARCHAR, Surname VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, Age INTEGER)" + ";";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -96,7 +96,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 	@Override
 	public ArrayList<Player> getAllSpieler() throws SQLException {
-		String sql = "Select * from spieler ORDER BY dwz ASC;";
+		String sql = "Select * from spieler ORDER BY Surname ASC;";
 		ArrayList<Player> spielerListe = new ArrayList<Player>();
 
 		Statement stmt;
@@ -104,50 +104,50 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 			stmt = this.dbConnect.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
-
 			while (rs.next()) {
-
 				int idSpieler = rs.getInt("idSpieler");
 				String name = rs.getString("Name");
+				String foreName = rs.getString("ForeName");
+				String surName = rs.getString("SurName");
 				String kuerzel = rs.getString("kuerzel");
 				String dwz = rs.getString("dwz");
-				int age = 2;
-				try {
-					age = rs.getInt("Age");
-				} catch (SQLException e) {
+				int age = rs.getInt("Age");
+				Player player = null;
 
-					alterTableAge();
-
+				if (foreName.length() == 0 && surName.length() == 0) {
+					player = new Player(idSpieler, name, kuerzel, dwz, age);
+				} else {
+					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, age);
 				}
-
-				spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age));
+				spielerListe.add(player);
 			}
+
 			stmt.close();
 
 		}
-
 		return spielerListe;
 
 	}
 
 	@Override
-	public int insertSpieler(String name, String dwz, String kuerzel, int age) throws SQLException {
+	public int insertSpieler(String name, String foreName, String surName, String dwz, String kuerzel, int age)
+			throws SQLException {
 
 		String sql;
 		int id = -1;
 
-		sql = "Insert into spieler (DWZ, Kuerzel, Name, Age) values (?,?,?,?)" + ";";
+		sql = "Insert into spieler (Name, Forename, Surname, DWZ, Kuerzel, Age) values (?,?,?,?,?,?)" + ";";
 
 		if (this.dbConnect != null) {
 
 			PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-			preStm.setString(1, dwz);
-			preStm.setString(2, kuerzel);
-			preStm.setString(3, name);
-
-			preStm.setInt(4, age);
-
+			preStm.setString(1, name);
+			preStm.setString(2, foreName);
+			preStm.setString(3, surName);
+			preStm.setString(4, dwz);
+			preStm.setString(5, kuerzel);
+			preStm.setInt(6, age);
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
@@ -166,7 +166,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public ArrayList<Player> selectAllSpieler(int idGruppe) throws SQLException {
 		String sql = "Select * from turnier_has_spieler, spieler where Gruppe_idGruppe = " + idGruppe
-				+ " AND Spieler_idSpieler = idSpieler" + " ORDER BY dwz ASC;";
+				+ " AND Spieler_idSpieler = idSpieler" + " ORDER BY Surname ASC;";
 		ArrayList<Player> spielerListe = new ArrayList<Player>();
 
 		Statement stmt;
@@ -177,14 +177,14 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 			while (rs.next()) {
 				int idSpieler = rs.getInt("idSpieler");
-				String name = rs.getString("Name");
+				// String name = rs.getString("Name");
+				String foreName = rs.getString("Forename");
+				String surName = rs.getString("Surname");
 				String kuerzel = rs.getString("kuerzel");
 				String dwz = rs.getString("dwz");
-				int age = 2;
+				int age = rs.getInt("Age");
 
-				age = rs.getInt("Age");
-
-				spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age));
+				spielerListe.add(new Player(idSpieler, foreName, surName, kuerzel, dwz, age));
 			}
 			stmt.close();
 
@@ -196,19 +196,17 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public boolean updateSpieler(Player spieler) throws SQLException {
 		boolean ok = false;
-		String sql = "update spieler set Name = ?, Kuerzel = ?" + ", DWZ = ?, Age = ? where idSpieler="
-				+ spieler.getSpielerId() + ";";
+		String sql = "update spieler set Name = ?,Forename = ?,Surname = ?, Kuerzel = ?"
+				+ ", DWZ = ?, Age = ? where idSpieler=" + spieler.getSpielerId() + ";";
 		if (this.dbConnect != null) {
-
 			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
 			preStm.setString(1, spieler.getName());
-			preStm.setString(2, spieler.getKuerzel());
-			preStm.setString(3, spieler.getDwz());
-			try {
-				preStm.setInt(4, spieler.getAge());
-			} catch (SQLException e) {
-				alterTableAge();
-			}
+			preStm.setString(2, spieler.getForename());
+			preStm.setString(3, spieler.getSurname());
+			preStm.setString(4, spieler.getKuerzel());
+			preStm.setString(5, spieler.getDwz());
+			preStm.setInt(6, spieler.getAge());
+
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
@@ -221,21 +219,97 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	}
 
 	private void alterTableAge() {
+		if (!isFieldExist("Age", true)) {
+			String sql = "ALTER TABLE spieler ADD Age INTEGER  DEFAULT(2)" + ";";
+			Statement stmt;
+			if (this.dbConnect != null) {
+				try {
+					// create a database connection
+					stmt = this.dbConnect.createStatement();
+					stmt.setQueryTimeout(30); // set timeout to 30 sec.
+					stmt.executeUpdate(sql);
+					stmt.close();
 
-		String sql = "ALTER TABLE spieler ADD Age INTEGER  DEFAULT(2)" + ";";
-		Statement stmt;
-		if (this.dbConnect != null) {
-			try {
-				// create a database connection
-				stmt = this.dbConnect.createStatement();
-				stmt.setQueryTimeout(30); // set timeout to 30 sec.
-				stmt.executeUpdate(sql);
-				stmt.close();
+				} catch (SQLException e) {
 
-			} catch (SQLException e) {
-
+				}
 			}
 		}
 	}
 
+	private void alterTableName() {
+		if (!isFieldExist("Forename", false)) {
+			String sql1 = "ALTER TABLE spieler ADD Forename VARCHAR DEFAULT ''" + ";";
+			Statement stmt1;
+			if (this.dbConnect != null) {
+				try {
+					// create a database connection
+					stmt1 = this.dbConnect.createStatement();
+					stmt1.setQueryTimeout(30); // set timeout to 30 sec.
+					stmt1.executeUpdate(sql1);
+					stmt1.close();
+
+				} catch (SQLException e1) {
+
+				}
+			}
+		}
+		if (!isFieldExist("Surname", false)) {
+			String sql2 = "ALTER TABLE spieler ADD Surname VARCHAR DEFAULT ''" + ";";
+			Statement stmt2;
+			if (this.dbConnect != null) {
+				try {
+					// create a database connection
+					stmt2 = this.dbConnect.createStatement();
+					stmt2.setQueryTimeout(30); // set timeout to 30 sec.
+					stmt2.executeUpdate(sql2);
+					stmt2.close();
+
+				} catch (SQLException e2) {
+
+				}
+			}
+		}
+		if (!isFieldExist("Surname", false) && !isFieldExist("Forename", false)) {
+			ArrayList<Player> spielerListe = new ArrayList<Player>();
+
+			try {
+				spielerListe = getAllSpieler();
+				for (Player player : spielerListe) {
+					player.extractNameToForenameAndSurename();
+					updateSpieler(player);
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+	}
+
+	public boolean isFieldExist(String fieldName, Boolean type) {
+
+		boolean isExist = true;
+		String sql = "SELECT " + fieldName + " FROM spieler;";
+		Statement stmt;
+		if (this.dbConnect != null) {
+
+			try {
+				stmt = this.dbConnect.createStatement();
+
+				ResultSet rs = stmt.executeQuery(sql);
+
+				rs.next();
+				if (type == false) {
+					String string = rs.getString(fieldName);
+				} else {
+					int number = rs.getInt(fieldName);
+				}
+				stmt.close();
+			} catch (SQLException e) {
+				isExist = false;
+			}
+		}
+		return isExist;
+	}
 }

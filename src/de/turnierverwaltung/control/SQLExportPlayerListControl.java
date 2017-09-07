@@ -1,5 +1,6 @@
 package de.turnierverwaltung.control;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -72,10 +73,12 @@ public class SQLExportPlayerListControl {
 				ListIterator<Player> li = spieler.listIterator();
 				while (li.hasNext()) {
 					oneSpieler = li.next();
-					mySQLSpielerDAO.insertSpieler(oneSpieler.getName(), oneSpieler.getDwz(), oneSpieler.getKuerzel(),
-							oneSpieler.getAge());
+					mySQLSpielerDAO.insertSpieler(oneSpieler.getName(), oneSpieler.getForename(),
+							oneSpieler.getSurname(), oneSpieler.getDwz(), oneSpieler.getKuerzel(), oneSpieler.getAge());
 				}
-				JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerTableExportController.3") + newFile, Messages.getString("SpielerTableExportController.4"), //$NON-NLS-1$ //$NON-NLS-2$
+				JOptionPane.showMessageDialog(mainControl,
+						Messages.getString("SpielerTableExportController.3") + newFile, //$NON-NLS-1$
+						Messages.getString("SpielerTableExportController.4"), //$NON-NLS-1$
 						JOptionPane.INFORMATION_MESSAGE);
 				SQLiteDAOFactory.setDB_PATH(filename);
 			} catch (IOException e) {

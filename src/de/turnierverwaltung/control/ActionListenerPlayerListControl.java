@@ -30,13 +30,16 @@ public class ActionListenerPlayerListControl implements ActionListener {
 		if (spielerHinzufuegenView != null) {
 			if (arg0.getSource() == spielerHinzufuegenView.getOkButton()) {
 				try {
-					String name = spielerHinzufuegenView.getTextFieldName().getText();
-					if (!name.equals("Spielfrei")) {
+					String forename = spielerHinzufuegenView.getTextFieldForeName().getText();
+					String surname = spielerHinzufuegenView.getTextFieldSurName().getText();
+					if (!surname.equals("Spielfrei")) {
 						String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
 						String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
 						int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
 						Player neuerSpieler = new Player();
-						neuerSpieler.setName(name);
+						neuerSpieler.setForename(forename);
+						neuerSpieler.setSurname(surname);
+						neuerSpieler.extractForenameAndSurenameToName();
 						neuerSpieler.setKuerzel(kuerzel);
 						neuerSpieler.setDwz(dwz);
 						neuerSpieler.setAge(age);
@@ -46,7 +49,8 @@ public class ActionListenerPlayerListControl implements ActionListener {
 
 						this.mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
 					}
-					spielerHinzufuegenView.getTextFieldName().setEditable(false);
+					spielerHinzufuegenView.getTextFieldForeName().setEditable(false);
+					spielerHinzufuegenView.getTextFieldSurName().setEditable(false);
 					spielerHinzufuegenView.getTextFieldKuerzel().setEditable(false);
 					spielerHinzufuegenView.getTextFieldDwz().setEditable(false);
 					spielerHinzufuegenView.getTextComboBoxAge().setEnabled(false);
@@ -85,7 +89,7 @@ public class ActionListenerPlayerListControl implements ActionListener {
 				mainControl.fileSQLError();
 			}
 		}
-		
+
 		if (arg0.getSource() == naviView.getSpielerDEWISSearchButton()) {
 			dewisDialogControl.makeDialog();
 		}

@@ -37,8 +37,7 @@ public class SQLPlayerControl {
 
 	public SQLPlayerControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		daoFactory = DAOFactory
-				.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
+		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		mySQLSpielerDAO = daoFactory.getSpielerDAO();
 	}
 
@@ -55,12 +54,11 @@ public class SQLPlayerControl {
 		this.turnier = this.mainControl.getTurnier();
 		ArrayList<Player> spieler = new ArrayList<Player>();
 		for (int i = 0; i < this.turnier.getAnzahlGruppen(); i++) {
-			spieler = mySQLSpielerDAO.selectAllSpieler(turnier.getGruppe()[i]
-					.getGruppeId());
+			spieler = mySQLSpielerDAO.selectAllSpieler(turnier.getGruppe()[i].getGruppeId());
 			if (spieler.size() % 2 == 1) {
-				Player spielfrei = new Player(
-						TournamentConstants.SPIELFREI_ID,
-						Messages.getString("SpielerTableControl.0"), Messages.getString("SpielerTableControl.1"), "0", 0); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+				Player spielfrei = new Player(TournamentConstants.SPIELFREI_ID,
+						Messages.getString("SpielerTableControl.0"), Messages.getString("SpielerTableControl.1"), "0", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+						0);
 				spieler.add(spielfrei);
 			}
 
@@ -85,7 +83,7 @@ public class SQLPlayerControl {
 		int spielerId = -1;
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
 
-		spielerId = mySQLSpielerDAO.insertSpieler(spielerName, spielerDWZ,
+		spielerId = mySQLSpielerDAO.insertSpieler(spielerName, spieler.getForename(), spieler.getSurname(), spielerDWZ,
 				spielerKuerzel, age);
 
 		return spielerId;
@@ -94,31 +92,26 @@ public class SQLPlayerControl {
 	public boolean insertSpieler(int gruppe) throws SQLException {
 		boolean eintragGespeichert = false;
 		this.turnier = mainControl.getTurnier();
-		String[] spielerName = new String[turnier.getGruppe()[gruppe]
-				.getSpielerAnzahl()];
-		String[] spielerDWZ = new String[turnier.getGruppe()[gruppe]
-				.getSpielerAnzahl()];
-		String[] spielerKuerzel = new String[turnier.getGruppe()[gruppe]
-				.getSpielerAnzahl()];
-		int[] spielerAge = new int[turnier.getGruppe()[gruppe]
-				.getSpielerAnzahl()];
+		String[] spielerName = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+		String[] spielerForeName = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+		String[] spielerSurName = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+		String[] spielerDWZ = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+		String[] spielerKuerzel = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+		int[] spielerAge = new int[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
 		turnierId = turnier.getTurnierId();
 		int spielerAnzahl = turnier.getGruppe()[gruppe].getSpielerAnzahl();
 		spielerId = new int[spielerAnzahl];
 		for (int y = 0; y < spielerAnzahl; y++) {
 			if (turnier.getGruppe()[gruppe].getSpieler()[y].getSpielerId() == -1) {
-				spielerName[y] = turnier.getGruppe()[gruppe].getSpieler()[y]
-						.getName();
-				spielerDWZ[y] = turnier.getGruppe()[gruppe].getSpieler()[y]
-						.getDwz();
-				spielerKuerzel[y] = turnier.getGruppe()[gruppe].getSpieler()[y]
-						.getKuerzel();
-				spielerAge[y] = turnier.getGruppe()[gruppe].getSpieler()[y]
-						.getAge();
-				spielerId[y] = mySQLSpielerDAO.insertSpieler(spielerName[y],
+				spielerName[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getName();
+				spielerName[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getForename();
+				spielerName[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getSurname();
+				spielerDWZ[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getDwz();
+				spielerKuerzel[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getKuerzel();
+				spielerAge[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getAge();
+				spielerId[y] = mySQLSpielerDAO.insertSpieler(spielerName[y], spielerForeName[y], spielerSurName[y],
 						spielerDWZ[y], spielerKuerzel[y], spielerAge[y]);
-				turnier.getGruppe()[gruppe].getSpieler()[y]
-						.setSpielerId(spielerId[y]);
+				turnier.getGruppe()[gruppe].getSpieler()[y].setSpielerId(spielerId[y]);
 				eintragGespeichert = true;
 			}
 		}
@@ -128,31 +121,25 @@ public class SQLPlayerControl {
 	public boolean loescheSpieler(Player spieler) throws SQLException {
 		boolean geloescht = false;
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
-		Turnier_has_SpielerDAO turnier_has_spielerDAO = daoFactory
-				.getTurnier_has_SpielerDAO();
-		ArrayList<Integer> tId = turnier_has_spielerDAO
-				.findSpielerisinTurnier_has_Spieler(spieler);
+		Turnier_has_SpielerDAO turnier_has_spielerDAO = daoFactory.getTurnier_has_SpielerDAO();
+		ArrayList<Integer> tId = turnier_has_spielerDAO.findSpielerisinTurnier_has_Spieler(spieler);
 		int abfrage = 0;
 		if (tId.size() > 0) {
-			JOptionPane
-					.showMessageDialog(
-							mainControl,
-							"Spieler " + spieler.getName() + "\n" + Messages.getString("SpielerTableControl.5") + spieler.getName() //$NON-NLS-2$ //$NON-NLS-3$
-									+ " \n" + Messages.getString("SpielerTableControl.7") + tId.size() + Messages.getString("SpielerTableControl.8")); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			JOptionPane.showMessageDialog(mainControl,
+					"Spieler " + spieler.getName() + "\n" + Messages.getString("SpielerTableControl.5") //$NON-NLS-2$ //$NON-NLS-3$
+							+ spieler.getName() + " \n" + Messages.getString("SpielerTableControl.7") + tId.size() //$NON-NLS-1$ //$NON-NLS-2$
+							+ Messages.getString("SpielerTableControl.8")); //$NON-NLS-1$
 
 			abfrage = -1;
 		} else {
-			Object[] options = {
-					Messages.getString("SpielerTableControl.9"), Messages.getString("SpielerTableControl.10") }; //$NON-NLS-1$ //$NON-NLS-2$
-			abfrage = JOptionPane
-					.showOptionDialog(
-							mainControl,
-							Messages.getString("SpielerTableControl.11") + Messages.getString("SpielerTableControl.12") + Messages.getString("SpielerTableControl.13") //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-									+ spieler.getName()
-									+ Messages
-											.getString("SpielerTableControl.14"), //$NON-NLS-1$
-							Messages.getString("SpielerTableControl.15"), JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, //$NON-NLS-1$
-							options[1]);
+			Object[] options = { Messages.getString("SpielerTableControl.9"), //$NON-NLS-1$
+					Messages.getString("SpielerTableControl.10") }; //$NON-NLS-1$
+			abfrage = JOptionPane.showOptionDialog(mainControl,
+					Messages.getString("SpielerTableControl.11") + Messages.getString("SpielerTableControl.12") //$NON-NLS-1$ //$NON-NLS-2$
+							+ Messages.getString("SpielerTableControl.13") //$NON-NLS-1$
+							+ spieler.getName() + Messages.getString("SpielerTableControl.14"), //$NON-NLS-1$
+					Messages.getString("SpielerTableControl.15"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
+					JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 		}
 		if (abfrage == 0) {
 			// geloescht =
@@ -175,8 +162,7 @@ public class SQLPlayerControl {
 		boolean saved = false;
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
 		for (int i = 0; i < turnier.getGruppe()[gruppe].getSpielerAnzahl(); i++) {
-			saved = mySQLSpielerDAO.updateSpieler(turnier.getGruppe()[gruppe]
-					.getSpieler()[i]);
+			saved = mySQLSpielerDAO.updateSpieler(turnier.getGruppe()[gruppe].getSpieler()[i]);
 		}
 		return saved;
 	}

@@ -166,7 +166,7 @@ public class Player implements Comparable<Object> {
 		return sort;
 	}
 
-	private void extractNameToForenameAndSurename() {
+	public void extractNameToForenameAndSurename() {
 		forename = "";
 		surname = "";
 		int i = 0;
@@ -187,7 +187,7 @@ public class Player implements Comparable<Object> {
 
 	}
 
-	private void extractForenameAndSurenameToName() {
+	public void extractForenameAndSurenameToName() {
 
 		name = forename + " " + surname;
 
@@ -216,11 +216,11 @@ public class Player implements Comparable<Object> {
 		this.kuerzel = kuerzel;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-		extractNameToForenameAndSurename();
-		extractNameToKuerzel();
-	}
+	// public void setName(String name) {
+	// this.name = name;
+	// extractNameToForenameAndSurename();
+	// extractNameToKuerzel();
+	// }
 
 	public void setPartie(Game[] partie) {
 		this.partie = partie;

@@ -46,13 +46,14 @@ public class ActionListenerFileMenuControl implements ActionListener {
 		turnierAnsicht = new TurnierAnsicht(mainControl);
 
 		mainControl.getHauptPanel().addChangeListener(turnierAnsicht);
-		new FileHandler();
 	}
+
+	
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == newdbButton) {
-
+			
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
 				String filename = JOptionPane.showInputDialog(null, Messages.getString("NaviController.5"), //$NON-NLS-1$
@@ -63,7 +64,8 @@ public class ActionListenerFileMenuControl implements ActionListener {
 					filename += ".ktv"; //$NON-NLS-1$
 					File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 					JFileChooser savefile = new JFileChooser(path);
-					FileFilter filter = new FileNameExtensionFilter(Messages.getString("NaviController.8"), "ktv"); //$NON-NLS-1$ //$NON-NLS-2$
+					FileFilter filter = new FileNameExtensionFilter(Messages.getString("NaviController.8"), "ktv");
+					// $NON-NLS-1$ //$NON-NLS-2$
 					savefile.addChoosableFileFilter(filter);
 					savefile.setFileFilter(filter);
 					savefile.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -89,7 +91,8 @@ public class ActionListenerFileMenuControl implements ActionListener {
 							SQLControl sqlC = new SQLControl();
 							sqlC.createAllTables();
 							// mainControl.datenbankMenueView(true);
-							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.11"), //$NON-NLS-1$
+							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.11"),
+									// $NON-NLS-1$
 									Messages.getString("NaviController.12"), //$NON-NLS-1$
 									JOptionPane.INFORMATION_MESSAGE);
 							this.mainControl.setNeuesTurnier(false);
@@ -110,12 +113,14 @@ public class ActionListenerFileMenuControl implements ActionListener {
 
 							naviView.updateUI();
 						} catch (IOException e) {
-							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.13")); //$NON-NLS-1$
+							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.13"));
+							// $NON-NLS-1$
 						} catch (SQLException e) {
 							mainControl.fileSQLError();
 						}
 					} else if (sf == JFileChooser.CANCEL_OPTION) {
-						JOptionPane.showMessageDialog(null, Messages.getString("NaviController.14")); //$NON-NLS-1$
+						JOptionPane.showMessageDialog(null, Messages.getString("NaviController.14"));
+						// $NON-NLS-1$
 					}
 				}
 			}

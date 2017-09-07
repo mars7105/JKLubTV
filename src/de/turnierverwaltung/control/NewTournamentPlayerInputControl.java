@@ -94,7 +94,8 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		String name = ""; //$NON-NLS-1$
+		String foreName = ""; //$NON-NLS-1$
+		String surName = "";
 		String kuerzel = ""; //$NON-NLS-1$
 		String dwz = ""; //$NON-NLS-1$
 		int age = 0;
@@ -116,7 +117,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 					if (testForDoubles(i) == true) {
 
 						for (int y = 0; y < sAnzahl; y++) {
-							if (spielerEingabeView[i].getSpielerTextfield()[y].getText().equals("Spielfrei")) {
+							if (spielerEingabeView[i].getSurnameTextfield()[y].getText().equals("Spielfrei")) {
 								correctName = false;
 							} else {
 								correctName = true;
@@ -124,14 +125,16 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 							}
 
 							if (correctName == true) {
-								name = spielerEingabeView[i].getSpielerTextfield()[y].getText();
+								foreName = spielerEingabeView[i].getForenameTextfield()[y].getText();
+								surName = spielerEingabeView[i].getSurnameTextfield()[y].getText();
 								kuerzel = spielerEingabeView[i].getKuerzelTextfield()[y].getText();
 								dwz = spielerEingabeView[i].getDwzTextfield()[y].getText();
 								spielerID = spielerEingabeView[i].getSpielerID()[y];
 								age = spielerEingabeView[i].getTextComboBoxAge()[y].getSelectedIndex();
 
 								spieler[counter] = new Player();
-								spieler[counter].setName(name);
+								spieler[counter].setForename(foreName);
+								spieler[counter].setSurname(surName);
 								spieler[counter].setKuerzel(kuerzel);
 								spieler[counter].setDwz(dwz);
 								spieler[counter].setAge(age);
@@ -175,7 +178,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 			}
 			for (int s = 0; s < spielerAnzahl[i]; s++) {
 				if (arg0.getSource() == spielerEingabeView[i].getSpielerSuche()[s]) {
-					JTextField field = spielerEingabeView[i].getSpielerTextfield()[s];
+					JTextField field = spielerEingabeView[i].getSurnameTextfield()[s];
 					@SuppressWarnings("unchecked")
 					JComboBox<String> box = spielerEingabeView[i].getSpielerSuche()[s];
 
@@ -189,7 +192,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 					textField = field.getText();
 					while (li.hasNext()) {
 						temp = li.next();
-						if (textField.regionMatches(true, 0, temp.getName(), 0, textField.length())) {
+						if (textField.regionMatches(true, 0, temp.getSurname(), 0, textField.length())) {
 							dwz = temp.getDwz();
 							kuerzel = temp.getKuerzel();
 							spielerID = temp.getSpielerId();
@@ -229,9 +232,9 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 	public void keyPressed(KeyEvent e) {
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			for (int s = 0; s < spielerAnzahl[i]; s++)
-				if (e.getSource() == spielerEingabeView[i].getSpielerTextfield()[s]) {
+				if (e.getSource() == spielerEingabeView[i].getSurnameTextfield()[s]) {
 					spielerEingabeView[i].getSpielerSuche()[s].removeActionListener(this);
-					spielerEingabeView[i].getSpielerTextfield()[s].removeKeyListener(this);
+					spielerEingabeView[i].getSurnameTextfield()[s].removeKeyListener(this);
 
 					spielerEingabeView[i].getSpielerSuche()[s].removeAllItems();
 
@@ -241,20 +244,20 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 					String textField = ""; //$NON-NLS-1$
 					String labels = ""; //$NON-NLS-1$
-					textField = spielerEingabeView[i].getSpielerTextfield()[s].getText() + e.getKeyChar();
+					textField = spielerEingabeView[i].getSurnameTextfield()[s].getText() + e.getKeyChar();
 					while (li.hasNext()) {
 						temp = li.next();
 
-						if (textField.regionMatches(true, 0, temp.getName(), 0, textField.length())) {
-							labels = temp.getName();
+						if (textField.regionMatches(true, 0, temp.getSurname(), 0, textField.length())) {
+							labels = temp.getSurname();
 							spielerEingabeView[i].getSpielerSuche()[s].addItem(labels);
 
 						}
 
 					}
 					spielerEingabeView[i].getSpielerSuche()[s].addActionListener(this);
-					spielerEingabeView[i].getSpielerTextfield()[s].addKeyListener(this);
-					if (spielerEingabeView[i].getSpielerTextfield()[s].getText().length() == 0) {
+					spielerEingabeView[i].getSurnameTextfield()[s].addKeyListener(this);
+					if (spielerEingabeView[i].getSurnameTextfield()[s].getText().length() == 0) {
 						suchAnzeige2(i);
 					}
 
@@ -302,9 +305,9 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 				for (int y = 0; y < spieler.length; y++) {
 					if (i != y) {
 
-						if (spieler[i].getName().equals(spieler[y].getName())) {
+						if (spieler[i].getSurname().equals(spieler[y].getSurname())) {
 							zName++;
-							spieler[y].setName(spieler[y].getName() + "_" + new Integer(zName).toString());
+							spieler[y].setSurname(spieler[y].getSurname() + "_" + new Integer(zName).toString());
 
 							stc.updateOneSpieler(spieler[y]);
 							loop = true;
@@ -332,11 +335,11 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 			String labels = ""; //$NON-NLS-1$
 			while (li.hasNext()) {
 				temp = li.next();
-				labels = temp.getName();
+				labels = temp.getSurname();
 				spielerEingabeView[index].getSpielerSuche()[i].addItem(labels);
 			}
 			spielerEingabeView[index].getSpielerSuche()[i].addActionListener(this);
-			spielerEingabeView[index].getSpielerTextfield()[i].addKeyListener(this);
+			spielerEingabeView[index].getSurnameTextfield()[i].addKeyListener(this);
 
 		}
 	}
@@ -345,17 +348,17 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 	private void suchAnzeige2(int index) {
 		for (int i = 0; i < spielerAnzahl[index]; i++) {
 			spielerEingabeView[index].getSpielerSuche()[i].removeActionListener(this);
-			spielerEingabeView[index].getSpielerTextfield()[i].removeKeyListener(this);
+			spielerEingabeView[index].getSurnameTextfield()[i].removeKeyListener(this);
 			Player temp = null;
 			ListIterator<Player> li = alleSpieler.listIterator();
 			String labels = ""; //$NON-NLS-1$
 			while (li.hasNext()) {
 				temp = li.next();
-				labels = temp.getName();
+				labels = temp.getSurname();
 				spielerEingabeView[index].getSpielerSuche()[i].addItem(labels);
 			}
 			spielerEingabeView[index].getSpielerSuche()[i].addActionListener(this);
-			spielerEingabeView[index].getSpielerTextfield()[i].addKeyListener(this);
+			spielerEingabeView[index].getSurnameTextfield()[i].addKeyListener(this);
 		}
 	}
 

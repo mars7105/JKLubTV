@@ -30,7 +30,7 @@ public interface SpielerDAO {
 
 	public ArrayList<Player> getAllSpieler() throws SQLException;
 
-	public int insertSpieler(String spielerName, String spielerDWZ, String spielerKuerzel, int age) throws SQLException;
+	public int insertSpieler(String name, String foreName, String surName,String spielerDWZ, String spielerKuerzel, int age) throws SQLException;
 
 	public ArrayList<Player> selectAllSpieler(int idGruppe) throws SQLException;
 

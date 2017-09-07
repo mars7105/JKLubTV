@@ -174,7 +174,7 @@ public class PairingsTables {
 				spielerneu[i] = spieler[i];
 			}
 			spielerneu[spielerAnzahl] = new Player();
-			spielerneu[spielerAnzahl].setName("Spielfrei");
+			spielerneu[spielerAnzahl].setSurname("Spielfrei");
 			spielerneu[spielerAnzahl].setKuerzel("SF");
 			spielerneu[spielerAnzahl].setDwz("0000");
 			spielerneu[spielerAnzahl].setSpielerId(TournamentConstants.SPIELFREI_ID);
