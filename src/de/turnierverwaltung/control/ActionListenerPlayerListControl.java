@@ -2,17 +2,20 @@ package de.turnierverwaltung.control;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.sql.SQLException;
 
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.NewPlayerView;
 
-public class ActionListenerPlayerListControl implements ActionListener {
+public class ActionListenerPlayerListControl implements ActionListener, FocusListener {
 	private MainControl mainControl;
 	private NewPlayerView spielerHinzufuegenView;
 	private NaviView naviView;
 	private DSBDWZControl dewisDialogControl;
+	private Player neuerSpieler;
 
 	public ActionListenerPlayerListControl(MainControl mainControl) {
 		super();
@@ -23,12 +26,14 @@ public class ActionListenerPlayerListControl implements ActionListener {
 		naviView.getSpielerImport().addActionListener(this);
 		naviView.getSpielerDEWISSearchButton().addActionListener(this);
 		dewisDialogControl = new DSBDWZControl(mainControl);
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (spielerHinzufuegenView != null) {
 			if (arg0.getSource() == spielerHinzufuegenView.getOkButton()) {
+
 				try {
 					String forename = spielerHinzufuegenView.getTextFieldForeName().getText();
 					String surname = spielerHinzufuegenView.getTextFieldSurName().getText();
@@ -36,7 +41,7 @@ public class ActionListenerPlayerListControl implements ActionListener {
 						String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
 						String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
 						int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
-						Player neuerSpieler = new Player();
+						neuerSpieler = new Player();
 						neuerSpieler.setForename(forename);
 						neuerSpieler.setSurname(surname);
 						neuerSpieler.extractForenameAndSurenameToName();
@@ -98,6 +103,7 @@ public class ActionListenerPlayerListControl implements ActionListener {
 
 			spielerHinzufuegenView.getOkButton().addActionListener(this);
 			spielerHinzufuegenView.getCancelButton().addActionListener(this);
+			spielerHinzufuegenView.getTextFieldKuerzel().addFocusListener(this);
 			mainControl.setEnabled(false);
 		}
 	}
@@ -117,4 +123,20 @@ public class ActionListenerPlayerListControl implements ActionListener {
 		spielerHinzufuegenView.getCancelButton().addActionListener(this);
 		mainControl.setEnabled(false);
 	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		String forename = spielerHinzufuegenView.getTextFieldForeName().getText();
+		String surname = spielerHinzufuegenView.getTextFieldSurName().getText();
+		String kuerzel = forename.substring(0, 1) + surname.substring(0, 1);
+		spielerHinzufuegenView.getTextFieldKuerzel().setText(kuerzel);
+
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
