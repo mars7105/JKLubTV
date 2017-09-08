@@ -50,6 +50,7 @@ public class PlayerListControl implements ActionListener {
 		hauptPanel = this.mainControl.getHauptPanel();
 		this.mainControl.getNaviView().getDateiPanel().setVisible(true);
 		this.mainControl.getNaviView().getSpielerListePanel().setVisible(true);
+
 	}
 
 	@Override
@@ -69,6 +70,7 @@ public class PlayerListControl implements ActionListener {
 						spieler.get(spielerIndex).setKuerzel(kuerzel);
 						spieler.get(spielerIndex).setDwz(dwz);
 						spieler.get(spielerIndex).setAge(age);
+						spieler.get(spielerIndex).extractForenameAndSurenameToName();
 						SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
 						stc.updateOneSpieler(spieler.get(spielerIndex));
@@ -98,8 +100,7 @@ public class PlayerListControl implements ActionListener {
 				}
 
 			}
-		}
-		if (spielerEditierenView != null) {
+
 			if (arg0.getSource() == spielerEditierenView.getCancelButton()) {
 				mainControl.setEnabled(true);
 				spielerEditierenView.closeWindow();
@@ -170,9 +171,18 @@ public class PlayerListControl implements ActionListener {
 
 		int index = 0;
 		// Collections.sort(spieler, new SortName());
-
+		Boolean updateListe = false;
 		for (Player player : spieler) {
 
+			if (player.getName().length() > 0 && player.getForename().length() < 1) {
+				player.extractNameToForenameAndSurename();
+				spielerTableControl.updateOneSpieler(player);
+				updateListe = true;
+			}
+			if (player.getName().length() < 1) {
+				player.extractForenameAndSurenameToName();
+				updateListe = true;
+			}
 			spielerLadenView.makeSpielerZeile(player, index);
 			spielerLadenView.getSpielerBearbeitenButton()[index].addActionListener(this);
 			spielerLadenView.getSpielerLoeschenButton()[index].addActionListener(this);
@@ -182,6 +192,9 @@ public class PlayerListControl implements ActionListener {
 			spielerLadenView.getSpielerListe().setSelectedIndex(selectedTab);
 		}
 		spielerLadenView.updateUI();
+		if (updateListe) {
+			updateSpielerListe();
+		}
 	}
 
 	private void testPlayerListForDoubles() throws SQLException {
@@ -193,11 +206,12 @@ public class PlayerListControl implements ActionListener {
 				int zName = 0;
 				for (int y = 0; y < spieler.size(); y++) {
 					if (i != y) {
-						if (spieler.get(i).getSurname().equals(spieler.get(y).getSurname())) {
+						if (spieler.get(i).getName().equals(spieler.get(y).getName())) {
 							zName++;
 							spieler.get(y)
 									.setSurname(spieler.get(y).getSurname() + "_" + new Integer(zName).toString());
 
+							spieler.get(y).extractForenameAndSurenameToName();
 							stc.updateOneSpieler(spieler.get(y));
 							loop = true;
 						}

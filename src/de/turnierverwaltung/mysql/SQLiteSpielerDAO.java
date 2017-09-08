@@ -116,6 +116,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 				if (foreName.length() == 0 && surName.length() == 0) {
 					player = new Player(idSpieler, name, kuerzel, dwz, age);
+
 				} else {
 					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, age);
 				}
@@ -177,14 +178,19 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 			while (rs.next()) {
 				int idSpieler = rs.getInt("idSpieler");
-				// String name = rs.getString("Name");
+				String name = rs.getString("Name");
 				String foreName = rs.getString("Forename");
 				String surName = rs.getString("Surname");
 				String kuerzel = rs.getString("kuerzel");
 				String dwz = rs.getString("dwz");
 				int age = rs.getInt("Age");
+				if (foreName.length() == 0 && surName.length() == 0) {
+					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age));
 
-				spielerListe.add(new Player(idSpieler, foreName, surName, kuerzel, dwz, age));
+				} else {
+					spielerListe.add(new Player(idSpieler, foreName, surName, kuerzel, dwz, age));
+				}
+
 			}
 			stmt.close();
 

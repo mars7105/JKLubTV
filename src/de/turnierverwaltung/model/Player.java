@@ -67,8 +67,8 @@ public class Player implements Comparable<Object> {
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
-		extractNameToForenameAndSurename();
-		extractNameToKuerzel();
+//		extractNameToForenameAndSurename();
+//		extractNameToKuerzel();
 	}
 
 	/**
@@ -216,11 +216,10 @@ public class Player implements Comparable<Object> {
 		this.kuerzel = kuerzel;
 	}
 
-	// public void setName(String name) {
-	// this.name = name;
-	// extractNameToForenameAndSurename();
-	// extractNameToKuerzel();
-	// }
+	public void setName(String name) {
+		this.name = name;
+
+	}
 
 	public void setPartie(Game[] partie) {
 		this.partie = partie;

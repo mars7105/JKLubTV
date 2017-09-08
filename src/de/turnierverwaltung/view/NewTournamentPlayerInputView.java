@@ -80,9 +80,12 @@ public class NewTournamentPlayerInputView extends JPanel {
 			spielerID[i] = -1;
 			line = new JPanel();
 			line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
-			JLabel label = new JLabel(" " + new Integer(i + 1).toString() //$NON-NLS-1$
-					+ Messages.getString("SpielerEingabeView.5") + Messages.getString("SpielerEingabeView.6")); //$NON-NLS-1$ //$NON-NLS-2$
+			JLabel label1 = new JLabel(
+					" " + new Integer(i + 1).toString() + Messages.getString("SpielerEingabeView.14"));
 			forenameTextfield[i] = new JTextField(10);
+			JLabel label2 = new JLabel(
+					" " + new Integer(i + 1).toString() + Messages.getString("SpielerEingabeView.15"));
+
 			surnameTextfield[i] = new JTextField(10);
 			spielerSuche[i] = new JComboBox();
 			Dimension dimTextField = new Dimension(170, 30);
@@ -92,18 +95,19 @@ public class NewTournamentPlayerInputView extends JPanel {
 			spielerSuche[i].addItem(Messages.getString("SpielerEingabeView.7")); //$NON-NLS-1$
 
 			line.add(spielerSuche[i]);
-			line.add(label);
+			line.add(label1);
 			line.add(forenameTextfield[i]);
+			line.add(label2);
 			line.add(surnameTextfield[i]);
 
-			JLabel label2 = new JLabel(Messages.getString("SpielerEingabeView.8")); //$NON-NLS-1$
+			JLabel label3 = new JLabel(Messages.getString("SpielerEingabeView.8")); //$NON-NLS-1$
 			kuerzelTextfield[i] = new JTextField(10);
-			line.add(label2);
+			line.add(label3);
 			line.add(kuerzelTextfield[i]);
 
-			JLabel label3 = new JLabel(Messages.getString("SpielerEingabeView.9")); //$NON-NLS-1$
+			JLabel label4 = new JLabel(Messages.getString("SpielerEingabeView.9")); //$NON-NLS-1$
 			dwzTextfield[i] = new JTextField(10);
-			line.add(label3);
+			line.add(label4);
 			line.add(dwzTextfield[i]);
 
 			String[] ageStrings = { Messages.getString("SpielerEingabeView.10"), //$NON-NLS-1$

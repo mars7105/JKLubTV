@@ -84,8 +84,6 @@ public class NewPlayerView extends JDialog {
 		return textFieldKuerzel;
 	}
 
-	
-
 	public void setCancelButton(JButton cancelButton) {
 		this.cancelButton = cancelButton;
 	}
@@ -101,8 +99,6 @@ public class NewPlayerView extends JDialog {
 	public void setTextFieldKuerzel(JTextField textFieldKuerzel) {
 		this.textFieldKuerzel = textFieldKuerzel;
 	}
-
-	
 
 	public JTextField getTextFieldForeName() {
 		return textFieldForeName;
@@ -136,9 +132,9 @@ public class NewPlayerView extends JDialog {
 		this.textFieldDwz = new JTextField(15);
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// centerPane.setBackground(new Color(249, 222, 112));
-		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.3"))); //$NON-NLS-1$
+		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.12"))); 
 		centerPane.add(textFieldForeName);
-		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.3"))); //$NON-NLS-1$
+		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.13"))); 
 		centerPane.add(textFieldSurName);
 		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.4"))); //$NON-NLS-1$
 		centerPane.add(textFieldKuerzel);
