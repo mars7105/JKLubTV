@@ -57,8 +57,6 @@ public class DSBDWZClub {
 				String forename = player.getFirstName();
 				String surname = player.getLastName();
 				String zpsNumber = Integer.toString(player.getClubMembershipByZps(zps).getZps());
-				System.out.println(zpsNumber);
-				// String mgl = player.getClubMembershipByZps();
 				String kuerzel = player.getFirstName().substring(0, 1) + player.getLastName().substring(0, 1);
 				try {
 					dwz = new Integer(player.getDwz()).toString();
