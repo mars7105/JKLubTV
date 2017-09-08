@@ -56,7 +56,7 @@ public class DSBDWZClub {
 
 				String forename = player.getFirstName();
 				String surname = player.getLastName();
-				String zpsNumber = player.getClubMembershipByZps(zps).getZps().toString();
+				String zpsNumber = Integer.toString(player.getClubMembershipByZps(zps).getZps());
 				System.out.println(zpsNumber);
 				// String mgl = player.getClubMembershipByZps();
 				String kuerzel = player.getFirstName().substring(0, 1) + player.getLastName().substring(0, 1);
@@ -78,14 +78,14 @@ public class DSBDWZClub {
 				spieler.add(new de.turnierverwaltung.model.Player(id, forenameUTF8, surenameUTF8, kuerzelUTF8, dwz, age,
 						zps, zpsNumber));
 			}
-
+			if (spieler.isEmpty()) {
+				spieler = null;
+			}
+			return spieler;
 		} catch (IOException e) {
-			spieler = null;
+			return null;
 		}
-		if (spieler.isEmpty()) {
-			spieler = null;
-		}
-		return spieler;
+
 	}
 
 }

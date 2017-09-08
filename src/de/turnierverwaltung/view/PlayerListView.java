@@ -16,10 +16,12 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,6 +30,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 import de.turnierverwaltung.model.Player;
 
@@ -93,27 +97,40 @@ public class PlayerListView extends JPanel {
 	}
 
 	public void makeSpielerZeile(Player spieler, int index) {
+		Border raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		line = new JPanel();
 
 		line.setLayout(new FlowLayout(FlowLayout.LEFT));
-
-		JPanel playerLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		JPanel mainLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		mainLine.setBorder(raisedetched);
+		JPanel playerLine = new JPanel();
+		playerLine.setLayout(new BoxLayout(playerLine, BoxLayout.PAGE_AXIS));
 		playerLine.setPreferredSize(new Dimension(350, 50));
+		playerLine.setBackground(Color.WHITE);
+
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		String lineText1 = spieler.getName();
+		String lineText2 = "";
+		if (spieler.getDsbZPSNumber().length() > 0) {
+			lineText2 += "DWZ:" + spieler.getDwz() + "  ZPS:" + spieler.getDsbZPSNumber() + "-"
+					+ spieler.getDsbMGLNumber();
+		} else {
+			lineText2 += "DWZ:" + spieler.getDwz();
+		}
+		JLabel col1 = new JLabel(lineText1);
+		playerLine.add(col1);
+		JLabel col2 = new JLabel(lineText2);
+		playerLine.add(col2);
 
-		JLabel sname = new JLabel(Messages.getString("SpielerLadenView.3") + spieler.getName()); //$NON-NLS-1$
-		playerLine.add(sname);
+		mainLine.add(playerLine);
 
-		JLabel dwz = new JLabel(
-				Messages.getString("SpielerLadenView.4") + spieler.getDwz() + " " + spieler.getDsbZPSNumber()); //$NON-NLS-1$
-		playerLine.add(dwz);
-		line.add(playerLine);
 		spielerBearbeitenButton[index] = new JButton(Messages.getString("SpielerLadenView.5"), userProperties); //$NON-NLS-1$
 
 		buttonLine.add(spielerBearbeitenButton[index]);
 		spielerLoeschenButton[index] = new JButton(Messages.getString("SpielerLadenView.6"), userDelete); //$NON-NLS-1$
 		buttonLine.add(spielerLoeschenButton[index]);
-		line.add(buttonLine);
+		mainLine.add(buttonLine);
+		line.add(mainLine);
 		centerPane.add(line);
 		centerPane.add(new JSeparator());
 

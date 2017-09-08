@@ -36,7 +36,8 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public void createSpielerTable() throws SQLException {
 		String sql = "CREATE TABLE spieler (idSpieler INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-				+ " Name VARCHAR, Forename VARCHAR, Surname VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, ZPS VARCHAR, MGL VARCHAR, Age INTEGER)" + ";";
+				+ " Name VARCHAR, Forename VARCHAR, Surname VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, ZPS VARCHAR, MGL VARCHAR, Age INTEGER)"
+				+ ";";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -110,14 +111,16 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				String surName = rs.getString("SurName");
 				String kuerzel = rs.getString("kuerzel");
 				String dwz = rs.getString("dwz");
+				String zps = rs.getString("ZPS");
+				String mgl = rs.getString("MGL");
 				int age = rs.getInt("Age");
 				Player player = null;
 
 				if (foreName.length() == 0 && surName.length() == 0) {
-					player = new Player(idSpieler, name, kuerzel, dwz, age, "", "");
+					player = new Player(idSpieler, name, kuerzel, dwz, age, zps, mgl);
 
 				} else {
-					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, age, "", "");
+					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, age, zps, mgl);
 				}
 				spielerListe.add(player);
 			}
@@ -130,13 +133,13 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	}
 
 	@Override
-	public int insertSpieler(String name, String foreName, String surName, String dwz, String kuerzel, int age)
-			throws SQLException {
+	public int insertSpieler(String name, String foreName, String surName, String dwz, String kuerzel, String zps,
+			String mgl, int age) throws SQLException {
 
 		String sql;
 		int id = -1;
 
-		sql = "Insert into spieler (Name, Forename, Surname, DWZ, Kuerzel, Age) values (?,?,?,?,?,?)" + ";";
+		sql = "Insert into spieler (Name, Forename, Surname, DWZ, Kuerzel, ZPS, MGL, Age) values (?,?,?,?,?,?,?,?)" + ";";
 
 		if (this.dbConnect != null) {
 
@@ -147,7 +150,9 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 			preStm.setString(3, surName);
 			preStm.setString(4, dwz);
 			preStm.setString(5, kuerzel);
-			preStm.setInt(6, age);
+			preStm.setString(6, zps);
+			preStm.setString(7, mgl);
+			preStm.setInt(8, age);
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
@@ -182,14 +187,18 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				String surName = rs.getString("Surname");
 				String kuerzel = rs.getString("kuerzel");
 				String dwz = rs.getString("dwz");
+				String zps = rs.getString("ZPS");
+				String mgl = rs.getString("MGL");
 				int age = rs.getInt("Age");
+				Player player = null;
+
 				if (foreName.length() == 0 && surName.length() == 0) {
-					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age, "", ""));
+					player = new Player(idSpieler, name, kuerzel, dwz, age, zps, mgl);
 
 				} else {
-					spielerListe.add(new Player(idSpieler, foreName, surName, kuerzel, dwz, age, "", ""));
+					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, age, zps, mgl);
 				}
-
+				spielerListe.add(player);
 			}
 			stmt.close();
 
@@ -202,7 +211,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	public boolean updateSpieler(Player spieler) throws SQLException {
 		boolean ok = false;
 		String sql = "update spieler set Name = ?,Forename = ?,Surname = ?, Kuerzel = ?"
-				+ ", DWZ = ?, Age = ? where idSpieler=" + spieler.getSpielerId() + ";";
+				+ ", DWZ = ?, ZPS = ?, MGL = ?, Age = ? where idSpieler=" + spieler.getSpielerId() + ";";
 		if (this.dbConnect != null) {
 			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
 			preStm.setString(1, spieler.getName());
@@ -210,7 +219,9 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 			preStm.setString(3, spieler.getSurname());
 			preStm.setString(4, spieler.getKuerzel());
 			preStm.setString(5, spieler.getDwz());
-			preStm.setInt(6, spieler.getAge());
+			preStm.setString(6, spieler.getDsbZPSNumber());
+			preStm.setString(7, spieler.getDsbMGLNumber());
+			preStm.setInt(8, spieler.getAge());
 
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);

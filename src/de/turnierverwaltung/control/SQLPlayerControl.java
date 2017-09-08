@@ -79,13 +79,15 @@ public class SQLPlayerControl {
 		String spielerName = spieler.getName();
 		String spielerDWZ = spieler.getDwz();
 		String spielerKuerzel = spieler.getKuerzel();
+		String spielerZPS = spieler.getDsbZPSNumber();
+		String spielerMGL = spieler.getDsbMGLNumber();
 		int age = spieler.getAge();
 
 		int spielerId = -1;
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
 
 		spielerId = mySQLSpielerDAO.insertSpieler(spielerName, spieler.getForename(), spieler.getSurname(), spielerDWZ,
-				spielerKuerzel, age);
+				spielerKuerzel, spielerZPS, spielerMGL, age);
 
 		return spielerId;
 	}
@@ -98,6 +100,8 @@ public class SQLPlayerControl {
 		String[] spielerSurName = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
 		String[] spielerDWZ = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
 		String[] spielerKuerzel = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+		String[] spielerZPS = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+		String[] spielerMGL = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
 		int[] spielerAge = new int[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
 		turnierId = turnier.getTurnierId();
 		int spielerAnzahl = turnier.getGruppe()[gruppe].getSpielerAnzahl();
@@ -109,9 +113,11 @@ public class SQLPlayerControl {
 				spielerName[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getSurname();
 				spielerDWZ[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getDwz();
 				spielerKuerzel[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getKuerzel();
+				spielerZPS[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getDsbZPSNumber();
+				spielerMGL[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getDsbMGLNumber();
 				spielerAge[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getAge();
 				spielerId[y] = mySQLSpielerDAO.insertSpieler(spielerName[y], spielerForeName[y], spielerSurName[y],
-						spielerDWZ[y], spielerKuerzel[y], spielerAge[y]);
+						spielerDWZ[y], spielerKuerzel[y], spielerZPS[y], spielerMGL[y], spielerAge[y]);
 				turnier.getGruppe()[gruppe].getSpieler()[y].setSpielerId(spielerId[y]);
 				eintragGespeichert = true;
 			}

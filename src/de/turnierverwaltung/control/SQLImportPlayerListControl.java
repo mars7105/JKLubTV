@@ -69,7 +69,8 @@ public class SQLImportPlayerListControl {
 			while (li.hasNext()) {
 				oneSpieler = li.next();
 				mySQLSpielerDAO.insertSpieler(oneSpieler.getName(), oneSpieler.getForename(), oneSpieler.getSurname(),
-						oneSpieler.getDwz(), oneSpieler.getKuerzel(), oneSpieler.getAge());
+						oneSpieler.getDwz(), oneSpieler.getKuerzel(), oneSpieler.getDsbZPSNumber(),
+						oneSpieler.getDsbMGLNumber(), oneSpieler.getAge());
 			}
 
 		} else {

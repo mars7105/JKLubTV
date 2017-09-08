@@ -16,10 +16,12 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -28,6 +30,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 public class TournamentListView extends JPanel {
 	/**
@@ -108,13 +112,15 @@ public class TournamentListView extends JPanel {
 	}
 
 	public void makeTurnierZeile(String turnierName, String startDatum, String endDatum) {
+		Border raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+
 		line = new JPanel();
 		line.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// line.setPreferredSize(new Dimension(700,50));
-
+		JPanel mainLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		mainLine.setBorder(raisedetched);
 		JPanel turnierLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		turnierLine.setPreferredSize(new Dimension(350, 50));
-
+		turnierLine.setBackground(Color.WHITE);
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		// buttonLine.setPreferredSize(new Dimension(300,50));
 
@@ -129,9 +135,9 @@ public class TournamentListView extends JPanel {
 		buttonLine.add(turnierLoeschenButton[anzahlElemente]);
 		JLabel tName = new JLabel(Messages.getString("TurnierListeLadenView.7") + turnierName); //$NON-NLS-1$
 		turnierLine.add(tName);
-
-		line.add(turnierLine);
-		line.add(buttonLine);
+		mainLine.add(turnierLine);
+		mainLine.add(buttonLine);
+		line.add(mainLine);
 		centerPane.add(line);
 		centerPane.add(new JSeparator());
 		anzahlElemente++;

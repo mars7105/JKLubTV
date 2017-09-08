@@ -136,7 +136,8 @@ public class MySQLSpielerDAO implements SpielerDAO {
 	}
 
 	@Override
-	public int insertSpieler(String name, String foreName, String surName, String dwz, String kuerzel, int age) {
+	public int insertSpieler(String name, String foreName, String surName, String dwz, String kuerzel, String zps,
+			String mgl, int age) throws SQLException {
 
 		String sql;
 		int id = -1;
@@ -223,4 +224,5 @@ public class MySQLSpielerDAO implements SpielerDAO {
 		// TODO Auto-generated method stub
 
 	}
+
 }
