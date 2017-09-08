@@ -30,14 +30,13 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	public SQLiteSpielerDAO() {
 		this.dbConnect = null;
 		this.dbConnect = SQLiteDAOFactory.createConnection();
-		alterTableAge();
-		alterTableName();
+
 	}
 
 	@Override
 	public void createSpielerTable() throws SQLException {
 		String sql = "CREATE TABLE spieler (idSpieler INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-				+ " Name VARCHAR, Forename VARCHAR, Surname VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, Age INTEGER)" + ";";
+				+ " Name VARCHAR, Forename VARCHAR, Surname VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, ZPS VARCHAR, MGL VARCHAR, Age INTEGER)" + ";";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -115,10 +114,10 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				Player player = null;
 
 				if (foreName.length() == 0 && surName.length() == 0) {
-					player = new Player(idSpieler, name, kuerzel, dwz, age);
+					player = new Player(idSpieler, name, kuerzel, dwz, age, "", "");
 
 				} else {
-					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, age);
+					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, age, "", "");
 				}
 				spielerListe.add(player);
 			}
@@ -185,10 +184,10 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				String dwz = rs.getString("dwz");
 				int age = rs.getInt("Age");
 				if (foreName.length() == 0 && surName.length() == 0) {
-					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age));
+					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, age, "", ""));
 
 				} else {
-					spielerListe.add(new Player(idSpieler, foreName, surName, kuerzel, dwz, age));
+					spielerListe.add(new Player(idSpieler, foreName, surName, kuerzel, dwz, age, "", ""));
 				}
 
 			}
@@ -222,6 +221,11 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 		}
 		return ok;
+	}
+
+	public void alterTables() {
+		alterTableAge();
+		alterTableName();
 	}
 
 	private void alterTableAge() {
@@ -290,6 +294,38 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				e.printStackTrace();
 			}
 
+		}
+		if (!isFieldExist("ZPS", false)) {
+			String sql1 = "ALTER TABLE spieler ADD ZPS VARCHAR DEFAULT ''" + ";";
+			Statement stmt1;
+			if (this.dbConnect != null) {
+				try {
+					// create a database connection
+					stmt1 = this.dbConnect.createStatement();
+					stmt1.setQueryTimeout(30); // set timeout to 30 sec.
+					stmt1.executeUpdate(sql1);
+					stmt1.close();
+
+				} catch (SQLException e1) {
+
+				}
+			}
+		}
+		if (!isFieldExist("MGL", false)) {
+			String sql1 = "ALTER TABLE spieler ADD MGL VARCHAR DEFAULT ''" + ";";
+			Statement stmt1;
+			if (this.dbConnect != null) {
+				try {
+					// create a database connection
+					stmt1 = this.dbConnect.createStatement();
+					stmt1.setQueryTimeout(30); // set timeout to 30 sec.
+					stmt1.executeUpdate(sql1);
+					stmt1.close();
+
+				} catch (SQLException e1) {
+
+				}
+			}
 		}
 	}
 

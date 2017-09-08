@@ -104,7 +104,8 @@ public class PlayerListView extends JPanel {
 		JLabel sname = new JLabel(Messages.getString("SpielerLadenView.3") + spieler.getName()); //$NON-NLS-1$
 		playerLine.add(sname);
 
-		JLabel dwz = new JLabel(Messages.getString("SpielerLadenView.4") + spieler.getDwz()); //$NON-NLS-1$
+		JLabel dwz = new JLabel(
+				Messages.getString("SpielerLadenView.4") + spieler.getDwz() + " " + spieler.getDsbZPSNumber()); //$NON-NLS-1$
 		playerLine.add(dwz);
 		line.add(playerLine);
 		spielerBearbeitenButton[index] = new JButton(Messages.getString("SpielerLadenView.5"), userProperties); //$NON-NLS-1$

@@ -17,6 +17,7 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
 
 import javax.swing.DefaultCellEditor;
@@ -64,11 +65,13 @@ public class CrossTableView extends JPanel {
 		comboBox.addItem("-"); //$NON-NLS-1$
 		comboBox.addItem("+"); //$NON-NLS-1$
 		setColumnWidth(abstand);
+		this.setBackground(Color.white);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		// table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setRowHeight(30);
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
+		sPane.setBackground(Color.white);
 
 		JPanel southPanel = new JPanel();
 		southPanel.setLayout(new BorderLayout());

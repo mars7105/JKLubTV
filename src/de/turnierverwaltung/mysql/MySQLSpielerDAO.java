@@ -122,7 +122,7 @@ public class MySQLSpielerDAO implements SpielerDAO {
 					String kuerzel = rs.getString("kuerzel");
 					String dwz = rs.getString("dwz");
 
-					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, 0));
+					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, 0, "", ""));
 				}
 				stmt.close();
 
@@ -184,7 +184,7 @@ public class MySQLSpielerDAO implements SpielerDAO {
 					String name = rs.getString("Name");
 					String kuerzel = rs.getString("kuerzel");
 					String dwz = rs.getString("dwz");
-					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, 0));
+					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, 0, "", ""));
 				}
 				stmt.close();
 
@@ -216,5 +216,11 @@ public class MySQLSpielerDAO implements SpielerDAO {
 			}
 		}
 		return ok;
+	}
+
+	@Override
+	public void alterTables() {
+		// TODO Auto-generated method stub
+
 	}
 }

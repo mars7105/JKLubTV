@@ -35,4 +35,6 @@ public interface SpielerDAO {
 	public ArrayList<Player> selectAllSpieler(int idGruppe) throws SQLException;
 
 	public boolean updateSpieler(Player spieler) throws SQLException;
+	
+	public void alterTables();
 }

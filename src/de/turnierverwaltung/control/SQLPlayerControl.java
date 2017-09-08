@@ -39,6 +39,7 @@ public class SQLPlayerControl {
 		this.mainControl = mainControl;
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		mySQLSpielerDAO = daoFactory.getSpielerDAO();
+		mySQLSpielerDAO.alterTables();
 	}
 
 	public ArrayList<Player> getAllSpieler() throws SQLException {
@@ -57,8 +58,8 @@ public class SQLPlayerControl {
 			spieler = mySQLSpielerDAO.selectAllSpieler(turnier.getGruppe()[i].getGruppeId());
 			if (spieler.size() % 2 == 1) {
 				Player spielfrei = new Player(TournamentConstants.SPIELFREI_ID,
-						Messages.getString("SpielerTableControl.0"), Messages.getString("SpielerTableControl.1"), "0", //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
-						0);
+						Messages.getString("SpielerTableControl.0"), Messages.getString("SpielerTableControl.1"), "0",
+						0, "", "");
 				spieler.add(spielfrei);
 			}
 

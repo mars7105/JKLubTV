@@ -33,6 +33,8 @@ public class Player implements Comparable<Object> {
 	private int age;
 	private String forename;
 	private String surname;
+	private String dsbZPSNumber;
+	private String dsbMGLNumber;
 	private Boolean showPlayer;
 
 	public Player() {
@@ -47,6 +49,8 @@ public class Player implements Comparable<Object> {
 		this.soberg = 0;
 		this.platz = 1;
 		this.spielerId = -1;
+		this.dsbZPSNumber = "";
+		this.dsbMGLNumber = "";
 		this.showPlayer = true;
 	}
 
@@ -58,7 +62,7 @@ public class Player implements Comparable<Object> {
 	 * @param dwz
 	 * @param age
 	 */
-	public Player(int id, String name, String kuerzel, String dwz, int age) {
+	public Player(int id, String name, String kuerzel, String dwz, int age, String zps, String mgl) {
 		this.spielerId = id;
 		this.name = name;
 		this.forename = "";
@@ -69,9 +73,11 @@ public class Player implements Comparable<Object> {
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
+		this.dsbZPSNumber = zps;
+		this.dsbMGLNumber = mgl;
 		this.showPlayer = true;
-//		extractNameToForenameAndSurename();
-//		extractNameToKuerzel();
+		// extractNameToForenameAndSurename();
+		// extractNameToKuerzel();
 	}
 
 	/**
@@ -83,7 +89,8 @@ public class Player implements Comparable<Object> {
 	 * @param dwz
 	 * @param age
 	 */
-	public Player(int id, String forename, String surname, String kuerzel, String dwz, int age) {
+	public Player(int id, String forename, String surname, String kuerzel, String dwz, int age, String zps,
+			String mgl) {
 		this.spielerId = id;
 		this.forename = forename;
 		this.surname = surname;
@@ -94,6 +101,8 @@ public class Player implements Comparable<Object> {
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
+		this.dsbZPSNumber = zps;
+		this.dsbMGLNumber = mgl;
 		this.showPlayer = true;
 		extractForenameAndSurenameToName();
 		extractNameToKuerzel();
@@ -300,6 +309,22 @@ public class Player implements Comparable<Object> {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+	}
+
+	public String getDsbZPSNumber() {
+		return dsbZPSNumber;
+	}
+
+	public void setDsbZPSNumber(String dsbZPSNumber) {
+		this.dsbZPSNumber = dsbZPSNumber;
+	}
+
+	public String getDsbMGLNumber() {
+		return dsbMGLNumber;
+	}
+
+	public void setDsbMGLNumber(String dsbMGLNumber) {
+		this.dsbMGLNumber = dsbMGLNumber;
 	}
 
 }

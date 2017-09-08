@@ -22,17 +22,19 @@ public class DSBDWZClub {
 	private List<de.fahsel.dewis.Player> players;
 	private ArrayList<de.turnierverwaltung.model.Player> spieler;
 	private String zps;
-/**
- * 
- * @param zps
- */
+
+	/**
+	 * 
+	 * @param zps
+	 */
 	public DSBDWZClub(String zps) {
 		this.zps = zps;
 	}
-/**
- * 
- * @return
- */
+
+	/**
+	 * 
+	 * @return
+	 */
 	public ArrayList<de.turnierverwaltung.model.Player> getSpieler() {
 		try {
 			// Erzeugt dei DewisFacade über die auf die API des Schachbundes
@@ -52,8 +54,11 @@ public class DSBDWZClub {
 			for (de.fahsel.dewis.Player player : players) {
 				int id = -1;
 
-				String name = player.getFirstName().substring(0, 1) + ". " + player.getLastName();
-
+				String forename = player.getFirstName();
+				String surname = player.getLastName();
+				String zpsNumber = player.getClubMembershipByZps(zps).getZps().toString();
+				System.out.println(zpsNumber);
+				// String mgl = player.getClubMembershipByZps();
 				String kuerzel = player.getFirstName().substring(0, 1) + player.getLastName().substring(0, 1);
 				try {
 					dwz = new Integer(player.getDwz()).toString();
@@ -63,12 +68,15 @@ public class DSBDWZClub {
 				int age = 2;
 				// test
 				Charset UTF8_CHARSET = Charset.forName("UTF-8");
-				byte[] bname = name.getBytes();
-				String nameUTF8 = new String(bname, UTF8_CHARSET);
+				byte[] bforename = forename.getBytes();
+				String forenameUTF8 = new String(bforename, UTF8_CHARSET);
+				byte[] bsurname = surname.getBytes();
+				String surenameUTF8 = new String(bsurname, UTF8_CHARSET);
 				byte[] bkuerzel = kuerzel.getBytes();
 				String kuerzelUTF8 = new String(bkuerzel, UTF8_CHARSET);
 				// Test
-				spieler.add(new de.turnierverwaltung.model.Player(id, nameUTF8, kuerzelUTF8, dwz, age));
+				spieler.add(new de.turnierverwaltung.model.Player(id, forenameUTF8, surenameUTF8, kuerzelUTF8, dwz, age,
+						zps, zpsNumber));
 			}
 
 		} catch (IOException e) {
