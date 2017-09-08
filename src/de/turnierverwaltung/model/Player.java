@@ -33,6 +33,7 @@ public class Player implements Comparable<Object> {
 	private int age;
 	private String forename;
 	private String surname;
+	private Boolean showPlayer;
 
 	public Player() {
 		this.name = "";
@@ -46,6 +47,7 @@ public class Player implements Comparable<Object> {
 		this.soberg = 0;
 		this.platz = 1;
 		this.spielerId = -1;
+		this.showPlayer = true;
 	}
 
 	/**
@@ -67,6 +69,7 @@ public class Player implements Comparable<Object> {
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
+		this.showPlayer = true;
 //		extractNameToForenameAndSurename();
 //		extractNameToKuerzel();
 	}
@@ -91,6 +94,7 @@ public class Player implements Comparable<Object> {
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
+		this.showPlayer = true;
 		extractForenameAndSurenameToName();
 		extractNameToKuerzel();
 
@@ -144,6 +148,14 @@ public class Player implements Comparable<Object> {
 
 	public double getSoberg() {
 		return soberg;
+	}
+
+	public Boolean getShowPlayer() {
+		return showPlayer;
+	}
+
+	public void setShowPlayer(Boolean showPlayer) {
+		this.showPlayer = showPlayer;
 	}
 
 	/**

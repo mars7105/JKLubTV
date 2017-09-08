@@ -137,17 +137,28 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 								spieler[counter].setKuerzel(kuerzel);
 								spieler[counter].setDwz(dwz);
 								spieler[counter].setAge(age);
+								spieler[counter].setShowPlayer(false);
 								if (spielerID >= 0) {
 									spieler[counter].setSpielerId(spielerID);
 
 									stc.updateOneSpieler(spieler[counter]);
+									Player temp = null;
 
+									ListIterator<Player> li = alleSpieler.listIterator();
+									while (li.hasNext()) {
+										temp = li.next();
+										if (spielerID == temp.getSpielerId()) {
+											li.remove();
+										}
+
+									}
 								} else {
 									spieler[counter].setSpielerId(stc.insertOneSpieler(spieler[counter]));
 								}
 							}
 						}
 						testPlayerListForDoubles();
+
 						gruppe[i].setSpieler(spieler);
 						// Arrays.sort(spieler);
 						spielerEingabeView[i].removeAll();
@@ -342,6 +353,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 				temp = li.next();
 				labelName = temp.getName();
 				spielerEingabeView[index].getSpielerSuche()[i].addItem(labelName);
+
 			}
 			spielerEingabeView[index].getSpielerSuche()[i].addActionListener(this);
 			spielerEingabeView[index].getSurnameTextfield()[i].addKeyListener(this);
@@ -361,6 +373,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 				temp = li.next();
 				labelName = temp.getName();
 				spielerEingabeView[index].getSpielerSuche()[i].addItem(labelName);
+
 			}
 			spielerEingabeView[index].getSpielerSuche()[i].addActionListener(this);
 			spielerEingabeView[index].getSurnameTextfield()[i].addKeyListener(this);
