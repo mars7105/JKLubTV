@@ -28,7 +28,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
@@ -122,7 +121,6 @@ public class TournamentListView extends JPanel {
 		turnierLine.setPreferredSize(new Dimension(350, 50));
 		turnierLine.setBackground(Color.WHITE);
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		// buttonLine.setPreferredSize(new Dimension(300,50));
 
 		turnierLadeButton[anzahlElemente] = new JButton(Messages.getString("TurnierListeLadenView.4"), turnierLaden); //$NON-NLS-1$
 		buttonLine.add(turnierLadeButton[anzahlElemente]);
@@ -139,7 +137,7 @@ public class TournamentListView extends JPanel {
 		mainLine.add(buttonLine);
 		line.add(mainLine);
 		centerPane.add(line);
-		centerPane.add(new JSeparator());
+		// centerPane.add(new JSeparator());
 		anzahlElemente++;
 		int anzahlItems = 0;
 		if (turnierTabAnzahl == 0) {
@@ -156,7 +154,7 @@ public class TournamentListView extends JPanel {
 		}
 		if (anzahlElemente % anzahlItems == 0 || anzahlElemente == anzahlTurniere) {
 			int endIndex = anzahlElemente;
-			int startIndex = endIndex + 1 - centerPane.getComponentCount() / 2;
+			int startIndex = endIndex + 1 - centerPane.getComponentCount();
 			if (startIndex < 1) {
 				startIndex = 1;
 			}

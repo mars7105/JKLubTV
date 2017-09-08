@@ -28,7 +28,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.border.Border;
 import javax.swing.border.EtchedBorder;
@@ -132,7 +131,7 @@ public class PlayerListView extends JPanel {
 		mainLine.add(buttonLine);
 		line.add(mainLine);
 		centerPane.add(line);
-		centerPane.add(new JSeparator());
+		// centerPane.add(new JSeparator());
 
 		anzahlElemente++;
 		int anzahlItems = 0;
@@ -150,7 +149,7 @@ public class PlayerListView extends JPanel {
 		}
 		if (anzahlElemente % anzahlItems == 0 || anzahlElemente == spielerAnzahl) {
 			int endIndex = anzahlElemente;
-			int startIndex = endIndex + 1 - centerPane.getComponentCount() / 2;
+			int startIndex = endIndex + 1 - centerPane.getComponentCount();
 			if (startIndex < 1) {
 				startIndex = 1;
 			}
