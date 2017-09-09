@@ -188,30 +188,33 @@ public class Player implements Comparable<Object> {
 	}
 
 	public void extractNameToForenameAndSurename() {
-		forename = "";
-		surname = "";
-		int i = 0;
+		if (spielerId > TournamentConstants.SPIELFREI_ID) {
+			forename = "";
+			surname = "";
+			int i = 0;
 
-		for (String retval : name.split("\\s")) {
-			if (i == 0) {
-				forename = retval;
+			for (String retval : name.split("\\s")) {
+				if (i == 0) {
+					forename = retval;
+				}
+
+				if (i == 1) {
+					surname = retval;
+				}
+				if (i > 1) {
+					surname += " " + retval;
+				}
+				i++;
 			}
 
-			if (i == 1) {
-				surname = retval;
-			}
-			if (i > 1) {
-				surname += " " + retval;
-			}
-			i++;
 		}
-
 	}
 
 	public void extractForenameAndSurenameToName() {
+		if (spielerId > TournamentConstants.SPIELFREI_ID) {
+			name = forename + " " + surname;
 
-		name = forename + " " + surname;
-
+		}
 	}
 
 	private void extractNameToKuerzel() {

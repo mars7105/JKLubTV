@@ -96,6 +96,7 @@ public class PlayerListView extends JPanel {
 	}
 
 	public void makeSpielerZeile(Player spieler, int index) {
+
 		Border raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
 		line = new JPanel();
 
@@ -155,8 +156,10 @@ public class PlayerListView extends JPanel {
 			}
 			JPanel panel = new JPanel();
 			panel.setLayout(new BorderLayout());
+
 			panel.add(centerPane, BorderLayout.NORTH);
 			JScrollPane playerScrollPane = new JScrollPane();
+
 			playerScrollPane.setViewportView(panel);
 			playerScrollPane.setAlignmentY(TOP_ALIGNMENT);
 			spielerListe.addTab(startIndex + " " + Messages.getString("SpielerLadenView.7") + " " + endIndex,
