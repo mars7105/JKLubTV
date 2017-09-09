@@ -35,19 +35,26 @@ public class SQLPlayerControl {
 	private SpielerDAO mySQLSpielerDAO;
 	int turnierId;
 	int spielerId[];
+	private PropertiesControl prop;
 
 	public SQLPlayerControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		mySQLSpielerDAO = daoFactory.getSpielerDAO();
-		mySQLSpielerDAO.alterTables();
+		prop = mainControl.getPropertiesControl();
+		Boolean dbUpdated = prop.getDatabaseUpdated();
+		if (dbUpdated == false) {
+			mySQLSpielerDAO.alterTables();
+			prop.setDatabaseUpdated(true);
+			prop.writeProperties();
+		}
 	}
 
 	public ArrayList<Player> getAllSpieler() throws SQLException {
 		ArrayList<Player> spieler;
 
 		spieler = mySQLSpielerDAO.getAllSpieler();
-		PropertiesControl prop = mainControl.getPropertiesControl();
+
 		int cutForename = Integer.parseInt(prop.getCutForename());
 		int cutSurname = Integer.parseInt(prop.getCutSurname());
 		ListIterator<Player> li = spieler.listIterator();
@@ -75,7 +82,6 @@ public class SQLPlayerControl {
 						0, "", "");
 				spieler.add(spielfrei);
 			}
-			PropertiesControl prop = mainControl.getPropertiesControl();
 			int cutForename = Integer.parseInt(prop.getCutForename());
 			int cutSurname = Integer.parseInt(prop.getCutSurname());
 

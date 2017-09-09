@@ -48,12 +48,11 @@ public class ActionListenerFileMenuControl implements ActionListener {
 		mainControl.getHauptPanel().addChangeListener(turnierAnsicht);
 	}
 
-	
-
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
+		PropertiesControl prop = mainControl.getPropertiesControl();
 		if (arg0.getSource() == newdbButton) {
-			
+
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
 				String filename = JOptionPane.showInputDialog(null, Messages.getString("NaviController.5"), //$NON-NLS-1$
@@ -61,11 +60,12 @@ public class ActionListenerFileMenuControl implements ActionListener {
 						JOptionPane.PLAIN_MESSAGE);
 
 				if (filename != null) {
-					filename += ".ktv"; //$NON-NLS-1$
+					filename += ".ktv";
 					File path = new File(mainControl.getPropertiesControl().getDefaultPath());
+					
+					
 					JFileChooser savefile = new JFileChooser(path);
 					FileFilter filter = new FileNameExtensionFilter(Messages.getString("NaviController.8"), "ktv");
-					// $NON-NLS-1$ //$NON-NLS-2$
 					savefile.addChoosableFileFilter(filter);
 					savefile.setFileFilter(filter);
 					savefile.setDialogType(JFileChooser.SAVE_DIALOG);
@@ -82,36 +82,35 @@ public class ActionListenerFileMenuControl implements ActionListener {
 
 							// true for rewrite, false for override
 							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
-							mainControl.getPropertiesControl().setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
+							prop.setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
 							mainControl.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
 									+ SQLiteDAOFactory.getDB_PATH());
-							mainControl.getPropertiesControl().setDefaultPath(file.getParent());
+							prop.setDefaultPath(file.getParent());
 							mainControl.getEigenschaftenControl().getEigenschaftenView()
 									.setOpenDefaultPathLabel(file.getParent());
 							SQLControl sqlC = new SQLControl();
 							sqlC.createAllTables();
-							// mainControl.datenbankMenueView(true);
 							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.11"),
 									// $NON-NLS-1$
 									Messages.getString("NaviController.12"), //$NON-NLS-1$
 									JOptionPane.INFORMATION_MESSAGE);
 							this.mainControl.setNeuesTurnier(false);
 							mainControl.setTurnierTableControl(new SQLTournamentControl(mainControl));
-							// mainControl.getTurnierTableControl()
-							// .loadTurnierListe();
+							
 							mainControl.setSpielerEditierenControl(new PlayerListControl(mainControl));
 							mainControl.getSpielerEditierenControl().updateSpielerListe();
 							mainControl.setTurnierListeLadenControl(
 									new ActionListenerTournamentItemsControl(this.mainControl));
 							mainControl.getTurnierListeLadenControl().loadTurnierListe();
 
-							mainControl.getPropertiesControl().setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
-							mainControl.getPropertiesControl().writeProperties();
+							prop.setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
 							turnierAnsicht = new TurnierAnsicht(mainControl);
 
 							mainControl.getHauptPanel().addChangeListener(turnierAnsicht);
 
 							naviView.updateUI();
+							prop.setDatabaseUpdated(true);
+							prop.writeProperties();
 						} catch (IOException e) {
 							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.13"));
 							// $NON-NLS-1$
@@ -133,7 +132,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 			if (abfrage == 0) {
 
 				// Create a file chooser
-				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
+				File path = new File(prop.getDefaultPath());
 
 				JFileChooser fc = new JFileChooser(path);
 				FileFilter filter = new FileNameExtensionFilter(Messages.getString("NaviController.15"), //$NON-NLS-1$
@@ -160,11 +159,11 @@ public class ActionListenerFileMenuControl implements ActionListener {
 
 						mainControl.getTurnierListeLadenControl().loadTurnierListe();
 
-						mainControl.getPropertiesControl().setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
-						mainControl.getPropertiesControl().setDefaultPath(file.getParent());
+						prop.setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
+						prop.setDefaultPath(file.getParent());
 						mainControl.getEigenschaftenControl().getEigenschaftenView()
 								.setOpenDefaultPathLabel(file.getParent());
-						mainControl.getPropertiesControl().writeProperties();
+						prop.writeProperties();
 						naviView.setPathToDatabase(new JLabel(SQLiteDAOFactory.getDB_PATH()));
 
 						mainControl.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
