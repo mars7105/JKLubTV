@@ -221,6 +221,22 @@ public class Player implements Comparable<Object> {
 
 	}
 
+	public void cutForename(int count) {
+		if (forename.length() > count) {
+			forename = new String(forename.substring(0, count));
+		}
+		if (count < 3) {
+			forename += ".";
+		}
+	}
+
+	public void cutSurname(int count) {
+		if (surname.length() > count) {
+			surname = new String(surname.substring(0, count));
+		}
+
+	}
+
 	public int getSpielerId() {
 		return spielerId;
 	}

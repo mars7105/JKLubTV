@@ -28,7 +28,7 @@ public class SpinnerView extends JPanel {
 	}
 
 	public String getValue() {
-		return spinner.getValue().toString();
+		return (String) spinner.getValue();
 	}
 
 	public void setValue(String value) {

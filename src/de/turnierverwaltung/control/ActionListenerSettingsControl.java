@@ -57,6 +57,9 @@ public class ActionListenerSettingsControl {
 						.setSelected(mainControl.getPropertiesControl().getNoFolgeDWZ());
 				eigenschaftenView.getSpielerListeAuswahlBox().setSelectedIndex(ppC.getSpielerProTab());
 				eigenschaftenView.getTurnierListeAuswahlBox().setSelectedIndex(ppC.getTurniereProTab());
+				eigenschaftenView.getForenameLengthBox().setValue(ppC.getCutForename());
+				eigenschaftenView.getSurnameLengthBox().setValue(ppC.getCutSurname());
+				eigenschaftenView.getCheckBoxohneDWZ().setSelected(ppC.getNoDWZ());
 				if (eigenschaftenView.getCheckBoxohneDWZ().isSelected() == true) {
 					eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(true);
 					eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(false);
@@ -102,7 +105,8 @@ public class ActionListenerSettingsControl {
 				ppC.setTableComumnRound(esControl.getEigenschaftenView().getRoundTextField().getText());
 				ppC.checkCrossTableColumnForDoubles();
 				ppC.checkMeetingTableColumnForDoubles();
-
+				ppC.setCutForename(esControl.getEigenschaftenView().getForenameLengthBox().getValue());
+				ppC.setCutSurname(esControl.getEigenschaftenView().getSurnameLengthBox().getValue());
 				ppC.writeProperties();
 				esControl.setTableColumns();
 
@@ -189,7 +193,6 @@ public class ActionListenerSettingsControl {
 
 			}
 		});
-		
 
 	}
 }

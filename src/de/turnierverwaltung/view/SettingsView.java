@@ -785,6 +785,22 @@ public class SettingsView extends JPanel {
 		this.okButton = okButton;
 	}
 
+	public SpinnerView getForenameLengthBox() {
+		return forenameLengthBox;
+	}
+
+	public void setForenameLengthBox(SpinnerView forenameLengthBox) {
+		this.forenameLengthBox = forenameLengthBox;
+	}
+
+	public SpinnerView getSurnameLengthBox() {
+		return surnameLengthBox;
+	}
+
+	public void setSurnameLengthBox(SpinnerView surnameLengthBox) {
+		this.surnameLengthBox = surnameLengthBox;
+	}
+
 	class OpenUrlAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {

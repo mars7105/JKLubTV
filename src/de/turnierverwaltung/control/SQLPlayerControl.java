@@ -17,6 +17,7 @@ package de.turnierverwaltung.control;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 import javax.swing.JOptionPane;
 
@@ -46,6 +47,17 @@ public class SQLPlayerControl {
 		ArrayList<Player> spieler;
 
 		spieler = mySQLSpielerDAO.getAllSpieler();
+		PropertiesControl prop = mainControl.getPropertiesControl();
+		int cutForename = Integer.parseInt(prop.getCutForename());
+		int cutSurname = Integer.parseInt(prop.getCutSurname());
+		ListIterator<Player> li = spieler.listIterator();
+
+		while (li.hasNext()) {
+			Player temp = li.next();
+			temp.cutForename(cutForename);
+			temp.cutSurname(cutSurname);
+			temp.extractForenameAndSurenameToName();
+		}
 
 		return spieler;
 
@@ -53,6 +65,7 @@ public class SQLPlayerControl {
 
 	public void getSpieler() throws SQLException {
 		this.turnier = this.mainControl.getTurnier();
+
 		ArrayList<Player> spieler = new ArrayList<Player>();
 		for (int i = 0; i < this.turnier.getAnzahlGruppen(); i++) {
 			spieler = mySQLSpielerDAO.selectAllSpieler(turnier.getGruppe()[i].getGruppeId());
@@ -62,9 +75,16 @@ public class SQLPlayerControl {
 						0, "", "");
 				spieler.add(spielfrei);
 			}
+			PropertiesControl prop = mainControl.getPropertiesControl();
+			int cutForename = Integer.parseInt(prop.getCutForename());
+			int cutSurname = Integer.parseInt(prop.getCutSurname());
 
 			Player[] gamers = new Player[spieler.size()];
 			for (int y = 0; y < spieler.size(); y++) {
+				Player temp = spieler.get(y);
+				temp.cutForename(cutForename);
+				temp.cutSurname(cutSurname);
+				temp.extractForenameAndSurenameToName();
 				gamers[y] = spieler.get(y);
 			}
 			this.turnier.getGruppe()[i].setSpieler(gamers);

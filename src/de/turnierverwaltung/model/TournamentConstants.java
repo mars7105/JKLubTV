@@ -59,6 +59,8 @@ public class TournamentConstants {
 	public static final int TAB_PLAYER_LIST = 0;
 	public static final int TAB_TOURNAMENTS_LIST = 1;
 	public static final int TAB_ACTIVE_TOURNAMENT = 2;
+	public static final String CUT_FORENAME = "20";
+	public static final String CUT_SURNAME = "20";
 	public static String TABLE_COLUMN_PLAYER = Messages.getString("TurnierKonstanten.0");
 	public static String TABLE_COLUMN_OLD_DWZ = Messages.getString("TurnierKonstanten.1");
 	public static String TABLE_COLUMN_NEW_DWZ = Messages.getString("TurnierKonstanten.2");

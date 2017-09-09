@@ -183,6 +183,9 @@ public class PlayerListControl implements ActionListener {
 				player.extractForenameAndSurenameToName();
 				updateListe = true;
 			}
+
+			
+
 			spielerLadenView.makeSpielerZeile(player, index);
 			spielerLadenView.getSpielerBearbeitenButton()[index].addActionListener(this);
 			spielerLadenView.getSpielerLoeschenButton()[index].addActionListener(this);

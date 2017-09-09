@@ -49,6 +49,8 @@ public class SettingsControl {
 		eigenschaftenView.getSbbTextField().setText(ppC.getTableComumnSonnebornBerger());
 		eigenschaftenView.getResultTextField().setText(ppC.getTableComumnResult());
 		eigenschaftenView.getRoundTextField().setText(ppC.getTableComumnRound());
+		eigenschaftenView.getForenameLengthBox().setValue(ppC.getCutForename());
+		eigenschaftenView.getSurnameLengthBox().setValue(ppC.getCutSurname());
 	}
 
 
