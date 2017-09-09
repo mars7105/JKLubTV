@@ -25,7 +25,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 
 import de.turnierverwaltung.ZahlGroesserAlsN;
 import de.turnierverwaltung.ZahlKleinerAlsN;
@@ -34,6 +33,7 @@ import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.NewTournamentPlayerCountlView;
+import de.turnierverwaltung.view.SpinnerView;
 import de.turnierverwaltung.view.TabbedPaneView;
 
 public class NewTournamentPlayerCountControl implements ActionListener {
@@ -54,7 +54,7 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 	private NewTournamentPlayerInputControl spielerEingabeControl;
 	private MainControl mainControl;
 	private NewTournamentPlayerCountlView[] spielerAnzahlView;
-	private JTextField[] spielerAnzahlTextfield;
+	private SpinnerView[] spielerAnzahlTextfield;
 	private JTabbedPane hauptPanel;
 	private TabbedPaneView tabbedPaneView;
 	private Tournament turnier;
@@ -77,7 +77,7 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 		this.spielerAnzahl = new int[gruppenAnzahl];
 		title = mainControl.getGruppenView().getGruppenName();
 		spielerAnzahlView = new NewTournamentPlayerCountlView[gruppenAnzahl];
-		spielerAnzahlTextfield = new JTextField[gruppenAnzahl];
+		spielerAnzahlTextfield = new SpinnerView[gruppenAnzahl];
 		okButton = new JButton[gruppenAnzahl];
 		spieler = new Player[gruppenAnzahl][];
 		for (int i = 0; i < gruppenAnzahl; i++) {
@@ -88,7 +88,7 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 			okButton[i].addActionListener(this);
 			tabbedPaneView.getTabbedPane().addTab(title[i], spielerAnzahlView[i]);
 			gruppe[i].setSpieler(spieler[i]);
-			spielerAnzahlTextfield[i].setText("");
+			// spielerAnzahlTextfield[i].setText("");
 			spielerAnzahlTextfield[i].grabFocus();
 		}
 		// tabbedPaneView.updateUI();
@@ -100,7 +100,7 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		tabbedPaneView.getTabbedPane().setSelectedIndex(0);
-		spielerAnzahlTextfield[0].setText("");
+		// spielerAnzahlTextfield[0].setText("");
 		spielerAnzahlTextfield[0].grabFocus();
 	}
 
@@ -129,19 +129,19 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 		} catch (NumberFormatException e) {
 			spielerAnzahl[fehlerIndex] = 0;
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.1")); //$NON-NLS-1$
-			spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
+			// spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
 			spielerAnzahlTextfield[fehlerIndex].grabFocus();
 		} catch (ZahlKleinerAlsN e) {
 			spielerAnzahl[fehlerIndex] = 0;
 
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.3")); //$NON-NLS-1$
-			spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
+			// spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
 			spielerAnzahlTextfield[fehlerIndex].grabFocus();
 		} catch (ZahlGroesserAlsN e) {
 			spielerAnzahl[fehlerIndex] = 0;
 
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.5")); //$NON-NLS-1$
-			spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
+			// spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
 			spielerAnzahlTextfield[fehlerIndex].grabFocus();
 		}
 
@@ -149,7 +149,7 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 
 	public int getSpielerAnzahl(int indexI) throws ZahlKleinerAlsN, NumberFormatException, ZahlGroesserAlsN {
 
-		spielerAnzahl[indexI] = pruefeObZahlKleinerDreiIst(Integer.parseInt(spielerAnzahlTextfield[indexI].getText()));
+		spielerAnzahl[indexI] = pruefeObZahlKleinerDreiIst(Integer.parseInt(spielerAnzahlTextfield[indexI].getValue()));
 
 		return spielerAnzahl[indexI];
 	}
@@ -177,11 +177,11 @@ public class NewTournamentPlayerCountControl implements ActionListener {
 		this.spielerAnzahlView = spielerAnzahlView;
 	}
 
-	public JTextField[] getSpielerAnzahlTextfield() {
+	public SpinnerView[] getSpielerAnzahlTextfield() {
 		return spielerAnzahlTextfield;
 	}
 
-	public void setSpielerAnzahlTextfield(JTextField[] spielerAnzahlTextfield) {
+	public void setSpielerAnzahlTextfield(SpinnerView[] spielerAnzahlTextfield) {
 		this.spielerAnzahlTextfield = spielerAnzahlTextfield;
 	}
 

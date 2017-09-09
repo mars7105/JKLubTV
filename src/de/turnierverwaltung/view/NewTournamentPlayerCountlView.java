@@ -20,11 +20,9 @@ import java.awt.FlowLayout;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -36,7 +34,7 @@ public class NewTournamentPlayerCountlView extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPanel;
 	private JButton okButton;
-	private JTextField anzahlSpielerTextField;
+	private SpinnerView anzahlSpielerTextField;
 
 	public NewTournamentPlayerCountlView(String title) {
 
@@ -55,10 +53,18 @@ public class NewTournamentPlayerCountlView extends JPanel {
 		
 		okButton = buttonPane.getOkButton();
 
-		JLabel label = new JLabel(Messages.getString("SpielerAnzahlView.2")); //$NON-NLS-1$
-		anzahlSpielerTextField = new JTextField(5);
+//		JLabel label = new JLabel(Messages.getString("SpielerAnzahlView.2")); //$NON-NLS-1$
+		String[] listString = new String[20];
+		for (int i = 0; i < 18; i++) {
+			listString[i] = new Integer(i + 3).toString();
+
+		}
+		anzahlSpielerTextField = new SpinnerView(listString, 0, Messages.getString("SpielerAnzahlView.2"));
+
+		// gruppenAnzahlTextField.setColumns(10);
+//		anzahlSpielerTextField = new JTextField(5);
 		anzahlSpielerTextField.grabFocus();
-		centerPane.add(label);
+//		centerPane.add(label);
 		centerPane.add(anzahlSpielerTextField);
 		contentPanel.add(centerPane);
 		contentPanel.add(buttonPane);
@@ -79,7 +85,7 @@ public class NewTournamentPlayerCountlView extends JPanel {
 
 	}
 
-	public JTextField getAnzahlSpielerTextField() {
+	public SpinnerView getAnzahlSpielerTextField() {
 		return anzahlSpielerTextField;
 	}
 
@@ -87,7 +93,7 @@ public class NewTournamentPlayerCountlView extends JPanel {
 		return okButton;
 	}
 
-	public void setAnzahlSpielerTextField(JTextField anzahlSpielerTextField) {
+	public void setAnzahlSpielerTextField(SpinnerView anzahlSpielerTextField) {
 		this.anzahlSpielerTextField = anzahlSpielerTextField;
 	}
 

@@ -85,6 +85,8 @@ public class SettingsView extends JPanel {
 	private JTextField resultTextField;
 	private JTextField meetingTextField;
 	private JButton okButton;
+	private SpinnerView forenameLengthBox;
+	private SpinnerView surnameLengthBox;
 
 	/**
 	 * Create the panel.
@@ -536,11 +538,7 @@ public class SettingsView extends JPanel {
 		titleView.setFlowLayoutLeft();
 
 		htmlAll.add(titleView);
-		// JPanel title = new JPanel();
-		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// title.add(new JLabel(Messages.getString("EigenschaftenView.2")));
-		// //$NON-NLS-1$
-		// htmlAll.add(title);
+
 		htmlAll.add(htmlPanel);
 
 		// ohne DWZ
@@ -552,11 +550,9 @@ public class SettingsView extends JPanel {
 		htmlPanel.add(labelHeader);
 
 		htmlAll.add(htmlPanel);
-		JPanel all = new JPanel();
-		all.setLayout(new BorderLayout());
-		all.add(htmlAll, BorderLayout.NORTH);
+
 		// ohne Folge DWZ
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.4")); //$NON-NLS-1$
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.3")); //$NON-NLS-1$
 		checkBoxohneFolgeDWZ = new JCheckBox();
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -564,6 +560,23 @@ public class SettingsView extends JPanel {
 		htmlPanel.add(labelHeader);
 
 		htmlAll.add(htmlPanel);
+
+		// buchstaben anzahl
+		String[] listString = new String[20];
+		for (int i = 0; i < 20; i++) {
+			listString[i] = new Integer(i + 1).toString();
+
+		}
+		// forename length
+		forenameLengthBox = new SpinnerView(listString, listString.length - 1,
+				Messages.getString("EigenschaftenView.39"));
+		htmlAll.add(forenameLengthBox);
+
+		// surname length
+		surnameLengthBox = new SpinnerView(listString, listString.length - 1,
+				Messages.getString("EigenschaftenView.40"));
+		htmlAll.add(surnameLengthBox);
+
 		htmlAll.add(new JSeparator());
 
 	}

@@ -202,7 +202,7 @@ public class NewTournamentControl implements ActionListener {
 
 		try {
 
-			gruppenAnzahl = pruefeObZahlKleinerEinsIst(new Integer(turnierView.getGruppenAnzahlTextField().getText()));
+			gruppenAnzahl = pruefeObZahlKleinerEinsIst(new Integer(turnierView.getGruppenAnzahlTextField().getValue()));
 
 			if (turnierName.length() > 0 && startDatum.length() > 0 && endDatum.length() > 0 && gruppenAnzahl > 0) {
 				makeTurnier();
@@ -213,15 +213,15 @@ public class NewTournamentControl implements ActionListener {
 
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("TurnierControl.2")); //$NON-NLS-1$
-			turnierView.getGruppenAnzahlTextField().setText(""); //$NON-NLS-1$
+			turnierView.getGruppenAnzahlTextField().resetValue(); // $NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		} catch (ZahlKleinerAlsN e) {
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("TurnierControl.4")); //$NON-NLS-1$
-			turnierView.getGruppenAnzahlTextField().setText(""); //$NON-NLS-1$
+			turnierView.getGruppenAnzahlTextField().resetValue(); // $NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		} catch (ZahlGroesserAlsN e) {
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("TurnierControl.6")); //$NON-NLS-1$
-			turnierView.getGruppenAnzahlTextField().setText(""); //$NON-NLS-1$
+			turnierView.getGruppenAnzahlTextField().resetValue(); // $NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().grabFocus();
 		}
 

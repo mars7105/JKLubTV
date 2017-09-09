@@ -293,7 +293,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 	public void makeTabbedPane(int index) throws NumberFormatException, ZahlKleinerAlsN, ZahlGroesserAlsN {
 		this.mainControl.getHauptPanel();
 
-		if (spielerAnzahlView[index].getAnzahlSpielerTextField().getText().length() > 0) {
+		if (spielerAnzahlView[index].getAnzahlSpielerTextField().getValue().length() > 0) {
 			spielerAnzahl[index] = this.mainControl.getSpielerAnzahlControl().getSpielerAnzahl(index);
 			spielerEingabeView[index] = new NewTournamentPlayerInputView(spielerAnzahl[index]);
 			okButton[index] = spielerEingabeView[index].getOkButton();

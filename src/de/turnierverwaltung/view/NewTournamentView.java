@@ -50,7 +50,7 @@ public class NewTournamentView extends JPanel {
 	private JTextField turnierNameTextField;
 	private DateChooserPanel startDatumTextField;
 	private DateChooserPanel endDatumeTextField;
-	private JTextField gruppenAnzahlTextField;
+	private SpinnerView gruppenAnzahlTextField;
 	private Tournament turnier;
 	private JButton okButton;
 	private String turnierName;
@@ -113,52 +113,57 @@ public class NewTournamentView extends JPanel {
 		panel1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		panel1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		// panel1.setBackground(new Color(249, 222, 112));
-		hauptPanel.add(panel1);
-		panel1.setLayout(new BoxLayout(panel1, BoxLayout.Y_AXIS));
+
+		panel1.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		JLabel lblTurniername = new JLabel(Messages.getString("TurnierView.8")); //$NON-NLS-1$
-		panel1.add(lblTurniername);
 
 		turnierNameTextField = new JTextField();
+		turnierNameTextField.setColumns(20);
 		panel1.add(turnierNameTextField);
-		turnierNameTextField.setColumns(10);
-
+		panel1.add(lblTurniername);
+		hauptPanel.add(panel1);
 		JPanel panel2 = new JPanel();
 		// panel2.setBackground(new Color(249, 222, 112));
-		hauptPanel.add(panel2);
-		panel2.setLayout(new BoxLayout(panel2, BoxLayout.Y_AXIS));
+
+		panel2.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		JLabel label = new JLabel(Messages.getString("TurnierView.9")); //$NON-NLS-1$
-		panel2.add(label);
 
 		startDatumTextField = new DateChooserPanel();
 		startDatumTextField.setLocale(Locale.getDefault());
 
 		panel2.add(startDatumTextField);
-
+		panel2.add(label);
+		hauptPanel.add(panel2);
 		JPanel panel3 = new JPanel();
 		// panel3.setBackground(new Color(249, 222, 112));
-		panel3.setLayout(new BoxLayout(panel3, BoxLayout.Y_AXIS));
-		hauptPanel.add(panel3);
+		panel3.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		JLabel lblEndDatum = new JLabel(Messages.getString("TurnierView.10")); //$NON-NLS-1$
-		panel3.add(lblEndDatum);
 
+		hauptPanel.add(panel3);
 		endDatumeTextField = new DateChooserPanel();
 		endDatumeTextField.setLocale(Locale.getDefault());
 		panel3.add(endDatumeTextField);
-
+		panel3.add(lblEndDatum);
 		JPanel panel4 = new JPanel();
 		// panel4.setBackground(new Color(249, 222, 112));
 		panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
 		hauptPanel.add(panel4);
 
-		JLabel lblAnzahlGruppen = new JLabel(Messages.getString("TurnierView.11")); //$NON-NLS-1$
-		panel4.add(lblAnzahlGruppen);
+		// JLabel lblAnzahlGruppen = new JLabel(Messages.getString("TurnierView.11"));
+		// //$NON-NLS-1$
+		// panel4.add(lblAnzahlGruppen);
+		// buchstaben anzahl
+		String[] listString = new String[15];
+		for (int i = 0; i < 15; i++) {
+			listString[i] = new Integer(i + 1).toString();
 
-		gruppenAnzahlTextField = new JTextField();
+		}
+		gruppenAnzahlTextField = new SpinnerView(listString, 0, Messages.getString("TurnierView.11"));
 
-		gruppenAnzahlTextField.setColumns(10);
+		// gruppenAnzahlTextField.setColumns(10);
 		panel4.add(gruppenAnzahlTextField);
 
 		ButtonPanelView buttonPane = new ButtonPanelView();
@@ -189,11 +194,11 @@ public class NewTournamentView extends JPanel {
 	}
 
 	public int getGruppenAnzahl() {
-		gruppenAnzahl = new Integer(gruppenAnzahlTextField.getText());
+		gruppenAnzahl = Integer.parseInt(gruppenAnzahlTextField.getValue());
 		return gruppenAnzahl;
 	}
 
-	public JTextField getGruppenAnzahlTextField() {
+	public SpinnerView getGruppenAnzahlTextField() {
 		return gruppenAnzahlTextField;
 	}
 
@@ -237,7 +242,7 @@ public class NewTournamentView extends JPanel {
 		this.gruppenAnzahl = gruppenAnzahl;
 	}
 
-	public void setGruppenAnzahlTextField(JTextField gruppenAnzahlTextField) {
+	public void setGruppenAnzahlTextField(SpinnerView gruppenAnzahlTextField) {
 		this.gruppenAnzahlTextField = gruppenAnzahlTextField;
 	}
 
