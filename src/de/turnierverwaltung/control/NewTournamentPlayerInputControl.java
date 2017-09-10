@@ -151,16 +151,16 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 									spieler[counter].setSpielerId(spielerID);
 
 									stc.updateOneSpieler(spieler[counter]);
-									Player temp = null;
-
-									ListIterator<Player> li = alleSpieler.listIterator();
-									while (li.hasNext()) {
-										temp = li.next();
-										if (spielerID == temp.getSpielerId()) {
-											li.remove();
-										}
-
-									}
+//									Player temp = null;
+//
+//									ListIterator<Player> li = alleSpieler.listIterator();
+//									while (li.hasNext()) {
+//										temp = li.next();
+//										if (spielerID == temp.getSpielerId()) {
+//											li.remove();
+//										}
+//
+//									}
 								} else {
 									spieler[counter].setSpielerId(stc.insertOneSpieler(spieler[counter]));
 								}
