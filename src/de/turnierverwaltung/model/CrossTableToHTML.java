@@ -112,10 +112,10 @@ public class CrossTableToHTML {
 			for (int x = 0; x < col; x++) {
 
 				String ausgabeWert = this.tabellenMatrix[reihenfolge[x]][y];
-				if (ausgabeWert != null && ausgabeWert != "" //$NON-NLS-1$
-						&& ausgabeWert != " ") { //$NON-NLS-1$
+				if (ausgabeWert != null && !ausgabeWert.equals("") // $NON-NLS-1$
+						&& !ausgabeWert.equals(" ")) { //$NON-NLS-1$
 
-					if (ausgabeWert == TournamentConstants.REMIS) {
+					if (ausgabeWert.equals(TournamentConstants.REMIS)) {
 						ausgabeWert = "&frac12;"; //$NON-NLS-1$
 					}
 
@@ -129,7 +129,6 @@ public class CrossTableToHTML {
 
 				}
 
-				// }
 			}
 			htmlString += "      </tr>\n"; //$NON-NLS-1$
 
@@ -138,10 +137,7 @@ public class CrossTableToHTML {
 			htmlString += "    </tbody>\n<tfoot><tr><td colspan='" + col + "'>" + infoString + "</td></tr></tfoot>\n";
 		}
 		htmlString += "     </table>\n"; //$NON-NLS-1$
-		// if (infoString != "") { //$NON-NLS-1$
-		// htmlString += " <div><p>" + infoString + "</p></div>\n"; //$NON-NLS-1$
-		// //$NON-NLS-2$
-		// }
+		
 		if (turnier.getOnlyTables() == false) {
 			htmlString += getHTMLFooter();
 		}
