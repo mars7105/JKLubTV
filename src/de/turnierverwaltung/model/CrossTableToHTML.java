@@ -134,7 +134,7 @@ public class CrossTableToHTML {
 			htmlString += "      </tr>\n"; //$NON-NLS-1$
 
 		}
-		if (infoString != "") {
+		if (infoString.length() > 0) {
 			htmlString += "    </tbody>\n<tfoot><tr><td colspan='" + col + "'>" + infoString + "</td></tr></tfoot>\n";
 		}
 		htmlString += "     </table>\n"; //$NON-NLS-1$
