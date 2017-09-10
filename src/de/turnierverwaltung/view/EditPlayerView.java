@@ -44,8 +44,8 @@ public class EditPlayerView extends JDialog {
 	private ButtonPanelView buttonPane;
 	private JButton addSpielerButton;
 	private JComboBox<String> textComboBoxAge;
-	private JTextField textFieldZPS;
-	private JTextField textFieldMGL;
+//	private JTextField textFieldZPS;
+//	private JTextField textFieldMGL;
 
 	public EditPlayerView(Player spieler) {
 		this.setAlwaysOnTop(true);
@@ -58,8 +58,8 @@ public class EditPlayerView extends JDialog {
 		this.textFieldSurname = new JTextField(15);
 		this.textFieldKuerzel = new JTextField(15);
 		this.textFieldDwz = new JTextField(15);
-		this.textFieldZPS = new JTextField(15);
-		this.textFieldMGL = new JTextField(15);
+//		this.textFieldZPS = new JTextField(15);
+//		this.textFieldMGL = new JTextField(15);
 		setTitle(Messages.getString("SpielerEditierenView.2")); //$NON-NLS-1$
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 
@@ -139,28 +139,28 @@ public class EditPlayerView extends JDialog {
 		centerPane.add(textComboBoxAge);
 		contentPanel.add(centerPane);
 
-		textFieldZPS.setText(spieler.getDsbZPSNumber());
-		label = new JLabel();
-		label.setPreferredSize(new Dimension(120, 10));
-		label.setText(Messages.getString("SpielerEditierenView.12")); //$NON-NLS-1$
-		centerPane = new JPanel();
-		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// centerPane.setBackground(new Color(249, 222, 112));
-		centerPane.add(label);
-		centerPane.add(textFieldZPS);
-		contentPanel.add(centerPane);
-
-		textFieldMGL.setText(spieler.getDsbMGLNumber());
-		label = new JLabel();
-		label.setPreferredSize(new Dimension(120, 10));
-		label.setText(Messages.getString("SpielerEditierenView.13")); //$NON-NLS-1$
-		centerPane = new JPanel();
-		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// centerPane.setBackground(new Color(249, 222, 112));
-		centerPane.add(label);
-		centerPane.add(textFieldMGL);
-
-		contentPanel.add(centerPane);
+//		textFieldZPS.setText(spieler.getDsbZPSNumber());
+//		label = new JLabel();
+//		label.setPreferredSize(new Dimension(120, 10));
+//		label.setText(Messages.getString("SpielerEditierenView.12")); //$NON-NLS-1$
+//		centerPane = new JPanel();
+//		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+//		// centerPane.setBackground(new Color(249, 222, 112));
+//		centerPane.add(label);
+//		centerPane.add(textFieldZPS);
+//		contentPanel.add(centerPane);
+//
+//		textFieldMGL.setText(spieler.getDsbMGLNumber());
+//		label = new JLabel();
+//		label.setPreferredSize(new Dimension(120, 10));
+//		label.setText(Messages.getString("SpielerEditierenView.13")); //$NON-NLS-1$
+//		centerPane = new JPanel();
+//		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+//		// centerPane.setBackground(new Color(249, 222, 112));
+//		centerPane.add(label);
+//		centerPane.add(textFieldMGL);
+//
+//		contentPanel.add(centerPane);
 
 		contentPanel.add(buttonPane);
 		add(contentPanel);
