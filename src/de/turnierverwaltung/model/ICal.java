@@ -1,6 +1,5 @@
 package de.turnierverwaltung.model;
 
-
 import java.io.File;
 import java.io.IOException;
 
@@ -28,7 +27,7 @@ public class ICal {
 		}
 	}
 
-	public void saveICalender(String filename)  {
+	public void saveICalender(String filename) {
 
 		File file = new File(filename);
 		try {
@@ -51,6 +50,11 @@ public class ICal {
 			cal.set(java.util.Calendar.YEAR, year);
 			cal.set(java.util.Calendar.MONTH, month);
 			cal.set(java.util.Calendar.DAY_OF_MONTH, day);
+			ev.setDateStart(cal.getTime(), false);
+			cal.set(java.util.Calendar.DAY_OF_MONTH, day + 1);
+
+			ev.setDateEnd(cal.getTime(), false);
+			ev.setSummary(event);
 
 		} else {
 
@@ -60,10 +64,12 @@ public class ICal {
 			cal.set(java.util.Calendar.YEAR, year);
 			cal.set(java.util.Calendar.MONTH, month);
 			cal.set(java.util.Calendar.DAY_OF_MONTH, day);
+			ev.setDateStart(cal.getTime(), false);
+			cal.set(java.util.Calendar.DAY_OF_MONTH, day + 1);
+			ev.setDateEnd(cal.getTime(), false);
+			ev.setSummary(event);
 
 		}
-		ev.setDateStart(cal.getTime(), false);
-		ev.setSummary(event);
 
 		return ev;
 	}
