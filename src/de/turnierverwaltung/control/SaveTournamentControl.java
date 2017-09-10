@@ -186,8 +186,8 @@ public class SaveTournamentControl {
 				}
 			}
 			if (saveOK1 && saveOK2 && saveOK4) {
-				JOptionPane.showMessageDialog(mainControl, Messages.getString("SaveTurnierControl.11") //$NON-NLS-1$
-						+ this.mainControl.getTurnier().getTurnierName() + Messages.getString("SaveTurnierControl.12")); //$NON-NLS-1$
+//				JOptionPane.showMessageDialog(mainControl, Messages.getString("SaveTurnierControl.11") //$NON-NLS-1$
+//						+ this.mainControl.getTurnier().getTurnierName() + Messages.getString("SaveTurnierControl.12")); //$NON-NLS-1$
 				try {
 					mainControl.getTurnierListeLadenControl().loadTurnierListe();
 				} catch (SQLException e) {
