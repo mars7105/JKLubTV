@@ -42,7 +42,6 @@ import de.turnierverwaltung.view.MainView;
 import de.turnierverwaltung.view.MeetingTableView;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.NewTournamentGroupsView;
-import de.turnierverwaltung.view.NewTournamentPlayerCountlView;
 import de.turnierverwaltung.view.NewTournamentPlayerInputView;
 import de.turnierverwaltung.view.NewTournamentView;
 import de.turnierverwaltung.view.PairingsView;
@@ -71,8 +70,8 @@ public class MainControl extends JFrame {
 	private NewTournamentView turnierView;
 	private NewTournamentGroupsView gruppenView;
 	private NewTournamentGroupsControl gruppenControl;
-	private NewTournamentPlayerCountlView spielerAnzahlView;
-	private NewTournamentPlayerCountControl spielerAnzahlControl;
+//	private NewTournamentPlayerCountlView spielerAnzahlView;
+//	private NewTournamentPlayerCountControl spielerAnzahlControl;
 	private NewTournamentPlayerInputView[] spielerEingabeView;
 	private NewTournamentPlayerInputControl spielerEingabeControl;
 	private TabbedPaneViewControl tabAnzeigeControl;
@@ -241,8 +240,8 @@ public class MainControl extends JFrame {
 		turnierView = null;
 		gruppenView = null;
 		gruppenControl = null;
-		spielerAnzahlView = null;
-		spielerAnzahlControl = null;
+//		spielerAnzahlView = null;
+//		spielerAnzahlControl = null;
 		spielerEingabeView = null;
 		spielerEingabeControl = null;
 		tabAnzeigeControl = null;
@@ -396,13 +395,13 @@ public class MainControl extends JFrame {
 		return simpleTerminTabelleView;
 	}
 
-	public NewTournamentPlayerCountControl getSpielerAnzahlControl() {
-		return spielerAnzahlControl;
-	}
+//	public NewTournamentPlayerCountControl getSpielerAnzahlControl() {
+//		return spielerAnzahlControl;
+//	}
 
-	public NewTournamentPlayerCountlView getSpielerAnzahlView() {
-		return spielerAnzahlView;
-	}
+//	public NewTournamentPlayerCountlView getSpielerAnzahlView() {
+//		return spielerAnzahlView;
+//	}
 
 	public PlayerListControl getSpielerEditierenControl() {
 		return spielerLadenControl;
@@ -548,13 +547,13 @@ public class MainControl extends JFrame {
 		this.simpleTerminTabelleView = simpleTerminTabelleView;
 	}
 
-	public void setSpielerAnzahlControl(NewTournamentPlayerCountControl spielerAnzahlControl) {
-		this.spielerAnzahlControl = spielerAnzahlControl;
-	}
+//	public void setSpielerAnzahlControl(NewTournamentPlayerCountControl spielerAnzahlControl) {
+//		this.spielerAnzahlControl = spielerAnzahlControl;
+//	}
 
-	public void setSpielerAnzahlView(NewTournamentPlayerCountlView spielerAnzahlView) {
-		this.spielerAnzahlView = spielerAnzahlView;
-	}
+//	public void setSpielerAnzahlView(NewTournamentPlayerCountlView spielerAnzahlView) {
+//		this.spielerAnzahlView = spielerAnzahlView;
+//	}
 
 	public void setSpielerEditierenControl(PlayerListControl spielerLadenControl) {
 		this.spielerLadenControl = spielerLadenControl;

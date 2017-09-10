@@ -50,6 +50,7 @@ public class NewTournamentGroupsView extends JPanel {
 	 */
 	// private JCheckBox[] doppelteRundenCheckBox;
 	private JScrollPane scrollPane;
+	private SpinnerView[] anzahlSpielerSpinner;
 
 	public NewTournamentGroupsView() {
 
@@ -87,6 +88,7 @@ public class NewTournamentGroupsView extends JPanel {
 		gruppenName = new String[this.gruppenAnzahl];
 
 		gruppenNameTextField = new JTextField[this.gruppenAnzahl];
+		anzahlSpielerSpinner = new SpinnerView[this.gruppenAnzahl];
 		/*
 		 * Version 3.1.0
 		 */
@@ -105,18 +107,34 @@ public class NewTournamentGroupsView extends JPanel {
 		JPanel centerPane = new JPanel();
 		// centerPane.setBackground(new Color(249, 222, 112));
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
+
 		for (int i = 0; i < this.gruppenAnzahl; i++) {
 
 			JPanel groupBox = new JPanel();
 			groupBox.setLayout(new FlowLayout(FlowLayout.LEFT));
-			groupBox.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 			gruppenNameTextField[i] = new JTextField();
 			gruppenNameTextField[i].setColumns(10);
 			JPanel gruppenLabelPanel = new JPanel();
 			gruppenLabelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			gruppenLabelPanel.add(new JLabel(String.valueOf(i + 1) + Messages.getString("GruppenView.0"))); //$NON-NLS-1$
-			groupBox.add(gruppenLabelPanel);
 			groupBox.add(gruppenNameTextField[i]);
+			groupBox.add(gruppenLabelPanel);
+
+			JPanel countBox = new JPanel();
+			countBox.setLayout(new FlowLayout(FlowLayout.LEFT));
+			String[] listString = new String[20];
+			for (int x = 0; x < 18; x++) {
+				listString[x] = new Integer(x + 3).toString();
+
+			}
+			anzahlSpielerSpinner[i] = new SpinnerView(listString, 0, Messages.getString("SpielerAnzahlView.2"));
+			// JPanel countLabelPanel = new JPanel();
+			// countLabelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+			// countLabelPanel.add(new JLabel(String.valueOf(i + 1) +
+			// Messages.getString("GruppenView.0"))); //$NON-NLS-1$
+			// countBox.add(gruppenLabelPanel);
+			countBox.add(anzahlSpielerSpinner[i]);
+
 			/*
 			 * Version 3.1.0
 			 */
@@ -130,7 +148,14 @@ public class NewTournamentGroupsView extends JPanel {
 			// doppelRundigPanel.add(doppelteRundenLabel);
 
 			// groupBox.add(doppelRundigPanel);
-			centerPane.add(groupBox);
+
+			JPanel itemPanel = new JPanel();
+			itemPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
+			itemPanel.setLayout(new BoxLayout(itemPanel, BoxLayout.Y_AXIS));
+
+			itemPanel.add(groupBox);
+			itemPanel.add(countBox);
+			centerPane.add(itemPanel);
 		}
 		okButton = buttonPane.getOkButton();
 
@@ -169,6 +194,14 @@ public class NewTournamentGroupsView extends JPanel {
 
 	public void setOkButton(JButton okButton) {
 		this.okButton = okButton;
+	}
+
+	public SpinnerView[] getAnzahlSpielerSpinner() {
+		return anzahlSpielerSpinner;
+	}
+
+	public void setAnzahlSpielerSpinner(SpinnerView[] anzahlSpielerSpinner) {
+		this.anzahlSpielerSpinner = anzahlSpielerSpinner;
 	}
 
 }

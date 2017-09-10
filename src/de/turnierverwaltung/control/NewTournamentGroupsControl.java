@@ -19,12 +19,17 @@ package de.turnierverwaltung.control;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
+import de.turnierverwaltung.ZahlGroesserAlsN;
+import de.turnierverwaltung.ZahlKleinerAlsN;
 import de.turnierverwaltung.model.Group;
+import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.NewTournamentGroupsView;
@@ -40,10 +45,26 @@ public class NewTournamentGroupsControl implements ActionListener {
 	private Group[] gruppe;
 	private ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
+	private Player[][] spieler;
+	private int spielerAnzahl[];
+
+	private static int pruefeObZahlKleinerDreiIst(int zahl) throws ZahlKleinerAlsN, ZahlGroesserAlsN {
+		if (zahl < 3) {
+			throw new ZahlKleinerAlsN();
+		}
+		if (zahl > 20) {
+			throw new ZahlGroesserAlsN();
+		}
+		return zahl;
+	}
 
 	public NewTournamentGroupsControl(MainControl mainControl) {
 
 		this.mainControl = mainControl;
+		init();
+	}
+
+	public void init() {
 		turnier = this.mainControl.getTurnier();
 		hauptPanel = this.mainControl.getHauptPanel();
 		gruppenAnzahl = turnier.getAnzahlGruppen();
@@ -69,7 +90,9 @@ public class NewTournamentGroupsControl implements ActionListener {
 		if (arg0.getSource() == gruppenOKButton) {
 			makeGruppe();
 
-			mainControl.setSpielerAnzahlControl(new NewTournamentPlayerCountControl(this.mainControl));
+			// mainControl.setSpielerAnzahlControl(new
+			// NewTournamentPlayerCountControl(this.mainControl));
+			runPlayerInput();
 		}
 		if (arg0.getSource() == gruppenCancelButton) {
 			this.mainControl.setTurnierControl(new NewTournamentControl(this.mainControl));
@@ -83,10 +106,16 @@ public class NewTournamentGroupsControl implements ActionListener {
 
 	private void makeGruppe() {
 		gruppe = new Group[gruppenAnzahl];
-
+		spieler = new Player[gruppenAnzahl][];
+		spielerAnzahl = new int[gruppenAnzahl];
 		for (int i = 0; i < gruppenAnzahl; i++) {
+			spielerAnzahl[i] = Integer.parseInt(gruppenView.getAnzahlSpielerSpinner()[i].getValue());
 			gruppe[i] = new Group();
 			gruppe[i].setGruppenName(gruppenView.getGruppenNameTextField()[i].getText());
+			spieler[i] = new Player[spielerAnzahl[i]];
+
+			gruppe[i].setSpieler(spieler[i]);
+			gruppe[i].setSpielerAnzahl(spielerAnzahl[i]);
 
 		}
 		turnier.setGruppe(gruppe);
@@ -97,4 +126,50 @@ public class NewTournamentGroupsControl implements ActionListener {
 		this.gruppenAnzahl = gruppenAnzahl;
 	}
 
+	public int getSpielerAnzahl(int indexI) throws ZahlKleinerAlsN, NumberFormatException, ZahlGroesserAlsN {
+
+		spielerAnzahl[indexI] = pruefeObZahlKleinerDreiIst(
+				Integer.parseInt(gruppenView.getAnzahlSpielerSpinner()[indexI].getValue()));
+
+		return spielerAnzahl[indexI];
+	}
+
+	private void runPlayerInput() {
+		int fehlerIndex = 0;
+		try {
+			NewTournamentPlayerInputControl spielerEingabeControl;
+			if (mainControl.getSpielerEingabeControl() == null) {
+				spielerEingabeControl = new NewTournamentPlayerInputControl(mainControl);
+				mainControl.setSpielerEingabeControl(spielerEingabeControl);
+			} else {
+				spielerEingabeControl = mainControl.getSpielerEingabeControl();
+			}
+
+			for (int i = 0; i < gruppenAnzahl; i++) {
+				//
+				// fehlerIndex = i;
+				// spielerAnzahl[i] = getSpielerAnzahl(i);
+				// gruppe[i].setSpielerAnzahl(spielerAnzahl[i]);
+				spielerEingabeControl.makeTabbedPane(i);
+
+			}
+		} catch (SQLException e) {
+			mainControl.fileSQLError();
+		} catch (NumberFormatException e) {
+			spielerAnzahl[fehlerIndex] = 0;
+			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.1")); //$NON-NLS-1$
+			// spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
+		} catch (ZahlKleinerAlsN e) {
+			spielerAnzahl[fehlerIndex] = 0;
+
+			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.3")); //$NON-NLS-1$
+			// spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
+		} catch (ZahlGroesserAlsN e) {
+			spielerAnzahl[fehlerIndex] = 0;
+
+			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.5")); //$NON-NLS-1$
+			// spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
+		}
+
+	}
 }

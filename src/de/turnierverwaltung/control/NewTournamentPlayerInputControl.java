@@ -29,6 +29,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import de.turnierverwaltung.ZahlGroesserAlsN;
@@ -37,7 +38,6 @@ import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
-import de.turnierverwaltung.view.NewTournamentPlayerCountlView;
 import de.turnierverwaltung.view.NewTournamentPlayerInputView;
 import de.turnierverwaltung.view.TabbedPaneView;
 
@@ -45,7 +45,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 	private MainControl mainControl;
 	private NewTournamentPlayerInputView[] spielerEingabeView;
-	private NewTournamentPlayerCountlView[] spielerAnzahlView;
+	// private NewTournamentPlayerCountlView[] spielerAnzahlView;
 	private JButton[] okButton;
 	private JButton[] cancelButton;
 	private int[] spielerAnzahl;
@@ -59,6 +59,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 	private Boolean[] readyToSave;
 	private ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png"))); //$NON-NLS-1$
+	private JTabbedPane hauptPanel;
 
 	public NewTournamentPlayerInputControl(MainControl mainControl) throws SQLException {
 		int windowWidth = TournamentConstants.WINDOW_WIDTH - 25;
@@ -68,10 +69,17 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		alleSpieler = spielerTableControl.getAllSpieler();
 		turnier = this.mainControl.getTurnier();
 		gruppe = turnier.getGruppe();
-		this.mainControl.getHauptPanel();
+		hauptPanel = this.mainControl.getHauptPanel();
+		this.mainControl.setTabAnzeigeControl(new TabbedPaneViewControl(this.mainControl, "S"));
+		this.mainControl
+				.setTabAnzeigeView(new TabbedPaneView(mainControl, Messages.getString("SpielerEingabeControl.10")));
 		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
 		tabAnzeigeView.setPreferredSize(new Dimension(windowWidth, windowHeight));
-		spielerAnzahlView = this.mainControl.getSpielerAnzahlControl().getSpielerAnzahlView();
+		hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		hauptPanel.add(tabAnzeigeView, TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		hauptPanel.setTitleAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, turnier.getTurnierName());
+		hauptPanel.setIconAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, gruppenIcon);
+		hauptPanel.setSelectedIndex(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
 		gruppenAnzahl = this.mainControl.getTurnier().getAnzahlGruppen();
 		spielerAnzahl = new int[gruppenAnzahl];
 
@@ -86,6 +94,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		readyToSave = new Boolean[gruppenAnzahl];
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			readyToSave[i] = false;
+			spielerAnzahl[i] = gruppe[i].getSpielerAnzahl();
 
 		}
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
@@ -183,7 +192,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 						Messages.getString("SpielerEingabeControl.8"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
 						JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 				if (abfrage == 0) {
-					this.mainControl.getSpielerAnzahlControl().makeNewTab(i);
+					this.mainControl.setTurnierControl(new NewTournamentControl(this.mainControl));
 				}
 			}
 			for (int s = 0; s < spielerAnzahl[i]; s++) {
@@ -292,21 +301,24 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 	public void makeTabbedPane(int index) throws NumberFormatException, ZahlKleinerAlsN, ZahlGroesserAlsN {
 		this.mainControl.getHauptPanel();
+		tabAnzeigeView.getTabbedPane().addTab(null, spielerEingabeView[index]);
 
-		if (spielerAnzahlView[index].getAnzahlSpielerTextField().getValue().length() > 0) {
-			spielerAnzahl[index] = this.mainControl.getSpielerAnzahlControl().getSpielerAnzahl(index);
-			spielerEingabeView[index] = new NewTournamentPlayerInputView(spielerAnzahl[index]);
-			okButton[index] = spielerEingabeView[index].getOkButton();
-			okButton[index].addActionListener(this);
-			cancelButton[index] = spielerEingabeView[index].getCancelButton();
-			cancelButton[index].addActionListener(this);
-			tabAnzeigeView.getTabbedPane().setComponentAt(index, spielerEingabeView[index]);
-			tabAnzeigeView.getTabbedPane().setTitleAt(index, gruppe[index].getGruppenName());
-			tabAnzeigeView.getTabbedPane().setIconAt(index, gruppenIcon);
+		// if (spielerAnzahlView[index].getAnzahlSpielerTextField().getValue().length()
+		// > 0) {
+		// spielerAnzahl[index] =
+		// this.mainControl.getSpielerAnzahlControl().getSpielerAnzahl(index);
+		spielerEingabeView[index] = new NewTournamentPlayerInputView(spielerAnzahl[index]);
+		okButton[index] = spielerEingabeView[index].getOkButton();
+		okButton[index].addActionListener(this);
+		cancelButton[index] = spielerEingabeView[index].getCancelButton();
+		cancelButton[index].addActionListener(this);
+		tabAnzeigeView.getTabbedPane().setComponentAt(index, spielerEingabeView[index]);
+		tabAnzeigeView.getTabbedPane().setTitleAt(index, gruppe[index].getGruppenName());
+		tabAnzeigeView.getTabbedPane().setIconAt(index, gruppenIcon);
 
-			suchAnzeige(index);
-			// hauptPanel.updateUI();
-		}
+		suchAnzeige(index);
+		// hauptPanel.updateUI();
+		// }
 	}
 
 	private void testPlayerListForDoubles() throws SQLException {
