@@ -62,8 +62,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 				if (filename != null) {
 					filename += ".ktv";
 					File path = new File(mainControl.getPropertiesControl().getDefaultPath());
-					
-					
+
 					JFileChooser savefile = new JFileChooser(path);
 					FileFilter filter = new FileNameExtensionFilter(Messages.getString("NaviController.8"), "ktv");
 					savefile.addChoosableFileFilter(filter);
@@ -96,7 +95,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 									JOptionPane.INFORMATION_MESSAGE);
 							this.mainControl.setNeuesTurnier(false);
 							mainControl.setTurnierTableControl(new SQLTournamentControl(mainControl));
-							
+
 							mainControl.setSpielerEditierenControl(new PlayerListControl(mainControl));
 							mainControl.getSpielerEditierenControl().updateSpielerListe();
 							mainControl.setTurnierListeLadenControl(
@@ -130,6 +129,9 @@ public class ActionListenerFileMenuControl implements ActionListener {
 
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
+
+				prop.setDatabaseUpdated(false);
+				prop.writeProperties();
 
 				// Create a file chooser
 				File path = new File(prop.getDefaultPath());

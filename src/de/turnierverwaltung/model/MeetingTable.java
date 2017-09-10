@@ -31,7 +31,7 @@ public class MeetingTable {
 	private String blackColumnName;
 	private String resultColumnName;
 	private String meetingColumnName;
-	private ICalendar iCalendar;
+	private ICal iCalendar;
 
 	/**
 	 * 
@@ -55,7 +55,7 @@ public class MeetingTable {
 		this.gruppe.getSpieler();
 		this.spielerAnzahl = this.gruppe.getSpielerAnzahl();
 		this.partien = gruppe.getPartien();
-		this.iCalendar = new ICalendar();
+		this.iCalendar = new ICal();
 		calcRunden();
 		calcAnzahlSpaltenZeilen();
 		tabellenMatrix = new String[5][zeilenAnzahl];
@@ -152,11 +152,11 @@ public class MeetingTable {
 		return terminTabelleToHTML.getHTMLTable(ohneHeaderundFooter);
 	}
 
-	public ICalendar getiCalendar() {
+	public ICal getiCalendar() {
 		return iCalendar;
 	}
 
-	public void setiCalendar(ICalendar iCalendar) {
+	public void setiCalendar(ICal iCalendar) {
 		this.iCalendar = iCalendar;
 	}
 

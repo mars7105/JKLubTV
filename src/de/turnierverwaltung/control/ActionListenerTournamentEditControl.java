@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.ProgressBarView;
 import de.turnierverwaltung.view.TabbedPaneView;
-import net.fortuna.ical4j.model.ValidationException;
 
 public class ActionListenerTournamentEditControl implements ActionListener {
 	private MainControl mainControl;
@@ -49,10 +48,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 			} catch (IOException e) {
 				// TODO Automatisch generierter Erfassungsblock
 				e.printStackTrace();
-			} catch (ValidationException e) {
-				// TODO Automatisch generierter Erfassungsblock
-				e.printStackTrace();
-			}
+			} 
 
 		}
 

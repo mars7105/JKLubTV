@@ -58,8 +58,8 @@ public class InfoLicenseView {
 	private JButton buttonopencsv;
 	private URI poiUri;
 	private JButton buttonpoi;
-	private URI iCal4jUri;
-	private JButton buttoniCal4j;
+	private URI biweekly;
+	private JButton buttonbiweekly;
 
 	class OpenUrlAction implements ActionListener {
 		@Override
@@ -91,8 +91,8 @@ public class InfoLicenseView {
 			if (e.getSource() == buttonpoi) {
 				open(poiUri);
 			}
-			if (e.getSource() == buttoniCal4j) {
-				open(iCal4jUri);
+			if (e.getSource() == buttonbiweekly) {
+				open(biweekly);
 			}
 
 		}
@@ -283,19 +283,20 @@ public class InfoLicenseView {
 		temp.add(poiUriPicker);
 		panel.add(temp);
 		panel.add(new JSeparator());
-		iCal4jUri = new URI("http://ical4j.sourceforge.net/index.html"); //$NON-NLS-1$
+		biweekly = new URI("https://github.com/mangstadt/biweekly"); 
 		JLabel iCal4jUriPicker = new JLabel(
-				"9. iCal4j is a Java library used to read and write iCalendar data streams as defined in RFC2445. -> \nhttp://ical4j.sourceforge.net/index.html\n"); //$NON-NLS-1$
-		buttoniCal4j = new JButton();
-		buttoniCal4j.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>"); //$NON-NLS-1$
+				"9. biweekly is an iCalendar library written in Java.\n" + 
+				" -> \nhttps://github.com/mangstadt/biweekly\n"); 
+		buttonbiweekly = new JButton();
+		buttonbiweekly.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>"); //$NON-NLS-1$
 
-		buttoniCal4j.setOpaque(false);
-		buttoniCal4j.setToolTipText(iCal4jUri.toString());
-		buttoniCal4j.addActionListener(new OpenUrlAction());
+		buttonbiweekly.setOpaque(false);
+		buttonbiweekly.setToolTipText(biweekly.toString());
+		buttonbiweekly.addActionListener(new OpenUrlAction());
 		temp = new JPanel();
 		temp.setBackground(Color.WHITE);
 		temp.setLayout(new FlowLayout(FlowLayout.LEFT));
-		temp.add(buttoniCal4j);
+		temp.add(buttonbiweekly);
 
 		temp.add(iCal4jUriPicker);
 		panel.add(temp);

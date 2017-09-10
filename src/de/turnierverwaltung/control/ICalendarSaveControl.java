@@ -9,9 +9,8 @@ import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import de.turnierverwaltung.model.ICalendar;
+import de.turnierverwaltung.model.ICal;
 import de.turnierverwaltung.model.MeetingTable;
-import net.fortuna.ical4j.model.ValidationException;
 
 public class ICalendarSaveControl {
 
@@ -24,7 +23,7 @@ public class ICalendarSaveControl {
 
 	}
 
-	public void saveiCalendarFile() throws IOException, ValidationException {
+	public void saveiCalendarFile() throws IOException {
 		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
 			int gruppenAnzahl = this.meetingTable.length;
@@ -40,7 +39,7 @@ public class ICalendarSaveControl {
 			int sf = savefile.showSaveDialog(null);
 			if (sf == JFileChooser.APPROVE_OPTION) {
 				for (int i = 0; i < gruppenAnzahl; i++) {
-					ICalendar iCalendar = this.meetingTable[i].getiCalendar();
+					ICal iCalendar = this.meetingTable[i].getiCalendar();
 					String fileName = savefile.getCurrentDirectory() + "/"
 							+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + "-"
 							+ mainControl.getTurnier().getTurnierName() + ".ics";
