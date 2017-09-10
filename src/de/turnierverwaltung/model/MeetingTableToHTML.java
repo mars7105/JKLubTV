@@ -101,8 +101,8 @@ public class MeetingTableToHTML {
 
 			for (int x = 0; x < col; x++) {
 				String ausgabeWert = this.tabellenMatrix[x][y];
-				if (ausgabeWert != null && ausgabeWert != "" && ausgabeWert != " ") {
-					if (ausgabeWert == TournamentConstants.PARTIE_REMIS) {
+				if (ausgabeWert != null && !ausgabeWert.equals("") && !ausgabeWert.equals(" ")) {
+					if (ausgabeWert.equals(TournamentConstants.PARTIE_REMIS)) {
 						ausgabeWert = "&frac12; - &frac12;";
 					}
 

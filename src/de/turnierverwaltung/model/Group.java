@@ -1,4 +1,5 @@
 package de.turnierverwaltung.model;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -15,6 +16,7 @@ package de.turnierverwaltung.model;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.util.Arrays;
+
 /**
  * 
  * @author mars
@@ -22,7 +24,6 @@ import java.util.Arrays;
  */
 public class Group {
 
-	
 	private int spielerAnzahl;
 	private int partienAnzahl;
 	private int rundenAnzahl;
@@ -33,12 +34,14 @@ public class Group {
 
 	private MeetingTable teminTabelle;
 	private CrossTable turnierTabelle;
-/**
- * 
- */
+
+	/**
+	 * 
+	 */
 	public Group() {
 		this.gruppeId = -1;
 	}
+
 	/**
 	 * 
 	 * @param idGruppe
@@ -48,6 +51,7 @@ public class Group {
 		this.gruppeId = idGruppe;
 		this.gruppenName = gruppenName;
 	}
+
 	/**
 	 * 
 	 */
@@ -58,14 +62,14 @@ public class Group {
 		}
 		for (int i = 0; i < getSpielerAnzahl() - 1; i++) {
 			if (spieler[i].getPunkte() == spieler[i + 1].getPunkte()
-					&& spieler[i].getSoberg() == spieler[i + 1].getSoberg()
-					) {
-				
+					&& spieler[i].getSoberg() == spieler[i + 1].getSoberg()) {
+
 				spieler[i + 1].setPlatz(spieler[i].getPlatz());
 			}
 		}
 
 	}
+
 	/**
 	 * 
 	 */
@@ -84,17 +88,16 @@ public class Group {
 			weiss = partien[i].getSpielerWeiss();
 			schwarz = partien[i].getSpielerSchwarz();
 			ergWeiss = partien[i].getErgebnisWeiss();
-			wPunkte = weiss.getPunkte()
-					+ convertErgebnisStringToDouble(ergWeiss);
+			wPunkte = weiss.getPunkte() + convertErgebnisStringToDouble(ergWeiss);
 			partien[i].getSpielerWeiss().setPunkte(wPunkte);
 			ergSchwarz = partien[i].getErgebnisSchwarz();
-			sPunkte = schwarz.getPunkte()
-					+ convertErgebnisStringToDouble(ergSchwarz);
+			sPunkte = schwarz.getPunkte() + convertErgebnisStringToDouble(ergSchwarz);
 			partien[i].getSpielerSchwarz().setPunkte(sPunkte);
 		}
 		berechneSoBerg();
 		berechnePlatz();
 	}
+
 	/**
 	 * 
 	 */
@@ -105,19 +108,17 @@ public class Group {
 			for (int i = 0; i < getSpielerAnzahl(); i++) {
 				for (int p = 0; p < partienAnzahl; p++) {
 					if (s != i) {
-						if (partien[p].getSpielerWeiss() == spieler[s]
-								&& partien[p].getSpielerSchwarz() == spieler[i]) {
+						if (partien[p].getSpielerWeiss().equals(spieler[s])
+								&& partien[p].getSpielerSchwarz().equals(spieler[i])) {
 
 							soberg += spieler[i].getPunkte()
-									* convertErgebnisStringToDouble(partien[p]
-											.getErgebnisWeiss());
+									* convertErgebnisStringToDouble(partien[p].getErgebnisWeiss());
 						}
-						if (partien[p].getSpielerWeiss() == spieler[i]
-								&& partien[p].getSpielerSchwarz() == spieler[s]) {
+						if (partien[p].getSpielerWeiss().equals(spieler[i])
+								&& partien[p].getSpielerSchwarz().equals(spieler[s])) {
 
 							soberg += spieler[i].getPunkte()
-									* convertErgebnisStringToDouble(partien[p]
-											.getErgebnisSchwarz());
+									* convertErgebnisStringToDouble(partien[p].getErgebnisSchwarz());
 						}
 					}
 				}
@@ -126,6 +127,7 @@ public class Group {
 
 		}
 	}
+
 	/**
 	 * 
 	 * @param erg

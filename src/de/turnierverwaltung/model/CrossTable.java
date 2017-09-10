@@ -132,7 +132,7 @@ public class CrossTable {
 		for (int i = 0; i < sp; i++) {
 			tabellenMatrix[0][i + 1] = spieler[i].getName();
 			if (ohneDWZ == false) {
-				if (spieler[i].getDwz() != TournamentConstants.KEINE_DWZ) {
+				if (!spieler[i].getDwz().equals(TournamentConstants.KEINE_DWZ)) {
 					tabellenMatrix[1][i + 1] = spieler[i].getDwz();
 				} else {
 					tabellenMatrix[1][i + 1] = ""; //$NON-NLS-1$
@@ -158,13 +158,13 @@ public class CrossTable {
 						} else {
 							for (int i = 0; i < partienAnzahl; i++) {
 
-								if (partien[i].getSpielerWeiss() == spieler[x]
-										&& partien[i].getSpielerSchwarz() == spieler[y]) {
+								if (partien[i].getSpielerWeiss().equals(spieler[x])
+										&& partien[i].getSpielerSchwarz().equals(spieler[y])) {
 									tabellenMatrix[x + dwzAbstand][y + 1] = partien[i].getErgebnisSchwarz();
 
 								}
-								if (partien[i].getSpielerSchwarz() == spieler[x]
-										&& partien[i].getSpielerWeiss() == spieler[y]) {
+								if (partien[i].getSpielerSchwarz().equals(spieler[x])
+										&& partien[i].getSpielerWeiss().equals(spieler[y])) {
 									tabellenMatrix[x + dwzAbstand][y + 1] = partien[i].getErgebnisWeiss();
 
 								}
