@@ -54,6 +54,7 @@ public class PropertiesControl {
 	public static final String CUT_FORENAME = "cut-forename";
 	public static final String CUT_SURNAME = "cut-surname";
 	public static final String DATABASE_UPDATED = "database-updated";
+	public static final String WEBSERVER_PATH = "webserver-path";
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
@@ -88,6 +89,7 @@ public class PropertiesControl {
 		prop.setProperty(CUT_FORENAME, "");
 		prop.setProperty(CUT_SURNAME, "");
 		prop.setProperty(DATABASE_UPDATED, FALSE);
+		prop.setProperty(WEBSERVER_PATH, "");
 	}
 
 	public void checkProperties() {
@@ -109,7 +111,7 @@ public class PropertiesControl {
 			spielerProTab = 1;
 			saveChanges = true;
 		}
-		if (!prop.getProperty(PATHTODATABASE).equals("")  && checkPathToDatabase() == false) {
+		if (!prop.getProperty(PATHTODATABASE).equals("") && checkPathToDatabase() == false) {
 			prop.setProperty(PATHTODATABASE, "");
 			saveChanges = true;
 		}
@@ -201,6 +203,10 @@ public class PropertiesControl {
 			prop.setProperty(DATABASE_UPDATED, FALSE);
 			saveChanges = true;
 		}
+//		if (prop.getProperty(WEBSERVER_PATH).equals("")) {
+//			prop.setProperty(WEBSERVER_PATH, "/");
+//			saveChanges = true;
+//		}
 		checkCrossTableColumnForDoubles();
 		checkMeetingTableColumnForDoubles();
 		if (saveChanges == true) {
@@ -267,6 +273,14 @@ public class PropertiesControl {
 
 	public void setCutSurname(String namecut) {
 		prop.setProperty(CUT_SURNAME, namecut);
+	}
+
+	public String getWebserverPath() {
+		return prop.getProperty(WEBSERVER_PATH);
+	}
+
+	public void setWebserverPath(String path) {
+		prop.setProperty(WEBSERVER_PATH, path);
 	}
 
 	public Boolean writeProperties() {

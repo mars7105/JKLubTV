@@ -63,7 +63,7 @@ public class PDFOutputControl {
 			Document document = new Document();
 			// step 2
 			try {
-				PdfWriter.getInstance(document, new FileOutputStream(absolutePath));
+				PdfWriter.getInstance(document, new FileOutputStream(file));
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -89,6 +89,7 @@ public class PDFOutputControl {
 
 	public void createTerminPdf(String titel, String absolutePath, String[][] tabellenMatrix) {
 		int n = 0;
+		
 		File file = new File(absolutePath);
 		if (file.exists()) {
 			Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
@@ -102,7 +103,7 @@ public class PDFOutputControl {
 			Document document = new Document();
 			// step 2
 			try {
-				PdfWriter.getInstance(document, new FileOutputStream(absolutePath));
+				PdfWriter.getInstance(document, new FileOutputStream(file));
 			} catch (FileNotFoundException | DocumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

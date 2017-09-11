@@ -59,11 +59,13 @@ public class HTMLSaveControl {
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 			String filename = mainControl.getTurnier().getTurnierName();
+			;
 			// String filename = JOptionPane.showInputDialog(mainControl,
 			// Messages.getString("HTMLSaveControler.0"), //$NON-NLS-1$
 			// Messages.getString("HTMLSaveControler.1"), //$NON-NLS-1$
 			// JOptionPane.PLAIN_MESSAGE);
 			File path = new File(mainControl.getPropertiesControl().getDefaultPath());
+			String webserverPath = mainControl.getPropertiesControl().getWebserverPath();
 
 			JFileChooser savefile = new JFileChooser(path);
 			FileFilter filter = new FileNameExtensionFilter("HTML", "html"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -76,6 +78,17 @@ public class HTMLSaveControl {
 			if (sf == JFileChooser.APPROVE_OPTION) {
 
 				for (int i = 0; i < anzahlGruppen; i++) {
+
+					String wfn = mainControl.getTurnier().getTurnierName();
+					wfn += Messages.getString("PDFSaveControler.2")
+							+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".pdf";
+					String webfilename1 = wfn.trim();
+
+					String wfn2 = mainControl.getTurnier().getTurnierName();
+					wfn2 += Messages.getString("PDFSaveControler.8")
+							+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".pdf";
+					String webfilename2 = wfn2.trim();
+
 					if (this.mainControl.getTurnierTabelle()[i] == null) {
 						this.mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
 
@@ -135,15 +148,15 @@ public class HTMLSaveControl {
 								// Construct a writer for a specific encoding
 								writer1 = new OutputStreamWriter(new FileOutputStream(filename1), "UTF8"); //$NON-NLS-1$
 
-								writer1.write(
-										this.mainControl.getTurnierTabelle()[i].getHTMLTable(ohneHeaderundFooter));
+								writer1.write(this.mainControl.getTurnierTabelle()[i].getHTMLTable(ohneHeaderundFooter,
+										webserverPath, webfilename1));
 								writer1.flush();
 								writer1.close();
 							}
 							if (n2 == 0) {
 								writer2 = new OutputStreamWriter(new FileOutputStream(filename2), "UTF8"); //$NON-NLS-1$
 								writer2.write(this.mainControl.getTerminTabelleControl().getTerminTabelle()[i]
-										.getHTMLTable(ohneHeaderundFooter));
+										.getHTMLTable(ohneHeaderundFooter, webserverPath, webfilename2));
 								writer2.flush();
 								writer2.close();
 							}

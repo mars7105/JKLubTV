@@ -196,8 +196,9 @@ public class CrossTable {
 	 * @param ohneHeaderundFooter
 	 * @return
 	 */
-	public String getHTMLTable(Boolean ohneHeaderundFooter) {
-		turnierTabelleToHTML = new CrossTableToHTML(tabellenMatrix, turnier, gruppe.getGruppenName(), infoString);
+	public String getHTMLTable(Boolean ohneHeaderundFooter, String path, String filename) {
+		turnierTabelleToHTML = new CrossTableToHTML(tabellenMatrix, turnier, gruppe.getGruppenName(), infoString, path,
+				filename);
 		return turnierTabelleToHTML.getHTMLTable(ohneHeaderundFooter);
 	}
 

@@ -59,6 +59,7 @@ public class ActionListenerSettingsControl {
 				eigenschaftenView.getTurnierListeAuswahlBox().setSelectedIndex(ppC.getTurniereProTab());
 				eigenschaftenView.getForenameLengthBox().setValue(ppC.getCutForename());
 				eigenschaftenView.getSurnameLengthBox().setValue(ppC.getCutSurname());
+				eigenschaftenView.getWebserverPathTextField().setText(ppC.getWebserverPath());
 				eigenschaftenView.getCheckBoxohneDWZ().setSelected(ppC.getNoDWZ());
 				if (eigenschaftenView.getCheckBoxohneDWZ().isSelected() == true) {
 					eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(true);
@@ -92,21 +93,24 @@ public class ActionListenerSettingsControl {
 			public void actionPerformed(ActionEvent arg0) {
 				dialog.dispose();
 				PropertiesControl ppC = mainControl.getPropertiesControl();
-				ppC.setTableComumnBlack(esControl.getEigenschaftenView().getBlackTextField().getText());
-				ppC.setTableComumnWhite(esControl.getEigenschaftenView().getWhiteTextField().getText());
-				ppC.setTableComumnMeeting(esControl.getEigenschaftenView().getMeetingTextField().getText());
-				ppC.setTableComumnNewDWZ(esControl.getEigenschaftenView().getNewDWZTextField().getText());
-				ppC.setTableComumnOldDWZ(esControl.getEigenschaftenView().getOldDWZTextField().getText());
-				ppC.setTableComumnPlayer(esControl.getEigenschaftenView().getPlayerTextField().getText());
-				ppC.setTableComumnPoints(esControl.getEigenschaftenView().getPointsTextField().getText());
-				ppC.setTableComumnRanking(esControl.getEigenschaftenView().getRankingTextField().getText());
-				ppC.setTableComumnResult(esControl.getEigenschaftenView().getResultTextField().getText());
-				ppC.setTableComumnSonnebornBerger(esControl.getEigenschaftenView().getSbbTextField().getText());
-				ppC.setTableComumnRound(esControl.getEigenschaftenView().getRoundTextField().getText());
+				SettingsView settingsView = esControl.getEigenschaftenView();
+				ppC.setTableComumnBlack(settingsView.getBlackTextField().getText());
+				ppC.setTableComumnWhite(settingsView.getWhiteTextField().getText());
+				ppC.setTableComumnMeeting(settingsView.getMeetingTextField().getText());
+				ppC.setTableComumnNewDWZ(settingsView.getNewDWZTextField().getText());
+				ppC.setTableComumnOldDWZ(settingsView.getOldDWZTextField().getText());
+				ppC.setTableComumnPlayer(settingsView.getPlayerTextField().getText());
+				ppC.setTableComumnPoints(settingsView.getPointsTextField().getText());
+				ppC.setTableComumnRanking(settingsView.getRankingTextField().getText());
+				ppC.setTableComumnResult(settingsView.getResultTextField().getText());
+				ppC.setTableComumnSonnebornBerger(settingsView.getSbbTextField().getText());
+				ppC.setTableComumnRound(settingsView.getRoundTextField().getText());
+				ppC.setCutForename(settingsView.getForenameLengthBox().getValue());
+				ppC.setCutSurname(settingsView.getSurnameLengthBox().getValue());
+				ppC.setWebserverPath(settingsView.getWebserverPathTextField().getText());
 				ppC.checkCrossTableColumnForDoubles();
 				ppC.checkMeetingTableColumnForDoubles();
-				ppC.setCutForename(esControl.getEigenschaftenView().getForenameLengthBox().getValue());
-				ppC.setCutSurname(esControl.getEigenschaftenView().getSurnameLengthBox().getValue());
+
 				ppC.writeProperties();
 				esControl.setTableColumns();
 

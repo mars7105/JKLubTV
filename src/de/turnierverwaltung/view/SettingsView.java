@@ -87,6 +87,7 @@ public class SettingsView extends JPanel {
 	private JButton okButton;
 	private SpinnerView forenameLengthBox;
 	private SpinnerView surnameLengthBox;
+	private JTextField webserverPathTextField;
 
 	/**
 	 * Create the panel.
@@ -541,6 +542,16 @@ public class SettingsView extends JPanel {
 
 		htmlAll.add(htmlPanel);
 
+		// Webserver Path
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.41")); //$NON-NLS-1$
+		webserverPathTextField = new JTextField(20);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(webserverPathTextField);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
 		// ohne DWZ
 		labelHeader = new JLabel(Messages.getString("EigenschaftenView.3")); //$NON-NLS-1$
 		checkBoxohneDWZ = new JCheckBox();
@@ -552,7 +563,7 @@ public class SettingsView extends JPanel {
 		htmlAll.add(htmlPanel);
 
 		// ohne Folge DWZ
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.3")); //$NON-NLS-1$
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.4")); //$NON-NLS-1$
 		checkBoxohneFolgeDWZ = new JCheckBox();
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -799,6 +810,14 @@ public class SettingsView extends JPanel {
 
 	public void setSurnameLengthBox(SpinnerView surnameLengthBox) {
 		this.surnameLengthBox = surnameLengthBox;
+	}
+
+	public JTextField getWebserverPathTextField() {
+		return webserverPathTextField;
+	}
+
+	public void setWebserverPathTextField(JTextField webserverPathTextField) {
+		this.webserverPathTextField = webserverPathTextField;
 	}
 
 	class OpenUrlAction implements ActionListener {

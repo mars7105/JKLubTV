@@ -27,6 +27,9 @@ public class CrossTableToHTML {
 	private String infoString;
 	private int[] reihenfolge;
 	private Tournament turnier;
+	private String webServerPath;
+	private String filename;
+	private WebserverFileLink fileLink;
 
 	/**
 	 * 
@@ -35,7 +38,8 @@ public class CrossTableToHTML {
 	 * @param gruppenName
 	 * @param infoString
 	 */
-	public CrossTableToHTML(String[][] tabellenMatrix, Tournament turnier, String gruppenName, String infoString) {
+	public CrossTableToHTML(String[][] tabellenMatrix, Tournament turnier, String gruppenName, String infoString,
+			String webServerPath, String filename) {
 		this.turnier = turnier;
 		this.tabellenMatrix = tabellenMatrix;
 		this.turnierName = turnier.getTurnierName();
@@ -43,6 +47,9 @@ public class CrossTableToHTML {
 		this.endDatum = turnier.getEndDatum();
 		this.gruppenName = gruppenName;
 		this.infoString = infoString;
+		this.webServerPath = webServerPath;
+		this.filename = filename;
+		this.fileLink = new WebserverFileLink(this.webServerPath, this.filename);
 	}
 
 	private String getHTMLFooter() {
@@ -103,8 +110,9 @@ public class CrossTableToHTML {
 		for (int y = 0; y < row; y++) {
 			if (y == 0) {
 				htmlString += "    <thead>\n"; //$NON-NLS-1$
-				htmlString += "    <tr><th colspan='" + col + "'>" + Messages.getString("TurnierTabelleToHTML.10")
-						+ " - " + gruppenName + "</th></tr>\n</thead>\n<tbody>\n";
+				htmlString += "    <tr><th colspan='" + col + "'>" + " " + "&nbsp;"
+						+ Messages.getString("TurnierTabelleToHTML.10") + " - " + gruppenName + fileLink.getPathToPDF()
+						+ "</th></tr>\n</thead>\n<tbody>\n";
 			}
 
 			htmlString += "      <tr>\n"; //$NON-NLS-1$
@@ -137,7 +145,7 @@ public class CrossTableToHTML {
 			htmlString += "    </tbody>\n<tfoot><tr><td colspan='" + col + "'>" + infoString + "</td></tr></tfoot>\n";
 		}
 		htmlString += "     </table>\n"; //$NON-NLS-1$
-		
+
 		if (turnier.getOnlyTables() == false) {
 			htmlString += getHTMLFooter();
 		}

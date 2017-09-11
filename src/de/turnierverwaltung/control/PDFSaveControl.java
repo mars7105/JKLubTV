@@ -41,7 +41,7 @@ public class PDFSaveControl {
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 
-			String filename = mainControl.getTurnier().getTurnierName();
+			String filename = mainControl.getTurnier().getTurnierName().replaceAll(" ", "");
 			File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 			JFileChooser savefile = new JFileChooser(path);
@@ -80,10 +80,10 @@ public class PDFSaveControl {
 
 						File filename1 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 								+ filename + Messages.getString("PDFSaveControler.2") //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".pdf"); //$NON-NLS-1$
+								+ mainControl.getTurnier().getGruppe()[i].getGruppenName().replaceAll(" ", "") + ".pdf"); //$NON-NLS-1$
 						File filename2 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 								+ filename + Messages.getString("PDFSaveControler.8") //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".pdf"); //$NON-NLS-1$
+								+ mainControl.getTurnier().getGruppe()[i].getGruppenName().replaceAll(" ", "") + ".pdf"); //$NON-NLS-1$
 
 						String titel = Messages.getString("PDFSaveControler.10") //$NON-NLS-1$
 								+ mainControl.getTurnier().getTurnierName() + " - " //$NON-NLS-1$
