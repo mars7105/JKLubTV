@@ -28,7 +28,7 @@ public class ActionListenerSettingsControl {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				PropertiesControl ppC = mainControl.getPropertiesControl();
+
 				mainControl.getEigenschaftenControl().setEigenschaftenView(new SettingsView());
 				SettingsView eigenschaftenView = mainControl.getEigenschaftenControl().getEigenschaftenView();
 				mainControl.getEigenschaftenControl().setItemListenerControl(
@@ -46,15 +46,16 @@ public class ActionListenerSettingsControl {
 				dialog.setLocationRelativeTo(null);
 				dialog.setEnabled(true);
 				dialog.setVisible(true);
-
 				if (mainControl.getPropertiesControl() == null) {
+
 					mainControl.setPropertiesControl(new PropertiesControl(mainControl));
-					ppC.readProperties();
+
 				}
+				PropertiesControl ppC = mainControl.getPropertiesControl();
+				ppC.readProperties();
 				eigenschaftenView.getCheckBoxHeaderFooter().setSelected(ppC.getOnlyTables());
 				eigenschaftenView.getCheckBoxohneDWZ().setSelected(ppC.getNoDWZ());
-				eigenschaftenView.getCheckBoxohneFolgeDWZ()
-						.setSelected(mainControl.getPropertiesControl().getNoFolgeDWZ());
+				eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(ppC.getNoFolgeDWZ());
 				eigenschaftenView.getSpielerListeAuswahlBox().setSelectedIndex(ppC.getSpielerProTab());
 				eigenschaftenView.getTurnierListeAuswahlBox().setSelectedIndex(ppC.getTurniereProTab());
 				eigenschaftenView.getForenameLengthBox().setValue(ppC.getCutForename());
@@ -66,6 +67,9 @@ public class ActionListenerSettingsControl {
 					eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(false);
 					ppC.setNoFolgeDWZ(true);
 				}
+				eigenschaftenView.getCheckBoxPDFLinks().setSelected(ppC.getPDFLinks());
+				eigenschaftenView.getWebserverPathTextField().setEnabled(ppC.getPDFLinks());
+
 				if (mainControl.getPropertiesControl().getLanguage().equals("german")) { //$NON-NLS-1$
 					eigenschaftenView.getGermanLanguageCheckBox().setSelected(true);
 					eigenschaftenView.getEnglishLanguageCheckBox().setSelected(false);

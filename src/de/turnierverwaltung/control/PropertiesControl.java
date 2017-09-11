@@ -54,6 +54,7 @@ public class PropertiesControl {
 	public static final String CUT_FORENAME = "cut-forename";
 	public static final String CUT_SURNAME = "cut-surname";
 	public static final String DATABASE_UPDATED = "database-updated";
+	public static final String PDFLINKS = "pdflinks";
 	public static final String WEBSERVER_PATH = "webserver-path";
 	private Properties prop;
 	private Boolean NoWritableProperties;
@@ -89,6 +90,7 @@ public class PropertiesControl {
 		prop.setProperty(CUT_FORENAME, "");
 		prop.setProperty(CUT_SURNAME, "");
 		prop.setProperty(DATABASE_UPDATED, FALSE);
+		prop.setProperty(PDFLINKS, FALSE);
 		prop.setProperty(WEBSERVER_PATH, "");
 	}
 
@@ -203,10 +205,10 @@ public class PropertiesControl {
 			prop.setProperty(DATABASE_UPDATED, FALSE);
 			saveChanges = true;
 		}
-//		if (prop.getProperty(WEBSERVER_PATH).equals("")) {
-//			prop.setProperty(WEBSERVER_PATH, "/");
-//			saveChanges = true;
-//		}
+		if (!(prop.getProperty(PDFLINKS).equals(TRUE) || prop.getProperty(PDFLINKS).equals(FALSE))) {
+			prop.setProperty(PDFLINKS, FALSE);
+			saveChanges = true;
+		}
 		checkCrossTableColumnForDoubles();
 		checkMeetingTableColumnForDoubles();
 		if (saveChanges == true) {
@@ -249,6 +251,14 @@ public class PropertiesControl {
 
 	public Boolean getNoFolgeDWZ() {
 		if (prop.getProperty(NOFOLGEDWZ).equals(TRUE)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Boolean getPDFLinks() {
+		if (prop.getProperty(PDFLINKS).equals(TRUE)) {
 			return true;
 		} else {
 			return false;
@@ -529,6 +539,14 @@ public class PropertiesControl {
 			prop.setProperty(NOFOLGEDWZ, TRUE);
 		} else {
 			prop.setProperty(NOFOLGEDWZ, FALSE);
+		}
+	}
+
+	public void setPDFLinks(Boolean pdfLinks) {
+		if (pdfLinks == true) {
+			prop.setProperty(PDFLINKS, TRUE);
+		} else {
+			prop.setProperty(PDFLINKS, FALSE);
 		}
 	}
 

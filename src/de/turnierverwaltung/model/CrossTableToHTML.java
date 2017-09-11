@@ -39,7 +39,7 @@ public class CrossTableToHTML {
 	 * @param infoString
 	 */
 	public CrossTableToHTML(String[][] tabellenMatrix, Tournament turnier, String gruppenName, String infoString,
-			String webServerPath, String filename) {
+			String webServerPath, String filename, Boolean showLink) {
 		this.turnier = turnier;
 		this.tabellenMatrix = tabellenMatrix;
 		this.turnierName = turnier.getTurnierName();
@@ -49,7 +49,7 @@ public class CrossTableToHTML {
 		this.infoString = infoString;
 		this.webServerPath = webServerPath;
 		this.filename = filename;
-		this.fileLink = new WebserverFileLink(this.webServerPath, this.filename);
+		this.fileLink = new WebserverFileLink(this.webServerPath, this.filename, showLink);
 	}
 
 	private String getHTMLFooter() {

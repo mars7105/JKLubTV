@@ -32,8 +32,17 @@ public class ItemListenerSettingsControl {
 				mainControl.getPropertiesControl().writeProperties();
 			}
 		});
+		eigenschaftenView.getCheckBoxPDFLinks().addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				Boolean pdflink = eigenschaftenView.getCheckBoxPDFLinks().isSelected();
+				eigenschaftenView.getWebserverPathTextField().setEnabled(pdflink);
 
-		eigenschaftenView.getCheckBoxohneDWZ().setSelected(mainControl.getPropertiesControl().getNoDWZ());
+				mainControl.getPropertiesControl().setPDFLinks(pdflink);
+
+				mainControl.getPropertiesControl().writeProperties();
+
+			}
+		});
 		eigenschaftenView.getCheckBoxohneDWZ().addItemListener(new ItemListener() {
 
 			public void itemStateChanged(ItemEvent e) {
@@ -75,7 +84,6 @@ public class ItemListenerSettingsControl {
 			}
 		});
 
-		eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(mainControl.getPropertiesControl().getNoFolgeDWZ());
 		eigenschaftenView.getCheckBoxohneFolgeDWZ().addItemListener(new ItemListener() {
 
 			public void itemStateChanged(ItemEvent e) {

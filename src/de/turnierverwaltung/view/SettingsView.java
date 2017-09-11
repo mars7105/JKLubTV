@@ -88,6 +88,7 @@ public class SettingsView extends JPanel {
 	private SpinnerView forenameLengthBox;
 	private SpinnerView surnameLengthBox;
 	private JTextField webserverPathTextField;
+	private JCheckBox checkBoxPDFLinks;
 
 	/**
 	 * Create the panel.
@@ -542,6 +543,16 @@ public class SettingsView extends JPanel {
 
 		htmlAll.add(htmlPanel);
 
+		// PDF Links in HTML Tabellen einbinden
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.42")); //$NON-NLS-1$
+		checkBoxPDFLinks = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxPDFLinks);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
 		// Webserver Path
 		labelHeader = new JLabel(Messages.getString("EigenschaftenView.41")); //$NON-NLS-1$
 		webserverPathTextField = new JTextField(20);
@@ -818,6 +829,14 @@ public class SettingsView extends JPanel {
 
 	public void setWebserverPathTextField(JTextField webserverPathTextField) {
 		this.webserverPathTextField = webserverPathTextField;
+	}
+
+	public JCheckBox getCheckBoxPDFLinks() {
+		return checkBoxPDFLinks;
+	}
+
+	public void setCheckBoxPDFLinks(JCheckBox checkBoxPDFLinks) {
+		this.checkBoxPDFLinks = checkBoxPDFLinks;
 	}
 
 	class OpenUrlAction implements ActionListener {

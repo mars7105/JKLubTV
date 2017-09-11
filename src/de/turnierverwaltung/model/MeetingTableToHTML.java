@@ -37,7 +37,7 @@ public class MeetingTableToHTML {
 	 * @param gruppenName
 	 */
 	public MeetingTableToHTML(String[][] tabellenMatrix, String turnierName, String startDatum, String endDatum,
-			String gruppenName, String webServerPath, String filename) {
+			String gruppenName, String webServerPath, String filename, Boolean showLink) {
 		super();
 		this.tabellenMatrix = tabellenMatrix;
 		this.turnierName = turnierName;
@@ -46,7 +46,7 @@ public class MeetingTableToHTML {
 		this.gruppenName = gruppenName;
 		this.webServerPath = webServerPath;
 		this.filename = filename;
-		this.fileLink = new WebserverFileLink(this.webServerPath, this.filename);
+		this.fileLink = new WebserverFileLink(this.webServerPath, this.filename, showLink);
 	}
 
 	private String getHTMLFooter() {
