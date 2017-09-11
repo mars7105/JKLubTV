@@ -543,26 +543,6 @@ public class SettingsView extends JPanel {
 
 		htmlAll.add(htmlPanel);
 
-		// PDF Links in HTML Tabellen einbinden
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.42")); //$NON-NLS-1$
-		checkBoxPDFLinks = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxPDFLinks);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
-		// Webserver Path
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.41")); //$NON-NLS-1$
-		webserverPathTextField = new JTextField(20);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(webserverPathTextField);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
 		// ohne DWZ
 		labelHeader = new JLabel(Messages.getString("EigenschaftenView.3")); //$NON-NLS-1$
 		checkBoxohneDWZ = new JCheckBox();
@@ -582,7 +562,28 @@ public class SettingsView extends JPanel {
 		htmlPanel.add(labelHeader);
 
 		htmlAll.add(htmlPanel);
+		// PDF Links in HTML Tabellen einbinden
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.42")); //$NON-NLS-1$
+		checkBoxPDFLinks = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxPDFLinks);
+		htmlPanel.add(labelHeader);
 
+		htmlAll.add(htmlPanel);
+
+		// Webserver Path
+		Dimension dimTextField = new Dimension(225, 30);
+
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.41")); //$NON-NLS-1$
+		webserverPathTextField = new JTextField(22);
+		webserverPathTextField.setPreferredSize(dimTextField);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(webserverPathTextField);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
 		// buchstaben anzahl
 		String[] listString = new String[20];
 		for (int i = 0; i < 20; i++) {
