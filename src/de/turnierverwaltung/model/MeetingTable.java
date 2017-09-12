@@ -146,9 +146,10 @@ public class MeetingTable {
 	 * @param ohneHeaderundFooter
 	 * @return
 	 */
-	public String getHTMLTable(Boolean ohneHeaderundFooter, String path, String filename, Boolean showLink) {
+	public String getHTMLTable(Boolean ohneHeaderundFooter, String path, String filename, String icsfilename,
+			Boolean showLink) {
 		terminTabelleToHTML = new MeetingTableToHTML(tabellenMatrix, turnier.getTurnierName(), turnier.getStartDatum(),
-				turnier.getEndDatum(), gruppe.getGruppenName(), path, filename, showLink);
+				turnier.getEndDatum(), gruppe.getGruppenName(), path, filename, icsfilename, showLink);
 		return terminTabelleToHTML.getHTMLTable(ohneHeaderundFooter);
 	}
 

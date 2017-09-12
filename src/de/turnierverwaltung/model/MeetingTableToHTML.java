@@ -27,6 +27,7 @@ public class MeetingTableToHTML {
 	private String filename;
 	private WebserverFileLink fileLink;
 	private String webServerPath;
+	private String icsfilename;
 
 	/**
 	 * 
@@ -35,9 +36,10 @@ public class MeetingTableToHTML {
 	 * @param startDatum
 	 * @param endDatum
 	 * @param gruppenName
+	 * @param icsfilename
 	 */
 	public MeetingTableToHTML(String[][] tabellenMatrix, String turnierName, String startDatum, String endDatum,
-			String gruppenName, String webServerPath, String filename, Boolean showLink) {
+			String gruppenName, String webServerPath, String filename, String icsfilename, Boolean showLink) {
 		super();
 		this.tabellenMatrix = tabellenMatrix;
 		this.turnierName = turnierName;
@@ -46,7 +48,8 @@ public class MeetingTableToHTML {
 		this.gruppenName = gruppenName;
 		this.webServerPath = webServerPath;
 		this.filename = filename;
-		this.fileLink = new WebserverFileLink(this.webServerPath, this.filename, showLink);
+		this.icsfilename = icsfilename;
+		this.fileLink = new WebserverFileLink(this.webServerPath, this.filename, this.icsfilename, showLink);
 	}
 
 	private String getHTMLFooter() {
@@ -99,7 +102,8 @@ public class MeetingTableToHTML {
 			if (y == 0) {
 				htmlString += "    <thead>\n";
 				htmlString += "    <tr><th colspan='" + col + "'>" + Messages.getString("TurnierTabelleToHTML.11")
-						+ " - " + gruppenName + fileLink.getPathToPDF() + "</th></tr>\n</thead>\n<tbody>\n";
+						+ " - " + gruppenName + fileLink.getPathToPDF() + fileLink.getPathToICS()
+						+ "</th></tr>\n</thead>\n<tbody>\n";
 			}
 
 			htmlString += "      <tr>\n";

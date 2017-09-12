@@ -59,7 +59,7 @@ public class HTMLSaveControl {
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 			String filename = mainControl.getTurnier().getTurnierName();
-			;
+
 			// String filename = JOptionPane.showInputDialog(mainControl,
 			// Messages.getString("HTMLSaveControler.0"), //$NON-NLS-1$
 			// Messages.getString("HTMLSaveControler.1"), //$NON-NLS-1$
@@ -82,12 +82,16 @@ public class HTMLSaveControl {
 					String wfn = mainControl.getTurnier().getTurnierName();
 					wfn += Messages.getString("PDFSaveControler.2")
 							+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".pdf";
-					String webfilename1 = wfn.trim();
+					String webfilename1 = wfn.replaceAll(" ", "");
 
 					String wfn2 = mainControl.getTurnier().getTurnierName();
 					wfn2 += Messages.getString("PDFSaveControler.8")
 							+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".pdf";
-					String webfilename2 = wfn2.trim();
+					String webfilename2 = wfn2.replaceAll(" ", "");
+
+					String ical = mainControl.getTurnier().getTurnierName()
+							+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".ics";
+					String webfilename3 = ical.replaceAll(" ", "");
 
 					if (this.mainControl.getTurnierTabelle()[i] == null) {
 						this.mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
@@ -157,7 +161,8 @@ public class HTMLSaveControl {
 							if (n2 == 0) {
 								writer2 = new OutputStreamWriter(new FileOutputStream(filename2), "UTF8"); //$NON-NLS-1$
 								writer2.write(this.mainControl.getTerminTabelleControl().getTerminTabelle()[i]
-										.getHTMLTable(ohneHeaderundFooter, webserverPath, webfilename2, showLink));
+										.getHTMLTable(ohneHeaderundFooter, webserverPath, webfilename2, webfilename3,
+												showLink));
 								writer2.flush();
 								writer2.close();
 							}

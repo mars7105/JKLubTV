@@ -41,8 +41,8 @@ public class ICalendarSaveControl {
 				for (int i = 0; i < gruppenAnzahl; i++) {
 					ICal iCalendar = this.meetingTable[i].getiCalendar();
 					String fileName = savefile.getCurrentDirectory() + "/"
-							+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + "-"
-							+ mainControl.getTurnier().getTurnierName() + ".ics";
+							+ mainControl.getTurnier().getTurnierName().replaceAll(" ", "")
+							+ mainControl.getTurnier().getGruppe()[i].getGruppenName().replaceAll(" ", "") + ".ics";
 
 					File file = new File(fileName);
 					if (file.exists()) {
