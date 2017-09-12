@@ -171,20 +171,16 @@ public class PlayerListControl implements ActionListener {
 
 		int index = 0;
 		// Collections.sort(spieler, new SortName());
-		Boolean updateListe = false;
 		for (Player player : spieler) {
 
-			if (player.getName().length() > 0 && player.getForename().length() < 1) {
+			if (player.getName().length() > 0 && player.getForename().length() == 0) {
 				player.extractNameToForenameAndSurename();
 				spielerTableControl.updateOneSpieler(player);
-				updateListe = true;
 			}
-			if (player.getName().length() < 1) {
+			if (player.getName().length() == 0) {
 				player.extractForenameAndSurenameToName();
-				updateListe = true;
+				spielerTableControl.updateOneSpieler(player);
 			}
-
-			
 
 			spielerLadenView.makeSpielerZeile(player, index);
 			spielerLadenView.getSpielerBearbeitenButton()[index].addActionListener(this);
@@ -195,9 +191,7 @@ public class PlayerListControl implements ActionListener {
 			spielerLadenView.getSpielerListe().setSelectedIndex(selectedTab);
 		}
 		spielerLadenView.updateUI();
-		if (updateListe) {
-			updateSpielerListe();
-		}
+
 	}
 
 	private void testPlayerListForDoubles() throws SQLException {

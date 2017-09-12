@@ -126,70 +126,74 @@ public class ActionListenerFileMenuControl implements ActionListener {
 		if (arg0.getSource() == loaddbButton)
 
 		{
+			try {
+				int abfrage = warnHinweis();
+				if (abfrage == 0) {
 
-			int abfrage = warnHinweis();
-			if (abfrage == 0) {
+					prop.setDatabaseUpdated(false);
+					prop.writeProperties();
 
-				prop.setDatabaseUpdated(false);
-				prop.writeProperties();
+					// Create a file chooser
+					File path = new File(prop.getDefaultPath());
 
-				// Create a file chooser
-				File path = new File(prop.getDefaultPath());
+					JFileChooser fc = new JFileChooser(path);
+					FileFilter filter = new FileNameExtensionFilter(Messages.getString("NaviController.15"), //$NON-NLS-1$
+							Messages.getString("NaviController.16")); //$NON-NLS-1$
+					fc.addChoosableFileFilter(filter);
+					fc.setFileFilter(filter);
+					int returnVal = fc.showOpenDialog(null);
+					try {
+						if (returnVal == JFileChooser.APPROVE_OPTION) {
+							mainControl.resetApp();
+							// mainControl.datenbankMenueView(false);
+							File file = fc.getSelectedFile();
+							// This is where a real application would open the file.
+							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
 
-				JFileChooser fc = new JFileChooser(path);
-				FileFilter filter = new FileNameExtensionFilter(Messages.getString("NaviController.15"), //$NON-NLS-1$
-						Messages.getString("NaviController.16")); //$NON-NLS-1$
-				fc.addChoosableFileFilter(filter);
-				fc.setFileFilter(filter);
-				int returnVal = fc.showOpenDialog(null);
-				try {
-					if (returnVal == JFileChooser.APPROVE_OPTION) {
-						mainControl.resetApp();
-						// mainControl.datenbankMenueView(false);
-						File file = fc.getSelectedFile();
-						// This is where a real application would open the file.
-						SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
+							mainControl.setNeuesTurnier(false);
+							// mainControl.getNaviView().getTabellenPanel().setVisible(false);
+							mainControl.setTurnierTableControl(new SQLTournamentControl(mainControl));
+							// mainControl.getTurnierTableControl().loadTurnierListe();
+							mainControl.setSpielerEditierenControl(new PlayerListControl(mainControl));
+							mainControl.getSpielerEditierenControl().updateSpielerListe();
+							mainControl.setTurnierListeLadenControl(
+									new ActionListenerTournamentItemsControl(this.mainControl));
 
-						mainControl.setNeuesTurnier(false);
-						// mainControl.getNaviView().getTabellenPanel().setVisible(false);
-						mainControl.setTurnierTableControl(new SQLTournamentControl(mainControl));
-						// mainControl.getTurnierTableControl().loadTurnierListe();
-						mainControl.setSpielerEditierenControl(new PlayerListControl(mainControl));
-						mainControl.getSpielerEditierenControl().updateSpielerListe();
-						mainControl.setTurnierListeLadenControl(
-								new ActionListenerTournamentItemsControl(this.mainControl));
+							mainControl.getTurnierListeLadenControl().loadTurnierListe();
 
-						mainControl.getTurnierListeLadenControl().loadTurnierListe();
+							prop.setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
+							prop.setDefaultPath(file.getParent());
+							mainControl.getEigenschaftenControl().getEigenschaftenView()
+									.setOpenDefaultPathLabel(file.getParent());
+							prop.writeProperties();
+							naviView.setPathToDatabase(new JLabel(SQLiteDAOFactory.getDB_PATH()));
 
-						prop.setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
-						prop.setDefaultPath(file.getParent());
-						mainControl.getEigenschaftenControl().getEigenschaftenView()
-								.setOpenDefaultPathLabel(file.getParent());
-						prop.writeProperties();
-						naviView.setPathToDatabase(new JLabel(SQLiteDAOFactory.getDB_PATH()));
-
-						mainControl.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
-								+ SQLiteDAOFactory.getDB_PATH());
-						turnierAnsicht = new TurnierAnsicht(mainControl);
-						mainControl.getHauptPanel().addChangeListener(turnierAnsicht);
-						for (int i = 0; i < mainControl.getHauptPanel().getTabCount(); i++) {
-							if (mainControl.getHauptPanel().getTitleAt(i)
-									.equals(Messages.getString("NaviController.17"))) { //$NON-NLS-1$
-								mainControl.getHauptPanel().setSelectedIndex(i);
+							mainControl.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
+									+ SQLiteDAOFactory.getDB_PATH());
+							turnierAnsicht = new TurnierAnsicht(mainControl);
+							mainControl.getHauptPanel().addChangeListener(turnierAnsicht);
+							for (int i = 0; i < mainControl.getHauptPanel().getTabCount(); i++) {
+								if (mainControl.getHauptPanel().getTitleAt(i)
+										.equals(Messages.getString("NaviController.17"))) { //$NON-NLS-1$
+									mainControl.getHauptPanel().setSelectedIndex(i);
+								}
 							}
+
+							naviView.updateUI();
+
+						} else {
+							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.18")); //$NON-NLS-1$
 						}
-
-						naviView.updateUI();
-
-					} else {
-						JOptionPane.showMessageDialog(null, Messages.getString("NaviController.18")); //$NON-NLS-1$
+					} catch (SQLException e) {
+						mainControl.fileSQLError();
 					}
-				} catch (SQLException e) {
-					mainControl.fileSQLError();
 				}
-			}
 
+			} catch (Exception e) {
+
+			}
 		}
+
 		if (arg0.getSource() == exitButton) {
 			int abfrage = beendenHinweis();
 			if (abfrage == 0) {

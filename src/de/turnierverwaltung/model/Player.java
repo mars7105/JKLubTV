@@ -188,7 +188,7 @@ public class Player implements Comparable<Object> {
 	}
 
 	public void extractNameToForenameAndSurename() {
-		if (spielerId > TournamentConstants.SPIELFREI_ID) {
+		if (spielerId > TournamentConstants.SPIELFREI_ID && name.length() > 0) {
 			forename = "";
 			surname = "";
 			int i = 0;
