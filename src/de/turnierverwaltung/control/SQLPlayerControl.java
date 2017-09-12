@@ -103,6 +103,8 @@ public class SQLPlayerControl {
 	public int insertOneSpieler(Player spieler) throws SQLException {
 		this.turnier = mainControl.getTurnier();
 		String spielerName = spieler.getName();
+		String spielerForeName = spieler.getForename();
+		String spielerSurName = spieler.getSurname();
 		String spielerDWZ = spieler.getDwz();
 		String spielerKuerzel = spieler.getKuerzel();
 		String spielerZPS = spieler.getDsbZPSNumber();
@@ -112,7 +114,7 @@ public class SQLPlayerControl {
 		int spielerId = -1;
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
 
-		spielerId = mySQLSpielerDAO.insertSpieler(spielerName, spieler.getForename(), spieler.getSurname(), spielerDWZ,
+		spielerId = mySQLSpielerDAO.insertSpieler(spielerName, spielerForeName, spielerSurName, spielerDWZ,
 				spielerKuerzel, spielerZPS, spielerMGL, age);
 
 		return spielerId;
@@ -185,7 +187,12 @@ public class SQLPlayerControl {
 
 	public void updateOneSpieler(Player spieler) throws SQLException {
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
-
+		if (!spieler.getName().equals("") && spieler.getSurname().equals("")) {
+			spieler.extractNameToForenameAndSurename();
+		}
+		if (spieler.getName().equals("") && !spieler.getSurname().equals("")) {
+			spieler.extractForenameAndSurenameToName();
+		}
 		mySQLSpielerDAO.updateSpieler(spieler);
 	}
 

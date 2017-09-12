@@ -65,6 +65,7 @@ public class PlayerListControl implements ActionListener {
 						String kuerzel = spielerEditierenView.getTextFieldKuerzel().getText();
 						String dwz = spielerEditierenView.getTextFieldDwz().getText();
 						int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
+
 						spieler.get(spielerIndex).setForename(foreName);
 						spieler.get(spielerIndex).setSurname(surName);
 						spieler.get(spielerIndex).setKuerzel(kuerzel);
@@ -173,14 +174,16 @@ public class PlayerListControl implements ActionListener {
 		// Collections.sort(spieler, new SortName());
 		for (Player player : spieler) {
 
-			if (player.getName().length() > 0 && player.getForename().length() == 0) {
+			if (!player.getName().equals("") && player.getSurname().equals("")) {
 				player.extractNameToForenameAndSurename();
 				spielerTableControl.updateOneSpieler(player);
 			}
-			if (player.getName().length() == 0) {
+			if (player.getName().equals("") && !player.getSurname().equals("")) {
 				player.extractForenameAndSurenameToName();
 				spielerTableControl.updateOneSpieler(player);
 			}
+
+			
 
 			spielerLadenView.makeSpielerZeile(player, index);
 			spielerLadenView.getSpielerBearbeitenButton()[index].addActionListener(this);
