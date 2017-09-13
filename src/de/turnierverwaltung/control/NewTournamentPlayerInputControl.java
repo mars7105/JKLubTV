@@ -151,16 +151,16 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 									spieler[counter].setSpielerId(spielerID);
 
 									stc.updateOneSpieler(spieler[counter]);
-//									Player temp = null;
-//
-//									ListIterator<Player> li = alleSpieler.listIterator();
-//									while (li.hasNext()) {
-//										temp = li.next();
-//										if (spielerID == temp.getSpielerId()) {
-//											li.remove();
-//										}
-//
-//									}
+									// Player temp = null;
+									//
+									// ListIterator<Player> li = alleSpieler.listIterator();
+									// while (li.hasNext()) {
+									// temp = li.next();
+									// if (spielerID == temp.getSpielerId()) {
+									// li.remove();
+									// }
+									//
+									// }
 								} else {
 									spieler[counter].setSpielerId(stc.insertOneSpieler(spieler[counter]));
 								}
@@ -328,21 +328,25 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 			loop = false;
 			for (int i = 0; i < spieler.length; i++) {
 				int zName = 0;
-				int zKuerzel = 0;
+				int zKuerzel = 1;
 				for (int y = 0; y < spieler.length; y++) {
+
 					spieler[i].extractForenameAndSurenameToName();
 					if (i != y) {
 
-						if (spieler[i].getName().equals(spieler[y].getName())) {
+						if (spieler[i].getSurname().equals(spieler[y].getSurname())
+								&& spieler[i].getForename().equals(spieler[y].getForename())
+								&& spieler[i].getSurname().equals("Spielfrei") != true) {
 							zName++;
-							spieler[y].setName(spieler[y].getName() + "_" + new Integer(zName).toString());
+							spieler[y].setSurname(spieler[y].getSurname() + new Integer(zName).toString());
 							spieler[y].extractForenameAndSurenameToName();
 							stc.updateOneSpieler(spieler[y]);
 							loop = true;
 						}
-						if (spieler[i].getKuerzel().equals(spieler[y].getKuerzel())) {
+						if (spieler[i].getKuerzel().equals(spieler[y].getKuerzel())
+								&& spieler[i].getSurname().equals("Spielfrei") != true) {
 							zKuerzel++;
-							spieler[y].setKuerzel(spieler[y].getKuerzel() + "_" + new Integer(zKuerzel).toString());
+							spieler[y].setKuerzel(spieler[y].getKuerzel() + new Integer(zKuerzel).toString());
 
 							stc.updateOneSpieler(spieler[y]);
 							loop = true;

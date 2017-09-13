@@ -146,7 +146,7 @@ public class PDFOutputControl {
 
 			fl[2] = 1;
 		} else {
-			fl[2] = 3;
+			fl[2] = 4;
 		}
 
 		for (int i = 0; i <= zeilen; i++) {
