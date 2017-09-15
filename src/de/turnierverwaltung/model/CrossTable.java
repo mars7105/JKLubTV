@@ -154,7 +154,7 @@ public class CrossTable {
 					if (spieler[y].getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 
 						if (x == y) {
-							tabellenMatrix[x + 3 - abstand][y + 1] = "--"; //$NON-NLS-1$
+							tabellenMatrix[x + 3 - abstand][y + 1] = TournamentConstants.LEERE_MENGE; //$NON-NLS-1$
 						} else {
 							for (int i = 0; i < partienAnzahl; i++) {
 
