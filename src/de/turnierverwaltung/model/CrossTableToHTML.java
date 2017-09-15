@@ -144,7 +144,6 @@ public class CrossTableToHTML {
 					if (ausgabeWert.equals(TournamentConstants.REMIS)) {
 						ausgabeWert = "&frac12;"; //$NON-NLS-1$
 					}
-					
 
 					htmlString += "        <td>" + ausgabeWert //$NON-NLS-1$
 							+ "</td>\n"; //$NON-NLS-1$
@@ -175,7 +174,7 @@ public class CrossTableToHTML {
 		htmlString = htmlString.replaceAll("\u00c4", "&Auml;");
 		htmlString = htmlString.replaceAll("\u00d6", "&Ouml;");
 		htmlString = htmlString.replaceAll("\u00dc", "&Uuml;");
-		htmlString = htmlString.replaceAll("\u2260", "&ne;");
+		htmlString = htmlString.replaceAll("\u2666", "&diams;");
 		return htmlString;
 
 	}
