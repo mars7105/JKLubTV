@@ -5,3 +5,4 @@ Sie ist für Webmaster gedacht die auf einfache Weise ein Klubturnier im eigenen
 
 Die Software ist kostenlos (Opensource).
 
+https://github.com/mars7105/JKLubTV/releases/tag/v3.0.33-beta
