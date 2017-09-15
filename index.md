@@ -5,8 +5,3 @@ Sie ist für Webmaster gedacht die auf einfache Weise ein Klubturnier im eigenen
 
 Die Software ist kostenlos (Opensource).
 
-Download
-Windows:
-<https://github.com/mars7105/JKLubTV/releases/download/v3.0.0-beta.20/JKlubTVSetup-3.0.0-beta.20.exe> <br />
-Java:
-<https://github.com/mars7105/JKLubTV/releases/download/v3.0.0-beta.20/JKlubTV-3.0.0-beta.20.jar> <br />
