@@ -29,7 +29,7 @@ public class WebserverFileLink {
 
 	public String getPathToICS() {
 		if (showLink) {
-			pathToFile = "&nbsp;&nbsp;&nbsp;<a href='" + this.webserverPath + icsfilename
+			pathToFile = "<a href='" + this.webserverPath + icsfilename
 					+ "' target='_blank'><img src='" + this.webserverPath + "accessories-date.png' alt='"
 					+ Messages.getString("WebserverFileLink.2") + "' />&nbsp;"
 					+ Messages.getString("WebserverFileLink.2") + "</a>";
@@ -39,7 +39,7 @@ public class WebserverFileLink {
 
 	public String getPathToPDF() {
 		if (showLink) {
-			pathToFile = "&nbsp;&nbsp;&nbsp;<a href='" + this.webserverPath + this.filename
+			pathToFile = "<a href='" + this.webserverPath + this.filename
 					+ "' target='_blank'><img src='" + this.webserverPath + "acroread-2.png' alt='"
 					+ Messages.getString("WebserverFileLink.0") + "' />&nbsp;"
 					+ Messages.getString("WebserverFileLink.0") + "</a>";

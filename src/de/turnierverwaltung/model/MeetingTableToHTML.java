@@ -28,6 +28,7 @@ public class MeetingTableToHTML {
 	private WebserverFileLink fileLink;
 	private String webServerPath;
 	private String icsfilename;
+	private int anzahlSpieler;
 
 	/**
 	 * 
@@ -38,14 +39,15 @@ public class MeetingTableToHTML {
 	 * @param gruppenName
 	 * @param icsfilename
 	 */
-	public MeetingTableToHTML(String[][] tabellenMatrix, String turnierName, String startDatum, String endDatum,
-			String gruppenName, String webServerPath, String filename, String icsfilename, Boolean showLink) {
+	public MeetingTableToHTML(String[][] tabellenMatrix, Tournament turnier, Group gruppe, String webServerPath,
+			String filename, String icsfilename, Boolean showLink) {
 		super();
 		this.tabellenMatrix = tabellenMatrix;
-		this.turnierName = turnierName;
-		this.startDatum = startDatum;
-		this.endDatum = endDatum;
-		this.gruppenName = gruppenName;
+		this.turnierName = turnier.getTurnierName();
+		this.startDatum = turnier.getStartDatum();
+		this.endDatum = turnier.getEndDatum();
+		this.gruppenName = gruppe.getGruppenName();
+		this.anzahlSpieler = gruppe.getSpielerAnzahl();
 		this.webServerPath = webServerPath;
 		this.filename = filename;
 		this.icsfilename = icsfilename;
@@ -92,40 +94,60 @@ public class MeetingTableToHTML {
 	private String makeTerminTabelle(Boolean ohneHeaderundFooter) {
 		int col = this.tabellenMatrix.length;
 		int row = this.tabellenMatrix[0].length;
+		String beginString1 = "";
+		String beginString2 = "";
+		for (int i = 1; i < 5; i++) {
+			beginString2 += "<td>" + this.tabellenMatrix[i][0] + "</td>";
+		}
 		if (ohneHeaderundFooter == false) {
 			htmlString = getHTMLHeader();
 		} else {
 			htmlString = "";
 		}
-		htmlString += "  <table>\n";
+		htmlString += " <table>\n";
 		for (int y = 0; y < row; y++) {
 			if (y == 0) {
-				htmlString += "    <thead>\n";
-				htmlString += "    <tr><th colspan='" + col + "'>" + Messages.getString("TurnierTabelleToHTML.11")
-						+ " - " + gruppenName + fileLink.getPathToPDF() + fileLink.getPathToICS()
-						+ "</th></tr>\n</thead>\n<tbody>\n";
-			}
+				beginString1 = "    <thead>\n    <tr><th colspan='" + col + "'>"
+						+ Messages.getString("TurnierTabelleToHTML.11") + " - " + gruppenName + " "
+						+ this.tabellenMatrix[0][0] + " " + this.tabellenMatrix[y][1] + "<br />"
+						+ fileLink.getPathToPDF() + "&nbsp;&nbsp;&nbsp;" + fileLink.getPathToICS()
+						+ "</th></tr>\n</thead>\n<tbody>\n<tr>\n";
+				htmlString += beginString1 + beginString2;
+			} else {
 
-			htmlString += "      <tr>\n";
+				htmlString += "<tr>\n";
 
-			for (int x = 0; x < col; x++) {
-				String ausgabeWert = this.tabellenMatrix[x][y];
-				if (ausgabeWert != null && !ausgabeWert.equals("") && !ausgabeWert.equals(" ")) {
-					if (ausgabeWert.equals(TournamentConstants.PARTIE_REMIS)) {
-						ausgabeWert = "&frac12; - &frac12;";
+				for (int x = 1; x < col; x++) {
+					String ausgabeWert = this.tabellenMatrix[x][y];
+					if (ausgabeWert != null && !ausgabeWert.equals("") && !ausgabeWert.equals(" ")) {
+						if (ausgabeWert.equals(TournamentConstants.PARTIE_REMIS)) {
+							ausgabeWert = "&frac12; - &frac12;";
+						}
+
+						htmlString += "        <td>" + ausgabeWert + "</td>\n";
+
+					} else {
+
+						htmlString += "        <td>" + TournamentConstants.HTML_LEERZEICHEN + "</td>\n";
+
 					}
 
-					htmlString += "        <td>" + ausgabeWert + "</td>\n";
+				}
+				htmlString += "</tr>\n";
+				if (y + 1 >= anzahlSpieler / 2 && y % (anzahlSpieler / 2) == 0 && y < row - 1) {
+					htmlString += "</tbody></table>\n";
 
-				} else {
-
-					htmlString += "        <td>" + TournamentConstants.HTML_LEERZEICHEN + "</td>\n";
+					htmlString += "<table>\n";
+					beginString1 = "    <thead>\n    <tr><th colspan='" + col + "'>"
+							+ Messages.getString("TurnierTabelleToHTML.11") + " - " + gruppenName + " "
+							+ this.tabellenMatrix[0][0] + " " + this.tabellenMatrix[0][y + 1] + "<br />"
+							+ fileLink.getPathToPDF() + "&nbsp;&nbsp;&nbsp;" + fileLink.getPathToICS()
+							+ "</th></tr>\n</thead>\n<tbody>\n<tr>\n";
+					htmlString += beginString1 + beginString2;
 
 				}
 
 			}
-			htmlString += "      </tr>\n";
-
 		}
 		htmlString += "    </tbody>\n  </table>\n";
 
