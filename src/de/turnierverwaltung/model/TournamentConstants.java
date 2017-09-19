@@ -24,6 +24,7 @@ import de.turnierverwaltung.mysql.DAOFactory;
  * @author mars
  *
  */
+
 public class TournamentConstants {
 	public static final String KEIN_ERGEBNIS = " ";
 	public static final String GEWINN = "1";

@@ -171,8 +171,6 @@ public class CrossTableControl {
 		ResultDWZControl folgeDWZ = new ResultDWZControl(mainControl.getTurnier(),
 				mainControl.getTurnier().getGruppe()[gruppenNummer]);
 		folgeDWZ.caculateDWZ();
-		// Zweimal ausführen falls DWZ-lose Spieler dabei sind
-		folgeDWZ.caculateDWZ();
 
 	}
 
@@ -247,6 +245,7 @@ public class CrossTableControl {
 		for (int i = 0; i < anzahlGruppen; i++) {
 			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
 			simpleTableView[i].getStatusLabel().setBackground(Color.ORANGE);
+			berechneFolgeDWZ(i);
 
 		}
 
