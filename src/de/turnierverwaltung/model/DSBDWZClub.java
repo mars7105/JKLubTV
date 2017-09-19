@@ -58,6 +58,7 @@ public class DSBDWZClub {
 				String surname = player.getLastName();
 				String zpsNumber = Integer.toString(player.getClubMembershipByZps(zps).getZps());
 				String kuerzel = player.getFirstName().substring(0, 1) + player.getLastName().substring(0, 1);
+				int dwzIndex=player.getDwzIndex();
 				try {
 					dwz = new Integer(player.getDwz()).toString();
 				} catch (NullPointerException e) {
@@ -73,7 +74,8 @@ public class DSBDWZClub {
 				byte[] bkuerzel = kuerzel.getBytes();
 				String kuerzelUTF8 = new String(bkuerzel, UTF8_CHARSET);
 				// Test
-				spieler.add(new de.turnierverwaltung.model.Player(id, forenameUTF8, surenameUTF8, kuerzelUTF8, dwz, age,
+				spieler.add(new de.turnierverwaltung.model.Player(id, forenameUTF8, surenameUTF8, kuerzelUTF8, dwz,
+						dwzIndex, age,
 						zps, zpsNumber));
 			}
 			if (spieler.isEmpty()) {

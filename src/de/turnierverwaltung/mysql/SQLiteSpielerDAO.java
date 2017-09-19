@@ -120,7 +120,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 					player = new Player(idSpieler, name, kuerzel, dwz, age, zps, mgl);
 
 				} else {
-					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, age, zps, mgl);
+					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, 10, age, zps, mgl);
 				}
 				spielerListe.add(player);
 			}
@@ -139,7 +139,8 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 		String sql;
 		int id = -1;
 
-		sql = "Insert into spieler (Name, Forename, Surname, DWZ, Kuerzel, ZPS, MGL, Age) values (?,?,?,?,?,?,?,?)" + ";";
+		sql = "Insert into spieler (Name, Forename, Surname, DWZ, Kuerzel, ZPS, MGL, Age) values (?,?,?,?,?,?,?,?)"
+				+ ";";
 
 		if (this.dbConnect != null) {
 
@@ -196,7 +197,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 					player = new Player(idSpieler, name, kuerzel, dwz, age, zps, mgl);
 
 				} else {
-					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, age, zps, mgl);
+					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, 10, age, zps, mgl);
 				}
 				spielerListe.add(player);
 			}

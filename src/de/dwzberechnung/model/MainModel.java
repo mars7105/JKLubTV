@@ -16,6 +16,7 @@ package de.dwzberechnung.model;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 public class MainModel {
 	private PlayerModel player;
@@ -33,28 +34,52 @@ public class MainModel {
 
 	public void calculateDWZ() {
 		if (this.opponents.size() > 0) {
-			calcWahrscheinlichkeit = new CalculateWahrscheinlichkeitModel(this.player, this.opponents);
-			double durchschnittsDWZ = 0;
-			double punkte = 0;
-			for (OpponentModel oppmod : this.opponents) {
-				durchschnittsDWZ += oppmod.getDwz();
-				punkte += oppmod.getErgebnis();
-			}
-			durchschnittsDWZ = Math.round(durchschnittsDWZ / opponents.size());
-			this.player.setDurchschnittderGegnerDWZ(durchschnittsDWZ);
-			this.player.setPunkte(punkte);
-			TurnierleistungModel turnierleistungModel = new TurnierleistungModel();
-			this.player.setLeistungsDWZ(turnierleistungModel.calcTurnierLeistung(this.player, this.opponents));
-			EntwicklungskoeffizientModel ekM = new EntwicklungskoeffizientModel(this.player.getAge(),
-					this.player.getOldDWZ(), this.player.getPunkte(), this.player.getPunkterwartung());
-			double entwicklungskoeffizient = ekM.getEntwicklungskoeffizient();
-			this.player.setEntwicklungskoeffizient(entwicklungskoeffizient);
-			if (player.getOldDWZ() == 0) {
-				this.player.setFolgeDWZ(this.player.getLeistungsDWZ());
-			} else {
-				FolgeDWZModel fDWZ = new FolgeDWZModel(this.player.getOldDWZ(), this.player.getPunkte(),
-						this.player.getPunkterwartung(), entwicklungskoeffizient, this.player.getNumberOfOpponents());
-				this.player.setFolgeDWZ(fDWZ.getFolgeDWZ());
+			for (int o = 0; o < 2; o++) {
+				calcWahrscheinlichkeit = new CalculateWahrscheinlichkeitModel(this.player, this.opponents);
+				double durchschnittsDWZ = 0;
+				double punkte = 0;
+				for (OpponentModel oppmod : this.opponents) {
+					durchschnittsDWZ += oppmod.getDwz();
+					punkte += oppmod.getErgebnis();
+				}
+				durchschnittsDWZ = Math.round(durchschnittsDWZ / opponents.size());
+				this.player.setDurchschnittderGegnerDWZ(durchschnittsDWZ);
+				this.player.setPunkte(punkte);
+				TurnierleistungModel turnierleistungModel = new TurnierleistungModel();
+				this.player.setLeistungsDWZ(turnierleistungModel.calcTurnierLeistung(this.player, this.opponents));
+				ListIterator<OpponentModel> li = opponents.listIterator();
+				int counter = 0;
+				while (li.hasNext()) {
+					OpponentModel temp = li.next();
+					if (temp.getDwz() > 0) {
+						counter++;
+					}
+				}
+
+				if (player.getOldDWZ() == 0) {
+
+					if (counter >= 5) {
+
+						player.setOldDWZ((int) player.getLeistungsDWZ());
+						EntwicklungskoeffizientModel ekM = new EntwicklungskoeffizientModel(this.player.getAge(),
+								this.player.getOldDWZ(), this.player.getPunkte(), this.player.getPunkterwartung());
+						double entwicklungskoeffizient = ekM.getEntwicklungskoeffizient();
+						this.player.setEntwicklungskoeffizient(entwicklungskoeffizient);
+						FolgeDWZModel fDWZ = new FolgeDWZModel((int) player.getOldDWZ(), player.getPunkte(),
+								this.player.getPunkterwartung(), entwicklungskoeffizient,
+								this.player.getNumberOfOpponents());
+						this.player.setFolgeDWZ(fDWZ.getFolgeDWZ());
+					}
+				} else {
+					EntwicklungskoeffizientModel ekM = new EntwicklungskoeffizientModel(this.player.getAge(),
+							this.player.getOldDWZ(), this.player.getPunkte(), this.player.getPunkterwartung());
+					double entwicklungskoeffizient = ekM.getEntwicklungskoeffizient();
+					this.player.setEntwicklungskoeffizient(entwicklungskoeffizient);
+					FolgeDWZModel fDWZ = new FolgeDWZModel(this.player.getOldDWZ(), this.player.getPunkte(),
+							this.player.getPunkterwartung(), entwicklungskoeffizient,
+							this.player.getNumberOfOpponents());
+					this.player.setFolgeDWZ(fDWZ.getFolgeDWZ());
+				}
 			}
 		}
 	}

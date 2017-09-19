@@ -49,8 +49,14 @@ public class TurnierleistungModel {
 		// Quelle:
 		// http://www.schachbund.de/id-47-die-berechnung-der-punkterwartung.html
 
-		PlayerModel leistungszahlSpieler = new PlayerModel(player.getAge(), player.getOldDWZ(),
-				player.getNumberOfOpponents());
+		int playerdwz = player.getOldDWZ();
+		if (player.getOldDWZ() == 0 && opponents.size() >= 5) {
+			ErstDWZModel edwz = new ErstDWZModel(player.getPunkte(), player.getNumberOfOpponents(),
+					player.getDurchschnittderGegnerDWZ());
+			playerdwz = (int) edwz.getErstDWZ();
+		}
+
+		PlayerModel leistungszahlSpieler = new PlayerModel(player.getAge(), playerdwz, player.getNumberOfOpponents());
 		leistungszahlSpieler.setAge(player.getAge());
 		leistungszahlSpieler.setDurchschnittderGegnerDWZ(player.getDurchschnittderGegnerDWZ());
 		leistungszahlSpieler.setPunkte(player.getPunkte());
@@ -88,7 +94,7 @@ public class TurnierleistungModel {
 			// http://www.schachbund.de/id-47-die-berechnung-der-punkterwartung.html
 
 			// do {
-			for (int iteration = 0; iteration < 1000; iteration++) {
+			for (int iteration = 0; iteration < 10; iteration++) {
 				// Berechnung der Punkteerwartung nach Tabelle Anhang 2.1
 				// Wahrscheinlichkeitstabelle
 				// http://www.schachbund.de/anhang-21.html
