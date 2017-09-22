@@ -42,7 +42,7 @@ public class ButtonPanelView extends JPanel {
 		okButton.setActionCommand(Messages.getString("ButtonPanelView.0")); //$NON-NLS-1$
 
 		add(okButton);
-		makeHelpButton();
+//		makeHelpButton();
 	}
 
 	public void makeCancelButton() {
@@ -72,6 +72,14 @@ public class ButtonPanelView extends JPanel {
 
 	public void setCancelButton(JButton cancelButton) {
 		this.cancelButton = cancelButton;
+	}
+
+	public JButton getHelpButton() {
+		return helpButton;
+	}
+
+	public void setHelpButton(JButton helpButton) {
+		this.helpButton = helpButton;
 	}
 
 }
