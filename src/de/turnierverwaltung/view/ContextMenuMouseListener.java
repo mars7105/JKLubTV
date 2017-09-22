@@ -1,4 +1,5 @@
 package de.turnierverwaltung.view;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -33,6 +34,7 @@ public class ContextMenuMouseListener extends MouseAdapter {
 
 	private AbstractAction selectAllAndCopyAction;
 	private JTextComponent textComponent;
+
 	public ContextMenuMouseListener() {
 		// undoAction = new AbstractAction("Undo") {
 		//
@@ -59,8 +61,7 @@ public class ContextMenuMouseListener extends MouseAdapter {
 		// };
 		//
 		// popup.add(cutAction);
-		selectAllAndCopyAction = new AbstractAction(
-				Messages.getString("ContextMenuMouseListener.0")) { //$NON-NLS-1$
+		selectAllAndCopyAction = new AbstractAction(Messages.getString("ContextMenuMouseListener.0")) { //$NON-NLS-1$
 
 			/**
 					 * 
@@ -135,12 +136,10 @@ public class ContextMenuMouseListener extends MouseAdapter {
 
 			boolean enabled = textComponent.isEnabled();
 			boolean editable = textComponent.isEditable();
-			boolean nonempty = !(textComponent.getText() == null || textComponent
-					.getText().equals("")); //$NON-NLS-1$
+			boolean nonempty = !(textComponent.getText() == null || textComponent.getText().equals("")); //$NON-NLS-1$
 			boolean marked = textComponent.getSelectedText() != null;
 
-			boolean pasteAvailable = Toolkit.getDefaultToolkit()
-					.getSystemClipboard().getContents(null)
+			boolean pasteAvailable = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null)
 					.isDataFlavorSupported(DataFlavor.stringFlavor);
 
 			// undoAction

@@ -174,7 +174,7 @@ public class CrossTableToHTML {
 		htmlString = htmlString.replaceAll("\u00c4", "&Auml;");
 		htmlString = htmlString.replaceAll("\u00d6", "&Ouml;");
 		htmlString = htmlString.replaceAll("\u00dc", "&Uuml;");
-//		htmlString = htmlString.replaceAll("\u2666", "&diams;");
+		// htmlString = htmlString.replaceAll("\u2666", "&diams;");
 		return htmlString;
 
 	}

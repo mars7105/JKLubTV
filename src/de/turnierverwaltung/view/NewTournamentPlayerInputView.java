@@ -83,8 +83,7 @@ public class NewTournamentPlayerInputView extends JPanel {
 			JLabel label1 = new JLabel(
 					" " + new Integer(i + 1).toString() + ". " + Messages.getString("SpielerEingabeView.14"));
 			forenameTextfield[i] = new JTextField(10);
-			JLabel label2 = new JLabel(
-					" " + Messages.getString("SpielerEingabeView.15"));
+			JLabel label2 = new JLabel(" " + Messages.getString("SpielerEingabeView.15"));
 
 			surnameTextfield[i] = new JTextField(10);
 			spielerSuche[i] = new JComboBox();

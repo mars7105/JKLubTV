@@ -1,4 +1,5 @@
 package de.dwzberechnung.model;
+
 //DWZ Rechner - Ein Programm zum Berechnen von DWZ Zahlen von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -27,6 +28,4 @@ public class KonstantenModel {
 	public static int ALTER_UEBER_25_JAHRE = 15;
 	public static double EULERSCHE_ZAHL = 2.718281828;
 
-	
-	
 }

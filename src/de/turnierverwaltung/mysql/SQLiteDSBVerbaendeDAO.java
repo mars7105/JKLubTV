@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -26,14 +27,13 @@ public class SQLiteDSBVerbaendeDAO implements DSBVerbaendeDAO {
 		this.dbConnect = null;
 		this.dbConnect = SQLiteDSBDAOFactory.createConnection();
 	}
+
 	@Override
 	public void createDSBVerbaendeTable() {
-		String sql = "CREATE TABLE dwz_verbaende ("
-				+ "Verband            char(3)      NOT NULL default '',"
+		String sql = "CREATE TABLE dwz_verbaende (" + "Verband            char(3)      NOT NULL default '',"
 				+ "LV                 char(1)      NOT NULL default '',"
 				+ "Uebergeordnet      char(3)      NOT NULL default '',"
-				+ "Verbandname        varchar(45)  NOT NULL default '',"
-				+ "PRIMARY KEY (Verband)" + ") TYPE=MyISAM";
+				+ "Verbandname        varchar(45)  NOT NULL default ''," + "PRIMARY KEY (Verband)" + ") TYPE=MyISAM";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -50,7 +50,6 @@ public class SQLiteDSBVerbaendeDAO implements DSBVerbaendeDAO {
 			}
 		}
 
-		
 	}
 
 }

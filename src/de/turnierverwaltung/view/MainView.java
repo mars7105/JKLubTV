@@ -1,5 +1,6 @@
 package de.turnierverwaltung.view;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -26,10 +27,11 @@ public class MainView extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JButton cancelButton;
+
 	public MainView() {
 
 		setLayout(new FlowLayout());
-//		setBackground(new Color(249, 222, 112));
+		// setBackground(new Color(249, 222, 112));
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 		add(buttonPane);

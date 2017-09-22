@@ -61,8 +61,7 @@ public class MySQLTurnierDAO implements TurnierDAO {
 	@Override
 	public boolean deleteTurnier(int id) {
 		boolean ok = false;
-		String datum = "Select Datum_idDatum from turnier where idTurnier="
-				+ id;
+		String datum = "Select Datum_idDatum from turnier where idTurnier=" + id;
 		String gruppe = "Select idGruppe from gruppen where TurnierId=" + id;
 		String sql = "delete from turnier where idTurnier=?";
 		Statement stmt;
@@ -129,11 +128,8 @@ public class MySQLTurnierDAO implements TurnierDAO {
 
 	@Override
 	public Tournament findTurnier(int id, PropertiesControl prop) {
-		String sql = "Select Startdatum, Enddatum, Turniername, Datum_idDatum, idDatum"
-				+ "from turnier,datum "
-				+ "where idTurnier="
-				+ id
-				+ " AND Datum_idDatum = idDatum";
+		String sql = "Select Startdatum, Enddatum, Turniername, Datum_idDatum, idDatum" + "from turnier,datum "
+				+ "where idTurnier=" + id + " AND Datum_idDatum = idDatum";
 		Tournament turnier = null;
 
 		Statement stmt;
@@ -147,9 +143,8 @@ public class MySQLTurnierDAO implements TurnierDAO {
 					String turnierName = rs.getString("Turniername");
 					String startDatum = rs.getString("Startdatum");
 					String endDatum = rs.getString("Enddatum");
-					turnier = new Tournament(turnierId, turnierName, startDatum,
-							endDatum, prop.getOnlyTables(), prop.getNoDWZ(),
-							prop.getNoFolgeDWZ());
+					turnier = new Tournament(turnierId, turnierName, startDatum, endDatum, prop.getOnlyTables(),
+							prop.getNoDWZ(), prop.getNoFolgeDWZ());
 
 				}
 				stmt.close();
@@ -171,8 +166,7 @@ public class MySQLTurnierDAO implements TurnierDAO {
 		int id = -1;
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
-						Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 				preStm.setString(1, turnierName);
 				preStm.setInt(2, datumId);
@@ -210,9 +204,8 @@ public class MySQLTurnierDAO implements TurnierDAO {
 					String turnierName = rs.getString("Turniername");
 					String startDatum = rs.getString("Startdatum");
 					String endDatum = rs.getString("Enddatum");
-					turnierListe.add(new Tournament(id, turnierName, startDatum,
-							endDatum, prop.getOnlyTables(), prop.getNoDWZ(),
-							prop.getNoFolgeDWZ()));
+					turnierListe.add(new Tournament(id, turnierName, startDatum, endDatum, prop.getOnlyTables(),
+							prop.getNoDWZ(), prop.getNoFolgeDWZ()));
 
 				}
 				stmt.close();
@@ -228,8 +221,7 @@ public class MySQLTurnierDAO implements TurnierDAO {
 	@Override
 	public boolean updateTurnier(Tournament turnier) {
 		boolean ok = false;
-		String datum = "Select Datum_idDatum from turnier where idTurnier="
-				+ turnier.getTurnierId();
+		String datum = "Select Datum_idDatum from turnier where idTurnier=" + turnier.getTurnierId();
 		int datumId = -1;
 		if (this.dbConnect != null) {
 			// Datum l�schen
@@ -250,14 +242,11 @@ public class MySQLTurnierDAO implements TurnierDAO {
 				e.printStackTrace();
 			}
 		}
-		String sql1 = "update turnier set Turniername = ?"
-				+ " where idTurnier = " + turnier.getTurnierId();
-		String sql2 = "update datum set Startdatum = ?, Enddatum = ?"
-				+ " where idDatum = " + datumId;
+		String sql1 = "update turnier set Turniername = ?" + " where idTurnier = " + turnier.getTurnierId();
+		String sql2 = "update datum set Startdatum = ?, Enddatum = ?" + " where idDatum = " + datumId;
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect
-						.prepareStatement(sql1);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql1);
 				preStm.setString(1, turnier.getTurnierName());
 				preStm.executeUpdate();
 				preStm.close();
@@ -269,8 +258,7 @@ public class MySQLTurnierDAO implements TurnierDAO {
 		}
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect
-						.prepareStatement(sql2);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql2);
 
 				preStm.setString(1, turnier.getStartDatum());
 				preStm.setString(2, turnier.getEndDatum());

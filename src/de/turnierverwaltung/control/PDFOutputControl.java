@@ -89,7 +89,7 @@ public class PDFOutputControl {
 
 	public void createTerminPdf(String titel, String absolutePath, String[][] tabellenMatrix) {
 		int n = 0;
-		
+
 		File file = new File(absolutePath);
 		if (file.exists()) {
 			Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };

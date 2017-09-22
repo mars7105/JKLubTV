@@ -48,7 +48,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 			} catch (IOException e) {
 				// TODO Automatisch generierter Erfassungsblock
 				e.printStackTrace();
-			} 
+			}
 
 		}
 
@@ -140,6 +140,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 		}
 
 	}
+
 	private void makeNewTables() {
 		int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 		mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(false);

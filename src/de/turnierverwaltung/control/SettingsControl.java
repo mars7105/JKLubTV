@@ -53,8 +53,6 @@ public class SettingsControl {
 		eigenschaftenView.getSurnameLengthBox().setValue(ppC.getCutSurname());
 	}
 
-
-
 	public SettingsView getEigenschaftenView() {
 		return eigenschaftenView;
 	}
@@ -62,8 +60,6 @@ public class SettingsControl {
 	public void setEigenschaftenView(SettingsView eigenschaftenView) {
 		this.eigenschaftenView = eigenschaftenView;
 	}
-
-	
 
 	public ActionListenerSettingsControl getActionListenerControl() {
 		return actionListenerControl;

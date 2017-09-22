@@ -1,4 +1,5 @@
 package de.dwzberechnung.model;
+
 //DWZ Rechner - Ein Programm zum Berechnen von DWZ Zahlen von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //

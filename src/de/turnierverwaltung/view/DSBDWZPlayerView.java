@@ -77,8 +77,7 @@ public class DSBDWZPlayerView extends JPanel {
 
 	public void makeSpielerZeile(Player spieler) {
 
-		listModel.addElement(spieler.getName()
-				+ Messages.getString("SpielerDewisView.2") + spieler.getDwz()); //$NON-NLS-1$
+		listModel.addElement(spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz()); //$NON-NLS-1$
 
 	}
 

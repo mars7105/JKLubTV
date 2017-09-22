@@ -23,13 +23,12 @@ import javax.swing.JScrollPane;
 
 import de.turnierverwaltung.view.NaviView;
 
-
 /**
  * 
  * @author mars
  *
  */
-public class NaviControl  {
+public class NaviControl {
 
 	public static final int TURNIERTABELLE = 0;
 	public static final int TERMINTABELLE = 1;
@@ -41,7 +40,6 @@ public class NaviControl  {
 	private MainControl mainControl;
 
 	private NaviView naviView;
-
 
 	/**
 	 * 
@@ -62,8 +60,8 @@ public class NaviControl  {
 		this.mainControl.setFileMenuActionControl(new ActionListenerFileMenuControl(this.mainControl));
 		this.mainControl.setPlayerListMenuActionControl(new ActionListenerPlayerListControl(this.mainControl));
 		this.mainControl.setTournamentListMenuActionControl(new ActionListenerTournamentListControl(mainControl));
-		this.mainControl.setActionListenerTournamentEditControl(new ActionListenerTournamentEditControl(this.mainControl));
-
+		this.mainControl
+				.setActionListenerTournamentEditControl(new ActionListenerTournamentEditControl(this.mainControl));
 
 		JPanel hauptPanel = this.mainControl.getMainPanel();
 		JScrollPane scrollPane = new JScrollPane();
@@ -72,9 +70,5 @@ public class NaviControl  {
 
 		hauptPanel.updateUI();
 	}
-
-	
-	
-	
 
 }

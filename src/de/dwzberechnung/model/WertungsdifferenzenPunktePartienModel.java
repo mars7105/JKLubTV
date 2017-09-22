@@ -27,7 +27,7 @@ public class WertungsdifferenzenPunktePartienModel {
 		// numberFormat.setRoundingMode(RoundingMode.DOWN);
 
 		String key = numberFormat.format(anzahlPunkte);
-//		System.out.println(key);
+		// System.out.println(key);
 		return (double) hmap.get(key)[anzahlPartien - 2];
 
 	}

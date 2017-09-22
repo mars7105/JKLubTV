@@ -57,22 +57,21 @@ public class InfoHTMLView {
 		// Da setPage eine IOException wirft, muss
 		// der Aufruf im try-catch-Block erfolgen.
 		try {
-			editorPane.setPage(helpURL); //$NON-NLS-1$
+			editorPane.setPage(helpURL); // $NON-NLS-1$
 		} catch (IOException ioe) {
 			// HTML wird als Texttyp vorgegeben.
 			editorPane.setContentType("text/html"); //$NON-NLS-1$
 
 			// Text für Fehlermeldung wird
 			// im HTML-Format übergeben.
-			editorPane
-					.setText("<html> <center>" + Messages.getString("InfoHomeScreenView.0") + "</center> </html>."); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
+			editorPane.setText("<html> <center>" + Messages.getString("InfoHomeScreenView.0") + "</center> </html>."); //$NON-NLS-1$ //$NON-NLS-2$ //$NON-NLS-3$
 		}
 		panel.add(editorPane);
 		panel.add(new JSeparator());
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(panel);
 		all.add(scrollPane, BorderLayout.CENTER);
-//		all.add(panel, BorderLayout.NORTH);
+		// all.add(panel, BorderLayout.NORTH);
 		editorPane.setPreferredSize(new Dimension(500, 900));
 
 		return all;

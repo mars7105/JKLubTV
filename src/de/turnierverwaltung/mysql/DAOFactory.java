@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -43,7 +44,5 @@ public abstract class DAOFactory {
 	public abstract Turnier_has_SpielerDAO getTurnier_has_SpielerDAO();
 
 	public abstract TurnierDAO getTurnierDAO();
-
-
 
 }

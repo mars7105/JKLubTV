@@ -1,0 +1,17 @@
+digraph "Grafische Darstellung der Klassenhierarchie"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node1 [label="JDialog",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="de.turnierverwaltung.view.\lDSBDWZDialogView",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classde_1_1turnierverwaltung_1_1view_1_1_d_s_b_d_w_z_dialog_view.html"];
+  Node1 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="de.turnierverwaltung.view.\lEditPlayerView",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classde_1_1turnierverwaltung_1_1view_1_1_edit_player_view.html"];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="de.turnierverwaltung.view.\lEditTournamentView",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classde_1_1turnierverwaltung_1_1view_1_1_edit_tournament_view.html"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="de.turnierverwaltung.view.\lNewPlayerView",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classde_1_1turnierverwaltung_1_1view_1_1_new_player_view.html"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="de.turnierverwaltung.view.\lProgressBarView",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classde_1_1turnierverwaltung_1_1view_1_1_progress_bar_view.html"];
+}

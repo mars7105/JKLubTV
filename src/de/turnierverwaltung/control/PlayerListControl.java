@@ -183,8 +183,6 @@ public class PlayerListControl implements ActionListener {
 				spielerTableControl.updateOneSpieler(player);
 			}
 
-			
-
 			spielerLadenView.makeSpielerZeile(player, index);
 			spielerLadenView.getSpielerBearbeitenButton()[index].addActionListener(this);
 			spielerLadenView.getSpielerLoeschenButton()[index].addActionListener(this);

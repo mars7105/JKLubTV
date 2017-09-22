@@ -18,7 +18,7 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 		super();
 		this.mainControl = mainControl;
 		naviView = mainControl.getNaviView();
-		
+
 		naviView.getPairingsSaveButton().addActionListener(this);
 		naviView.getPairingsCancelButton().addActionListener(this);
 		pairingIsActive = false;
@@ -51,6 +51,7 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 			}
 		}
 	}
+
 	private int abbrechenHinweis() {
 		int abfrage = 0;
 		String hinweisText = Messages.getString("NaviController.21") //$NON-NLS-1$

@@ -132,9 +132,9 @@ public class NewPlayerView extends JDialog {
 		this.textFieldDwz = new JTextField(15);
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// centerPane.setBackground(new Color(249, 222, 112));
-		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.12"))); 
+		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.12")));
 		centerPane.add(textFieldForeName);
-		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.13"))); 
+		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.13")));
 		centerPane.add(textFieldSurName);
 		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.4"))); //$NON-NLS-1$
 		centerPane.add(textFieldKuerzel);

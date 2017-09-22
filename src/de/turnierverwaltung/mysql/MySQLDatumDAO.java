@@ -57,7 +57,7 @@ public class MySQLDatumDAO implements DatumDAO {
 	@Override
 	public boolean deleteDatum(int id) {
 		boolean ok = false;
-		String sql = "delete from datum where idDatum=?"; 
+		String sql = "delete from datum where idDatum=?";
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
@@ -87,8 +87,7 @@ public class MySQLDatumDAO implements DatumDAO {
 		int id = -1;
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
-						Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				preStm.setString(1, startDatum);
 				preStm.setString(2, endDatum);
 				preStm.executeUpdate();
@@ -117,8 +116,7 @@ public class MySQLDatumDAO implements DatumDAO {
 	@Override
 	public boolean updateDatum(int idDatum, String startDatum, String endDatum) {
 		boolean ok = false;
-		String sql = "update datum set Startdatum = ?, Enddatum = ? where idDatum="
-				+ idDatum;
+		String sql = "update datum set Startdatum = ?, Enddatum = ? where idDatum=" + idDatum;
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);

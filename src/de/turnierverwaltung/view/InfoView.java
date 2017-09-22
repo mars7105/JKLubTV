@@ -41,18 +41,18 @@ public class InfoView extends JPanel {
 
 		TitleLabelView titleView = new TitleLabelView(Messages.getString("InfoView.0"));
 
-		
 		setLayout(new BorderLayout());
 
-//		JLabel titleLabel = new JLabel(Messages.getString("InfoView.0")); //$NON-NLS-1$
-//		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+		// JLabel titleLabel = new JLabel(Messages.getString("InfoView.0"));
+		// //$NON-NLS-1$
+		// JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		JPanel northPanel = new JPanel();
 		northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.PAGE_AXIS));
-//		titlepanel.add(titleLabel);
+		// titlepanel.add(titleLabel);
 
-//		scrollPane = new JScrollPane();
-//		scrollPane.setViewportView(lizenzenPane);
+		// scrollPane = new JScrollPane();
+		// scrollPane.setViewportView(lizenzenPane);
 		northPanel.add(titleView);
 		northPanel.add(topPanel);
 		add(northPanel, BorderLayout.NORTH);
@@ -64,7 +64,6 @@ public class InfoView extends JPanel {
 		this.okButton = buttonPane.getOkButton();
 		add(buttonPane, BorderLayout.SOUTH);
 		this.updateUI();
-
 
 	}
 
@@ -79,8 +78,6 @@ public class InfoView extends JPanel {
 	public JTabbedPane getLizenzenPane() {
 		return lizenzenPane;
 	}
-
-	
 
 	public JButton getOkButton() {
 		return okButton;

@@ -1,0 +1,112 @@
+\hypertarget{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o}{}\section{de.\+turnierverwaltung.\+mysql.\+S\+Q\+Lite\+Gruppen\+D\+AO Klassenreferenz}
+\label{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o}\index{de.\+turnierverwaltung.\+mysql.\+S\+Q\+Lite\+Gruppen\+D\+AO@{de.\+turnierverwaltung.\+mysql.\+S\+Q\+Lite\+Gruppen\+D\+AO}}
+
+
+Klassendiagramm für de.\+turnierverwaltung.\+mysql.\+S\+Q\+Lite\+Gruppen\+D\+AO\+:
+% FIG 0
+
+
+Zusammengehörigkeiten von de.\+turnierverwaltung.\+mysql.\+S\+Q\+Lite\+Gruppen\+D\+AO\+:
+% FIG 1
+\subsection*{Öffentliche Methoden}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_a16f46ce6e5c04743d00d081e3b50f06f}{S\+Q\+Lite\+Gruppen\+D\+AO} ()
+\item 
+void \hyperlink{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_a1c936cdc3b4ecf2df618f8a11674a325}{create\+Gruppen\+Table} ()  throws S\+Q\+L\+Exception 
+\item 
+boolean \hyperlink{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_abb00c008470bd980a76b9250260499a3}{delete\+Gruppe} (int id)  throws S\+Q\+L\+Exception 
+\item 
+\hyperlink{classde_1_1turnierverwaltung_1_1model_1_1_group}{Group} \hyperlink{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_aadee41df098237ee8fa45462d19edb6b}{find\+Gruppe} (int id)  throws S\+Q\+L\+Exception 
+\item 
+int \hyperlink{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_a6c7e2f9a7671c5f8b1207b2b79b99725}{insert\+Gruppe} (String gruppen\+Name, int turnier\+Id)  throws S\+Q\+L\+Exception 
+\item 
+Array\+List$<$ \hyperlink{classde_1_1turnierverwaltung_1_1model_1_1_group}{Group} $>$ \hyperlink{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_a036d41772361fb7e62c10be4cd5b76f2}{select\+All\+Gruppen} (int id\+Turnier)  throws S\+Q\+L\+Exception 
+\item 
+boolean \hyperlink{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_aa1640b18e1708c3b817a939e76c0d052}{update\+Gruppe} (\hyperlink{classde_1_1turnierverwaltung_1_1model_1_1_group}{Group} gruppe)  throws S\+Q\+L\+Exception 
+\end{DoxyCompactItemize}
+
+
+\subsection{Beschreibung der Konstruktoren und Destruktoren}
+\index{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO@{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO}!S\+Q\+Lite\+Gruppen\+D\+AO@{S\+Q\+Lite\+Gruppen\+D\+AO}}
+\index{S\+Q\+Lite\+Gruppen\+D\+AO@{S\+Q\+Lite\+Gruppen\+D\+AO}!de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO@{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO}}
+\subsubsection[{\texorpdfstring{S\+Q\+Lite\+Gruppen\+D\+A\+O()}{SQLiteGruppenDAO()}}]{\setlength{\rightskip}{0pt plus 5cm}de.\+turnierverwaltung.\+mysql.\+S\+Q\+Lite\+Gruppen\+D\+A\+O.\+S\+Q\+Lite\+Gruppen\+D\+AO (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}\hypertarget{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_a16f46ce6e5c04743d00d081e3b50f06f}{}\label{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_a16f46ce6e5c04743d00d081e3b50f06f}
+
+
+\subsection{Dokumentation der Elementfunktionen}
+\index{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO@{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO}!create\+Gruppen\+Table@{create\+Gruppen\+Table}}
+\index{create\+Gruppen\+Table@{create\+Gruppen\+Table}!de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO@{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO}}
+\subsubsection[{\texorpdfstring{create\+Gruppen\+Table()}{createGruppenTable()}}]{\setlength{\rightskip}{0pt plus 5cm}void de.\+turnierverwaltung.\+mysql.\+S\+Q\+Lite\+Gruppen\+D\+A\+O.\+create\+Gruppen\+Table (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+) throws S\+Q\+L\+Exception}\hypertarget{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_a1c936cdc3b4ecf2df618f8a11674a325}{}\label{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_a1c936cdc3b4ecf2df618f8a11674a325}
+
+
+Implementiert \hyperlink{interfacede_1_1turnierverwaltung_1_1mysql_1_1_gruppen_d_a_o_ad38ae6a7633e3164f8e4a9e3dcf5ce84}{de.\+turnierverwaltung.\+mysql.\+Gruppen\+D\+AO}.
+
+\index{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO@{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO}!delete\+Gruppe@{delete\+Gruppe}}
+\index{delete\+Gruppe@{delete\+Gruppe}!de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO@{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO}}
+\subsubsection[{\texorpdfstring{delete\+Gruppe(int id)}{deleteGruppe(int id)}}]{\setlength{\rightskip}{0pt plus 5cm}boolean de.\+turnierverwaltung.\+mysql.\+S\+Q\+Lite\+Gruppen\+D\+A\+O.\+delete\+Gruppe (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+) throws S\+Q\+L\+Exception}\hypertarget{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_abb00c008470bd980a76b9250260499a3}{}\label{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_abb00c008470bd980a76b9250260499a3}
+
+
+Implementiert \hyperlink{interfacede_1_1turnierverwaltung_1_1mysql_1_1_gruppen_d_a_o_a8e8f3d0dc565692bb4c6c21e84127d7f}{de.\+turnierverwaltung.\+mysql.\+Gruppen\+D\+AO}.
+
+\index{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO@{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO}!find\+Gruppe@{find\+Gruppe}}
+\index{find\+Gruppe@{find\+Gruppe}!de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO@{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO}}
+\subsubsection[{\texorpdfstring{find\+Gruppe(int id)}{findGruppe(int id)}}]{\setlength{\rightskip}{0pt plus 5cm}{\bf Group} de.\+turnierverwaltung.\+mysql.\+S\+Q\+Lite\+Gruppen\+D\+A\+O.\+find\+Gruppe (
+\begin{DoxyParamCaption}
+\item[{int}]{id}
+\end{DoxyParamCaption}
+) throws S\+Q\+L\+Exception}\hypertarget{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_aadee41df098237ee8fa45462d19edb6b}{}\label{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_aadee41df098237ee8fa45462d19edb6b}
+
+
+Implementiert \hyperlink{interfacede_1_1turnierverwaltung_1_1mysql_1_1_gruppen_d_a_o_af0efea2e11965a84378d57f1a94f68b3}{de.\+turnierverwaltung.\+mysql.\+Gruppen\+D\+AO}.
+
+\index{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO@{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO}!insert\+Gruppe@{insert\+Gruppe}}
+\index{insert\+Gruppe@{insert\+Gruppe}!de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO@{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO}}
+\subsubsection[{\texorpdfstring{insert\+Gruppe(\+String gruppen\+Name, int turnier\+Id)}{insertGruppe(String gruppenName, int turnierId)}}]{\setlength{\rightskip}{0pt plus 5cm}int de.\+turnierverwaltung.\+mysql.\+S\+Q\+Lite\+Gruppen\+D\+A\+O.\+insert\+Gruppe (
+\begin{DoxyParamCaption}
+\item[{String}]{gruppen\+Name, }
+\item[{int}]{turnier\+Id}
+\end{DoxyParamCaption}
+) throws S\+Q\+L\+Exception}\hypertarget{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_a6c7e2f9a7671c5f8b1207b2b79b99725}{}\label{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_a6c7e2f9a7671c5f8b1207b2b79b99725}
+
+
+Implementiert \hyperlink{interfacede_1_1turnierverwaltung_1_1mysql_1_1_gruppen_d_a_o_abee6784dae9d4de7ac44fe54f66bb5e2}{de.\+turnierverwaltung.\+mysql.\+Gruppen\+D\+AO}.
+
+\index{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO@{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO}!select\+All\+Gruppen@{select\+All\+Gruppen}}
+\index{select\+All\+Gruppen@{select\+All\+Gruppen}!de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO@{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO}}
+\subsubsection[{\texorpdfstring{select\+All\+Gruppen(int id\+Turnier)}{selectAllGruppen(int idTurnier)}}]{\setlength{\rightskip}{0pt plus 5cm}Array\+List$<${\bf Group}$>$ de.\+turnierverwaltung.\+mysql.\+S\+Q\+Lite\+Gruppen\+D\+A\+O.\+select\+All\+Gruppen (
+\begin{DoxyParamCaption}
+\item[{int}]{id\+Turnier}
+\end{DoxyParamCaption}
+) throws S\+Q\+L\+Exception}\hypertarget{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_a036d41772361fb7e62c10be4cd5b76f2}{}\label{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_a036d41772361fb7e62c10be4cd5b76f2}
+
+
+Implementiert \hyperlink{interfacede_1_1turnierverwaltung_1_1mysql_1_1_gruppen_d_a_o_a76a40ff09a9620267c4c61d3d0efb64e}{de.\+turnierverwaltung.\+mysql.\+Gruppen\+D\+AO}.
+
+\index{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO@{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO}!update\+Gruppe@{update\+Gruppe}}
+\index{update\+Gruppe@{update\+Gruppe}!de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO@{de\+::turnierverwaltung\+::mysql\+::\+S\+Q\+Lite\+Gruppen\+D\+AO}}
+\subsubsection[{\texorpdfstring{update\+Gruppe(\+Group gruppe)}{updateGruppe(Group gruppe)}}]{\setlength{\rightskip}{0pt plus 5cm}boolean de.\+turnierverwaltung.\+mysql.\+S\+Q\+Lite\+Gruppen\+D\+A\+O.\+update\+Gruppe (
+\begin{DoxyParamCaption}
+\item[{{\bf Group}}]{gruppe}
+\end{DoxyParamCaption}
+) throws S\+Q\+L\+Exception}\hypertarget{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_aa1640b18e1708c3b817a939e76c0d052}{}\label{classde_1_1turnierverwaltung_1_1mysql_1_1_s_q_lite_gruppen_d_a_o_aa1640b18e1708c3b817a939e76c0d052}
+
+
+Implementiert \hyperlink{interfacede_1_1turnierverwaltung_1_1mysql_1_1_gruppen_d_a_o_a86be33fec86dded1380312ae33f236dd}{de.\+turnierverwaltung.\+mysql.\+Gruppen\+D\+AO}.
+
+
+
+Die Dokumentation für diese Klasse wurde erzeugt aufgrund der Datei\+:\begin{DoxyCompactItemize}
+\item 
+src/de/turnierverwaltung/mysql/\hyperlink{_s_q_lite_gruppen_d_a_o_8java}{S\+Q\+Lite\+Gruppen\+D\+A\+O.\+java}\end{DoxyCompactItemize}

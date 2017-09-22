@@ -283,10 +283,9 @@ public class InfoLicenseView {
 		temp.add(poiUriPicker);
 		panel.add(temp);
 		panel.add(new JSeparator());
-		biweekly = new URI("https://github.com/mangstadt/biweekly"); 
-		JLabel iCal4jUriPicker = new JLabel(
-				"9. biweekly is an iCalendar library written in Java.\n" + 
-				" -> \nhttps://github.com/mangstadt/biweekly\n"); 
+		biweekly = new URI("https://github.com/mangstadt/biweekly");
+		JLabel iCal4jUriPicker = new JLabel("9. biweekly is an iCalendar library written in Java.\n"
+				+ " -> \nhttps://github.com/mangstadt/biweekly\n");
 		buttonbiweekly = new JButton();
 		buttonbiweekly.setText("<HTML><FONT color=\"#000099\"><U>Link</U></FONT></HTML>"); //$NON-NLS-1$
 

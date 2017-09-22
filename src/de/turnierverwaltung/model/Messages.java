@@ -9,8 +9,7 @@ public class Messages {
 
 	private static Locale LOCALE = new Locale("en", "US");
 
-	private static ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-			.getBundle(BUNDLE_COMTROLER_NAME, LOCALE);
+	private static ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_COMTROLER_NAME, LOCALE);
 
 	private Messages() {
 	}

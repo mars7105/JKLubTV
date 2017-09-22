@@ -35,7 +35,7 @@ public class TitleLabelView extends JPanel {
 	public TitleLabelView(String title) {
 
 		setLayout(new BorderLayout());
-//		setBackground(new Color(130, 165, 195));
+		// setBackground(new Color(130, 165, 195));
 		titleLabel = new JLabel(title);
 		titlePanel = new JPanel();
 		titlePanel.setBackground(new Color(130, 165, 195));

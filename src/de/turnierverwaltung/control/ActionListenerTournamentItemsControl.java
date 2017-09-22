@@ -1,7 +1,5 @@
 package de.turnierverwaltung.control;
 
-
-
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -158,7 +156,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 
 			if (arg0.getSource() == turnierListeLadenView.getTurnierLadeButton()[i]) {
 				Tournament turnier = this.mainControl.getTurnier();
-				
+
 				if (turnier == null) {
 					selectTurnierTab = true;
 					try {

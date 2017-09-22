@@ -1,4 +1,5 @@
 package de.dwzberechnung.model;
+
 //DWZ Rechner - Ein Programm zum Berechnen von DWZ Zahlen von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -18,26 +19,33 @@ public class OpponentModel {
 	private int dwz;
 	private double ergebnis;
 	private double gewinnerwartung;
+
 	public OpponentModel(int dwz, double ergebnis) {
 		super();
 		this.dwz = dwz;
 		this.ergebnis = ergebnis;
 	}
+
 	public int getDwz() {
 		return dwz;
 	}
+
 	public void setDwz(int dwz) {
 		this.dwz = dwz;
 	}
+
 	public double getErgebnis() {
 		return ergebnis;
 	}
+
 	public void setErgebnis(double ergebnis) {
 		this.ergebnis = ergebnis;
 	}
+
 	public double getGewinnerwartung() {
 		return gewinnerwartung;
 	}
+
 	public void setGewinnerwartung(double gewinnerwartung) {
 		this.gewinnerwartung = gewinnerwartung;
 	}

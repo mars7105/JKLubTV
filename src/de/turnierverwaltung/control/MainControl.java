@@ -70,8 +70,8 @@ public class MainControl extends JFrame {
 	private NewTournamentView turnierView;
 	private NewTournamentGroupsView gruppenView;
 	private NewTournamentGroupsControl gruppenControl;
-//	private NewTournamentPlayerCountlView spielerAnzahlView;
-//	private NewTournamentPlayerCountControl spielerAnzahlControl;
+	// private NewTournamentPlayerCountlView spielerAnzahlView;
+	// private NewTournamentPlayerCountControl spielerAnzahlControl;
 	private NewTournamentPlayerInputView[] spielerEingabeView;
 	private NewTournamentPlayerInputControl spielerEingabeControl;
 	private TabbedPaneViewControl tabAnzeigeControl;
@@ -240,8 +240,8 @@ public class MainControl extends JFrame {
 		turnierView = null;
 		gruppenView = null;
 		gruppenControl = null;
-//		spielerAnzahlView = null;
-//		spielerAnzahlControl = null;
+		// spielerAnzahlView = null;
+		// spielerAnzahlControl = null;
 		spielerEingabeView = null;
 		spielerEingabeControl = null;
 		tabAnzeigeControl = null;
@@ -395,13 +395,13 @@ public class MainControl extends JFrame {
 		return simpleTerminTabelleView;
 	}
 
-//	public NewTournamentPlayerCountControl getSpielerAnzahlControl() {
-//		return spielerAnzahlControl;
-//	}
+	// public NewTournamentPlayerCountControl getSpielerAnzahlControl() {
+	// return spielerAnzahlControl;
+	// }
 
-//	public NewTournamentPlayerCountlView getSpielerAnzahlView() {
-//		return spielerAnzahlView;
-//	}
+	// public NewTournamentPlayerCountlView getSpielerAnzahlView() {
+	// return spielerAnzahlView;
+	// }
 
 	public PlayerListControl getSpielerEditierenControl() {
 		return spielerLadenControl;
@@ -547,13 +547,15 @@ public class MainControl extends JFrame {
 		this.simpleTerminTabelleView = simpleTerminTabelleView;
 	}
 
-//	public void setSpielerAnzahlControl(NewTournamentPlayerCountControl spielerAnzahlControl) {
-//		this.spielerAnzahlControl = spielerAnzahlControl;
-//	}
+	// public void setSpielerAnzahlControl(NewTournamentPlayerCountControl
+	// spielerAnzahlControl) {
+	// this.spielerAnzahlControl = spielerAnzahlControl;
+	// }
 
-//	public void setSpielerAnzahlView(NewTournamentPlayerCountlView spielerAnzahlView) {
-//		this.spielerAnzahlView = spielerAnzahlView;
-//	}
+	// public void setSpielerAnzahlView(NewTournamentPlayerCountlView
+	// spielerAnzahlView) {
+	// this.spielerAnzahlView = spielerAnzahlView;
+	// }
 
 	public void setSpielerEditierenControl(PlayerListControl spielerLadenControl) {
 		this.spielerLadenControl = spielerLadenControl;
@@ -699,7 +701,8 @@ public class MainControl extends JFrame {
 		return this.playerListMenuActionControl;
 	}
 
-	public void setTournamentListMenuActionControl(ActionListenerTournamentListControl tournamentListMenuActionControl) {
+	public void setTournamentListMenuActionControl(
+			ActionListenerTournamentListControl tournamentListMenuActionControl) {
 		this.tournamentListMenuActionControl = tournamentListMenuActionControl;
 
 	}
@@ -712,7 +715,7 @@ public class MainControl extends JFrame {
 	public void setActionListenerTournamentEditControl(
 			ActionListenerTournamentEditControl actionListenerTournamentEditControl) {
 		this.actionListenerTournamentEditControl = actionListenerTournamentEditControl;
-		
+
 	}
 
 	public ActionListenerPairingsMenuControl getPairingMenuActionControl() {
@@ -722,5 +725,5 @@ public class MainControl extends JFrame {
 	public ActionListenerTournamentEditControl getActionListenerTournamentEditControl() {
 		return actionListenerTournamentEditControl;
 	}
-	
+
 }

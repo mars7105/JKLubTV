@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 import java.sql.SQLException;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net

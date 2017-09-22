@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -20,8 +21,7 @@ import java.util.ResourceBundle;
 public class Messages {
 	private static final String BUNDLE_NAME = "de.turnierverwaltung.mysql.messages"; //$NON-NLS-1$
 
-	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle
-			.getBundle(BUNDLE_NAME);
+	private static final ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME);
 
 	private Messages() {
 	}

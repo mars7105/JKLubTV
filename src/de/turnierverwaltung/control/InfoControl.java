@@ -52,7 +52,7 @@ public class InfoControl {
 	 */
 	public InfoControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		
+
 		propertiesControl = mainControl.getPropertiesControl();
 		String lang = propertiesControl.getLanguage();
 		infoHelpView = new InfoHTMLView(lang);

@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -29,8 +30,7 @@ public class SQLiteDSBSpielerDAO implements DSBSpielerDAO {
 
 	@Override
 	public void createDSBSpielerTable() {
-		String sql = "CREATE TABLE dwz_spieler ("
-				+ "ZPS                varchar(5)   NOT NULL default '',"
+		String sql = "CREATE TABLE dwz_spieler (" + "ZPS                varchar(5)   NOT NULL default '',"
 				+ "Mgl_Nr             char(4)      NOT NULL default '',"
 				+ "Status             char(1)               default NULL,"
 				+ "Spielername        varchar(40)  NOT NULL default '',"
@@ -44,9 +44,8 @@ public class SQLiteDSBSpielerDAO implements DSBSpielerDAO {
 				+ "FIDE_Elo           smallint(4)  unsigned default NULL,"
 				+ "FIDE_Titel         char(2)               default NULL,"
 				+ "FIDE_ID            int(8)       unsigned default NULL,"
-				+ "FIDE_Land          char(3)               default NULL,"
-				+ "PRIMARY KEY  (ZPS,Mgl_Nr)," + "KEY FIDE_ID (FIDE_ID),"
-				+ " KEY Spielername_G (Spielername_G)" + ") TYPE=MyISAM";
+				+ "FIDE_Land          char(3)               default NULL," + "PRIMARY KEY  (ZPS,Mgl_Nr),"
+				+ "KEY FIDE_ID (FIDE_ID)," + " KEY Spielername_G (Spielername_G)" + ") TYPE=MyISAM";
 
 		Statement stmt;
 		if (this.dbConnect != null) {

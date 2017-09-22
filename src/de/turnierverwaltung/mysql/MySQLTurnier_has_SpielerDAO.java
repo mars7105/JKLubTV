@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -71,8 +72,7 @@ public class MySQLTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 
 					while (li.hasNext()) {
 						idSp = li.next();
-						PreparedStatement preStm = this.dbConnect
-								.prepareStatement(sql + idSp);
+						PreparedStatement preStm = this.dbConnect.prepareStatement(sql + idSp);
 						// preStm.setInt(1, idSp);
 						preStm.executeUpdate();
 						preStm.close();
@@ -92,8 +92,7 @@ public class MySQLTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 	@Override
 	public ArrayList<Integer> findSpielerisinTurnier_has_Spieler(Player spieler) {
 		ArrayList<Integer> findTurnier_has_Spieler = new ArrayList<Integer>();
-		String sql = "Select * " + "from turnier_has_spieler "
-				+ "where Spieler_idSpieler=" + spieler.getSpielerId();
+		String sql = "Select * " + "from turnier_has_spieler " + "where Spieler_idSpieler=" + spieler.getSpielerId();
 		Statement stmt;
 		ResultSet rs;
 		if (this.dbConnect != null) {
@@ -130,8 +129,7 @@ public class MySQLTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 		int id = -1;
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
-						Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				preStm.setInt(1, idGruppe);
 				preStm.setInt(2, idSpieler);
 				preStm.executeUpdate();

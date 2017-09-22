@@ -61,7 +61,7 @@ public class DSBDWZClub {
 				int dwzIndex = -1;
 				try {
 					dwzIndex = player.getDwzIndex();
-					System.out.println(dwzIndex);
+					// System.out.println(dwzIndex);
 				} catch (NullPointerException e) {
 					dwzIndex = -1;
 				}

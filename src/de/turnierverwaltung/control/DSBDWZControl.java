@@ -153,7 +153,7 @@ public class DSBDWZControl {
 	 * @param updateDWZ
 	 *            = update the dwz
 	 * @return
-	 * @throws SQLException 
+	 * @throws SQLException
 	 */
 	public Boolean searchSpieler(Player neuerSpieler, Boolean updateDWZ) throws SQLException {
 		ArrayList<Player> spieler = mainControl.getSpielerLadenControl().getSpieler();

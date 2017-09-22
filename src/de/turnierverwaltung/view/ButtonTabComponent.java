@@ -172,9 +172,8 @@ public class ButtonTabComponent extends JPanel {
 					// Custom button text
 					Object[] options = { Messages.getString("ButtonTabComponent.0"), //$NON-NLS-1$
 							Messages.getString("ButtonTabComponent.1") }; //$NON-NLS-1$
-					abfrage = JOptionPane.showOptionDialog(mainControl,
-							Messages.getString("ButtonTabComponent.2") //$NON-NLS-1$
-									+ Messages.getString("ButtonTabComponent.3"), //$NON-NLS-1$
+					abfrage = JOptionPane.showOptionDialog(mainControl, Messages.getString("ButtonTabComponent.2") //$NON-NLS-1$
+							+ Messages.getString("ButtonTabComponent.3"), //$NON-NLS-1$
 							Messages.getString("ButtonTabComponent.4"), //$NON-NLS-1$
 							JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 					if (abfrage == 0) {

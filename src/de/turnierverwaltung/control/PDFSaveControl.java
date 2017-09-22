@@ -80,10 +80,12 @@ public class PDFSaveControl {
 
 						File filename1 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 								+ filename + Messages.getString("PDFSaveControler.2") //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName().replaceAll(" ", "") + ".pdf"); //$NON-NLS-1$
+								+ mainControl.getTurnier().getGruppe()[i].getGruppenName().replaceAll(" ", "") //$NON-NLS-1$
+								+ ".pdf");
 						File filename2 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 								+ filename + Messages.getString("PDFSaveControler.8") //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName().replaceAll(" ", "") + ".pdf"); //$NON-NLS-1$
+								+ mainControl.getTurnier().getGruppe()[i].getGruppenName().replaceAll(" ", "") //$NON-NLS-1$
+								+ ".pdf");
 
 						String titel = Messages.getString("PDFSaveControler.10") //$NON-NLS-1$
 								+ mainControl.getTurnier().getTurnierName() + " - " //$NON-NLS-1$

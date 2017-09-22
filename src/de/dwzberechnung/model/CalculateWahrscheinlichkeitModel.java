@@ -27,8 +27,8 @@ public class CalculateWahrscheinlichkeitModel {
 	private ArrayList<OpponentModel> opponents;
 
 	/**
-	 * Konrtuktor mit Parameter die Wahrscheinlichkeitstabelle wird per
-	 * Parameter übergeben
+	 * Konrtuktor mit Parameter die Wahrscheinlichkeitstabelle wird per Parameter
+	 * übergeben
 	 * 
 	 * @param wahrscheinlichkeitsTabelle
 	 */
@@ -58,8 +58,8 @@ public class CalculateWahrscheinlichkeitModel {
 	}
 
 	/**
-	 * * Dies ist die Hauptroutine in der die Gewinnerwartung anhand der Tabelle
-	 * vom DSB (http://www.schachbund.de/anhang-21.html) errechnet wird.
+	 * * Dies ist die Hauptroutine in der die Gewinnerwartung anhand der Tabelle vom
+	 * DSB (http://www.schachbund.de/anhang-21.html) errechnet wird.
 	 * 
 	 * @param dwzPlayer
 	 *            : Die DWZ des Spielers

@@ -1,5 +1,9 @@
 package de.dwzberechnung.model;
 
+/**
+ * @author mamuck
+ *
+ */
 public class ErstDWZModel {
 	private double erstDWZ;
 	private double punkte;
@@ -31,8 +35,9 @@ public class ErstDWZModel {
 			erfolgszahl = wdTM.getValue(punkte, anzahlDerGegner);
 
 		}
-//		System.out.println((durchschnittderGegnerDWZ + erfolgszahl) + "DurchschnittsDWZ =" + durchschnittderGegnerDWZ
-//				+ "Punkte =" + punkte + " A Spieler:" + anzahlDerGegner);
+		// System.out.println((durchschnittderGegnerDWZ + erfolgszahl) +
+		// "DurchschnittsDWZ =" + durchschnittderGegnerDWZ
+		// + "Punkte =" + punkte + " A Spieler:" + anzahlDerGegner);
 		erstDWZ = durchschnittderGegnerDWZ + erfolgszahl;
 	}
 

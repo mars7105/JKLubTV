@@ -1,4 +1,5 @@
 package de.turnierverwaltung.mysql;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -77,8 +78,7 @@ public class MySQLGruppenDAO implements GruppenDAO {
 
 	@Override
 	public Group findGruppe(int id) {
-		String sql = "Select Gruppenname, TurnierId " + "from gruppen "
-				+ "where idGruppe=" + id;
+		String sql = "Select Gruppenname, TurnierId " + "from gruppen " + "where idGruppe=" + id;
 
 		Group gruppe = null;
 
@@ -114,8 +114,7 @@ public class MySQLGruppenDAO implements GruppenDAO {
 		id = -1;
 		if (this.dbConnect != null) {
 			try {
-				PreparedStatement preStm = this.dbConnect.prepareStatement(sql,
-						Statement.RETURN_GENERATED_KEYS);
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 				preStm.setString(1, gruppenName);
 				preStm.setInt(2, turnierId);
@@ -166,8 +165,7 @@ public class MySQLGruppenDAO implements GruppenDAO {
 	@Override
 	public boolean updateGruppe(Group gruppe) {
 		boolean ok = false;
-		String sql = "update gruppen set Gruppenname = ? where idGruppe="
-				+ gruppe.getGruppeId();
+		String sql = "update gruppen set Gruppenname = ? where idGruppe=" + gruppe.getGruppeId();
 		if (this.dbConnect != null) {
 			try {
 				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
