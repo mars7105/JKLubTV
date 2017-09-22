@@ -110,6 +110,10 @@ public class PlayerListView extends JPanel {
 
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		String lineText1 = spieler.getName();
+		if (spieler.getDwzindex() >= 0) {
+
+			lineText1 += " Index: " + spieler.getDwzindex();
+		}
 		String lineText2 = "";
 		if (spieler.getDsbZPSNumber().length() > 0) {
 			lineText2 += "DWZ:" + spieler.getDwz() + "  ZPS:" + spieler.getDsbZPSNumber() + "-"

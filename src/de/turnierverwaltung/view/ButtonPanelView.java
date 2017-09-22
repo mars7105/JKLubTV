@@ -19,6 +19,9 @@ public class ButtonPanelView extends JPanel {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-ok-3.png"))); //$NON-NLS-1$
 	private ImageIcon cancelIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-cancel-3.png"))); //$NON-NLS-1$
+	private JButton helpButton;
+	private ImageIcon helpIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/help.png")));
 
 	/**
 	 * Create the panel.
@@ -31,6 +34,7 @@ public class ButtonPanelView extends JPanel {
 	public void makeAllButtons() {
 		makeOKButton();
 		makeCancelButton();
+
 	}
 
 	public void makeOKButton() {
@@ -38,6 +42,7 @@ public class ButtonPanelView extends JPanel {
 		okButton.setActionCommand(Messages.getString("ButtonPanelView.0")); //$NON-NLS-1$
 
 		add(okButton);
+		makeHelpButton();
 	}
 
 	public void makeCancelButton() {
@@ -45,6 +50,12 @@ public class ButtonPanelView extends JPanel {
 		cancelButton.setActionCommand(Messages.getString("ButtonPanelView.1")); //$NON-NLS-1$
 
 		add(cancelButton);
+	}
+
+	public void makeHelpButton() {
+		helpButton = new JButton(helpIcon);
+
+		add(helpButton);
 	}
 
 	public JButton getOkButton() {

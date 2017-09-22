@@ -36,6 +36,7 @@ public class Player implements Comparable<Object> {
 	private String dsbZPSNumber;
 	private String dsbMGLNumber;
 	private Boolean showPlayer;
+	private int dwzindex;
 
 	public Player() {
 		this.name = "";
@@ -44,7 +45,7 @@ public class Player implements Comparable<Object> {
 		this.kuerzel = "";
 		this.dwz = "";
 		this.age = 0;
-
+		this.dwzindex = -1;
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
@@ -76,8 +77,7 @@ public class Player implements Comparable<Object> {
 		this.dsbZPSNumber = zps;
 		this.dsbMGLNumber = mgl;
 		this.showPlayer = true;
-		// extractNameToForenameAndSurename();
-		// extractNameToKuerzel();
+		this.dwzindex = -1;
 	}
 
 	/**
@@ -99,6 +99,7 @@ public class Player implements Comparable<Object> {
 		this.kuerzel = kuerzel;
 		this.dwz = dwz;
 		this.age = age;
+		this.dwzindex = dwzindex;
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
@@ -345,6 +346,14 @@ public class Player implements Comparable<Object> {
 
 	public void setDsbMGLNumber(String dsbMGLNumber) {
 		this.dsbMGLNumber = dsbMGLNumber;
+	}
+
+	public int getDwzindex() {
+		return dwzindex;
+	}
+
+	public void setDwzindex(int dwzindex) {
+		this.dwzindex = dwzindex;
 	}
 
 }
