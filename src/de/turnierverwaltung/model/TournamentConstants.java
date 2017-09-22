@@ -30,7 +30,7 @@ public class TournamentConstants {
 	public static final String GEWINN = "1";
 	public static final String VERLUST = "0";
 	public static final String REMIS = "\u00BD";
-	public static final String LEERE_MENGE = "\u2666";
+	public static final String LEERE_MENGE = "*";
 	public static final String TRENNZEICHEN = " - ";
 	public static final String GEWINN_KAMPFLOS = "+";
 	public static final String VERLUST_KAMPFLOS = "-";
