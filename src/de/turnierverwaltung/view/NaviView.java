@@ -26,10 +26,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-public class NaviView extends JPanel {
+public class NaviView extends JToolBar {
 	/**
 	 * 
 	 */
@@ -111,7 +112,7 @@ public class NaviView extends JPanel {
 		this.setBackground(Color.LIGHT_GRAY);
 
 		this.setLayout(new BorderLayout());
-
+		this.setRollover(true);
 		newDatabseButton = new JButton(Messages.getString("NaviView.11"), dbNewIcon); //$NON-NLS-1$
 		newDatabseButton.setPreferredSize(new Dimension(200, 40));
 		newDatabseButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -167,7 +168,6 @@ public class NaviView extends JPanel {
 		dateiPanel.setBackground(Color.LIGHT_GRAY);
 		BoxLayout dateiPanelLayout = new BoxLayout(dateiPanel, BoxLayout.PAGE_AXIS);
 		dateiPanel.setLayout(dateiPanelLayout);
-		dateiPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		// Turnierliste
 		turnierAddButton = new JButton(Messages.getString("NaviView.17"), turnierNew); //$NON-NLS-1$
 		turnierAddButton.setPreferredSize(new Dimension(200, 40));
@@ -245,17 +245,17 @@ public class NaviView extends JPanel {
 		panel2.add(loadDatabaseButton);
 
 		NaviPanelElementView panel2a = new NaviPanelElementView();
-		panel2a.getFlowLayout().setVgap(1);
+//		panel2a.getFlowLayout().setVgap(1);
 
 		panel2a.add(propertiesButton);
 		NaviPanelElementView panel2b = new NaviPanelElementView();
-		panel2b.getFlowLayout().setVgap(1);
+//		panel2b.getFlowLayout().setVgap(1);
 
 		panel2b.add(infoButton);
 		NaviPanelElementView panel2c = new NaviPanelElementView();
 		panel2c.add(exitButton);
 		NaviPanelElementView panelLabel = new NaviPanelElementView();
-		panelLabel.getFlowLayout().setVgap(1);
+//		panelLabel.getFlowLayout().setVgap(1);
 		pathToDatabase = new JLabel(" "); //$NON-NLS-1$
 		panelLabel.add(pathToDatabase);
 
@@ -336,6 +336,7 @@ public class NaviView extends JPanel {
 		pairingsPanel.add(panel4l);
 		tabellenPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pairingsPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		dateiPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		NaviPanelElementView panel5 = new NaviPanelElementView();
 		BoxLayout boxLayout = new BoxLayout(panel5, BoxLayout.Y_AXIS);

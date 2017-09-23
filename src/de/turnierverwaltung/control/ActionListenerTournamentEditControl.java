@@ -126,6 +126,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 					mainControl.fileSQLError();
 				}
 				if (ok) {
+					mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(false);
 					makeNewTables();
 				}
 			}
@@ -143,7 +144,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 
 	private void makeNewTables() {
 		int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
-		mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(false);
+		
 		for (int i = 0; i < anzahlGruppen; i++) {
 
 			this.mainControl.getTurnierTabelleControl().okAction(i);

@@ -71,7 +71,6 @@ public class TournamentListView extends JPanel {
 		// contentPanel = new JPanel();
 		// contentPanel.setLayout(new BorderLayout());
 		// contentPanel.setBackground(new Color(249, 222, 112));
-		setLayout(new BorderLayout());
 		// scrollPane = new JScrollPane();
 		// scrollPane.setViewportView(contentPanel);
 		titleView = new TitleLabelView(Messages.getString("TurnierListeLadenView.3"));

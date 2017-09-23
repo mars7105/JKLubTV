@@ -36,6 +36,7 @@ import javax.swing.JPanel;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import javax.swing.JTabbedPane;
+import javax.swing.border.EmptyBorder;
 
 import de.turnierverwaltung.control.MainControl;
 
@@ -49,6 +50,7 @@ public class TabbedPaneView extends JPanel {
 
 	public TabbedPaneView(MainControl mainCtrl, String title) {
 		setLayout(new BorderLayout());
+		setBorder(new EmptyBorder(5, 5, 5, 5));
 		titleView = new TitleLabelView(title);
 		tabbedPane = new JTabbedPane();
 

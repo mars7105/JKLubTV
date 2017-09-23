@@ -32,14 +32,17 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting() == false) {
-
-			if (dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex() == -1) {
+			int index = dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex();
+			if (index == -1) {
 				// No selection, disable fire button.
 				dewisDialogControl.getDialog().getOkButton().setEnabled(false);
 
 			} else {
+				// dewisDialogControl.getSpielerDewisView().getList().get
 				// Selection, enable the fire button.
+
 				dewisDialogControl.getDialog().getOkButton().setEnabled(true);
+
 			}
 		}
 	}
@@ -76,7 +79,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 					for (int i = 0; i < indices.length; i++) {
 						Player neuerSpieler = new Player();
 						neuerSpieler = dewisDialogControl.getPlayers().get(indices[i]);
-
+						dewisDialogControl.getSpielerDewisView().getList().setSelectedIndex(indices[i]);
 						Boolean findPlayer = dewisDialogControl.searchSpieler(neuerSpieler, false);
 						if (findPlayer == false) {
 							SQLPlayerControl stc = new SQLPlayerControl(mainControl);

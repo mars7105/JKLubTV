@@ -38,7 +38,7 @@ import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.ButtonTabComponent;
 import de.turnierverwaltung.view.CrossTableView;
-import de.turnierverwaltung.view.MainView;
+//import de.turnierverwaltung.view.MainView;
 import de.turnierverwaltung.view.MeetingTableView;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.NewTournamentGroupsView;
@@ -63,7 +63,7 @@ public class MainControl extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private int windowWidth;
 	private int windowHeight;
-	private MainView mainView;
+//	private MainView mainView;
 	private JTabbedPane hauptPanel;
 
 	private NewTournamentControl turnierControl;
@@ -233,7 +233,7 @@ public class MainControl extends JFrame {
 	public void resetApp() {
 		windowWidth = 0;
 		windowHeight = 0;
-		mainView = null;
+//		mainView = null;
 		hauptPanel = null;
 
 		turnierControl = null;
@@ -355,9 +355,9 @@ public class MainControl extends JFrame {
 		return hauptPanel;
 	}
 
-	public MainView getMainView() {
-		return mainView;
-	}
+//	public MainView getMainView() {
+//		return mainView;
+//	}
 
 	public PairingsTables getPaarungsTafeln() {
 		return paarungsTafeln;
@@ -515,9 +515,9 @@ public class MainControl extends JFrame {
 		this.hauptPanel = hauptPanel;
 	}
 
-	public void setMainView(MainView mainView) {
-		this.mainView = mainView;
-	}
+//	public void setMainView(MainView mainView) {
+//		this.mainView = mainView;
+//	}
 
 	public void setPaarungsTafeln(PairingsTables paarungsTafeln) {
 		this.paarungsTafeln = paarungsTafeln;

@@ -23,12 +23,12 @@ public class NaviPanelElementView extends JPanel {
 		setBackground(Color.LIGHT_GRAY);
 	}
 
-	public FlowLayout getFlowLayout() {
-		return flowLayout;
-	}
-
-	public void setFlowLayout(FlowLayout flowLayout) {
-		this.flowLayout = flowLayout;
-	}
+//	public FlowLayout getFlowLayout() {
+//		return flowLayout;
+//	}
+//
+//	public void setFlowLayout(FlowLayout flowLayout) {
+//		this.flowLayout = flowLayout;
+//	}
 
 }
