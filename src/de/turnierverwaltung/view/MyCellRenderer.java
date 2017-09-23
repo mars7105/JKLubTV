@@ -1,0 +1,65 @@
+package de.turnierverwaltung.view;
+
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.FlowLayout;
+
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
+//MyCellRenderer.java
+
+/* Eventuell hier erst das Paket definieren, falls erforderlich! */
+
+@SuppressWarnings("rawtypes")
+public class MyCellRenderer extends JPanel implements ListCellRenderer {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -9184411188243605427L;
+	private JLabel label = null;
+
+	public MyCellRenderer() {
+		// Konstruktor des JPanels mit FlowLayout aufrufen
+		super(new FlowLayout(FlowLayout.LEFT));
+
+		// JPanel undurchsichtig machen
+		setOpaque(true);
+
+		// JLabel instanzieren, durchsichtig machen und hinzufügen
+		label = new JLabel();
+		label.setOpaque(false);
+		add(label);
+	}
+
+	public Component getListCellRendererComponent(JList list, // JList Objekt
+			Object value, // anzuzeigende Komponente
+			int index, // Zellenindex
+			boolean iss, // Ist selektiert?
+			boolean chf) // Hat den Fokus?
+	{
+		// JLabel das Icon aus unserem MyListItem zuweisen
+		label.setIcon(((ListItem) value).getIcon());
+
+		// JLabel den Text aus unserem MyListItem zuweisen
+		label.setText(((ListItem) value).getText());
+
+		// Hintergrundfarbe des JPanels bei Fokuswechseln definieren
+		if (iss)
+			setBackground(Color.lightGray); // Hat den Fokus
+		else
+			setBackground(list.getBackground()); // Hat den Fokus nicht
+
+		return this;
+	}
+
+	public JLabel getLabel() {
+		return label;
+	}
+
+	public void setLabel(JLabel label) {
+		this.label = label;
+	}
+
+}

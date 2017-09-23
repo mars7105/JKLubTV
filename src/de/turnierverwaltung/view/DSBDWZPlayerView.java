@@ -18,9 +18,11 @@ package de.turnierverwaltung.view;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -38,11 +40,13 @@ public class DSBDWZPlayerView extends JPanel {
 	private JPanel contentPanel;
 	private JPanel mainPane;
 	private JScrollPane scrollPane;
-	private DefaultListModel<Object> listModel;
-	private JList<Object> list;
+	private DefaultListModel<ListItem> listModel;
+	private JList<ListItem> list;
 	private int windowWidth;
 	private int windowHeight;
-
+	private ImageIcon iinserIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-add-2.png")));
+	
 	public DSBDWZPlayerView() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
 		windowHeight = TournamentConstants.WINDOW_HEIGHT;
@@ -67,7 +71,7 @@ public class DSBDWZPlayerView extends JPanel {
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new BorderLayout());
 
-		listModel = new DefaultListModel<Object>();
+		listModel = new DefaultListModel<ListItem>();
 
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
@@ -76,16 +80,19 @@ public class DSBDWZPlayerView extends JPanel {
 	}
 
 	public void makeSpielerZeile(Player spieler) {
-
-		listModel.addElement(spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz()); //$NON-NLS-1$
+		ListItem playerItem = new ListItem(iinserIcon,
+				spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
+		listModel.addElement(playerItem); // $NON-NLS-1$
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public void makeList() {
-		list = new JList<Object>(listModel);
+		list = new JList<ListItem>(listModel);
 		list.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setVisibleRowCount(-1);
+		list.setCellRenderer(new MyCellRenderer());
 		contentPanel.add(list);
 		contentPanel.updateUI();
 	}
@@ -98,11 +105,11 @@ public class DSBDWZPlayerView extends JPanel {
 		this.contentPanel = contentPanel;
 	}
 
-	public JList<Object> getList() {
+	public JList<ListItem> getList() {
 		return list;
 	}
 
-	public void setList(JList<Object> list) {
+	public void setList(JList<ListItem> list) {
 		this.list = list;
 	}
 

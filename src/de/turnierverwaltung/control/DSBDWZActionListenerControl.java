@@ -1,9 +1,13 @@
 package de.turnierverwaltung.control;
 
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.ListIterator;
 
+import javax.swing.ImageIcon;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -18,6 +22,8 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 	private MainControl mainControl;
 	private DSBDWZControl dewisDialogControl;
 
+	private ArrayList<Integer> indices;
+
 	/**
 	 * 
 	 * @param mainControl
@@ -27,7 +33,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 		super();
 		this.mainControl = mainControl;
 		this.dewisDialogControl = dewisDialogControl;
-
+		indices = new ArrayList<Integer>();
 	}
 
 	public void valueChanged(ListSelectionEvent e) {
@@ -38,9 +44,27 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 				dewisDialogControl.getDialog().getOkButton().setEnabled(false);
 
 			} else {
-				// dewisDialogControl.getSpielerDewisView().getList().get
-				// Selection, enable the fire button.
-
+				ListIterator<Integer> lit = indices.listIterator();
+				int counter = 0;
+				Boolean notfound = false;
+				while (lit.hasNext()) {
+					int temp = lit.next();
+					if (temp == index) {
+						indices.remove(counter);
+						ImageIcon insertIcon = new ImageIcon(
+								Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-add-2.png")));
+						dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon);
+						notfound = true;
+						break;
+					}
+					counter++;
+				}
+				if (notfound == false) {
+					indices.add(dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex());
+					ImageIcon insertIcon = new ImageIcon(
+							Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-ok-3.png")));
+					dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon);
+				}
 				dewisDialogControl.getDialog().getOkButton().setEnabled(true);
 
 			}
@@ -73,13 +97,16 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 		}
 		if (arg0.getSource() == dewisDialogControl.getDialog().getOkButton()) {
 			try {
-				int[] indices = dewisDialogControl.getSpielerDewisView().getList().getSelectedIndices();
 
 				if (dewisDialogControl.getPlayers() != null) {
-					for (int i = 0; i < indices.length; i++) {
+
+					ListIterator<Integer> lit = indices.listIterator();
+
+					while (lit.hasNext()) {
+						int temp = lit.next();
 						Player neuerSpieler = new Player();
-						neuerSpieler = dewisDialogControl.getPlayers().get(indices[i]);
-						dewisDialogControl.getSpielerDewisView().getList().setSelectedIndex(indices[i]);
+						neuerSpieler = dewisDialogControl.getPlayers().get(temp);
+//						dewisDialogControl.getSpielerDewisView().getList().setSelectedIndex(temp);
 						Boolean findPlayer = dewisDialogControl.searchSpieler(neuerSpieler, false);
 						if (findPlayer == false) {
 							SQLPlayerControl stc = new SQLPlayerControl(mainControl);
@@ -87,6 +114,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 							mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
 						}
 					}
+
 				}
 
 				mainControl.getSpielerLadenControl().updateSpielerListe();
