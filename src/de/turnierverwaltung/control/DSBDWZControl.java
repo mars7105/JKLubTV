@@ -21,6 +21,7 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.ListIterator;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -39,6 +40,7 @@ public class DSBDWZControl {
 	private DSBDWZAssociationSearchControl vereinsSuche;
 	private ArrayList<String[]> zpsItems;
 	private DSBDWZActionListenerControl dewisDialogActionListenerControl;
+	private ArrayList<Player> spielerListe;
 
 	/**
 	 * 
@@ -48,6 +50,7 @@ public class DSBDWZControl {
 		super();
 		this.mainControl = mainControl;
 		dewisDialogActionListenerControl = new DSBDWZActionListenerControl(this.mainControl, this);
+
 	}
 
 	/**
@@ -59,12 +62,42 @@ public class DSBDWZControl {
 		DSBDWZClub verein = new DSBDWZClub(zps);
 		players = new ArrayList<Player>();
 		players = verein.getSpieler();
+		SQLPlayerControl sqlpc = new SQLPlayerControl(mainControl);
+		try {
+			spielerListe = sqlpc.getAllSpielerOrderByZPS();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if (players != null) {
 			Collections.sort(players, new SortName());
 
 			spielerDewisView = new DSBDWZPlayerView();
-			for (Player player : players) {
-				spielerDewisView.makeSpielerZeile(player);
+
+			ListIterator<Player> list = players.listIterator();
+			while (list.hasNext()) {
+				Player player = list.next();
+				ListIterator<Player> li = spielerListe.listIterator();
+				Boolean foundPlayer = false;
+				while (li.hasNext()) {
+					Player tmp = li.next();
+					try {
+						int tmpzps = Integer.parseInt(tmp.getDsbZPSNumber());
+						int tmpmgl = Integer.parseInt(tmp.getDsbMGLNumber());
+						int playerzps = Integer.parseInt(player.getDsbZPSNumber());
+						int playermgl = Integer.parseInt(player.getDsbMGLNumber());
+						if (tmpzps == playerzps && tmpmgl == playermgl) {
+							spielerDewisView.makeSpielerZeile(player, 1);
+							foundPlayer = true;
+
+						}
+					} catch (NumberFormatException e) {
+						
+					}
+				}
+				if (foundPlayer == false) {
+					spielerDewisView.makeSpielerZeile(player, 0);
+				}
 			}
 			spielerDewisView.makeList();
 			spielerDewisView.updateUI();
@@ -72,9 +105,9 @@ public class DSBDWZControl {
 			dialog.setDsbPanel(spielerDewisView);
 			mainControl.getPropertiesControl().setZPS(zps);
 			mainControl.getPropertiesControl().writeProperties();
-//			dialog.getUpdateButton().setEnabled(true);
+			// dialog.getUpdateButton().setEnabled(true);
 		} else {
-//			dialog.getUpdateButton().setEnabled(false);
+			// dialog.getUpdateButton().setEnabled(false);
 			JLabel noItemLabel = new JLabel(Messages.getString("DewisDialogControl.0")); //$NON-NLS-1$
 			JPanel noItemPanel = new JPanel();
 			noItemPanel.add(noItemLabel);
@@ -108,8 +141,8 @@ public class DSBDWZControl {
 		}
 		dialog.getVereinsSucheButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getVereinsAuswahlOkButton().addActionListener(dewisDialogActionListenerControl);
-//		dialog.getUpdateButton().addActionListener(dewisDialogActionListenerControl);
-//		dialog.getUpdateButton().setEnabled(false);
+		// dialog.getUpdateButton().addActionListener(dewisDialogActionListenerControl);
+		// dialog.getUpdateButton().setEnabled(false);
 		dialog.getOkButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getCancelButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getOkButton().setEnabled(false);
@@ -218,7 +251,5 @@ public class DSBDWZControl {
 	public void setZpsItems(ArrayList<String[]> zpsItems) {
 		this.zpsItems = zpsItems;
 	}
-
-	
 
 }

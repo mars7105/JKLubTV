@@ -52,7 +52,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 					if (temp == index) {
 						indices.remove(counter);
 						ImageIcon insertIcon = new ImageIcon(
-								Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-add-2.png")));
+								Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user-offline.png")));
 						dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon);
 						notfound = true;
 						break;
