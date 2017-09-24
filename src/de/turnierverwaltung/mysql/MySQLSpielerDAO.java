@@ -225,4 +225,10 @@ public class MySQLSpielerDAO implements SpielerDAO {
 
 	}
 
+	@Override
+	public ArrayList<Player> getAllSpielerOrderByZPS() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

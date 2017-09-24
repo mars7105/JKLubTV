@@ -38,4 +38,7 @@ public interface SpielerDAO {
 	public boolean updateSpieler(Player spieler) throws SQLException;
 
 	public void alterTables();
+
+	public ArrayList<Player> getAllSpielerOrderByZPS() throws SQLException;
+
 }

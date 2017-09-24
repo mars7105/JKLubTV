@@ -69,7 +69,25 @@ public class SQLPlayerControl {
 		return spieler;
 
 	}
+	public ArrayList<Player> getAllSpielerOrderByZPS() throws SQLException {
+		ArrayList<Player> spieler;
 
+		spieler = mySQLSpielerDAO.getAllSpielerOrderByZPS();
+
+		int cutForename = Integer.parseInt(prop.getCutForename());
+		int cutSurname = Integer.parseInt(prop.getCutSurname());
+		ListIterator<Player> li = spieler.listIterator();
+
+		while (li.hasNext()) {
+			Player temp = li.next();
+			temp.cutForename(cutForename);
+			temp.cutSurname(cutSurname);
+			temp.extractForenameAndSurenameToName();
+		}
+
+		return spieler;
+
+	}
 	public void getSpieler() throws SQLException {
 		this.turnier = this.mainControl.getTurnier();
 

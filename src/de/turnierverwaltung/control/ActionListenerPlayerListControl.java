@@ -160,7 +160,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
 		ArrayList<Player> spielerliste = null;
 		try {
-			spielerliste = spielerTableControl.getAllSpieler();
+			spielerliste = spielerTableControl.getAllSpielerOrderByZPS();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -188,7 +188,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 								player.setDwzindex(temp.getDwzindex());
 								try {
 									spielerTableControl.updateOneSpieler(player);
-									System.out.println(player.getName());
+//									System.out.println(player.getName());
 								} catch (SQLException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();

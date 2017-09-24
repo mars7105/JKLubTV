@@ -136,6 +136,47 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	}
 
 	@Override
+	public ArrayList<Player> getAllSpielerOrderByZPS() throws SQLException {
+		String sql = "Select * from spieler ORDER BY ZPS ASC;";
+		ArrayList<Player> spielerListe = new ArrayList<Player>();
+
+		Statement stmt;
+		if (this.dbConnect != null) {
+
+			stmt = this.dbConnect.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				int idSpieler = rs.getInt("idSpieler");
+				String name = rs.getString("Name");
+				String foreName = rs.getString("ForeName");
+				String surName = rs.getString("SurName");
+				String kuerzel = rs.getString("kuerzel");
+				String dwz = rs.getString("dwz");
+				String zps = rs.getString("ZPS");
+				String mgl = rs.getString("MGL");
+				int dwzindex = rs.getInt("DWZIndex");
+				int age = rs.getInt("Age");
+
+				Player player = null;
+
+				if (foreName.length() == 0 && surName.length() == 0) {
+					player = new Player(idSpieler, name, kuerzel, dwz, age, zps, mgl, dwzindex);
+
+				} else {
+
+					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, dwzindex, age, zps, mgl);
+				}
+				spielerListe.add(player);
+			}
+
+			stmt.close();
+
+		}
+		return spielerListe;
+
+	}
+
+	@Override
 	public int insertSpieler(String name, String foreName, String surName, String dwz, String kuerzel, String zps,
 			String mgl, int dwzindex, int age) throws SQLException {
 
@@ -391,4 +432,5 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 		}
 		return isExist;
 	}
+
 }
