@@ -47,7 +47,7 @@ public class DSBDWZDialogView extends JDialog {
 	private JButton vereinsSucheButton;
 	private JButton okButton;
 	private JButton cancelButton;
-	private JButton updateButton;
+	
 	private ButtonPanelView buttonPane;
 	private URI dwzdbURI;
 	private JButton dwzdbButton;
@@ -126,7 +126,6 @@ public class DSBDWZDialogView extends JDialog {
 
 		contentPanel.add(suchePanel, BorderLayout.NORTH);
 		dsbPanel = new JPanel();
-		updateButton = new JButton(Messages.getString("DEWISDialogView.5")); //$NON-NLS-1$
 
 		buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();
@@ -134,7 +133,7 @@ public class DSBDWZDialogView extends JDialog {
 		cancelButton = buttonPane.getCancelButton();
 		okButton.setText(Messages.getString("DEWISDialogView.6")); //$NON-NLS-1$
 		cancelButton.setText(Messages.getString("DEWISDialogView.7")); //$NON-NLS-1$
-		buttonPane.add(updateButton);
+//		buttonPane.add(updateButton);
 
 		contentPanel.add(dsbPanel, BorderLayout.CENTER);
 		contentPanel.add(buttonPane, BorderLayout.SOUTH);
@@ -234,13 +233,13 @@ public class DSBDWZDialogView extends JDialog {
 		return contentPanel;
 	}
 
-	public JButton getUpdateButton() {
-		return updateButton;
-	}
-
-	public void setUpdateButton(JButton updateButton) {
-		this.updateButton = updateButton;
-	}
+//	public JButton getUpdateButton() {
+//		return updateButton;
+//	}
+//
+//	public void setUpdateButton(JButton updateButton) {
+//		this.updateButton = updateButton;
+//	}
 
 	public JTextField getVereinsName() {
 		return vereinsName;

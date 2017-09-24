@@ -115,11 +115,12 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				String mgl = rs.getString("MGL");
 				int age = rs.getInt("Age");
 				Player player = null;
-
+				
 				if (foreName.length() == 0 && surName.length() == 0) {
 					player = new Player(idSpieler, name, kuerzel, dwz, age, zps, mgl);
 
 				} else {
+
 					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, -1, age, zps, mgl);
 				}
 				spielerListe.add(player);

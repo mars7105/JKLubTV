@@ -94,4 +94,12 @@ public class DSBDWZClub {
 
 	}
 
+	public String getZps() {
+		return zps;
+	}
+
+	public void setZps(String zps) {
+		this.zps = zps;
+	}
+
 }

@@ -72,9 +72,9 @@ public class DSBDWZControl {
 			dialog.setDsbPanel(spielerDewisView);
 			mainControl.getPropertiesControl().setZPS(zps);
 			mainControl.getPropertiesControl().writeProperties();
-			dialog.getUpdateButton().setEnabled(true);
+//			dialog.getUpdateButton().setEnabled(true);
 		} else {
-			dialog.getUpdateButton().setEnabled(false);
+//			dialog.getUpdateButton().setEnabled(false);
 			JLabel noItemLabel = new JLabel(Messages.getString("DewisDialogControl.0")); //$NON-NLS-1$
 			JPanel noItemPanel = new JPanel();
 			noItemPanel.add(noItemLabel);
@@ -108,8 +108,8 @@ public class DSBDWZControl {
 		}
 		dialog.getVereinsSucheButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getVereinsAuswahlOkButton().addActionListener(dewisDialogActionListenerControl);
-		dialog.getUpdateButton().addActionListener(dewisDialogActionListenerControl);
-		dialog.getUpdateButton().setEnabled(false);
+//		dialog.getUpdateButton().addActionListener(dewisDialogActionListenerControl);
+//		dialog.getUpdateButton().setEnabled(false);
 		dialog.getOkButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getCancelButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getOkButton().setEnabled(false);
@@ -156,15 +156,19 @@ public class DSBDWZControl {
 	 * @throws SQLException
 	 */
 	public Boolean searchSpieler(Player neuerSpieler, Boolean updateDWZ) throws SQLException {
-		ArrayList<Player> spieler = mainControl.getSpielerLadenControl().getSpieler();
 
-		for (Player player : spieler) {
-			if (player.getName().equals(neuerSpieler.getName()) == true) {
-				if (player.getDWZ() != neuerSpieler.getDWZ() && updateDWZ == true) {
+		for (Player player : players) {
+
+			if (player.getDsbZPSNumber().equals(neuerSpieler.getDsbZPSNumber())
+					&& player.getDsbMGLNumber().equals(neuerSpieler.getDsbMGLNumber())) {
+				if (((player.getDWZ() < neuerSpieler.getDWZ() || player.getDWZ() > neuerSpieler.getDWZ())
+						&& updateDWZ == true)) {
 
 					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-					player.setDwz(neuerSpieler.getDWZ());
-					stc.updateOneSpieler(player);
+					neuerSpieler.setDwz(player.getDWZ());
+
+					neuerSpieler.setDwzindex(player.getDwzindex());
+					stc.updateOneSpieler(neuerSpieler);
 
 				}
 
@@ -214,5 +218,7 @@ public class DSBDWZControl {
 	public void setZpsItems(ArrayList<String[]> zpsItems) {
 		this.zpsItems = zpsItems;
 	}
+
+	
 
 }

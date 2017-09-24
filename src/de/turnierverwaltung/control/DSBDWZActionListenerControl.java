@@ -97,21 +97,19 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 		}
 		if (arg0.getSource() == dewisDialogControl.getDialog().getOkButton()) {
 			try {
-
-				if (dewisDialogControl.getPlayers() != null) {
+				ArrayList<Player> spieler = dewisDialogControl.getPlayers();
+				if (spieler != null) {
 
 					ListIterator<Integer> lit = indices.listIterator();
 
 					while (lit.hasNext()) {
 						int temp = lit.next();
-						Player neuerSpieler = new Player();
-						neuerSpieler = dewisDialogControl.getPlayers().get(temp);
-//						dewisDialogControl.getSpielerDewisView().getList().setSelectedIndex(temp);
-						Boolean findPlayer = dewisDialogControl.searchSpieler(neuerSpieler, false);
-						if (findPlayer == false) {
+						Player neuerSpieler = spieler.get(temp);
+						if (playerExist(neuerSpieler) == false) {
 							SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
 							mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+
 						}
 					}
 
@@ -122,23 +120,27 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 				mainControl.fileSQLError();
 			}
 		}
-		if (arg0.getSource() == dewisDialogControl.getDialog().getUpdateButton()) {
-			try {
-				@SuppressWarnings("unused")
-				Boolean findPlayer = true;
-				for (Player player : dewisDialogControl.getPlayers()) {
-					findPlayer = dewisDialogControl.searchSpieler(player, true);
 
+	}
+
+	private boolean playerExist(Player neuerSpieler) {
+		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
+		ArrayList<Player> spieler;
+		try {
+			spieler = spielerTableControl.getAllSpieler();
+
+			for (Player player : spieler) {
+				if (player.getDsbZPSNumber().equals(neuerSpieler.getDsbZPSNumber())
+						&& player.getDsbMGLNumber().equals(neuerSpieler.getDsbMGLNumber())) {
+					return true;
 				}
 
-				dewisDialogControl.getDialog().closeWindow();
-				// mainControl.setEnabled(true);
-
-				mainControl.getSpielerLadenControl().updateSpielerListe();
-			} catch (SQLException e) {
-				mainControl.fileSQLError();
 			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		return false;
 	}
 
 }

@@ -45,7 +45,6 @@ public class PlayerListView extends JPanel {
 	private JButton[] spielerLoeschenButton;
 	private int anzahlElemente;
 	private JPanel line;
-
 	private JTabbedPane spielerListe;
 
 	private ImageIcon userDelete = new ImageIcon(

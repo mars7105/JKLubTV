@@ -104,9 +104,12 @@ public class NaviView extends JToolBar {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/media-playlist-shuffle-3.png")));
 	private ImageIcon pairingsSaveIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-save-5.png")));
+	private ImageIcon updateButtonIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-refresh-6.png")));
 	private JPanel pairingsPanel;
 	private JLabel pairingsLabel;
 	private String pairingsname;
+	private JButton updateButton;
 
 	public NaviView() {
 		this.setBackground(Color.LIGHT_GRAY);
@@ -201,7 +204,16 @@ public class NaviView extends JToolBar {
 		spielerListePanel.add(titleView);
 		spielerListePanel.add(panel3);
 		spielerListePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		// update dwz
+		updateButton = new JButton(Messages.getString("DEWISDialogView.5"), updateButtonIcon); //$NON-NLS-1$
+		updateButton.setPreferredSize(new Dimension(200, 40));
+		updateButton.setHorizontalAlignment(SwingConstants.LEFT);
 
+		panel3 = new NaviPanelElementView();
+
+		panel3.add(updateButton);
+
+		spielerListePanel.add(panel3);
 		// Spieler Import
 		spielerImport = new JButton(Messages.getString("NaviView.21"), userImport); //$NON-NLS-1$
 		spielerImport.setPreferredSize(new Dimension(200, 40));
@@ -245,17 +257,17 @@ public class NaviView extends JToolBar {
 		panel2.add(loadDatabaseButton);
 
 		NaviPanelElementView panel2a = new NaviPanelElementView();
-//		panel2a.getFlowLayout().setVgap(1);
+		// panel2a.getFlowLayout().setVgap(1);
 
 		panel2a.add(propertiesButton);
 		NaviPanelElementView panel2b = new NaviPanelElementView();
-//		panel2b.getFlowLayout().setVgap(1);
+		// panel2b.getFlowLayout().setVgap(1);
 
 		panel2b.add(infoButton);
 		NaviPanelElementView panel2c = new NaviPanelElementView();
 		panel2c.add(exitButton);
 		NaviPanelElementView panelLabel = new NaviPanelElementView();
-//		panelLabel.getFlowLayout().setVgap(1);
+		// panelLabel.getFlowLayout().setVgap(1);
 		pathToDatabase = new JLabel(" "); //$NON-NLS-1$
 		panelLabel.add(pathToDatabase);
 
@@ -573,6 +585,14 @@ public class NaviView extends JToolBar {
 
 	public void setPairingsCancelButton(JButton pairingsCancelButton) {
 		this.pairingsCancelButton = pairingsCancelButton;
+	}
+
+	public JButton getUpdateButton() {
+		return updateButton;
+	}
+
+	public void setUpdateButton(JButton updateButton) {
+		this.updateButton = updateButton;
 	}
 
 }

@@ -5,10 +5,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import de.turnierverwaltung.model.DSBDWZClub;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.NewPlayerView;
+import de.turnierverwaltung.view.ProgressBarDWZUpdateView;
 
 public class ActionListenerPlayerListControl implements ActionListener, FocusListener {
 	private MainControl mainControl;
@@ -16,6 +19,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 	private NaviView naviView;
 	private DSBDWZControl dewisDialogControl;
 	private Player neuerSpieler;
+	private ProgressBarDWZUpdateView ladebalkenView;
 
 	public ActionListenerPlayerListControl(MainControl mainControl) {
 		super();
@@ -25,6 +29,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 		naviView.getSpielerExport().addActionListener(this);
 		naviView.getSpielerImport().addActionListener(this);
 		naviView.getSpielerDEWISSearchButton().addActionListener(this);
+		naviView.getUpdateButton().addActionListener(this);
 		dewisDialogControl = new DSBDWZControl(mainControl);
 
 	}
@@ -106,6 +111,16 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 			spielerHinzufuegenView.getTextFieldKuerzel().addFocusListener(this);
 			mainControl.setEnabled(false);
 		}
+		if (arg0.getSource() == naviView.getUpdateButton()) {
+			try {
+
+				updateSpieler();
+
+				mainControl.getSpielerLadenControl().updateSpielerListe();
+			} catch (SQLException e) {
+				mainControl.fileSQLError();
+			}
+		}
 	}
 
 	/**
@@ -122,6 +137,71 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 		spielerHinzufuegenView.getOkButton().addActionListener(this);
 		spielerHinzufuegenView.getCancelButton().addActionListener(this);
 		mainControl.setEnabled(false);
+	}
+
+	/**
+	 * Create the GUI and show it. As with all GUI code, this must run on the
+	 * event-dispatching thread.
+	 */
+	private void createAndShowGUI(int anzahl) {
+
+		ladebalkenView = new ProgressBarDWZUpdateView(anzahl);
+
+		// Display the window.
+		ladebalkenView.pack();
+
+		ladebalkenView.setVisible(true);
+	}
+
+	public void updateSpieler() {
+		DSBDWZClub verein = null;
+		ArrayList<Player> spieler = null;
+		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
+		ArrayList<Player> spielerliste = null;
+		try {
+			spielerliste = spielerTableControl.getAllSpieler();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		createAndShowGUI(spielerliste.size());
+		for (Player player : spielerliste) {
+			if (verein != null) {
+				if (verein.getZps().equals(player.getDsbZPSNumber()) == false) {
+					verein = new DSBDWZClub(player.getDsbZPSNumber());
+					spieler = verein.getSpieler();
+				}
+			} else {
+				verein = new DSBDWZClub(player.getDsbZPSNumber());
+				spieler = verein.getSpieler();
+			}
+
+			if (spieler != null) {
+				for (Player temp : spieler) {
+					try {
+						int tempMGL = Integer.parseInt(temp.getDsbMGLNumber());
+						int playerMGL = Integer.parseInt(player.getDsbMGLNumber());
+						if (tempMGL == playerMGL) {
+							if (player.getDWZ() != temp.getDWZ()) {
+								player.setDwz(temp.getDWZ());
+
+								try {
+									spielerTableControl.updateOneSpieler(player);
+									System.out.println(player.getName());
+								} catch (SQLException e) {
+									// TODO Auto-generated catch block
+									e.printStackTrace();
+								}
+							}
+						}
+					} catch (NumberFormatException e) {
+
+					}
+
+				}
+			}
+			ladebalkenView.iterate();
+		}
 	}
 
 	@Override
