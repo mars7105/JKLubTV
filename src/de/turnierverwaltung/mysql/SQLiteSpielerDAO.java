@@ -36,7 +36,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public void createSpielerTable() throws SQLException {
 		String sql = "CREATE TABLE spieler (idSpieler INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-				+ " Name VARCHAR, Forename VARCHAR, Surname VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, ZPS VARCHAR, MGL VARCHAR, Age INTEGER)"
+				+ " Name VARCHAR, Forename VARCHAR, Surname VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, ZPS VARCHAR, MGL VARCHAR, DWZIndex INTEGER, Age INTEGER)"
 				+ ";";
 
 		Statement stmt;
@@ -113,15 +113,17 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				String dwz = rs.getString("dwz");
 				String zps = rs.getString("ZPS");
 				String mgl = rs.getString("MGL");
+				int dwzindex = rs.getInt("DWZIndex");
 				int age = rs.getInt("Age");
+
 				Player player = null;
-				
+
 				if (foreName.length() == 0 && surName.length() == 0) {
-					player = new Player(idSpieler, name, kuerzel, dwz, age, zps, mgl);
+					player = new Player(idSpieler, name, kuerzel, dwz, age, zps, mgl, dwzindex);
 
 				} else {
 
-					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, -1, age, zps, mgl);
+					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, dwzindex, age, zps, mgl);
 				}
 				spielerListe.add(player);
 			}
@@ -135,12 +137,12 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 	@Override
 	public int insertSpieler(String name, String foreName, String surName, String dwz, String kuerzel, String zps,
-			String mgl, int age) throws SQLException {
+			String mgl, int dwzindex, int age) throws SQLException {
 
 		String sql;
 		int id = -1;
 
-		sql = "Insert into spieler (Name, Forename, Surname, DWZ, Kuerzel, ZPS, MGL, Age) values (?,?,?,?,?,?,?,?)"
+		sql = "Insert into spieler (Name, Forename, Surname, DWZ, Kuerzel, ZPS, MGL, DWZIndex, Age) values (?,?,?,?,?,?,?,?,?)"
 				+ ";";
 
 		if (this.dbConnect != null) {
@@ -154,7 +156,8 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 			preStm.setString(5, kuerzel);
 			preStm.setString(6, zps);
 			preStm.setString(7, mgl);
-			preStm.setInt(8, age);
+			preStm.setInt(8, dwzindex);
+			preStm.setInt(9, age);
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
@@ -191,14 +194,16 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				String dwz = rs.getString("dwz");
 				String zps = rs.getString("ZPS");
 				String mgl = rs.getString("MGL");
+				int dwzindex = rs.getInt("DWZIndex");
+
 				int age = rs.getInt("Age");
 				Player player = null;
 
 				if (foreName.length() == 0 && surName.length() == 0) {
-					player = new Player(idSpieler, name, kuerzel, dwz, age, zps, mgl);
+					player = new Player(idSpieler, name, kuerzel, dwz, age, zps, mgl, dwzindex);
 
 				} else {
-					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, -1, age, zps, mgl);
+					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, dwzindex, age, zps, mgl);
 				}
 				spielerListe.add(player);
 			}
@@ -213,7 +218,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	public boolean updateSpieler(Player spieler) throws SQLException {
 		boolean ok = false;
 		String sql = "update spieler set Name = ?,Forename = ?,Surname = ?, Kuerzel = ?"
-				+ ", DWZ = ?, ZPS = ?, MGL = ?, Age = ? where idSpieler=" + spieler.getSpielerId() + ";";
+				+ ", DWZ = ?, ZPS = ?, MGL = ?, DWZIndex = ?, Age = ? where idSpieler=" + spieler.getSpielerId() + ";";
 		if (this.dbConnect != null) {
 			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
 			preStm.setString(1, spieler.getName());
@@ -223,7 +228,8 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 			preStm.setString(5, spieler.getDwz());
 			preStm.setString(6, spieler.getDsbZPSNumber());
 			preStm.setString(7, spieler.getDsbMGLNumber());
-			preStm.setInt(8, spieler.getAge());
+			preStm.setInt(8, spieler.getDwzindex());
+			preStm.setInt(9, spieler.getAge());
 
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
@@ -326,6 +332,22 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 		}
 		if (!isFieldExist("MGL", false)) {
 			String sql1 = "ALTER TABLE spieler ADD MGL VARCHAR DEFAULT ''" + ";";
+			Statement stmt1;
+			if (this.dbConnect != null) {
+				try {
+					// create a database connection
+					stmt1 = this.dbConnect.createStatement();
+					stmt1.setQueryTimeout(30); // set timeout to 30 sec.
+					stmt1.executeUpdate(sql1);
+					stmt1.close();
+
+				} catch (SQLException e1) {
+
+				}
+			}
+		}
+		if (!isFieldExist("DWZIndex", false)) {
+			String sql1 = "ALTER TABLE spieler ADD DWZIndex INTEGER DEFAULT -1" + ";";
 			Statement stmt1;
 			if (this.dbConnect != null) {
 				try {

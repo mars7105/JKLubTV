@@ -75,7 +75,8 @@ public class SQLExportPlayerListControl {
 					oneSpieler = li.next();
 					mySQLSpielerDAO.insertSpieler(oneSpieler.getName(), oneSpieler.getForename(),
 							oneSpieler.getSurname(), oneSpieler.getDwz(), oneSpieler.getKuerzel(),
-							oneSpieler.getDsbZPSNumber(), oneSpieler.getDsbMGLNumber(), oneSpieler.getAge());
+							oneSpieler.getDsbZPSNumber(), oneSpieler.getDsbMGLNumber(), oneSpieler.getDwzindex(),
+							oneSpieler.getAge());
 				}
 				JOptionPane.showMessageDialog(mainControl,
 						Messages.getString("SpielerTableExportController.3") + newFile, //$NON-NLS-1$

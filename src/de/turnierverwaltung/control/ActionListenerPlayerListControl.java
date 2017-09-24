@@ -182,9 +182,9 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 						int tempMGL = Integer.parseInt(temp.getDsbMGLNumber());
 						int playerMGL = Integer.parseInt(player.getDsbMGLNumber());
 						if (tempMGL == playerMGL) {
-							if (player.getDWZ() != temp.getDWZ()) {
+							if (player.getDWZ() != temp.getDWZ() || player.getDwzindex() != temp.getDwzindex()) {
 								player.setDwz(temp.getDWZ());
-
+								player.setDwzindex(temp.getDwzindex());
 								try {
 									spielerTableControl.updateOneSpieler(player);
 									System.out.println(player.getName());

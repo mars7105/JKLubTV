@@ -108,18 +108,20 @@ public class PlayerListView extends JPanel {
 		playerLine.setBackground(Color.WHITE);
 
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		String lineText1 = spieler.getName();
+		String lineText0 = spieler.getName();
+		String lineText1 = "";
 		if (spieler.getDwzindex() >= 0) {
 
-			lineText1 += " Index: " + spieler.getDwzindex();
+			lineText1 += "DWZ: " + spieler.getDwz() + " - Index: " + spieler.getDwzindex();
+		} else if (spieler.getDwz().equals("") == false) {
+			lineText1 += "DWZ: " + spieler.getDwz();
 		}
 		String lineText2 = "";
 		if (spieler.getDsbZPSNumber().length() > 0) {
-			lineText2 += "DWZ:" + spieler.getDwz() + "  ZPS:" + spieler.getDsbZPSNumber() + "-"
-					+ spieler.getDsbMGLNumber();
-		} else {
-			lineText2 += "DWZ:" + spieler.getDwz();
+			lineText2 += "ZPS: " + spieler.getDsbZPSNumber() + " - MGL: " + spieler.getDsbMGLNumber();
 		}
+		JLabel col0 = new JLabel(lineText0);
+		playerLine.add(col0);
 		JLabel col1 = new JLabel(lineText1);
 		playerLine.add(col1);
 		JLabel col2 = new JLabel(lineText2);

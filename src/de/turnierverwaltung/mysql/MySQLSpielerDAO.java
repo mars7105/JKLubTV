@@ -122,7 +122,7 @@ public class MySQLSpielerDAO implements SpielerDAO {
 					String kuerzel = rs.getString("kuerzel");
 					String dwz = rs.getString("dwz");
 
-					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, 0, "", ""));
+					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, 0, "", "", -1));
 				}
 				stmt.close();
 
@@ -137,7 +137,7 @@ public class MySQLSpielerDAO implements SpielerDAO {
 
 	@Override
 	public int insertSpieler(String name, String foreName, String surName, String dwz, String kuerzel, String zps,
-			String mgl, int age) throws SQLException {
+			String mgl, int dwzindex, int age) throws SQLException {
 
 		String sql;
 		int id = -1;
@@ -185,7 +185,7 @@ public class MySQLSpielerDAO implements SpielerDAO {
 					String name = rs.getString("Name");
 					String kuerzel = rs.getString("kuerzel");
 					String dwz = rs.getString("dwz");
-					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, 0, "", ""));
+					spielerListe.add(new Player(idSpieler, name, kuerzel, dwz, 0, "", "", -1));
 				}
 				stmt.close();
 
