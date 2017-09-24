@@ -87,7 +87,7 @@ public class DSBDWZControl {
 						int playerzps = Integer.parseInt(player.getDsbZPSNumber());
 						int playermgl = Integer.parseInt(player.getDsbMGLNumber());
 						if (tmpzps == playerzps && tmpmgl == playermgl) {
-							spielerDewisView.makeSpielerZeile(player, 1);
+							spielerDewisView.makeSpielerZeile(player, 2);
 							foundPlayer = true;
 
 						}

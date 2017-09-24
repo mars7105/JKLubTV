@@ -39,34 +39,47 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting() == false) {
 			int index = dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex();
+
 			if (index == -1) {
 				// No selection, disable fire button.
-				dewisDialogControl.getDialog().getOkButton().setEnabled(false);
+				// dewisDialogControl.getDialog().getOkButton().setEnabled(false);
 
 			} else {
+				ArrayList<Player> spieler = dewisDialogControl.getPlayers();
+				Player neuerSpieler = spieler.get(index);
+				Boolean savedPlayer = playerExist(neuerSpieler);
 				ListIterator<Integer> lit = indices.listIterator();
 				int counter = 0;
 				Boolean notfound = false;
+				int nf = 0;
+				ImageIcon insertIcon1 = new ImageIcon(
+						Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user-offline.png")));
+				ImageIcon insertIcon2 = new ImageIcon(
+						Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-ok-3.png")));
 				while (lit.hasNext()) {
 					int temp = lit.next();
-					if (temp == index) {
-						indices.remove(counter);
-						ImageIcon insertIcon = new ImageIcon(
-								Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user-offline.png")));
-						dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon);
+
+					if (temp == index && savedPlayer == false) {
+
 						notfound = true;
-						break;
+						nf = counter;
+						// break;
+
 					}
 					counter++;
 				}
-				if (notfound == false) {
+				if (notfound == true) {
+					indices.remove(nf);
+
+					dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon1);
+				}
+				if (notfound == false && savedPlayer == false) {
 					indices.add(dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex());
-					ImageIcon insertIcon = new ImageIcon(
-							Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-ok-3.png")));
-					dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon);
+
+					dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon2);
 				}
 				dewisDialogControl.getDialog().getOkButton().setEnabled(true);
-
+				dewisDialogControl.getSpielerDewisView().getList().clearSelection();
 			}
 		}
 	}
@@ -127,12 +140,21 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
 		ArrayList<Player> spieler;
 		try {
-			spieler = spielerTableControl.getAllSpieler();
+			spieler = spielerTableControl.getAllSpielerOrderByZPS();
 
 			for (Player player : spieler) {
-				if (player.getDsbZPSNumber().equals(neuerSpieler.getDsbZPSNumber())
-						&& player.getDsbMGLNumber().equals(neuerSpieler.getDsbMGLNumber())) {
-					return true;
+				try {
+					int tmpzps = Integer.parseInt(player.getDsbZPSNumber());
+					int tmpmgl = Integer.parseInt(player.getDsbMGLNumber());
+					int playerzps = Integer.parseInt(neuerSpieler.getDsbZPSNumber());
+					int playermgl = Integer.parseInt(neuerSpieler.getDsbMGLNumber());
+					if (tmpzps == playerzps && tmpmgl == playermgl) {
+						return true;
+
+					}
+
+				} catch (NumberFormatException e) {
+
 				}
 
 			}

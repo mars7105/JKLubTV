@@ -49,6 +49,9 @@ public class DSBDWZPlayerView extends JPanel {
 	private ImageIcon insertIcon2 = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-ok-3.png")));
 
+	private ImageIcon insertIcon3 = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user.png")));
+
 	public DSBDWZPlayerView() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
 		windowHeight = TournamentConstants.WINDOW_HEIGHT;
@@ -86,12 +89,18 @@ public class DSBDWZPlayerView extends JPanel {
 		if (iconnumber == 0) {
 			playerItem = new ListItem(inserIcon,
 					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
-		} else {
+		}
+		if (iconnumber == 1) {
 			playerItem = new ListItem(insertIcon2,
 					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
 		}
-
-		listModel.addElement(playerItem); // $NON-NLS-1$
+		if (iconnumber == 2) {
+			playerItem = new ListItem(insertIcon3,
+					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
+			
+		}
+		listModel.addElement(playerItem); 
+		
 
 	}
 
@@ -121,5 +130,7 @@ public class DSBDWZPlayerView extends JPanel {
 	public void setList(JList<ListItem> list) {
 		this.list = list;
 	}
-
+public void setIcon1() {
+	
+}
 }
