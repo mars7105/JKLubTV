@@ -46,6 +46,7 @@ public class EditPlayerView extends JDialog {
 	private JComboBox<String> textComboBoxAge;
 	private JTextField textFieldZPS;
 	private JTextField textFieldMGL;
+	private JTextField textFieldDwzIndex;
 
 	public EditPlayerView(Player spieler) {
 		this.setAlwaysOnTop(true);
@@ -58,6 +59,7 @@ public class EditPlayerView extends JDialog {
 		this.textFieldSurname = new JTextField(15);
 		this.textFieldKuerzel = new JTextField(15);
 		this.textFieldDwz = new JTextField(15);
+		this.textFieldDwzIndex = new JTextField(15);
 		this.textFieldZPS = new JTextField(15);
 		this.textFieldMGL = new JTextField(15);
 		setTitle(Messages.getString("SpielerEditierenView.2")); //$NON-NLS-1$
@@ -123,6 +125,17 @@ public class EditPlayerView extends JDialog {
 		// centerPane.setBackground(new Color(249, 222, 112));
 		centerPane.add(label);
 		centerPane.add(textFieldDwz);
+		contentPanel.add(centerPane);
+
+		textFieldDwzIndex.setText(Integer.toString(spieler.getDwzindex()));
+		label = new JLabel();
+		label.setPreferredSize(new Dimension(120, 10));
+		label.setText(Messages.getString("SpielerEditierenView.14")); //$NON-NLS-1$
+		centerPane = new JPanel();
+		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// centerPane.setBackground(new Color(249, 222, 112));
+		centerPane.add(label);
+		centerPane.add(textFieldDwzIndex);
 		contentPanel.add(centerPane);
 
 		String[] ageStrings = { Messages.getString("SpielerEditierenView.6"), //$NON-NLS-1$
@@ -263,6 +276,14 @@ public class EditPlayerView extends JDialog {
 
 	public void setTextFieldMGL(JTextField textFieldMGL) {
 		this.textFieldMGL = textFieldMGL;
+	}
+
+	public JTextField getTextFieldDwzIndex() {
+		return textFieldDwzIndex;
+	}
+
+	public void setTextFieldDwzIndex(JTextField textFieldDwzIndex) {
+		this.textFieldDwzIndex = textFieldDwzIndex;
 	}
 
 }

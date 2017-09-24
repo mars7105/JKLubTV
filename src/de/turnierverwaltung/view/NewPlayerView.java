@@ -1,6 +1,9 @@
 package de.turnierverwaltung.view;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -24,8 +27,12 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+
+import de.turnierverwaltung.model.TournamentConstants;
 
 public class NewPlayerView extends JDialog {
 	/**
@@ -54,12 +61,21 @@ public class NewPlayerView extends JDialog {
 		setTitle(Messages.getString("SpielerHinzufuegenView.2")); //$NON-NLS-1$
 		this.setAlwaysOnTop(true);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-
+		setLayout(new BorderLayout());
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+		setPreferredSize(new Dimension(TournamentConstants.WINDOW_WIDTH, TournamentConstants.WINDOW_HEIGHT));
+
 		// contentPanel.setBackground(new Color(249, 222, 112));
 
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BorderLayout());
+		mainPanel.add(contentPanel, BorderLayout.NORTH);
+		JScrollPane jsP = new JScrollPane(mainPanel);
+		jsP.setViewportView(mainPanel);
 		buttonPane.setLayout(new FlowLayout());
+		add(jsP, BorderLayout.CENTER);
+		add(buttonPane, BorderLayout.SOUTH);
 		spielerPanel();
 
 	}
@@ -125,6 +141,8 @@ public class NewPlayerView extends JDialog {
 	}
 
 	public void spielerPanel() {
+		JPanel all = new JPanel();
+		all.setLayout(new BoxLayout(all, BoxLayout.Y_AXIS));
 		centerPane = new JPanel();
 		this.textFieldForeName = new JTextField(15);
 		this.textFieldSurName = new JTextField(15);
@@ -132,23 +150,46 @@ public class NewPlayerView extends JDialog {
 		this.textFieldDwz = new JTextField(15);
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// centerPane.setBackground(new Color(249, 222, 112));
-		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.12")));
+		Dimension dim = new Dimension(90, 30);
+		JLabel label = new JLabel();
+		label.setPreferredSize(dim);
+		label.setText(Messages.getString("SpielerHinzufuegenView.12"));
+		centerPane.add(label);
 		centerPane.add(textFieldForeName);
-		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.13")));
+		label = new JLabel();
+		label.setPreferredSize(dim);
+		label.setText(Messages.getString("SpielerHinzufuegenView.13"));
+		centerPane.add(label);
 		centerPane.add(textFieldSurName);
-		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.4"))); //$NON-NLS-1$
+		label = new JLabel();
+		label.setPreferredSize(dim);
+		label.setText(Messages.getString("SpielerHinzufuegenView.4"));
+		centerPane.add(label);
 		centerPane.add(textFieldKuerzel);
-
-		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.5"))); //$NON-NLS-1$
+		all.add(centerPane);
+		centerPane = new JPanel();
+		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+		label = new JLabel();
+		label.setPreferredSize(dim);
+		label.setText(Messages.getString("SpielerHinzufuegenView.5"));
+		centerPane.add(label); // $NON-NLS-1$
 		centerPane.add(textFieldDwz);
 		String[] ageStrings = { Messages.getString("SpielerHinzufuegenView.6"), //$NON-NLS-1$
 				Messages.getString("SpielerHinzufuegenView.7"), Messages.getString("SpielerHinzufuegenView.8") }; //$NON-NLS-1$ //$NON-NLS-2$
 		this.textComboBoxAge = new JComboBox<String>(ageStrings);
-		centerPane.add(new JLabel(Messages.getString("SpielerHinzufuegenView.9"))); //$NON-NLS-1$
+		label = new JLabel();
+		label.setPreferredSize(dim);
+		label.setText(Messages.getString("SpielerHinzufuegenView.9"));
+		centerPane.add(label);
 		centerPane.add(textComboBoxAge);
-		contentPanel.add(centerPane);
-		contentPanel.add(buttonPane);
-		add(contentPanel);
+		all.add(centerPane);
+		all.add(new JSeparator());
+		JPanel allall = new JPanel();
+		allall.setLayout(new BorderLayout());
+		allall.add(all, BorderLayout.NORTH);
+		contentPanel.add(allall);
+		// contentPanel.add(buttonPane);
+
 		contentPanel.updateUI();
 		pack();
 		setLocationRelativeTo(null);

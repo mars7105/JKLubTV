@@ -65,6 +65,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 					spielerHinzufuegenView.getTextFieldDwz().setEditable(false);
 					spielerHinzufuegenView.getTextComboBoxAge().setEnabled(false);
 					spielerHinzufuegenView.spielerPanel();
+					spielerHinzufuegenView.getTextFieldKuerzel().addFocusListener(this);
 				} catch (SQLException e) {
 					mainControl.fileSQLError();
 				}
