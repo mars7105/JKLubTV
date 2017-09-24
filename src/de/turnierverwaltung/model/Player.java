@@ -251,7 +251,9 @@ public class Player implements Comparable<Object> {
 	}
 
 	public void setDwz(int intDWZ) {
-		this.dwz = Integer.toString(intDWZ);
+		if (intDWZ > 0) {
+			this.dwz = Integer.toString(intDWZ);
+		}
 	}
 
 	public void setKuerzel(String kuerzel) {

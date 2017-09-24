@@ -204,6 +204,16 @@ public class NaviView extends JToolBar {
 		spielerListePanel.add(titleView);
 		spielerListePanel.add(panel3);
 		spielerListePanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+		// DWZ Abfrage
+		spielerDEWISSearchButton = new JButton(Messages.getString("NaviView.23"), DEWISSearch); //$NON-NLS-1$
+		spielerDEWISSearchButton.setPreferredSize(new Dimension(200, 40));
+		spielerDEWISSearchButton.setHorizontalAlignment(SwingConstants.LEFT);
+
+		panel3 = new NaviPanelElementView();
+
+		panel3.add(spielerDEWISSearchButton);
+
+		spielerListePanel.add(panel3);
 		// update dwz
 		updateButton = new JButton(Messages.getString("DEWISDialogView.5"), updateButtonIcon); //$NON-NLS-1$
 		updateButton.setPreferredSize(new Dimension(200, 40));
@@ -233,17 +243,6 @@ public class NaviView extends JToolBar {
 		panel3 = new NaviPanelElementView();
 
 		panel3.add(spielerExport);
-
-		spielerListePanel.add(panel3);
-
-		// DWZ Abfrage
-		spielerDEWISSearchButton = new JButton(Messages.getString("NaviView.23"), DEWISSearch); //$NON-NLS-1$
-		spielerDEWISSearchButton.setPreferredSize(new Dimension(200, 40));
-		spielerDEWISSearchButton.setHorizontalAlignment(SwingConstants.LEFT);
-
-		panel3 = new NaviPanelElementView();
-
-		panel3.add(spielerDEWISSearchButton);
 
 		spielerListePanel.add(panel3);
 
