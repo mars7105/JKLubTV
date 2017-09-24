@@ -139,29 +139,32 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 								dwz = spielerEingabeView[i].getDwzTextfield()[y].getText();
 								spielerID = spielerEingabeView[i].getSpielerID()[y];
 								age = spielerEingabeView[i].getTextComboBoxAge()[y].getSelectedIndex();
-
 								spieler[counter] = new Player();
-								spieler[counter].setForename(foreName);
-								spieler[counter].setSurname(surName);
-								spieler[counter].setKuerzel(kuerzel);
-								spieler[counter].setDwz(dwz);
-								spieler[counter].setAge(age);
-								spieler[counter].setShowPlayer(false);
 								if (spielerID >= 0) {
 									spieler[counter].setSpielerId(spielerID);
 
-									stc.updateOneSpieler(spieler[counter]);
-									// Player temp = null;
-									//
-									// ListIterator<Player> li = alleSpieler.listIterator();
-									// while (li.hasNext()) {
-									// temp = li.next();
-									// if (spielerID == temp.getSpielerId()) {
-									// li.remove();
-									// }
-									//
-									// }
+									Player temp = null;
+
+									ListIterator<Player> li = alleSpieler.listIterator();
+									while (li.hasNext()) {
+										temp = li.next();
+										if (spielerID == temp.getSpielerId()) {
+											spieler[counter] = temp;
+											spieler[counter].setShowPlayer(false);
+											stc.updateOneSpieler(spieler[counter]);
+										}
+
+									}
 								} else {
+									
+									spieler[counter].setForename(foreName);
+									spieler[counter].setSurname(surName);
+									spieler[counter].setKuerzel(kuerzel);
+									spieler[counter].setDwz(dwz);
+									spieler[counter].setAge(age);
+									spieler[counter].setDwzindex(-1);
+
+									spieler[counter].setShowPlayer(false);
 									spieler[counter].setSpielerId(stc.insertOneSpieler(spieler[counter]));
 								}
 							}

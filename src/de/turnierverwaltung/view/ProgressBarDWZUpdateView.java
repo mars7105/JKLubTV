@@ -93,7 +93,7 @@ public class ProgressBarDWZUpdateView extends JDialog {
 		progressBar.setValue(value);
 		progressBar.paint(progressBar.getGraphics());
 		textLabel.paint(textLabel.getGraphics());
-		if (num >= 100) {
+		if (value >= 100) {
 			try {
 				Thread.sleep(250);
 			} catch (InterruptedException ex) {
@@ -110,7 +110,7 @@ public class ProgressBarDWZUpdateView extends JDialog {
 		progressBar.setValue(value);
 		progressBar.paint(progressBar.getGraphics());
 		textLabel.paint(textLabel.getGraphics());
-		if (num >= 100) {
+		if (value >= 100) {
 			try {
 				Thread.sleep(250);
 			} catch (InterruptedException ex) {
