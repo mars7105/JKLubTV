@@ -97,7 +97,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 
 		}
 		if (arg0.getSource() == dewisDialogControl.getDialog().getVereinsSucheButton()) {
-			if (dewisDialogControl.getDialog().getVereinsName().getText().length() > 0) {
+			if (dewisDialogControl.getDialog().getVereinsName().isEnabled()) {
 				dewisDialogControl.makeVereinsListe();
 			} else if (dewisDialogControl.getDialog().getVereinsSuche().getText().length() > 0) {
 				String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
@@ -165,4 +165,12 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 		return false;
 	}
 
+	public void makeVereinsListe() {
+		if (dewisDialogControl.getDialog().getVereinsName().isEnabled()) {
+			dewisDialogControl.makeVereinsListe();
+		} else if (dewisDialogControl.getDialog().getVereinsSuche().getText().length() > 0) {
+			String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
+			dewisDialogControl.makeDWZListe(zps);
+		}
+	}
 }

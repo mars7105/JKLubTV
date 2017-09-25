@@ -50,6 +50,7 @@ public class DSBDWZAssociationSearchControl {
 					if (paramLower.contains(searchString.toLowerCase())) {
 						foundStringList.add(row);
 					}
+					
 				}
 
 				// ...

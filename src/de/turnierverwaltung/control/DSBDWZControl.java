@@ -92,7 +92,7 @@ public class DSBDWZControl {
 
 						}
 					} catch (NumberFormatException e) {
-						
+
 					}
 				}
 				if (foundPlayer == false) {
@@ -160,6 +160,7 @@ public class DSBDWZControl {
 			dialog.getVereinsName().setBackground(Color.LIGHT_GRAY);
 		}
 
+		makeVereinsListe();
 	}
 
 	/**
