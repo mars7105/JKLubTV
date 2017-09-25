@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 public class CSVPlayerList {
 	private HashMap<Integer, CSVPlayer> csvPlayer;
-	// private ArrayList<CSVPlayer> csvPlayer;
 
 	public CSVPlayerList() {
 
@@ -27,9 +26,24 @@ public class CSVPlayerList {
 		}
 	}
 
-	public ArrayList<CSVPlayer> getPlayerOfVerein(String zps) {
+	public ArrayList<Player> getPlayerOfVerein(String zps) {
+		ArrayList<Player> temp = new ArrayList<Player>();
+		int zpsi = 0;
+		int key = 0;
+		try {
+			zpsi = Integer.parseInt(zps);
+			key = zpsi * 10000;
+			for (int i = 0; i < 9999; i++) {
 
-		return null;
+				if (csvPlayer.containsKey(key + i)) {
+					temp.add(csvPlayer.get(key + i).getPlayer());
+				}
+			}
+		} catch (NumberFormatException e) {
+			temp = null;
+		}
+
+		return temp;
 
 	}
 
@@ -46,7 +60,7 @@ public class CSVPlayerList {
 		try {
 			int zpsi = Integer.parseInt(zps);
 			int mgli = Integer.parseInt(mgl);
-			int key = zpsi * 10000 + mgli;
+			int key = (zpsi * 10000) + mgli;
 			return key;
 		} catch (NumberFormatException e) {
 			return -1;

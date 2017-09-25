@@ -26,6 +26,7 @@ import java.util.ListIterator;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import de.turnierverwaltung.model.CSVPlayerList;
 import de.turnierverwaltung.model.DSBDWZClub;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.SortName;
@@ -59,9 +60,17 @@ public class DSBDWZControl {
 	 *            = ZPS number of the association
 	 */
 	public void makeDWZListe(String zps) {
-		DSBDWZClub verein = new DSBDWZClub(zps);
+		CSVPlayerList csvplayerlist = null;
+		DSBDWZClub verein = null;
 		players = new ArrayList<Player>();
-		players = verein.getSpieler();
+		if (vereinsSuche.checkifSpielerFileExist()) {
+			csvplayerlist = vereinsSuche.loadPlayerCSVList();
+			players = csvplayerlist.getPlayerOfVerein(zps);
+		} else {
+			verein = new DSBDWZClub(zps);
+			players = verein.getSpieler();
+		}
+
 		SQLPlayerControl sqlpc = new SQLPlayerControl(mainControl);
 		try {
 			spielerListe = sqlpc.getAllSpielerOrderByZPS();
@@ -147,11 +156,7 @@ public class DSBDWZControl {
 		dialog.getCancelButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getOkButton().setEnabled(false);
 		String zps = mainControl.getPropertiesControl().getZPS();
-		if (zps.length() > 0) {
-			dialog.getVereinsSuche().setText(zps);
-
-			makeDWZListe(zps);
-		}
+		
 		vereinsSuche = new DSBDWZAssociationSearchControl(mainControl);
 		if (vereinsSuche.checkifFileExist() == false) {
 			dialog.getVereinsAuswahl().setEnabled(false);
@@ -159,7 +164,11 @@ public class DSBDWZControl {
 			dialog.getVereinsName().setEnabled(false);
 			dialog.getVereinsName().setBackground(Color.LIGHT_GRAY);
 		}
+		if (zps.length() > 0) {
+			dialog.getVereinsSuche().setText(zps);
 
+			makeDWZListe(zps);
+		}
 		makeVereinsListe();
 	}
 

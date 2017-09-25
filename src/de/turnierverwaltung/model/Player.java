@@ -220,7 +220,7 @@ public class Player implements Comparable<Object> {
 		}
 	}
 
-	private void extractNameToKuerzel() {
+	public void extractNameToKuerzel() {
 		if (forename.length() > 0 && surname.length() > 0 && kuerzel.length() == 0) {
 			kuerzel = forename.substring(0, 1) + surname.substring(0, 1);
 		}
