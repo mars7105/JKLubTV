@@ -26,7 +26,7 @@ public class DSBDWZAssociationSearchControl {
 		super();
 		this.mainControl = mainControl;
 
-		csvFilename = this.mainControl.getPropertiesControl().getPathToCVS();
+		csvFilename = this.mainControl.getPropertiesControl().getPathToVereineCVS();
 
 	}
 
@@ -36,6 +36,34 @@ public class DSBDWZAssociationSearchControl {
 	 * @return
 	 */
 	public ArrayList<String[]> searchForVerein(String searchString) {
+		ArrayList<String[]> foundStringList = new ArrayList<String[]>();
+
+		if (checkifFileExist() == true) {
+
+			String[] row = null;
+
+			try {
+				csvReader = new CSVReader(new FileReader(csvFilename));
+
+				while ((row = csvReader.readNext()) != null) {
+					String paramLower = row[3].toLowerCase();
+					if (paramLower.contains(searchString.toLowerCase())) {
+						foundStringList.add(row);
+					}
+					
+				}
+
+				// ...
+				csvReader.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+		}
+		return foundStringList;
+	}
+	public ArrayList<String[]> searchForPlayer(String searchString) {
 		ArrayList<String[]> foundStringList = new ArrayList<String[]>();
 
 		if (checkifFileExist() == true) {

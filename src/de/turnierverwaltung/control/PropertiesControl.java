@@ -35,7 +35,8 @@ public class PropertiesControl {
 	public static final String TRUE = "true";
 	public static final String FALSE = "false";
 	public static final String LANGUAGE = "language";
-	public static final String PATHTOVEREINECSV = "PathToCSV";
+	public static final String PATHTOVEREINECSV = "PathToVereineCSV";
+	public static final String PATHTOPLAYERSCSV = "PathToPlayersCSV";
 	public static final String DEFAULTPATH = "defaultPath";
 	public static final String TURNIEREPROTAB = "TurniereproTab";
 	public static final String SPIELERPROTAB = "SpielerproTab";
@@ -73,6 +74,7 @@ public class PropertiesControl {
 		prop.setProperty(ZPS, "");
 		prop.setProperty(LANGUAGE, "");
 		prop.setProperty(PATHTOVEREINECSV, "");
+		prop.setProperty(PATHTOPLAYERSCSV, "");
 		prop.setProperty(DEFAULTPATH, "");
 		prop.setProperty(TURNIEREPROTAB, "1");
 		prop.setProperty(SPIELERPROTAB, "1");
@@ -121,7 +123,10 @@ public class PropertiesControl {
 			prop.setProperty(PATHTOVEREINECSV, "");
 			saveChanges = true;
 		}
-
+		if (!prop.getProperty(PATHTOPLAYERSCSV).equals("") && checkPathToPlayersCSV() == false) {
+			prop.setProperty(PATHTOPLAYERSCSV, "");
+			saveChanges = true;
+		}
 		if (!prop.getProperty(DEFAULTPATH).equals("") && checkDefaultPath() == false) {
 			prop.setProperty(DEFAULTPATH, "");
 			saveChanges = true;
@@ -216,6 +221,12 @@ public class PropertiesControl {
 		}
 	}
 
+	private boolean checkPathToPlayersCSV() {
+		String path = prop.getProperty(PATHTOPLAYERSCSV);
+		return checkPath(path);
+
+	}
+
 	public Boolean getDatabaseUpdated() {
 		if (prop.getProperty(DATABASE_UPDATED).equals(TRUE)) {
 			return true;
@@ -304,7 +315,6 @@ public class PropertiesControl {
 			ok = true;
 			NoWritableProperties = false;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			ok = false;
 			NoWritableProperties = true;
@@ -369,7 +379,6 @@ public class PropertiesControl {
 	}
 
 	public String getPathToDatabase() {
-		// TODO Auto-generated method stub
 		return prop.getProperty(PATHTODATABASE);
 	}
 
@@ -378,12 +387,19 @@ public class PropertiesControl {
 	}
 
 	public String getPathToVereineCSV() {
-		// TODO Auto-generated method stub
 		return prop.getProperty(PATHTOVEREINECSV);
 	}
 
 	public void setPathToVereineCSV(String vereinecsv_PATH) {
 		prop.setProperty(PATHTOVEREINECSV, vereinecsv_PATH);
+	}
+
+	public String getPathToPlayersCSV() {
+		return prop.getProperty(PATHTOPLAYERSCSV);
+	}
+
+	public void setPathToPlayersCSV(String csv_PATH) {
+		prop.setProperty(PATHTOPLAYERSCSV, csv_PATH);
 	}
 
 	public Properties getProp() {
@@ -551,15 +567,14 @@ public class PropertiesControl {
 	}
 
 	public String getLanguage() {
-		// TODO Auto-generated method stub
 		return prop.getProperty(LANGUAGE);
 	}
 
-	public void setPathToCVS(String absolutePath) {
+	public void setPathToVereineCVS(String absolutePath) {
 		prop.setProperty(PATHTOVEREINECSV, absolutePath);
 	}
 
-	public String getPathToCVS() {
+	public String getPathToVereineCVS() {
 		return prop.getProperty(PATHTOVEREINECSV);
 	}
 

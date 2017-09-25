@@ -123,7 +123,7 @@ public class ActionListenerSettingsControl {
 		});
 		esControl.getEigenschaftenView().getOpenVereineCSVButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				// vereine.csv
 				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 				final JFileChooser fc = new JFileChooser(path);
@@ -136,10 +136,33 @@ public class ActionListenerSettingsControl {
 					File file = fc.getSelectedFile();
 					// This is where a real application would open the
 					// file.
-					mainControl.getPropertiesControl().setPathToCVS(file.getAbsolutePath());
+					mainControl.getPropertiesControl().setPathToVereineCVS(file.getAbsolutePath());
 					mainControl.getPropertiesControl().writeProperties();
 					esControl.getEigenschaftenView()
-							.setOpenVereineCSVLabel(mainControl.getPropertiesControl().getPathToCVS());
+							.setOpenVereineCSVLabel(mainControl.getPropertiesControl().getPathToVereineCVS());
+				}
+
+			}
+		});
+		esControl.getEigenschaftenView().getOpenPlayersCSVButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// spieler.csv
+				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
+
+				final JFileChooser fc = new JFileChooser(path);
+				FileFilter filter = new FileNameExtensionFilter("CSV file", "csv", "CSV");
+
+				fc.setFileFilter(filter);
+				int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					// This is where a real application would open the
+					// file.
+					mainControl.getPropertiesControl().setPathToPlayersCSV(file.getAbsolutePath());
+					mainControl.getPropertiesControl().writeProperties();
+					esControl.getEigenschaftenView()
+							.setOpenPlayersCSVLabel(mainControl.getPropertiesControl().getPathToPlayersCSV());
 				}
 
 			}
@@ -165,7 +188,9 @@ public class ActionListenerSettingsControl {
 
 			}
 		});
-		esControl.getEigenschaftenView().setOpenVereineCSVLabel(mainControl.getPropertiesControl().getPathToCVS());
+		esControl.getEigenschaftenView().setOpenVereineCSVLabel(mainControl.getPropertiesControl().getPathToVereineCVS());
+		esControl.getEigenschaftenView().setOpenPlayersCSVLabel(mainControl.getPropertiesControl().getPathToPlayersCSV());
+
 		esControl.getEigenschaftenView().getGermanLanguageCheckBox().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainControl.getLanguagePropertiesControl().setLanguageToGerman();

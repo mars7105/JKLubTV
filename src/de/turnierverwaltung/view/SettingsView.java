@@ -89,6 +89,8 @@ public class SettingsView extends JPanel {
 	private SpinnerView surnameLengthBox;
 	private JTextField webserverPathTextField;
 	private JCheckBox checkBoxPDFLinks;
+	private JButton openPlayersCSVButton;
+	private JLabel openPlayersCSVLabel;
 
 	/**
 	 * Create the panel.
@@ -522,6 +524,12 @@ public class SettingsView extends JPanel {
 		htmlPanel.add(openVereineCSVLabel);
 		htmlAll.add(htmlPanel);
 
+		openPlayersCSVButton = new JButton(Messages.getString("EigenschaftenView.43")); //$NON-NLS-1$
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(openPlayersCSVButton);
+		openPlayersCSVLabel = new JLabel();
+		htmlPanel.add(openPlayersCSVLabel);
 		htmlAll.add(htmlPanel);
 		htmlAll.add(new JSeparator());
 
@@ -849,6 +857,23 @@ public class SettingsView extends JPanel {
 
 		}
 
+	}
+
+	public JButton getOpenPlayersCSVButton() {
+		return openPlayersCSVButton;
+	}
+
+	public void setOpenPlayersCSVButton(JButton openPlayersCSVButton) {
+		this.openPlayersCSVButton = openPlayersCSVButton;
+	}
+
+	public JLabel getOpenPlayersCSVLabel() {
+		return openPlayersCSVLabel;
+	}
+
+	public void setOpenPlayersCSVLabel(String openVereineCSV) {
+		this.openPlayersCSVLabel.setText(openVereineCSV);
+		this.openPlayersCSVLabel.updateUI();
 	}
 
 }
