@@ -95,47 +95,33 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	}
 
 	@Override
-	public boolean playerExist(Player neuerSpieler) throws SQLException {
-		String sql = "";
-		ArrayList<Player> spielerListe = new ArrayList<Player>();
-		sql = "Select * from spieler where idSpieler =" + neuerSpieler.getSpielerId() + ";";
-
+	public boolean playerExist(Player neuerSpieler) {
+		String sql = "Select * from spieler where ZPS LIKE '" + neuerSpieler.getDsbZPSNumber() + "' AND MGL LIKE '%"
+				+ neuerSpieler.getDsbMGLNumber() + "';";
+		System.out.println(neuerSpieler.getDsbZPSNumber() + " " + neuerSpieler.getDsbMGLNumber());
+		System.out.println(sql);
+		int id = -1;
 		Statement stmt;
 		if (this.dbConnect != null) {
 
-			stmt = this.dbConnect.createStatement();
+			try {
+				stmt = this.dbConnect.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					id = rs.getInt("idSpieler");
 
-			ResultSet rs = stmt.executeQuery(sql);
-
-			while (rs.next()) {
-				int idSpieler = rs.getInt("idSpieler");
-				String name = rs.getString("Name");
-				String foreName = rs.getString("ForeName");
-				String surName = rs.getString("SurName");
-				String kuerzel = rs.getString("kuerzel");
-				String dwz = rs.getString("dwz");
-				String zps = rs.getString("ZPS");
-				String mgl = rs.getString("MGL");
-				int dwzindex = rs.getInt("DWZIndex");
-				int age = rs.getInt("Age");
-				Player player = null;
-
-				if (foreName.length() == 0 && surName.length() == 0) {
-					player = new Player(idSpieler, name, kuerzel, dwz, age, zps, mgl, dwzindex);
-
-				} else {
-
-					player = new Player(idSpieler, foreName, surName, kuerzel, dwz, dwzindex, age, zps, mgl);
 				}
-				spielerListe.add(player);
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			stmt.close();
-
 		}
 		Boolean returnStatement = false;
-		if (spielerListe.size() == 1) {
+		if (id >= 0) {
 			returnStatement = true;
 		}
+		System.out.println(id);
 		return returnStatement;
 	}
 

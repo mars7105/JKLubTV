@@ -52,9 +52,10 @@ public class DSBDWZControl {
 	public DSBDWZControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
-		dewisDialogActionListenerControl = new DSBDWZActionListenerControl(this.mainControl, this);
 		csvFiles = mainControl.getPropertiesControl().checkPathToVereineCSV()
 				&& mainControl.getPropertiesControl().checkPathToSpielerCSV();
+		dewisDialogActionListenerControl = new DSBDWZActionListenerControl(this.mainControl, this);
+
 	}
 
 	/**
@@ -76,6 +77,7 @@ public class DSBDWZControl {
 		}
 
 		SQLPlayerControl sqlpc = new SQLPlayerControl(mainControl);
+
 		try {
 			spielerListe = sqlpc.getAllSpielerOrderByZPS();
 		} catch (SQLException e) {

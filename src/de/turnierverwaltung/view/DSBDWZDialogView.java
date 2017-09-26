@@ -62,10 +62,12 @@ public class DSBDWZDialogView extends JDialog {
 	private JButton vereinsAuswahlOkButton;
 
 	// private JButton infoButton;
-	// private ImageIcon infoIcon = new ImageIcon(
-	// Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png")));
+	private ImageIcon infoIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png")));
 	private ImageIcon searchIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-find.png")));
+	private ImageIcon tabIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-new-2.png")));
 
 	/**
 	 * Create the dialog.
@@ -159,8 +161,8 @@ public class DSBDWZDialogView extends JDialog {
 		if (cvsFiles == false) {
 			DSBDWZInfoView sv = new DSBDWZInfoView();
 			JTabbedPane tp = new JTabbedPane();
-			tp.addTab(Messages.getString("DEWISDialogView.0"), contentPanel);
-			tp.addTab("Info", sv);
+			tp.addTab(Messages.getString("DEWISDialogView.0"), tabIcon, contentPanel);
+			tp.addTab("Info", infoIcon, sv);
 			getContentPane().add(tp, BorderLayout.CENTER);
 		} else {
 			getContentPane().add(contentPanel, BorderLayout.CENTER);

@@ -92,7 +92,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 			}
 
 		}
-		
+
 		if (arg0.getSource() == dewisDialogControl.getDialog().getVereinsSucheButton()) {
 			String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
 			dewisDialogControl.makeDWZListe(zps);
@@ -101,6 +101,8 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 			dewisDialogControl.getDialog().closeWindow();
 		}
 		if (arg0.getSource() == dewisDialogControl.getDialog().getOkButton()) {
+			ImageIcon insertIcon = new ImageIcon(
+					Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user.png")));
 			try {
 				ArrayList<Player> spieler = dewisDialogControl.getPlayers();
 				if (spieler != null) {
@@ -116,6 +118,9 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 							mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
 
 						}
+						dewisDialogControl.getSpielerDewisView().getList().setSelectedIndex(temp);
+
+
 					}
 
 				}
