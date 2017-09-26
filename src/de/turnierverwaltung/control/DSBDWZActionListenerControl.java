@@ -101,8 +101,6 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 			dewisDialogControl.getDialog().closeWindow();
 		}
 		if (arg0.getSource() == dewisDialogControl.getDialog().getOkButton()) {
-			ImageIcon insertIcon = new ImageIcon(
-					Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user.png")));
 			try {
 				ArrayList<Player> spieler = dewisDialogControl.getPlayers();
 				if (spieler != null) {
