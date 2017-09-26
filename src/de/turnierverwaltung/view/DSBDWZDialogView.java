@@ -47,7 +47,7 @@ public class DSBDWZDialogView extends JDialog {
 	private JButton vereinsSucheButton;
 	private JButton okButton;
 	private JButton cancelButton;
-	
+
 	private ButtonPanelView buttonPane;
 	private URI dwzdbURI;
 	private JButton dwzdbButton;
@@ -63,67 +63,73 @@ public class DSBDWZDialogView extends JDialog {
 	 * 
 	 * @throws URISyntaxException
 	 */
-	public DSBDWZDialogView() throws URISyntaxException {
+	public DSBDWZDialogView(Boolean cvsFiles) throws URISyntaxException {
 
 		this.setAlwaysOnTop(true);
 		setTitle(Messages.getString("DEWISDialogView.0")); //$NON-NLS-1$
 		// setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		// setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
-		dwzdbURI = new URI("http://www.schachbund.de/verein.html"); //$NON-NLS-1$
 
-		dwzdbButton = new JButton();
-		dwzdbButton.setText("<HTML><FONT color=\"#000099\"><U>Vereinssuche (ZPS Nummer)</U></FONT></HTML>"); //$NON-NLS-1$
-		// buttonDatePicker.setHorizontalAlignment(SwingConstants.LEFT);
-		// buttonDatePicker.setBorderPainted(false);
-		dwzdbButton.setOpaque(false);
-		// buttonDatePicker.setBackground(Color.WHITE);
-		dwzdbButton.setToolTipText(dwzdbURI.toString());
-		dwzdbButton.addActionListener(new OpenUrlAction());
 		contentPanel.setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		vereinsSuche = new JTextField(25);
 		JPanel suchePanel = new JPanel();
-		suchePanel.setLayout(new BoxLayout(suchePanel, BoxLayout.PAGE_AXIS));
-		JPanel zeilenPanel = new JPanel();
-		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		zeilenPanel.add(dwzdbButton);
-		suchePanel.add(zeilenPanel);
-		zeilenPanel = new JPanel();
-		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel vereinsSucheLabel = new JLabel(Messages.getString("DEWISDialogView.3")); //$NON-NLS-1$
-		vereinsSucheButton = new JButton(Messages.getString("DEWISDialogView.4")); //$NON-NLS-1$
-		zeilenPanel.add(vereinsSucheLabel);
-		suchePanel.add(zeilenPanel);
-		zeilenPanel = new JPanel();
-		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		zeilenPanel.add(vereinsSuche);
-		suchePanel.add(zeilenPanel);
-		zeilenPanel = new JPanel();
-		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		zeilenPanel.add(new JLabel(Messages.getString("DEWISDialogView.1"))); //$NON-NLS-1$
-		suchePanel.add(zeilenPanel);
+		if (cvsFiles == false) {
+			dwzdbURI = new URI("http://www.schachbund.de/verein.html"); //$NON-NLS-1$
 
-		vereinsName = new JTextField(25);
-		zeilenPanel = new JPanel();
-		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		zeilenPanel.add(vereinsName);
-		suchePanel.add(zeilenPanel);
-		zeilenPanel = new JPanel();
-		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		zeilenPanel.add(vereinsSucheButton);
-		suchePanel.add(zeilenPanel);
+			dwzdbButton = new JButton();
+			dwzdbButton.setText("<HTML><FONT color=\"#000099\"><U>Vereinssuche (ZPS Nummer)</U></FONT></HTML>"); //$NON-NLS-1$
+			// buttonDatePicker.setHorizontalAlignment(SwingConstants.LEFT);
+			// buttonDatePicker.setBorderPainted(false);
+			dwzdbButton.setOpaque(false);
+			// buttonDatePicker.setBackground(Color.WHITE);
+			dwzdbButton.setToolTipText(dwzdbURI.toString());
+			dwzdbButton.addActionListener(new OpenUrlAction());
 
-		vereinsAuswahl = new JComboBox<String>();
-		vereinsAuswahlOkButton = new JButton("Ok"); //$NON-NLS-1$
+			suchePanel.setLayout(new BoxLayout(suchePanel, BoxLayout.PAGE_AXIS));
+			JPanel zeilenPanel = new JPanel();
+			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+			zeilenPanel.add(dwzdbButton);
+			suchePanel.add(zeilenPanel);
+			zeilenPanel = new JPanel();
+			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+			JLabel vereinsSucheLabel = new JLabel(Messages.getString("DEWISDialogView.3")); //$NON-NLS-1$
+			// vereinsSucheButton = new JButton(Messages.getString("DEWISDialogView.4"));
+			// //$NON-NLS-1$
+			zeilenPanel.add(vereinsSucheLabel);
+			suchePanel.add(zeilenPanel);
+			zeilenPanel = new JPanel();
+			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+			zeilenPanel.add(vereinsSuche);
+			suchePanel.add(zeilenPanel);
+		}
+		if (cvsFiles == true) {
+			JPanel zeilenPanel = new JPanel();
+			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+			zeilenPanel.add(new JLabel(Messages.getString("DEWISDialogView.1"))); //$NON-NLS-1$
+			suchePanel.add(zeilenPanel);
 
-		zeilenPanel = new JPanel();
-		zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		zeilenPanel.add(vereinsAuswahl);
-		zeilenPanel.add(vereinsAuswahlOkButton);
+//			vereinsName = new JTextField(25);
+//			zeilenPanel = new JPanel();
+//			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//			zeilenPanel.add(vereinsName);
+//			suchePanel.add(zeilenPanel);
+			zeilenPanel = new JPanel();
+			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+			// zeilenPanel.add(vereinsSucheButton);
+			suchePanel.add(zeilenPanel);
 
-		suchePanel.add(zeilenPanel);
+			vereinsAuswahl = new JComboBox<String>();
+			vereinsAuswahlOkButton = new JButton("Ok");
 
+			zeilenPanel = new JPanel();
+			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+			zeilenPanel.add(vereinsAuswahl);
+			zeilenPanel.add(vereinsAuswahlOkButton);
+
+			suchePanel.add(zeilenPanel);
+		}
 		contentPanel.add(suchePanel, BorderLayout.NORTH);
 		dsbPanel = new JPanel();
 
@@ -133,7 +139,7 @@ public class DSBDWZDialogView extends JDialog {
 		cancelButton = buttonPane.getCancelButton();
 		okButton.setText(Messages.getString("DEWISDialogView.6")); //$NON-NLS-1$
 		cancelButton.setText(Messages.getString("DEWISDialogView.7")); //$NON-NLS-1$
-//		buttonPane.add(updateButton);
+		// buttonPane.add(updateButton);
 
 		contentPanel.add(dsbPanel, BorderLayout.CENTER);
 		contentPanel.add(buttonPane, BorderLayout.SOUTH);
@@ -233,13 +239,13 @@ public class DSBDWZDialogView extends JDialog {
 		return contentPanel;
 	}
 
-//	public JButton getUpdateButton() {
-//		return updateButton;
-//	}
-//
-//	public void setUpdateButton(JButton updateButton) {
-//		this.updateButton = updateButton;
-//	}
+	// public JButton getUpdateButton() {
+	// return updateButton;
+	// }
+	//
+	// public void setUpdateButton(JButton updateButton) {
+	// this.updateButton = updateButton;
+	// }
 
 	public JTextField getVereinsName() {
 		return vereinsName;

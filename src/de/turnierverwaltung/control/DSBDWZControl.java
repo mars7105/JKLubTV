@@ -21,12 +21,15 @@ import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.ListIterator;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import de.turnierverwaltung.model.CSVPlayerList;
+import de.turnierverwaltung.model.CSVVereine;
+import de.turnierverwaltung.model.CSVVereineList;
 import de.turnierverwaltung.model.DSBDWZClub;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.SortName;
@@ -38,10 +41,11 @@ public class DSBDWZControl {
 	private DSBDWZDialogView dialog;
 	private DSBDWZPlayerView spielerDewisView;
 	private ArrayList<Player> players;
-	private DSBDWZAssociationSearchControl vereinsSuche;
-	private ArrayList<String[]> zpsItems;
+//	private DSBDWZAssociationSearchControl vereinsSuche;
+	private ArrayList<CSVVereine> zpsItems;
 	private DSBDWZActionListenerControl dewisDialogActionListenerControl;
 	private ArrayList<Player> spielerListe;
+	private Boolean csvFiles;
 
 	/**
 	 * 
@@ -51,7 +55,8 @@ public class DSBDWZControl {
 		super();
 		this.mainControl = mainControl;
 		dewisDialogActionListenerControl = new DSBDWZActionListenerControl(this.mainControl, this);
-
+		csvFiles = mainControl.getPropertiesControl().checkPathToVereineCSV()
+				&& mainControl.getPropertiesControl().checkPathToSpielerCSV();
 	}
 
 	/**
@@ -60,11 +65,14 @@ public class DSBDWZControl {
 	 *            = ZPS number of the association
 	 */
 	public void makeDWZListe(String zps) {
-		CSVPlayerList csvplayerlist = null;
+
+		csvFiles = mainControl.getPropertiesControl().checkPathToVereineCSV()
+				&& mainControl.getPropertiesControl().checkPathToSpielerCSV();
 		DSBDWZClub verein = null;
 		players = new ArrayList<Player>();
-		if (vereinsSuche.checkifSpielerFileExist()) {
-			csvplayerlist = vereinsSuche.loadPlayerCSVList();
+		if (csvFiles == true) {
+			CSVPlayerList csvplayerlist = new CSVPlayerList();
+			csvplayerlist.loadPlayerCSVList(mainControl.getPropertiesControl().getPathToPlayersCSV());
 			players = csvplayerlist.getPlayerOfVerein(zps);
 		} else {
 			verein = new DSBDWZClub(zps);
@@ -131,10 +139,11 @@ public class DSBDWZControl {
 	* 
 	*/
 	public void makeDialog() {
-
+//		vereinsSuche = new DSBDWZAssociationSearchControl(mainControl);
+		// Boolean csvFiles = vereinsSuche.checkifSpielerFileExist();
 		if (dialog == null) {
 			try {
-				dialog = new DSBDWZDialogView();
+				dialog = new DSBDWZDialogView(csvFiles);
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -142,13 +151,13 @@ public class DSBDWZControl {
 		} else {
 			dialog.dispose();
 			try {
-				dialog = new DSBDWZDialogView();
+				dialog = new DSBDWZDialogView(csvFiles);
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-		dialog.getVereinsSucheButton().addActionListener(dewisDialogActionListenerControl);
+		// dialog.getVereinsSucheButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getVereinsAuswahlOkButton().addActionListener(dewisDialogActionListenerControl);
 		// dialog.getUpdateButton().addActionListener(dewisDialogActionListenerControl);
 		// dialog.getUpdateButton().setEnabled(false);
@@ -156,9 +165,8 @@ public class DSBDWZControl {
 		dialog.getCancelButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getOkButton().setEnabled(false);
 		String zps = mainControl.getPropertiesControl().getZPS();
-		
-		vereinsSuche = new DSBDWZAssociationSearchControl(mainControl);
-		if (vereinsSuche.checkifFileExist() == false) {
+
+		if (csvFiles == false) {
 			dialog.getVereinsAuswahl().setEnabled(false);
 			dialog.getVereinsAuswahlOkButton().setEnabled(false);
 			dialog.getVereinsName().setEnabled(false);
@@ -176,15 +184,18 @@ public class DSBDWZControl {
 	 * 
 	 */
 	public void makeVereinsListe() {
-		ArrayList<String[]> vereine = vereinsSuche.searchForVerein(dialog.getVereinsName().getText());
-		zpsItems = new ArrayList<String[]>();
+		CSVVereineList vereine = new CSVVereineList();
+
+		vereine.loadVereine(mainControl.getPropertiesControl().getPathToVereineCSV());
+		// CSVVereineList vereine = vereinsSuche.loadVereine();
+
+		zpsItems = vereine.getCsvvereine();
 		dialog.getVereinsAuswahl().removeAllItems();
+		Iterator<CSVVereine> it = vereine.getCsvvereine().iterator();
+		while (it.hasNext()) {
+			CSVVereine temp = it.next();
 
-		for (String[] iterator : vereine) {
-
-			String[] row = iterator;
-			zpsItems.add(row);
-			dialog.getVereinsAuswahl().addItem(row[3]);
+			dialog.getVereinsAuswahl().addItem(temp.getCsvVereinname());
 
 		}
 
@@ -246,19 +257,19 @@ public class DSBDWZControl {
 		this.players = players;
 	}
 
-	public DSBDWZAssociationSearchControl getVereinsSuche() {
-		return vereinsSuche;
-	}
+//	public DSBDWZAssociationSearchControl getVereinsSuche() {
+//		return vereinsSuche;
+//	}
+//
+//	public void setVereinsSuche(DSBDWZAssociationSearchControl vereinsSuche) {
+//		this.vereinsSuche = vereinsSuche;
+//	}
 
-	public void setVereinsSuche(DSBDWZAssociationSearchControl vereinsSuche) {
-		this.vereinsSuche = vereinsSuche;
-	}
-
-	public ArrayList<String[]> getZpsItems() {
+	public ArrayList<CSVVereine> getZpsItems() {
 		return zpsItems;
 	}
 
-	public void setZpsItems(ArrayList<String[]> zpsItems) {
+	public void setZpsItems(ArrayList<CSVVereine> zpsItems) {
 		this.zpsItems = zpsItems;
 	}
 

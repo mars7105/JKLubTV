@@ -378,6 +378,12 @@ public class PropertiesControl {
 
 	}
 
+	public Boolean checkPathToSpielerCSV() {
+		String path = prop.getProperty(PATHTOPLAYERSCSV);
+		return checkPath(path);
+
+	}
+
 	public String getPathToDatabase() {
 		return prop.getProperty(PATHTODATABASE);
 	}

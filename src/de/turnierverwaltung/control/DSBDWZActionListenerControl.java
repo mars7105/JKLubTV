@@ -11,6 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import de.turnierverwaltung.model.CSVVereine;
 import de.turnierverwaltung.model.Player;
 
 /**
@@ -88,10 +89,10 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() == dewisDialogControl.getDialog().getVereinsAuswahlOkButton()) {
 			if (dewisDialogControl.getDialog().getVereinsAuswahl().getItemCount() > 0) {
-
+				ArrayList<CSVVereine> items = dewisDialogControl.getZpsItems();
 				int index = dewisDialogControl.getDialog().getVereinsAuswahl().getSelectedIndex();
-				String items[] = dewisDialogControl.getZpsItems().get(index);
-				String zps = items[0];
+				// String items = dewisDialogControl.getZpsItems().get(index);
+				String zps = items.get(index).getCsvZPS();
 				dewisDialogControl.makeDWZListe(zps);
 			}
 
