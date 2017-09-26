@@ -69,6 +69,7 @@ public class SQLPlayerControl {
 		return spieler;
 
 	}
+
 	public ArrayList<Player> getAllSpielerOrderByZPS() throws SQLException {
 		ArrayList<Player> spieler;
 
@@ -88,6 +89,7 @@ public class SQLPlayerControl {
 		return spieler;
 
 	}
+
 	public void getSpieler() throws SQLException {
 		this.turnier = this.mainControl.getTurnier();
 
@@ -226,6 +228,15 @@ public class SQLPlayerControl {
 			saved = mySQLSpielerDAO.updateSpieler(turnier.getGruppe()[gruppe].getSpieler()[i]);
 		}
 		return saved;
+	}
+
+	public Boolean playerExist(Player neuerSpieler) throws SQLException {
+		boolean exist = false;
+		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
+
+		exist = mySQLSpielerDAO.playerExist(neuerSpieler);
+
+		return exist;
 	}
 
 }

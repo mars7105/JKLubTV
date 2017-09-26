@@ -41,7 +41,6 @@ public class DSBDWZControl {
 	private DSBDWZDialogView dialog;
 	private DSBDWZPlayerView spielerDewisView;
 	private ArrayList<Player> players;
-//	private DSBDWZAssociationSearchControl vereinsSuche;
 	private ArrayList<CSVVereine> zpsItems;
 	private DSBDWZActionListenerControl dewisDialogActionListenerControl;
 	private ArrayList<Player> spielerListe;
@@ -66,8 +65,6 @@ public class DSBDWZControl {
 	 */
 	public void makeDWZListe(String zps) {
 
-		csvFiles = mainControl.getPropertiesControl().checkPathToVereineCSV()
-				&& mainControl.getPropertiesControl().checkPathToSpielerCSV();
 		DSBDWZClub verein = null;
 		players = new ArrayList<Player>();
 		if (csvFiles == true) {
@@ -139,7 +136,6 @@ public class DSBDWZControl {
 	* 
 	*/
 	public void makeDialog() {
-//		vereinsSuche = new DSBDWZAssociationSearchControl(mainControl);
 		// Boolean csvFiles = vereinsSuche.checkifSpielerFileExist();
 		if (dialog == null) {
 			try {
@@ -157,48 +153,57 @@ public class DSBDWZControl {
 				e.printStackTrace();
 			}
 		}
-		// dialog.getVereinsSucheButton().addActionListener(dewisDialogActionListenerControl);
-		dialog.getVereinsAuswahlOkButton().addActionListener(dewisDialogActionListenerControl);
-		// dialog.getUpdateButton().addActionListener(dewisDialogActionListenerControl);
-		// dialog.getUpdateButton().setEnabled(false);
+		String zps = mainControl.getPropertiesControl().getZPS();
+		if (csvFiles == true) {
+			dialog.getVereinsAuswahlOkButton().addActionListener(dewisDialogActionListenerControl);
+			makeVereinsListe(zps);
+		} else {
+			dialog.getVereinsSucheButton().addActionListener(dewisDialogActionListenerControl);
+		}
+
 		dialog.getOkButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getCancelButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getOkButton().setEnabled(false);
-		String zps = mainControl.getPropertiesControl().getZPS();
+		
 
-		if (csvFiles == false) {
-			dialog.getVereinsAuswahl().setEnabled(false);
-			dialog.getVereinsAuswahlOkButton().setEnabled(false);
-			dialog.getVereinsName().setEnabled(false);
-			dialog.getVereinsName().setBackground(Color.LIGHT_GRAY);
-		}
+
 		if (zps.length() > 0) {
 			dialog.getVereinsSuche().setText(zps);
 
 			makeDWZListe(zps);
 		}
-		makeVereinsListe();
+		
 	}
 
 	/**
 	 * 
 	 */
-	public void makeVereinsListe() {
+	public void makeVereinsListe(String zps) {
 		CSVVereineList vereine = new CSVVereineList();
 
 		vereine.loadVereine(mainControl.getPropertiesControl().getPathToVereineCSV());
-		// CSVVereineList vereine = vereinsSuche.loadVereine();
 
 		zpsItems = vereine.getCsvvereine();
 		dialog.getVereinsAuswahl().removeAllItems();
 		Iterator<CSVVereine> it = vereine.getCsvvereine().iterator();
+		int counter = 0;
+		int selectIndex = 0;
 		while (it.hasNext()) {
 			CSVVereine temp = it.next();
 
+			try {
+				int tmpzps = Integer.parseInt(temp.getCsvZPS());
+				int vzps = Integer.parseInt(zps);
+				if (tmpzps == vzps) {
+					selectIndex = counter;
+				}
+			} catch (NumberFormatException e) {
+
+			}
 			dialog.getVereinsAuswahl().addItem(temp.getCsvVereinname());
-
+			counter++;
 		}
-
+		dialog.getVereinsAuswahl().setSelectedIndex(selectIndex);
 	}
 
 	/**
@@ -256,14 +261,6 @@ public class DSBDWZControl {
 	public void setPlayers(ArrayList<Player> players) {
 		this.players = players;
 	}
-
-//	public DSBDWZAssociationSearchControl getVereinsSuche() {
-//		return vereinsSuche;
-//	}
-//
-//	public void setVereinsSuche(DSBDWZAssociationSearchControl vereinsSuche) {
-//		this.vereinsSuche = vereinsSuche;
-//	}
 
 	public ArrayList<CSVVereine> getZpsItems() {
 		return zpsItems;

@@ -35,11 +35,13 @@ public class CSVVereineList {
 				csvReader = new CSVReader(
 						new BufferedReader(new InputStreamReader(new FileInputStream(csvFilenameVereine), "Cp1252")));
 				while ((row = csvReader.readNext()) != null) {
-					String csvZPS = row[0];
-					String csvLV = row[1];
-					String csvVerband = row[2];
-					String csvVereinname = row[3];
-					addVerein(new CSVVereine(csvZPS, csvLV, csvVerband, csvVereinname));
+					if (row[0].equals("ZPS") == false) {
+						String csvZPS = row[0];
+						String csvLV = row[1];
+						String csvVerband = row[2];
+						String csvVereinname = row[3];
+						addVerein(new CSVVereine(csvZPS, csvLV, csvVerband, csvVereinname));
+					}
 				}
 
 				csvReader.close();

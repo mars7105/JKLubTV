@@ -75,6 +75,7 @@ public class DSBDWZDialogView extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		vereinsSuche = new JTextField(25);
 		JPanel suchePanel = new JPanel();
+		suchePanel.setLayout(new BoxLayout(suchePanel, BoxLayout.PAGE_AXIS));
 		if (cvsFiles == false) {
 			dwzdbURI = new URI("http://www.schachbund.de/verein.html"); //$NON-NLS-1$
 
@@ -87,7 +88,6 @@ public class DSBDWZDialogView extends JDialog {
 			dwzdbButton.setToolTipText(dwzdbURI.toString());
 			dwzdbButton.addActionListener(new OpenUrlAction());
 
-			suchePanel.setLayout(new BoxLayout(suchePanel, BoxLayout.PAGE_AXIS));
 			JPanel zeilenPanel = new JPanel();
 			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			zeilenPanel.add(dwzdbButton);
@@ -95,13 +95,16 @@ public class DSBDWZDialogView extends JDialog {
 			zeilenPanel = new JPanel();
 			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			JLabel vereinsSucheLabel = new JLabel(Messages.getString("DEWISDialogView.3")); //$NON-NLS-1$
-			// vereinsSucheButton = new JButton(Messages.getString("DEWISDialogView.4"));
-			// //$NON-NLS-1$
+
+			vereinsSucheButton = new JButton(Messages.getString("DEWISDialogView.4"));
+
 			zeilenPanel.add(vereinsSucheLabel);
+
 			suchePanel.add(zeilenPanel);
 			zeilenPanel = new JPanel();
 			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			zeilenPanel.add(vereinsSuche);
+			zeilenPanel.add(vereinsSucheButton);
 			suchePanel.add(zeilenPanel);
 		}
 		if (cvsFiles == true) {
@@ -110,11 +113,11 @@ public class DSBDWZDialogView extends JDialog {
 			zeilenPanel.add(new JLabel(Messages.getString("DEWISDialogView.1"))); //$NON-NLS-1$
 			suchePanel.add(zeilenPanel);
 
-//			vereinsName = new JTextField(25);
-//			zeilenPanel = new JPanel();
-//			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-//			zeilenPanel.add(vereinsName);
-//			suchePanel.add(zeilenPanel);
+			// vereinsName = new JTextField(25);
+			// zeilenPanel = new JPanel();
+			// zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+			// zeilenPanel.add(vereinsName);
+			// suchePanel.add(zeilenPanel);
 			zeilenPanel = new JPanel();
 			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			// zeilenPanel.add(vereinsSucheButton);
@@ -238,14 +241,6 @@ public class DSBDWZDialogView extends JDialog {
 	public JPanel getContentPanel() {
 		return contentPanel;
 	}
-
-	// public JButton getUpdateButton() {
-	// return updateButton;
-	// }
-	//
-	// public void setUpdateButton(JButton updateButton) {
-	// this.updateButton = updateButton;
-	// }
 
 	public JTextField getVereinsName() {
 		return vereinsName;

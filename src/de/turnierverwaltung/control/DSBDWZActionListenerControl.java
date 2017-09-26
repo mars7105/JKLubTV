@@ -6,11 +6,9 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ListIterator;
-
 import javax.swing.ImageIcon;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-
 import de.turnierverwaltung.model.CSVVereine;
 import de.turnierverwaltung.model.Player;
 
@@ -42,8 +40,6 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 			int index = dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex();
 
 			if (index == -1) {
-				// No selection, disable fire button.
-				// dewisDialogControl.getDialog().getOkButton().setEnabled(false);
 
 			} else {
 				ArrayList<Player> spieler = dewisDialogControl.getPlayers();
@@ -91,20 +87,14 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 			if (dewisDialogControl.getDialog().getVereinsAuswahl().getItemCount() > 0) {
 				ArrayList<CSVVereine> items = dewisDialogControl.getZpsItems();
 				int index = dewisDialogControl.getDialog().getVereinsAuswahl().getSelectedIndex();
-				// String items = dewisDialogControl.getZpsItems().get(index);
 				String zps = items.get(index).getCsvZPS();
 				dewisDialogControl.makeDWZListe(zps);
 			}
 
 		}
 		if (arg0.getSource() == dewisDialogControl.getDialog().getVereinsSucheButton()) {
-			if (dewisDialogControl.getDialog().getVereinsName().isEnabled()) {
-				dewisDialogControl.makeVereinsListe();
-			} else if (dewisDialogControl.getDialog().getVereinsSuche().getText().length() > 0) {
-				String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
-				dewisDialogControl.makeDWZListe(zps);
-			}
-
+			String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
+			dewisDialogControl.makeDWZListe(zps);
 		}
 		if (arg0.getSource() == dewisDialogControl.getDialog().getCancelButton()) {
 			dewisDialogControl.getDialog().closeWindow();
@@ -139,36 +129,20 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 
 	private boolean playerExist(Player neuerSpieler) {
 		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
-		ArrayList<Player> spieler;
+		Boolean playerExist = false;
 		try {
-			spieler = spielerTableControl.getAllSpielerOrderByZPS();
+			playerExist = spielerTableControl.playerExist(neuerSpieler);
 
-			for (Player player : spieler) {
-				try {
-					int tmpzps = Integer.parseInt(player.getDsbZPSNumber());
-					int tmpmgl = Integer.parseInt(player.getDsbMGLNumber());
-					int playerzps = Integer.parseInt(neuerSpieler.getDsbZPSNumber());
-					int playermgl = Integer.parseInt(neuerSpieler.getDsbMGLNumber());
-					if (tmpzps == playerzps && tmpmgl == playermgl) {
-						return true;
-
-					}
-
-				} catch (NumberFormatException e) {
-
-				}
-
-			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			mainControl.fileSQLError();
 		}
-		return false;
+		return playerExist;
 	}
 
 	public void makeVereinsListe() {
 		if (dewisDialogControl.getDialog().getVereinsName().isEnabled()) {
-			dewisDialogControl.makeVereinsListe();
+			String zps = mainControl.getPropertiesControl().getZPS();
+			dewisDialogControl.makeVereinsListe(zps);
 		} else if (dewisDialogControl.getDialog().getVereinsSuche().getText().length() > 0) {
 			String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
 			dewisDialogControl.makeDWZListe(zps);

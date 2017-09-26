@@ -41,4 +41,6 @@ public interface SpielerDAO {
 
 	public ArrayList<Player> getAllSpielerOrderByZPS() throws SQLException;
 
+	public boolean playerExist(Player neuerSpieler) throws SQLException;
+
 }

@@ -231,4 +231,10 @@ public class MySQLSpielerDAO implements SpielerDAO {
 		return null;
 	}
 
+	@Override
+	public boolean playerExist(Player neuerSpieler) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
