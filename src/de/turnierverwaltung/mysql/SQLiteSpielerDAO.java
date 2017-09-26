@@ -98,8 +98,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	public boolean playerExist(Player neuerSpieler) {
 		String sql = "Select * from spieler where ZPS LIKE '" + neuerSpieler.getDsbZPSNumber() + "' AND MGL LIKE '%"
 				+ neuerSpieler.getDsbMGLNumber() + "';";
-		System.out.println(neuerSpieler.getDsbZPSNumber() + " " + neuerSpieler.getDsbMGLNumber());
-		System.out.println(sql);
+		
 		int id = -1;
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -121,7 +120,6 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 		if (id >= 0) {
 			returnStatement = true;
 		}
-		System.out.println(id);
 		return returnStatement;
 	}
 
