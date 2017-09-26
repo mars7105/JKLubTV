@@ -16,7 +16,6 @@ package de.turnierverwaltung.control;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import java.awt.Color;
 import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
