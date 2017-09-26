@@ -163,15 +163,13 @@ public class DSBDWZControl {
 		dialog.getOkButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getCancelButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getOkButton().setEnabled(false);
-		
-
 
 		if (zps.length() > 0) {
 			dialog.getVereinsSuche().setText(zps);
 
 			makeDWZListe(zps);
 		}
-		
+
 	}
 
 	/**

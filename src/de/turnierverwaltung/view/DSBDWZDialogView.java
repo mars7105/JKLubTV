@@ -19,6 +19,7 @@ package de.turnierverwaltung.view;
 import java.awt.BorderLayout;
 import java.awt.Desktop;
 import java.awt.FlowLayout;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -26,11 +27,13 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -57,6 +60,12 @@ public class DSBDWZDialogView extends JDialog {
 	private JComboBox<String> vereinsAuswahl;
 
 	private JButton vereinsAuswahlOkButton;
+
+	// private JButton infoButton;
+	// private ImageIcon infoIcon = new ImageIcon(
+	// Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png")));
+	private ImageIcon searchIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-find.png")));
 
 	/**
 	 * Create the dialog.
@@ -96,7 +105,7 @@ public class DSBDWZDialogView extends JDialog {
 			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			JLabel vereinsSucheLabel = new JLabel(Messages.getString("DEWISDialogView.3")); //$NON-NLS-1$
 
-			vereinsSucheButton = new JButton(Messages.getString("DEWISDialogView.4"));
+			vereinsSucheButton = new JButton(Messages.getString("DEWISDialogView.4"), searchIcon);
 
 			zeilenPanel.add(vereinsSucheLabel);
 
@@ -132,6 +141,7 @@ public class DSBDWZDialogView extends JDialog {
 			zeilenPanel.add(vereinsAuswahlOkButton);
 
 			suchePanel.add(zeilenPanel);
+
 		}
 		contentPanel.add(suchePanel, BorderLayout.NORTH);
 		dsbPanel = new JPanel();
@@ -146,8 +156,15 @@ public class DSBDWZDialogView extends JDialog {
 
 		contentPanel.add(dsbPanel, BorderLayout.CENTER);
 		contentPanel.add(buttonPane, BorderLayout.SOUTH);
-
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		if (cvsFiles == false) {
+			DSBDWZInfoView sv = new DSBDWZInfoView();
+			JTabbedPane tp = new JTabbedPane();
+			tp.addTab(Messages.getString("DEWISDialogView.0"), contentPanel);
+			tp.addTab("Info", sv);
+			getContentPane().add(tp, BorderLayout.CENTER);
+		} else {
+			getContentPane().add(contentPanel, BorderLayout.CENTER);
+		}
 		pack();
 		setLocationRelativeTo(null);
 		setEnabled(true);

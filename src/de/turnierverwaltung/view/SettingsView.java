@@ -186,6 +186,7 @@ public class SettingsView extends JPanel {
 		add(scrollPane, BorderLayout.CENTER);
 	}
 
+	
 	private void tableLabel() {
 		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.21"));
 		titleView.setFlowLayoutLeft();

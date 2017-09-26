@@ -92,6 +92,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 			}
 
 		}
+		
 		if (arg0.getSource() == dewisDialogControl.getDialog().getVereinsSucheButton()) {
 			String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
 			dewisDialogControl.makeDWZListe(zps);
