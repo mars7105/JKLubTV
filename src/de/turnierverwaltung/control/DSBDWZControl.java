@@ -1,5 +1,7 @@
 package de.turnierverwaltung.control;
 
+import java.io.IOException;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -24,6 +26,7 @@ import java.util.Iterator;
 import java.util.ListIterator;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import de.turnierverwaltung.model.CSVPlayerList;
@@ -68,9 +71,23 @@ public class DSBDWZControl {
 		DSBDWZClub verein = null;
 		players = new ArrayList<Player>();
 		if (csvFiles == true) {
-			CSVPlayerList csvplayerlist = new CSVPlayerList();
-			csvplayerlist.loadPlayerCSVList(mainControl.getPropertiesControl().getPathToPlayersCSV());
-			players = csvplayerlist.getPlayerOfVerein(zps);
+			try {
+				CSVPlayerList csvplayerlist = new CSVPlayerList();
+				csvplayerlist.loadPlayerCSVList(mainControl.getPropertiesControl().getPathToPlayersCSV());
+				players = csvplayerlist.getPlayerOfVerein(zps);
+			} catch (IOException e) {
+				csvFiles = false;
+				mainControl.getPropertiesControl().setPathToPlayersCSV("");
+				mainControl.getPropertiesControl().setPathToVereineCSV("");
+				verein = new DSBDWZClub(zps);
+				players = verein.getSpieler();
+			} catch (ArrayIndexOutOfBoundsException e2) {
+				csvFiles = false;
+				mainControl.getPropertiesControl().setPathToPlayersCSV("");
+				mainControl.getPropertiesControl().setPathToVereineCSV("");
+				verein = new DSBDWZClub(zps);
+				players = verein.getSpieler();
+			}
 		} else {
 			verein = new DSBDWZClub(zps);
 			players = verein.getSpieler();
@@ -178,31 +195,48 @@ public class DSBDWZControl {
 	 * 
 	 */
 	public void makeVereinsListe(String zps) {
-		CSVVereineList vereine = new CSVVereineList();
 
-		vereine.loadVereine(mainControl.getPropertiesControl().getPathToVereineCSV());
+		try {
+			CSVVereineList vereine = new CSVVereineList();
 
-		zpsItems = vereine.getCsvvereine();
-		dialog.getVereinsAuswahl().removeAllItems();
-		Iterator<CSVVereine> it = vereine.getCsvvereine().iterator();
-		int counter = 0;
-		int selectIndex = 0;
-		while (it.hasNext()) {
-			CSVVereine temp = it.next();
+			vereine.loadVereine(mainControl.getPropertiesControl().getPathToVereineCSV());
 
-			try {
-				int tmpzps = Integer.parseInt(temp.getCsvZPS());
-				int vzps = Integer.parseInt(zps);
-				if (tmpzps == vzps) {
-					selectIndex = counter;
+			zpsItems = vereine.getCsvvereine();
+			dialog.getVereinsAuswahl().removeAllItems();
+			Iterator<CSVVereine> it = vereine.getCsvvereine().iterator();
+			int counter = 0;
+			int selectIndex = 0;
+			while (it.hasNext()) {
+				CSVVereine temp = it.next();
+
+				try {
+					int tmpzps = Integer.parseInt(temp.getCsvZPS());
+					int vzps = Integer.parseInt(zps);
+					if (tmpzps == vzps) {
+						selectIndex = counter;
+					}
+				} catch (NumberFormatException e) {
 				}
-			} catch (NumberFormatException e) {
 
+				dialog.getVereinsAuswahl().addItem(temp.getCsvVereinname());
+				counter++;
 			}
-			dialog.getVereinsAuswahl().addItem(temp.getCsvVereinname());
-			counter++;
+			dialog.getVereinsAuswahl().setSelectedIndex(selectIndex);
+		} catch (IOException e) {
+			errorHandler();
+		} catch (ArrayIndexOutOfBoundsException e2) {
+			errorHandler();
 		}
-		dialog.getVereinsAuswahl().setSelectedIndex(selectIndex);
+	}
+
+	private void errorHandler() {
+		csvFiles = false;
+		mainControl.getPropertiesControl().setPathToVereineCSV("");
+		mainControl.getPropertiesControl().setPathToPlayersCSV("");
+		dialog.dispose();
+		JOptionPane.showMessageDialog(null, Messages.getString("DewisDialogControl.7"), 
+				Messages.getString("DewisDialogControl.8"), 
+				JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	/**

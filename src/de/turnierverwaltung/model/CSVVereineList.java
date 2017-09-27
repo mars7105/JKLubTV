@@ -25,29 +25,25 @@ public class CSVVereineList {
 	 * @param searchString
 	 * @return
 	 */
-	public void loadVereine(String csvFilenameVereine) {
+	public void loadVereine(String csvFilenameVereine) throws IOException, ArrayIndexOutOfBoundsException {
 
 		if (checkifFileExist(csvFilenameVereine) == true) {
 
 			String[] row = null;
 
-			try {
-				csvReader = new CSVReader(
-						new BufferedReader(new InputStreamReader(new FileInputStream(csvFilenameVereine), "Cp1252")));
-				while ((row = csvReader.readNext()) != null) {
-					if (row[0].equals("ZPS") == false) {
-						String csvZPS = row[0];
-						String csvLV = row[1];
-						String csvVerband = row[2];
-						String csvVereinname = row[3];
-						addVerein(new CSVVereine(csvZPS, csvLV, csvVerband, csvVereinname));
-					}
+			csvReader = new CSVReader(
+					new BufferedReader(new InputStreamReader(new FileInputStream(csvFilenameVereine), "Cp1252")));
+			while ((row = csvReader.readNext()) != null) {
+				if (row[0].equals("ZPS") == false) {
+					String csvZPS = row[0];
+					String csvLV = row[1];
+					String csvVerband = row[2];
+					String csvVereinname = row[3];
+					addVerein(new CSVVereine(csvZPS, csvLV, csvVerband, csvVereinname));
 				}
-
-				csvReader.close();
-			} catch (IOException e) {
-				e.printStackTrace();
 			}
+
+			csvReader.close();
 
 		}
 
