@@ -124,14 +124,9 @@ public class DSBDWZDialogView extends JDialog {
 			zeilenPanel.add(new JLabel(Messages.getString("DEWISDialogView.1"))); //$NON-NLS-1$
 			suchePanel.add(zeilenPanel);
 
-			// vereinsName = new JTextField(25);
-			// zeilenPanel = new JPanel();
-			// zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-			// zeilenPanel.add(vereinsName);
-			// suchePanel.add(zeilenPanel);
+			
 			zeilenPanel = new JPanel();
 			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-			// zeilenPanel.add(vereinsSucheButton);
 			suchePanel.add(zeilenPanel);
 
 			vereinsAuswahl = new JComboBox<String>();
@@ -154,7 +149,6 @@ public class DSBDWZDialogView extends JDialog {
 		cancelButton = buttonPane.getCancelButton();
 		okButton.setText(Messages.getString("DEWISDialogView.6")); 
 		cancelButton.setText(Messages.getString("DEWISDialogView.7")); 
-		// buttonPane.add(updateButton);
 
 		contentPanel.add(dsbPanel, BorderLayout.CENTER);
 		contentPanel.add(buttonPane, BorderLayout.SOUTH);
@@ -168,10 +162,10 @@ public class DSBDWZDialogView extends JDialog {
 			getContentPane().add(contentPanel, BorderLayout.CENTER);
 		}
 		pack();
-		setLocationRelativeTo(null);
+		
 		setEnabled(true);
 		setVisible(true);
-
+		setLocationRelativeTo(null);
 	}
 
 	class OpenUrlAction implements ActionListener {

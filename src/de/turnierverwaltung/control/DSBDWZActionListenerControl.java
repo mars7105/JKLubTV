@@ -20,7 +20,12 @@ import de.turnierverwaltung.model.Player;
 public class DSBDWZActionListenerControl implements ListSelectionListener, ActionListener {
 	private MainControl mainControl;
 	private DSBDWZControl dewisDialogControl;
-
+	private ImageIcon insertIcon3 = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user.png")));
+	private ImageIcon insertIcon1 = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user-offline.png")));
+	private ImageIcon insertIcon2 = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-ok-3.png")));
 	private ArrayList<Integer> indices;
 
 	/**
@@ -38,21 +43,18 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting() == false) {
 			int index = dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex();
-
+			ArrayList<Player> spieler = dewisDialogControl.getPlayers();
 			if (index == -1) {
 
 			} else {
-				ArrayList<Player> spieler = dewisDialogControl.getPlayers();
+
 				Player neuerSpieler = spieler.get(index);
 				Boolean savedPlayer = playerExist(neuerSpieler);
 				ListIterator<Integer> lit = indices.listIterator();
 				int counter = 0;
 				Boolean notfound = false;
 				int nf = 0;
-				ImageIcon insertIcon1 = new ImageIcon(
-						Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user-offline.png")));
-				ImageIcon insertIcon2 = new ImageIcon(
-						Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-ok-3.png")));
+
 				while (lit.hasNext()) {
 					int temp = lit.next();
 
@@ -77,7 +79,9 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 				}
 				dewisDialogControl.getDialog().getOkButton().setEnabled(true);
 				dewisDialogControl.getSpielerDewisView().getList().clearSelection();
+
 			}
+
 		}
 	}
 
@@ -114,10 +118,11 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 							SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
 							mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+							dewisDialogControl.getSpielerDewisView().getListModel().getElementAt(temp)
+									.setIcon(insertIcon3);
 
 						}
 						dewisDialogControl.getSpielerDewisView().getList().setSelectedIndex(temp);
-
 
 					}
 

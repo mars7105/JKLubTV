@@ -17,7 +17,6 @@ package de.turnierverwaltung.mysql;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 

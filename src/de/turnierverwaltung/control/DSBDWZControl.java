@@ -24,7 +24,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.ListIterator;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -104,8 +103,9 @@ public class DSBDWZControl {
 
 			spielerDewisView = new DSBDWZPlayerView();
 
-			ListIterator<Player> list = players.listIterator();
+			ListIterator<Player> list =  players.listIterator();
 			while (list.hasNext()) {
+				
 				Player player = list.next();
 				ListIterator<Player> li = spielerListe.listIterator();
 				Boolean foundPlayer = false;
@@ -232,9 +232,8 @@ public class DSBDWZControl {
 		mainControl.getPropertiesControl().setPathToVereineCSV("");
 		mainControl.getPropertiesControl().setPathToPlayersCSV("");
 		dialog.dispose();
-		JOptionPane.showMessageDialog(null, Messages.getString("DewisDialogControl.7"), 
-				Messages.getString("DewisDialogControl.8"), 
-				JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(null, Messages.getString("DewisDialogControl.7"),
+				Messages.getString("DewisDialogControl.8"), JOptionPane.INFORMATION_MESSAGE);
 	}
 
 	/**
@@ -246,26 +245,19 @@ public class DSBDWZControl {
 	 * @throws SQLException
 	 */
 	public Boolean searchSpieler(Player neuerSpieler, Boolean updateDWZ) throws SQLException {
+		Player player = players.get(neuerSpieler.getDsbMGLNumberInt());
 
-		for (Player player : players) {
+		if ((player.getDWZ() != neuerSpieler.getDWZ() && updateDWZ == true)) {
 
-			if (player.getDsbZPSNumber().equals(neuerSpieler.getDsbZPSNumber())
-					&& player.getDsbMGLNumber().equals(neuerSpieler.getDsbMGLNumber())) {
-				if (((player.getDWZ() < neuerSpieler.getDWZ() || player.getDWZ() > neuerSpieler.getDWZ())
-						&& updateDWZ == true)) {
+			SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+			neuerSpieler.setDwz(player.getDWZ());
 
-					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-					neuerSpieler.setDwz(player.getDWZ());
-
-					neuerSpieler.setDwzindex(player.getDwzindex());
-					stc.updateOneSpieler(neuerSpieler);
-
-				}
-
-				return true;
-			}
+			neuerSpieler.setDwzindex(player.getDwzindex());
+			stc.updateOneSpieler(neuerSpieler);
+			return true;
+		} else {
+			return false;
 		}
-		return false;
 
 	}
 

@@ -1,6 +1,5 @@
 package de.turnierverwaltung.view;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
 
@@ -46,11 +45,12 @@ public class MyCellRenderer extends JPanel implements ListCellRenderer {
 		label.setText(((ListItem) value).getText());
 
 		// Hintergrundfarbe des JPanels bei Fokuswechseln definieren
-		if (iss)
-			setBackground(Color.lightGray); // Hat den Fokus
-		else
+		if (iss) {
+			setBackground(list.getBackground()); // Hat den Fokus
+		}
+		else {
 			setBackground(list.getBackground()); // Hat den Fokus nicht
-
+		}
 		return this;
 	}
 
