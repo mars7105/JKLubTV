@@ -62,7 +62,7 @@ public class Player implements Comparable<Object> {
 	 * @param kuerzel
 	 * @param dwz
 	 * @param age
-	 * @param dwzindex2 
+	 * @param dwzindex2
 	 */
 	public Player(int id, String name, String kuerzel, String dwz, int age, String zps, String mgl, int dwzindex2) {
 		this.spielerId = id;
@@ -79,6 +79,7 @@ public class Player implements Comparable<Object> {
 		this.dsbMGLNumber = mgl;
 		this.showPlayer = true;
 		this.dwzindex = -1;
+		correctMGLNumber();
 	}
 
 	/**
@@ -109,7 +110,21 @@ public class Player implements Comparable<Object> {
 		this.showPlayer = true;
 		extractForenameAndSurenameToName();
 		extractNameToKuerzel();
+		correctMGLNumber();
 
+	}
+
+	private void correctMGLNumber() {
+		int length = dsbMGLNumber.length();
+		if (length < 4) {
+			StringBuffer sb = new StringBuffer(dsbMGLNumber);
+			for (int i = length; i < 4; i++) {
+				sb.insert(0, "0");
+			}
+			dsbMGLNumber = sb.toString();
+			System.out.println(dsbMGLNumber);
+
+		}
 	}
 
 	@Override
@@ -339,6 +354,14 @@ public class Player implements Comparable<Object> {
 		return dsbZPSNumber;
 	}
 
+	public int getDsbZPSNumberInt() {
+		try {
+			return Integer.parseInt(dsbZPSNumber);
+		} catch (NumberFormatException e) {
+			return -1;
+		}
+	}
+
 	public void setDsbZPSNumber(String dsbZPSNumber) {
 		this.dsbZPSNumber = dsbZPSNumber;
 	}
@@ -347,8 +370,17 @@ public class Player implements Comparable<Object> {
 		return dsbMGLNumber;
 	}
 
+	public int getDsbMGLNumberInt() {
+		try {
+			return Integer.parseInt(dsbMGLNumber);
+		} catch (NumberFormatException e) {
+			return -1;
+		}
+	}
+
 	public void setDsbMGLNumber(String dsbMGLNumber) {
 		this.dsbMGLNumber = dsbMGLNumber;
+		correctMGLNumber();
 	}
 
 	public int getDwzindex() {

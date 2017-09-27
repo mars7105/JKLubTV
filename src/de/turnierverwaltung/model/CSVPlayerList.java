@@ -104,6 +104,7 @@ public class CSVPlayerList {
 						String csvFIDE_Land = new String(row[13]);
 						String[] getrennt = csvSpielername.split("\\,");
 						String name = getrennt[1] + " " + getrennt[0];
+
 						addPlayer(csvZPS, csvMgl_Nr,
 								new CSVPlayer(csvZPS, csvMgl_Nr, csvStatus, name, csvGeschlecht, csvSpielberechtigung,
 										csvGeburtsjahr, csvLetzte_Auswertung, csvDWZ, csvIndex, csvFIDE_Elo,

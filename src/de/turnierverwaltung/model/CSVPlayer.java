@@ -36,10 +36,20 @@ public class CSVPlayer {
 		this.csvFIDE_Titel = csvFIDE_Titel;
 		this.csvFIDE_ID = csvFIDE_ID;
 		this.csvFIDE_Land = csvFIDE_Land;
+		correctMGLNumber();
+
 	}
 
 	public String getCsvZPS() {
 		return csvZPS;
+	}
+
+	public int getCsvZPSInt() {
+		try {
+			return Integer.parseInt(csvZPS);
+		} catch (NumberFormatException e) {
+			return -1;
+		}
 	}
 
 	public void setCsvZPS(String csvZPS) {
@@ -50,8 +60,17 @@ public class CSVPlayer {
 		return csvMgl_Nr;
 	}
 
+	public int getCsvMGLInt() {
+		try {
+			return Integer.parseInt(csvMgl_Nr);
+		} catch (NumberFormatException e) {
+			return -1;
+		}
+	}
+
 	public void setCsvMgl_Nr(String csvMgl_Nr) {
 		this.csvMgl_Nr = csvMgl_Nr;
+		correctMGLNumber();
 	}
 
 	public String getCsvStatus() {
@@ -184,4 +203,16 @@ public class CSVPlayer {
 		return player;
 	}
 
+	private void correctMGLNumber() {
+		int length = csvMgl_Nr.length();
+		if (length < 4) {
+			StringBuffer sb = new StringBuffer(csvMgl_Nr);
+			for (int i = length; i < 4; i++) {
+				sb.insert(0, "0");
+			}
+			csvMgl_Nr = sb.toString();
+			System.out.println(csvMgl_Nr);
+
+		}
+	}
 }
