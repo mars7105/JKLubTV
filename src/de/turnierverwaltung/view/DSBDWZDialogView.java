@@ -152,8 +152,8 @@ public class DSBDWZDialogView extends JDialog {
 		buttonPane.makeAllButtons();
 		okButton = buttonPane.getOkButton();
 		cancelButton = buttonPane.getCancelButton();
-		okButton.setText(Messages.getString("DEWISDialogView.6")); //$NON-NLS-1$
-		cancelButton.setText(Messages.getString("DEWISDialogView.7")); //$NON-NLS-1$
+		okButton.setText(Messages.getString("DEWISDialogView.6")); 
+		cancelButton.setText(Messages.getString("DEWISDialogView.7")); 
 		// buttonPane.add(updateButton);
 
 		contentPanel.add(dsbPanel, BorderLayout.CENTER);
