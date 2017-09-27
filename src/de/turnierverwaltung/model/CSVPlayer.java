@@ -205,12 +205,16 @@ public class CSVPlayer {
 
 	private void correctMGLNumber() {
 		int length = csvMgl_Nr.length();
-		if (length < 4) {
+		if (length > 0 && length < 4) {
 			StringBuffer sb = new StringBuffer(csvMgl_Nr);
 			for (int i = length; i < 4; i++) {
 				sb.insert(0, "0");
 			}
 			csvMgl_Nr = sb.toString();
+
+		}
+		if (csvMgl_Nr.equals("0000")) {
+			csvMgl_Nr = "";
 
 		}
 	}

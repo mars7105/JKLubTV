@@ -78,13 +78,11 @@ public class DSBDWZControl {
 			} catch (IOException e) {
 				csvFiles = false;
 				mainControl.getPropertiesControl().setPathToPlayersCSV("");
-				mainControl.getPropertiesControl().setPathToVereineCSV("");
 				verein = new DSBDWZClub(zps);
 				players = verein.getSpieler();
 			} catch (ArrayIndexOutOfBoundsException e2) {
 				csvFiles = false;
 				mainControl.getPropertiesControl().setPathToPlayersCSV("");
-				mainControl.getPropertiesControl().setPathToVereineCSV("");
 				verein = new DSBDWZClub(zps);
 				players = verein.getSpieler();
 			}

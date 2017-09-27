@@ -116,12 +116,16 @@ public class Player implements Comparable<Object> {
 
 	private void correctMGLNumber() {
 		int length = dsbMGLNumber.length();
-		if (length < 4) {
+		if (length > 0 && length < 4) {
 			StringBuffer sb = new StringBuffer(dsbMGLNumber);
 			for (int i = length; i < 4; i++) {
 				sb.insert(0, "0");
 			}
 			dsbMGLNumber = sb.toString();
+
+		}
+		if (dsbMGLNumber.equals("0000")) {
+			dsbMGLNumber = "";
 
 		}
 	}
