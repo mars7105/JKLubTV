@@ -31,7 +31,7 @@ import de.turnierverwaltung.model.CSVVereine;
 import de.turnierverwaltung.model.CSVVereineList;
 import de.turnierverwaltung.model.DSBDWZClub;
 import de.turnierverwaltung.model.Player;
-import de.turnierverwaltung.model.SortName;
+import de.turnierverwaltung.model.SortSurname;
 import de.turnierverwaltung.view.DSBDWZDialogView;
 import de.turnierverwaltung.view.DSBDWZPlayerView;
 
@@ -85,7 +85,7 @@ public class DSBDWZControl {
 			e.printStackTrace();
 		}
 		if (players != null) {
-			Collections.sort(players, new SortName());
+			Collections.sort(players, new SortSurname());
 
 			spielerDewisView = new DSBDWZPlayerView();
 

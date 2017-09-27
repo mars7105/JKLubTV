@@ -122,7 +122,6 @@ public class Player implements Comparable<Object> {
 				sb.insert(0, "0");
 			}
 			dsbMGLNumber = sb.toString();
-			System.out.println(dsbMGLNumber);
 
 		}
 	}

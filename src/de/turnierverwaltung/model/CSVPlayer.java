@@ -211,7 +211,6 @@ public class CSVPlayer {
 				sb.insert(0, "0");
 			}
 			csvMgl_Nr = sb.toString();
-			System.out.println(csvMgl_Nr);
 
 		}
 	}
