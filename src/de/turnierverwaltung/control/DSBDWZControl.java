@@ -33,6 +33,7 @@ import de.turnierverwaltung.model.CSVVereine;
 import de.turnierverwaltung.model.CSVVereineList;
 import de.turnierverwaltung.model.DSBDWZClub;
 import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.model.SortCSVVereine;
 import de.turnierverwaltung.model.SortSurname;
 import de.turnierverwaltung.view.DSBDWZDialogView;
 import de.turnierverwaltung.view.DSBDWZPlayerView;
@@ -103,9 +104,9 @@ public class DSBDWZControl {
 
 			spielerDewisView = new DSBDWZPlayerView();
 
-			ListIterator<Player> list =  players.listIterator();
+			ListIterator<Player> list = players.listIterator();
 			while (list.hasNext()) {
-				
+
 				Player player = list.next();
 				ListIterator<Player> li = spielerListe.listIterator();
 				Boolean foundPlayer = false;
@@ -128,6 +129,7 @@ public class DSBDWZControl {
 				if (foundPlayer == false) {
 					spielerDewisView.makeSpielerZeile(player, 0);
 				}
+				
 			}
 			spielerDewisView.makeList();
 			spielerDewisView.updateUI();
@@ -200,6 +202,8 @@ public class DSBDWZControl {
 			vereine.loadVereine(mainControl.getPropertiesControl().getPathToVereineCSV());
 
 			zpsItems = vereine.getCsvvereine();
+			Collections.sort(zpsItems, new SortCSVVereine());
+
 			dialog.getVereinsAuswahl().removeAllItems();
 			Iterator<CSVVereine> it = vereine.getCsvvereine().iterator();
 			int counter = 0;
