@@ -54,4 +54,20 @@ public class WebserverFileLink {
 		}
 		return pathToFile;
 	}
+
+	public String getPathToUserImageWhite() {
+		if (showLink) {
+			pathToFile = "<img src='" + this.webserverPath + "im-user-white.png' alt='white' />&nbsp;";
+
+		}
+		return pathToFile;
+	}
+
+	public String getPathToUserImageBlack() {
+		if (showLink) {
+			pathToFile = "<img src='" + this.webserverPath + "im-user-black.png' alt='black' />&nbsp;";
+
+		}
+		return pathToFile;
+	}
 }

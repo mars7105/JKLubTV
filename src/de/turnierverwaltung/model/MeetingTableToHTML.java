@@ -104,6 +104,9 @@ public class MeetingTableToHTML {
 		} else {
 			htmlString = "";
 		}
+		String whiteImage = fileLink.getPathToUserImageWhite();
+		String blackImage = fileLink.getPathToUserImageBlack();
+
 		htmlString += " <table>\n";
 		for (int y = 0; y < row; y++) {
 			if (y == 0) {
@@ -119,12 +122,19 @@ public class MeetingTableToHTML {
 
 				for (int x = 1; x < col; x++) {
 					String ausgabeWert = this.tabellenMatrix[x][y];
+					String playerIcon = "";
 					if (ausgabeWert != null && !ausgabeWert.equals("") && !ausgabeWert.equals(" ")) {
 						if (ausgabeWert.equals(TournamentConstants.PARTIE_REMIS)) {
 							ausgabeWert = "&frac12; - &frac12;";
 						}
+						if (x == 1) {
+							playerIcon = whiteImage;
+						}
+						if (x == 2) {
+							playerIcon = blackImage;
+						}
 
-						htmlString += "        <td>" + ausgabeWert + "</td>\n";
+						htmlString += "        <td>" + playerIcon + ausgabeWert + "</td>\n";
 
 					} else {
 
