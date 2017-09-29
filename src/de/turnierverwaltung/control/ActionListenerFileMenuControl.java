@@ -11,12 +11,8 @@ import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JTabbedPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.NaviView;
 
@@ -26,9 +22,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 	private JButton loaddbButton;
 	private JButton exitButton;
 	private NaviView naviView;
-	private TurnierAnsicht turnierAnsicht;
-	private boolean pairingIsActive;
-
+	private ChangeListenerTabControl turnierAnsicht;
 	public ActionListenerFileMenuControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
@@ -36,14 +30,14 @@ public class ActionListenerFileMenuControl implements ActionListener {
 		this.newdbButton = this.naviView.getNewDatabseButton();
 		this.loaddbButton = this.naviView.getLoadDatabaseButton();
 		this.exitButton = this.naviView.getExitButton();
-		this.pairingIsActive = this.mainControl.getPairingsMenuActionControl().getPairingIsActive();
+		this.mainControl.getPairingsMenuActionControl().getPairingIsActive();
 		newdbButton = naviView.getNewDatabseButton();
 		newdbButton.addActionListener(this);
 		loaddbButton = naviView.getLoadDatabaseButton();
 		loaddbButton.addActionListener(this);
 		exitButton = naviView.getExitButton();
 		exitButton.addActionListener(this);
-		turnierAnsicht = new TurnierAnsicht(mainControl);
+		turnierAnsicht = new ChangeListenerTabControl(mainControl);
 
 		mainControl.getHauptPanel().addChangeListener(turnierAnsicht);
 	}
@@ -103,7 +97,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 							mainControl.getTurnierListeLadenControl().loadTurnierListe();
 
 							prop.setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
-							turnierAnsicht = new TurnierAnsicht(mainControl);
+							turnierAnsicht = new ChangeListenerTabControl(mainControl);
 
 							mainControl.getHauptPanel().addChangeListener(turnierAnsicht);
 
@@ -170,7 +164,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 
 							mainControl.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
 									+ SQLiteDAOFactory.getDB_PATH());
-							turnierAnsicht = new TurnierAnsicht(mainControl);
+							turnierAnsicht = new ChangeListenerTabControl(mainControl);
 							mainControl.getHauptPanel().addChangeListener(turnierAnsicht);
 							for (int i = 0; i < mainControl.getHauptPanel().getTabCount(); i++) {
 								if (mainControl.getHauptPanel().getTitleAt(i)
@@ -239,101 +233,13 @@ public class ActionListenerFileMenuControl implements ActionListener {
 		return abfrage;
 	}
 
-	public TurnierAnsicht getTurnierAnsicht() {
+	public ChangeListenerTabControl getTurnierAnsicht() {
 		return turnierAnsicht;
 	}
 
-	public void setTurnierAnsicht(TurnierAnsicht turnierAnsicht) {
+	public void setTurnierAnsicht(ChangeListenerTabControl turnierAnsicht) {
 		this.turnierAnsicht = turnierAnsicht;
 	}
 
-	/**
-	 * 
-	 * @author mars
-	 *
-	 */
-	class TurnierAnsicht implements ChangeListener {
-
-		private MainControl mainControl;
-
-		/**
-		 * 
-		 * @param mainControl
-		 */
-		public TurnierAnsicht(MainControl mainControl) {
-			super();
-			this.mainControl = mainControl;
-			int selectedTabIndex = this.mainControl.getHauptPanel().getSelectedIndex();
-			if (TournamentConstants.TAB_PLAYER_LIST == selectedTabIndex) {
-				this.mainControl.getNaviView().getSpielerListePanel().setVisible(true);
-				this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
-				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-
-			}
-			if (TournamentConstants.TAB_TOURNAMENTS_LIST == selectedTabIndex) {
-				this.mainControl.getNaviView().getTurnierListePanel().setVisible(true);
-				this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
-				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-
-			}
-			if (TournamentConstants.TAB_ACTIVE_TOURNAMENT == selectedTabIndex) {
-				this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
-				this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
-				this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
-			}
-			if (this.mainControl.getNeuesTurnier() == true) {
-				this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-				this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
-			}
-		}
-
-		@Override
-		public void stateChanged(ChangeEvent e) {
-			pairingIsActive = this.mainControl.getPairingsMenuActionControl().getPairingIsActive();
-			if (e.getSource() instanceof JTabbedPane) {
-				JTabbedPane pane = (JTabbedPane) e.getSource();
-				int selectedIndex = pane.getSelectedIndex();
-				String turnierName = Messages.getString("NaviController.27"); //$NON-NLS-1$
-				if (this.mainControl.getTurnier() != null) {
-					turnierName = this.mainControl.getTurnier().getTurnierName();
-					if (pane.getTitleAt(selectedIndex).equals(turnierName)
-							|| pane.getTitleAt(selectedIndex).equals(Messages.getString("NaviController.28"))) {
-						if (this.mainControl.getNeuesTurnier() == false) {
-							if (pairingIsActive == true) {
-								this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-								this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
-							} else {
-								this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
-								this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
-							}
-
-						} else {
-							this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-							this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
-						}
-
-					} else {
-						this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
-						this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
-					}
-
-				}
-
-				if (pane.getTitleAt(selectedIndex).equals(Messages.getString("NaviController.29"))) { //$NON-NLS-1$
-					this.mainControl.getNaviView().getTurnierListePanel().setVisible(true);
-
-				} else {
-					this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
-				}
-				if (pane.getTitleAt(selectedIndex).equals(Messages.getString("NaviController.30"))) { //$NON-NLS-1$
-					this.mainControl.getNaviView().getSpielerListePanel().setVisible(true);
-
-				} else {
-					this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
-				}
-
-			}
-		}
-
-	}
+	
 }
