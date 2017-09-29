@@ -37,6 +37,7 @@ public class PropertiesControl {
 	public static final String LANGUAGE = "language";
 	public static final String PATHTOVEREINECSV = "PathToVereineCSV";
 	public static final String PATHTOPLAYERSCSV = "PathToPlayersCSV";
+	public static final String PATHTOPLAYERSELO = "PathToPlayersELO";
 	public static final String DEFAULTPATH = "defaultPath";
 	public static final String TURNIEREPROTAB = "TurniereproTab";
 	public static final String SPIELERPROTAB = "SpielerproTab";
@@ -75,6 +76,7 @@ public class PropertiesControl {
 		prop.setProperty(LANGUAGE, "");
 		prop.setProperty(PATHTOVEREINECSV, "");
 		prop.setProperty(PATHTOPLAYERSCSV, "");
+		prop.setProperty(PATHTOPLAYERSELO, "");
 		prop.setProperty(DEFAULTPATH, "");
 		prop.setProperty(TURNIEREPROTAB, "1");
 		prop.setProperty(SPIELERPROTAB, "1");
@@ -125,6 +127,10 @@ public class PropertiesControl {
 		}
 		if (!prop.getProperty(PATHTOPLAYERSCSV).equals("") && checkPathToPlayersCSV() == false) {
 			prop.setProperty(PATHTOPLAYERSCSV, "");
+			saveChanges = true;
+		}
+		if (!prop.getProperty(PATHTOPLAYERSELO).equals("") && checkPathToPlayersELO() == false) {
+			prop.setProperty(PATHTOPLAYERSELO, "");
 			saveChanges = true;
 		}
 		if (!prop.getProperty(DEFAULTPATH).equals("") && checkDefaultPath() == false) {
@@ -219,6 +225,11 @@ public class PropertiesControl {
 		if (saveChanges == true) {
 			writeProperties();
 		}
+	}
+
+	private boolean checkPathToPlayersELO() {
+		String path = prop.getProperty(PATHTOPLAYERSELO);
+		return checkPath(path);
 	}
 
 	private boolean checkPathToPlayersCSV() {
@@ -584,6 +595,15 @@ public class PropertiesControl {
 		return prop.getProperty(PATHTOVEREINECSV);
 	}
 
+	public void setPathToPlayersELO(String absolutePath) {
+		prop.setProperty(PATHTOPLAYERSELO, absolutePath);
+
+	}
+
+	public String getPathToPlayersELO() {
+		return prop.getProperty(PATHTOPLAYERSELO);
+	}
+
 	public void setDefaultPath(String absolutePath) {
 		prop.setProperty(DEFAULTPATH, absolutePath);
 	}
@@ -692,4 +712,5 @@ public class PropertiesControl {
 		prop.setProperty(TABLE_COLUMN_RESULT, tableColumns[3]);
 		prop.setProperty(TABLE_COLUMN_MEETING, tableColumns[4]);
 	}
+
 }

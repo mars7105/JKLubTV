@@ -167,6 +167,29 @@ public class ActionListenerSettingsControl {
 
 			}
 		});
+		esControl.getEigenschaftenView().getOpenPlayersELOButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				// spieler.csv
+				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
+
+				final JFileChooser fc = new JFileChooser(path);
+				FileFilter filter = new FileNameExtensionFilter("XML file", "xml", "XML");
+
+				fc.setFileFilter(filter);
+				int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
+
+				if (returnVal == JFileChooser.APPROVE_OPTION) {
+					File file = fc.getSelectedFile();
+					// This is where a real application would open the
+					// file.
+					mainControl.getPropertiesControl().setPathToPlayersELO(file.getAbsolutePath());
+					mainControl.getPropertiesControl().writeProperties();
+					esControl.getEigenschaftenView()
+							.setOpenPlayersELOLabel(mainControl.getPropertiesControl().getPathToPlayersELO());
+				}
+
+			}
+		});
 		esControl.getEigenschaftenView().getOpenDefaultPathButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
@@ -188,9 +211,12 @@ public class ActionListenerSettingsControl {
 
 			}
 		});
-		esControl.getEigenschaftenView().setOpenVereineCSVLabel(mainControl.getPropertiesControl().getPathToVereineCVS());
-		esControl.getEigenschaftenView().setOpenPlayersCSVLabel(mainControl.getPropertiesControl().getPathToPlayersCSV());
-
+		esControl.getEigenschaftenView()
+				.setOpenVereineCSVLabel(mainControl.getPropertiesControl().getPathToVereineCVS());
+		esControl.getEigenschaftenView()
+				.setOpenPlayersCSVLabel(mainControl.getPropertiesControl().getPathToPlayersCSV());
+		esControl.getEigenschaftenView()
+				.setOpenPlayersELOLabel(mainControl.getPropertiesControl().getPathToPlayersELO());
 		esControl.getEigenschaftenView().getGermanLanguageCheckBox().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				mainControl.getLanguagePropertiesControl().setLanguageToGerman();

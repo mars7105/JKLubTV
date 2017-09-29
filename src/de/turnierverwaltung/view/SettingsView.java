@@ -91,6 +91,10 @@ public class SettingsView extends JPanel {
 	private JCheckBox checkBoxPDFLinks;
 	private JButton openPlayersCSVButton;
 	private JLabel openPlayersCSVLabel;
+	private URI fideHomepage;
+	private JButton fideHomepageButton;
+	private JButton openPlayersELOButton;
+	private JLabel openPlayersELOLabel;
 
 	/**
 	 * Create the panel.
@@ -169,11 +173,19 @@ public class SettingsView extends JPanel {
 
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
-		downloadLinks();
+		downloadDWZListe();
 		wrapper = new JPanel();
 		wrapper.setLayout(new BorderLayout());
 		wrapper.add(htmlAll, BorderLayout.NORTH);
 		tabbedPane.addTab(Messages.getString("EigenschaftenView.5"), wrapper);
+
+		htmlAll = new JPanel();
+		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
+		downloadELOListe();
+		wrapper = new JPanel();
+		wrapper.setLayout(new BorderLayout());
+		wrapper.add(htmlAll, BorderLayout.NORTH);
+		tabbedPane.addTab(Messages.getString("EigenschaftenView.51"), wrapper);
 
 		centerPane.add(tabbedPane, BorderLayout.NORTH);
 		ButtonPanelView buttonPane = new ButtonPanelView();
@@ -186,7 +198,6 @@ public class SettingsView extends JPanel {
 		add(scrollPane, BorderLayout.CENTER);
 	}
 
-	
 	private void tableLabel() {
 		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.21"));
 		titleView.setFlowLayoutLeft();
@@ -465,22 +476,19 @@ public class SettingsView extends JPanel {
 		htmlAll.add(new JSeparator());
 	}
 
-	private void downloadLinks() {
+	private void downloadDWZListe() {
 		// ohne Header und Footer
 		try {
 			dsbHomepage = new URI("http://www.schachbund.de/download.html"); //$NON-NLS-1$
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		}
+
 		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.5"));
 		titleView.setFlowLayoutLeft();
 
 		htmlAll.add(titleView);
-		// JPanel title = new JPanel();
-		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// title.add(new JLabel(Messages.getString("EigenschaftenView.5")));
-		// //$NON-NLS-1$
-		// htmlAll.add(title);
+
 		dsbHomepageButton = new JButton();
 		dsbHomepageButton
 				.setText("<HTML><FONT color=\"#000099\"><U>http://www.schachbund.de/download.html</U></FONT></HTML>"); //$NON-NLS-1$
@@ -492,6 +500,7 @@ public class SettingsView extends JPanel {
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(dsbHomepageButton);
 		htmlAll.add(htmlPanel);
+
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelHeader1 = new JLabel(Messages.getString("EigenschaftenView.10") //$NON-NLS-1$
@@ -532,8 +541,69 @@ public class SettingsView extends JPanel {
 		openPlayersCSVLabel = new JLabel();
 		htmlPanel.add(openPlayersCSVLabel);
 		htmlAll.add(htmlPanel);
+
 		htmlAll.add(new JSeparator());
 
+	}
+
+	private void downloadELOListe() {
+
+		try {
+			fideHomepage = new URI("https://ratings.fide.com/download.phtml"); //$NON-NLS-1$
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+
+		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.51"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+		fideHomepageButton = new JButton();
+		fideHomepageButton
+				.setText("<HTML><FONT color=\"#000099\"><U>https://ratings.fide.com/download.phtml</U></FONT></HTML>"); //$NON-NLS-1$
+
+		fideHomepageButton.setOpaque(false);
+		fideHomepageButton.setToolTipText(fideHomepage.toString());
+		fideHomepageButton.addActionListener(new OpenUrlAction());
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(fideHomepageButton);
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JLabel labelHeader1 = new JLabel(Messages.getString("EigenschaftenView.53") //$NON-NLS-1$
+				+ Messages.getString("EigenschaftenView.54")); //$NON-NLS-1$
+		JLabel labelHeader1b = new JLabel(Messages.getString("EigenschaftenView.55") //$NON-NLS-1$
+				+ Messages.getString("EigenschaftenView.56")); //$NON-NLS-1$
+		JLabel labelHeader2 = new JLabel(Messages.getString("EigenschaftenView.57") //$NON-NLS-1$
+				+ Messages.getString("EigenschaftenView.58")); //$NON-NLS-1$
+		JLabel labelHeader2b = new JLabel(Messages.getString("EigenschaftenView.59")); //$NON-NLS-1$
+		htmlPanel.add(labelHeader1);
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(labelHeader1b);
+
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(labelHeader2);
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(labelHeader2b);
+		htmlAll.add(htmlPanel);
+
+		htmlAll.add(htmlPanel);
+
+		openPlayersELOButton = new JButton(Messages.getString("EigenschaftenView.52")); //$NON-NLS-1$
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(openPlayersELOButton);
+		openPlayersELOLabel = new JLabel();
+		htmlPanel.add(openPlayersELOLabel);
+		htmlAll.add(htmlPanel);
+		htmlAll.add(new JSeparator());
 	}
 
 	private void makeHTMLEigenschaften() {
@@ -801,14 +871,6 @@ public class SettingsView extends JPanel {
 		this.pointsTextField = pointsTextField;
 	}
 
-	// public JButton getSaveTableNamesButton() {
-	// return saveTableNamesButton;
-	// }
-	//
-	// public void setSaveTableNamesButton(JButton saveTableNamesButton) {
-	// this.saveTableNamesButton = saveTableNamesButton;
-	// }
-
 	public JButton getOkButton() {
 		return okButton;
 	}
@@ -855,6 +917,9 @@ public class SettingsView extends JPanel {
 			if (e.getSource() == dsbHomepageButton) {
 				open(dsbHomepage);
 			}
+			if (e.getSource() == fideHomepageButton) {
+				open(fideHomepage);
+			}
 
 		}
 
@@ -875,6 +940,22 @@ public class SettingsView extends JPanel {
 	public void setOpenPlayersCSVLabel(String openVereineCSV) {
 		this.openPlayersCSVLabel.setText(openVereineCSV);
 		this.openPlayersCSVLabel.updateUI();
+	}
+
+	public JButton getOpenPlayersELOButton() {
+		return openPlayersELOButton;
+	}
+
+	public void setOpenPlayersELOButton(JButton openPlayersELOButton) {
+		this.openPlayersELOButton = openPlayersELOButton;
+	}
+
+	public JLabel getOpenPlayersELOLabel() {
+		return openPlayersELOLabel;
+	}
+
+	public void setOpenPlayersELOLabel(String openPlayersELOLabel) {
+		this.openPlayersELOLabel.setText(openPlayersELOLabel);
 	}
 
 }
