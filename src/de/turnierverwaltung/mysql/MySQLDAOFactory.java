@@ -91,4 +91,10 @@ public class MySQLDAOFactory extends DAOFactory {
 		return turnierDAO;
 	}
 
+	@Override
+	public InfoDAO getInfoDAO() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

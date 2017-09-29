@@ -104,4 +104,10 @@ public class SQLiteDAOFactory extends DAOFactory {
 		return DB_PATH;
 	}
 
+	@Override
+	public InfoDAO getInfoDAO() {
+		InfoDAO infoDAO = new SQLiteInfoDAO();
+		return infoDAO;
+	}
+
 }

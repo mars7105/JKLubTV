@@ -110,6 +110,7 @@ public class NaviView extends JToolBar {
 	private JLabel pairingsLabel;
 	private String pairingsname;
 	private JButton updateButton;
+	private JButton spielerELOSearchButton;
 
 	public NaviView() {
 		this.setBackground(Color.LIGHT_GRAY);
@@ -212,6 +213,16 @@ public class NaviView extends JToolBar {
 		panel3 = new NaviPanelElementView();
 
 		panel3.add(spielerDEWISSearchButton);
+
+		spielerListePanel.add(panel3);
+		// ELO Abfrage
+		spielerELOSearchButton = new JButton(Messages.getString("NaviView.34"), DEWISSearch); //$NON-NLS-1$
+		spielerELOSearchButton.setPreferredSize(new Dimension(200, 40));
+		spielerELOSearchButton.setHorizontalAlignment(SwingConstants.LEFT);
+
+		panel3 = new NaviPanelElementView();
+
+		panel3.add(spielerELOSearchButton);
 
 		spielerListePanel.add(panel3);
 		// update dwz

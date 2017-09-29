@@ -44,5 +44,7 @@ public abstract class DAOFactory {
 	public abstract Turnier_has_SpielerDAO getTurnier_has_SpielerDAO();
 
 	public abstract TurnierDAO getTurnierDAO();
+	
+	public abstract InfoDAO getInfoDAO();
 
 }
