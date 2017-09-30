@@ -224,7 +224,7 @@ public class NaviView extends JToolBar {
 
 		panel3.add(spielerELOSearchButton);
 
-		spielerListePanel.add(panel3);
+//		spielerListePanel.add(panel3);
 		// update dwz
 		updateButton = new JButton(Messages.getString("DEWISDialogView.5"), updateButtonIcon); //$NON-NLS-1$
 		updateButton.setPreferredSize(new Dimension(200, 40));
