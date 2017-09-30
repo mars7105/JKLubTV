@@ -254,7 +254,9 @@ public class SQLitePartienDAO implements PartienDAO {
 		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ) {
 			ergebnisString = TournamentConstants.VERLUST_KAMPFLOS;
 		}
-
+		if (ergebnis == TournamentConstants.MYSQL_PARTIE_VERLUST_KAMPFLOS_BEIDE) {
+			ergebnisString = TournamentConstants.VERLUST_KAMPFLOS_BEIDE;
+		}
 		return ergebnisString;
 	}
 }

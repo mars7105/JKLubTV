@@ -394,4 +394,12 @@ public class Player implements Comparable<Object> {
 		this.dwzindex = dwzindex;
 	}
 
+	public boolean equals(Object other) {
+		if (spielerId == ((Player) other).spielerId && spielerId >= 0) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
 }

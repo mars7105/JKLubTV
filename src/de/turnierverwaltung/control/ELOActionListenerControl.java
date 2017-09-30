@@ -87,7 +87,7 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == eloDialogControl.getDialog().getVereinsAuswahlOkButton()) {
+		if (arg0.getSource().equals(eloDialogControl.getDialog().getVereinsAuswahlOkButton())) {
 			if (eloDialogControl.getDialog().getVereinsAuswahl().getItemCount() > 0) {
 				ArrayList<CSVVereine> items = eloDialogControl.getZpsItems();
 				int index = eloDialogControl.getDialog().getVereinsAuswahl().getSelectedIndex();
@@ -97,14 +97,14 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 
 		}
 
-		if (arg0.getSource() == eloDialogControl.getDialog().getVereinsSucheButton()) {
+		if (arg0.getSource().equals(eloDialogControl.getDialog().getVereinsSucheButton())) {
 			String zps = eloDialogControl.getDialog().getVereinsSuche().getText();
 			eloDialogControl.makeDWZListe(zps);
 		}
-		if (arg0.getSource() == eloDialogControl.getDialog().getCancelButton()) {
+		if (arg0.getSource().equals(eloDialogControl.getDialog().getCancelButton())) {
 			eloDialogControl.getDialog().closeWindow();
 		}
-		if (arg0.getSource() == eloDialogControl.getDialog().getOkButton()) {
+		if (arg0.getSource().equals(eloDialogControl.getDialog().getOkButton())) {
 			try {
 				ArrayList<Player> spieler = eloDialogControl.getPlayers();
 				if (spieler != null) {

@@ -57,7 +57,7 @@ public class PlayerListControl implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 
 		if (spielerEditierenView != null) {
-			if (arg0.getSource() == spielerEditierenView.getOkButton()) {
+			if (arg0.getSource().equals(spielerEditierenView.getOkButton())) {
 				String foreName = spielerEditierenView.getTextFieldForename().getText();
 				String surName = spielerEditierenView.getTextFieldSurname().getText();
 				if (!surName.equals("Spielfrei")) {
@@ -108,7 +108,7 @@ public class PlayerListControl implements ActionListener {
 
 			}
 
-			if (arg0.getSource() == spielerEditierenView.getCancelButton()) {
+			if (arg0.getSource().equals(spielerEditierenView.getCancelButton())) {
 				mainControl.setEnabled(true);
 				spielerEditierenView.closeWindow();
 
@@ -119,7 +119,7 @@ public class PlayerListControl implements ActionListener {
 		if (spielerLadenView != null) {
 
 			for (int i = 0; i < spielerAnzahl; i++) {
-				if (arg0.getSource() == spielerLadenView.getSpielerBearbeitenButton()[i]) {
+				if (arg0.getSource().equals(spielerLadenView.getSpielerBearbeitenButton()[i])) {
 					if (mainControl.getNeuesTurnier() == false) {
 						spielerIndex = i;
 						spielerEditierenView = new EditPlayerView(spieler.get(i));
@@ -133,7 +133,7 @@ public class PlayerListControl implements ActionListener {
 			}
 
 			for (int i = 0; i < spielerAnzahl; i++) {
-				if (arg0.getSource() == spielerLadenView.getSpielerLoeschenButton()[i]) {
+				if (arg0.getSource().equals(spielerLadenView.getSpielerLoeschenButton()[i])) {
 					if (mainControl.getNeuesTurnier() == false) {
 						try {
 							SQLPlayerControl stC = new SQLPlayerControl(mainControl);

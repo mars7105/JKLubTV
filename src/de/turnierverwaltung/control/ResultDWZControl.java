@@ -55,19 +55,19 @@ public class ResultDWZControl {
 					Boolean check = false;
 					for (int i = 0; i < this.partienanzahl; i++) {
 
-						if (partien[i].getSpielerWeiss() == player
+						if (partien[i].getSpielerWeiss() .equals(player)
 								&& partien[i].getSpielerSchwarz().getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 							ergebnis = 0;
 							check = false;
-							if (this.partien[i].getErgebnisWeiss() == TournamentConstants.GEWINN) {
+							if (this.partien[i].getErgebnisWeiss() .equals( TournamentConstants.GEWINN)) {
 								ergebnis = 1;
 								check = true;
 							}
-							if (this.partien[i].getErgebnisWeiss() == TournamentConstants.VERLUST) {
+							if (this.partien[i].getErgebnisWeiss() .equals( TournamentConstants.VERLUST)) {
 								ergebnis = 0;
 								check = true;
 							}
-							if (this.partien[i].getErgebnisWeiss() == TournamentConstants.REMIS) {
+							if (this.partien[i].getErgebnisWeiss() .equals( TournamentConstants.REMIS)) {
 								ergebnis = 0.5;
 								check = true;
 							}
@@ -87,19 +87,19 @@ public class ResultDWZControl {
 								}
 							}
 						}
-						if (partien[i].getSpielerSchwarz() == player
+						if (partien[i].getSpielerSchwarz().equals(player)
 								&& partien[i].getSpielerWeiss().getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 							ergebnis = 0;
 							check = false;
-							if (this.partien[i].getErgebnisSchwarz() == TournamentConstants.GEWINN) {
+							if (this.partien[i].getErgebnisSchwarz().equals(TournamentConstants.GEWINN)) {
 								ergebnis = 1;
 								check = true;
 							}
-							if (this.partien[i].getErgebnisSchwarz() == TournamentConstants.VERLUST) {
+							if (this.partien[i].getErgebnisSchwarz() .equals( TournamentConstants.VERLUST)) {
 								ergebnis = 0;
 								check = true;
 							}
-							if (this.partien[i].getErgebnisSchwarz() == TournamentConstants.REMIS) {
+							if (this.partien[i].getErgebnisSchwarz() .equals( TournamentConstants.REMIS)) {
 								ergebnis = 0.5;
 								check = true;
 							}

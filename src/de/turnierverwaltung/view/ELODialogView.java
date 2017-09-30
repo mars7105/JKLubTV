@@ -171,7 +171,7 @@ public class ELODialogView extends JDialog {
 	class OpenUrlAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == dwzdbButton) {
+			if (e.getSource().equals(dwzdbButton)) {
 				open(dwzdbURI);
 			}
 

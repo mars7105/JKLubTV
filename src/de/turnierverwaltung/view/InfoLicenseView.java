@@ -64,34 +64,34 @@ public class InfoLicenseView {
 	class OpenUrlAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == buttonDatePicker) {
+			if (e.getSource().equals(buttonDatePicker)) {
 				open(datepickerUri);
 			}
-			if (e.getSource() == buttonSQlite) {
+			if (e.getSource().equals(buttonSQlite)) {
 				open(sqLiteUri);
 			}
-			if (e.getSource() == buttoniText) {
+			if (e.getSource().equals(buttoniText)) {
 				open(iTextUri);
 			}
-			if (e.getSource() == buttonopenIcon) {
+			if (e.getSource().equals(buttonopenIcon)) {
 				open(openIconUri);
 			}
-			if (e.getSource() == buttonemailUri) {
+			if (e.getSource().equals(buttonemailUri)) {
 				open(emailUri);
 			}
-			if (e.getSource() == buttondewisUri) {
+			if (e.getSource().equals(buttondewisUri)) {
 				open(dewisUri);
 			}
-			if (e.getSource() == buttonjgoodies) {
+			if (e.getSource().equals(buttonjgoodies)) {
 				open(jgoodiesUri);
 			}
-			if (e.getSource() == buttonopencsv) {
+			if (e.getSource().equals(buttonopencsv)) {
 				open(opencsvUri);
 			}
-			if (e.getSource() == buttonpoi) {
+			if (e.getSource().equals(buttonpoi)) {
 				open(poiUri);
 			}
-			if (e.getSource() == buttonbiweekly) {
+			if (e.getSource().equals(buttonbiweekly)) {
 				open(biweekly);
 			}
 

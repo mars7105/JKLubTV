@@ -99,7 +99,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 
 		if (turnierEditierenView != null) {
 
-			if (arg0.getSource() == turnierEditierenView.getOkButton()) {
+			if (arg0.getSource() .equals( turnierEditierenView.getOkButton())) {
 				String turnierName = turnierEditierenView.getTextFieldTurnierName().getText();
 				DateFormat formatter1 = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 				DateFormat formatter2 = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
@@ -145,7 +145,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 				}
 
 			}
-			if (arg0.getSource() == turnierEditierenView.getCancelButton()) {
+			if (arg0.getSource() .equals( turnierEditierenView.getCancelButton())) {
 				mainControl.setEnabled(true);
 
 				turnierEditierenView.dispose();
@@ -154,7 +154,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 
 		for (int i = 0; i < anzahlTurniere; i++) {
 
-			if (arg0.getSource() == turnierListeLadenView.getTurnierLadeButton()[i]) {
+			if (arg0.getSource() .equals( turnierListeLadenView.getTurnierLadeButton()[i])) {
 				Tournament turnier = this.mainControl.getTurnier();
 
 				if (turnier == null) {
@@ -236,7 +236,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 				}
 			}
 
-			if (arg0.getSource() == turnierListeLadenView.getTurnierBearbeitenButton()[i]) {
+			if (arg0.getSource() .equals( turnierListeLadenView.getTurnierBearbeitenButton()[i])) {
 				turnierEdit = turnierListe.get(i);
 				SQLGroupsControl gTC = new SQLGroupsControl(mainControl);
 				try {
@@ -254,7 +254,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 			// Wichtig:
 			// Diese Abfrage muss an letzter Stelle stehen,
 			// da ansonsten eine ArraOutOfBounds Exception auftritt!
-			if (arg0.getSource() == turnierListeLadenView.getTurnierLoeschenButton()[i]) {
+			if (arg0.getSource() .equals( turnierListeLadenView.getTurnierLoeschenButton()[i])) {
 				if (mainControl.getTurnier() != null) {
 					if (mainControl.getTurnier().getTurnierId() == turnierListe.get(i).getTurnierId()) {
 						JOptionPane.showMessageDialog(mainControl, Messages.getString("TurnierListeLadenControl.4")); //$NON-NLS-1$

@@ -23,7 +23,7 @@ public class DSBDWZInfoView extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JButton dsbHomepageButton;
 	private URI dsbHomepage;
-	
+
 	private JPanel htmlAll;
 
 	public DSBDWZInfoView() {
@@ -118,7 +118,7 @@ public class DSBDWZInfoView extends JPanel {
 	class OpenUrlAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == dsbHomepageButton) {
+			if (e.getSource().equals(dsbHomepageButton)) {
 				open(dsbHomepage);
 			}
 

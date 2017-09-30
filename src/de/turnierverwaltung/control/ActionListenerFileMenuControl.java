@@ -45,7 +45,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		PropertiesControl prop = mainControl.getPropertiesControl();
-		if (arg0.getSource() == newdbButton) {
+		if (arg0.getSource().equals(newdbButton)) {
 
 			int abfrage = warnHinweis();
 			if (abfrage == 0) {
@@ -117,7 +117,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 				}
 			}
 		}
-		if (arg0.getSource() == loaddbButton)
+		if (arg0.getSource().equals(loaddbButton))
 
 		{
 			try {
@@ -188,7 +188,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 			}
 		}
 
-		if (arg0.getSource() == exitButton) {
+		if (arg0.getSource().equals(exitButton)) {
 			int abfrage = beendenHinweis();
 			if (abfrage == 0) {
 				System.exit(0);

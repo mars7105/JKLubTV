@@ -36,12 +36,12 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == pdfButton) {
+		if (arg0.getSource().equals(pdfButton)) {
 			PDFSaveControl pdfsave = new PDFSaveControl(this.mainControl);
 			pdfsave.savePDFFile();
 
 		}
-		if (arg0.getSource() == iCalendarButton) {
+		if (arg0.getSource().equals(iCalendarButton)) {
 			ICalendarSaveControl iCalendarsave = new ICalendarSaveControl(this.mainControl);
 			try {
 				iCalendarsave.saveiCalendarFile();
@@ -52,12 +52,12 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 
 		}
 
-		if (arg0.getSource() == naviView.getExcelSpeichernButton()) {
+		if (arg0.getSource() .equals( naviView.getExcelSpeichernButton())) {
 			ExcelSaveControl excelsave = new ExcelSaveControl(this.mainControl);
 			excelsave.saveExcelFile();
 
 		}
-		if (arg0.getSource() == naviView.getPairingsLoadButton()) {
+		if (arg0.getSource() .equals( naviView.getPairingsLoadButton())) {
 			mainControl.setPairingsControl(new PairingsControl(mainControl));
 
 			PairingsControl pairingsControl = mainControl.getPairingsControl();
@@ -95,7 +95,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 			}
 		}
 
-		if (arg0.getSource() == naviView.getTabelleAktualisierenButton())
+		if (arg0.getSource() .equals( naviView.getTabelleAktualisierenButton()))
 
 		{
 			Boolean ok = mainControl.getPairingsControl().checkNewTurnier();
@@ -108,7 +108,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 			}
 
 		}
-		if (arg0.getSource() == naviView.getTabelleSpeichernButton())
+		if (arg0.getSource() .equals( naviView.getTabelleSpeichernButton()))
 
 		{
 			Boolean ok = false;
@@ -132,7 +132,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 			}
 		}
 
-		if (arg0.getSource() == naviView.getTabelleHTMLAusgabeButton())
+		if (arg0.getSource() .equals( naviView.getTabelleHTMLAusgabeButton()))
 
 		{
 			HTMLSaveControl HTMLSave = new HTMLSaveControl(this.mainControl);

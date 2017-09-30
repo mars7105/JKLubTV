@@ -87,14 +87,14 @@ public class NewTournamentGroupsControl implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 
-		if (arg0.getSource() == gruppenOKButton) {
+		if (arg0.getSource() .equals( gruppenOKButton)) {
 			makeGruppe();
 
 			// mainControl.setSpielerAnzahlControl(new
 			// NewTournamentPlayerCountControl(this.mainControl));
 			runPlayerInput();
 		}
-		if (arg0.getSource() == gruppenCancelButton) {
+		if (arg0.getSource() .equals( gruppenCancelButton)) {
 			this.mainControl.setTurnierControl(new NewTournamentControl(this.mainControl));
 		}
 

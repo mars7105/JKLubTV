@@ -111,7 +111,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		int sAnzahl = 0;
 
 		for (int i = 0; i < gruppenAnzahl; i++) {
-			if (arg0.getSource() == okButton[i]) {
+			if (arg0.getSource() .equals( okButton[i])) {
 				try {
 					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
@@ -186,7 +186,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 					mainControl.fileSQLError();
 				}
 			}
-			if (arg0.getSource() == cancelButton[i]) {
+			if (arg0.getSource() .equals( cancelButton[i])) {
 				// Custom button text
 				Object[] options = { Messages.getString("SpielerEingabeControl.4"), //$NON-NLS-1$
 						Messages.getString("SpielerEingabeControl.5") }; //$NON-NLS-1$
@@ -199,7 +199,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 				}
 			}
 			for (int s = 0; s < spielerAnzahl[i]; s++) {
-				if (arg0.getSource() == spielerEingabeView[i].getSpielerSuche()[s]) {
+				if (arg0.getSource() .equals( spielerEingabeView[i].getSpielerSuche()[s])) {
 					JTextField field = spielerEingabeView[i].getSurnameTextfield()[s];
 					JTextField field2 = spielerEingabeView[i].getForenameTextfield()[s];
 					@SuppressWarnings("unchecked")

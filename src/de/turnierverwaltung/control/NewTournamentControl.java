@@ -111,7 +111,7 @@ public class NewTournamentControl implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == turnierOkButton) {
+		if (arg0.getSource() .equals( turnierOkButton)) {
 			turnierOkButton();
 
 		}

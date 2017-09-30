@@ -124,7 +124,6 @@ public class DSBDWZDialogView extends JDialog {
 			zeilenPanel.add(new JLabel(Messages.getString("DEWISDialogView.1"))); //$NON-NLS-1$
 			suchePanel.add(zeilenPanel);
 
-			
 			zeilenPanel = new JPanel();
 			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			suchePanel.add(zeilenPanel);
@@ -147,8 +146,8 @@ public class DSBDWZDialogView extends JDialog {
 		buttonPane.makeAllButtons();
 		okButton = buttonPane.getOkButton();
 		cancelButton = buttonPane.getCancelButton();
-		okButton.setText(Messages.getString("DEWISDialogView.6")); 
-		cancelButton.setText(Messages.getString("DEWISDialogView.7")); 
+		okButton.setText(Messages.getString("DEWISDialogView.6"));
+		cancelButton.setText(Messages.getString("DEWISDialogView.7"));
 
 		contentPanel.add(dsbPanel, BorderLayout.CENTER);
 		contentPanel.add(buttonPane, BorderLayout.SOUTH);
@@ -162,7 +161,7 @@ public class DSBDWZDialogView extends JDialog {
 			getContentPane().add(contentPanel, BorderLayout.CENTER);
 		}
 		pack();
-		
+
 		setEnabled(true);
 		setVisible(true);
 		setLocationRelativeTo(null);
@@ -171,7 +170,7 @@ public class DSBDWZDialogView extends JDialog {
 	class OpenUrlAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == dwzdbButton) {
+			if (e.getSource().equals(dwzdbButton)) {
 				open(dwzdbURI);
 			}
 

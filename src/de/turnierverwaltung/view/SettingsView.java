@@ -914,10 +914,10 @@ public class SettingsView extends JPanel {
 	class OpenUrlAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if (e.getSource() == dsbHomepageButton) {
+			if (e.getSource().equals(dsbHomepageButton)) {
 				open(dsbHomepage);
 			}
-			if (e.getSource() == fideHomepageButton) {
+			if (e.getSource().equals(fideHomepageButton)) {
 				open(fideHomepage);
 			}
 

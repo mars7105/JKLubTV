@@ -87,7 +87,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == dewisDialogControl.getDialog().getVereinsAuswahlOkButton()) {
+		if (arg0.getSource() .equals( dewisDialogControl.getDialog().getVereinsAuswahlOkButton())) {
 			if (dewisDialogControl.getDialog().getVereinsAuswahl().getItemCount() > 0) {
 				ArrayList<CSVVereine> items = dewisDialogControl.getZpsItems();
 				int index = dewisDialogControl.getDialog().getVereinsAuswahl().getSelectedIndex();
@@ -97,14 +97,14 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 
 		}
 
-		if (arg0.getSource() == dewisDialogControl.getDialog().getVereinsSucheButton()) {
+		if (arg0.getSource() .equals( dewisDialogControl.getDialog().getVereinsSucheButton())) {
 			String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
 			dewisDialogControl.makeDWZListe(zps);
 		}
-		if (arg0.getSource() == dewisDialogControl.getDialog().getCancelButton()) {
+		if (arg0.getSource() .equals( dewisDialogControl.getDialog().getCancelButton())) {
 			dewisDialogControl.getDialog().closeWindow();
 		}
-		if (arg0.getSource() == dewisDialogControl.getDialog().getOkButton()) {
+		if (arg0.getSource() .equals( dewisDialogControl.getDialog().getOkButton())) {
 			try {
 				ArrayList<Player> spieler = dewisDialogControl.getPlayers();
 				if (spieler != null) {

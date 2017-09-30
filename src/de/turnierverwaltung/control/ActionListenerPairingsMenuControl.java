@@ -26,7 +26,7 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == naviView.getPairingsSaveButton()) {
+		if (arg0.getSource() .equals(naviView.getPairingsSaveButton())) {
 
 			saveAndReloadTurnier();
 			try {
@@ -37,7 +37,7 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 			pairingIsActive = false;
 
 		}
-		if (arg0.getSource() == naviView.getPairingsCancelButton()) {
+		if (arg0.getSource().equals(naviView.getPairingsCancelButton()) ){
 			int abfrage = abbrechenHinweis();
 			if (abfrage == 0) {
 				PairingsControl pairingsControl = mainControl.getPairingsControl();

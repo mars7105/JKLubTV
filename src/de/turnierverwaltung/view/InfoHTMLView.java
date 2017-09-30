@@ -38,9 +38,9 @@ public class InfoHTMLView {
 	public JPanel getLizenzText() throws URISyntaxException {
 		ContextMenuMouseListener cmmL = new ContextMenuMouseListener();
 		java.net.URL helpURL = getClass().getResource("/files/JKlubTV.html");
-		if (language == "german") {
+		if (language.equals("german")) {
 			helpURL = getClass().getResource("/files/JKlubTV.html");
-		} else if (language == "english") {
+		} else if (language.equals("english")) {
 			helpURL = getClass().getResource("/files/JKlubTV_en.html");
 		}
 		JPanel all = new JPanel(new BorderLayout());

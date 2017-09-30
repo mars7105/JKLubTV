@@ -158,7 +158,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 			for (int i = 0; i < anzahl; i++) {
 
-				if (arg0.getSource() == changeColor[index][i]) {
+				if (arg0.getSource().equals(changeColor[index][i])) {
 					changeColor(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
 					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
@@ -174,7 +174,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 				}
 
-				if (arg0.getSource() == rundenNummer[index][i]) {
+				if (arg0.getSource().equals(rundenNummer[index][i])) {
 					changeWerte(index, i);
 					changedPartien.add(gruppe[index].getPartien()[i]);
 					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.SORTIEREN;
@@ -446,7 +446,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 				anzahl = max * (max - 1) / 2;
 
 				for (int i = 0; i < anzahl; i++) {
-					if (arg0.getSource() == datePicker[index][i].getJDateChooser()) {
+					if (arg0.getSource().equals(datePicker[index][i].getJDateChooser())) {
 
 						changeWerte(index, i);
 						changedPartien.add(gruppe[index].getPartien()[i]);

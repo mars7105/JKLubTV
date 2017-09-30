@@ -26,7 +26,7 @@ public class ActionListenerTournamentListControl implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() == newTurnierButton) {
+		if (arg0.getSource() .equals( newTurnierButton)) {
 			mainControl.setSpielerEingabeControl(null);
 			Tournament turnier = this.mainControl.getTurnier();
 			if (turnier == null) {
