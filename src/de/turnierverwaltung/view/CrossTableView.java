@@ -52,18 +52,18 @@ public class CrossTableView extends JPanel {
 		setLayout(new BorderLayout());
 		// setBackground(new Color(249, 222, 112));
 		table = new JTable(simpleTableModel);
-		// table.setPreferredSize(new Dimension(300, 300));
-		// table.setMinimumSize(new Dimension(200, 200));
-		// Font fnt = new Font("Arial", Font.PLAIN, 16);
-		// table.setFont(fnt);
-
+		
+		
 		comboBox = new JComboBox<String>();
-		comboBox.addItem(" "); //$NON-NLS-1$
-		comboBox.addItem("0"); //$NON-NLS-1$
+		comboBox.addItem(TournamentConstants.KEIN_ERGEBNIS); 
+		comboBox.addItem(TournamentConstants.VERLUST); 
 		comboBox.addItem(TournamentConstants.REMIS);
-		comboBox.addItem("1"); //$NON-NLS-1$
-		comboBox.addItem("-"); //$NON-NLS-1$
-		comboBox.addItem("+"); //$NON-NLS-1$
+		comboBox.addItem(TournamentConstants.GEWINN); 
+		comboBox.addItem(TournamentConstants.VERLUST_KAMPFLOS); 
+		comboBox.addItem(TournamentConstants.GEWINN_KAMPFLOS); 
+		comboBox.addItem(TournamentConstants.VERLUST_KAMPFLOS_BEIDE);
+		
+		
 		setColumnWidth(abstand);
 		this.setBackground(Color.white);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);

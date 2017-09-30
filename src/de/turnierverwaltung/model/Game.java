@@ -132,6 +132,10 @@ public class Game implements Comparable<Object> {
 			this.ergebnisWeiss = TournamentConstants.VERLUST_KAMPFLOS;
 			this.ergebnisSchwarz = TournamentConstants.GEWINN_KAMPFLOS;
 		}
+		if (ergebnis == TournamentConstants.MYSQL_PARTIE_VERLUST_KAMPFLOS_BEIDE) {
+			this.ergebnisWeiss = TournamentConstants.VERLUST_KAMPFLOS;
+			this.ergebnisSchwarz = TournamentConstants.VERLUST_KAMPFLOS;
+		}
 		if (ergebnis == TournamentConstants.MYSQL_PARTIE_REMIS) {
 			this.ergebnisWeiss = TournamentConstants.REMIS;
 			this.ergebnisSchwarz = TournamentConstants.REMIS;

@@ -34,12 +34,18 @@ public class TournamentConstants {
 	public static final String TRENNZEICHEN = " - ";
 	public static final String GEWINN_KAMPFLOS = "+";
 	public static final String VERLUST_KAMPFLOS = "-";
+	public static final String VERLUST_KAMPFLOS_BEIDE = "--";
 	public static final String TRENNZEICHEN_KAMPFLOS = " / ";
 	public static final String PARTIE_GEWINN_WEISS = "1 - 0";
 	public static final String PARTIE_GEWINN_SCHWARZ = "0 - 1";
+	public static final String PARTIE_GEWINN_PLAYER = PARTIE_GEWINN_WEISS;
+	public static final String PARTIE_GEWINN_OPPONENT = PARTIE_GEWINN_SCHWARZ;
 	public static final String PARTIE_REMIS = "\u00BD - \u00BD";
 	public static final String PARTIE_GEWINN_KAMPFLOS_WEISS = "+ / -";
 	public static final String PARTIE_GEWINN_KAMPFLOS_SCHWARZ = "- / +";
+	public static final String PARTIE_GEWINN_KAMPFLOS_PLAYER = PARTIE_GEWINN_KAMPFLOS_WEISS;
+	public static final String PARTIE_GEWINN_KAMPFLOS_OPPONENT = PARTIE_GEWINN_KAMPFLOS_SCHWARZ;
+	public static final String PARTIE_VERLUST_KAMPFLOS_BEIDE = "- / -";
 	public static final String KEINE_DWZ = "0000";
 	public static final String HTML_LEERZEICHEN = "&nbsp;";
 	public static final int MYSQL_PARTIE_GEWINN_WEISS = 1;
@@ -47,6 +53,7 @@ public class TournamentConstants {
 	public static final int MYSQL_PARTIE_REMIS = 3;
 	public static final int MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS = 4;
 	public static final int MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ = 5;
+	public static final int MYSQL_PARTIE_VERLUST_KAMPFLOS_BEIDE = 6;
 	public static final int MYSQL_KEIN_ERGEBNIS = 0;
 	public static final int DATABASE_DRIVER = DAOFactory.SQLITE;
 	public static final int WINDOW_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().height - 150;

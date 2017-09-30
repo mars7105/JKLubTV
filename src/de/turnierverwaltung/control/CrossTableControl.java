@@ -245,7 +245,7 @@ public class CrossTableControl {
 		for (int i = 0; i < anzahlGruppen; i++) {
 			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
 			simpleTableView[i].getStatusLabel().setBackground(Color.ORANGE);
-			berechneFolgeDWZ(i);
+			// berechneFolgeDWZ(i);
 
 		}
 
@@ -283,37 +283,42 @@ public class CrossTableControl {
 			int invertCol = spielery + abstand;
 			String ergebniss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, col);
 
-			String invertErgebniss = " "; //$NON-NLS-1$
+			String invertErgebniss = " ";
 			int invertErgebnissInt = 0;
 			int ergebnissInt = 0;
 
-			if (ergebniss == TournamentConstants.KEIN_ERGEBNIS) {
+			if (ergebniss.equals(TournamentConstants.KEIN_ERGEBNIS)) {
 				invertErgebniss = TournamentConstants.KEIN_ERGEBNIS;
 				ergebnissInt = TournamentConstants.MYSQL_KEIN_ERGEBNIS;
 				invertErgebnissInt = TournamentConstants.MYSQL_KEIN_ERGEBNIS;
 			}
-			if (ergebniss == TournamentConstants.VERLUST) {
+			if (ergebniss.equals(TournamentConstants.VERLUST)) {
 				invertErgebniss = TournamentConstants.GEWINN;
 				ergebnissInt = TournamentConstants.MYSQL_PARTIE_GEWINN_SCHWARZ;
 				invertErgebnissInt = TournamentConstants.MYSQL_PARTIE_GEWINN_WEISS;
 
 			}
-			if (ergebniss == TournamentConstants.REMIS) {
+			if (ergebniss.equals(TournamentConstants.REMIS)) {
 				invertErgebniss = TournamentConstants.REMIS;
 				ergebnissInt = TournamentConstants.MYSQL_PARTIE_REMIS;
 				invertErgebnissInt = TournamentConstants.MYSQL_PARTIE_REMIS;
 			}
-			if (ergebniss == TournamentConstants.GEWINN) {
+			if (ergebniss.equals(TournamentConstants.GEWINN)) {
 				invertErgebniss = TournamentConstants.VERLUST;
 				ergebnissInt = TournamentConstants.MYSQL_PARTIE_GEWINN_WEISS;
 				invertErgebnissInt = TournamentConstants.MYSQL_PARTIE_GEWINN_SCHWARZ;
 			}
-			if (ergebniss == TournamentConstants.VERLUST_KAMPFLOS) {
+			if (ergebniss.equals(TournamentConstants.VERLUST_KAMPFLOS)) {
 				invertErgebniss = TournamentConstants.GEWINN_KAMPFLOS;
 				ergebnissInt = TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ;
 				invertErgebnissInt = TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS;
 			}
-			if (ergebniss == TournamentConstants.GEWINN_KAMPFLOS) {
+			if (ergebniss.equals(TournamentConstants.VERLUST_KAMPFLOS_BEIDE)) {
+				invertErgebniss = TournamentConstants.VERLUST_KAMPFLOS_BEIDE;
+				ergebnissInt = TournamentConstants.MYSQL_PARTIE_VERLUST_KAMPFLOS_BEIDE;
+				invertErgebnissInt = TournamentConstants.MYSQL_PARTIE_VERLUST_KAMPFLOS_BEIDE;
+			}
+			if (ergebniss.equals(TournamentConstants.GEWINN_KAMPFLOS)) {
 				invertErgebniss = TournamentConstants.VERLUST_KAMPFLOS;
 				ergebnissInt = TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS;
 				invertErgebnissInt = TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ;
@@ -327,8 +332,8 @@ public class CrossTableControl {
 					&& (spielerx != spielery)) {
 
 				for (int i = 0; i < turnier.getGruppe()[gruppenNummer].getPartienAnzahl(); i++) {
-					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss() == spx
-							&& turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerSchwarz() == spy) {
+					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss().equals(spx)
+							&& turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerSchwarz().equals(spy)) {
 
 						turnier.getGruppe()[gruppenNummer].getPartien()[i].setErgebnis(invertErgebnissInt);
 
@@ -338,8 +343,8 @@ public class CrossTableControl {
 
 					}
 
-					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss() == spy
-							&& turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerSchwarz() == spx) {
+					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss().equals(spy)
+							&& turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerSchwarz().equals(spx)) {
 						turnier.getGruppe()[gruppenNummer].getPartien()[i].setErgebnis(ergebnissInt);
 
 						updatePunkteCol(colCount - 3);
@@ -351,7 +356,9 @@ public class CrossTableControl {
 
 				}
 			}
-			mainControl.getTerminTabelleControl().makeSimpleTableView(gruppenNummer);
+			// mainControl.getTerminTabelleControl().makeSimpleTableView(gruppenNummer);
+			mainControl.getTerminTabelleControl().updateSimpleTableView(changedPartien.get(changedPartien.size() - 1),
+					gruppenNummer);
 			simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
 
 			mainControl.getTerminTabelleControl().updateStatus();

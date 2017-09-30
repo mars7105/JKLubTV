@@ -135,6 +135,9 @@ public class MeetingTable {
 		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ) {
 			ergebnisString = TournamentConstants.PARTIE_GEWINN_KAMPFLOS_SCHWARZ;
 		}
+		if (ergebnis == TournamentConstants.MYSQL_PARTIE_VERLUST_KAMPFLOS_BEIDE) {
+			ergebnisString = TournamentConstants.PARTIE_VERLUST_KAMPFLOS_BEIDE;
+		}
 		if (ergebnis == TournamentConstants.MYSQL_KEIN_ERGEBNIS) {
 			ergebnisString = TournamentConstants.KEIN_ERGEBNIS;
 		}

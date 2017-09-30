@@ -20,7 +20,6 @@ import java.awt.Color;
 
 import java.awt.Toolkit;
 import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 import javax.swing.event.TableModelEvent;
@@ -90,7 +89,7 @@ public class MeetingTableControl {
 		this.mainControl.setTerminTabelle(terminTabelle);
 		simpleTableView[gruppenNummer] = new MeetingTableView(new MeetingTableModel(this.terminTabelle[gruppenNummer]));
 		simpleTurnierTabelleView = mainControl.getSimpleTableView();
-		mainControl.getTurnierTabelle();
+		// mainControl.getTurnierTabelle();
 		if (tml[gruppenNummer] == null) {
 			int abstand = mainControl.getPropertiesControl().getTabellenAbstand();
 			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer, abstand);
@@ -156,31 +155,34 @@ public class MeetingTableControl {
 
 				String ergebnissSet = TournamentConstants.KEIN_ERGEBNIS;
 
-				if (ergebniss == TournamentConstants.KEIN_ERGEBNIS) {
+				if (ergebniss.equals(TournamentConstants.KEIN_ERGEBNIS)) {
 					ergebnissSet = TournamentConstants.KEIN_ERGEBNIS;
 				}
-				if (ergebniss == TournamentConstants.PARTIE_GEWINN_SCHWARZ) {
+				if (ergebniss.equals(TournamentConstants.PARTIE_GEWINN_SCHWARZ)) {
 					ergebnissSet = TournamentConstants.VERLUST;
 				}
-				if (ergebniss == TournamentConstants.PARTIE_REMIS) {
+				if (ergebniss.equals(TournamentConstants.PARTIE_REMIS)) {
 					ergebnissSet = TournamentConstants.REMIS;
 				}
-				if (ergebniss == TournamentConstants.PARTIE_GEWINN_WEISS) {
+				if (ergebniss.equals(TournamentConstants.PARTIE_GEWINN_WEISS)) {
 					ergebnissSet = TournamentConstants.GEWINN;
 				}
-				if (ergebniss == TournamentConstants.PARTIE_GEWINN_KAMPFLOS_SCHWARZ) {
+				if (ergebniss.equals(TournamentConstants.PARTIE_GEWINN_KAMPFLOS_SCHWARZ)) {
 					ergebnissSet = TournamentConstants.VERLUST_KAMPFLOS;
 				}
-				if (ergebniss == TournamentConstants.PARTIE_GEWINN_KAMPFLOS_WEISS) {
+				if (ergebniss.equals(TournamentConstants.PARTIE_GEWINN_KAMPFLOS_WEISS)) {
 					ergebnissSet = TournamentConstants.GEWINN_KAMPFLOS;
 				}
+				if (ergebniss.equals(TournamentConstants.PARTIE_VERLUST_KAMPFLOS_BEIDE)) {
+					ergebnissSet = TournamentConstants.VERLUST_KAMPFLOS_BEIDE;
+				}
 				for (int i = 0; i < simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getRowCount(); i++) {
-					if (simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getValueAt(i,
-							0) == spielerWeiss) {
+					if (simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getValueAt(i, 0)
+							.equals(spielerWeiss)) {
 						for (int y = 0; y < simpleTurnierTabelleView[gruppenNummer].getTable().getModel()
 								.getRowCount(); y++) {
-							if (simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getValueAt(y,
-									0) == spielerSchwarz) {
+							if (simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getValueAt(y, 0)
+									.equals(spielerSchwarz)) {
 								simpleTurnierTabelleView[gruppenNummer].getTable().getModel().setValueAt(ergebnissSet,
 										i, y + abstand);
 							}
@@ -190,6 +192,46 @@ public class MeetingTableControl {
 				}
 				mainControl.getTurnierTabelleControl().updateStatus();
 				updateStatus();
+			}
+		}
+
+	}
+
+	public void updateSimpleTableView(Game game, int gruppenNummer) {
+
+		int ergebniss = game.getErgebnis();
+		String spielerWeiss = game.getSpielerWeiss().getName();
+		String spielerSchwarz = game.getSpielerSchwarz().getName();
+
+		String ergebnissSet = TournamentConstants.KEIN_ERGEBNIS;
+
+		if (ergebniss == TournamentConstants.MYSQL_KEIN_ERGEBNIS) {
+			ergebnissSet = TournamentConstants.KEIN_ERGEBNIS;
+		}
+		if (ergebniss == TournamentConstants.MYSQL_PARTIE_GEWINN_SCHWARZ) {
+			ergebnissSet = TournamentConstants.PARTIE_GEWINN_SCHWARZ;
+		}
+		if (ergebniss == TournamentConstants.MYSQL_PARTIE_REMIS) {
+			ergebnissSet = TournamentConstants.PARTIE_REMIS;
+		}
+		if (ergebniss == TournamentConstants.MYSQL_PARTIE_GEWINN_WEISS) {
+			ergebnissSet = TournamentConstants.PARTIE_GEWINN_WEISS;
+		}
+		if (ergebniss == TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ) {
+			ergebnissSet = TournamentConstants.PARTIE_GEWINN_KAMPFLOS_SCHWARZ;
+		}
+		if (ergebniss == TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS) {
+			ergebnissSet = TournamentConstants.PARTIE_GEWINN_KAMPFLOS_WEISS;
+		}
+		if (ergebniss == TournamentConstants.MYSQL_PARTIE_VERLUST_KAMPFLOS_BEIDE) {
+			ergebnissSet = TournamentConstants.PARTIE_VERLUST_KAMPFLOS_BEIDE;
+		}
+		for (int i = 0; i < simpleTableView[gruppenNummer].getTable().getModel().getRowCount(); i++) {
+			if (simpleTableView[gruppenNummer].getTable().getModel().getValueAt(i, 1).equals(spielerWeiss)
+					&& simpleTableView[gruppenNummer].getTable().getModel().getValueAt(i, 2).equals(spielerSchwarz)) {
+
+				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(ergebnissSet, i, 3);
+
 			}
 		}
 

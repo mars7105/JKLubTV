@@ -102,13 +102,13 @@ public class MeetingTableView extends JPanel {
 		// Font fnt = new Font("Arial", Font.PLAIN, 16);
 		// table.setFont(fnt);
 		comboBox = new JComboBox<String>();
-		comboBox.addItem(" "); //$NON-NLS-1$
-		comboBox.addItem("0 - 1"); //$NON-NLS-1$
+		comboBox.addItem(TournamentConstants.KEIN_ERGEBNIS); 
+		comboBox.addItem(TournamentConstants.PARTIE_GEWINN_OPPONENT); 
 		comboBox.addItem(TournamentConstants.PARTIE_REMIS);
-		comboBox.addItem("1 - 0"); //$NON-NLS-1$
-		comboBox.addItem("- / +"); //$NON-NLS-1$
-		comboBox.addItem("+ / -"); //$NON-NLS-1$
-
+		comboBox.addItem(TournamentConstants.PARTIE_GEWINN_PLAYER); 
+		comboBox.addItem(TournamentConstants.PARTIE_GEWINN_KAMPFLOS_OPPONENT); 
+		comboBox.addItem(TournamentConstants.PARTIE_GEWINN_KAMPFLOS_PLAYER); 
+		comboBox.addItem(TournamentConstants.PARTIE_VERLUST_KAMPFLOS_BEIDE); 
 		property = new Properties();
 		property.put("text.today", Messages.getString("SimpleTerminTabelleView.8")); //$NON-NLS-1$ //$NON-NLS-2$
 		property.put("text.month", Messages.getString("SimpleTerminTabelleView.10")); //$NON-NLS-1$ //$NON-NLS-2$

@@ -135,13 +135,13 @@ public class Group {
 	 */
 	private double convertErgebnisStringToDouble(String erg) {
 		double ergebniss = 0;
-		if (erg == TournamentConstants.REMIS) {
+		if (erg.equals(TournamentConstants.REMIS)) {
 			ergebniss = 0.5;
 		}
-		if (erg == "1") {
+		if (erg.equals(TournamentConstants.GEWINN)) {
 			ergebniss = 1;
 		}
-		if (erg == "+") {
+		if (erg.equals(TournamentConstants.GEWINN_KAMPFLOS)) {
 			ergebniss = 1;
 		}
 		return ergebniss;
