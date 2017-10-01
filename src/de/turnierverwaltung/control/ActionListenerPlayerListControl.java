@@ -30,7 +30,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 		naviView.getSpielerImport().addActionListener(this);
 		naviView.getSpielerDEWISSearchButton().addActionListener(this);
 		naviView.getUpdateButton().addActionListener(this);
-
+		naviView.getSpielerELOSearchButton().addActionListener(this);
 	}
 
 	@Override
@@ -104,6 +104,11 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 			dewisDialogControl = new DSBDWZControl(mainControl);
 			dewisDialogControl.makeDialog();
 			dewisDialogControl.makePlayerSearchList();
+		}
+		if (arg0.getSource().equals(naviView.getSpielerELOSearchButton())) {
+			ELOControl eloDialogControl = new ELOControl(mainControl);
+			eloDialogControl.makeDialog();
+			eloDialogControl.makePlayerSearchList();
 		}
 		if (arg0.getSource().equals(naviView.getSpielerAddButton())) {
 			spielerHinzufuegenView = new NewPlayerView();

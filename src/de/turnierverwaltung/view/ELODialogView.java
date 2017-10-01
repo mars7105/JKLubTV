@@ -68,6 +68,7 @@ public class ELODialogView extends JDialog {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-find.png")));
 	private ImageIcon tabIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-new-2.png")));
+	private PlayerSearchView playerSearchView;
 
 	/**
 	 * Create the dialog.
@@ -124,7 +125,6 @@ public class ELODialogView extends JDialog {
 			zeilenPanel.add(new JLabel(Messages.getString("DEWISDialogView.1"))); //$NON-NLS-1$
 			suchePanel.add(zeilenPanel);
 
-			
 			zeilenPanel = new JPanel();
 			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			suchePanel.add(zeilenPanel);
@@ -142,27 +142,32 @@ public class ELODialogView extends JDialog {
 		}
 		contentPanel.add(suchePanel, BorderLayout.NORTH);
 		dsbPanel = new JPanel();
-
+		playerSearchView = new PlayerSearchView();
 		buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();
 		okButton = buttonPane.getOkButton();
 		cancelButton = buttonPane.getCancelButton();
-		okButton.setText(Messages.getString("DEWISDialogView.6")); 
-		cancelButton.setText(Messages.getString("DEWISDialogView.7")); 
+		okButton.setText(Messages.getString("DEWISDialogView.6"));
+		cancelButton.setText(Messages.getString("DEWISDialogView.7"));
 
 		contentPanel.add(dsbPanel, BorderLayout.CENTER);
 		contentPanel.add(buttonPane, BorderLayout.SOUTH);
 		if (cvsFiles == false) {
 			DSBDWZInfoView sv = new DSBDWZInfoView();
+
 			JTabbedPane tp = new JTabbedPane();
 			tp.addTab(Messages.getString("DEWISDialogView.0"), tabIcon, contentPanel);
 			tp.addTab("Info", infoIcon, sv);
 			getContentPane().add(tp, BorderLayout.CENTER);
 		} else {
-			getContentPane().add(contentPanel, BorderLayout.CENTER);
+			JTabbedPane tp = new JTabbedPane();
+			
+			tp.addTab(Messages.getString("DEWISDialogView.0"), tabIcon, contentPanel);
+			tp.addTab(Messages.getString("DEWISDialogView.8"), tabIcon, playerSearchView);
+			getContentPane().add(tp, BorderLayout.CENTER);
 		}
 		pack();
-		
+
 		setEnabled(true);
 		setVisible(true);
 		setLocationRelativeTo(null);
@@ -277,6 +282,14 @@ public class ELODialogView extends JDialog {
 
 	public void setVereinsAuswahlOkButton(JButton vereinsAuswahlOkButton) {
 		this.vereinsAuswahlOkButton = vereinsAuswahlOkButton;
+	}
+
+	public PlayerSearchView getPlayerSearchView() {
+		return playerSearchView;
+	}
+
+	public void setPlayerSearchView(PlayerSearchView playerSearchView) {
+		this.playerSearchView = playerSearchView;
 	}
 
 }

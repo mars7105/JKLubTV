@@ -27,6 +27,7 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 	private ImageIcon insertIcon2 = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-ok-3.png")));
 	private ArrayList<Integer> indices;
+	private ELOControl eloControl;
 
 	/**
 	 * 
@@ -40,8 +41,60 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 		indices = new ArrayList<Integer>();
 	}
 
+	public ActionListenerPlayerSearchControl(MainControl mainControl2, ELOControl eloControl) {
+		super();
+		this.mainControl = mainControl2;
+		this.eloControl = eloControl;
+		indices = new ArrayList<Integer>();
+	}
+
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting() == false) {
+			if (eloControl == null) {
+				int index = dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex();
+				ArrayList<Player> spieler = dewisDialogControl.getSearchplayerlist();
+				if (index == -1) {
+
+				} else {
+
+					Player neuerSpieler = spieler.get(index);
+					Boolean savedPlayer = playerExist(neuerSpieler);
+					ListIterator<Integer> lit = indices.listIterator();
+					int counter = 0;
+					Boolean notfound = false;
+					int nf = 0;
+
+					while (lit.hasNext()) {
+						int temp = lit.next();
+
+						if (temp == index && savedPlayer == false) {
+
+							notfound = true;
+							nf = counter;
+							// break;
+
+						}
+						counter++;
+					}
+					if (notfound == true) {
+						indices.remove(nf);
+
+						dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedValue()
+								.setIcon(insertIcon1);
+					}
+					if (notfound == false && savedPlayer == false) {
+						indices.add(dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex());
+
+						dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedValue()
+								.setIcon(insertIcon2);
+					}
+					dewisDialogControl.getDialog().getOkButton().setEnabled(true);
+					dewisDialogControl.getSpielerSearchPanelList().getList().clearSelection();
+
+				}
+
+			}
+		} else {
 			int index = dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex();
 			ArrayList<Player> spieler = dewisDialogControl.getSearchplayerlist();
 			if (index == -1) {
@@ -70,12 +123,14 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 				if (notfound == true) {
 					indices.remove(nf);
 
-					dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedValue().setIcon(insertIcon1);
+					dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedValue()
+							.setIcon(insertIcon1);
 				}
 				if (notfound == false && savedPlayer == false) {
 					indices.add(dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex());
 
-					dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedValue().setIcon(insertIcon2);
+					dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedValue()
+							.setIcon(insertIcon2);
 				}
 				dewisDialogControl.getDialog().getOkButton().setEnabled(true);
 				dewisDialogControl.getSpielerSearchPanelList().getList().clearSelection();

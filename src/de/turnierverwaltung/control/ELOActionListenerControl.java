@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import de.turnierverwaltung.model.CSVVereine;
+import de.turnierverwaltung.model.ELOPlayer;
 import de.turnierverwaltung.model.Player;
 
 /**
@@ -43,12 +44,12 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting() == false) {
 			int index = eloDialogControl.getSpielerDewisView().getList().getSelectedIndex();
-			ArrayList<Player> spieler = eloDialogControl.getPlayers();
+			ArrayList<ELOPlayer> spieler = eloDialogControl.getPlayers();
 			if (index == -1) {
 
 			} else {
 
-				Player neuerSpieler = spieler.get(index);
+				Player neuerSpieler = spieler.get(index).getPlayer();
 				Boolean savedPlayer = playerExist(neuerSpieler);
 				ListIterator<Integer> lit = indices.listIterator();
 				int counter = 0;
@@ -106,14 +107,14 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 		}
 		if (arg0.getSource().equals(eloDialogControl.getDialog().getOkButton())) {
 			try {
-				ArrayList<Player> spieler = eloDialogControl.getPlayers();
+				ArrayList<ELOPlayer> spieler = eloDialogControl.getPlayers();
 				if (spieler != null) {
 
 					ListIterator<Integer> lit = indices.listIterator();
 
 					while (lit.hasNext()) {
 						int temp = lit.next();
-						Player neuerSpieler = spieler.get(temp);
+						Player neuerSpieler = spieler.get(temp).getPlayer();
 						if (playerExist(neuerSpieler) == false) {
 							SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
@@ -148,13 +149,13 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 		return playerExist;
 	}
 
-	public void makeVereinsListe() {
-		if (eloDialogControl.getDialog().getVereinsName().isEnabled()) {
-			String zps = mainControl.getPropertiesControl().getZPS();
-			eloDialogControl.makeVereinsListe(zps);
-		} else if (eloDialogControl.getDialog().getVereinsSuche().getText().length() > 0) {
-			String zps = eloDialogControl.getDialog().getVereinsSuche().getText();
-			eloDialogControl.makeDWZListe(zps);
-		}
-	}
+//	public void makeVereinsListe() {
+//		if (eloDialogControl.getDialog().getVereinsName().isEnabled()) {
+//			String zps = mainControl.getPropertiesControl().getZPS();
+//			eloDialogControl.makeVereinsListe(zps);
+//		} else if (eloDialogControl.getDialog().getVereinsSuche().getText().length() > 0) {
+//			String zps = eloDialogControl.getDialog().getVereinsSuche().getText();
+//			eloDialogControl.makeDWZListe(zps);
+//		}
+//	}
 }

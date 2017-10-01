@@ -14,7 +14,7 @@ public class PlayerSearchView extends JPanel {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTextField searchField;
-	private DSBDWZPlayerView dsbPanel;
+	private JPanel dsbPanel;
 	private ButtonPanelView buttonPane;
 	private JButton okButton;
 	private JButton cancelButton;
@@ -45,6 +45,12 @@ public class PlayerSearchView extends JPanel {
 		add(dsbPanel, BorderLayout.CENTER);
 	}
 
+	public void setDsbPanel(ELOPlayerView spielerSearchPanelList) {
+		remove(this.dsbPanel);
+		this.dsbPanel = spielerSearchPanelList;
+		add(spielerSearchPanelList, BorderLayout.CENTER);
+	}
+
 	public JTextField getSearchField() {
 		return searchField;
 	}
@@ -53,7 +59,7 @@ public class PlayerSearchView extends JPanel {
 		this.searchField = searchField;
 	}
 
-	public DSBDWZPlayerView getDsbPanel() {
+	public JPanel getDsbPanel() {
 		return dsbPanel;
 	}
 

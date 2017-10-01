@@ -182,10 +182,10 @@ public class SettingsView extends JPanel {
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		downloadELOListe();
-//		wrapper = new JPanel();
-//		wrapper.setLayout(new BorderLayout());
-//		wrapper.add(htmlAll, BorderLayout.NORTH);
-//		tabbedPane.addTab(Messages.getString("EigenschaftenView.51"), wrapper);
+		wrapper = new JPanel();
+		wrapper.setLayout(new BorderLayout());
+		wrapper.add(htmlAll, BorderLayout.NORTH);
+		tabbedPane.addTab(Messages.getString("EigenschaftenView.51"), wrapper);
 
 		centerPane.add(tabbedPane, BorderLayout.NORTH);
 		ButtonPanelView buttonPane = new ButtonPanelView();

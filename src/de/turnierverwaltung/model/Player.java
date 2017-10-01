@@ -1,5 +1,7 @@
 package de.turnierverwaltung.model;
 
+import java.time.LocalDateTime;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -38,6 +40,19 @@ public class Player implements Comparable<Object> {
 	private Boolean showPlayer;
 	private int dwzindex;
 
+	private String fideid;
+	private String country;
+	private String sex;
+	private String title;
+	private String w_title;
+	private String o_title;
+	private String foa_title;
+	private String eloRating;
+	private String eloGames;
+	private String k;
+	private String birthday;
+	private String flag;
+
 	public Player() {
 		this.name = "";
 		this.forename = "";
@@ -53,6 +68,50 @@ public class Player implements Comparable<Object> {
 		this.dsbZPSNumber = "";
 		this.dsbMGLNumber = "";
 		this.showPlayer = true;
+	}
+
+	public Player(String name, String fideid, String country, String sex, String title, String w_title, String o_title,
+			String foa_title, String eloRating, String eloGames, String k, String birthday, String flag) {
+		super();
+		this.name = name;
+		this.fideid = fideid;
+		this.country = country;
+		this.sex = sex;
+		this.title = title;
+		this.w_title = w_title;
+		this.o_title = o_title;
+		this.foa_title = foa_title;
+		this.eloRating = eloRating;
+		this.eloGames = eloGames;
+		this.k = k;
+		this.birthday = birthday;
+		this.flag = flag;
+		LocalDateTime now = LocalDateTime.now();
+		int years = now.getYear() - Integer.parseInt(birthday);
+		if (years < 20) {
+			age = 0;
+		}
+		if (years >= 20 && years <= 25) {
+			age = 1;
+		}
+		if (years > 25) {
+			age = 2;
+		}
+		this.forename = "";
+		this.surname = "";
+		this.kuerzel = "";
+		this.dwz = "";
+		this.dwzindex = -1;
+		this.punkte = 0;
+		this.soberg = 0;
+		this.platz = 1;
+		this.spielerId = -1;
+		this.dsbZPSNumber = "";
+		this.dsbMGLNumber = "";
+		this.showPlayer = true;
+		extractNameToForenameAndSurename();
+		extractNameToKuerzel();
+
 	}
 
 	/**
@@ -357,7 +416,6 @@ public class Player implements Comparable<Object> {
 		return dsbZPSNumber;
 	}
 
-	
 	public void setDsbZPSNumber(String dsbZPSNumber) {
 		this.dsbZPSNumber = dsbZPSNumber;
 	}
@@ -365,8 +423,6 @@ public class Player implements Comparable<Object> {
 	public String getDsbMGLNumber() {
 		return dsbMGLNumber;
 	}
-
-	
 
 	public void setDsbMGLNumber(String dsbMGLNumber) {
 		this.dsbMGLNumber = dsbMGLNumber;
@@ -389,4 +445,101 @@ public class Player implements Comparable<Object> {
 		}
 
 	}
+
+	public String getFideid() {
+		return fideid;
+	}
+
+	public void setFideid(String fideid) {
+		this.fideid = fideid;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getW_title() {
+		return w_title;
+	}
+
+	public void setW_title(String w_title) {
+		this.w_title = w_title;
+	}
+
+	public String getO_title() {
+		return o_title;
+	}
+
+	public void setO_title(String o_title) {
+		this.o_title = o_title;
+	}
+
+	public String getFoa_title() {
+		return foa_title;
+	}
+
+	public void setFoa_title(String foa_title) {
+		this.foa_title = foa_title;
+	}
+
+	public String getEloRating() {
+		return eloRating;
+	}
+
+	public void setEloRating(String eloRating) {
+		this.eloRating = eloRating;
+	}
+
+	public String getEloGames() {
+		return eloGames;
+	}
+
+	public void setEloGames(String eloGames) {
+		this.eloGames = eloGames;
+	}
+
+	public String getK() {
+		return k;
+	}
+
+	public void setK(String k) {
+		this.k = k;
+	}
+
+	public String getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+
 }

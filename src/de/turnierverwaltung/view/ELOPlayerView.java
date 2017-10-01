@@ -139,7 +139,5 @@ public class ELOPlayerView extends JPanel {
 		this.listModel = listModel;
 	}
 	
-	// public void setIcon1() {
-	//
-	// }
+	
 }
