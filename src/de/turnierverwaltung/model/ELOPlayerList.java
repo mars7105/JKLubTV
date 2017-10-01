@@ -11,44 +11,37 @@ import java.util.HashMap;
 import com.opencsv.CSVReader;
 
 public class ELOPlayerList {
-	private HashMap<Integer, CSVPlayer> csvPlayer;
+	private HashMap<String, CSVPlayer> csvPlayer;
 	private CSVReader csvReader;
 
 	public ELOPlayerList() {
 
-		csvPlayer = new HashMap<Integer, CSVPlayer>();
+		csvPlayer = new HashMap<String, CSVPlayer>();
 	}
 
-	public HashMap<Integer, CSVPlayer> getCsvPlayer() {
+	public HashMap<String, CSVPlayer> getCsvPlayer() {
 		return csvPlayer;
 	}
 
-	public void setCsvPlayer(HashMap<Integer, CSVPlayer> csvPlayer) {
+	public void setCsvPlayer(HashMap<String, CSVPlayer> csvPlayer) {
 		this.csvPlayer = csvPlayer;
 	}
 
-	public void addPlayer(String zps, String mgl, CSVPlayer csv_Player) {
-		int key = decodeKey(zps, mgl);
-		if (key >= 0) {
-			csvPlayer.put(key, csv_Player);
-		}
+	public void addPlayer(String key, CSVPlayer csv_Player) {
+
+		csvPlayer.put(key, csv_Player);
+
 	}
 
 	public ArrayList<Player> getPlayerOfVerein(String zps) {
 		ArrayList<Player> temp = new ArrayList<Player>();
-		int zpsi = 0;
-		int key = 0;
-		try {
-			zpsi = Integer.parseInt(zps);
-			key = zpsi * 10000;
-			for (int i = 0; i < 9999; i++) {
 
-				if (csvPlayer.containsKey(key + i)) {
-					temp.add(csvPlayer.get(key + i).getPlayer());
-				}
+		for (int i = 0; i < 9999; i++) {
+			String number = Integer.toString(i);
+			String key = keyGenerator(zps, number);
+			if (csvPlayer.containsKey(key)) {
+				temp.add(csvPlayer.get(key).getPlayer());
 			}
-		} catch (NumberFormatException e) {
-			temp = null;
 		}
 
 		return temp;
@@ -56,23 +49,28 @@ public class ELOPlayerList {
 	}
 
 	public CSVPlayer getPlayer(String zps, String mgl) {
-		int key = decodeKey(zps, mgl);
-		if (key >= 0) {
-			return csvPlayer.get(key);
-		} else {
-			return null;
-		}
+		String key = keyGenerator(zps, mgl);
+
+		return csvPlayer.get(key);
+
 	}
 
-	private int decodeKey(String zps, String mgl) {
-		try {
-			int zpsi = Integer.parseInt(zps);
-			int mgli = Integer.parseInt(mgl);
-			int key = (zpsi * 10000) + mgli;
-			return key;
-		} catch (NumberFormatException e) {
-			return -1;
+	private String keyGenerator(String zps, String mgl) {
+		int length = mgl.length();
+		if (length > 0 && length < 4) {
+			StringBuffer sb = new StringBuffer(mgl);
+			for (int i = length; i < 4; i++) {
+				sb.insert(0, "0");
+			}
+			mgl = sb.toString();
+
 		}
+		if (mgl.equals("0000")) {
+			mgl = "";
+
+		}
+
+		return zps + mgl;
 	}
 
 	public void loadPlayerCSVList(String csvFilenameSpieler) throws IOException, ArrayIndexOutOfBoundsException {
@@ -103,12 +101,14 @@ public class ELOPlayerList {
 					String csvFIDE_Land = new String(row[13]);
 					String[] getrennt = csvSpielername.split("\\,");
 					String name = getrennt[1] + " " + getrennt[0];
+					String key = keyGenerator(csvZPS, csvMgl_Nr);
+					if (key.length() > 0) {
+						addPlayer(key,
+								new CSVPlayer(csvZPS, csvMgl_Nr, csvStatus, name, csvGeschlecht, csvSpielberechtigung,
+										csvGeburtsjahr, csvLetzte_Auswertung, csvDWZ, csvIndex, csvFIDE_Elo,
+										csvFIDE_Titel, csvFIDE_ID, csvFIDE_Land));
 
-					addPlayer(csvZPS, csvMgl_Nr,
-							new CSVPlayer(csvZPS, csvMgl_Nr, csvStatus, name, csvGeschlecht, csvSpielberechtigung,
-									csvGeburtsjahr, csvLetzte_Auswertung, csvDWZ, csvIndex, csvFIDE_Elo, csvFIDE_Titel,
-									csvFIDE_ID, csvFIDE_Land));
-
+					}
 				}
 			}
 			// ...

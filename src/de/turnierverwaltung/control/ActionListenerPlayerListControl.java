@@ -30,7 +30,6 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 		naviView.getSpielerImport().addActionListener(this);
 		naviView.getSpielerDEWISSearchButton().addActionListener(this);
 		naviView.getUpdateButton().addActionListener(this);
-		
 
 	}
 
@@ -82,7 +81,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 				spielerHinzufuegenView.closeWindow();
 			}
 		}
-		if (arg0.getSource().equals( naviView.getSpielerImport())) {
+		if (arg0.getSource().equals(naviView.getSpielerImport())) {
 			SQLImportPlayerListControl spielerImport = new SQLImportPlayerListControl(mainControl);
 			try {
 				spielerImport.importSpielerTable();
@@ -92,7 +91,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 				mainControl.fileSQLError();
 			}
 		}
-		if (arg0.getSource().equals( naviView.getSpielerExport())) {
+		if (arg0.getSource().equals(naviView.getSpielerExport())) {
 			SQLExportPlayerListControl spielerExport = new SQLExportPlayerListControl(this.mainControl);
 			try {
 				spielerExport.exportSpielerTable();
@@ -101,11 +100,12 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 			}
 		}
 
-		if (arg0.getSource().equals( naviView.getSpielerDEWISSearchButton())) {
+		if (arg0.getSource().equals(naviView.getSpielerDEWISSearchButton())) {
 			dewisDialogControl = new DSBDWZControl(mainControl);
 			dewisDialogControl.makeDialog();
+			dewisDialogControl.makePlayerSearchList();
 		}
-		if (arg0.getSource().equals( naviView.getSpielerAddButton())) {
+		if (arg0.getSource().equals(naviView.getSpielerAddButton())) {
 			spielerHinzufuegenView = new NewPlayerView();
 
 			spielerHinzufuegenView.getOkButton().addActionListener(this);
@@ -113,7 +113,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 			spielerHinzufuegenView.getTextFieldKuerzel().addFocusListener(this);
 			mainControl.setEnabled(false);
 		}
-		if (arg0.getSource().equals( naviView.getUpdateButton())) {
+		if (arg0.getSource().equals(naviView.getUpdateButton())) {
 			try {
 
 				updateSpieler();
@@ -189,7 +189,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 								player.setDwzindex(temp.getDwzindex());
 								try {
 									spielerTableControl.updateOneSpieler(player);
-//									System.out.println(player.getName());
+									// System.out.println(player.getName());
 								} catch (SQLException e) {
 									// TODO Auto-generated catch block
 									e.printStackTrace();

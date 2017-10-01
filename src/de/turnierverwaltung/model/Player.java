@@ -357,14 +357,7 @@ public class Player implements Comparable<Object> {
 		return dsbZPSNumber;
 	}
 
-	public int getDsbZPSNumberInt() {
-		try {
-			return Integer.parseInt(dsbZPSNumber);
-		} catch (NumberFormatException e) {
-			return -1;
-		}
-	}
-
+	
 	public void setDsbZPSNumber(String dsbZPSNumber) {
 		this.dsbZPSNumber = dsbZPSNumber;
 	}
@@ -373,13 +366,7 @@ public class Player implements Comparable<Object> {
 		return dsbMGLNumber;
 	}
 
-	public int getDsbMGLNumberInt() {
-		try {
-			return Integer.parseInt(dsbMGLNumber);
-		} catch (NumberFormatException e) {
-			return -1;
-		}
-	}
+	
 
 	public void setDsbMGLNumber(String dsbMGLNumber) {
 		this.dsbMGLNumber = dsbMGLNumber;

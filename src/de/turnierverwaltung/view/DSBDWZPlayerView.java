@@ -138,8 +138,6 @@ public class DSBDWZPlayerView extends JPanel {
 	public void setListModel(DefaultListModel<ListItem> listModel) {
 		this.listModel = listModel;
 	}
-	
-	// public void setIcon1() {
-	//
-	// }
+
+
 }

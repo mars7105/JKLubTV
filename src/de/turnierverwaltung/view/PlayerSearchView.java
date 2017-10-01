@@ -1,0 +1,76 @@
+package de.turnierverwaltung.view;
+
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class PlayerSearchView extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextField searchField;
+	private DSBDWZPlayerView dsbPanel;
+	private ButtonPanelView buttonPane;
+	private JButton okButton;
+	private JButton cancelButton;
+
+	public PlayerSearchView() {
+		searchField = new JTextField(20);
+		JLabel searchFieldLabel = new JLabel(Messages.getString("PlayerSearchView.0"));
+		setLayout(new BorderLayout());
+		JPanel searchPanel = new JPanel();
+		searchPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		searchPanel.add(searchFieldLabel);
+		searchPanel.add(searchField);
+		add(searchPanel, BorderLayout.NORTH);
+		this.dsbPanel = new DSBDWZPlayerView();
+		add(this.dsbPanel, BorderLayout.CENTER);
+		buttonPane = new ButtonPanelView();
+		buttonPane.makeAllButtons();
+		okButton = buttonPane.getOkButton();
+		cancelButton = buttonPane.getCancelButton();
+		okButton.setText(Messages.getString("DEWISDialogView.6"));
+		cancelButton.setText(Messages.getString("DEWISDialogView.7"));
+		add(buttonPane, BorderLayout.SOUTH);
+	}
+
+	public void setDsbPanel(DSBDWZPlayerView dsbPanel) {
+		remove(this.dsbPanel);
+		this.dsbPanel = dsbPanel;
+		add(dsbPanel, BorderLayout.CENTER);
+	}
+
+	public JTextField getSearchField() {
+		return searchField;
+	}
+
+	public void setSearchField(JTextField searchField) {
+		this.searchField = searchField;
+	}
+
+	public DSBDWZPlayerView getDsbPanel() {
+		return dsbPanel;
+	}
+
+	public JButton getOkButton() {
+		return okButton;
+	}
+
+	public void setOkButton(JButton okButton) {
+		this.okButton = okButton;
+	}
+
+	public JButton getCancelButton() {
+		return cancelButton;
+	}
+
+	public void setCancelButton(JButton cancelButton) {
+		this.cancelButton = cancelButton;
+	}
+
+}

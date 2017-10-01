@@ -6,71 +6,51 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.ListIterator;
 
 import com.opencsv.CSVReader;
 
-public class CSVPlayerList {
-	private HashMap<String, CSVPlayer> csvPlayer;
+public class CSVPlayerArrayList {
+	private ArrayList<CSVPlayer> csvPlayer;
 	private CSVReader csvReader;
 
-	public CSVPlayerList() {
+	public CSVPlayerArrayList() {
 
-		csvPlayer = new HashMap<String, CSVPlayer>();
+		csvPlayer = new ArrayList<CSVPlayer>();
 	}
 
-	public HashMap<String, CSVPlayer> getCsvPlayer() {
+	public ArrayList<CSVPlayer> getCsvPlayer() {
 		return csvPlayer;
 	}
 
-	public void setCsvPlayer(HashMap<String, CSVPlayer> csvPlayer) {
+	public void setCsvPlayer(ArrayList<CSVPlayer> csvPlayer) {
 		this.csvPlayer = csvPlayer;
 	}
 
-	public void addPlayer(String key, CSVPlayer csv_Player) {
+	public void addPlayer(CSVPlayer csv_Player) {
 
-		csvPlayer.put(key, csv_Player);
+		csvPlayer.add(csv_Player);
 
 	}
 
-	public ArrayList<Player> getPlayerOfVerein(String zps) {
-		ArrayList<Player> temp = new ArrayList<Player>();
+	public ArrayList<CSVPlayer> getAllPlayer() {
 
-		for (int i = 0; i < 9999; i++) {
-			String number = Integer.toString(i);
-			String key = keyGenerator(zps, number);
-			if (csvPlayer.containsKey(key)) {
-				temp.add(csvPlayer.get(key).getPlayer());
+		return csvPlayer;
+
+	}
+
+	
+
+	public Player getPlayer(String zps, String mgl) {
+
+		ListIterator<CSVPlayer> list = csvPlayer.listIterator();
+		while (list.hasNext()) {
+			Player tmp = list.next().getPlayer();
+			if (tmp.getDsbZPSNumber().equals(zps) && tmp.getDsbMGLNumber().equals(mgl)) {
+				return tmp;
 			}
 		}
-
-		return temp;
-
-	}
-
-	public CSVPlayer getPlayer(String zps, String mgl) {
-		String key = keyGenerator(zps, mgl);
-
-		return csvPlayer.get(key);
-
-	}
-
-	private String keyGenerator(String zps, String mgl) {
-		int length = mgl.length();
-		if (length > 0 && length < 4) {
-			StringBuffer sb = new StringBuffer(mgl);
-			for (int i = length; i < 4; i++) {
-				sb.insert(0, "0");
-			}
-			mgl = sb.toString();
-
-		}
-		if (mgl.equals("0000")) {
-			mgl = "";
-
-		}
-
-		return zps + mgl;
+		return null;
 	}
 
 	public void loadPlayerCSVList(String csvFilenameSpieler) throws IOException, ArrayIndexOutOfBoundsException {
@@ -101,13 +81,11 @@ public class CSVPlayerList {
 					String csvFIDE_Land = new String(row[13]);
 					String[] getrennt = csvSpielername.split("\\,");
 					String name = getrennt[1] + " " + getrennt[0];
-					String key = keyGenerator(csvZPS, csvMgl_Nr);
-					if (key.length() > 0) {
-						addPlayer(key,
-								new CSVPlayer(csvZPS, csvMgl_Nr, csvStatus, name, csvGeschlecht, csvSpielberechtigung,
-										csvGeburtsjahr, csvLetzte_Auswertung, csvDWZ, csvIndex, csvFIDE_Elo,
-										csvFIDE_Titel, csvFIDE_ID, csvFIDE_Land));
-					}
+
+					addPlayer(new CSVPlayer(csvZPS, csvMgl_Nr, csvStatus, name, csvGeschlecht, csvSpielberechtigung,
+							csvGeburtsjahr, csvLetzte_Auswertung, csvDWZ, csvIndex, csvFIDE_Elo, csvFIDE_Titel,
+							csvFIDE_ID, csvFIDE_Land));
+
 				}
 			}
 			csvReader.close();

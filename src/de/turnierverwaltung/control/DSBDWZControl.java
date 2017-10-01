@@ -1,5 +1,7 @@
 package de.turnierverwaltung.control;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.IOException;
 
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
@@ -27,7 +29,10 @@ import java.util.ListIterator;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
+import de.turnierverwaltung.model.CSVPlayer;
+import de.turnierverwaltung.model.CSVPlayerArrayList;
 import de.turnierverwaltung.model.CSVPlayerList;
 import de.turnierverwaltung.model.CSVVereine;
 import de.turnierverwaltung.model.CSVVereineList;
@@ -47,6 +52,10 @@ public class DSBDWZControl {
 	private DSBDWZActionListenerControl dewisDialogActionListenerControl;
 	private ArrayList<Player> spielerListe;
 	private Boolean csvFiles;
+	private JTextField spielerSearchTextField;
+	private DSBDWZPlayerView spielerSearchPanelList;
+	private ArrayList<CSVPlayer> playerlist;
+	private ArrayList<Player> searchplayerlist;
 
 	/**
 	 * 
@@ -67,7 +76,7 @@ public class DSBDWZControl {
 	 *            = ZPS number of the association
 	 */
 	public void makeDWZListe(String zps) {
-
+		spielerDewisView = new DSBDWZPlayerView();
 		DSBDWZClub verein = null;
 		players = new ArrayList<Player>();
 		if (csvFiles == true) {
@@ -101,8 +110,7 @@ public class DSBDWZControl {
 		}
 		if (players != null) {
 			Collections.sort(players, new SortSurname());
-
-			spielerDewisView = new DSBDWZPlayerView();
+			
 
 			ListIterator<Player> list = players.listIterator();
 			while (list.hasNext()) {
@@ -129,7 +137,7 @@ public class DSBDWZControl {
 				if (foundPlayer == false) {
 					spielerDewisView.makeSpielerZeile(player, 0);
 				}
-				
+
 			}
 			spielerDewisView.makeList();
 			spielerDewisView.updateUI();
@@ -146,8 +154,101 @@ public class DSBDWZControl {
 			dialog.setDsbPanel(noItemPanel);
 
 		}
+
 		dialog.refresh();
 
+	}
+
+	public void makePlayerSearchList() {
+		if (csvFiles == true) {
+			CSVPlayerArrayList csvplayerlist = new CSVPlayerArrayList();
+			try {
+				csvplayerlist.loadPlayerCSVList(mainControl.getPropertiesControl().getPathToPlayersCSV());
+			} catch (ArrayIndexOutOfBoundsException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			} catch (IOException e3) {
+				// TODO Auto-generated catch block
+				e3.printStackTrace();
+			}
+
+			ActionListenerPlayerSearchControl psc = new ActionListenerPlayerSearchControl(mainControl, this);
+			spielerSearchTextField = dialog.getPlayerSearchView().getSearchField();
+			dialog.getPlayerSearchView().getOkButton().addActionListener(psc);
+			dialog.getPlayerSearchView().getCancelButton().addActionListener(psc);
+			spielerSearchTextField.addKeyListener(new KeyListener() {
+
+				@Override
+				public void keyPressed(KeyEvent e) {
+
+				}
+
+				@Override
+				public void keyReleased(KeyEvent e) {
+					spielerSearchPanelList = new DSBDWZPlayerView();
+					dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
+					searchplayerlist = new ArrayList<Player>();
+
+					playerlist = csvplayerlist.getAllPlayer();
+					String eingabe = spielerSearchTextField.getText().toUpperCase();
+					ListIterator<CSVPlayer> li = playerlist.listIterator();
+					int counter = 0;
+					while (li.hasNext() && counter < 20) {
+						CSVPlayer tmp = li.next();
+						String surname = "";
+						String forename = "";
+						String name = "";
+						if (tmp.getPlayer().getSurname().length() >= eingabe.length()) {
+							surname = tmp.getPlayer().getSurname().substring(0, eingabe.length()).toUpperCase();
+						}
+						if (tmp.getPlayer().getForename().length() >= eingabe.length()) {
+							forename = tmp.getPlayer().getForename().substring(0, eingabe.length()).toUpperCase();
+						}
+						if (tmp.getPlayer().getName().length() >= eingabe.length()) {
+							name = tmp.getPlayer().getName().substring(0, eingabe.length()).toUpperCase();
+						}
+						if (eingabe.equals(surname) || eingabe.equals(forename) || eingabe.equals(name)) {
+
+							ListIterator<Player> list = spielerListe.listIterator();
+							Boolean foundPlayer = false;
+							while (list.hasNext()) {
+								Player temp = list.next();
+								try {
+									int tmpzps = Integer.parseInt(temp.getDsbZPSNumber());
+									int tmpmgl = Integer.parseInt(temp.getDsbMGLNumber());
+									int playerzps = Integer.parseInt(tmp.getPlayer().getDsbZPSNumber());
+									int playermgl = Integer.parseInt(tmp.getPlayer().getDsbMGLNumber());
+									if (tmpzps == playerzps && tmpmgl == playermgl) {
+										spielerSearchPanelList.makeSpielerZeile(tmp.getPlayer(), 2);
+										searchplayerlist.add(tmp.getPlayer());
+										foundPlayer = true;
+
+									}
+								} catch (NumberFormatException e2) {
+
+								}
+							}
+							if (foundPlayer == false) {
+								spielerSearchPanelList.makeSpielerZeile(tmp.getPlayer(), 0);
+								searchplayerlist.add(tmp.getPlayer());
+							}
+
+							counter++;
+						}
+
+					}
+					spielerSearchPanelList.makeList();
+					spielerSearchPanelList.updateUI();
+					spielerSearchPanelList.getList().addListSelectionListener(psc);
+
+				}
+
+				@Override
+				public void keyTyped(KeyEvent e) {
+
+				}
+			});
+		}
 	}
 
 	/**
@@ -248,22 +349,22 @@ public class DSBDWZControl {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Boolean searchSpieler(Player neuerSpieler, Boolean updateDWZ) throws SQLException {
-		Player player = players.get(neuerSpieler.getDsbMGLNumberInt());
-
-		if ((player.getDWZ() != neuerSpieler.getDWZ() && updateDWZ == true)) {
-
-			SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-			neuerSpieler.setDwz(player.getDWZ());
-
-			neuerSpieler.setDwzindex(player.getDwzindex());
-			stc.updateOneSpieler(neuerSpieler);
-			return true;
-		} else {
-			return false;
-		}
-
-	}
+//	public Boolean searchSpieler(Player neuerSpieler, Boolean updateDWZ) throws SQLException {
+//		Player player = players.get(neuerSpieler.getDsbMGLNumberInt());
+//
+//		if ((player.getDWZ() != neuerSpieler.getDWZ() && updateDWZ == true)) {
+//
+//			SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+//			neuerSpieler.setDwz(player.getDWZ());
+//
+//			neuerSpieler.setDwzindex(player.getDwzindex());
+//			stc.updateOneSpieler(neuerSpieler);
+//			return true;
+//		} else {
+//			return false;
+//		}
+//
+//	}
 
 	public DSBDWZDialogView getDialog() {
 		return dialog;
@@ -295,6 +396,30 @@ public class DSBDWZControl {
 
 	public void setZpsItems(ArrayList<CSVVereine> zpsItems) {
 		this.zpsItems = zpsItems;
+	}
+
+	public DSBDWZPlayerView getSpielerSearchPanelList() {
+		return spielerSearchPanelList;
+	}
+
+	public void setSpielerSearchPanelList(DSBDWZPlayerView spielerSearchPanelList) {
+		this.spielerSearchPanelList = spielerSearchPanelList;
+	}
+
+	public ArrayList<CSVPlayer> getPlayerlist() {
+		return playerlist;
+	}
+
+	public void setPlayerlist(ArrayList<CSVPlayer> playerlist) {
+		this.playerlist = playerlist;
+	}
+
+	public ArrayList<Player> getSearchplayerlist() {
+		return searchplayerlist;
+	}
+
+	public void setSearchplayerlist(ArrayList<Player> searchplayerlist) {
+		this.searchplayerlist = searchplayerlist;
 	}
 
 }

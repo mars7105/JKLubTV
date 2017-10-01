@@ -69,6 +69,8 @@ public class DSBDWZDialogView extends JDialog {
 	private ImageIcon tabIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-new-2.png")));
 
+	private PlayerSearchView playerSearchView;
+
 	/**
 	 * Create the dialog.
 	 * 
@@ -141,7 +143,7 @@ public class DSBDWZDialogView extends JDialog {
 		}
 		contentPanel.add(suchePanel, BorderLayout.NORTH);
 		dsbPanel = new JPanel();
-
+		playerSearchView = new PlayerSearchView();
 		buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();
 		okButton = buttonPane.getOkButton();
@@ -153,12 +155,17 @@ public class DSBDWZDialogView extends JDialog {
 		contentPanel.add(buttonPane, BorderLayout.SOUTH);
 		if (cvsFiles == false) {
 			DSBDWZInfoView sv = new DSBDWZInfoView();
+
 			JTabbedPane tp = new JTabbedPane();
 			tp.addTab(Messages.getString("DEWISDialogView.0"), tabIcon, contentPanel);
 			tp.addTab("Info", infoIcon, sv);
 			getContentPane().add(tp, BorderLayout.CENTER);
 		} else {
-			getContentPane().add(contentPanel, BorderLayout.CENTER);
+			JTabbedPane tp = new JTabbedPane();
+			
+			tp.addTab(Messages.getString("DEWISDialogView.0"), tabIcon, contentPanel);
+			tp.addTab(Messages.getString("DEWISDialogView.8"), tabIcon, playerSearchView);
+			getContentPane().add(tp, BorderLayout.CENTER);
 		}
 		pack();
 
@@ -166,6 +173,8 @@ public class DSBDWZDialogView extends JDialog {
 		setVisible(true);
 		setLocationRelativeTo(null);
 	}
+
+	
 
 	class OpenUrlAction implements ActionListener {
 		@Override
@@ -208,6 +217,14 @@ public class DSBDWZDialogView extends JDialog {
 		getContentPanel().updateUI();
 		pack();
 		setLocationRelativeTo(null);
+	}
+
+	public PlayerSearchView getPlayerSearchView() {
+		return playerSearchView;
+	}
+
+	public void setPlayerSearchView(PlayerSearchView playerSearchView) {
+		this.playerSearchView = playerSearchView;
 	}
 
 	public ButtonPanelView getButtonPanel() {

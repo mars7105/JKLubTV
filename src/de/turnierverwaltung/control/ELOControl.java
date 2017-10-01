@@ -248,22 +248,22 @@ public class ELOControl {
 	 * @return
 	 * @throws SQLException
 	 */
-	public Boolean searchSpieler(Player neuerSpieler, Boolean updateDWZ) throws SQLException {
-		Player player = players.get(neuerSpieler.getDsbMGLNumberInt());
-
-		if ((player.getDWZ() != neuerSpieler.getDWZ() && updateDWZ == true)) {
-
-			SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-			neuerSpieler.setDwz(player.getDWZ());
-
-			neuerSpieler.setDwzindex(player.getDwzindex());
-			stc.updateOneSpieler(neuerSpieler);
-			return true;
-		} else {
-			return false;
-		}
-
-	}
+//	public Boolean searchSpieler(Player neuerSpieler, Boolean updateDWZ) throws SQLException {
+//		Player player = players.get(neuerSpieler.getDsbMGLNumberInt());
+//
+//		if ((player.getDWZ() != neuerSpieler.getDWZ() && updateDWZ == true)) {
+//
+//			SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+//			neuerSpieler.setDwz(player.getDWZ());
+//
+//			neuerSpieler.setDwzindex(player.getDwzindex());
+//			stc.updateOneSpieler(neuerSpieler);
+//			return true;
+//		} else {
+//			return false;
+//		}
+//
+//	}
 
 	public ELODialogView getDialog() {
 		return dialog;
