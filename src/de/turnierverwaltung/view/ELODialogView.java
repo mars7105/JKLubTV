@@ -17,23 +17,15 @@ package de.turnierverwaltung.view;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.BorderLayout;
-import java.awt.Desktop;
-import java.awt.FlowLayout;
 import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -52,9 +44,6 @@ public class ELODialogView extends JDialog {
 	private JButton cancelButton;
 
 	private ButtonPanelView buttonPane;
-	private URI dwzdbURI;
-	private JButton dwzdbButton;
-
 	private JTextField vereinsName;
 
 	private JComboBox<String> vereinsAuswahl;
@@ -75,7 +64,7 @@ public class ELODialogView extends JDialog {
 	 * 
 	 * @throws URISyntaxException
 	 */
-	public ELODialogView(Boolean cvsFiles) throws URISyntaxException {
+	public ELODialogView() {
 
 		this.setAlwaysOnTop(true);
 		setTitle(Messages.getString("DEWISDialogView.0")); //$NON-NLS-1$
@@ -86,61 +75,61 @@ public class ELODialogView extends JDialog {
 		contentPanel.setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		vereinsSuche = new JTextField(25);
-		JPanel suchePanel = new JPanel();
-		suchePanel.setLayout(new BoxLayout(suchePanel, BoxLayout.PAGE_AXIS));
-		if (cvsFiles == false) {
-			dwzdbURI = new URI("http://www.schachbund.de/verein.html"); //$NON-NLS-1$
-
-			dwzdbButton = new JButton();
-			dwzdbButton.setText("<HTML><FONT color=\"#000099\"><U>Vereinssuche (ZPS Nummer)</U></FONT></HTML>"); //$NON-NLS-1$
-			// buttonDatePicker.setHorizontalAlignment(SwingConstants.LEFT);
-			// buttonDatePicker.setBorderPainted(false);
-			dwzdbButton.setOpaque(false);
-			// buttonDatePicker.setBackground(Color.WHITE);
-			dwzdbButton.setToolTipText(dwzdbURI.toString());
-			dwzdbButton.addActionListener(new OpenUrlAction());
-
-			JPanel zeilenPanel = new JPanel();
-			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-			zeilenPanel.add(dwzdbButton);
-			suchePanel.add(zeilenPanel);
-			zeilenPanel = new JPanel();
-			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-			JLabel vereinsSucheLabel = new JLabel(Messages.getString("DEWISDialogView.3")); //$NON-NLS-1$
-
-			vereinsSucheButton = new JButton(Messages.getString("DEWISDialogView.4"), searchIcon);
-
-			zeilenPanel.add(vereinsSucheLabel);
-
-			suchePanel.add(zeilenPanel);
-			zeilenPanel = new JPanel();
-			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-			zeilenPanel.add(vereinsSuche);
-			zeilenPanel.add(vereinsSucheButton);
-			suchePanel.add(zeilenPanel);
-		}
-		if (cvsFiles == true) {
-			JPanel zeilenPanel = new JPanel();
-			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-			zeilenPanel.add(new JLabel(Messages.getString("DEWISDialogView.1"))); //$NON-NLS-1$
-			suchePanel.add(zeilenPanel);
-
-			zeilenPanel = new JPanel();
-			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-			suchePanel.add(zeilenPanel);
-
-			vereinsAuswahl = new JComboBox<String>();
-			vereinsAuswahlOkButton = new JButton("Ok");
-
-			zeilenPanel = new JPanel();
-			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-			zeilenPanel.add(vereinsAuswahl);
-			zeilenPanel.add(vereinsAuswahlOkButton);
-
-			suchePanel.add(zeilenPanel);
-
-		}
-		contentPanel.add(suchePanel, BorderLayout.NORTH);
+//		JPanel suchePanel = new JPanel();
+//		suchePanel.setLayout(new BoxLayout(suchePanel, BoxLayout.PAGE_AXIS));
+//		if (cvsFiles == false) {
+//			dwzdbURI = new URI("http://www.schachbund.de/verein.html"); //$NON-NLS-1$
+//
+//			dwzdbButton = new JButton();
+//			dwzdbButton.setText("<HTML><FONT color=\"#000099\"><U>Vereinssuche (ZPS Nummer)</U></FONT></HTML>"); //$NON-NLS-1$
+//			// buttonDatePicker.setHorizontalAlignment(SwingConstants.LEFT);
+//			// buttonDatePicker.setBorderPainted(false);
+//			dwzdbButton.setOpaque(false);
+//			// buttonDatePicker.setBackground(Color.WHITE);
+//			dwzdbButton.setToolTipText(dwzdbURI.toString());
+//			dwzdbButton.addActionListener(new OpenUrlAction());
+//
+//			JPanel zeilenPanel = new JPanel();
+//			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//			zeilenPanel.add(dwzdbButton);
+//			suchePanel.add(zeilenPanel);
+//			zeilenPanel = new JPanel();
+//			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//			JLabel vereinsSucheLabel = new JLabel(Messages.getString("DEWISDialogView.3")); //$NON-NLS-1$
+//
+//			vereinsSucheButton = new JButton(Messages.getString("DEWISDialogView.4"), searchIcon);
+//
+//			zeilenPanel.add(vereinsSucheLabel);
+//
+//			suchePanel.add(zeilenPanel);
+//			zeilenPanel = new JPanel();
+//			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//			zeilenPanel.add(vereinsSuche);
+//			zeilenPanel.add(vereinsSucheButton);
+//			suchePanel.add(zeilenPanel);
+//		}
+//		if (cvsFiles == true) {
+//			JPanel zeilenPanel = new JPanel();
+//			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//			zeilenPanel.add(new JLabel(Messages.getString("DEWISDialogView.1"))); //$NON-NLS-1$
+//			suchePanel.add(zeilenPanel);
+//
+//			zeilenPanel = new JPanel();
+//			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//			suchePanel.add(zeilenPanel);
+//
+//			vereinsAuswahl = new JComboBox<String>();
+//			vereinsAuswahlOkButton = new JButton("Ok");
+//
+//			zeilenPanel = new JPanel();
+//			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//			zeilenPanel.add(vereinsAuswahl);
+//			zeilenPanel.add(vereinsAuswahlOkButton);
+//
+//			suchePanel.add(zeilenPanel);
+//
+//		}
+//		contentPanel.add(suchePanel, BorderLayout.NORTH);
 		dsbPanel = new JPanel();
 		playerSearchView = new PlayerSearchView();
 		buttonPane = new ButtonPanelView();
@@ -150,22 +139,24 @@ public class ELODialogView extends JDialog {
 		okButton.setText(Messages.getString("DEWISDialogView.6"));
 		cancelButton.setText(Messages.getString("DEWISDialogView.7"));
 
-		contentPanel.add(dsbPanel, BorderLayout.CENTER);
+		contentPanel.add(playerSearchView, BorderLayout.CENTER);
 		contentPanel.add(buttonPane, BorderLayout.SOUTH);
-		if (cvsFiles == false) {
-			DSBDWZInfoView sv = new DSBDWZInfoView();
-
-			JTabbedPane tp = new JTabbedPane();
-			tp.addTab(Messages.getString("DEWISDialogView.0"), tabIcon, contentPanel);
-			tp.addTab("Info", infoIcon, sv);
-			getContentPane().add(tp, BorderLayout.CENTER);
-		} else {
-			JTabbedPane tp = new JTabbedPane();
-			
-			tp.addTab(Messages.getString("DEWISDialogView.0"), tabIcon, contentPanel);
-			tp.addTab(Messages.getString("DEWISDialogView.8"), tabIcon, playerSearchView);
-			getContentPane().add(tp, BorderLayout.CENTER);
-		}
+//		if (cvsFiles == false) {
+//			DSBDWZInfoView sv = new DSBDWZInfoView();
+//
+//			JTabbedPane tp = new JTabbedPane();
+//			tp.addTab(Messages.getString("DEWISDialogView.0"), tabIcon, contentPanel);
+//			tp.addTab("Info", infoIcon, sv);
+//			getContentPane().add(tp, BorderLayout.CENTER);
+//		} else {
+//			JTabbedPane tp = new JTabbedPane();
+//			
+//			tp.addTab(Messages.getString("DEWISDialogView.0"), tabIcon, contentPanel);
+//			tp.addTab(Messages.getString("DEWISDialogView.8"), tabIcon, playerSearchView);
+//			getContentPane().add(tp, BorderLayout.CENTER);
+//		}
+//		contentPanel.add(playerSearchView)
+		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		pack();
 
 		setEnabled(true);
@@ -173,26 +164,26 @@ public class ELODialogView extends JDialog {
 		setLocationRelativeTo(null);
 	}
 
-	class OpenUrlAction implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (e.getSource().equals(dwzdbButton)) {
-				open(dwzdbURI);
-			}
+//	class OpenUrlAction implements ActionListener {
+//		@Override
+//		public void actionPerformed(ActionEvent e) {
+//			if (e.getSource().equals(dwzdbButton)) {
+//				open(dwzdbURI);
+//			}
+//
+//		}
+//
+//	}
 
-		}
-
-	}
-
-	private static void open(URI uri) {
-		if (Desktop.isDesktopSupported()) {
-			try {
-				Desktop.getDesktop().browse(uri);
-			} catch (IOException e) {
-				/* TODO: error handling */}
-		} else {
-			/* TODO: error handling */}
-	}
+//	private static void open(URI uri) {
+//		if (Desktop.isDesktopSupported()) {
+//			try {
+//				Desktop.getDesktop().browse(uri);
+//			} catch (IOException e) {
+//				/* TODO: error handling */}
+//		} else {
+//			/* TODO: error handling */}
+//	}
 
 	public void closeWindow() {
 		this.dispose();

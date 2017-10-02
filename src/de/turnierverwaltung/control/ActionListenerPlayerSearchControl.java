@@ -95,8 +95,8 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 
 			}
 		} else {
-			int index = dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex();
-			ArrayList<Player> spieler = dewisDialogControl.getSearchplayerlist();
+			int index = eloControl.getSpielerSearchPanelList().getList().getSelectedIndex();
+			ArrayList<Player> spieler = eloControl.getSearchplayerlist();
 			if (index == -1) {
 
 			} else {
@@ -123,17 +123,17 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 				if (notfound == true) {
 					indices.remove(nf);
 
-					dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedValue()
+					eloControl.getSpielerSearchPanelList().getList().getSelectedValue()
 							.setIcon(insertIcon1);
 				}
 				if (notfound == false && savedPlayer == false) {
-					indices.add(dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex());
+					indices.add(eloControl.getSpielerSearchPanelList().getList().getSelectedIndex());
 
-					dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedValue()
+					eloControl.getSpielerSearchPanelList().getList().getSelectedValue()
 							.setIcon(insertIcon2);
 				}
-				dewisDialogControl.getDialog().getOkButton().setEnabled(true);
-				dewisDialogControl.getSpielerSearchPanelList().getList().clearSelection();
+				eloControl.getDialog().getOkButton().setEnabled(true);
+				eloControl.getSpielerSearchPanelList().getList().clearSelection();
 
 			}
 
@@ -142,7 +142,7 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-
+		if (eloControl == null) {
 		if (arg0.getSource().equals(dewisDialogControl.getDialog().getPlayerSearchView().getCancelButton())) {
 			dewisDialogControl.getDialog().closeWindow();
 		}
@@ -175,7 +175,39 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 				mainControl.fileSQLError();
 			}
 		}
+		}else {
+			if (arg0.getSource().equals(eloControl.getDialog().getPlayerSearchView().getCancelButton())) {
+				eloControl.getDialog().closeWindow();
+			}
+			if (arg0.getSource().equals(eloControl.getDialog().getPlayerSearchView().getOkButton())) {
+				try {
+					ArrayList<Player> spieler = eloControl.getSearchplayerlist();
+					if (spieler != null) {
 
+						ListIterator<Integer> lit = indices.listIterator();
+
+						while (lit.hasNext()) {
+							int temp = lit.next();
+							Player neuerSpieler = spieler.get(temp);
+							if (playerExist(neuerSpieler) == false) {
+								SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+								neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+								mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+								eloControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
+										.setIcon(insertIcon3);
+
+							}
+							eloControl.getSpielerSearchPanelList().getList().setSelectedIndex(temp);
+
+						}
+
+					}
+
+					mainControl.getSpielerLadenControl().updateSpielerListe();
+				} catch (SQLException e) {
+					mainControl.fileSQLError();
+				}
+		}}
 	}
 
 	private boolean playerExist(Player neuerSpieler) {

@@ -86,15 +86,24 @@ public class Player implements Comparable<Object> {
 		this.k = k;
 		this.birthday = birthday;
 		this.flag = flag;
-		LocalDateTime now = LocalDateTime.now();
-		int years = now.getYear() - Integer.parseInt(birthday);
-		if (years < 20) {
-			age = 0;
-		}
-		if (years >= 20 && years <= 25) {
-			age = 1;
-		}
-		if (years > 25) {
+		try {
+			if (birthday.length() > 0) {
+				LocalDateTime now = LocalDateTime.now();
+				int years = now.getYear() - Integer.parseInt(birthday);
+				if (years < 20) {
+					age = 0;
+				}
+				if (years >= 20 && years <= 25) {
+					age = 1;
+				}
+				if (years > 25) {
+					age = 2;
+				}
+			} else {
+				this.birthday = "";
+				age = 2;
+			}
+		} catch (NumberFormatException e) {
 			age = 2;
 		}
 		this.forename = "";

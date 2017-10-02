@@ -3,6 +3,7 @@ package de.turnierverwaltung.control;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ListIterator;
@@ -92,14 +93,30 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 				ArrayList<CSVVereine> items = dewisDialogControl.getZpsItems();
 				int index = dewisDialogControl.getDialog().getVereinsAuswahl().getSelectedIndex();
 				String zps = items.get(index).getCsvZPS();
-				dewisDialogControl.makeDWZListe(zps);
+				try {
+					dewisDialogControl.makeDWZListe(zps);
+				} catch (ArrayIndexOutOfBoundsException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 
 		}
 
 		if (arg0.getSource() .equals( dewisDialogControl.getDialog().getVereinsSucheButton())) {
 			String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
-			dewisDialogControl.makeDWZListe(zps);
+			try {
+				dewisDialogControl.makeDWZListe(zps);
+			} catch (ArrayIndexOutOfBoundsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		if (arg0.getSource() .equals( dewisDialogControl.getDialog().getCancelButton())) {
 			dewisDialogControl.getDialog().closeWindow();
@@ -148,7 +165,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 		return playerExist;
 	}
 
-	public void makeVereinsListe() {
+	public void makeVereinsListe() throws ArrayIndexOutOfBoundsException, IOException {
 		if (dewisDialogControl.getDialog().getVereinsName().isEnabled()) {
 			String zps = mainControl.getPropertiesControl().getZPS();
 			dewisDialogControl.makeVereinsListe(zps);

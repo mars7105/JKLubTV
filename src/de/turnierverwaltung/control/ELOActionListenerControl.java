@@ -9,7 +9,6 @@ import java.util.ListIterator;
 import javax.swing.ImageIcon;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import de.turnierverwaltung.model.CSVVereine;
 import de.turnierverwaltung.model.ELOPlayer;
 import de.turnierverwaltung.model.Player;
 
@@ -88,20 +87,9 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource().equals(eloDialogControl.getDialog().getVereinsAuswahlOkButton())) {
-			if (eloDialogControl.getDialog().getVereinsAuswahl().getItemCount() > 0) {
-				ArrayList<CSVVereine> items = eloDialogControl.getZpsItems();
-				int index = eloDialogControl.getDialog().getVereinsAuswahl().getSelectedIndex();
-				String zps = items.get(index).getCsvZPS();
-				eloDialogControl.makeDWZListe(zps);
-			}
+		
 
-		}
-
-		if (arg0.getSource().equals(eloDialogControl.getDialog().getVereinsSucheButton())) {
-			String zps = eloDialogControl.getDialog().getVereinsSuche().getText();
-			eloDialogControl.makeDWZListe(zps);
-		}
+		
 		if (arg0.getSource().equals(eloDialogControl.getDialog().getCancelButton())) {
 			eloDialogControl.getDialog().closeWindow();
 		}
@@ -138,15 +126,15 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 	}
 
 	private boolean playerExist(Player neuerSpieler) {
-		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
-		Boolean playerExist = false;
-		try {
-			playerExist = spielerTableControl.playerExist(neuerSpieler);
-
-		} catch (SQLException e) {
-			mainControl.fileSQLError();
-		}
-		return playerExist;
+//		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
+//		Boolean playerExist = false;
+//		try {
+//			playerExist = spielerTableControl.playerExist(neuerSpieler);
+//
+//		} catch (SQLException e) {
+//			mainControl.fileSQLError();
+//		}
+		return false;
 	}
 
 //	public void makeVereinsListe() {

@@ -395,6 +395,12 @@ public class PropertiesControl {
 
 	}
 
+	public Boolean checkPathToELOXML() {
+		String path = prop.getProperty(PATHTOPLAYERSELO);
+		return checkPath(path);
+
+	}
+
 	public String getPathToDatabase() {
 		return prop.getProperty(PATHTODATABASE);
 	}

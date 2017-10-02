@@ -1,10 +1,12 @@
 package de.turnierverwaltung.model;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ELOPlayerList {
 	private ArrayList<ELOPlayer> playerList;
+
 	public ELOPlayerList() {
 
 		playerList = new ArrayList<ELOPlayer>();
@@ -24,9 +26,9 @@ public class ELOPlayerList {
 
 	}
 
-	public void readEloList(String filename) {
-		ReadXMLFile readXMLFile = new ReadXMLFile();
-		playerList = readXMLFile.readFile(filename);
+	public void readEloList(String filename) throws IOException {
+		ReadTXTFile readTXTFile = new ReadTXTFile();
+		playerList = readTXTFile.readFile(filename);
 
 	}
 
@@ -45,5 +47,5 @@ public class ELOPlayerList {
 			return false;
 		}
 	}
-	
+
 }

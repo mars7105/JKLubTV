@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -102,13 +103,29 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 
 		if (arg0.getSource().equals(naviView.getSpielerDEWISSearchButton())) {
 			dewisDialogControl = new DSBDWZControl(mainControl);
-			dewisDialogControl.makeDialog();
-			dewisDialogControl.makePlayerSearchList();
+			try {
+				dewisDialogControl.makeDialog();
+				dewisDialogControl.makePlayerSearchList();
+			} catch (ArrayIndexOutOfBoundsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		if (arg0.getSource().equals(naviView.getSpielerELOSearchButton())) {
-			ELOControl eloDialogControl = new ELOControl(mainControl);
-			eloDialogControl.makeDialog();
-			eloDialogControl.makePlayerSearchList();
+			ELOControl eloDialogControl;
+			try {
+				eloDialogControl = new ELOControl(mainControl);
+				eloDialogControl.makeDialog();
+				eloDialogControl.makePlayerSearchList();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		if (arg0.getSource().equals(naviView.getSpielerAddButton())) {
 			spielerHinzufuegenView = new NewPlayerView();

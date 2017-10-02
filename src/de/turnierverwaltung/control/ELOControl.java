@@ -2,6 +2,7 @@ package de.turnierverwaltung.control;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
@@ -19,12 +20,8 @@ import java.awt.event.KeyListener;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import java.net.URISyntaxException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ListIterator;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import de.turnierverwaltung.model.CSVVereine;
 import de.turnierverwaltung.model.ELOPlayer;
@@ -40,121 +37,45 @@ public class ELOControl {
 	private ArrayList<ELOPlayer> players;
 	private ArrayList<CSVVereine> zpsItems;
 	private ELOActionListenerControl dewisDialogActionListenerControl;
-	private ArrayList<Player> spielerListe;
-	private Boolean csvFiles;
+	private Boolean eloFile;
 	private JTextField spielerSearchTextField;
 	private ELOPlayerView spielerSearchPanelList;
 	private ArrayList<Player> searchplayerlist;
 	private ArrayList<ELOPlayer> playerlist;
+	private ELOPlayerList csvplayerlist;
 
 	/**
 	 * 
 	 * @param mainControl
+	 * @throws IOException 
 	 */
-	public ELOControl(MainControl mainControl) {
+	public ELOControl(MainControl mainControl) throws IOException {
 		super();
 		this.mainControl = mainControl;
-		csvFiles = mainControl.getPropertiesControl().checkPathToVereineCSV()
-				&& mainControl.getPropertiesControl().checkPathToSpielerCSV();
+		eloFile = mainControl.getPropertiesControl().checkPathToELOXML();
 		dewisDialogActionListenerControl = new ELOActionListenerControl(this.mainControl, this);
+		if (eloFile == true) {
+			csvplayerlist = new ELOPlayerList();
 
-	}
-
-	/**
-	 * 
-	 * @param zps
-	 *            = ZPS number of the association
-	 */
-	public void makeDWZListe(String zps) {
-
-		players = null;
-		if (csvFiles == true) {
-			try {
-				ELOPlayerList csvplayerlist = new ELOPlayerList();
-				csvplayerlist.readEloList(mainControl.getPropertiesControl().getPathToPlayersELO());
-				players = csvplayerlist.getPlayerList();
-
-				SQLPlayerControl sqlpc = new SQLPlayerControl(mainControl);
-
-				try {
-					spielerListe = sqlpc.getAllSpieler();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				if (players != null) {
-
-					spielerDewisView = new ELOPlayerView();
-
-					ListIterator<ELOPlayer> list = players.listIterator();
-					while (list.hasNext()) {
-
-						Player player = list.next().getPlayer();
-						ListIterator<Player> li = spielerListe.listIterator();
-						Boolean foundPlayer = false;
-						while (li.hasNext()) {
-							Player tmp = li.next();
-							try {
-								int tmpzps = Integer.parseInt(tmp.getDsbZPSNumber());
-								int tmpmgl = Integer.parseInt(tmp.getDsbMGLNumber());
-								int playerzps = Integer.parseInt(player.getDsbZPSNumber());
-								int playermgl = Integer.parseInt(player.getDsbMGLNumber());
-								if (tmpzps == playerzps && tmpmgl == playermgl) {
-									spielerDewisView.makeSpielerZeile(player, 2);
-									foundPlayer = true;
-
-								}
-							} catch (NumberFormatException e) {
-
-							}
-						}
-						if (foundPlayer == false) {
-							spielerDewisView.makeSpielerZeile(player, 0);
-						}
-
-					}
-					spielerDewisView.makeList();
-					spielerDewisView.updateUI();
-					spielerDewisView.getList().addListSelectionListener(dewisDialogActionListenerControl);
-					dialog.setDsbPanel(spielerDewisView);
-					mainControl.getPropertiesControl().setZPS(zps);
-					mainControl.getPropertiesControl().writeProperties();
-					// dialog.getUpdateButton().setEnabled(true);
-				} else {
-					// dialog.getUpdateButton().setEnabled(false);
-					JLabel noItemLabel = new JLabel(Messages.getString("DewisDialogControl.0")); //$NON-NLS-1$
-					JPanel noItemPanel = new JPanel();
-					noItemPanel.add(noItemLabel);
-					dialog.setDsbPanel(noItemPanel);
-
-				}
-				dialog.refresh();
-			} catch (ArrayIndexOutOfBoundsException e2) {
-
-			}
+			csvplayerlist.readEloList(mainControl.getPropertiesControl().getPathToPlayersELO());
+			playerlist = csvplayerlist.getPlayerList();
 		}
 	}
 
+	
 	/**
 	* 
 	*/
 	public void makeDialog() {
-		// Boolean csvFiles = vereinsSuche.checkifSpielerFileExist();
 		if (dialog == null) {
-			try {
-				dialog = new ELODialogView(csvFiles);
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+			dialog = new ELODialogView();
+
 		} else {
 			dialog.dispose();
-			try {
-				dialog = new ELODialogView(csvFiles);
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+			dialog = new ELODialogView();
+
 		}
 
 		dialog.getOkButton().addActionListener(dewisDialogActionListenerControl);
@@ -164,14 +85,7 @@ public class ELOControl {
 	}
 
 	public void makePlayerSearchList() {
-		if (csvFiles == true) {
-			ELOPlayerList csvplayerlist = new ELOPlayerList();
-			try {
-				csvplayerlist.readEloList(mainControl.getPropertiesControl().getPathToPlayersELO());
-			} catch (ArrayIndexOutOfBoundsException e3) {
-				// TODO Auto-generated catch block
-				e3.printStackTrace();
-			}
+		if (eloFile == true) {
 
 			ActionListenerPlayerSearchControl psc = new ActionListenerPlayerSearchControl(mainControl, this);
 			spielerSearchTextField = dialog.getPlayerSearchView().getSearchField();
@@ -190,7 +104,7 @@ public class ELOControl {
 					dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
 					searchplayerlist = new ArrayList<Player>();
 
-					playerlist = csvplayerlist.getPlayerList();
+					
 					String eingabe = spielerSearchTextField.getText().toUpperCase();
 					ListIterator<ELOPlayer> li = playerlist.listIterator();
 					int counter = 0;
@@ -210,29 +124,8 @@ public class ELOControl {
 						}
 						if (eingabe.equals(surname) || eingabe.equals(forename) || eingabe.equals(name)) {
 
-							ListIterator<Player> list = spielerListe.listIterator();
-							Boolean foundPlayer = false;
-							while (list.hasNext()) {
-								Player temp = list.next();
-								try {
-									int tmpzps = Integer.parseInt(temp.getDsbZPSNumber());
-									int tmpmgl = Integer.parseInt(temp.getDsbMGLNumber());
-									int playerzps = Integer.parseInt(tmp.getPlayer().getDsbZPSNumber());
-									int playermgl = Integer.parseInt(tmp.getPlayer().getDsbMGLNumber());
-									if (tmpzps == playerzps && tmpmgl == playermgl) {
-										spielerSearchPanelList.makeSpielerZeile(tmp.getPlayer(), 2);
-										searchplayerlist.add(tmp.getPlayer());
-										foundPlayer = true;
-
-									}
-								} catch (NumberFormatException e2) {
-
-								}
-							}
-							if (foundPlayer == false) {
-								spielerSearchPanelList.makeSpielerZeile(tmp.getPlayer(), 0);
-								searchplayerlist.add(tmp.getPlayer());
-							}
+							spielerSearchPanelList.makeSpielerZeile(tmp.getPlayer(), 0);
+							searchplayerlist.add(tmp.getPlayer());
 
 							counter++;
 						}
@@ -252,15 +145,7 @@ public class ELOControl {
 		}
 	}
 
-	// private void errorHandler() {
-	// csvFiles = false;
-	// mainControl.getPropertiesControl().setPathToVereineCSV("");
-	// mainControl.getPropertiesControl().setPathToPlayersCSV("");
-	// dialog.dispose();
-	// JOptionPane.showMessageDialog(null,
-	// Messages.getString("DewisDialogControl.7"),
-	// Messages.getString("DewisDialogControl.8"), JOptionPane.INFORMATION_MESSAGE);
-	// }
+	
 
 	public ELODialogView getDialog() {
 		return dialog;
@@ -292,6 +177,22 @@ public class ELOControl {
 
 	public void setZpsItems(ArrayList<CSVVereine> zpsItems) {
 		this.zpsItems = zpsItems;
+	}
+
+	public ELOPlayerView getSpielerSearchPanelList() {
+		return spielerSearchPanelList;
+	}
+
+	public void setSpielerSearchPanelList(ELOPlayerView spielerSearchPanelList) {
+		this.spielerSearchPanelList = spielerSearchPanelList;
+	}
+
+	public ArrayList<Player> getSearchplayerlist() {
+		return searchplayerlist;
+	}
+
+	public void setSearchplayerlist(ArrayList<Player> searchplayerlist) {
+		this.searchplayerlist = searchplayerlist;
 	}
 
 }
