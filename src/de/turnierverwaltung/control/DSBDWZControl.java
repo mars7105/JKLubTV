@@ -67,8 +67,18 @@ public class DSBDWZControl {
 		csvFiles = mainControl.getPropertiesControl().checkPathToVereineCSV()
 				&& mainControl.getPropertiesControl().checkPathToSpielerCSV();
 		dewisDialogActionListenerControl = new DSBDWZActionListenerControl(this.mainControl, this);
-		
-		
+		CSVPlayerArrayList csvplayerlist = new CSVPlayerArrayList();
+
+		try {
+			csvplayerlist.loadPlayerCSVList(mainControl.getPropertiesControl().getPathToPlayersCSV());
+		} catch (ArrayIndexOutOfBoundsException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		playerlist = csvplayerlist.getAllPlayer();
 
 	}
 
@@ -76,8 +86,8 @@ public class DSBDWZControl {
 	 * 
 	 * @param zps
 	 *            = ZPS number of the association
-	 * @throws IOException 
-	 * @throws ArrayIndexOutOfBoundsException 
+	 * @throws IOException
+	 * @throws ArrayIndexOutOfBoundsException
 	 */
 	public void makeDWZListe(String zps) throws ArrayIndexOutOfBoundsException, IOException {
 		spielerDewisView = new DSBDWZPlayerView();
@@ -153,10 +163,6 @@ public class DSBDWZControl {
 
 	public void makePlayerSearchList() throws ArrayIndexOutOfBoundsException, IOException {
 		if (csvFiles == true) {
-			CSVPlayerArrayList csvplayerlist = new CSVPlayerArrayList();
-
-			csvplayerlist.loadPlayerCSVList(mainControl.getPropertiesControl().getPathToPlayersCSV());
-			playerlist = csvplayerlist.getAllPlayer();
 
 			ActionListenerPlayerSearchControl psc = new ActionListenerPlayerSearchControl(mainControl, this);
 			spielerSearchTextField = dialog.getPlayerSearchView().getSearchField();
@@ -174,7 +180,6 @@ public class DSBDWZControl {
 					spielerSearchPanelList = new DSBDWZPlayerView();
 					dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
 					searchplayerlist = new ArrayList<Player>();
-
 					String eingabe = spielerSearchTextField.getText().toUpperCase();
 					ListIterator<CSVPlayer> li = playerlist.listIterator();
 					int counter = 0;
@@ -237,10 +242,10 @@ public class DSBDWZControl {
 	}
 
 	/**
-	 * @throws IOException 
-	 * @throws ArrayIndexOutOfBoundsException 
-	* 
-	*/
+	 * @throws IOException
+	 * @throws ArrayIndexOutOfBoundsException
+	 * 
+	 */
 	public void makeDialog() throws ArrayIndexOutOfBoundsException, IOException {
 		// Boolean csvFiles = vereinsSuche.checkifSpielerFileExist();
 		if (dialog == null) {
@@ -328,31 +333,7 @@ public class DSBDWZControl {
 				Messages.getString("DewisDialogControl.8"), JOptionPane.INFORMATION_MESSAGE);
 	}
 
-	/**
-	 * @param neuerSpieler
-	 *            = new player
-	 * @param updateDWZ
-	 *            = update the dwz
-	 * @return
-	 * @throws SQLException
-	 */
-	// public Boolean searchSpieler(Player neuerSpieler, Boolean updateDWZ) throws
-	// SQLException {
-	// Player player = players.get(neuerSpieler.getDsbMGLNumberInt());
-	//
-	// if ((player.getDWZ() != neuerSpieler.getDWZ() && updateDWZ == true)) {
-	//
-	// SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-	// neuerSpieler.setDwz(player.getDWZ());
-	//
-	// neuerSpieler.setDwzindex(player.getDwzindex());
-	// stc.updateOneSpieler(neuerSpieler);
-	// return true;
-	// } else {
-	// return false;
-	// }
-	//
-	// }
+	
 
 	public DSBDWZDialogView getDialog() {
 		return dialog;

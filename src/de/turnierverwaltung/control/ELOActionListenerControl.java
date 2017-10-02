@@ -9,7 +9,6 @@ import java.util.ListIterator;
 import javax.swing.ImageIcon;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import de.turnierverwaltung.model.ELOPlayer;
 import de.turnierverwaltung.model.Player;
 
 /**
@@ -43,12 +42,12 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting() == false) {
 			int index = eloDialogControl.getSpielerDewisView().getList().getSelectedIndex();
-			ArrayList<ELOPlayer> spieler = eloDialogControl.getPlayers();
+			ArrayList<Player> spieler = eloDialogControl.getSearchplayerlist();
 			if (index == -1) {
 
 			} else {
 
-				Player neuerSpieler = spieler.get(index).getPlayer();
+				Player neuerSpieler = spieler.get(index);
 				Boolean savedPlayer = playerExist(neuerSpieler);
 				ListIterator<Integer> lit = indices.listIterator();
 				int counter = 0;
@@ -62,7 +61,7 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 
 						notfound = true;
 						nf = counter;
-						// break;
+//						 break;
 
 					}
 					counter++;
@@ -77,7 +76,7 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 
 					eloDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon2);
 				}
-				eloDialogControl.getDialog().getOkButton().setEnabled(true);
+				eloDialogControl.getDialog().getPlayerSearchView().getOkButton().setEnabled(true);
 				eloDialogControl.getSpielerDewisView().getList().clearSelection();
 
 			}
@@ -90,19 +89,19 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 		
 
 		
-		if (arg0.getSource().equals(eloDialogControl.getDialog().getCancelButton())) {
+		if (arg0.getSource().equals(eloDialogControl.getDialog().getPlayerSearchView().getCancelButton())) {
 			eloDialogControl.getDialog().closeWindow();
 		}
-		if (arg0.getSource().equals(eloDialogControl.getDialog().getOkButton())) {
+		if (arg0.getSource().equals(eloDialogControl.getDialog().getPlayerSearchView().getOkButton())) {
 			try {
-				ArrayList<ELOPlayer> spieler = eloDialogControl.getPlayers();
+				ArrayList<Player> spieler = eloDialogControl.getSearchplayerlist();
 				if (spieler != null) {
 
 					ListIterator<Integer> lit = indices.listIterator();
 
 					while (lit.hasNext()) {
 						int temp = lit.next();
-						Player neuerSpieler = spieler.get(temp).getPlayer();
+						Player neuerSpieler = spieler.get(temp);
 						if (playerExist(neuerSpieler) == false) {
 							SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
@@ -111,7 +110,7 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 									.setIcon(insertIcon3);
 
 						}
-						eloDialogControl.getSpielerDewisView().getList().setSelectedIndex(temp);
+//						eloDialogControl.getSpielerDewisView().getList().setSelectedIndex(temp);
 
 					}
 

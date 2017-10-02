@@ -132,7 +132,7 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 					eloControl.getSpielerSearchPanelList().getList().getSelectedValue()
 							.setIcon(insertIcon2);
 				}
-				eloControl.getDialog().getOkButton().setEnabled(true);
+				eloControl.getDialog().getPlayerSearchView().getOkButton().setEnabled(true);
 				eloControl.getSpielerSearchPanelList().getList().clearSelection();
 
 			}

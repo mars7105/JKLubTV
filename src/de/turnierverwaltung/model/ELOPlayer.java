@@ -34,11 +34,10 @@ public class ELOPlayer {
 	}
 
 	public Player getPlayer() {
-		
 
 		Player player = new Player(name, fideid, country, sex, title, w_title, o_title, foa_title, rating, games, k,
 				birthday, flag);
-		
+
 		return player;
 	}
 

@@ -70,6 +70,7 @@ public class DSBDWZDialogView extends JDialog {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-new-2.png")));
 
 	private PlayerSearchView playerSearchView;
+	private JLabel statusLabel;
 
 	/**
 	 * Create the dialog.
@@ -152,7 +153,13 @@ public class DSBDWZDialogView extends JDialog {
 		cancelButton.setText(Messages.getString("DEWISDialogView.7"));
 
 		contentPanel.add(dsbPanel, BorderLayout.CENTER);
-		contentPanel.add(buttonPane, BorderLayout.SOUTH);
+
+		statusLabel = new JLabel("Test");
+		JPanel southPanel = new JPanel();
+		southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
+		southPanel.add(statusLabel);
+		southPanel.add(buttonPane);
+		contentPanel.add(southPanel, BorderLayout.SOUTH);
 		if (cvsFiles == false) {
 			DSBDWZInfoView sv = new DSBDWZInfoView();
 
@@ -162,7 +169,7 @@ public class DSBDWZDialogView extends JDialog {
 			getContentPane().add(tp, BorderLayout.CENTER);
 		} else {
 			JTabbedPane tp = new JTabbedPane();
-			
+
 			tp.addTab(Messages.getString("DEWISDialogView.0"), tabIcon, contentPanel);
 			tp.addTab(Messages.getString("DEWISDialogView.8"), tabIcon, playerSearchView);
 			getContentPane().add(tp, BorderLayout.CENTER);
@@ -173,8 +180,6 @@ public class DSBDWZDialogView extends JDialog {
 		setVisible(true);
 		setLocationRelativeTo(null);
 	}
-
-	
 
 	class OpenUrlAction implements ActionListener {
 		@Override

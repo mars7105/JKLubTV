@@ -139,7 +139,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 									.setIcon(insertIcon3);
 
 						}
-						dewisDialogControl.getSpielerDewisView().getList().setSelectedIndex(temp);
+//						dewisDialogControl.getSpielerDewisView().getList().setSelectedIndex(temp);
 
 					}
 

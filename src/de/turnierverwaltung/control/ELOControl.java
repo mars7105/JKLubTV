@@ -47,13 +47,12 @@ public class ELOControl {
 	/**
 	 * 
 	 * @param mainControl
-	 * @throws IOException 
+	 * @throws IOException
 	 */
 	public ELOControl(MainControl mainControl) throws IOException {
 		super();
 		this.mainControl = mainControl;
 		eloFile = mainControl.getPropertiesControl().checkPathToELOXML();
-		dewisDialogActionListenerControl = new ELOActionListenerControl(this.mainControl, this);
 		if (eloFile == true) {
 			csvplayerlist = new ELOPlayerList();
 
@@ -62,7 +61,6 @@ public class ELOControl {
 		}
 	}
 
-	
 	/**
 	* 
 	*/
@@ -77,10 +75,11 @@ public class ELOControl {
 			dialog = new ELODialogView();
 
 		}
+		dewisDialogActionListenerControl = new ELOActionListenerControl(this.mainControl, this);
 
-		dialog.getOkButton().addActionListener(dewisDialogActionListenerControl);
-		dialog.getCancelButton().addActionListener(dewisDialogActionListenerControl);
-		dialog.getOkButton().setEnabled(false);
+		dialog.getPlayerSearchView().getOkButton().addActionListener(dewisDialogActionListenerControl);
+		dialog.getPlayerSearchView().getCancelButton().addActionListener(dewisDialogActionListenerControl);
+		dialog.getPlayerSearchView().getOkButton().setEnabled(false);
 
 	}
 
@@ -103,8 +102,6 @@ public class ELOControl {
 					spielerSearchPanelList = new ELOPlayerView();
 					dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
 					searchplayerlist = new ArrayList<Player>();
-
-					
 					String eingabe = spielerSearchTextField.getText().toUpperCase();
 					ListIterator<ELOPlayer> li = playerlist.listIterator();
 					int counter = 0;
@@ -144,8 +141,6 @@ public class ELOControl {
 			});
 		}
 	}
-
-	
 
 	public ELODialogView getDialog() {
 		return dialog;

@@ -51,7 +51,6 @@ public class ELOPlayerView extends JPanel {
 
 	private ImageIcon insertIcon3 = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user.png")));
-
 	public ELOPlayerView() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
 		windowHeight = TournamentConstants.WINDOW_HEIGHT;
@@ -112,6 +111,7 @@ public class ELOPlayerView extends JPanel {
 		list.setVisibleRowCount(-1);
 		list.setCellRenderer(new MyCellRenderer());
 		contentPanel.add(list);
+		
 		contentPanel.updateUI();
 	}
 
