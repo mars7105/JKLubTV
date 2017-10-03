@@ -7,6 +7,7 @@ import java.util.ListIterator;
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 
 public class HTMLToClipBoardDialogView extends JDialog {
@@ -48,14 +49,21 @@ public class HTMLToClipBoardDialogView extends JDialog {
 			main.add(list.next());
 		}
 
-		main.add(statusLabel);
+		
+		JPanel mainPanel = new JPanel();
+		mainPanel.setLayout(new BorderLayout());
 		add(titleview, BorderLayout.NORTH);
-		add(main, BorderLayout.CENTER);
+
+		
+		mainPanel.add(main, BorderLayout.NORTH);
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportView(mainPanel);
+		add(scrollPane, BorderLayout.CENTER);
 		buttonPanel.makeOKButton();
 		JPanel southPanel = new JPanel();
 		southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.PAGE_AXIS));
 		southPanel.add(new JSeparator());
-
+		southPanel.add(statusLabel);
 		southPanel.add(buttonPanel);
 
 		add(southPanel, BorderLayout.SOUTH);
