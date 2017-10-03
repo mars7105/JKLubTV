@@ -1,6 +1,6 @@
 package de.turnierverwaltung.model;
 
-public class DSBData {
+public class DWZData {
 	private String csvZPS;
 	private String csvMgl_Nr;
 	private String csvStatus;
@@ -16,7 +16,7 @@ public class DSBData {
 	private String csvFIDE_ID;
 	private String csvFIDE_Land;
 
-	public DSBData(String csvZPS, String csvMgl_Nr, String csvStatus, String csvSpielername, String csvGeschlecht,
+	public DWZData(String csvZPS, String csvMgl_Nr, String csvStatus, String csvSpielername, String csvGeschlecht,
 			String csvSpielberechtigung, String csvGeburtsjahr, String csvLetzte_Auswertung, String csvDWZ,
 			String csvIndex, String csvFIDE_Elo, String csvFIDE_Titel, String csvFIDE_ID, String csvFIDE_Land) {
 		super();
@@ -36,7 +36,7 @@ public class DSBData {
 		this.csvFIDE_Land = csvFIDE_Land;
 	}
 
-	public DSBData() {
+	public DWZData() {
 		this.csvZPS = "";
 		this.csvMgl_Nr = "";
 		this.csvStatus = "";

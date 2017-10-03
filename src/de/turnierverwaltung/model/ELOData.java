@@ -1,6 +1,6 @@
 package de.turnierverwaltung.model;
 
-public class FideData {
+public class ELOData {
 	private String fideid;
 	private String name;
 
@@ -16,7 +16,7 @@ public class FideData {
 	private String birthday;
 	private String flag;
 
-	public FideData(String fideid, String name, String country, String sex, String title, String w_title,
+	public ELOData(String fideid, String name, String country, String sex, String title, String w_title,
 			String o_title, String foa_title, String rating, String games, String k, String birthday, String flag) {
 		super();
 		this.fideid = fideid;
@@ -35,7 +35,7 @@ public class FideData {
 
 	}
 
-	public FideData() {
+	public ELOData() {
 		this.fideid = "";
 		this.name = "";
 		this.country = "";

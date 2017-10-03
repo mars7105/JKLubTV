@@ -110,4 +110,28 @@ public class SQLiteDAOFactory extends DAOFactory {
 		return infoDAO;
 	}
 
+	@Override
+	public DWZDataDAO getDWZDataDAO() {
+		DWZDataDAO dwzDataDAO = new SQLiteDWZDataDAO();
+		return dwzDataDAO;
+	}
+
+	@Override
+	public DWZVereineDAO getDWZVereineDAO() {
+		DWZVereineDAO dwzVereineDAO = new SQLiteVereineDAO();
+		return dwzVereineDAO;
+	}
+
+	@Override
+	public DWZVerbandDAO getDWZVerbandDAO() {
+		DWZVerbandDAO verbandDAO = new SQLiteVerbandDAO();
+		return verbandDAO;
+	}
+
+	@Override
+	public ELODataDAO getELODataDAO() {
+		ELODataDAO eloDataDAO = new SQLiteELODataDAO();
+		return eloDataDAO;
+	}
+
 }

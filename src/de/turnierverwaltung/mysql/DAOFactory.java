@@ -22,7 +22,7 @@ public abstract class DAOFactory {
 	public static DAOFactory getDAOFactory(int database) {
 		switch (SQLITE) {
 		case DAOFactory.MYSQL:
-			return new MySQLDAOFactory();
+			return null;
 		case DAOFactory.ORACLE:
 			return null;
 		case DAOFactory.SQLITE:
@@ -44,7 +44,14 @@ public abstract class DAOFactory {
 	public abstract Turnier_has_SpielerDAO getTurnier_has_SpielerDAO();
 
 	public abstract TurnierDAO getTurnierDAO();
-	
+
 	public abstract InfoDAO getInfoDAO();
 
+	public abstract DWZVerbandDAO getDWZVerbandDAO();
+
+	public abstract DWZVereineDAO getDWZVereineDAO();
+
+	public abstract DWZDataDAO getDWZDataDAO();
+
+	public abstract ELODataDAO getELODataDAO();
 }
