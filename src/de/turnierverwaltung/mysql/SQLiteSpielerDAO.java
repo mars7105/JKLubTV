@@ -40,7 +40,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				+ ";";
 
 		Statement stmt;
-		if (this.dbConnect != null) {
+		if (this.dbConnect != null) { 
 
 			// create a database connection
 			stmt = this.dbConnect.createStatement();
@@ -120,6 +120,28 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 		if (id >= 0) {
 			returnStatement = true;
 		}
+//		else {
+//			String sql2 = "Select * from spieler where ZPS LIKE '" + neuerSpieler.getFideid() + "' AND MGL LIKE '%"
+//					+ neuerSpieler.getDsbMGLNumber() + "';";
+//			
+//			int id2 = -1;
+//			Statement stmt2;
+//			if (this.dbConnect != null) {
+//
+//				try {
+//					stmt2 = this.dbConnect.createStatement();
+//					ResultSet rs = stmt2.executeQuery(sql2);
+//					while (rs.next()) {
+//						id2 = rs.getInt("idSpieler");
+//
+//					}
+//					stmt2.close();
+//				} catch (SQLException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//			}
+//		}
 		return returnStatement;
 	}
 

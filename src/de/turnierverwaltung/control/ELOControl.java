@@ -50,7 +50,7 @@ public class ELOControl {
 	 * @throws IOException
 	 */
 	public ELOControl(MainControl mainControl) throws IOException {
-		super();
+		super(); 
 		this.mainControl = mainControl;
 		eloFile = mainControl.getPropertiesControl().checkPathToELOXML();
 		if (eloFile == true) {
@@ -59,6 +59,7 @@ public class ELOControl {
 			csvplayerlist.readEloList(mainControl.getPropertiesControl().getPathToPlayersELO());
 			playerlist = csvplayerlist.getPlayerList();
 		}
+
 	}
 
 	/**
@@ -75,21 +76,20 @@ public class ELOControl {
 			dialog = new ELODialogView();
 
 		}
-		dewisDialogActionListenerControl = new ELOActionListenerControl(this.mainControl, this);
 
-		dialog.getPlayerSearchView().getOkButton().addActionListener(dewisDialogActionListenerControl);
-		dialog.getPlayerSearchView().getCancelButton().addActionListener(dewisDialogActionListenerControl);
+		
 		dialog.getPlayerSearchView().getOkButton().setEnabled(false);
 
 	}
 
 	public void makePlayerSearchList() {
 		if (eloFile == true) {
-
-			ActionListenerPlayerSearchControl psc = new ActionListenerPlayerSearchControl(mainControl, this);
+			dewisDialogActionListenerControl = new ELOActionListenerControl(this.mainControl, this);
+			dialog.getPlayerSearchView().getOkButton().addActionListener(dewisDialogActionListenerControl);
+			dialog.getPlayerSearchView().getCancelButton().addActionListener(dewisDialogActionListenerControl);
+//			ELOActionListenerControl psc = new ELOActionListenerControl(mainControl, this);
 			spielerSearchTextField = dialog.getPlayerSearchView().getSearchField();
-			dialog.getPlayerSearchView().getOkButton().addActionListener(psc);
-			dialog.getPlayerSearchView().getCancelButton().addActionListener(psc);
+
 			spielerSearchTextField.addKeyListener(new KeyListener() {
 
 				@Override
@@ -130,7 +130,7 @@ public class ELOControl {
 					}
 					spielerSearchPanelList.makeList();
 					spielerSearchPanelList.updateUI();
-					spielerSearchPanelList.getList().addListSelectionListener(psc);
+					spielerSearchPanelList.getList().addListSelectionListener(dewisDialogActionListenerControl);
 
 				}
 

@@ -41,7 +41,7 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting() == false) {
-			int index = eloDialogControl.getSpielerDewisView().getList().getSelectedIndex();
+			int index = eloDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex();
 			ArrayList<Player> spieler = eloDialogControl.getSearchplayerlist();
 			if (index == -1) {
 
@@ -49,6 +49,7 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 
 				Player neuerSpieler = spieler.get(index);
 				Boolean savedPlayer = playerExist(neuerSpieler);
+				savedPlayer = false;
 				ListIterator<Integer> lit = indices.listIterator();
 				int counter = 0;
 				Boolean notfound = false;
@@ -61,7 +62,7 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 
 						notfound = true;
 						nf = counter;
-//						 break;
+						// break;
 
 					}
 					counter++;
@@ -69,15 +70,15 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 				if (notfound == true) {
 					indices.remove(nf);
 
-					eloDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon1);
+					eloDialogControl.getSpielerSearchPanelList().getList().getSelectedValue().setIcon(insertIcon1);
 				}
 				if (notfound == false && savedPlayer == false) {
-					indices.add(eloDialogControl.getSpielerDewisView().getList().getSelectedIndex());
+					indices.add(eloDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex());
 
-					eloDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon2);
+					eloDialogControl.getSpielerSearchPanelList().getList().getSelectedValue().setIcon(insertIcon2);
 				}
 				eloDialogControl.getDialog().getPlayerSearchView().getOkButton().setEnabled(true);
-				eloDialogControl.getSpielerDewisView().getList().clearSelection();
+				eloDialogControl.getSpielerSearchPanelList().getList().clearSelection();
 
 			}
 
@@ -86,9 +87,7 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		
 
-		
 		if (arg0.getSource().equals(eloDialogControl.getDialog().getPlayerSearchView().getCancelButton())) {
 			eloDialogControl.getDialog().closeWindow();
 		}
@@ -106,11 +105,12 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 							SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
 							mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
-							eloDialogControl.getSpielerDewisView().getListModel().getElementAt(temp)
+							eloDialogControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
 									.setIcon(insertIcon3);
 
 						}
-//						eloDialogControl.getSpielerDewisView().getList().setSelectedIndex(temp);
+						eloDialogControl.getSpielerSearchPanelList().getList().updateUI();
+						
 
 					}
 
@@ -125,24 +125,15 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 	}
 
 	private boolean playerExist(Player neuerSpieler) {
-//		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
-//		Boolean playerExist = false;
-//		try {
-//			playerExist = spielerTableControl.playerExist(neuerSpieler);
-//
-//		} catch (SQLException e) {
-//			mainControl.fileSQLError();
-//		}
+		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
+		Boolean playerExist = false;
+		try {
+			playerExist = spielerTableControl.playerExist(neuerSpieler);
+
+		} catch (SQLException e) {
+			mainControl.fileSQLError();
+		}
 		return false;
 	}
 
-//	public void makeVereinsListe() {
-//		if (eloDialogControl.getDialog().getVereinsName().isEnabled()) {
-//			String zps = mainControl.getPropertiesControl().getZPS();
-//			eloDialogControl.makeVereinsListe(zps);
-//		} else if (eloDialogControl.getDialog().getVereinsSuche().getText().length() > 0) {
-//			String zps = eloDialogControl.getDialog().getVereinsSuche().getText();
-//			eloDialogControl.makeDWZListe(zps);
-//		}
-//	}
 }

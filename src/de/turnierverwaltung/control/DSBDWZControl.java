@@ -83,7 +83,7 @@ public class DSBDWZControl {
 	}
 
 	/**
-	 * 
+	 *  
 	 * @param zps
 	 *            = ZPS number of the association
 	 * @throws IOException
@@ -100,7 +100,7 @@ public class DSBDWZControl {
 			players = csvplayerlist.getPlayerOfVerein(zps);
 
 		} else {
-			verein = new DSBDWZClub(zps);
+			verein = new DSBDWZClub(zps); 
 			players = verein.getSpieler();
 		}
 		SQLPlayerControl sqlpc = new SQLPlayerControl(mainControl);

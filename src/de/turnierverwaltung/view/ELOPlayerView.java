@@ -42,7 +42,7 @@ public class ELOPlayerView extends JPanel {
 	private JScrollPane scrollPane;
 	private DefaultListModel<ListItem> listModel;
 	private JList<ListItem> list;
-	private int windowWidth;
+	private int windowWidth; 
 	private int windowHeight;
 	private ImageIcon inserIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user-offline.png")));

@@ -230,7 +230,7 @@ public class SQLPlayerControl {
 		return saved;
 	}
 
-	public Boolean playerExist(Player neuerSpieler) throws SQLException {
+	public Boolean playerExist(Player neuerSpieler) throws SQLException { 
 		boolean exist = false;
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
 
