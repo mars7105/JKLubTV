@@ -115,5 +115,15 @@ public class ItemListenerSettingsControl {
 				mainControl.getPropertiesControl().writeProperties();
 			}
 		});
+		eigenschaftenView.getCheckBoxhtmlToClipboard().addItemListener(new ItemListener() {
+
+			public void itemStateChanged(ItemEvent e) {
+
+				Boolean copy = eigenschaftenView.getCheckBoxhtmlToClipboard().isSelected();
+
+				mainControl.getPropertiesControl().sethtmlToClipboard(copy);
+				mainControl.getPropertiesControl().writeProperties();
+			}
+		});
 	}
 }

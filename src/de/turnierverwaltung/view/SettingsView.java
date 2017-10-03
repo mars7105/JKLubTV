@@ -95,6 +95,7 @@ public class SettingsView extends JPanel {
 	private JButton fideHomepageButton;
 	private JButton openPlayersELOButton;
 	private JLabel openPlayersELOLabel;
+	private JCheckBox checkBoxhtmlToClipboard;
 
 	/**
 	 * Create the panel.
@@ -641,6 +642,16 @@ public class SettingsView extends JPanel {
 		htmlPanel.add(labelHeader);
 
 		htmlAll.add(htmlPanel);
+		// HTML Tabellen in die Zwischenablage kopieren
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.60")); //$NON-NLS-1$
+		checkBoxhtmlToClipboard = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxhtmlToClipboard);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
 		// PDF Links in HTML Tabellen einbinden
 		labelHeader = new JLabel(Messages.getString("EigenschaftenView.42")); //$NON-NLS-1$
 		checkBoxPDFLinks = new JCheckBox();
@@ -956,6 +967,14 @@ public class SettingsView extends JPanel {
 
 	public void setOpenPlayersELOLabel(String openPlayersELOLabel) {
 		this.openPlayersELOLabel.setText(openPlayersELOLabel);
+	}
+
+	public JCheckBox getCheckBoxhtmlToClipboard() {
+		return checkBoxhtmlToClipboard;
+	}
+
+	public void setCheckBoxhtmlToClipboard(JCheckBox checkBoxhtmlToClipboard) {
+		this.checkBoxhtmlToClipboard = checkBoxhtmlToClipboard;
 	}
 
 }

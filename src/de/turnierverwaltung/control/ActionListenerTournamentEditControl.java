@@ -52,12 +52,12 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 
 		}
 
-		if (arg0.getSource() .equals( naviView.getExcelSpeichernButton())) {
+		if (arg0.getSource().equals(naviView.getExcelSpeichernButton())) {
 			ExcelSaveControl excelsave = new ExcelSaveControl(this.mainControl);
 			excelsave.saveExcelFile();
 
 		}
-		if (arg0.getSource() .equals( naviView.getPairingsLoadButton())) {
+		if (arg0.getSource().equals(naviView.getPairingsLoadButton())) {
 			mainControl.setPairingsControl(new PairingsControl(mainControl));
 
 			PairingsControl pairingsControl = mainControl.getPairingsControl();
@@ -95,7 +95,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 			}
 		}
 
-		if (arg0.getSource() .equals( naviView.getTabelleAktualisierenButton()))
+		if (arg0.getSource().equals(naviView.getTabelleAktualisierenButton()))
 
 		{
 			Boolean ok = mainControl.getPairingsControl().checkNewTurnier();
@@ -108,7 +108,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 			}
 
 		}
-		if (arg0.getSource() .equals( naviView.getTabelleSpeichernButton()))
+		if (arg0.getSource().equals(naviView.getTabelleSpeichernButton()))
 
 		{
 			Boolean ok = false;
@@ -132,19 +132,23 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 			}
 		}
 
-		if (arg0.getSource() .equals( naviView.getTabelleHTMLAusgabeButton()))
+		if (arg0.getSource().equals(naviView.getTabelleHTMLAusgabeButton()))
 
 		{
-			HTMLSaveControl HTMLSave = new HTMLSaveControl(this.mainControl);
-			HTMLSave.saveHTMLFile();
-
+			if (this.mainControl.getPropertiesControl().gethtmlToClipboard() == true) {
+				HTMLCopyToClipboardControl htmlcopy = new HTMLCopyToClipboardControl(mainControl);
+				htmlcopy.copyToClipboard();
+			} else {
+				HTMLSaveControl HTMLSave = new HTMLSaveControl(this.mainControl);
+				HTMLSave.saveHTMLFile();
+			}
 		}
 
 	}
 
 	private void makeNewTables() {
 		int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
-		
+
 		for (int i = 0; i < anzahlGruppen; i++) {
 
 			this.mainControl.getTurnierTabelleControl().okAction(i);

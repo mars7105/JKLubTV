@@ -44,7 +44,7 @@ public class CrossTableView extends JPanel {
 	private JButton htmlButton;
 	private JTable table;
 	private JComboBox<String> comboBox;
-	private JLabel statusLabel;
+	private TitleLabelView statusLabel;
 
 	public CrossTableView(CrossTableModel simpleTableModel, int abstand) {
 
@@ -52,18 +52,16 @@ public class CrossTableView extends JPanel {
 		setLayout(new BorderLayout());
 		// setBackground(new Color(249, 222, 112));
 		table = new JTable(simpleTableModel);
-		
-		
+
 		comboBox = new JComboBox<String>();
-		comboBox.addItem(TournamentConstants.KEIN_ERGEBNIS); 
-		comboBox.addItem(TournamentConstants.VERLUST); 
+		comboBox.addItem(TournamentConstants.KEIN_ERGEBNIS);
+		comboBox.addItem(TournamentConstants.VERLUST);
 		comboBox.addItem(TournamentConstants.REMIS);
-		comboBox.addItem(TournamentConstants.GEWINN); 
-		comboBox.addItem(TournamentConstants.VERLUST_KAMPFLOS); 
-		comboBox.addItem(TournamentConstants.GEWINN_KAMPFLOS); 
+		comboBox.addItem(TournamentConstants.GEWINN);
+		comboBox.addItem(TournamentConstants.VERLUST_KAMPFLOS);
+		comboBox.addItem(TournamentConstants.GEWINN_KAMPFLOS);
 		comboBox.addItem(TournamentConstants.VERLUST_KAMPFLOS_BEIDE);
-		
-		
+
 		setColumnWidth(abstand);
 		this.setBackground(Color.white);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
@@ -86,7 +84,8 @@ public class CrossTableView extends JPanel {
 		JPanel status = new JPanel();
 		status.setLayout(new FlowLayout(FlowLayout.LEFT));
 		status.add(new JLabel(Messages.getString("SimpleTerminTabelleView.15"))); //$NON-NLS-1$
-		statusLabel = new JLabel("0");
+		statusLabel = new TitleLabelView("0");
+		statusLabel.setFlowLayoutLeft();
 		statusLabel.setOpaque(true);
 		JLabel changesLabel = new JLabel(Messages.getString("SimpleTerminTabelleView.16"));
 		status.add(statusLabel);
@@ -100,12 +99,12 @@ public class CrossTableView extends JPanel {
 	}
 
 	public JLabel getStatusLabel() {
-		return statusLabel;
+		return statusLabel.getTitleLabel();
 	}
 
 	public void setStatusLabel(JLabel statusLabel) {
 
-		this.statusLabel = statusLabel;
+		this.statusLabel.setTitleLabel(statusLabel);
 	}
 
 	public JComboBox<String> getComboBox() {

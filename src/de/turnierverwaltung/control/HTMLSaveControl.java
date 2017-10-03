@@ -26,7 +26,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.Writer;
-
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
@@ -60,10 +59,6 @@ public class HTMLSaveControl {
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 			String filename = mainControl.getTurnier().getTurnierName();
 
-			// String filename = JOptionPane.showInputDialog(mainControl,
-			// Messages.getString("HTMLSaveControler.0"), //$NON-NLS-1$
-			// Messages.getString("HTMLSaveControler.1"), //$NON-NLS-1$
-			// JOptionPane.PLAIN_MESSAGE);
 			File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 			String webserverPath = mainControl.getPropertiesControl().getWebserverPath();
 
@@ -228,4 +223,5 @@ public class HTMLSaveControl {
 		}
 	}
 
+	
 }

@@ -57,7 +57,7 @@ public class PairingsView extends JPanel {
 	private int gerade;
 	private int rundenanzahl;
 	private int partienanzahl;
-	private JLabel statusLabel;
+	private TitleLabelView statusLabel;
 
 	// private JButton reloadButton;
 
@@ -139,7 +139,8 @@ public class PairingsView extends JPanel {
 		JPanel status = new JPanel();
 		status.setLayout(new FlowLayout(FlowLayout.LEFT));
 		status.add(new JLabel(Messages.getString("SimpleTerminTabelleView.15"))); //$NON-NLS-1$
-		statusLabel = new JLabel("0");
+		statusLabel = new TitleLabelView("0");
+		statusLabel.setFlowLayoutLeft();
 		statusLabel.setOpaque(true);
 
 		JLabel changesLabel = new JLabel(Messages.getString("SimpleTerminTabelleView.16"));
@@ -155,10 +156,6 @@ public class PairingsView extends JPanel {
 		this.anzahlElemente = anzahlElemente;
 	}
 
-	// public void setCancelButton(JButton cancelButton) {
-	// this.cancelButton = cancelButton;
-	// }
-
 	public void setChangeColor(JButton[] changeColor) {
 		this.changeColor = changeColor;
 	}
@@ -168,12 +165,11 @@ public class PairingsView extends JPanel {
 	}
 
 	public JLabel getStatusLabel() {
-		return statusLabel;
+		return statusLabel.getTitleLabel();
 	}
 
 	public void setStatusLabel(JLabel statusLabel) {
-		this.statusLabel = statusLabel;
-		this.statusLabel.setText(this.statusLabel.getText() + " " + Messages.getString("SimpleTerminTabelleView.16"));
+		this.statusLabel.setTitleLabel(statusLabel);
 
 	}
 

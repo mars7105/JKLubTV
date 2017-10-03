@@ -90,7 +90,7 @@ public class MeetingTableView extends JPanel {
 	private JComboBox<String> comboBox;
 	private MeetingTableModel simpleTerminTabelle;
 	private Properties property;
-	private JLabel statusLabel;
+	private TitleLabelView statusLabel;
 
 	public MeetingTableView(MeetingTableModel simpleTerminTabelle) {
 
@@ -102,13 +102,13 @@ public class MeetingTableView extends JPanel {
 		// Font fnt = new Font("Arial", Font.PLAIN, 16);
 		// table.setFont(fnt);
 		comboBox = new JComboBox<String>();
-		comboBox.addItem(TournamentConstants.KEIN_ERGEBNIS); 
-		comboBox.addItem(TournamentConstants.PARTIE_GEWINN_OPPONENT); 
+		comboBox.addItem(TournamentConstants.KEIN_ERGEBNIS);
+		comboBox.addItem(TournamentConstants.PARTIE_GEWINN_OPPONENT);
 		comboBox.addItem(TournamentConstants.PARTIE_REMIS);
-		comboBox.addItem(TournamentConstants.PARTIE_GEWINN_PLAYER); 
-		comboBox.addItem(TournamentConstants.PARTIE_GEWINN_KAMPFLOS_OPPONENT); 
-		comboBox.addItem(TournamentConstants.PARTIE_GEWINN_KAMPFLOS_PLAYER); 
-		comboBox.addItem(TournamentConstants.PARTIE_VERLUST_KAMPFLOS_BEIDE); 
+		comboBox.addItem(TournamentConstants.PARTIE_GEWINN_PLAYER);
+		comboBox.addItem(TournamentConstants.PARTIE_GEWINN_KAMPFLOS_OPPONENT);
+		comboBox.addItem(TournamentConstants.PARTIE_GEWINN_KAMPFLOS_PLAYER);
+		comboBox.addItem(TournamentConstants.PARTIE_VERLUST_KAMPFLOS_BEIDE);
 		property = new Properties();
 		property.put("text.today", Messages.getString("SimpleTerminTabelleView.8")); //$NON-NLS-1$ //$NON-NLS-2$
 		property.put("text.month", Messages.getString("SimpleTerminTabelleView.10")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -133,7 +133,8 @@ public class MeetingTableView extends JPanel {
 		JPanel status = new JPanel();
 		status.setLayout(new FlowLayout(FlowLayout.LEFT));
 		status.add(new JLabel(Messages.getString("SimpleTerminTabelleView.15"))); //$NON-NLS-1$
-		statusLabel = new JLabel("0");
+		statusLabel = new TitleLabelView("0");
+		statusLabel.setFlowLayoutLeft();
 		statusLabel.setOpaque(true);
 
 		JLabel changesLabel = new JLabel(Messages.getString("SimpleTerminTabelleView.16"));
@@ -166,12 +167,11 @@ public class MeetingTableView extends JPanel {
 	}
 
 	public JLabel getStatusLabel() {
-		return statusLabel;
+		return statusLabel.getTitleLabel();
 	}
 
 	public void setStatusLabel(JLabel statusLabel) {
-		this.statusLabel = statusLabel;
-		this.statusLabel.setText(this.statusLabel.getText() + " " + Messages.getString("SimpleTerminTabelleView.16"));
+		this.statusLabel.setTitleLabel(statusLabel);
 
 	}
 

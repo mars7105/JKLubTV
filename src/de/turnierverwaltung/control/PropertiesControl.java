@@ -58,6 +58,7 @@ public class PropertiesControl {
 	public static final String DATABASE_UPDATED = "database-updated";
 	public static final String PDFLINKS = "pdflinks";
 	public static final String WEBSERVER_PATH = "webserver-path";
+	public static final String HTMLTOCLIPBOARD = "htmltoclipboard";
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
@@ -96,6 +97,7 @@ public class PropertiesControl {
 		prop.setProperty(DATABASE_UPDATED, FALSE);
 		prop.setProperty(PDFLINKS, FALSE);
 		prop.setProperty(WEBSERVER_PATH, "");
+		prop.setProperty(HTMLTOCLIPBOARD, FALSE);
 	}
 
 	public void checkProperties() {
@@ -220,6 +222,10 @@ public class PropertiesControl {
 			prop.setProperty(PDFLINKS, FALSE);
 			saveChanges = true;
 		}
+		if (!(prop.getProperty(HTMLTOCLIPBOARD).equals(TRUE) || prop.getProperty(HTMLTOCLIPBOARD).equals(FALSE))) {
+			prop.setProperty(HTMLTOCLIPBOARD, FALSE);
+			saveChanges = true;
+		}
 		checkCrossTableColumnForDoubles();
 		checkMeetingTableColumnForDoubles();
 		if (saveChanges == true) {
@@ -262,7 +268,13 @@ public class PropertiesControl {
 			return false;
 		}
 	}
-
+	public Boolean gethtmlToClipboard() {
+		if (prop.getProperty(HTMLTOCLIPBOARD).equals(TRUE)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	public Boolean getNoDWZ() {
 		if (prop.getProperty(NODWZ).equals(TRUE)) {
 			return true;
@@ -580,7 +592,13 @@ public class PropertiesControl {
 			prop.setProperty(NOFOLGEDWZ, FALSE);
 		}
 	}
-
+	public void sethtmlToClipboard(Boolean htmlToClipboard) {
+		if (htmlToClipboard == true) {
+			prop.setProperty(HTMLTOCLIPBOARD, TRUE);
+		} else {
+			prop.setProperty(HTMLTOCLIPBOARD, FALSE);
+		}
+	}
 	public void setPDFLinks(Boolean pdfLinks) {
 		if (pdfLinks == true) {
 			prop.setProperty(PDFLINKS, TRUE);

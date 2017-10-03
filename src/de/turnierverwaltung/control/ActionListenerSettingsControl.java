@@ -62,6 +62,7 @@ public class ActionListenerSettingsControl {
 				eigenschaftenView.getSurnameLengthBox().setValue(ppC.getCutSurname());
 				eigenschaftenView.getWebserverPathTextField().setText(ppC.getWebserverPath());
 				eigenschaftenView.getCheckBoxohneDWZ().setSelected(ppC.getNoDWZ());
+				eigenschaftenView.getCheckBoxhtmlToClipboard().setSelected(ppC.gethtmlToClipboard());
 				if (eigenschaftenView.getCheckBoxohneDWZ().isSelected() == true) {
 					eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(true);
 					eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(false);
