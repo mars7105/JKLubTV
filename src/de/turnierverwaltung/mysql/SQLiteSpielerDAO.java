@@ -40,7 +40,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				+ ";";
 
 		Statement stmt;
-		if (this.dbConnect != null) { 
+		if (this.dbConnect != null) {
 
 			// create a database connection
 			stmt = this.dbConnect.createStatement();
@@ -96,9 +96,9 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 	@Override
 	public boolean playerExist(Player neuerSpieler) {
-		String sql = "Select * from spieler where ZPS LIKE '" + neuerSpieler.getDsbZPSNumber() + "' AND MGL LIKE '%"
-				+ neuerSpieler.getDsbMGLNumber() + "';";
-		
+		String sql = "Select * from spieler where ZPS LIKE '" + neuerSpieler.getDwzData().getCsvZPS()
+				+ "' AND MGL LIKE '%" + neuerSpieler.getDwzData().getCsvMgl_Nr() + "';";
+
 		int id = -1;
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -120,28 +120,29 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 		if (id >= 0) {
 			returnStatement = true;
 		}
-//		else {
-//			String sql2 = "Select * from spieler where ZPS LIKE '" + neuerSpieler.getFideid() + "' AND MGL LIKE '%"
-//					+ neuerSpieler.getDsbMGLNumber() + "';";
-//			
-//			int id2 = -1;
-//			Statement stmt2;
-//			if (this.dbConnect != null) {
-//
-//				try {
-//					stmt2 = this.dbConnect.createStatement();
-//					ResultSet rs = stmt2.executeQuery(sql2);
-//					while (rs.next()) {
-//						id2 = rs.getInt("idSpieler");
-//
-//					}
-//					stmt2.close();
-//				} catch (SQLException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//			}
-//		}
+		// else {
+		// String sql2 = "Select * from spieler where ZPS LIKE '" +
+		// neuerSpieler.getFideid() + "' AND MGL LIKE '%"
+		// + neuerSpieler.getDsbMGLNumber() + "';";
+		//
+		// int id2 = -1;
+		// Statement stmt2;
+		// if (this.dbConnect != null) {
+		//
+		// try {
+		// stmt2 = this.dbConnect.createStatement();
+		// ResultSet rs = stmt2.executeQuery(sql2);
+		// while (rs.next()) {
+		// id2 = rs.getInt("idSpieler");
+		//
+		// }
+		// stmt2.close();
+		// } catch (SQLException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// }
+		// }
+		// }
 		return returnStatement;
 	}
 
@@ -228,8 +229,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	}
 
 	@Override
-	public int insertSpieler(String name, String foreName, String surName, String dwz, String kuerzel, String zps,
-			String mgl, int dwzindex, int age) throws SQLException {
+	public int insertSpieler(Player spieler) throws SQLException {
 
 		String sql;
 		int id = -1;
@@ -241,15 +241,21 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 
 			PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
-			preStm.setString(1, name);
-			preStm.setString(2, foreName);
-			preStm.setString(3, surName);
-			preStm.setString(4, dwz);
-			preStm.setString(5, kuerzel);
-			preStm.setString(6, zps);
-			preStm.setString(7, mgl);
-			preStm.setInt(8, dwzindex);
-			preStm.setInt(9, age);
+			preStm.setString(1, spieler.getName());
+			preStm.setString(2, spieler.getForename());
+			preStm.setString(3, spieler.getSurname());
+			preStm.setString(4, spieler.getDwz());
+			preStm.setString(5, spieler.getKuerzel());
+			preStm.setString(6, spieler.getDwzData().getCsvZPS());
+			preStm.setString(7, spieler.getDwzData().getCsvMgl_Nr());
+			int index = -1;
+			try {
+				index = Integer.parseInt(spieler.getDwzData().getCsvIndex());
+			} catch (NumberFormatException e) {
+				index = -1;
+			}
+			preStm.setInt(8, index);
+			preStm.setInt(9, spieler.getAge());
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
@@ -318,9 +324,15 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 			preStm.setString(3, spieler.getSurname());
 			preStm.setString(4, spieler.getKuerzel());
 			preStm.setString(5, spieler.getDwz());
-			preStm.setString(6, spieler.getDsbZPSNumber());
-			preStm.setString(7, spieler.getDsbMGLNumber());
-			preStm.setInt(8, spieler.getDwzindex());
+			preStm.setString(6, spieler.getDwzData().getCsvZPS());
+			preStm.setString(7, spieler.getDwzData().getCsvMgl_Nr());
+			int index = -1;
+			try {
+				index = Integer.parseInt(spieler.getDwzData().getCsvIndex());
+			} catch (NumberFormatException e) {
+				index = -1;
+			}
+			preStm.setInt(8, index);
 			preStm.setInt(9, spieler.getAge());
 
 			preStm.addBatch();

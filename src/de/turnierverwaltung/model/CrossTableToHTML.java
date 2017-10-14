@@ -17,7 +17,7 @@ package de.turnierverwaltung.model;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 public class CrossTableToHTML {
-
+	private Boolean colorMatrix[][];
 	private String[][] tabellenMatrix;
 	private String turnierName;
 	private String startDatum;
@@ -40,7 +40,7 @@ public class CrossTableToHTML {
 	 * @param infoString
 	 */
 	public CrossTableToHTML(String[][] tabellenMatrix, Tournament turnier, String gruppenName, String infoString,
-			String webServerPath, String filename, String icsfilename, Boolean showLink) {
+			String webServerPath, String filename, String icsfilename, Boolean showLink, Boolean colorMatrix[][]) {
 		this.turnier = turnier;
 		this.tabellenMatrix = tabellenMatrix;
 		this.turnierName = turnier.getTurnierName();
@@ -52,10 +52,11 @@ public class CrossTableToHTML {
 		this.filename = filename;
 		this.icsfilename = icsfilename;
 		this.fileLink = new WebserverFileLink(this.webServerPath, this.filename, this.icsfilename, showLink);
+		this.colorMatrix = colorMatrix;
 	}
 
 	public CrossTableToHTML(String[][] tabellenMatrix2, Tournament turnier2, String gruppenName2, String infoString2,
-			String path, String filename2, Boolean showLink) {
+			String path, String filename2, Boolean showLink, Boolean colorMatrix[][]) {
 		this.turnier = turnier2;
 		this.tabellenMatrix = tabellenMatrix2;
 		this.turnierName = turnier2.getTurnierName();
@@ -67,7 +68,7 @@ public class CrossTableToHTML {
 		this.filename = filename2;
 		this.icsfilename = "";
 		this.fileLink = new WebserverFileLink(this.webServerPath, this.filename, showLink);
-
+		this.colorMatrix = colorMatrix;
 	}
 
 	private String getHTMLFooter() {
@@ -138,20 +139,28 @@ public class CrossTableToHTML {
 			for (int x = 0; x < col; x++) {
 
 				String ausgabeWert = this.tabellenMatrix[reihenfolge[x]][y];
-				if (ausgabeWert != null && !ausgabeWert.equals("") // $NON-NLS-1$
-						&& !ausgabeWert.equals(" ")) { //$NON-NLS-1$
+
+				Boolean color = colorMatrix[reihenfolge[x]][y];
+				String cell = "        <td>";
+				if (color != null) {
+					if (color == true) {
+						cell = "<td " + fileLink.getPathToUserImageWhiteBlack() + ">";
+					}
+					if (color == false) {
+						cell = "<td " + fileLink.getPathToUserImageBlackWhite() + ">";
+					}
+				}
+				if (ausgabeWert != null && !ausgabeWert.equals("") && !ausgabeWert.equals(" ")) {
 
 					if (ausgabeWert.equals(TournamentConstants.REMIS)) {
-						ausgabeWert = "&frac12;"; //$NON-NLS-1$
+						ausgabeWert = "&frac12;";
 					}
 
-					htmlString += "        <td>" + ausgabeWert //$NON-NLS-1$
-							+ "</td>\n"; //$NON-NLS-1$
+					htmlString += cell + ausgabeWert + "</td>\n";
 
 				} else {
 
-					htmlString += "        <td>" //$NON-NLS-1$
-							+ TournamentConstants.HTML_LEERZEICHEN + "</td>\n"; //$NON-NLS-1$
+					htmlString += cell + TournamentConstants.HTML_LEERZEICHEN + "</td>\n";
 
 				}
 

@@ -70,4 +70,22 @@ public class WebserverFileLink {
 		}
 		return pathToFile;
 	}
+
+	public String getPathToUserImageWhiteBlack() {
+		if (showLink) {
+			pathToFile = "style='background-image: url(" + this.webserverPath
+					+ "im-user-white-small.png); background-repeat: no-repeat;background-position: right bottom;'";
+
+		}
+		return pathToFile;
+	}
+
+	public String getPathToUserImageBlackWhite() {
+		if (showLink) {
+			pathToFile = "style='background-image: url(" + this.webserverPath
+					+ "im-user-black-small.png); background-repeat: no-repeat;background-position: right bottom;'";
+
+		}
+		return pathToFile;
+	}
 }

@@ -83,7 +83,7 @@ public class DSBDWZControl {
 	}
 
 	/**
-	 *  
+	 * 
 	 * @param zps
 	 *            = ZPS number of the association
 	 * @throws IOException
@@ -100,7 +100,7 @@ public class DSBDWZControl {
 			players = csvplayerlist.getPlayerOfVerein(zps);
 
 		} else {
-			verein = new DSBDWZClub(zps); 
+			verein = new DSBDWZClub(zps);
 			players = verein.getSpieler();
 		}
 		SQLPlayerControl sqlpc = new SQLPlayerControl(mainControl);
@@ -123,10 +123,10 @@ public class DSBDWZControl {
 				while (li.hasNext()) {
 					Player tmp = li.next();
 					try {
-						int tmpzps = Integer.parseInt(tmp.getDsbZPSNumber());
-						int tmpmgl = Integer.parseInt(tmp.getDsbMGLNumber());
-						int playerzps = Integer.parseInt(player.getDsbZPSNumber());
-						int playermgl = Integer.parseInt(player.getDsbMGLNumber());
+						int tmpzps = Integer.parseInt(tmp.getDwzData().getCsvZPS());
+						int tmpmgl = Integer.parseInt(tmp.getDwzData().getCsvMgl_Nr());
+						int playerzps = Integer.parseInt(player.getDwzData().getCsvZPS());
+						int playermgl = Integer.parseInt(player.getDwzData().getCsvMgl_Nr());
 						if (tmpzps == playerzps && tmpmgl == playermgl) {
 							spielerDewisView.makeSpielerZeile(player, 2);
 							foundPlayer = true;
@@ -204,10 +204,10 @@ public class DSBDWZControl {
 							while (list.hasNext()) {
 								Player temp = list.next();
 								try {
-									int tmpzps = Integer.parseInt(temp.getDsbZPSNumber());
-									int tmpmgl = Integer.parseInt(temp.getDsbMGLNumber());
-									int playerzps = Integer.parseInt(tmp.getPlayer().getDsbZPSNumber());
-									int playermgl = Integer.parseInt(tmp.getPlayer().getDsbMGLNumber());
+									int tmpzps = Integer.parseInt(temp.getDwzData().getCsvZPS());
+									int tmpmgl = Integer.parseInt(temp.getDwzData().getCsvMgl_Nr());
+									int playerzps = Integer.parseInt(tmp.getPlayer().getDwzData().getCsvZPS());
+									int playermgl = Integer.parseInt(tmp.getPlayer().getDwzData().getCsvMgl_Nr());
 									if (tmpzps == playerzps && tmpmgl == playermgl) {
 										spielerSearchPanelList.makeSpielerZeile(tmp.getPlayer(), 2);
 										searchplayerlist.add(tmp.getPlayer());
@@ -332,8 +332,6 @@ public class DSBDWZControl {
 		JOptionPane.showMessageDialog(null, Messages.getString("DewisDialogControl.7"),
 				Messages.getString("DewisDialogControl.8"), JOptionPane.INFORMATION_MESSAGE);
 	}
-
-	
 
 	public DSBDWZDialogView getDialog() {
 		return dialog;

@@ -68,9 +68,7 @@ public class SQLImportPlayerListControl {
 			ListIterator<Player> li = spielerListe.listIterator();
 			while (li.hasNext()) {
 				oneSpieler = li.next();
-				mySQLSpielerDAO.insertSpieler(oneSpieler.getName(), oneSpieler.getForename(), oneSpieler.getSurname(),
-						oneSpieler.getDwz(), oneSpieler.getKuerzel(), oneSpieler.getDsbZPSNumber(),
-						oneSpieler.getDsbMGLNumber(), oneSpieler.getDwzindex(), oneSpieler.getAge());
+				mySQLSpielerDAO.insertSpieler(oneSpieler);
 			}
 
 		} else {

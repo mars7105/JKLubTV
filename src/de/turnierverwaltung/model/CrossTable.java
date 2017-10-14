@@ -23,6 +23,7 @@ public class CrossTable {
 	private int spielerAnzahl;
 	private int partienAnzahl;
 	private String tabellenMatrix[][];
+	private Boolean colorMatrix[][];
 	private int zeile;
 	private int spalte;
 	private CrossTableToHTML turnierTabelleToHTML;
@@ -99,9 +100,11 @@ public class CrossTable {
 		int sp = 0;
 		if (checkForSpielfrei() == true) {
 			tabellenMatrix = new String[this.spielerAnzahl + 5 - abstand][this.spielerAnzahl];
+			colorMatrix = new Boolean[this.spielerAnzahl + 5 - abstand][this.spielerAnzahl];
 			sp = spielerAnzahl - 1;
 		} else {
 			tabellenMatrix = new String[this.spielerAnzahl + 6 - abstand][this.spielerAnzahl + 1];
+			colorMatrix = new Boolean[this.spielerAnzahl + 6 - abstand][this.spielerAnzahl + 1];
 			sp = spielerAnzahl;
 		}
 
@@ -154,18 +157,21 @@ public class CrossTable {
 					if (spieler[y].getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 
 						if (x == y) {
-							tabellenMatrix[x + 3 - abstand][y + 1] = TournamentConstants.LEERE_MENGE; // $NON-NLS-1$
+							tabellenMatrix[x + 3 - abstand][y + 1] = TournamentConstants.LEERE_MENGE;
+
 						} else {
 							for (int i = 0; i < partienAnzahl; i++) {
 
 								if (partien[i].getSpielerWeiss().equals(spieler[x])
 										&& partien[i].getSpielerSchwarz().equals(spieler[y])) {
 									tabellenMatrix[x + dwzAbstand][y + 1] = partien[i].getErgebnisSchwarz();
+									colorMatrix[x + dwzAbstand][y + 1] = false;
 
 								}
 								if (partien[i].getSpielerSchwarz().equals(spieler[x])
 										&& partien[i].getSpielerWeiss().equals(spieler[y])) {
 									tabellenMatrix[x + dwzAbstand][y + 1] = partien[i].getErgebnisWeiss();
+									colorMatrix[x + dwzAbstand][y + 1] = true;
 
 								}
 							}
@@ -198,7 +204,7 @@ public class CrossTable {
 	 */
 	public String getHTMLTable(Boolean ohneHeaderundFooter, String path, String filename, Boolean showLink) {
 		turnierTabelleToHTML = new CrossTableToHTML(tabellenMatrix, turnier, gruppe.getGruppenName(), infoString, path,
-				filename, showLink);
+				filename, showLink, colorMatrix);
 		return turnierTabelleToHTML.getHTMLTable(ohneHeaderundFooter);
 	}
 
@@ -282,6 +288,14 @@ public class CrossTable {
 
 	public void setRankingColumnName(String rankingColumnName) {
 		this.rankingColumnName = rankingColumnName;
+	}
+
+	public Boolean[][] getColorMatrix() {
+		return colorMatrix;
+	}
+
+	public void setColorMatrix(Boolean[][] colorMatrix) {
+		this.colorMatrix = colorMatrix;
 	}
 
 }

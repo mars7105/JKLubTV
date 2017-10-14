@@ -66,16 +66,16 @@ public class PlayerListControl implements ActionListener {
 						String dwz = spielerEditierenView.getTextFieldDwz().getText();
 						String zps = spielerEditierenView.getTextFieldZPS().getText();
 						String mgl = spielerEditierenView.getTextFieldMGL().getText();
-						int dwzindex = Integer.parseInt(spielerEditierenView.getTextFieldDwzIndex().getText());
+						String dwzindex = spielerEditierenView.getTextFieldDwzIndex().getText();
 						int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
 
 						spieler.get(spielerIndex).setForename(foreName);
 						spieler.get(spielerIndex).setSurname(surName);
 						spieler.get(spielerIndex).setKuerzel(kuerzel);
 						spieler.get(spielerIndex).setDwz(dwz);
-						spieler.get(spielerIndex).setDsbZPSNumber(zps);
-						spieler.get(spielerIndex).setDsbMGLNumber(mgl);
-						spieler.get(spielerIndex).setDwzindex(dwzindex);
+						spieler.get(spielerIndex).getDwzData().setCsvZPS(zps);
+						spieler.get(spielerIndex).getDwzData().setCsvMgl_Nr(mgl);
+						spieler.get(spielerIndex).getDwzData().setCsvIndex(dwzindex);
 						spieler.get(spielerIndex).setAge(age);
 						spieler.get(spielerIndex).extractForenameAndSurenameToName();
 						SQLPlayerControl stc = new SQLPlayerControl(mainControl);

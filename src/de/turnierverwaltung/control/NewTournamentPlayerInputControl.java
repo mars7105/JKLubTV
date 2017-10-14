@@ -162,7 +162,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 									spieler[counter].setKuerzel(kuerzel);
 									spieler[counter].setDwz(dwz);
 									spieler[counter].setAge(age);
-									spieler[counter].setDwzindex(-1);
+//									spieler[counter].setDwzindex(-1);
 
 									spieler[counter].setShowPlayer(false);
 									spieler[counter].setSpielerId(stc.insertOneSpieler(spieler[counter]));

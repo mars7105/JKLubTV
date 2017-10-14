@@ -39,14 +39,12 @@ public class CSVPlayerArrayList {
 
 	}
 
-	
-
 	public Player getPlayer(String zps, String mgl) {
 
 		ListIterator<CSVPlayer> list = csvPlayer.listIterator();
 		while (list.hasNext()) {
 			Player tmp = list.next().getPlayer();
-			if (tmp.getDsbZPSNumber().equals(zps) && tmp.getDsbMGLNumber().equals(mgl)) {
+			if (tmp.getDwzData().getCsvZPS().equals(zps) && tmp.getDwzData().getCsvMgl_Nr().equals(mgl)) {
 				return tmp;
 			}
 		}

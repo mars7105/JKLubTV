@@ -127,7 +127,7 @@ public class EditPlayerView extends JDialog {
 		centerPane.add(textFieldDwz);
 		contentPanel.add(centerPane);
 
-		textFieldDwzIndex.setText(Integer.toString(spieler.getDwzindex()));
+		textFieldDwzIndex.setText(spieler.getDwzData().getCsvIndex());
 		label = new JLabel();
 		label.setPreferredSize(new Dimension(120, 10));
 		label.setText(Messages.getString("SpielerEditierenView.14")); //$NON-NLS-1$
@@ -152,7 +152,7 @@ public class EditPlayerView extends JDialog {
 		centerPane.add(textComboBoxAge);
 		contentPanel.add(centerPane);
 
-		textFieldZPS.setText(spieler.getDsbZPSNumber());
+		textFieldZPS.setText(spieler.getDwzData().getCsvZPS());
 		label = new JLabel();
 		label.setPreferredSize(new Dimension(120, 10));
 		label.setText(Messages.getString("SpielerEditierenView.12")); //$NON-NLS-1$
@@ -163,7 +163,7 @@ public class EditPlayerView extends JDialog {
 		centerPane.add(textFieldZPS);
 		contentPanel.add(centerPane);
 
-		textFieldMGL.setText(spieler.getDsbMGLNumber());
+		textFieldMGL.setText(spieler.getDwzData().getCsvMgl_Nr());
 		label = new JLabel();
 		label.setPreferredSize(new Dimension(120, 10));
 		label.setText(Messages.getString("SpielerEditierenView.13")); //$NON-NLS-1$

@@ -35,92 +35,31 @@ public class Player implements Comparable<Object> {
 	private int age;
 	private String forename;
 	private String surname;
-	private String dsbZPSNumber;
-	private String dsbMGLNumber;
-	private Boolean showPlayer;
-	private int dwzindex;
 
-	private String fideid;
-	private String country;
-	private String sex;
-	private String title;
-	private String w_title;
-	private String o_title;
-	private String foa_title;
-	private String eloRating;
-	private String eloGames;
-	private String k;
-	private String birthday;
-	private String flag;
+	private Boolean showPlayer;
+
+	private DWZData dwzData;
+	private ELOData eloData;
 
 	public Player() {
+		dwzData = new DWZData();
+		eloData = new ELOData();
 		this.name = "";
 		this.forename = "";
 		this.surname = "";
 		this.kuerzel = "";
 		this.dwz = "";
 		this.age = 0;
-		this.dwzindex = -1;
+		dwzData.setCsvIndex("-1");
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
 		this.spielerId = -1;
-		this.dsbZPSNumber = "";
-		this.dsbMGLNumber = "";
+		dwzData.setCsvZPS("");
+		dwzData.setCsvMgl_Nr("");
 		this.showPlayer = true;
-	}
-
-	public Player(String name, String fideid, String country, String sex, String title, String w_title, String o_title,
-			String foa_title, String eloRating, String eloGames, String k, String birthday, String flag) {
-		super();
-		this.name = name;
-		this.fideid = fideid;
-		this.country = country;
-		this.sex = sex;
-		this.title = title;
-		this.w_title = w_title;
-		this.o_title = o_title;
-		this.foa_title = foa_title;
-		this.eloRating = eloRating;
-		this.eloGames = eloGames;
-		this.k = k;
-		this.birthday = birthday;
-		this.flag = flag;
-		try {
-			if (birthday.length() > 0) {
-				LocalDateTime now = LocalDateTime.now();
-				int years = now.getYear() - Integer.parseInt(birthday);
-				if (years < 20) {
-					age = 0;
-				}
-				if (years >= 20 && years <= 25) {
-					age = 1;
-				}
-				if (years > 25) {
-					age = 2;
-				}
-			} else {
-				this.birthday = "";
-				age = 2;
-			}
-		} catch (NumberFormatException e) {
-			age = 2;
-		}
-		this.forename = "";
-		this.surname = "";
-		this.kuerzel = "";
-		this.dwz = "";
-		this.dwzindex = -1;
-		this.punkte = 0;
-		this.soberg = 0;
-		this.platz = 1;
-		this.spielerId = -1;
-		this.dsbZPSNumber = "";
-		this.dsbMGLNumber = "";
-		this.showPlayer = true;
-		extractNameToForenameAndSurename();
-		extractNameToKuerzel();
-
+		dwzData = new DWZData();
+		eloData = new ELOData();
 	}
 
 	/**
@@ -133,6 +72,8 @@ public class Player implements Comparable<Object> {
 	 * @param dwzindex2
 	 */
 	public Player(int id, String name, String kuerzel, String dwz, int age, String zps, String mgl, int dwzindex2) {
+		dwzData = new DWZData();
+		eloData = new ELOData();
 		this.spielerId = id;
 		this.name = name;
 		this.forename = "";
@@ -143,11 +84,12 @@ public class Player implements Comparable<Object> {
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
-		this.dsbZPSNumber = zps;
-		this.dsbMGLNumber = mgl;
+		dwzData.setCsvZPS(zps);
+		dwzData.setCsvMgl_Nr(mgl);
 		this.showPlayer = true;
-		this.dwzindex = -1;
+		dwzData.setCsvIndex("-1");
 		correctMGLNumber();
+
 	}
 
 	/**
@@ -162,6 +104,8 @@ public class Player implements Comparable<Object> {
 	 */
 	public Player(int id, String forename, String surname, String kuerzel, String dwz, int dwzindex, int age,
 			String zps, String mgl) {
+		dwzData = new DWZData();
+		eloData = new ELOData();
 		this.spielerId = id;
 		this.forename = forename;
 		this.surname = surname;
@@ -169,12 +113,12 @@ public class Player implements Comparable<Object> {
 		this.kuerzel = kuerzel;
 		this.dwz = dwz;
 		this.age = age;
-		this.dwzindex = dwzindex;
+		dwzData.setCsvIndex(Integer.toString(dwzindex));
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
-		this.dsbZPSNumber = zps;
-		this.dsbMGLNumber = mgl;
+		dwzData.setCsvZPS(zps);
+		dwzData.setCsvMgl_Nr(mgl);
 		this.showPlayer = true;
 		extractForenameAndSurenameToName();
 		extractNameToKuerzel();
@@ -182,18 +126,28 @@ public class Player implements Comparable<Object> {
 
 	}
 
+	public Player(ELOData eloData2) {
+		eloData = eloData2;
+
+	}
+
+	public Player(DWZData dwzData) {
+		this.dwzData = dwzData;
+
+	}
+
 	private void correctMGLNumber() {
-		int length = dsbMGLNumber.length();
+		int length = dwzData.getCsvMgl_Nr().length();
 		if (length > 0 && length < 4) {
-			StringBuffer sb = new StringBuffer(dsbMGLNumber);
+			StringBuffer sb = new StringBuffer(dwzData.getCsvMgl_Nr());
 			for (int i = length; i < 4; i++) {
 				sb.insert(0, "0");
 			}
-			dsbMGLNumber = sb.toString();
-
+			// dsbMGLNumber = sb.toString();
+			dwzData.setCsvMgl_Nr(sb.toString());
 		}
-		if (dsbMGLNumber.equals("0000")) {
-			dsbMGLNumber = "";
+		if (dwzData.getCsvMgl_Nr().equals("0000")) {
+			dwzData.setCsvMgl_Nr("");
 
 		}
 	}
@@ -423,30 +377,7 @@ public class Player implements Comparable<Object> {
 		this.surname = surname;
 	}
 
-	public String getDsbZPSNumber() {
-		return dsbZPSNumber;
-	}
-
-	public void setDsbZPSNumber(String dsbZPSNumber) {
-		this.dsbZPSNumber = dsbZPSNumber;
-	}
-
-	public String getDsbMGLNumber() {
-		return dsbMGLNumber;
-	}
-
-	public void setDsbMGLNumber(String dsbMGLNumber) {
-		this.dsbMGLNumber = dsbMGLNumber;
-		correctMGLNumber();
-	}
-
-	public int getDwzindex() {
-		return dwzindex;
-	}
-
-	public void setDwzindex(int dwzindex) {
-		this.dwzindex = dwzindex;
-	}
+	
 
 	public boolean equals(Object other) {
 		if (spielerId == ((Player) other).spielerId && spielerId >= 0) {
@@ -457,100 +388,20 @@ public class Player implements Comparable<Object> {
 
 	}
 
-	public String getFideid() {
-		return fideid;
+	public DWZData getDwzData() {
+		return dwzData;
 	}
 
-	public void setFideid(String fideid) {
-		this.fideid = fideid;
+	public void setDwzData(DWZData dwzData) {
+		this.dwzData = dwzData;
 	}
 
-	public String getCountry() {
-		return country;
+	public ELOData getEloData() {
+		return eloData;
 	}
 
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getSex() {
-		return sex;
-	}
-
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getW_title() {
-		return w_title;
-	}
-
-	public void setW_title(String w_title) {
-		this.w_title = w_title;
-	}
-
-	public String getO_title() {
-		return o_title;
-	}
-
-	public void setO_title(String o_title) {
-		this.o_title = o_title;
-	}
-
-	public String getFoa_title() {
-		return foa_title;
-	}
-
-	public void setFoa_title(String foa_title) {
-		this.foa_title = foa_title;
-	}
-
-	public String getEloRating() {
-		return eloRating;
-	}
-
-	public void setEloRating(String eloRating) {
-		this.eloRating = eloRating;
-	}
-
-	public String getEloGames() {
-		return eloGames;
-	}
-
-	public void setEloGames(String eloGames) {
-		this.eloGames = eloGames;
-	}
-
-	public String getK() {
-		return k;
-	}
-
-	public void setK(String k) {
-		this.k = k;
-	}
-
-	public String getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(String birthday) {
-		this.birthday = birthday;
-	}
-
-	public String getFlag() {
-		return flag;
-	}
-
-	public void setFlag(String flag) {
-		this.flag = flag;
+	public void setEloData(ELOData eloData) {
+		this.eloData = eloData;
 	}
 
 }

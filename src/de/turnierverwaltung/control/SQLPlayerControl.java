@@ -122,20 +122,11 @@ public class SQLPlayerControl {
 
 	public int insertOneSpieler(Player spieler) throws SQLException {
 		this.turnier = mainControl.getTurnier();
-		String spielerName = spieler.getName();
-		String spielerForeName = spieler.getForename();
-		String spielerSurName = spieler.getSurname();
-		String spielerDWZ = spieler.getDwz();
-		String spielerKuerzel = spieler.getKuerzel();
-		String spielerZPS = spieler.getDsbZPSNumber();
-		String spielerMGL = spieler.getDsbMGLNumber();
-		int age = spieler.getAge();
-		int dwzindex = spieler.getDwzindex();
+
 		int spielerId = -1;
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
 
-		spielerId = mySQLSpielerDAO.insertSpieler(spielerName, spielerForeName, spielerSurName, spielerDWZ,
-				spielerKuerzel, spielerZPS, spielerMGL, dwzindex, age);
+		spielerId = mySQLSpielerDAO.insertSpieler(spieler);
 
 		return spielerId;
 	}
@@ -143,32 +134,33 @@ public class SQLPlayerControl {
 	public boolean insertSpieler(int gruppe) throws SQLException {
 		boolean eintragGespeichert = false;
 		this.turnier = mainControl.getTurnier();
-		String[] spielerName = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
-		String[] spielerForeName = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
-		String[] spielerSurName = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
-		String[] spielerDWZ = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
-		String[] spielerKuerzel = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
-		String[] spielerZPS = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
-		String[] spielerMGL = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
-		int[] spielerdwzindex = new int[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
-		int[] spielerAge = new int[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+//		String[] spielerName = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+//		String[] spielerForeName = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+//		String[] spielerSurName = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+//		String[] spielerDWZ = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+//		String[] spielerKuerzel = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+//		String[] spielerZPS = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+//		String[] spielerMGL = new String[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+//		int[] spielerdwzindex = new int[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
+//		int[] spielerAge = new int[turnier.getGruppe()[gruppe].getSpielerAnzahl()];
 		turnierId = turnier.getTurnierId();
 		int spielerAnzahl = turnier.getGruppe()[gruppe].getSpielerAnzahl();
 		spielerId = new int[spielerAnzahl];
 		for (int y = 0; y < spielerAnzahl; y++) {
 			if (turnier.getGruppe()[gruppe].getSpieler()[y].getSpielerId() == -1) {
-				spielerName[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getName();
-				spielerName[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getForename();
-				spielerName[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getSurname();
-				spielerDWZ[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getDwz();
-				spielerKuerzel[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getKuerzel();
-				spielerZPS[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getDsbZPSNumber();
-				spielerMGL[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getDsbMGLNumber();
-				spielerdwzindex[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getDwzindex();
-				spielerAge[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getAge();
-				spielerId[y] = mySQLSpielerDAO.insertSpieler(spielerName[y], spielerForeName[y], spielerSurName[y],
-						spielerDWZ[y], spielerKuerzel[y], spielerZPS[y], spielerMGL[y], spielerdwzindex[y],
-						spielerAge[y]);
+				// spielerName[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getName();
+				// spielerName[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getForename();
+				// spielerName[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getSurname();
+				// spielerDWZ[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getDwz();
+				// spielerKuerzel[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getKuerzel();
+				// spielerZPS[y] =
+				// turnier.getGruppe()[gruppe].getSpieler()[y].getDsbZPSNumber();
+				// spielerMGL[y] =
+				// turnier.getGruppe()[gruppe].getSpieler()[y].getDsbMGLNumber();
+				// spielerdwzindex[y] =
+				// turnier.getGruppe()[gruppe].getSpieler()[y].getDwzindex();
+				// spielerAge[y] = turnier.getGruppe()[gruppe].getSpieler()[y].getAge();
+				spielerId[y] = mySQLSpielerDAO.insertSpieler(turnier.getGruppe()[gruppe].getSpieler()[y]);
 				turnier.getGruppe()[gruppe].getSpieler()[y].setSpielerId(spielerId[y]);
 				eintragGespeichert = true;
 			}
@@ -230,7 +222,7 @@ public class SQLPlayerControl {
 		return saved;
 	}
 
-	public Boolean playerExist(Player neuerSpieler) throws SQLException { 
+	public Boolean playerExist(Player neuerSpieler) throws SQLException {
 		boolean exist = false;
 		SpielerDAO mySQLSpielerDAO = daoFactory.getSpielerDAO();
 

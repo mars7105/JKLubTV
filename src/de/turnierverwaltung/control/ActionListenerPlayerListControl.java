@@ -113,7 +113,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 		if (arg0.getSource().equals(naviView.getSpielerELOSearchButton())) {
 			ELOControl eloDialogControl;
@@ -125,7 +125,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			
+
 		}
 		if (arg0.getSource().equals(naviView.getSpielerAddButton())) {
 			spielerHinzufuegenView = new NewPlayerView();
@@ -191,24 +191,25 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 		createAndShowGUI(spielerliste.size());
 		for (Player player : spielerliste) {
 			if (verein != null) {
-				if (verein.getZps().equals(player.getDsbZPSNumber()) == false) {
-					verein = new DSBDWZClub(player.getDsbZPSNumber());
+				if (verein.getZps().equals(player.getDwzData().getCsvZPS()) == false) {
+					verein = new DSBDWZClub(player.getDwzData().getCsvZPS());
 					spieler = verein.getSpieler();
 				}
 			} else {
-				verein = new DSBDWZClub(player.getDsbZPSNumber());
+				verein = new DSBDWZClub(player.getDwzData().getCsvZPS());
 				spieler = verein.getSpieler();
 			}
 
 			if (spieler != null) {
 				for (Player temp : spieler) {
 					try {
-						int tempMGL = Integer.parseInt(temp.getDsbMGLNumber());
-						int playerMGL = Integer.parseInt(player.getDsbMGLNumber());
+						int tempMGL = Integer.parseInt(temp.getDwzData().getCsvMgl_Nr());
+						int playerMGL = Integer.parseInt(player.getDwzData().getCsvMgl_Nr());
 						if (tempMGL == playerMGL) {
-							if (player.getDWZ() != temp.getDWZ() || player.getDwzindex() != temp.getDwzindex()) {
+							if (player.getDWZ() != temp.getDWZ()
+									|| !player.getDwzData().getCsvIndex().equals(temp.getDwzData().getCsvIndex())) {
 								player.setDwz(temp.getDWZ());
-								player.setDwzindex(temp.getDwzindex());
+								player.getDwzData().setCsvIndex(temp.getDwzData().getCsvIndex());
 								try {
 									spielerTableControl.updateOneSpieler(player);
 									// System.out.println(player.getName());
