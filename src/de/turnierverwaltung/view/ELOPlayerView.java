@@ -42,7 +42,7 @@ public class ELOPlayerView extends JPanel {
 	private JScrollPane scrollPane;
 	private DefaultListModel<ListItem> listModel;
 	private JList<ListItem> list;
-	private int windowWidth; 
+	private int windowWidth;
 	private int windowHeight;
 	private ImageIcon inserIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user-offline.png")));
@@ -51,6 +51,7 @@ public class ELOPlayerView extends JPanel {
 
 	private ImageIcon insertIcon3 = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user.png")));
+
 	public ELOPlayerView() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
 		windowHeight = TournamentConstants.WINDOW_HEIGHT;
@@ -59,8 +60,8 @@ public class ELOPlayerView extends JPanel {
 		setMinimumSize(new Dimension(windowWidth / 4, windowHeight / 4));
 		setLayout(new BorderLayout());
 
-		JLabel titleLabel = new JLabel(Messages.getString("SpielerDewisView.0")); //$NON-NLS-1$
-		JLabel hilfeLabel = new JLabel(Messages.getString("SpielerDewisView.1")); //$NON-NLS-1$
+		JLabel titleLabel = new JLabel(Messages.getString("ELOPlayerView.1"));
+		JLabel hilfeLabel = new JLabel(Messages.getString("SpielerDewisView.1"));
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		titlepanel.add(titleLabel);
 		JPanel hilfepanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -87,19 +88,18 @@ public class ELOPlayerView extends JPanel {
 		ListItem playerItem = null;
 		if (iconnumber == 0) {
 			playerItem = new ListItem(inserIcon,
-					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
+					spieler.getName() + " " + Messages.getString("ELOPlayerView.0") + spieler.getEloData().getRating());
 		}
 		if (iconnumber == 1) {
 			playerItem = new ListItem(insertIcon2,
-					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
+					spieler.getName() + " " + Messages.getString("ELOPlayerView.0") + spieler.getEloData().getRating());
 		}
 		if (iconnumber == 2) {
 			playerItem = new ListItem(insertIcon3,
-					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
-			
+					spieler.getName() + " " + Messages.getString("ELOPlayerView.0") + spieler.getEloData().getRating());
+
 		}
-		listModel.addElement(playerItem); 
-		
+		listModel.addElement(playerItem);
 
 	}
 
@@ -111,7 +111,7 @@ public class ELOPlayerView extends JPanel {
 		list.setVisibleRowCount(-1);
 		list.setCellRenderer(new MyCellRenderer());
 		contentPanel.add(list);
-		
+
 		contentPanel.updateUI();
 	}
 
@@ -138,6 +138,5 @@ public class ELOPlayerView extends JPanel {
 	public void setListModel(DefaultListModel<ListItem> listModel) {
 		this.listModel = listModel;
 	}
-	
-	
+
 }

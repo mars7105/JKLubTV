@@ -1,7 +1,5 @@
 package de.turnierverwaltung.model;
 
-import java.time.LocalDateTime;
-
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -58,8 +56,7 @@ public class Player implements Comparable<Object> {
 		dwzData.setCsvZPS("");
 		dwzData.setCsvMgl_Nr("");
 		this.showPlayer = true;
-		dwzData = new DWZData();
-		eloData = new ELOData();
+
 	}
 
 	/**
@@ -127,13 +124,47 @@ public class Player implements Comparable<Object> {
 	}
 
 	public Player(ELOData eloData2) {
+		dwzData = new DWZData();
+		dwzData.setCsvIndex("-1");
+		dwzData.setCsvZPS("");
+		dwzData.setCsvMgl_Nr("");
+
 		eloData = eloData2;
+		this.spielerId = -1;
+
+		this.name = eloData.getName();
+		this.forename = "";
+		this.surname = "";
+		this.kuerzel = "";
+		extractNameToForenameAndSurename();
+		extractNameToKuerzel();
+
+		this.dwz = "";
+		this.age = eloData.getAge();
+		this.punkte = 0;
+		this.soberg = 0;
+		this.platz = 1;
+
+		this.showPlayer = true;
 
 	}
 
 	public Player(DWZData dwzData) {
 		this.dwzData = dwzData;
+		eloData = new ELOData();
+		this.spielerId = -1;
 
+		this.name = this.dwzData.getCsvSpielername();
+		extractNameToForenameAndSurename();
+		extractNameToKuerzel();
+
+		this.dwz = this.dwzData.getCsvDWZ();
+		this.age = this.dwzData.getAge();
+		this.punkte = 0;
+		this.soberg = 0;
+		this.platz = 1;
+
+		this.showPlayer = true;
 	}
 
 	private void correctMGLNumber() {
@@ -377,8 +408,6 @@ public class Player implements Comparable<Object> {
 		this.surname = surname;
 	}
 
-	
-
 	public boolean equals(Object other) {
 		if (spielerId == ((Player) other).spielerId && spielerId >= 0) {
 			return true;
@@ -394,6 +423,20 @@ public class Player implements Comparable<Object> {
 
 	public void setDwzData(DWZData dwzData) {
 		this.dwzData = dwzData;
+		eloData = new ELOData();
+		this.spielerId = -1;
+
+		this.name = this.dwzData.getCsvSpielername();
+		extractNameToForenameAndSurename();
+		extractNameToKuerzel();
+
+		this.dwz = this.dwzData.getCsvDWZ();
+		this.age = this.dwzData.getAge();
+		this.punkte = 0;
+		this.soberg = 0;
+		this.platz = 1;
+
+		this.showPlayer = true;
 	}
 
 	public ELOData getEloData() {

@@ -1,5 +1,8 @@
 package de.turnierverwaltung.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class ELOData {
 	private String fideid;
 	private String name;
@@ -15,9 +18,10 @@ public class ELOData {
 	private String k;
 	private String birthday;
 	private String flag;
+	private int age;
 
-	public ELOData(String fideid, String name, String country, String sex, String title, String w_title,
-			String o_title, String foa_title, String rating, String games, String k, String birthday, String flag) {
+	public ELOData(String fideid, String name, String country, String sex, String title, String w_title, String o_title,
+			String foa_title, String rating, String games, String k, String birthday, String flag) {
 		super();
 		this.fideid = fideid;
 		this.name = name;
@@ -165,6 +169,29 @@ public class ELOData {
 
 	public void setFlag(String flag) {
 		this.flag = flag;
+	}
+
+	public int getAge() {
+		String timeStamp = new SimpleDateFormat("yyyy").format(Calendar.getInstance().getTime());
+		try {
+			int year = Integer.parseInt(timeStamp) - Integer.parseInt(birthday);
+			if (year < 20) {
+				age = 0;
+			}
+			if (year >= 20 && age <= 25) {
+				age = 1;
+			}
+			if (year > 25) {
+				age = 2;
+			}
+		} catch (NumberFormatException e) {
+			age = 2;
+		}
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 }

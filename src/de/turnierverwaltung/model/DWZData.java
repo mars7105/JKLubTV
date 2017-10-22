@@ -1,5 +1,8 @@
 package de.turnierverwaltung.model;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 public class DWZData {
 	private String csvZPS;
 	private String csvMgl_Nr;
@@ -15,6 +18,7 @@ public class DWZData {
 	private String csvFIDE_Titel;
 	private String csvFIDE_ID;
 	private String csvFIDE_Land;
+	private int age;
 
 	public DWZData(String csvZPS, String csvMgl_Nr, String csvStatus, String csvSpielername, String csvGeschlecht,
 			String csvSpielberechtigung, String csvGeburtsjahr, String csvLetzte_Auswertung, String csvDWZ,
@@ -163,6 +167,29 @@ public class DWZData {
 
 	public void setCsvFIDE_Land(String csvFIDE_Land) {
 		this.csvFIDE_Land = csvFIDE_Land;
+	}
+
+	public int getAge() {
+		String timeStamp = new SimpleDateFormat("yyyy").format(Calendar.getInstance().getTime());
+		try {
+			int year = Integer.parseInt(timeStamp) - Integer.parseInt(csvGeburtsjahr);
+			if (year < 20) {
+				age = 0;
+			}
+			if (year >= 20 && age <= 25) {
+				age = 1;
+			}
+			if (year > 25) {
+				age = 2;
+			}
+		} catch (NumberFormatException e) {
+			age = 2;
+		}
+		return age;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
 	}
 
 }
