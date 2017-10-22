@@ -423,7 +423,7 @@ public class Player implements Comparable<Object> {
 
 	public void setDwzData(DWZData dwzData) {
 		this.dwzData = dwzData;
-		eloData = new ELOData();
+//		eloData = new ELOData();
 		this.spielerId = -1;
 
 		this.name = this.dwzData.getCsvSpielername();
@@ -445,7 +445,7 @@ public class Player implements Comparable<Object> {
 
 	public void setEloData(ELOData eloData) {
 		this.eloData = eloData;
-		dwzData = new DWZData();
+//		dwzData = new DWZData();
 		dwzData.setCsvIndex("-1");
 		dwzData.setCsvZPS("");
 		dwzData.setCsvMgl_Nr("");
