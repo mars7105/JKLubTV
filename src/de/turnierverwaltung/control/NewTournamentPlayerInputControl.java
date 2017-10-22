@@ -150,7 +150,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 										temp = li.next();
 										if (spielerID == temp.getSpielerId()) {
 											spieler[counter] = temp;
-											spieler[counter].setShowPlayer(false);
+//											spieler[counter].setShowPlayer(false);
 											stc.updateOneSpieler(spieler[counter]);
 										}
 
@@ -164,7 +164,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 									spieler[counter].setAge(age);
 //									spieler[counter].setDwzindex(-1);
 
-									spieler[counter].setShowPlayer(false);
+//									spieler[counter].setShowPlayer(false);
 									spieler[counter].setSpielerId(stc.insertOneSpieler(spieler[counter]));
 								}
 							}

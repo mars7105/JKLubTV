@@ -34,7 +34,7 @@ public class Player implements Comparable<Object> {
 	private String forename;
 	private String surname;
 
-	private Boolean showPlayer;
+//	private Boolean showPlayer;
 
 	private DWZData dwzData;
 	private ELOData eloData;
@@ -55,7 +55,7 @@ public class Player implements Comparable<Object> {
 		this.spielerId = -1;
 		dwzData.setCsvZPS("");
 		dwzData.setCsvMgl_Nr("");
-		this.showPlayer = true;
+//		this.showPlayer = true;
 
 	}
 
@@ -83,7 +83,7 @@ public class Player implements Comparable<Object> {
 		this.platz = 1;
 		dwzData.setCsvZPS(zps);
 		dwzData.setCsvMgl_Nr(mgl);
-		this.showPlayer = true;
+//		this.showPlayer = true;
 		dwzData.setCsvIndex("-1");
 		correctMGLNumber();
 
@@ -116,7 +116,7 @@ public class Player implements Comparable<Object> {
 		this.platz = 1;
 		dwzData.setCsvZPS(zps);
 		dwzData.setCsvMgl_Nr(mgl);
-		this.showPlayer = true;
+//		this.showPlayer = true;
 		extractForenameAndSurenameToName();
 		extractNameToKuerzel();
 		correctMGLNumber();
@@ -145,7 +145,7 @@ public class Player implements Comparable<Object> {
 		this.soberg = 0;
 		this.platz = 1;
 
-		this.showPlayer = true;
+//		this.showPlayer = true;
 
 	}
 
@@ -164,7 +164,7 @@ public class Player implements Comparable<Object> {
 		this.soberg = 0;
 		this.platz = 1;
 
-		this.showPlayer = true;
+//		this.showPlayer = true;
 	}
 
 	private void correctMGLNumber() {
@@ -233,13 +233,13 @@ public class Player implements Comparable<Object> {
 		return soberg;
 	}
 
-	public Boolean getShowPlayer() {
-		return showPlayer;
-	}
-
-	public void setShowPlayer(Boolean showPlayer) {
-		this.showPlayer = showPlayer;
-	}
+//	public Boolean getShowPlayer() {
+//		return showPlayer;
+//	}
+//
+//	public void setShowPlayer(Boolean showPlayer) {
+//		this.showPlayer = showPlayer;
+//	}
 
 	/**
 	 * 
@@ -436,7 +436,7 @@ public class Player implements Comparable<Object> {
 		this.soberg = 0;
 		this.platz = 1;
 
-		this.showPlayer = true;
+//		this.showPlayer = true;
 	}
 
 	public ELOData getEloData() {
@@ -465,7 +465,7 @@ public class Player implements Comparable<Object> {
 		this.soberg = 0;
 		this.platz = 1;
 
-		this.showPlayer = true;
+		// this.showPlayer = true;
 	}
 
 }
