@@ -17,13 +17,15 @@ public class CSVPlayer {
 		dwzData.setCsvSpielername(csvSpielername);
 		dwzData.setCsvGeschlecht(csvGeschlecht);
 		dwzData.setCsvSpielberechtigung(csvSpielberechtigung);
-		dwzData.setCsvGeburtsjahr(csvGeburtsjahr);
-		dwzData.setCsvLetzte_Auswertung(csvLetzte_Auswertung);
-		dwzData.setCsvDWZ(csvDWZ);
-		dwzData.setCsvIndex(csvIndex);
-		dwzData.setCsvFIDE_Elo(csvFIDE_Elo);
+		
+		dwzData.setCsvGeburtsjahr(Integer.parseInt(csvGeburtsjahr));
+		dwzData.setCsvLetzte_Auswertung(Integer.parseInt(csvLetzte_Auswertung));
+		dwzData.setCsvDWZ(Integer.parseInt(csvDWZ));
+		dwzData.setCsvIndex(Integer.parseInt(csvIndex));
+		dwzData.setCsvFIDE_Elo(Integer.parseInt(csvFIDE_Elo));
+		dwzData.setCsvFIDE_ID(Integer.parseInt(csvFIDE_ID));
 		dwzData.setCsvFIDE_Titel(csvFIDE_Titel);
-		dwzData.setCsvFIDE_ID(csvFIDE_ID);
+		
 		dwzData.setCsvFIDE_Land(csvFIDE_Land);
 		correctMGLNumber();
 
@@ -33,24 +35,22 @@ public class CSVPlayer {
 		Player player = new Player();
 		int age = 0;
 		LocalDateTime now = LocalDateTime.now();
-		try {
-			age = now.getYear() - Integer.parseInt(dwzData.getCsvGeburtsjahr());
 
-			if (age < 20) {
-				player.setAge(0);
-			}
-			if (age >= 20 && age <= 25) {
-				player.setAge(1);
-			}
-			if (age > 25) {
-				player.setAge(2);
-			}
-		} catch (NumberFormatException e) {
+		age = now.getYear() - dwzData.getCsvGeburtsjahr();
+
+		if (age < 20) {
+			player.setAge(0);
+		}
+		if (age >= 20 && age <= 25) {
+			player.setAge(1);
+		}
+		if (age > 25) {
 			player.setAge(2);
 		}
+
 		player.setDwzData(dwzData);
-		
-//		try {
+
+		// try {
 		//// player.getDwzData().setDwzindex(Integer.parseInt(dwzData.getCsvIndex()));
 		// } catch (NumberFormatException e) {
 		// player.setDwzindex(-1);

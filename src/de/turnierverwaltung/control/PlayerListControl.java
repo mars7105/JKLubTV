@@ -66,7 +66,12 @@ public class PlayerListControl implements ActionListener {
 						String dwz = spielerEditierenView.getTextFieldDwz().getText();
 						String zps = spielerEditierenView.getTextFieldZPS().getText();
 						String mgl = spielerEditierenView.getTextFieldMGL().getText();
-						String dwzindex = spielerEditierenView.getTextFieldDwzIndex().getText();
+						int dwzindex = -1;
+						try {
+							dwzindex = Integer.parseInt(spielerEditierenView.getTextFieldDwzIndex().getText());
+						} catch (NumberFormatException e) {
+							dwzindex = -1;
+						}
 						int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
 
 						spieler.get(spielerIndex).setForename(foreName);

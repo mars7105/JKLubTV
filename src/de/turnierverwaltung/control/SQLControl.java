@@ -25,6 +25,7 @@ import de.turnierverwaltung.mysql.DWZVereineDAO;
 import de.turnierverwaltung.mysql.DatumDAO;
 import de.turnierverwaltung.mysql.ELODataDAO;
 import de.turnierverwaltung.mysql.GruppenDAO;
+import de.turnierverwaltung.mysql.InfoDAO;
 import de.turnierverwaltung.mysql.PartienDAO;
 import de.turnierverwaltung.mysql.SpielerDAO;
 import de.turnierverwaltung.mysql.TurnierDAO;
@@ -42,6 +43,7 @@ public class SQLControl {
 	private ELODataDAO mySQLELODataDAO;
 	private DWZVerbandDAO mySQLVerbandDAO;
 	private DWZVereineDAO mySQLVereineDAO;
+	private InfoDAO mySQLInfoDataDAO;
 
 	public SQLControl() {
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
@@ -55,6 +57,7 @@ public class SQLControl {
 		mySQLVerbandDAO = daoFactory.getDWZVerbandDAO();
 		mySQLVereineDAO = daoFactory.getDWZVereineDAO();
 		mySQLELODataDAO = daoFactory.getELODataDAO();
+		mySQLInfoDataDAO = daoFactory.getInfoDAO();
 	}
 
 	public void createAllTables() throws SQLException {
@@ -68,12 +71,13 @@ public class SQLControl {
 		mySQLVerbandDAO.createVerbandTable();
 		mySQLVereineDAO.createVereineTable();
 		mySQLELODataDAO.createELOTable();
+		mySQLInfoDataDAO.createInfoTable();
 	}
 
 	public void createSpielerTables() throws SQLException {
 		mySQLSpielerDAO.createSpielerTable();
 		mySQLDWZDataDAO.createDWZTable();
 		mySQLELODataDAO.createELOTable();
-
+		mySQLInfoDataDAO.createInfoTable();
 	}
 }

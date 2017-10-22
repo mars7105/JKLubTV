@@ -1,6 +1,7 @@
 package de.turnierverwaltung.mysql;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -16,27 +17,51 @@ public class SQLiteELODataDAO implements ELODataDAO {
 
 	@Override
 	public void createELOTable() throws SQLException {
-//		String sql = "CREATE TABLE spieler (idSpieler INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-//				+ " Name VARCHAR, Forename VARCHAR, Surname VARCHAR, Kuerzel VARCHAR, DWZ VARCHAR, ZPS VARCHAR, MGL VARCHAR, DWZIndex INTEGER, Age INTEGER)"
-//				+ ") TYPE=MyISAM;";
-//
-//		Statement stmt;
-//		if (this.dbConnect != null) {
-//
-//			// create a database connection
-//			stmt = this.dbConnect.createStatement();
-//			stmt.setQueryTimeout(30); // set timeout to 30 sec.
-//			stmt.executeUpdate(sql);
-//			stmt.close();
-//
-//		}
+		String sql = "CREATE TABLE 'elo_data' (\n" + "  'Name'               varchar(57)  NOT NULL default '',\n"
+				+ "  'Fed'                varchar(5)   NOT NULL default '',\n"
+				+ "  'Sex'                varchar(3)      NOT NULL default '',\n"
+				+ "  'Tit'                varchar(3)               default NULL,\n"
+				+ "  'WTit'               varchar(3)               default NULL,\n"
+				+ "  'OTit'               varchar(3)      NOT NULL default '',\n"
+				+ "  'FOA'                varchar(3)       NOT NULL default '',\n"
+				+ "  'OCT17'              INTEGER  unsigned default NULL,\n"
+				+ "  'Gms'                INTEGER  unsigned default NULL,\n"
+				+ "  'K'                  INTEGER  unsigned default NULL,\n"
+				+ "  'B-day'              INTEGER  unsigned default NULL,\n"
+				+ "  'Flag'               char(2)               default NULL,\n"
+				+ "  'ID_Number'          INTEGER PRIMARY KEY NOT NULL\n" + ");";
+		Statement stmt;
+		if (this.dbConnect != null) {
+
+			// create a database connection
+
+			stmt = this.dbConnect.createStatement();
+
+			stmt.setQueryTimeout(30); // set timeout to 30 sec.
+			stmt.executeUpdate(sql);
+			stmt.close();
+
+		}
 
 	}
 
 	@Override
 	public boolean deleteELO(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+		boolean ok = false;
+		String sql = "delete from elo_data where ID_Number=?" + ";";
+		if (this.dbConnect != null) {
+
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+			preStm.setInt(1, id);
+			preStm.addBatch();
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			preStm.close();
+			ok = true;
+
+		}
+		return ok;
 	}
 
 	@Override
@@ -52,7 +77,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	}
 
 	@Override
-	public ELOData findPlayer(int id) throws SQLException {
+	public ELOData getELOData(int id) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
 	}

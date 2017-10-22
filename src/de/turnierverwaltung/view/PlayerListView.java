@@ -112,7 +112,7 @@ public class PlayerListView extends JPanel {
 		String lineText1 = "";
 		int dwzindex = -1;
 		try {
-			dwzindex = Integer.parseInt(spieler.getDwzData().getCsvIndex());
+			dwzindex = spieler.getDwzData().getCsvIndex();
 		} catch (NumberFormatException e) {
 			dwzindex = -1;
 		}

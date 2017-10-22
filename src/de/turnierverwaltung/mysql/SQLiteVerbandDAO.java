@@ -1,6 +1,7 @@
 package de.turnierverwaltung.mysql;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -8,7 +9,7 @@ import de.turnierverwaltung.model.DWZData;
 
 public class SQLiteVerbandDAO implements DWZVerbandDAO {
 	private Connection dbConnect;
-	
+
 	public SQLiteVerbandDAO() {
 		this.dbConnect = null;
 		this.dbConnect = SQLiteDAOFactory.createConnection();
@@ -16,13 +17,10 @@ public class SQLiteVerbandDAO implements DWZVerbandDAO {
 
 	@Override
 	public void createVerbandTable() throws SQLException {
-		String sql = "CREATE TABLE `dwz_verbaende` (\n" + 
-				"  `Verband`            char(3)      NOT NULL default '',\n" + 
-				"  `LV`                 char(1)      NOT NULL default '',\n" + 
-				"  `Uebergeordnet`      char(3)      NOT NULL default '',\n" + 
-				"  `Verbandname`        varchar(45)  NOT NULL default '',\n" + 
-				"  PRIMARY KEY (`Verband`)\n" + 
-				");";
+		String sql = "CREATE TABLE `dwz_verbaende` (\n" + "  `Verband`            char(3)      NOT NULL default '',\n"
+				+ "  `LV`                 char(1)      NOT NULL default '',\n"
+				+ "  `Uebergeordnet`      char(3)      NOT NULL default '',\n"
+				+ "  `Verbandname`        varchar(45)  NOT NULL default '',\n" + "  PRIMARY KEY (`Verband`)\n" + ");";
 
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -35,13 +33,25 @@ public class SQLiteVerbandDAO implements DWZVerbandDAO {
 
 		}
 
-		
 	}
 
 	@Override
-	public boolean deleteDWZ(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean deleteDWZ(String verband) throws SQLException {
+		boolean ok = false;
+		String sql = "delete from dwz_verbaende where Verband=?" + ";";
+		if (this.dbConnect != null) {
+
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+			preStm.setString(1, verband);
+			preStm.addBatch();
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			preStm.close();
+			ok = true;
+
+		}
+		return ok;
 	}
 
 	@Override

@@ -207,7 +207,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 						int playerMGL = Integer.parseInt(player.getDwzData().getCsvMgl_Nr());
 						if (tempMGL == playerMGL) {
 							if (player.getDWZ() != temp.getDWZ()
-									|| !player.getDwzData().getCsvIndex().equals(temp.getDwzData().getCsvIndex())) {
+									|| player.getDwzData().getCsvIndex() != temp.getDwzData().getCsvIndex()) {
 								player.setDwz(temp.getDWZ());
 								player.getDwzData().setCsvIndex(temp.getDwzData().getCsvIndex());
 								try {

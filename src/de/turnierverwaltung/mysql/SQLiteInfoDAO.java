@@ -20,7 +20,7 @@ public class SQLiteInfoDAO implements InfoDAO {
 	@Override
 	public void createInfoTable() throws SQLException {
 		String sql = "CREATE TABLE info (idInfo INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ,"
-				+ " Infoname VARCHAR, Version INTEGER, Infonotice VARCHAR, Datum VARCHAR;";
+				+ " Infoname VARCHAR, Version INTEGER, Infonotice VARCHAR, Datum VARCHAR);";
 
 		Statement stmt;
 		if (this.dbConnect != null) {

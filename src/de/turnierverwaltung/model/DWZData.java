@@ -10,19 +10,19 @@ public class DWZData {
 	private String csvSpielername;
 	private String csvGeschlecht;
 	private String csvSpielberechtigung;
-	private String csvGeburtsjahr;
-	private String csvLetzte_Auswertung;
-	private String csvDWZ;
-	private String csvIndex;
-	private String csvFIDE_Elo;
+	private int csvGeburtsjahr;
+	private int csvLetzte_Auswertung;
+	private int csvDWZ;
+	private int csvIndex;
+	private int csvFIDE_Elo;
 	private String csvFIDE_Titel;
-	private String csvFIDE_ID;
+	private int csvFIDE_ID;
 	private String csvFIDE_Land;
 	private int age;
 
 	public DWZData(String csvZPS, String csvMgl_Nr, String csvStatus, String csvSpielername, String csvGeschlecht,
-			String csvSpielberechtigung, String csvGeburtsjahr, String csvLetzte_Auswertung, String csvDWZ,
-			String csvIndex, String csvFIDE_Elo, String csvFIDE_Titel, String csvFIDE_ID, String csvFIDE_Land) {
+			String csvSpielberechtigung, int csvGeburtsjahr, int csvLetzte_Auswertung, int csvDWZ,
+			int csvIndex, int csvFIDE_Elo, String csvFIDE_Titel, int csvFIDE_ID, String csvFIDE_Land) {
 		super();
 		this.csvZPS = csvZPS;
 		this.csvMgl_Nr = csvMgl_Nr;
@@ -47,13 +47,13 @@ public class DWZData {
 		this.csvSpielername = "";
 		this.csvGeschlecht = "";
 		this.csvSpielberechtigung = "";
-		this.csvGeburtsjahr = "";
-		this.csvLetzte_Auswertung = "";
-		this.csvDWZ = "";
-		this.csvIndex = "";
-		this.csvFIDE_Elo = "";
+		this.csvGeburtsjahr = 0;
+		this.csvLetzte_Auswertung = 0;
+		this.csvDWZ = 0;
+		this.csvIndex = 0;
+		this.csvFIDE_Elo = 0;
 		this.csvFIDE_Titel = "";
-		this.csvFIDE_ID = "";
+		this.csvFIDE_ID = -1;
 		this.csvFIDE_Land = "";
 	}
 
@@ -105,43 +105,43 @@ public class DWZData {
 		this.csvSpielberechtigung = csvSpielberechtigung;
 	}
 
-	public String getCsvGeburtsjahr() {
+	public int getCsvGeburtsjahr() {
 		return csvGeburtsjahr;
 	}
 
-	public void setCsvGeburtsjahr(String csvGeburtsjahr) {
+	public void setCsvGeburtsjahr(int csvGeburtsjahr) {
 		this.csvGeburtsjahr = csvGeburtsjahr;
 	}
 
-	public String getCsvLetzte_Auswertung() {
+	public int getCsvLetzte_Auswertung() {
 		return csvLetzte_Auswertung;
 	}
 
-	public void setCsvLetzte_Auswertung(String csvLetzte_Auswertung) {
+	public void setCsvLetzte_Auswertung(int csvLetzte_Auswertung) {
 		this.csvLetzte_Auswertung = csvLetzte_Auswertung;
 	}
 
-	public String getCsvDWZ() {
+	public int getCsvDWZ() {
 		return csvDWZ;
 	}
 
-	public void setCsvDWZ(String csvDWZ) {
+	public void setCsvDWZ(int csvDWZ) {
 		this.csvDWZ = csvDWZ;
 	}
 
-	public String getCsvIndex() {
+	public int getCsvIndex() {
 		return csvIndex;
 	}
 
-	public void setCsvIndex(String csvIndex) {
+	public void setCsvIndex(int csvIndex) {
 		this.csvIndex = csvIndex;
 	}
 
-	public String getCsvFIDE_Elo() {
+	public int getCsvFIDE_Elo() {
 		return csvFIDE_Elo;
 	}
 
-	public void setCsvFIDE_Elo(String csvFIDE_Elo) {
+	public void setCsvFIDE_Elo(int csvFIDE_Elo) {
 		this.csvFIDE_Elo = csvFIDE_Elo;
 	}
 
@@ -153,11 +153,11 @@ public class DWZData {
 		this.csvFIDE_Titel = csvFIDE_Titel;
 	}
 
-	public String getCsvFIDE_ID() {
+	public int getCsvFIDE_ID() {
 		return csvFIDE_ID;
 	}
 
-	public void setCsvFIDE_ID(String csvFIDE_ID) {
+	public void setCsvFIDE_ID(int csvFIDE_ID) {
 		this.csvFIDE_ID = csvFIDE_ID;
 	}
 
@@ -172,7 +172,7 @@ public class DWZData {
 	public int getAge() {
 		String timeStamp = new SimpleDateFormat("yyyy").format(Calendar.getInstance().getTime());
 		try {
-			int year = Integer.parseInt(timeStamp) - Integer.parseInt(csvGeburtsjahr);
+			int year = Integer.parseInt(timeStamp) - csvGeburtsjahr;
 			if (year < 20) {
 				age = 0;
 			}

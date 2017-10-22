@@ -127,7 +127,7 @@ public class EditPlayerView extends JDialog {
 		centerPane.add(textFieldDwz);
 		contentPanel.add(centerPane);
 
-		textFieldDwzIndex.setText(spieler.getDwzData().getCsvIndex());
+		textFieldDwzIndex.setText(Integer.toString(spieler.getDwzData().getCsvIndex()));
 		label = new JLabel();
 		label.setPreferredSize(new Dimension(120, 10));
 		label.setText(Messages.getString("SpielerEditierenView.14")); //$NON-NLS-1$

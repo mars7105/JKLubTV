@@ -120,7 +120,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 		if (id >= 0) {
 			returnStatement = true;
 		}
-		
+
 		return returnStatement;
 	}
 
@@ -226,13 +226,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 			preStm.setString(5, spieler.getKuerzel());
 			preStm.setString(6, spieler.getDwzData().getCsvZPS());
 			preStm.setString(7, spieler.getDwzData().getCsvMgl_Nr());
-			int index = -1;
-			try {
-				index = Integer.parseInt(spieler.getDwzData().getCsvIndex());
-			} catch (NumberFormatException e) {
-				index = -1;
-			}
-			preStm.setInt(8, index);
+			preStm.setInt(8, spieler.getDwzData().getCsvIndex());
 			preStm.setInt(9, spieler.getAge());
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
@@ -304,13 +298,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 			preStm.setString(5, spieler.getDwz());
 			preStm.setString(6, spieler.getDwzData().getCsvZPS());
 			preStm.setString(7, spieler.getDwzData().getCsvMgl_Nr());
-			int index = -1;
-			try {
-				index = Integer.parseInt(spieler.getDwzData().getCsvIndex());
-			} catch (NumberFormatException e) {
-				index = -1;
-			}
-			preStm.setInt(8, index);
+			preStm.setInt(8, spieler.getDwzData().getCsvIndex());
 			preStm.setInt(9, spieler.getAge());
 
 			preStm.addBatch();

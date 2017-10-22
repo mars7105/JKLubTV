@@ -12,6 +12,6 @@ public interface ELODataDAO {
 
 	public boolean updateELO(ELOData eloData) throws SQLException;
 
-	public ELOData findPlayer(int id) throws SQLException;
+	public ELOData getELOData(int id) throws SQLException;
 
 }
