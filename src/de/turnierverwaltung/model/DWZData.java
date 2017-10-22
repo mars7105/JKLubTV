@@ -19,10 +19,11 @@ public class DWZData {
 	private int csvFIDE_ID;
 	private String csvFIDE_Land;
 	private int age;
+	private int spielerId;
 
 	public DWZData(String csvZPS, String csvMgl_Nr, String csvStatus, String csvSpielername, String csvGeschlecht,
-			String csvSpielberechtigung, int csvGeburtsjahr, int csvLetzte_Auswertung, int csvDWZ,
-			int csvIndex, int csvFIDE_Elo, String csvFIDE_Titel, int csvFIDE_ID, String csvFIDE_Land) {
+			String csvSpielberechtigung, int csvGeburtsjahr, int csvLetzte_Auswertung, int csvDWZ, int csvIndex,
+			int csvFIDE_Elo, String csvFIDE_Titel, int csvFIDE_ID, String csvFIDE_Land) {
 		super();
 		this.csvZPS = csvZPS;
 		this.csvMgl_Nr = csvMgl_Nr;
@@ -38,6 +39,7 @@ public class DWZData {
 		this.csvFIDE_Titel = csvFIDE_Titel;
 		this.csvFIDE_ID = csvFIDE_ID;
 		this.csvFIDE_Land = csvFIDE_Land;
+		spielerId = -1;
 	}
 
 	public DWZData() {
@@ -55,6 +57,7 @@ public class DWZData {
 		this.csvFIDE_Titel = "";
 		this.csvFIDE_ID = -1;
 		this.csvFIDE_Land = "";
+		spielerId = -1;
 	}
 
 	public String getCsvZPS() {
@@ -190,6 +193,14 @@ public class DWZData {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+	public int getSpielerId() {
+		return spielerId;
+	}
+
+	public void setSpielerId(int spielerId) {
+		this.spielerId = spielerId;
 	}
 
 }

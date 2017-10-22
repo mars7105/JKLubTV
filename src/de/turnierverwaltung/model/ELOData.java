@@ -19,6 +19,7 @@ public class ELOData {
 	private String birthday;
 	private String flag;
 	private int age;
+	private int spielerId;
 
 	public ELOData(String fideid, String name, String country, String sex, String title, String w_title, String o_title,
 			String foa_title, String rating, String games, String k, String birthday, String flag) {
@@ -36,7 +37,7 @@ public class ELOData {
 		this.k = k;
 		this.birthday = birthday;
 		this.flag = flag;
-
+		spielerId = -1;
 	}
 
 	public ELOData() {
@@ -65,6 +66,7 @@ public class ELOData {
 		this.k = "";
 		this.birthday = "";
 		this.flag = "";
+		spielerId = -1;
 	}
 
 	public String getFideid() {
@@ -192,6 +194,14 @@ public class ELOData {
 
 	public void setAge(int age) {
 		this.age = age;
+	}
+
+	public int getSpielerId() {
+		return spielerId;
+	}
+
+	public void setSpielerId(int spielerId) {
+		this.spielerId = spielerId;
 	}
 
 }

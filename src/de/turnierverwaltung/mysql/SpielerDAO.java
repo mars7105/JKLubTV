@@ -29,20 +29,12 @@ public interface SpielerDAO {
 
 	public ArrayList<Player> getAllSpieler() throws SQLException;
 
-	// public int insertSpieler(String name, String foreName, String surName, String
-	// spielerDWZ, String spielerKuerzel,
-	// String zps, String mgl, int dwzindex, int age) throws SQLException;
-
 	public ArrayList<Player> selectAllSpieler(int idGruppe) throws SQLException;
 
 	public boolean updateSpieler(Player spieler) throws SQLException;
 
-	public void alterTables();
+//	public ArrayList<Player> getAllSpielerOrderByZPS() throws SQLException;
 
-	public ArrayList<Player> getAllSpielerOrderByZPS() throws SQLException;
-
-	public boolean playerExist(Player neuerSpieler) throws SQLException;
-
-	int insertSpieler(Player spieler) throws SQLException;
+	public int insertSpieler(Player spieler) throws SQLException;
 
 }
