@@ -445,6 +445,27 @@ public class Player implements Comparable<Object> {
 
 	public void setEloData(ELOData eloData) {
 		this.eloData = eloData;
+		dwzData = new DWZData();
+		dwzData.setCsvIndex("-1");
+		dwzData.setCsvZPS("");
+		dwzData.setCsvMgl_Nr("");
+
+		this.spielerId = -1;
+
+		this.name = eloData.getName();
+		this.forename = "";
+		this.surname = "";
+		this.kuerzel = "";
+		extractNameToForenameAndSurename();
+		extractNameToKuerzel();
+
+		this.dwz = "";
+		this.age = eloData.getAge();
+		this.punkte = 0;
+		this.soberg = 0;
+		this.platz = 1;
+
+		this.showPlayer = true;
 	}
 
 }
