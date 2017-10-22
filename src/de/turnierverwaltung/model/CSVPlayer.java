@@ -17,15 +17,38 @@ public class CSVPlayer {
 		dwzData.setCsvSpielername(csvSpielername);
 		dwzData.setCsvGeschlecht(csvGeschlecht);
 		dwzData.setCsvSpielberechtigung(csvSpielberechtigung);
-		
-		dwzData.setCsvGeburtsjahr(Integer.parseInt(csvGeburtsjahr));
-		dwzData.setCsvLetzte_Auswertung(Integer.parseInt(csvLetzte_Auswertung));
-		dwzData.setCsvDWZ(Integer.parseInt(csvDWZ));
-		dwzData.setCsvIndex(Integer.parseInt(csvIndex));
-		dwzData.setCsvFIDE_Elo(Integer.parseInt(csvFIDE_Elo));
-		dwzData.setCsvFIDE_ID(Integer.parseInt(csvFIDE_ID));
+		try {
+			dwzData.setCsvGeburtsjahr(Integer.parseInt(csvGeburtsjahr));
+		} catch (NumberFormatException e0) {
+			dwzData.setCsvGeburtsjahr(1970);
+		}
+		try {
+			dwzData.setCsvLetzte_Auswertung(Integer.parseInt(csvLetzte_Auswertung));
+		} catch (NumberFormatException e1) {
+			dwzData.setCsvLetzte_Auswertung(-1);
+		}
+		try {
+			dwzData.setCsvDWZ(Integer.parseInt(csvDWZ));
+		} catch (NumberFormatException e2) {
+			dwzData.setCsvDWZ(-1);
+		}
+		try {
+			dwzData.setCsvIndex(Integer.parseInt(csvIndex));
+		} catch (NumberFormatException e3) {
+			dwzData.setCsvIndex(-1);
+		}
+		try {
+			dwzData.setCsvFIDE_Elo(Integer.parseInt(csvFIDE_Elo));
+		} catch (NumberFormatException e4) {
+			dwzData.setCsvFIDE_Elo(-1);
+		}
+		try {
+			dwzData.setCsvFIDE_ID(Integer.parseInt(csvFIDE_ID));
+		} catch (NumberFormatException e5) {
+			dwzData.setCsvFIDE_ID(-1);
+		}
 		dwzData.setCsvFIDE_Titel(csvFIDE_Titel);
-		
+
 		dwzData.setCsvFIDE_Land(csvFIDE_Land);
 		correctMGLNumber();
 
@@ -50,11 +73,6 @@ public class CSVPlayer {
 
 		player.setDwzData(dwzData);
 
-		// try {
-		//// player.getDwzData().setDwzindex(Integer.parseInt(dwzData.getCsvIndex()));
-		// } catch (NumberFormatException e) {
-		// player.setDwzindex(-1);
-		// }
 		player.setName(dwzData.getCsvSpielername());
 		player.extractNameToForenameAndSurename();
 		player.extractNameToKuerzel();
