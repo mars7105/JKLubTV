@@ -19,7 +19,11 @@ import java.sql.SQLException;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.DAOFactory;
+import de.turnierverwaltung.mysql.DWZDataDAO;
+import de.turnierverwaltung.mysql.DWZVerbandDAO;
+import de.turnierverwaltung.mysql.DWZVereineDAO;
 import de.turnierverwaltung.mysql.DatumDAO;
+import de.turnierverwaltung.mysql.ELODataDAO;
 import de.turnierverwaltung.mysql.GruppenDAO;
 import de.turnierverwaltung.mysql.PartienDAO;
 import de.turnierverwaltung.mysql.SpielerDAO;
@@ -34,6 +38,10 @@ public class SQLControl {
 	private PartienDAO mySQLPartienDAO;
 	private GruppenDAO mySQLGruppenDAO;
 	private Turnier_has_SpielerDAO mySQLTurnier_has_SpielerDAO;
+	private DWZDataDAO mySQLDWZDataDAO;
+	private ELODataDAO mySQLELODataDAO;
+	private DWZVerbandDAO mySQLVerbandDAO;
+	private DWZVereineDAO mySQLVereineDAO;
 
 	public SQLControl() {
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
@@ -43,6 +51,10 @@ public class SQLControl {
 		mySQLPartienDAO = daoFactory.getPartienDAO();
 		mySQLGruppenDAO = daoFactory.getGruppenDAO();
 		mySQLTurnier_has_SpielerDAO = daoFactory.getTurnier_has_SpielerDAO();
+		mySQLDWZDataDAO = daoFactory.getDWZDataDAO();
+		mySQLVerbandDAO = daoFactory.getDWZVerbandDAO();
+		mySQLVereineDAO = daoFactory.getDWZVereineDAO();
+		mySQLELODataDAO = daoFactory.getELODataDAO();
 	}
 
 	public void createAllTables() throws SQLException {
@@ -52,10 +64,16 @@ public class SQLControl {
 		mySQLPartienDAO.createPartienTable();
 		mySQLGruppenDAO.createGruppenTable();
 		mySQLTurnier_has_SpielerDAO.createTurnier_has_SpielerTable();
+		mySQLDWZDataDAO.createDWZTable();
+		mySQLVerbandDAO.createVerbandTable();
+		mySQLVereineDAO.createVereineTable();
+		mySQLELODataDAO.createELOTable();
 	}
 
 	public void createSpielerTables() throws SQLException {
 		mySQLSpielerDAO.createSpielerTable();
+		mySQLDWZDataDAO.createDWZTable();
+		mySQLELODataDAO.createELOTable();
 
 	}
 }

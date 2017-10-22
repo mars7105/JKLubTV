@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import de.turnierverwaltung.model.DWZData;
 
 public interface DWZVerbandDAO {
-	public void createDWZTable() throws SQLException;
+	public void createVerbandTable() throws SQLException;
 
 	public boolean deleteDWZ(int id) throws SQLException;
 
