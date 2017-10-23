@@ -33,8 +33,8 @@ public class Player implements Comparable<Object> {
 	private int age;
 	private String forename;
 	private String surname;
-	public static int cutFname = 50;
-	public static int cutSname = 50;
+	public static int cutFname;
+	public static int cutSname;
 
 	private DWZData dwzData;
 	private ELOData eloData;
@@ -75,6 +75,7 @@ public class Player implements Comparable<Object> {
 		dwzData.setSpielerId(id);
 		eloData.setSpielerId(id);
 		this.name = name;
+		dwzData.setCsvSpielername(name);
 		this.forename = "";
 		this.surname = "";
 		this.kuerzel = kuerzel;
@@ -88,7 +89,12 @@ public class Player implements Comparable<Object> {
 		// this.showPlayer = true;
 		dwzData.setCsvIndex(-1);
 		correctMGLNumber();
-
+		extractNameToForenameAndSurename();
+		extractNameToKuerzel();
+		setDwz(dwz);
+		cutForename();
+		cutSurname();
+		extractForenameAndSurenameToName();
 	}
 
 	/**
@@ -120,11 +126,15 @@ public class Player implements Comparable<Object> {
 		this.platz = 1;
 		dwzData.setCsvZPS(zps);
 		dwzData.setCsvMgl_Nr(mgl);
-		// this.showPlayer = true;
+
 		extractForenameAndSurenameToName();
 		extractNameToKuerzel();
 		correctMGLNumber();
-
+		dwzData.setCsvSpielername(this.name);
+		setDwz(dwz);
+		cutForename();
+		cutSurname();
+		extractForenameAndSurenameToName();
 	}
 
 	public Player(ELOData eloData2) {
@@ -142,7 +152,9 @@ public class Player implements Comparable<Object> {
 		this.kuerzel = "";
 		extractNameToForenameAndSurename();
 		extractNameToKuerzel();
-
+		cutForename();
+		cutSurname();
+		extractForenameAndSurenameToName();
 		// this.dwz = "";
 		this.age = eloData.getAge();
 		this.punkte = 0;
@@ -161,7 +173,9 @@ public class Player implements Comparable<Object> {
 		this.name = this.dwzData.getCsvSpielername();
 		extractNameToForenameAndSurename();
 		extractNameToKuerzel();
-
+		cutForename();
+		cutSurname();
+		extractForenameAndSurenameToName();
 		// this.dwz = Integer.toString(this.dwzData.getCsvDWZ());
 		this.age = this.dwzData.getAge();
 		this.punkte = 0;
@@ -188,8 +202,8 @@ public class Player implements Comparable<Object> {
 		dwzData.setCsvMgl_Nr("");
 		extractNameToForenameAndSurename();
 		extractNameToKuerzel();
-		cutForename(cutFname);
-		cutSurname(cutSname);
+		cutForename();
+		cutSurname();
 		extractForenameAndSurenameToName();
 	}
 
@@ -210,8 +224,8 @@ public class Player implements Comparable<Object> {
 		dwzData.setCsvMgl_Nr("");
 		extractForenameAndSurenameToName();
 		extractNameToKuerzel();
-		cutForename(cutFname);
-		cutSurname(cutSname);
+		cutForename();
+		cutSurname();
 		extractForenameAndSurenameToName();
 
 	}
@@ -335,18 +349,18 @@ public class Player implements Comparable<Object> {
 
 	}
 
-	public void cutForename(int count) {
-		if (forename.length() > count) {
-			forename = new String(forename.substring(0, count));
+	public void cutForename() {
+		if (forename.length() > cutFname) {
+			forename = new String(forename.substring(0, cutFname));
 		}
-		if (count < 3) {
+		if (cutFname < 3) {
 			forename += ".";
 		}
 	}
 
-	public void cutSurname(int count) {
-		if (surname.length() > count) {
-			surname = new String(surname.substring(0, count));
+	public void cutSurname() {
+		if (surname.length() > cutSname) {
+			surname = new String(surname.substring(0, cutSname));
 		}
 
 	}
@@ -376,6 +390,8 @@ public class Player implements Comparable<Object> {
 
 	public void setName(String name) {
 		this.name = name;
+		cutForename();
+		cutSurname();
 
 	}
 
@@ -440,6 +456,8 @@ public class Player implements Comparable<Object> {
 
 	public void setForename(String forename) {
 		this.forename = forename;
+		cutForename();
+		cutSurname();
 	}
 
 	public String getSurname() {
@@ -448,16 +466,18 @@ public class Player implements Comparable<Object> {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
+		cutForename();
+		cutSurname();
 	}
 
-//	public boolean equals(Object other) {
-//		if (spielerId == ((Player) other).spielerId && spielerId >= 0) {
-//			return true;
-//		} else {
-//			return false;
-//		}
-//
-//	}
+	// public boolean equals(Object other) {
+	// if (spielerId == ((Player) other).spielerId && spielerId >= 0) {
+	// return true;
+	// } else {
+	// return false;
+	// }
+	//
+	// }
 
 	public DWZData getDwzData() {
 		return dwzData;

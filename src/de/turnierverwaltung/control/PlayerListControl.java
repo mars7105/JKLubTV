@@ -60,56 +60,63 @@ public class PlayerListControl implements ActionListener {
 			if (arg0.getSource().equals(spielerEditierenView.getOkButton())) {
 				String foreName = spielerEditierenView.getTextFieldForename().getText();
 				String surName = spielerEditierenView.getTextFieldSurname().getText();
-				if (!surName.equals("Spielfrei")) {
+				// if (surName.equals("Spielfrei") == false) {
+				try {
+					String kuerzel = spielerEditierenView.getTextFieldKuerzel().getText();
+					String dwz = spielerEditierenView.getTextFieldDwz().getText();
+					String dindex = spielerEditierenView.getTextFieldDwzIndex().getText();
+					String zps = spielerEditierenView.getTextFieldZPS().getText();
+					String mgl = spielerEditierenView.getTextFieldMGL().getText();
+					int dwzindex = -1;
 					try {
-						String kuerzel = spielerEditierenView.getTextFieldKuerzel().getText();
-						String dwz = spielerEditierenView.getTextFieldDwz().getText();
-						String zps = spielerEditierenView.getTextFieldZPS().getText();
-						String mgl = spielerEditierenView.getTextFieldMGL().getText();
-						int dwzindex = -1;
-						try {
-							dwzindex = Integer.parseInt(spielerEditierenView.getTextFieldDwzIndex().getText());
-						} catch (NumberFormatException e) {
-							dwzindex = -1;
-						}
-						int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
-
-						spieler.get(spielerIndex).setForename(foreName);
-						spieler.get(spielerIndex).setSurname(surName);
-						spieler.get(spielerIndex).setKuerzel(kuerzel);
-						spieler.get(spielerIndex).setDwz(dwz);
-						spieler.get(spielerIndex).getDwzData().setCsvZPS(zps);
-						spieler.get(spielerIndex).getDwzData().setCsvMgl_Nr(mgl);
-						spieler.get(spielerIndex).getDwzData().setCsvIndex(dwzindex);
-						spieler.get(spielerIndex).setAge(age);
-						spieler.get(spielerIndex).extractForenameAndSurenameToName();
-						SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-
-						stc.updateOneSpieler(spieler.get(spielerIndex));
-
-						mainControl.setEnabled(true);
-
-						updateSpielerListe();
-
-						if (mainControl.getTurnier() != null) {
-							mainControl.getTurnierListeLadenControl().reloadTurnier();
-						}
-						spielerEditierenView.closeWindow();
-					} catch (SQLException e1) {
-						spielerEditierenView.closeWindow();
-						mainControl.fileSQLError();
-
+						dwzindex = Integer.parseInt(dindex);
+					} catch (NumberFormatException e) {
+						dwzindex = -1;
 					}
-				} else {
-					mainControl.setEnabled(true);
+					int dwzInt = 0;
 					try {
-						updateSpielerListe();
-					} catch (SQLException e) {
-						spielerEditierenView.closeWindow();
-						mainControl.fileSQLError();
+						dwzInt = Integer.parseInt(dwz);
+					} catch (NumberFormatException e) {
+						dwzInt = 0;
+					}
+					int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
+
+					spieler.get(spielerIndex).setForename(foreName);
+					spieler.get(spielerIndex).setSurname(surName);
+					spieler.get(spielerIndex).setKuerzel(kuerzel);
+					spieler.get(spielerIndex).getDwzData().setCsvDWZ(dwzInt);
+					spieler.get(spielerIndex).getDwzData().setCsvZPS(zps);
+					spieler.get(spielerIndex).getDwzData().setCsvMgl_Nr(mgl);
+					spieler.get(spielerIndex).getDwzData().setCsvIndex(dwzindex);
+					spieler.get(spielerIndex).setAge(age);
+					spieler.get(spielerIndex).extractForenameAndSurenameToName();
+					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+
+					stc.updateOneSpieler(spieler.get(spielerIndex));
+					System.out.println(spieler.get(spielerIndex).getSpielerId());
+					mainControl.setEnabled(true);
+
+					updateSpielerListe();
+
+					if (mainControl.getTurnier() != null) {
+						mainControl.getTurnierListeLadenControl().reloadTurnier();
 					}
 					spielerEditierenView.closeWindow();
+				} catch (SQLException e1) {
+					spielerEditierenView.closeWindow();
+					mainControl.fileSQLError();
+
 				}
+				// } else {
+				// mainControl.setEnabled(true);
+				// try {
+				// updateSpielerListe();
+				// } catch (SQLException e) {
+				// spielerEditierenView.closeWindow();
+				// mainControl.fileSQLError();
+				// }
+				// spielerEditierenView.closeWindow();
+				// }
 
 			}
 
@@ -160,7 +167,11 @@ public class PlayerListControl implements ActionListener {
 	}
 
 	public void updateSpielerListe() throws SQLException {
-
+		PropertiesControl prop = mainControl.getPropertiesControl();
+		int cutForename = Integer.parseInt(prop.getCutForename());
+		int cutSurname = Integer.parseInt(prop.getCutSurname());
+		Player.cutFname = cutForename;
+		Player.cutSname = cutSurname;
 		spielerTableControl = new SQLPlayerControl(this.mainControl);
 		spieler = new ArrayList<Player>();
 		spieler = spielerTableControl.getAllSpieler();
@@ -187,13 +198,20 @@ public class PlayerListControl implements ActionListener {
 
 			if (!player.getName().equals("") && player.getSurname().equals("")) {
 				player.extractNameToForenameAndSurename();
-				spielerTableControl.updateOneSpieler(player);
-			}
-			if (player.getName().equals("") && !player.getSurname().equals("")) {
+				player.cutForename();
+				player.cutSurname();
 				player.extractForenameAndSurenameToName();
-				spielerTableControl.updateOneSpieler(player);
+			} else if (player.getName().equals("") && !player.getSurname().equals("")) {
+				player.cutForename();
+				player.cutSurname();
+				player.extractForenameAndSurenameToName();
+			} else {
+				player.cutForename();
+				player.cutSurname();
+				player.extractForenameAndSurenameToName();
+				
 			}
-
+			spielerTableControl.updateOneSpieler(player);
 			spielerLadenView.makeSpielerZeile(player, index);
 			spielerLadenView.getSpielerBearbeitenButton()[index].addActionListener(this);
 			spielerLadenView.getSpielerLoeschenButton()[index].addActionListener(this);

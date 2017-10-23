@@ -250,8 +250,8 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 	@Override
 	public boolean updateSpieler(Player spieler) throws SQLException {
 		boolean ok = false;
-		String sql = "update spieler set Name = ?,Forename = ?,Surname = ?, Kuerzel = ?" + ", Age = ? where idSpieler="
-				+ spieler.getSpielerId() + ";";
+		String sql = "update spieler set Name = ?,Forename = ?,Surname = ?, Kuerzel = ?, Age = ? where idSpieler = ?;";
+				
 		if (this.dbConnect != null) {
 			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
 			preStm.setString(1, spieler.getName());
@@ -259,7 +259,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 			preStm.setString(3, spieler.getSurname());
 			preStm.setString(4, spieler.getKuerzel());
 			preStm.setInt(5, spieler.getAge());
-
+			preStm.setInt(6, spieler.getSpielerId());
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
 			preStm.executeBatch();

@@ -133,6 +133,11 @@ public class CrossTable {
 		tabellenMatrix[4 + sp - abstand][0] = sbbColumnName;
 		tabellenMatrix[5 + sp - abstand][0] = rankingColumnName;
 		for (int i = 0; i < sp; i++) {
+			if (spieler[i].getSurname().length() > 0) {
+				spieler[i].cutForename();
+				spieler[i].cutSurname();
+				spieler[i].extractForenameAndSurenameToName();
+			}
 			tabellenMatrix[0][i + 1] = spieler[i].getName();
 			if (ohneDWZ == false) {
 				if (!spieler[i].getDwz().equals(TournamentConstants.KEINE_DWZ)) {

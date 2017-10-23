@@ -17,8 +17,6 @@ package de.turnierverwaltung.control;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.ListIterator;
-
 import javax.swing.JOptionPane;
 
 import de.turnierverwaltung.model.Player;
@@ -57,17 +55,17 @@ public class SQLPlayerControl {
 
 		spieler = mySQLSpielerDAO.getAllSpieler();
 
-		int cutForename = Integer.parseInt(prop.getCutForename());
-		int cutSurname = Integer.parseInt(prop.getCutSurname());
-		ListIterator<Player> li = spieler.listIterator();
-
-		while (li.hasNext()) {
-			Player temp = li.next();
-			temp.cutForename(cutForename);
-			temp.cutSurname(cutSurname);
-			temp.extractForenameAndSurenameToName();
-
-		}
+//		int cutForename = Integer.parseInt(prop.getCutForename());
+//		int cutSurname = Integer.parseInt(prop.getCutSurname());
+//		ListIterator<Player> li = spieler.listIterator();
+//
+//		while (li.hasNext()) {
+//			Player temp = li.next();
+//			temp.cutForename(cutForename);
+//			temp.cutSurname(cutSurname);
+//			temp.extractForenameAndSurenameToName();
+//
+//		}
 
 		return spieler;
 
@@ -102,6 +100,8 @@ public class SQLPlayerControl {
 				Player temp = spieler.get(y);
 
 				temp.setDwzData(mySQLDWZDataDAO.getDWZData(temp.getSpielerId()));
+				temp.cutForename();
+				temp.cutSurname();
 				gamers[y] = temp;
 			}
 			this.turnier.getGruppe()[i].setSpieler(gamers);
@@ -180,13 +180,16 @@ public class SQLPlayerControl {
 	}
 
 	public void updateOneSpieler(Player spieler) throws SQLException {
-		if (!spieler.getName().equals("") && spieler.getSurname().equals("")) {
-			spieler.extractNameToForenameAndSurename();
-		}
-		if (spieler.getName().equals("") && !spieler.getSurname().equals("")) {
-			spieler.extractForenameAndSurenameToName();
-		}
+//		if (!spieler.getName().equals("") && spieler.getSurname().equals("")) {
+//			spieler.extractNameToForenameAndSurename();
+//		}
+//		if (spieler.getName().equals("") && !spieler.getSurname().equals("")) {
+//			spieler.extractForenameAndSurenameToName();
+//		}
+//		spieler.cutForename();
+//		spieler.cutSurname();
 		mySQLSpielerDAO.updateSpieler(spieler);
+		mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
 	}
 
 	public boolean updateSpieler(int gruppe) throws SQLException {
@@ -195,6 +198,7 @@ public class SQLPlayerControl {
 		boolean saved = false;
 		for (int i = 0; i < turnier.getGruppe()[gruppe].getSpielerAnzahl(); i++) {
 			saved = mySQLSpielerDAO.updateSpieler(turnier.getGruppe()[gruppe].getSpieler()[i]);
+			mySQLDWZDataDAO.updateDWZ(turnier.getGruppe()[gruppe].getSpieler()[i].getDwzData());
 		}
 		return saved;
 	}
