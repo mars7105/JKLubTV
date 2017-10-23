@@ -101,7 +101,6 @@ public class CrossTableControl {
 	 */
 	public void makeSimpleTableView(int gruppenNummer) {
 
-		// mainControl.getMenueControl().setWarnHinweis(true);
 		turnier = mainControl.getTurnier();
 		if (tml[gruppenNummer] == null) {
 			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer);
@@ -153,14 +152,9 @@ public class CrossTableControl {
 			tabAnzeigeView.getTabbedPane().setComponentAt(gruppenNummer, tabAnzeigeView2[gruppenNummer]);
 		}
 
-		// dimension[gruppenNummer] = new Dimension(
-		// tabAnzeigeView.getTabbedPane().getComponentAt(gruppenNummer).getSize());
-		// simpleTableView[gruppenNummer].get.setPreferredSize(dimension[gruppenNummer]);
-
 		hauptPanel.updateUI();
 		turnier.setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
 		turnier.setNoFolgeDWZCalc(mainControl.getPropertiesControl().getNoFolgeDWZ());
-		// checkDWZVisible(gruppenNummer);
 		berechneFolgeDWZ(gruppenNummer);
 		simpleTableView[gruppenNummer].getTable().doLayout();
 		simpleTableView[gruppenNummer].getTable().updateUI();
@@ -168,10 +162,11 @@ public class CrossTableControl {
 	}
 
 	public void berechneFolgeDWZ(int gruppenNummer) {
-		ResultDWZControl folgeDWZ = new ResultDWZControl(mainControl.getTurnier(),
-				mainControl.getTurnier().getGruppe()[gruppenNummer]);
-		folgeDWZ.caculateDWZ();
-
+		if (mainControl.getNeuesTurnier() == false) {
+			ResultDWZControl folgeDWZ = new ResultDWZControl(mainControl.getTurnier(),
+					mainControl.getTurnier().getGruppe()[gruppenNummer]);
+			folgeDWZ.caculateDWZ();
+		}
 	}
 
 	/**

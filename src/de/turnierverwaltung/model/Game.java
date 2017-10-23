@@ -51,6 +51,10 @@ public class Game implements Comparable<Object> {
 		this.spielerSchwarz = spielerSchwarz;
 		this.runde = runde;
 		this.ergebnis = ergebnis;
+		ergebnisWeiss = "";
+		ergebnisSchwarz = "";
+		status = "";
+		sort = 0;
 		makeErgebnisse();
 	}
 

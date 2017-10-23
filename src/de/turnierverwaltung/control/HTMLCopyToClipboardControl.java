@@ -49,11 +49,14 @@ public class HTMLCopyToClipboardControl {
 				String webfilename3 = ical.replaceAll(" ", "");
 
 				String crossLabel = mainControl.getTurnier().getTurnierName() + " "
-						+ mainControl.getTurnier().getGruppe()[i].getGruppenName()
-						+ Messages.getString("PDFSaveControler.2");
+						+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + " "
+						+ Messages.getString("PDFSaveControler.22");
 				String meetingLabel = mainControl.getTurnier().getTurnierName() + " "
-						+ mainControl.getTurnier().getGruppe()[i].getGruppenName()
-						+ Messages.getString("PDFSaveControler.8");
+						+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + " "
+						+ Messages.getString("PDFSaveControler.23");
+				String allLabel = mainControl.getTurnier().getTurnierName() + " "
+						+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + " "
+						+ Messages.getString("PDFSaveControler.21");
 				if (this.mainControl.getTurnierTabelle()[i] == null) {
 					this.mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
 
@@ -111,7 +114,22 @@ public class HTMLCopyToClipboardControl {
 				});
 
 				htmlToClipboardArray.add(meetinghtmlToClipboard);
+				HTMLToClipBoardView allToClipboard = new HTMLToClipBoardView();
+				allToClipboard.getLabel().setText(allLabel);
 
+				
+				allToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						CopyToClipboard clipBoardcopy = new CopyToClipboard();
+						clipBoardcopy.copy(crosstable + "\n" + meetingtable);
+						htmlToClipboardDialog.getStatusLabel().getTitleLabel().setText("Clipboard: " + allLabel);
+					}
+
+				});
+
+				htmlToClipboardArray.add(allToClipboard);
 			}
 			htmlToClipboardDialog.makeDialog(htmlToClipboardArray);
 

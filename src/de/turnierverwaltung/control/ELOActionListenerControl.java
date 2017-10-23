@@ -125,14 +125,14 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 	}
 
 	private boolean playerExist(Player neuerSpieler) {
-		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
-		Boolean playerExist = false;
-		try {
-			playerExist = spielerTableControl.playerExist(neuerSpieler);
-
-		} catch (SQLException e) {
-			mainControl.fileSQLError();
-		}
+//		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
+//		Boolean playerExist = false;
+//		try {
+//			playerExist = spielerTableControl.playerExist(neuerSpieler);
+//
+//		} catch (SQLException e) {
+//			mainControl.fileSQLError();
+//		}
 		return false;
 	}
 
