@@ -45,9 +45,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 		if (e.getValueIsAdjusting() == false) {
 			int index = dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex();
 			ArrayList<Player> spieler = dewisDialogControl.getPlayers();
-			if (index == -1) {
-
-			} else {
+			if (index > -1) {
 
 				Player neuerSpieler = spieler.get(index);
 				Boolean savedPlayer = playerExist(neuerSpieler);
@@ -55,32 +53,37 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 				int counter = 0;
 				Boolean notfound = false;
 				int nf = 0;
+				if (savedPlayer == false) {
+					while (lit.hasNext()) {
+						int temp = lit.next();
 
-				while (lit.hasNext()) {
-					int temp = lit.next();
+						if (temp == index) {
 
-					if (temp == index && savedPlayer == false) {
+							notfound = true;
+							nf = counter;
+							break;
 
-						notfound = true;
-						nf = counter;
-						// break;
-
+						}
+						counter++;
 					}
-					counter++;
-				}
-				if (notfound == true) {
-					indices.remove(nf);
+					if (notfound == true) {
+						indices.remove(nf);
 
-					dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon1);
-				}
-				if (notfound == false && savedPlayer == false) {
-					indices.add(dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex());
+						dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon1);
+					} else {
+						indices.add(dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex());
 
-					dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon2);
+						dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon2);
+					}
+					if (indices.size() > 0) {
+						dewisDialogControl.getDialog().getOkButton().setEnabled(true);
+
+					} else {
+						dewisDialogControl.getDialog().getOkButton().setEnabled(false);
+					}
 				}
-				dewisDialogControl.getDialog().getOkButton().setEnabled(true);
+
 				dewisDialogControl.getSpielerDewisView().getList().clearSelection();
-
 			}
 
 		}

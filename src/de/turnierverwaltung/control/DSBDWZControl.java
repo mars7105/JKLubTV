@@ -67,18 +67,7 @@ public class DSBDWZControl {
 		csvFiles = mainControl.getPropertiesControl().checkPathToVereineCSV()
 				&& mainControl.getPropertiesControl().checkPathToSpielerCSV();
 		dewisDialogActionListenerControl = new DSBDWZActionListenerControl(this.mainControl, this);
-		CSVPlayerArrayList csvplayerlist = new CSVPlayerArrayList();
-
-		try {
-			csvplayerlist.loadPlayerCSVList(mainControl.getPropertiesControl().getPathToPlayersCSV());
-		} catch (ArrayIndexOutOfBoundsException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		playerlist = csvplayerlist.getAllPlayer();
+		
 
 	}
 
@@ -163,7 +152,18 @@ public class DSBDWZControl {
 
 	public void makePlayerSearchList() throws ArrayIndexOutOfBoundsException, IOException {
 		if (csvFiles == true) {
+			CSVPlayerArrayList csvplayerlist = new CSVPlayerArrayList();
 
+			try {
+				csvplayerlist.loadPlayerCSVList(mainControl.getPropertiesControl().getPathToPlayersCSV());
+			} catch (ArrayIndexOutOfBoundsException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			playerlist = csvplayerlist.getAllPlayer();
 			ActionListenerPlayerSearchControl psc = new ActionListenerPlayerSearchControl(mainControl, this);
 			spielerSearchTextField = dialog.getPlayerSearchView().getSearchField();
 			dialog.getPlayerSearchView().getOkButton().addActionListener(psc);
@@ -177,6 +177,7 @@ public class DSBDWZControl {
 
 				@Override
 				public void keyReleased(KeyEvent e) {
+					
 					spielerSearchPanelList = new DSBDWZPlayerView();
 					dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
 					searchplayerlist = new ArrayList<Player>();

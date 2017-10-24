@@ -43,43 +43,46 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 		if (e.getValueIsAdjusting() == false) {
 			int index = eloDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex();
 			ArrayList<Player> spieler = eloDialogControl.getSearchplayerlist();
-			if (index == -1) {
-
-			} else {
+			if (index > -1) {
 
 				Player neuerSpieler = spieler.get(index);
 				Boolean savedPlayer = playerExist(neuerSpieler);
-//				savedPlayer = false;
-				ListIterator<Integer> lit = indices.listIterator();
-				int counter = 0;
-				Boolean notfound = false;
-				int nf = 0;
+				if (savedPlayer == false) {
+					ListIterator<Integer> lit = indices.listIterator();
+					int counter = 0;
+					Boolean notfound = false;
+					int nf = 0;
 
-				while (lit.hasNext()) {
-					int temp = lit.next();
+					while (lit.hasNext()) {
+						int temp = lit.next();
 
-					if (temp == index && savedPlayer == false) {
+						if (temp == index) {
 
-						notfound = true;
-						nf = counter;
-						// break;
+							notfound = true;
+							nf = counter;
+							break;
 
+						}
+						counter++;
 					}
-					counter++;
-				}
-				if (notfound == true) {
-					indices.remove(nf);
+					if (notfound == true) {
+						indices.remove(nf);
 
-					eloDialogControl.getSpielerSearchPanelList().getList().getSelectedValue().setIcon(insertIcon1);
-				}
-				if (notfound == false && savedPlayer == false) {
-					indices.add(eloDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex());
+						eloDialogControl.getSpielerSearchPanelList().getList().getSelectedValue().setIcon(insertIcon1);
+					} else {
+						indices.add(eloDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex());
 
-					eloDialogControl.getSpielerSearchPanelList().getList().getSelectedValue().setIcon(insertIcon2);
+						eloDialogControl.getSpielerSearchPanelList().getList().getSelectedValue().setIcon(insertIcon2);
+					}
+					if (indices.size() > 0) {
+						eloDialogControl.getDialog().getPlayerSearchView().getOkButton().setEnabled(true);
+
+					} else {
+						eloDialogControl.getDialog().getPlayerSearchView().getOkButton().setEnabled(false);
+					}
 				}
-				eloDialogControl.getDialog().getPlayerSearchView().getOkButton().setEnabled(true);
+
 				eloDialogControl.getSpielerSearchPanelList().getList().clearSelection();
-
 			}
 
 		}
