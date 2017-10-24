@@ -33,8 +33,8 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 				+ "  'FIDE_Titel'         char(2)               default NULL,\n"
 				+ "  'FIDE_ID'            INTEGER       unsigned default NULL,\n"
 				+ "  'FIDE_Land'          char(3)               default NULL,\n"
-				+ "  idSpieler            INTEGER NOT NULL,\n"
-				+ "  idDWZData INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL\n" + ");";
+				+ "  'idSpieler            INTEGER NOT NULL,\n"
+				+ "  'idDWZData' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL\n" + ");";
 		Statement stmt;
 		if (this.dbConnect != null) {
 
@@ -126,7 +126,7 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 			preStm.setString(12, dwzData.getCsvFIDE_Titel());
 			preStm.setInt(13, dwzData.getCsvFIDE_ID());
 			preStm.setString(14, dwzData.getCsvFIDE_Land());
-//			preStm.setInt(15, dwzData.getSpielerId());
+			// preStm.setInt(15, dwzData.getSpielerId());
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
@@ -175,6 +175,35 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 	public boolean playerExist(DWZData dwzData) {
 		String sql = "Select * from dwz_spieler where ZPS LIKE '" + dwzData.getCsvZPS() + "' AND Mgl_Nr LIKE '%"
 				+ dwzData.getCsvMgl_Nr() + "';";
+
+		int id = -1;
+		Statement stmt;
+		if (this.dbConnect != null) {
+
+			try {
+				stmt = this.dbConnect.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					id = rs.getInt("idSpieler");
+
+				}
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		Boolean returnStatement = false;
+		if (id > 0) {
+			returnStatement = true;
+		}
+
+		return returnStatement;
+	}
+
+	@Override
+	public boolean playerFideExist(DWZData dwzData) {
+		String sql = "Select * from dwz_spieler where FIDE_ID LIKE '" + dwzData.getCsvFIDE_ID() + "';";
 
 		int id = -1;
 		Statement stmt;

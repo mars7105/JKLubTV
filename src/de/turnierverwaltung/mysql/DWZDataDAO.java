@@ -16,4 +16,7 @@ public interface DWZDataDAO {
 	public void insertDWZ(DWZData dwzData) throws SQLException;
 
 	public boolean playerExist(DWZData dwzData);
+
+	public boolean playerFideExist(DWZData dwzData);
+
 }

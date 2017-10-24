@@ -3,6 +3,7 @@ package de.turnierverwaltung.control;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.sql.SQLException;
 
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
@@ -36,7 +37,7 @@ public class ELOControl {
 	private ELOPlayerView spielerDewisView;
 	private ArrayList<ELOPlayer> players;
 	private ArrayList<CSVVereine> zpsItems;
-	private ELOActionListenerControl dewisDialogActionListenerControl;
+	private ELOActionListenerControl eloDialogActionListenerControl;
 	private Boolean eloFile;
 	private JTextField spielerSearchTextField;
 	private ELOPlayerView spielerSearchPanelList;
@@ -50,7 +51,7 @@ public class ELOControl {
 	 * @throws IOException
 	 */
 	public ELOControl(MainControl mainControl) throws IOException {
-		super(); 
+		super();
 		this.mainControl = mainControl;
 		eloFile = mainControl.getPropertiesControl().checkPathToELOXML();
 		if (eloFile == true) {
@@ -77,17 +78,17 @@ public class ELOControl {
 
 		}
 
-		
 		dialog.getPlayerSearchView().getOkButton().setEnabled(false);
 
 	}
 
 	public void makePlayerSearchList() {
 		if (eloFile == true) {
-			dewisDialogActionListenerControl = new ELOActionListenerControl(this.mainControl, this);
-			dialog.getPlayerSearchView().getOkButton().addActionListener(dewisDialogActionListenerControl);
-			dialog.getPlayerSearchView().getCancelButton().addActionListener(dewisDialogActionListenerControl);
-//			ELOActionListenerControl psc = new ELOActionListenerControl(mainControl, this);
+			eloDialogActionListenerControl = new ELOActionListenerControl(this.mainControl, this);
+			dialog.getPlayerSearchView().getOkButton().addActionListener(eloDialogActionListenerControl);
+			dialog.getPlayerSearchView().getCancelButton().addActionListener(eloDialogActionListenerControl);
+			// ELOActionListenerControl psc = new ELOActionListenerControl(mainControl,
+			// this);
 			spielerSearchTextField = dialog.getPlayerSearchView().getSearchField();
 
 			spielerSearchTextField.addKeyListener(new KeyListener() {
@@ -106,31 +107,36 @@ public class ELOControl {
 					ListIterator<ELOPlayer> li = playerlist.listIterator();
 					int counter = 0;
 					while (li.hasNext() && counter < 20) {
-						ELOPlayer tmp = li.next();
+						Player tmp = li.next().getPlayer();
 						String surname = "";
 						String forename = "";
 						String name = "";
-						if (tmp.getPlayer().getSurname().length() >= eingabe.length()) {
-							surname = tmp.getPlayer().getSurname().substring(0, eingabe.length()).toUpperCase();
+						if (tmp.getSurname().length() >= eingabe.length()) {
+							surname = tmp.getSurname().substring(0, eingabe.length()).toUpperCase();
 						}
-						if (tmp.getPlayer().getForename().length() >= eingabe.length()) {
-							forename = tmp.getPlayer().getForename().substring(0, eingabe.length()).toUpperCase();
+						if (tmp.getForename().length() >= eingabe.length()) {
+							forename = tmp.getForename().substring(0, eingabe.length()).toUpperCase();
 						}
-						if (tmp.getPlayer().getName().length() >= eingabe.length()) {
-							name = tmp.getPlayer().getName().substring(0, eingabe.length()).toUpperCase();
+						if (tmp.getName().length() >= eingabe.length()) {
+							name = tmp.getName().substring(0, eingabe.length()).toUpperCase();
 						}
 						if (eingabe.equals(surname) || eingabe.equals(forename) || eingabe.equals(name)) {
+							if (playerExist(tmp)) {
+								spielerSearchPanelList.makeSpielerZeile(tmp, 2);
+							} else {
+								spielerSearchPanelList.makeSpielerZeile(tmp, 0);
+							}
 
-							spielerSearchPanelList.makeSpielerZeile(tmp.getPlayer(), 0);
-							searchplayerlist.add(tmp.getPlayer());
+							searchplayerlist.add(tmp);
 
 							counter++;
 						}
 
 					}
+
 					spielerSearchPanelList.makeList();
 					spielerSearchPanelList.updateUI();
-					spielerSearchPanelList.getList().addListSelectionListener(dewisDialogActionListenerControl);
+					spielerSearchPanelList.getList().addListSelectionListener(eloDialogActionListenerControl);
 
 				}
 
@@ -140,6 +146,19 @@ public class ELOControl {
 				}
 			});
 		}
+	}
+
+	private boolean playerExist(Player neuerSpieler) {
+		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
+		Boolean playerExist = false;
+		try {
+			neuerSpieler.getDwzData().setCsvFIDE_ID(neuerSpieler.getEloData().getFideid());
+			playerExist = spielerTableControl.playerFideExist(neuerSpieler);
+
+		} catch (SQLException e) {
+			mainControl.fileSQLError();
+		}
+		return playerExist;
 	}
 
 	public ELODialogView getDialog() {

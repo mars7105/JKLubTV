@@ -42,6 +42,7 @@ public class SQLPlayerControl {
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		mySQLSpielerDAO = daoFactory.getSpielerDAO();
 		mySQLDWZDataDAO = daoFactory.getDWZDataDAO();
+		daoFactory.getELODataDAO();
 		prop = mainControl.getPropertiesControl();
 		int cutForename = Integer.parseInt(prop.getCutForename());
 		int cutSurname = Integer.parseInt(prop.getCutSurname());
@@ -55,17 +56,17 @@ public class SQLPlayerControl {
 
 		spieler = mySQLSpielerDAO.getAllSpieler();
 
-//		int cutForename = Integer.parseInt(prop.getCutForename());
-//		int cutSurname = Integer.parseInt(prop.getCutSurname());
-//		ListIterator<Player> li = spieler.listIterator();
-//
-//		while (li.hasNext()) {
-//			Player temp = li.next();
-//			temp.cutForename(cutForename);
-//			temp.cutSurname(cutSurname);
-//			temp.extractForenameAndSurenameToName();
-//
-//		}
+		// int cutForename = Integer.parseInt(prop.getCutForename());
+		// int cutSurname = Integer.parseInt(prop.getCutSurname());
+		// ListIterator<Player> li = spieler.listIterator();
+		//
+		// while (li.hasNext()) {
+		// Player temp = li.next();
+		// temp.cutForename(cutForename);
+		// temp.cutSurname(cutSurname);
+		// temp.extractForenameAndSurenameToName();
+		//
+		// }
 
 		return spieler;
 
@@ -76,15 +77,13 @@ public class SQLPlayerControl {
 
 		spieler = mySQLSpielerDAO.getAllSpieler();
 
-		
-
 		return spieler;
 
 	}
 
 	public void getSpieler() throws SQLException {
 		this.turnier = this.mainControl.getTurnier();
-		
+
 		ArrayList<Player> spieler = new ArrayList<Player>();
 		for (int i = 0; i < this.turnier.getAnzahlGruppen(); i++) {
 			spieler = mySQLSpielerDAO.selectAllSpieler(turnier.getGruppe()[i].getGruppeId());
@@ -180,14 +179,7 @@ public class SQLPlayerControl {
 	}
 
 	public void updateOneSpieler(Player spieler) throws SQLException {
-//		if (!spieler.getName().equals("") && spieler.getSurname().equals("")) {
-//			spieler.extractNameToForenameAndSurename();
-//		}
-//		if (spieler.getName().equals("") && !spieler.getSurname().equals("")) {
-//			spieler.extractForenameAndSurenameToName();
-//		}
-//		spieler.cutForename();
-//		spieler.cutSurname();
+		
 		mySQLSpielerDAO.updateSpieler(spieler);
 		mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
 	}
@@ -211,4 +203,10 @@ public class SQLPlayerControl {
 		return exist;
 	}
 
+	public Boolean playerFideExist(Player neuerSpieler) throws SQLException {
+		Boolean exist = false;
+		exist = mySQLDWZDataDAO.playerFideExist(neuerSpieler.getDwzData());
+
+		return exist;
+	}
 }

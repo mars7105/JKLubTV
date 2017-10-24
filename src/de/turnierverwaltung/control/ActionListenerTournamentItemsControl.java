@@ -99,7 +99,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 
 		if (turnierEditierenView != null) {
 
-			if (arg0.getSource() .equals( turnierEditierenView.getOkButton())) {
+			if (arg0.getSource().equals(turnierEditierenView.getOkButton())) {
 				String turnierName = turnierEditierenView.getTextFieldTurnierName().getText();
 				DateFormat formatter1 = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 				DateFormat formatter2 = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
@@ -132,29 +132,30 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 					SQLGroupsControl gtC = new SQLGroupsControl(mainControl);
 					gtC.updateGruppen(turnierEdit);
 
-					mainControl.setEnabled(true);
 					turnierEditierenView.dispose();
-
+					mainControl.setEnabled(true);
 					loadTurnierListe();
 					if (turnierEdit.getTurnierId() == loadedTurnierID) {
 						reloadTurnier();
 					}
 				} catch (SQLException e) {
 					turnierEditierenView.dispose();
+					mainControl.setEnabled(true);
 					mainControl.fileSQLError();
 				}
 
 			}
-			if (arg0.getSource() .equals( turnierEditierenView.getCancelButton())) {
-				mainControl.setEnabled(true);
+			if (arg0.getSource().equals(turnierEditierenView.getCancelButton())) {
+				
 
 				turnierEditierenView.dispose();
+				mainControl.setEnabled(true);
 			}
 		}
 
 		for (int i = 0; i < anzahlTurniere; i++) {
 
-			if (arg0.getSource() .equals( turnierListeLadenView.getTurnierLadeButton()[i])) {
+			if (arg0.getSource().equals(turnierListeLadenView.getTurnierLadeButton()[i])) {
 				Tournament turnier = this.mainControl.getTurnier();
 
 				if (turnier == null) {
@@ -236,25 +237,28 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 				}
 			}
 
-			if (arg0.getSource() .equals( turnierListeLadenView.getTurnierBearbeitenButton()[i])) {
+			if (arg0.getSource().equals(turnierListeLadenView.getTurnierBearbeitenButton()[i])) {
 				turnierEdit = turnierListe.get(i);
 				SQLGroupsControl gTC = new SQLGroupsControl(mainControl);
 				try {
+					mainControl.setEnabled(false);
 					turnierEdit = gTC.getGruppe(turnierEdit);
 
 					turnierEditierenView = new EditTournamentView(turnierEdit);
 					turnierEditierenView.getOkButton().addActionListener(this);
 					turnierEditierenView.getCancelButton().addActionListener(this);
-					mainControl.setEnabled(false);
+
 				} catch (SQLException e) {
+					turnierEditierenView.dispose();
 					mainControl.fileSQLError();
+					mainControl.setEnabled(true);
 				}
 			}
 
 			// Wichtig:
 			// Diese Abfrage muss an letzter Stelle stehen,
 			// da ansonsten eine ArraOutOfBounds Exception auftritt!
-			if (arg0.getSource() .equals( turnierListeLadenView.getTurnierLoeschenButton()[i])) {
+			if (arg0.getSource().equals(turnierListeLadenView.getTurnierLoeschenButton()[i])) {
 				if (mainControl.getTurnier() != null) {
 					if (mainControl.getTurnier().getTurnierId() == turnierListe.get(i).getTurnierId()) {
 						JOptionPane.showMessageDialog(mainControl, Messages.getString("TurnierListeLadenControl.4")); //$NON-NLS-1$

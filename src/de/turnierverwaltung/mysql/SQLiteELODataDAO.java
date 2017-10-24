@@ -2,6 +2,7 @@ package de.turnierverwaltung.mysql;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -29,6 +30,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 				+ "  'K'                  INTEGER  unsigned default NULL,\n"
 				+ "  'B-day'              INTEGER  unsigned default NULL,\n"
 				+ "  'Flag'               char(2)               default NULL,\n"
+				+ "  'idSpieler           INTEGER NOT NULL,\n" // ---
 				+ "  'ID_Number'          INTEGER PRIMARY KEY NOT NULL\n" + ");";
 		Statement stmt;
 		if (this.dbConnect != null) {
@@ -46,8 +48,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	}
 
 	@Override
-	public boolean deleteELO(int id) throws SQLException {
-		boolean ok = false;
+	public void deleteELO(int id) throws SQLException {
 		String sql = "delete from elo_data where ID_Number=?" + ";";
 		if (this.dbConnect != null) {
 
@@ -58,10 +59,9 @@ public class SQLiteELODataDAO implements ELODataDAO {
 			preStm.executeBatch();
 			this.dbConnect.setAutoCommit(true);
 			preStm.close();
-			ok = true;
 
 		}
-		return ok;
+
 	}
 
 	@Override
@@ -71,15 +71,43 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	}
 
 	@Override
-	public boolean updateELO(ELOData eloData) throws SQLException {
+	public void updateELO(ELOData eloData) throws SQLException {
 		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
 	public ELOData getELOData(int id) throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean playerExist(int fideId) {
+		String sql = "Select * from dwz_spieler where ID_Number LIKE '" + fideId + ";";
+
+		int id = -1;
+		Statement stmt;
+		if (this.dbConnect != null) {
+
+			try {
+				stmt = this.dbConnect.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					id = rs.getInt("idSpieler");
+
+				}
+				stmt.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		Boolean returnStatement = false;
+		if (id > 0) {
+			returnStatement = true;
+		}
+
+		return returnStatement;
 	}
 
 }

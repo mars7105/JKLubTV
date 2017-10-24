@@ -69,8 +69,17 @@ public class ELOData {
 		spielerId = -1;
 	}
 
-	public String getFideid() {
-		return fideid;
+	// public String getFideid() {
+	// return fideid;
+	// }
+	public int getFideid() {
+		int fid = -1;
+		try {
+			fid = Integer.parseInt(fideid);
+		} catch (NumberFormatException e) {
+			fid = -1;
+		}
+		return fid;
 	}
 
 	public void setFideid(String fideid) {

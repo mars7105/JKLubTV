@@ -49,7 +49,7 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 
 				Player neuerSpieler = spieler.get(index);
 				Boolean savedPlayer = playerExist(neuerSpieler);
-				savedPlayer = false;
+//				savedPlayer = false;
 				ListIterator<Integer> lit = indices.listIterator();
 				int counter = 0;
 				Boolean notfound = false;
@@ -110,7 +110,6 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 
 						}
 						eloDialogControl.getSpielerSearchPanelList().getList().updateUI();
-						
 
 					}
 
@@ -125,15 +124,15 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 	}
 
 	private boolean playerExist(Player neuerSpieler) {
-//		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
-//		Boolean playerExist = false;
-//		try {
-//			playerExist = spielerTableControl.playerExist(neuerSpieler);
-//
-//		} catch (SQLException e) {
-//			mainControl.fileSQLError();
-//		}
-		return false;
+		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
+		Boolean playerExist = false;
+		try {
+			playerExist = spielerTableControl.playerFideExist(neuerSpieler);
+
+		} catch (SQLException e) {
+			mainControl.fileSQLError();
+		}
+		return playerExist;
 	}
 
 }

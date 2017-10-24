@@ -184,18 +184,18 @@ public class DSBDWZControl {
 					ListIterator<CSVPlayer> li = playerlist.listIterator();
 					int counter = 0;
 					while (li.hasNext() && counter < 20) {
-						CSVPlayer csvPlayer = li.next();
+						Player csvPlayer = li.next().getPlayer();
 						String surname = "";
 						String forename = "";
 						String name = "";
-						if (csvPlayer.getPlayer().getSurname().length() >= eingabe.length()) {
-							surname = csvPlayer.getPlayer().getSurname().substring(0, eingabe.length()).toUpperCase();
+						if (csvPlayer.getSurname().length() >= eingabe.length()) {
+							surname = csvPlayer.getSurname().substring(0, eingabe.length()).toUpperCase();
 						}
-						if (csvPlayer.getPlayer().getForename().length() >= eingabe.length()) {
-							forename = csvPlayer.getPlayer().getForename().substring(0, eingabe.length()).toUpperCase();
+						if (csvPlayer.getForename().length() >= eingabe.length()) {
+							forename = csvPlayer.getForename().substring(0, eingabe.length()).toUpperCase();
 						}
-						if (csvPlayer.getPlayer().getName().length() >= eingabe.length()) {
-							name = csvPlayer.getPlayer().getName().substring(0, eingabe.length()).toUpperCase();
+						if (csvPlayer.getName().length() >= eingabe.length()) {
+							name = csvPlayer.getName().substring(0, eingabe.length()).toUpperCase();
 						}
 						if (eingabe.equals(surname) || eingabe.equals(forename) || eingabe.equals(name)) {
 
@@ -204,14 +204,13 @@ public class DSBDWZControl {
 							while (list.hasNext()) {
 								Player temp = list.next();
 								try {
-
 									String tmpzps = temp.getDwzData().getCsvZPS();
 									String tmpmgl = temp.getDwzData().getCsvMgl_Nr();
-									String playerzps = csvPlayer.getPlayer().getDwzData().getCsvZPS();
-									String playermgl = csvPlayer.getPlayer().getDwzData().getCsvMgl_Nr();
+									String playerzps = csvPlayer.getDwzData().getCsvZPS();
+									String playermgl = csvPlayer.getDwzData().getCsvMgl_Nr();
 									if (tmpzps.equals(playerzps) && tmpmgl.equals(playermgl)) {
-										spielerSearchPanelList.makeSpielerZeile(csvPlayer.getPlayer(), 2);
-										searchplayerlist.add(csvPlayer.getPlayer());
+										spielerSearchPanelList.makeSpielerZeile(csvPlayer, 2);
+										searchplayerlist.add(csvPlayer);
 										foundPlayer = true;
 
 									}
@@ -219,11 +218,18 @@ public class DSBDWZControl {
 
 								}
 							}
-							if (foundPlayer == false) {
-								spielerSearchPanelList.makeSpielerZeile(csvPlayer.getPlayer(), 0);
-								searchplayerlist.add(csvPlayer.getPlayer());
-							}
 
+							if (foundPlayer == false) {
+								spielerSearchPanelList.makeSpielerZeile(csvPlayer, 0);
+								searchplayerlist.add(csvPlayer);
+							}
+							// if (playerExist(csvPlayer)) {
+							// spielerSearchPanelList.makeSpielerZeile(csvPlayer.getPlayer(), 2);
+							// searchplayerlist.add(csvPlayer.getPlayer());
+							// } else {
+							// spielerSearchPanelList.makeSpielerZeile(csvPlayer.getPlayer(), 0);
+							// searchplayerlist.add(csvPlayer.getPlayer());
+							// }
 							counter++;
 						}
 
@@ -305,13 +311,8 @@ public class DSBDWZControl {
 			while (it.hasNext()) {
 				CSVVereine temp = it.next();
 
-				try {
-					int tmpzps = Integer.parseInt(temp.getCsvZPS());
-					int vzps = Integer.parseInt(zps);
-					if (tmpzps == vzps) {
-						selectIndex = counter;
-					}
-				} catch (NumberFormatException e) {
+				if (temp.getCsvZPS().equals(zps)) {
+					selectIndex = counter;
 				}
 
 				dialog.getVereinsAuswahl().addItem(temp.getCsvVereinname());
@@ -333,6 +334,19 @@ public class DSBDWZControl {
 		JOptionPane.showMessageDialog(null, Messages.getString("DewisDialogControl.7"),
 				Messages.getString("DewisDialogControl.8"), JOptionPane.INFORMATION_MESSAGE);
 	}
+
+//	private boolean playerExist(Player neuerSpieler) {
+//		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
+//		Boolean playerExist = false;
+//		try {
+//			playerExist = spielerTableControl.playerExist(neuerSpieler);
+//
+//		} catch (SQLException e) {
+//			mainControl.fileSQLError();
+//		}
+//
+//		return playerExist;
+//	}
 
 	public DSBDWZDialogView getDialog() {
 		return dialog;
