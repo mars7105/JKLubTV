@@ -218,6 +218,7 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 		} catch (SQLException e) {
 			mainControl.fileSQLError();
 		}
+
 		return playerExist;
 	}
 

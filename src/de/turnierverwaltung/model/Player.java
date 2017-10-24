@@ -249,7 +249,6 @@ public class Player implements Comparable<Object> {
 	@Override
 	public int compareTo(Object o) {
 
-		// return this.getName().compareTo(((Spieler) o).getName());
 
 		int compareQuantity = ((Player) o).getSort();
 
@@ -257,11 +256,14 @@ public class Player implements Comparable<Object> {
 		return compareQuantity - getSort();
 
 		// descending order
-		// return compareQuantity - this.quantity;
 	}
 
 	public String getDwz() {
-		return Integer.toString(dwzData.getCsvDWZ());
+		if (dwzData.getCsvDWZ() > 0) {
+			return Integer.toString(dwzData.getCsvDWZ());
+		} else {
+			return "";
+		}
 	}
 
 	public int getDWZ() {
@@ -457,7 +459,7 @@ public class Player implements Comparable<Object> {
 	public void setForename(String forename) {
 		this.forename = forename;
 		cutForename();
-		cutSurname();
+
 	}
 
 	public String getSurname() {
@@ -466,18 +468,9 @@ public class Player implements Comparable<Object> {
 
 	public void setSurname(String surname) {
 		this.surname = surname;
-		cutForename();
+
 		cutSurname();
 	}
-
-	// public boolean equals(Object other) {
-	// if (spielerId == ((Player) other).spielerId && spielerId >= 0) {
-	// return true;
-	// } else {
-	// return false;
-	// }
-	//
-	// }
 
 	public DWZData getDwzData() {
 		return dwzData;
@@ -487,16 +480,8 @@ public class Player implements Comparable<Object> {
 		this.dwzData = dwzData;
 		this.dwzData.setSpielerId(spielerId);
 
-		this.name = this.dwzData.getCsvSpielername();
-		extractNameToForenameAndSurename();
-		extractNameToKuerzel();
-
 		this.age = this.dwzData.getAge();
-		this.punkte = 0;
-		this.soberg = 0;
-		this.platz = 1;
 
-		// this.showPlayer = true;
 	}
 
 	public ELOData getEloData() {

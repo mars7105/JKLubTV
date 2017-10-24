@@ -40,6 +40,7 @@ public class DWZData {
 		this.csvFIDE_ID = csvFIDE_ID;
 		this.csvFIDE_Land = csvFIDE_Land;
 		spielerId = -1;
+		correctMGLNumber();
 	}
 
 	public DWZData() {
@@ -58,6 +59,7 @@ public class DWZData {
 		this.csvFIDE_ID = -1;
 		this.csvFIDE_Land = "";
 		spielerId = -1;
+		
 	}
 
 	public String getCsvZPS() {
@@ -74,6 +76,7 @@ public class DWZData {
 
 	public void setCsvMgl_Nr(String csvMgl_Nr) {
 		this.csvMgl_Nr = csvMgl_Nr;
+		correctMGLNumber();
 	}
 
 	public String getCsvStatus() {
@@ -203,4 +206,21 @@ public class DWZData {
 		this.spielerId = spielerId;
 	}
 
+	private void correctMGLNumber() {
+		int length = getCsvMgl_Nr().length();
+		if (length > 0 && length < 4) {
+			StringBuffer sb = new StringBuffer(getCsvMgl_Nr());
+			for (int i = length; i < 4; i++) {
+				sb.insert(0, "0");
+			}
+			// csvMgl_Nr = sb.toString();
+			setCsvMgl_Nr(sb.toString());
+
+		}
+		if (getCsvMgl_Nr().equals("0000")) {
+			// csvMgl_Nr = "";
+			setCsvMgl_Nr("");
+
+		}
+	}
 }

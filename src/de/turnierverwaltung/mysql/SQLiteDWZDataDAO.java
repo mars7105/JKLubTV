@@ -107,7 +107,8 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 
 	@Override
 	public void updateDWZ(DWZData dwzData) throws SQLException {
-		String sql = "update dwz_spieler set ZPS = ?, Mgl_Nr = ?, Status = ?, Spielername = ?, Geschlecht = ?, Spielberechtigung = ?, Geburtsjahr = ?, Letzte_Auswertung = ?, DWZ = ?, DWZ_Index = ?, FIDE_Elo = ?, FIDE_Titel = ?, FIDE_ID = ?, FIDE_Land = ? where idSpieler = ?;";
+		String sql = "update dwz_spieler set ZPS = ?, Mgl_Nr = ?, Status = ?, Spielername = ?, Geschlecht = ?, Spielberechtigung = ?, Geburtsjahr = ?, Letzte_Auswertung = ?, DWZ = ?, DWZ_Index = ?, FIDE_Elo = ?, FIDE_Titel = ?, FIDE_ID = ?, FIDE_Land = ? where idSpieler = "
+				+ dwzData.getSpielerId() + ";";
 
 		if (this.dbConnect != null) {
 			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
@@ -125,13 +126,12 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 			preStm.setString(12, dwzData.getCsvFIDE_Titel());
 			preStm.setInt(13, dwzData.getCsvFIDE_ID());
 			preStm.setString(14, dwzData.getCsvFIDE_Land());
-			preStm.setInt(15, dwzData.getSpielerId());
+//			preStm.setInt(15, dwzData.getSpielerId());
 			preStm.addBatch();
 			this.dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
 			this.dbConnect.setAutoCommit(true);
 			preStm.close();
-			
 
 		}
 	}
@@ -194,7 +194,7 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 			}
 		}
 		Boolean returnStatement = false;
-		if (id >= 0) {
+		if (id > 0) {
 			returnStatement = true;
 		}
 

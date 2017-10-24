@@ -50,7 +50,6 @@ public class CSVPlayer {
 		dwzData.setCsvFIDE_Titel(csvFIDE_Titel);
 
 		dwzData.setCsvFIDE_Land(csvFIDE_Land);
-		correctMGLNumber();
 
 	}
 
@@ -79,21 +78,4 @@ public class CSVPlayer {
 		return player;
 	}
 
-	private void correctMGLNumber() {
-		int length = dwzData.getCsvMgl_Nr().length();
-		if (length > 0 && length < 4) {
-			StringBuffer sb = new StringBuffer(dwzData.getCsvMgl_Nr());
-			for (int i = length; i < 4; i++) {
-				sb.insert(0, "0");
-			}
-			// csvMgl_Nr = sb.toString();
-			dwzData.setCsvMgl_Nr(sb.toString());
-
-		}
-		if (dwzData.getCsvMgl_Nr().equals("0000")) {
-			// csvMgl_Nr = "";
-			dwzData.setCsvMgl_Nr("");
-
-		}
-	}
 }

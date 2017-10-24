@@ -90,33 +90,22 @@ public class PlayerListControl implements ActionListener {
 					spieler.get(spielerIndex).getDwzData().setCsvIndex(dwzindex);
 					spieler.get(spielerIndex).setAge(age);
 					spieler.get(spielerIndex).extractForenameAndSurenameToName();
+
 					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
 					stc.updateOneSpieler(spieler.get(spielerIndex));
-					System.out.println(spieler.get(spielerIndex).getSpielerId());
-					mainControl.setEnabled(true);
-
-					updateSpielerListe();
 
 					if (mainControl.getTurnier() != null) {
 						mainControl.getTurnierListeLadenControl().reloadTurnier();
 					}
 					spielerEditierenView.closeWindow();
+					mainControl.setEnabled(true);
+					updateSpielerListe();
 				} catch (SQLException e1) {
 					spielerEditierenView.closeWindow();
 					mainControl.fileSQLError();
 
 				}
-				// } else {
-				// mainControl.setEnabled(true);
-				// try {
-				// updateSpielerListe();
-				// } catch (SQLException e) {
-				// spielerEditierenView.closeWindow();
-				// mainControl.fileSQLError();
-				// }
-				// spielerEditierenView.closeWindow();
-				// }
 
 			}
 
@@ -193,25 +182,24 @@ public class PlayerListControl implements ActionListener {
 		spielerLadenView.getTitleView().setFlowLayoutLeft();
 
 		int index = 0;
-		// Collections.sort(spieler, new SortName());
 		for (Player player : spieler) {
 
-			if (!player.getName().equals("") && player.getSurname().equals("")) {
-				player.extractNameToForenameAndSurename();
-				player.cutForename();
-				player.cutSurname();
-				player.extractForenameAndSurenameToName();
-			} else if (player.getName().equals("") && !player.getSurname().equals("")) {
-				player.cutForename();
-				player.cutSurname();
-				player.extractForenameAndSurenameToName();
-			} else {
-				player.cutForename();
-				player.cutSurname();
-				player.extractForenameAndSurenameToName();
-				
-			}
-			spielerTableControl.updateOneSpieler(player);
+			// if (!player.getName().equals("") && player.getSurname().equals("")) {
+			// player.extractNameToForenameAndSurename();
+			// player.cutForename();
+			// player.cutSurname();
+			// player.extractForenameAndSurenameToName();
+			// } else if (player.getName().equals("") && !player.getSurname().equals("")) {
+			// player.cutForename();
+			// player.cutSurname();
+			// player.extractForenameAndSurenameToName();
+			// } else {
+			// player.cutForename();
+			// player.cutSurname();
+			// player.extractForenameAndSurenameToName();
+			//
+			// }
+			// spielerTableControl.updateOneSpieler(player);
 			spielerLadenView.makeSpielerZeile(player, index);
 			spielerLadenView.getSpielerBearbeitenButton()[index].addActionListener(this);
 			spielerLadenView.getSpielerLoeschenButton()[index].addActionListener(this);

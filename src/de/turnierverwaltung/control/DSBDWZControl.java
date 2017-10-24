@@ -123,11 +123,11 @@ public class DSBDWZControl {
 				while (li.hasNext()) {
 					Player tmp = li.next();
 					try {
-						int tmpzps = Integer.parseInt(tmp.getDwzData().getCsvZPS());
-						int tmpmgl = Integer.parseInt(tmp.getDwzData().getCsvMgl_Nr());
-						int playerzps = Integer.parseInt(player.getDwzData().getCsvZPS());
-						int playermgl = Integer.parseInt(player.getDwzData().getCsvMgl_Nr());
-						if (tmpzps == playerzps && tmpmgl == playermgl) {
+						String tmpzps = tmp.getDwzData().getCsvZPS();
+						String tmpmgl = tmp.getDwzData().getCsvMgl_Nr();
+						String playerzps = player.getDwzData().getCsvZPS();
+						String playermgl = player.getDwzData().getCsvMgl_Nr();
+						if (tmpzps.equals(playerzps) && tmpmgl.equals(playermgl)) {
 							spielerDewisView.makeSpielerZeile(player, 2);
 							foundPlayer = true;
 
@@ -184,18 +184,18 @@ public class DSBDWZControl {
 					ListIterator<CSVPlayer> li = playerlist.listIterator();
 					int counter = 0;
 					while (li.hasNext() && counter < 20) {
-						CSVPlayer tmp = li.next();
+						CSVPlayer csvPlayer = li.next();
 						String surname = "";
 						String forename = "";
 						String name = "";
-						if (tmp.getPlayer().getSurname().length() >= eingabe.length()) {
-							surname = tmp.getPlayer().getSurname().substring(0, eingabe.length()).toUpperCase();
+						if (csvPlayer.getPlayer().getSurname().length() >= eingabe.length()) {
+							surname = csvPlayer.getPlayer().getSurname().substring(0, eingabe.length()).toUpperCase();
 						}
-						if (tmp.getPlayer().getForename().length() >= eingabe.length()) {
-							forename = tmp.getPlayer().getForename().substring(0, eingabe.length()).toUpperCase();
+						if (csvPlayer.getPlayer().getForename().length() >= eingabe.length()) {
+							forename = csvPlayer.getPlayer().getForename().substring(0, eingabe.length()).toUpperCase();
 						}
-						if (tmp.getPlayer().getName().length() >= eingabe.length()) {
-							name = tmp.getPlayer().getName().substring(0, eingabe.length()).toUpperCase();
+						if (csvPlayer.getPlayer().getName().length() >= eingabe.length()) {
+							name = csvPlayer.getPlayer().getName().substring(0, eingabe.length()).toUpperCase();
 						}
 						if (eingabe.equals(surname) || eingabe.equals(forename) || eingabe.equals(name)) {
 
@@ -204,13 +204,14 @@ public class DSBDWZControl {
 							while (list.hasNext()) {
 								Player temp = list.next();
 								try {
-									int tmpzps = Integer.parseInt(temp.getDwzData().getCsvZPS());
-									int tmpmgl = Integer.parseInt(temp.getDwzData().getCsvMgl_Nr());
-									int playerzps = Integer.parseInt(tmp.getPlayer().getDwzData().getCsvZPS());
-									int playermgl = Integer.parseInt(tmp.getPlayer().getDwzData().getCsvMgl_Nr());
-									if (tmpzps == playerzps && tmpmgl == playermgl) {
-										spielerSearchPanelList.makeSpielerZeile(tmp.getPlayer(), 2);
-										searchplayerlist.add(tmp.getPlayer());
+
+									String tmpzps = temp.getDwzData().getCsvZPS();
+									String tmpmgl = temp.getDwzData().getCsvMgl_Nr();
+									String playerzps = csvPlayer.getPlayer().getDwzData().getCsvZPS();
+									String playermgl = csvPlayer.getPlayer().getDwzData().getCsvMgl_Nr();
+									if (tmpzps.equals(playerzps) && tmpmgl.equals(playermgl)) {
+										spielerSearchPanelList.makeSpielerZeile(csvPlayer.getPlayer(), 2);
+										searchplayerlist.add(csvPlayer.getPlayer());
 										foundPlayer = true;
 
 									}
@@ -219,8 +220,8 @@ public class DSBDWZControl {
 								}
 							}
 							if (foundPlayer == false) {
-								spielerSearchPanelList.makeSpielerZeile(tmp.getPlayer(), 0);
-								searchplayerlist.add(tmp.getPlayer());
+								spielerSearchPanelList.makeSpielerZeile(csvPlayer.getPlayer(), 0);
+								searchplayerlist.add(csvPlayer.getPlayer());
 							}
 
 							counter++;
