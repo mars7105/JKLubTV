@@ -25,7 +25,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 				+ "  'WTit'               varchar(3)               default NULL,\n"
 				+ "  'OTit'               varchar(3)      NOT NULL default '',\n"
 				+ "  'FOA'                varchar(3)       NOT NULL default '',\n"
-				+ "  'OCT17'              INTEGER  unsigned default NULL,\n"
+				+ "  'Rating'              INTEGER  unsigned default NULL,\n"
 				+ "  'Gms'                INTEGER  unsigned default NULL,\n"
 				+ "  'K'                  INTEGER  unsigned default NULL,\n"
 				+ "  'B-day'              INTEGER  unsigned default NULL,\n"
@@ -69,7 +69,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	public void insertELO(ELOData eloData) throws SQLException {
 		String sql;
 
-		sql = "Insert into elo_data (Name, Fed, Sex, Tit, WTit, OTit, FOA, OCT17, Gms, K, B-day, Flag, idSpieler, ID_Number) values (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		sql = "Insert into elo_data (Name, Fed, Sex, Tit, WTit, OTit, FOA, Rating, Gms, K, B-day, Flag, idSpieler, ID_Number) values (?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
 		if (this.dbConnect != null) {
 
@@ -103,7 +103,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 
 	@Override
 	public void updateELO(ELOData eloData) throws SQLException {
-		String sql = "update elo_data set Name = ?, Fed = ?, Sex = ?, Tit = ?, WTit = ?, OTit = ?, FOA = ?, OCT17 = ?, Gms = ?, K = ?, B-day = ?, Flag = ?, ID_Number = ? where idSpieler = "
+		String sql = "update elo_data set Name = ?, Fed = ?, Sex = ?, Tit = ?, WTit = ?, OTit = ?, FOA = ?, Rating = ?, Gms = ?, K = ?, B-day = ?, Flag = ?, ID_Number = ? where idSpieler = "
 				+ eloData.getSpielerId() + ";";
 
 		if (this.dbConnect != null) {
@@ -149,7 +149,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 				eloData.setW_title(rs.getString("WTit"));
 				eloData.setO_title(rs.getString("OTit"));
 				eloData.setFoa_title(rs.getString("FOA"));
-				eloData.setRating(rs.getInt("OCT17"));
+				eloData.setRating(rs.getInt("Rating"));
 				eloData.setGames(rs.getInt("Gms"));
 				eloData.setK(rs.getInt("K"));
 				eloData.setBirthday(rs.getInt("B-day"));
