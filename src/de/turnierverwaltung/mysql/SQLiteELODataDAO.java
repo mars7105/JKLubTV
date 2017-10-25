@@ -28,7 +28,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 				+ "  'Rating'              INTEGER  unsigned default NULL,\n"
 				+ "  'Gms'                INTEGER  unsigned default NULL,\n"
 				+ "  'K'                  INTEGER  unsigned default NULL,\n"
-				+ "  'B-day'              INTEGER  unsigned default NULL,\n"
+				+ "  'Bday'              INTEGER  unsigned default NULL,\n"
 				+ "  'Flag'               char(2)               default NULL,\n"
 				+ "  'idSpieler'           INTEGER NOT NULL,\n" // ---
 				+ "  'ID_Number'          INTEGER PRIMARY KEY NOT NULL\n" + ");";
@@ -69,12 +69,11 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	public void insertELO(ELOData eloData) throws SQLException {
 		String sql;
 
-		sql = "Insert into elo_data (Name, Fed, Sex, Tit, WTit, OTit, FOA, Rating, Gms, K, B-day, Flag, idSpieler, ID_Number) values (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+		sql = "Insert into elo_data (Name, Fed, Sex, Tit, WTit, OTit, FOA, Rating, Gms, K, Bday, Flag, idSpieler, ID_Number) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
 		if (this.dbConnect != null) {
 
-			PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
 			preStm.setString(1, eloData.getName());
 			preStm.setString(2, eloData.getCountry());
 			preStm.setString(3, eloData.getSex());
@@ -103,7 +102,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 
 	@Override
 	public void updateELO(ELOData eloData) throws SQLException {
-		String sql = "update elo_data set Name = ?, Fed = ?, Sex = ?, Tit = ?, WTit = ?, OTit = ?, FOA = ?, Rating = ?, Gms = ?, K = ?, B-day = ?, Flag = ?, ID_Number = ? where idSpieler = "
+		String sql = "update elo_data set Name = ?, Fed = ?, Sex = ?, Tit = ?, WTit = ?, OTit = ?, FOA = ?, Rating = ?, Gms = ?, K = ?, Bday = ?, Flag = ?, ID_Number = ? where idSpieler = "
 				+ eloData.getSpielerId() + ";";
 
 		if (this.dbConnect != null) {
@@ -152,7 +151,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 				eloData.setRating(rs.getInt("Rating"));
 				eloData.setGames(rs.getInt("Gms"));
 				eloData.setK(rs.getInt("K"));
-				eloData.setBirthday(rs.getInt("B-day"));
+				eloData.setBirthday(rs.getInt("Bday"));
 				eloData.setFlag(rs.getString("Flag"));
 				eloData.setFideid(rs.getInt("ID_Number"));
 

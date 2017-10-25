@@ -1,15 +1,19 @@
 package de.turnierverwaltung.control;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import de.turnierverwaltung.model.DSBDWZClub;
+import de.turnierverwaltung.model.ELOPlayer;
 import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.model.ReadTXTFile;
 import de.turnierverwaltung.view.ProgressBarDWZUpdateView;
 
 public class UpdateRatingsControl {
 	private ProgressBarDWZUpdateView ladebalkenView;
 	private MainControl mainControl;
+	private String filename;
 
 	public UpdateRatingsControl(MainControl mainControl) {
 		super();
@@ -31,6 +35,15 @@ public class UpdateRatingsControl {
 	}
 
 	public void updateSpieler() {
+		ReadTXTFile rtf = new ReadTXTFile();
+		ArrayList<ELOPlayer> elospieler = null;
+		try {
+			elospieler = rtf.readFile(mainControl.getPropertiesControl().getPathToPlayersELO());
+		} catch (IOException e2) {
+			// TODO Auto-generated catch block
+			e2.printStackTrace();
+		}
+		;
 		DSBDWZClub verein = null;
 		ArrayList<Player> spieler = null;
 		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
@@ -52,17 +65,33 @@ public class UpdateRatingsControl {
 				verein = new DSBDWZClub(player.getDwzData().getCsvZPS());
 				spieler = verein.getSpieler();
 			}
+			if (elospieler != null) {
+				for (ELOPlayer eloplayer : elospieler) {
 
+					if (eloplayer.getEloData().getFideid() == player.getDwzData().getCsvFIDE_ID()) {
+						player.setEloData(eloplayer.getEloData());
+						try {
+							spielerTableControl.updateOneSpieler(player);
+						} catch (SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
 			if (spieler != null) {
 				for (Player temp : spieler) {
 					try {
-						int tempMGL = Integer.parseInt(temp.getDwzData().getCsvMgl_Nr());
-						int playerMGL = Integer.parseInt(player.getDwzData().getCsvMgl_Nr());
-						if (tempMGL == playerMGL) {
+						String tempMGL = temp.getDwzData().getCsvMgl_Nr();
+						String playerMGL = player.getDwzData().getCsvMgl_Nr();
+						if (tempMGL.equals(playerMGL)) {
 							if (player.getDWZ() != temp.getDWZ()
 									|| player.getDwzData().getCsvIndex() != temp.getDwzData().getCsvIndex()) {
 								player.setDwz(temp.getDWZ());
 								player.getDwzData().setCsvIndex(temp.getDwzData().getCsvIndex());
+
+								
+
 								try {
 									spielerTableControl.updateOneSpieler(player);
 									// System.out.println(player.getName());
@@ -78,6 +107,7 @@ public class UpdateRatingsControl {
 
 				}
 			}
+
 			ladebalkenView.iterate();
 		}
 	}

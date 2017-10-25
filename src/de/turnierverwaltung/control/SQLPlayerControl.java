@@ -24,6 +24,7 @@ import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.DWZDataDAO;
+import de.turnierverwaltung.mysql.ELODataDAO;
 import de.turnierverwaltung.mysql.SpielerDAO;
 import de.turnierverwaltung.mysql.Turnier_has_SpielerDAO;
 
@@ -36,13 +37,13 @@ public class SQLPlayerControl {
 	int turnierId;
 	int spielerId[];
 	private PropertiesControl prop;
-
+	private ELODataDAO mySQLELODataDAO;
 	public SQLPlayerControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		mySQLSpielerDAO = daoFactory.getSpielerDAO();
 		mySQLDWZDataDAO = daoFactory.getDWZDataDAO();
-		daoFactory.getELODataDAO();
+		mySQLELODataDAO = daoFactory.getELODataDAO();
 		prop = mainControl.getPropertiesControl();
 		int cutForename = Integer.parseInt(prop.getCutForename());
 		int cutSurname = Integer.parseInt(prop.getCutSurname());
@@ -50,6 +51,17 @@ public class SQLPlayerControl {
 		Player.cutSname = cutSurname;
 
 	}
+
+//	public void createTablesOneTime() throws SQLException {
+//		mySQLVerbandDAO = daoFactory.getDWZVerbandDAO();
+//		mySQLVereineDAO = daoFactory.getDWZVereineDAO();
+//		mySQLELODataDAO = daoFactory.getELODataDAO();
+//		mySQLInfoDataDAO = daoFactory.getInfoDAO();
+//		mySQLVerbandDAO.createVerbandTable();
+//		mySQLVereineDAO.createVereineTable();
+//		mySQLELODataDAO.createELOTable();
+//		mySQLInfoDataDAO.createInfoTable();
+//	}
 
 	public ArrayList<Player> getAllSpieler() throws SQLException {
 		ArrayList<Player> spieler;
@@ -67,7 +79,7 @@ public class SQLPlayerControl {
 		// temp.extractForenameAndSurenameToName();
 		//
 		// }
-
+//		createTablesOneTime();
 		return spieler;
 
 	}
@@ -76,7 +88,7 @@ public class SQLPlayerControl {
 		ArrayList<Player> spieler;
 
 		spieler = mySQLSpielerDAO.getAllSpieler();
-
+		
 		return spieler;
 
 	}
@@ -107,7 +119,7 @@ public class SQLPlayerControl {
 			this.turnier.getGruppe()[i].setSpielerAnzahl(gamers.length);
 
 		}
-
+		
 	}
 
 	public int insertOneSpieler(Player spieler) throws SQLException {
@@ -179,9 +191,10 @@ public class SQLPlayerControl {
 	}
 
 	public void updateOneSpieler(Player spieler) throws SQLException {
-		
+
 		mySQLSpielerDAO.updateSpieler(spieler);
 		mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
+		mySQLELODataDAO.updateELO(spieler.getEloData());
 	}
 
 	public boolean updateSpieler(int gruppe) throws SQLException {

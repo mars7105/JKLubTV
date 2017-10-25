@@ -38,16 +38,19 @@ public class SQLExportPlayerListControl {
 	private ArrayList<Player> spieler;
 	private DAOFactory daoFactory;
 	private SpielerDAO mySQLSpielerDAO;
+//	private ELODataDAO mySQLELODataDAO;
+//	private DWZDataDAO mySQLDWZDataDAO;
 
 	public SQLExportPlayerListControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 	}
 
 	public void exportSpielerTable() throws SQLException {
-
+//		mySQLELODataDAO = daoFactory.getELODataDAO();
+//		mySQLDWZDataDAO = daoFactory.getDWZDataDAO();
 		spielerTableControl = new SQLPlayerControl(this.mainControl);
 		spieler = spielerTableControl.getAllSpieler();
-
+		
 		String filename = SQLiteDAOFactory.getDB_PATH();
 		if (filename != null) {
 			BufferedWriter writer;

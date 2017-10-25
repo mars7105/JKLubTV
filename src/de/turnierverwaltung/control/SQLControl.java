@@ -80,4 +80,6 @@ public class SQLControl {
 		mySQLELODataDAO.createELOTable();
 		mySQLInfoDataDAO.createInfoTable();
 	}
+	
+
 }

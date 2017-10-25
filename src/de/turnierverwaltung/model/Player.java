@@ -105,17 +105,21 @@ public class Player implements Comparable<Object> {
 	 * @param kuerzel
 	 * @param dwz
 	 * @param age
-	 * @param elo 
+	 * @param elo
+	 * @param fideid
 	 * @param age2
 	 */
 	public Player(int id, String forename, String surname, String kuerzel, String dwz, int dwzindex, int age,
-			String zps, String mgl, int elo) {
+			String zps, String mgl, int elo, int fideid) {
 		dwzData = new DWZData();
 		eloData = new ELOData();
 		this.spielerId = id;
 		dwzData.setSpielerId(id);
+		dwzData.setCsvFIDE_Elo(elo);
+		dwzData.setCsvFIDE_ID(fideid);
 		eloData.setSpielerId(id);
 		eloData.setRating(elo);
+		eloData.setFideid(fideid);
 		this.forename = forename;
 		this.surname = surname;
 		this.name = "";
@@ -250,7 +254,6 @@ public class Player implements Comparable<Object> {
 
 	@Override
 	public int compareTo(Object o) {
-
 
 		int compareQuantity = ((Player) o).getSort();
 
