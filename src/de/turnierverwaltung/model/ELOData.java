@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class ELOData {
-	private String fideid;
+	private int fideid;
 	private String name;
 
 	private String country;
@@ -13,16 +13,16 @@ public class ELOData {
 	private String w_title;
 	private String o_title;
 	private String foa_title;
-	private String rating;
-	private String games;
-	private String k;
-	private String birthday;
+	private int rating;
+	private int games;
+	private int k;
+	private int birthday;
 	private String flag;
 	private int age;
 	private int spielerId;
 
-	public ELOData(String fideid, String name, String country, String sex, String title, String w_title, String o_title,
-			String foa_title, String rating, String games, String k, String birthday, String flag) {
+	public ELOData(int fideid, String name, String country, String sex, String title, String w_title, String o_title,
+			String foa_title, int rating, int games, int k, int birthday, String flag) {
 		super();
 		this.fideid = fideid;
 		this.name = name;
@@ -41,7 +41,7 @@ public class ELOData {
 	}
 
 	public ELOData() {
-		this.fideid = "";
+		this.fideid = -1;
 		this.name = "";
 		this.country = "";
 		this.sex = "";
@@ -49,40 +49,22 @@ public class ELOData {
 		this.w_title = "";
 		this.o_title = "";
 		this.foa_title = "";
-		this.rating = "";
-		this.games = "";
-		this.k = "";
-		this.birthday = "";
+		this.rating = -1;
+		this.games = -1;
+		this.k = -1;
+		this.birthday = -1;
 		this.flag = "";
-		this.name = "";
-		this.country = "";
-		this.sex = "";
-		this.title = "";
-		this.w_title = "";
-		this.o_title = "";
-		this.foa_title = "";
-		this.rating = "";
-		this.games = "";
-		this.k = "";
-		this.birthday = "";
-		this.flag = "";
+
 		spielerId = -1;
 	}
 
-	// public String getFideid() {
-	// return fideid;
-	// }
+	
 	public int getFideid() {
-		int fid = -1;
-		try {
-			fid = Integer.parseInt(fideid);
-		} catch (NumberFormatException e) {
-			fid = -1;
-		}
-		return fid;
+		
+		return fideid;
 	}
 
-	public void setFideid(String fideid) {
+	public void setFideid(int fideid) {
 		this.fideid = fideid;
 	}
 
@@ -142,35 +124,35 @@ public class ELOData {
 		this.foa_title = foa_title;
 	}
 
-	public String getRating() {
+	public int getRating() {
 		return rating;
 	}
 
-	public void setRating(String rating) {
+	public void setRating(int rating) {
 		this.rating = rating;
 	}
 
-	public String getGames() {
+	public int getGames() {
 		return games;
 	}
 
-	public void setGames(String games) {
+	public void setGames(int games) {
 		this.games = games;
 	}
 
-	public String getK() {
+	public int getK() {
 		return k;
 	}
 
-	public void setK(String k) {
+	public void setK(int k) {
 		this.k = k;
 	}
 
-	public String getBirthday() {
+	public int getBirthday() {
 		return birthday;
 	}
 
-	public void setBirthday(String birthday) {
+	public void setBirthday(int birthday) {
 		this.birthday = birthday;
 	}
 
@@ -184,20 +166,18 @@ public class ELOData {
 
 	public int getAge() {
 		String timeStamp = new SimpleDateFormat("yyyy").format(Calendar.getInstance().getTime());
-		try {
-			int year = Integer.parseInt(timeStamp) - Integer.parseInt(birthday);
-			if (year < 20) {
-				age = 0;
-			}
-			if (year >= 20 && age <= 25) {
-				age = 1;
-			}
-			if (year > 25) {
-				age = 2;
-			}
-		} catch (NumberFormatException e) {
+
+		int year = Integer.parseInt(timeStamp) - birthday;
+		if (year < 20) {
+			age = 0;
+		}
+		if (year >= 20 && age <= 25) {
+			age = 1;
+		}
+		if (year > 25) {
 			age = 2;
 		}
+
 		return age;
 	}
 

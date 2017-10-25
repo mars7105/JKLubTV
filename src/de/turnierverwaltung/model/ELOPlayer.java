@@ -4,8 +4,8 @@ public class ELOPlayer {
 
 	private ELOData eloData;
 
-	public ELOPlayer(String fideid, String name, String country, String sex, String title, String w_title,
-			String o_title, String foa_title, String rating, String games, String k, String birthday, String flag) {
+	public ELOPlayer(int fideid, String name, String country, String sex, String title, String w_title,
+			String o_title, String foa_title, int rating, int games, int k, int birthday, String flag) {
 		super();
 		eloData = new ELOData();
 		eloData.setFideid(fideid);

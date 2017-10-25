@@ -30,8 +30,9 @@ public class SQLiteELODataDAO implements ELODataDAO {
 				+ "  'K'                  INTEGER  unsigned default NULL,\n"
 				+ "  'B-day'              INTEGER  unsigned default NULL,\n"
 				+ "  'Flag'               char(2)               default NULL,\n"
-				+ "  'idSpieler           INTEGER NOT NULL,\n" // ---
+				+ "  'idSpieler'           INTEGER NOT NULL,\n" // ---
 				+ "  'ID_Number'          INTEGER PRIMARY KEY NOT NULL\n" + ");";
+
 		Statement stmt;
 		if (this.dbConnect != null) {
 
@@ -65,25 +66,107 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	}
 
 	@Override
-	public int insertELO(ELOData eloData) throws SQLException {
-		// TODO Auto-generated method stub
-		return 0;
+	public void insertELO(ELOData eloData) throws SQLException {
+		String sql;
+
+		sql = "Insert into elo_data (Name, Fed, Sex, Tit, WTit, OTit, FOA, OCT17, Gms, K, B-day, Flag, idSpieler, ID_Number) values (?,?,?,?,?,?,?,?,?,?,?,?,?);";
+
+		if (this.dbConnect != null) {
+
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+			preStm.setString(1, eloData.getName());
+			preStm.setString(2, eloData.getCountry());
+			preStm.setString(3, eloData.getSex());
+			preStm.setString(4, eloData.getTitle());
+			preStm.setString(5, eloData.getW_title());
+			preStm.setString(6, eloData.getO_title());
+			preStm.setString(7, eloData.getFoa_title());
+			preStm.setInt(8, eloData.getRating());
+			preStm.setInt(9, eloData.getGames());
+			preStm.setInt(10, eloData.getK());
+			preStm.setInt(11, eloData.getBirthday());
+			preStm.setString(12, eloData.getFlag());
+			preStm.setInt(13, eloData.getSpielerId());
+			preStm.setInt(14, eloData.getFideid());
+
+			preStm.addBatch();
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			// ResultSet rs = preStm.getGeneratedKeys();
+
+			preStm.close();
+
+		}
 	}
 
 	@Override
 	public void updateELO(ELOData eloData) throws SQLException {
-		// TODO Auto-generated method stub
+		String sql = "update elo_data set Name = ?, Fed = ?, Sex = ?, Tit = ?, WTit = ?, OTit = ?, FOA = ?, OCT17 = ?, Gms = ?, K = ?, B-day = ?, Flag = ?, ID_Number = ? where idSpieler = "
+				+ eloData.getSpielerId() + ";";
+
+		if (this.dbConnect != null) {
+			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+			preStm.setString(1, eloData.getName());
+			preStm.setString(2, eloData.getCountry());
+			preStm.setString(3, eloData.getSex());
+			preStm.setString(4, eloData.getTitle());
+			preStm.setString(5, eloData.getW_title());
+			preStm.setString(6, eloData.getO_title());
+			preStm.setString(7, eloData.getFoa_title());
+			preStm.setInt(8, eloData.getRating());
+			preStm.setInt(9, eloData.getGames());
+			preStm.setInt(10, eloData.getK());
+			preStm.setInt(11, eloData.getBirthday());
+			preStm.setString(12, eloData.getFlag());
+			preStm.setInt(13, eloData.getFideid());
+			preStm.addBatch();
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			preStm.close();
+
+		}
 	}
 
 	@Override
 	public ELOData getELOData(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+		String sql = "Select * from elo_data WHERE idSpieler=" + id + ";";
+		ELOData eloData = new ELOData();
+
+		Statement stmt;
+		if (this.dbConnect != null) {
+
+			stmt = this.dbConnect.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				eloData.setSpielerId(id);
+				eloData.setName(rs.getString("Name"));
+				eloData.setCountry(rs.getString("Fed"));
+				eloData.setSex(rs.getString("Sex"));
+				eloData.setTitle(rs.getString("Tit"));
+				eloData.setW_title(rs.getString("WTit"));
+				eloData.setO_title(rs.getString("OTit"));
+				eloData.setFoa_title(rs.getString("FOA"));
+				eloData.setRating(rs.getInt("OCT17"));
+				eloData.setGames(rs.getInt("Gms"));
+				eloData.setK(rs.getInt("K"));
+				eloData.setBirthday(rs.getInt("B-day"));
+				eloData.setFlag(rs.getString("Flag"));
+				eloData.setFideid(rs.getInt("ID_Number"));
+
+			}
+
+			stmt.close();
+
+		}
+		return eloData;
 	}
 
 	@Override
 	public boolean playerExist(int fideId) {
-		String sql = "Select * from dwz_spieler where ID_Number LIKE '" + fideId + ";";
+		String sql = "Select * from elo_data where ID_Number LIKE '" + fideId + ";";
 
 		int id = -1;
 		Statement stmt;

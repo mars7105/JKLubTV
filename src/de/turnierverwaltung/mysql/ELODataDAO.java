@@ -9,7 +9,7 @@ public interface ELODataDAO {
 
 	public void deleteELO(int id) throws SQLException;
 
-	public int insertELO(ELOData eloData) throws SQLException;
+	public void insertELO(ELOData eloData) throws SQLException;
 
 	public void updateELO(ELOData eloData) throws SQLException;
 

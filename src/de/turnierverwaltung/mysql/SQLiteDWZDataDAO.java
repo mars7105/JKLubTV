@@ -33,7 +33,7 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 				+ "  'FIDE_Titel'         char(2)               default NULL,\n"
 				+ "  'FIDE_ID'            INTEGER       unsigned default NULL,\n"
 				+ "  'FIDE_Land'          char(3)               default NULL,\n"
-				+ "  'idSpieler            INTEGER NOT NULL,\n"
+				+ "  'idSpieler'            INTEGER NOT NULL,\n"
 				+ "  'idDWZData' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL\n" + ");";
 		Statement stmt;
 		if (this.dbConnect != null) {

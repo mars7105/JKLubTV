@@ -34,29 +34,55 @@ public final class ReadTXTFile {
 			row[12] = line.substring(132, 134).trim();
 
 			if (i > 0) {
-				String fideid = row[0];
+				int fideid = -1;
+				try {
+					fideid = Integer.parseInt(row[0]);
+				} catch (NumberFormatException e) {
+					fideid = -1;
+				}
+
 				String name = "";
 				String[] nameString = row[1].split("\\s");
 				if (nameString.length > 1) {
 					name = (nameString[1] + " " + nameString[0]).replaceAll(",", "").trim();
 				}
-				
+
 				String country = row[2];
 				String sex = row[3];
 				String title = row[4];
 				String w_title = row[5];
 				String o_title = row[6];
 				String foa_title = row[7];
-				String rating = row[8];
-				String games = row[9];
-				String k = row[10];
-				String birthday = row[11];
+				int rating = -1;
+				try {
+					rating = Integer.parseInt(row[8]);
+				} catch (NumberFormatException e) {
+					rating = -1;
+				}
+				int games = -1;
+				try {
+					games = Integer.parseInt(row[9]);
+				} catch (NumberFormatException e) {
+					games = -1;
+				}
+				int k = -1;
+				try {
+					k = Integer.parseInt(row[10]);
+				} catch (NumberFormatException e) {
+					k = -1;
+				}
+				int birthday = -1;
+				try {
+					birthday = Integer.parseInt(row[11]);
+				} catch (NumberFormatException e) {
+					birthday = -1;
+				}
+
 				String flag = row[12];
-				
-				
+
 				eloPlayer = new ELOPlayer(fideid, name, country, sex, title, w_title, o_title, foa_title, rating, games,
 						k, birthday, flag);
-				
+
 				playerList.add(eloPlayer);
 			}
 

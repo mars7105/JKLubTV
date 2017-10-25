@@ -110,18 +110,14 @@ public class PlayerListView extends JPanel {
 		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		String lineText0 = spieler.getName();
 		String lineText1 = "";
-		int dwzindex = -1;
-		try {
-			dwzindex = spieler.getDwzData().getCsvIndex();
-		} catch (NumberFormatException e) {
-			dwzindex = -1;
-		}
-		if (dwzindex >= 0) {
 
-			lineText1 += "DWZ: " + spieler.getDwz() + " - Index: " + spieler.getDwzData().getCsvIndex();
-		} else if (spieler.getDwz().equals("") == false) {
+		if (spieler.getDWZ() > 0) {
 			lineText1 += "DWZ: " + spieler.getDwz();
 		}
+		if (spieler.getDwzData().getCsvFIDE_Elo() > 0) {
+			lineText1 += " ELO: " + spieler.getDwzData().getCsvFIDE_Elo();
+		}
+
 		String lineText2 = "";
 		if (spieler.getDwzData().getCsvZPS().length() > 0) {
 			lineText2 += "ZPS: " + spieler.getDwzData().getCsvZPS() + " - MGL: " + spieler.getDwzData().getCsvMgl_Nr();

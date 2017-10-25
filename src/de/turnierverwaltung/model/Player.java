@@ -105,15 +105,17 @@ public class Player implements Comparable<Object> {
 	 * @param kuerzel
 	 * @param dwz
 	 * @param age
+	 * @param elo 
 	 * @param age2
 	 */
 	public Player(int id, String forename, String surname, String kuerzel, String dwz, int dwzindex, int age,
-			String zps, String mgl) {
+			String zps, String mgl, int elo) {
 		dwzData = new DWZData();
 		eloData = new ELOData();
 		this.spielerId = id;
 		dwzData.setSpielerId(id);
 		eloData.setSpielerId(id);
+		eloData.setRating(elo);
 		this.forename = forename;
 		this.surname = surname;
 		this.name = "";
