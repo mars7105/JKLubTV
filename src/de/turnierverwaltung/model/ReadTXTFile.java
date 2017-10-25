@@ -30,7 +30,7 @@ public final class ReadTXTFile {
 			row[8] = line.substring(113, 117).trim();
 			row[9] = line.substring(119, 121).trim();
 			row[10] = line.substring(123, 124).trim();
-			row[11] = line.substring(126, 129).trim();
+			row[11] = line.substring(126, 130).trim();
 			row[12] = line.substring(132, 134).trim();
 
 			if (i > 0) {
