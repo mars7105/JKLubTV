@@ -13,7 +13,6 @@ import de.turnierverwaltung.view.ProgressBarDWZUpdateView;
 public class UpdateRatingsControl {
 	private ProgressBarDWZUpdateView ladebalkenView;
 	private MainControl mainControl;
-	private String filename;
 
 	public UpdateRatingsControl(MainControl mainControl) {
 		super();
@@ -28,7 +27,6 @@ public class UpdateRatingsControl {
 
 		ladebalkenView = new ProgressBarDWZUpdateView(anzahl);
 
-		// Display the window.
 		ladebalkenView.pack();
 
 		ladebalkenView.setVisible(true);
@@ -89,8 +87,6 @@ public class UpdateRatingsControl {
 									|| player.getDwzData().getCsvIndex() != temp.getDwzData().getCsvIndex()) {
 								player.setDwz(temp.getDWZ());
 								player.getDwzData().setCsvIndex(temp.getDwzData().getCsvIndex());
-
-								
 
 								try {
 									spielerTableControl.updateOneSpieler(player);
