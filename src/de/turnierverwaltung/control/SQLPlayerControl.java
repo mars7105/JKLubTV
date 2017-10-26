@@ -38,6 +38,7 @@ public class SQLPlayerControl {
 	int spielerId[];
 	private PropertiesControl prop;
 	private ELODataDAO mySQLELODataDAO;
+
 	public SQLPlayerControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
@@ -52,16 +53,16 @@ public class SQLPlayerControl {
 
 	}
 
-//	public void createTablesOneTime() throws SQLException {
-//		mySQLVerbandDAO = daoFactory.getDWZVerbandDAO();
-//		mySQLVereineDAO = daoFactory.getDWZVereineDAO();
-//		mySQLELODataDAO = daoFactory.getELODataDAO();
-//		mySQLInfoDataDAO = daoFactory.getInfoDAO();
-//		mySQLVerbandDAO.createVerbandTable();
-//		mySQLVereineDAO.createVereineTable();
-//		mySQLELODataDAO.createELOTable();
-//		mySQLInfoDataDAO.createInfoTable();
-//	}
+	// public void createTablesOneTime() throws SQLException {
+	// mySQLVerbandDAO = daoFactory.getDWZVerbandDAO();
+	// mySQLVereineDAO = daoFactory.getDWZVereineDAO();
+	// mySQLELODataDAO = daoFactory.getELODataDAO();
+	// mySQLInfoDataDAO = daoFactory.getInfoDAO();
+	// mySQLVerbandDAO.createVerbandTable();
+	// mySQLVereineDAO.createVereineTable();
+	// mySQLELODataDAO.createELOTable();
+	// mySQLInfoDataDAO.createInfoTable();
+	// }
 
 	public ArrayList<Player> getAllSpieler() throws SQLException {
 		ArrayList<Player> spieler;
@@ -79,7 +80,7 @@ public class SQLPlayerControl {
 		// temp.extractForenameAndSurenameToName();
 		//
 		// }
-//		createTablesOneTime();
+		// createTablesOneTime();
 		return spieler;
 
 	}
@@ -88,7 +89,7 @@ public class SQLPlayerControl {
 		ArrayList<Player> spieler;
 
 		spieler = mySQLSpielerDAO.getAllSpieler();
-		
+
 		return spieler;
 
 	}
@@ -119,7 +120,7 @@ public class SQLPlayerControl {
 			this.turnier.getGruppe()[i].setSpielerAnzahl(gamers.length);
 
 		}
-		
+
 	}
 
 	public int insertOneSpieler(Player spieler) throws SQLException {
@@ -193,8 +194,12 @@ public class SQLPlayerControl {
 	public void updateOneSpieler(Player spieler) throws SQLException {
 
 		mySQLSpielerDAO.updateSpieler(spieler);
-		mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
-		mySQLELODataDAO.updateELO(spieler.getEloData());
+		if (!spieler.getDwzData().getCsvZPS().equals("")) {
+			mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
+		}
+		if (spieler.getEloData().getFideid() > 0) {
+			mySQLELODataDAO.updateELO(spieler.getEloData());
+		}
 	}
 
 	public boolean updateSpieler(int gruppe) throws SQLException {

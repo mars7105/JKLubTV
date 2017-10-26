@@ -3,6 +3,8 @@ package de.turnierverwaltung.control;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import de.turnierverwaltung.model.DSBDWZClub;
 import de.turnierverwaltung.model.ELOPlayer;
@@ -38,73 +40,75 @@ public class UpdateRatingsControl {
 		try {
 			elospieler = rtf.readFile(mainControl.getPropertiesControl().getPathToPlayersELO());
 		} catch (IOException e2) {
-			// TODO Auto-generated catch block
-			e2.printStackTrace();
+			elospieler = null;
 		}
-		;
+
 		DSBDWZClub verein = null;
 		ArrayList<Player> spieler = null;
 		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
 		ArrayList<Player> spielerliste = null;
 		try {
 			spielerliste = spielerTableControl.getAllSpielerOrderByZPS();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		createAndShowGUI(spielerliste.size());
-		for (Player player : spielerliste) {
-			if (verein != null) {
-				if (verein.getZps().equals(player.getDwzData().getCsvZPS()) == false) {
-					verein = new DSBDWZClub(player.getDwzData().getCsvZPS());
+			// Sorting
+			Collections.sort(spielerliste, new Comparator<Player>() {
+				@Override
+				public int compare(Player player2, Player player1) {
+
+					return player1.getDwzData().getCsvZPS().compareTo(player2.getDwzData().getCsvZPS());
+				}
+			});
+			createAndShowGUI(spielerliste.size());
+			for (Player player : spielerliste) {
+				String zps = player.getDwzData().getCsvZPS();
+				if (verein != null) {
+					if (verein.getZps().equals(zps) == false) {
+						verein = new DSBDWZClub(zps);
+						spieler = verein.getSpieler();
+					}
+				} else {
+					verein = new DSBDWZClub(zps);
 					spieler = verein.getSpieler();
 				}
-			} else {
-				verein = new DSBDWZClub(player.getDwzData().getCsvZPS());
-				spieler = verein.getSpieler();
-			}
-			if (elospieler != null) {
-				for (ELOPlayer eloplayer : elospieler) {
+				if (elospieler != null) {
+					for (ELOPlayer eloplayer : elospieler) {
 
-					if (eloplayer.getEloData().getFideid() == player.getDwzData().getCsvFIDE_ID()) {
-						player.setEloData(eloplayer.getEloData());
-						try {
+						if (eloplayer.getEloData().getFideid() == player.getDwzData().getCsvFIDE_ID()) {
+							player.setEloData(eloplayer.getEloData());
+
 							spielerTableControl.updateOneSpieler(player);
-						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+
 						}
 					}
 				}
-			}
-			if (spieler != null) {
-				for (Player temp : spieler) {
-					try {
-						String tempMGL = temp.getDwzData().getCsvMgl_Nr();
-						String playerMGL = player.getDwzData().getCsvMgl_Nr();
-						if (tempMGL.equals(playerMGL)) {
-							if (player.getDWZ() != temp.getDWZ()
-									|| player.getDwzData().getCsvIndex() != temp.getDwzData().getCsvIndex()) {
-								player.setDwz(temp.getDWZ());
-								player.getDwzData().setCsvIndex(temp.getDwzData().getCsvIndex());
+				if (spieler != null) {
+					for (Player temp : spieler) {
+						try {
+							String tempMGL = temp.getDwzData().getCsvMgl_Nr();
+							String playerMGL = player.getDwzData().getCsvMgl_Nr();
+							if (tempMGL.equals(playerMGL)) {
+								if (player.getDWZ() != temp.getDWZ()
+										|| player.getDwzData().getCsvIndex() != temp.getDwzData().getCsvIndex()) {
+//									player.setDwzData(temp.getDwzData());
+									player.setDwz(temp.getDWZ());
+									player.getDwzData().setCsvIndex(temp.getDwzData().getCsvIndex());
 
-								try {
 									spielerTableControl.updateOneSpieler(player);
 									// System.out.println(player.getName());
-								} catch (SQLException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+
 								}
 							}
+						} catch (NumberFormatException e) {
+
 						}
-					} catch (NumberFormatException e) {
 
 					}
-
 				}
-			}
 
-			ladebalkenView.iterate();
+				ladebalkenView.iterate();
+			}
+		} catch (SQLException e1) {
+			spielerliste = null;
 		}
+
 	}
 }
