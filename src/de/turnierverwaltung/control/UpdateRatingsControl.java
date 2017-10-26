@@ -1,6 +1,5 @@
 package de.turnierverwaltung.control;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,11 +36,8 @@ public class UpdateRatingsControl {
 	public void updateSpieler() {
 		ReadTXTFile rtf = new ReadTXTFile();
 		ArrayList<ELOPlayer> elospieler = null;
-		try {
-			elospieler = rtf.readFile(mainControl.getPropertiesControl().getPathToPlayersELO());
-		} catch (IOException e2) {
-			elospieler = null;
-		}
+
+		elospieler = rtf.readFile(mainControl.getPropertiesControl().getPathToPlayersELO());
 
 		DSBDWZClub verein = null;
 		ArrayList<Player> spieler = null;
@@ -88,7 +84,7 @@ public class UpdateRatingsControl {
 							if (tempMGL.equals(playerMGL)) {
 								if (player.getDWZ() != temp.getDWZ()
 										|| player.getDwzData().getCsvIndex() != temp.getDwzData().getCsvIndex()) {
-//									player.setDwzData(temp.getDwzData());
+									// player.setDwzData(temp.getDwzData());
 									player.setDwz(temp.getDWZ());
 									player.getDwzData().setCsvIndex(temp.getDwzData().getCsvIndex());
 

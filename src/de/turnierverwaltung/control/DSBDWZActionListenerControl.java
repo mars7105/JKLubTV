@@ -96,30 +96,18 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 				ArrayList<CSVVereine> items = dewisDialogControl.getZpsItems();
 				int index = dewisDialogControl.getDialog().getVereinsAuswahl().getSelectedIndex();
 				String zps = items.get(index).getCsvZPS();
-				try {
-					dewisDialogControl.makeDWZListe(zps);
-				} catch (ArrayIndexOutOfBoundsException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+
+				dewisDialogControl.makeDWZListe(zps);
+
 			}
 
 		}
 
 		if (arg0.getSource().equals(dewisDialogControl.getDialog().getVereinsSucheButton())) {
 			String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
-			try {
-				dewisDialogControl.makeDWZListe(zps);
-			} catch (ArrayIndexOutOfBoundsException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
+			dewisDialogControl.makeDWZListe(zps);
+
 		}
 		if (arg0.getSource().equals(dewisDialogControl.getDialog().getCancelButton())) {
 			dewisDialogControl.getDialog().closeWindow();

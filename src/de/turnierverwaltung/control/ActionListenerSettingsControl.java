@@ -174,7 +174,7 @@ public class ActionListenerSettingsControl {
 				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 				final JFileChooser fc = new JFileChooser(path);
-				FileFilter filter = new FileNameExtensionFilter("XML file", "xml", "XML");
+				FileFilter filter = new FileNameExtensionFilter("TXT file", "txt", "TXT");
 
 				fc.setFileFilter(filter);
 				int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());

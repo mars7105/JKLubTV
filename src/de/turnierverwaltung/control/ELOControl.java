@@ -23,6 +23,8 @@ import java.sql.SQLException;
 
 import java.util.ArrayList;
 import java.util.ListIterator;
+
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import de.turnierverwaltung.model.CSVVereine;
 import de.turnierverwaltung.model.ELOPlayer;
@@ -44,6 +46,7 @@ public class ELOControl {
 	private ArrayList<Player> searchplayerlist;
 	private ArrayList<ELOPlayer> playerlist;
 	private ELOPlayerList csvplayerlist;
+	private Boolean runOnce;
 
 	/**
 	 * 
@@ -52,6 +55,7 @@ public class ELOControl {
 	 */
 	public ELOControl(MainControl mainControl) throws IOException {
 		super();
+		runOnce = false;
 		this.mainControl = mainControl;
 		eloFile = mainControl.getPropertiesControl().checkPathToELOXML();
 		if (eloFile == true) {
@@ -59,6 +63,8 @@ public class ELOControl {
 
 			csvplayerlist.readEloList(mainControl.getPropertiesControl().getPathToPlayersELO());
 			playerlist = csvplayerlist.getPlayerList();
+		} else {
+			errorHandler();
 		}
 
 	}
@@ -67,23 +73,26 @@ public class ELOControl {
 	* 
 	*/
 	public void makeDialog() {
-		if (dialog == null) {
+		if (playerlist != null) {
+			if (dialog == null) {
 
-			dialog = new ELODialogView();
+				dialog = new ELODialogView();
 
+			} else {
+				dialog.dispose();
+
+				dialog = new ELODialogView();
+
+			}
+
+			dialog.getPlayerSearchView().getOkButton().setEnabled(false);
 		} else {
-			dialog.dispose();
-
-			dialog = new ELODialogView();
-
+			errorHandler();
 		}
-
-		dialog.getPlayerSearchView().getOkButton().setEnabled(false);
-
 	}
 
 	public void makePlayerSearchList() {
-		if (eloFile == true) {
+		if (playerlist != null) {
 			eloDialogActionListenerControl = new ELOActionListenerControl(this.mainControl, this);
 			dialog.getPlayerSearchView().getOkButton().addActionListener(eloDialogActionListenerControl);
 			dialog.getPlayerSearchView().getCancelButton().addActionListener(eloDialogActionListenerControl);
@@ -145,7 +154,20 @@ public class ELOControl {
 
 				}
 			});
+		} else {
+			errorHandler();
 		}
+	}
+
+	private void errorHandler() {
+		if (runOnce == false) {
+			eloFile = false;
+			mainControl.getPropertiesControl().setPathToPlayersELO("");
+
+			JOptionPane.showMessageDialog(null, Messages.getString("DewisDialogControl.9"),
+					Messages.getString("DewisDialogControl.8"), JOptionPane.INFORMATION_MESSAGE);
+		}
+		runOnce = true;
 	}
 
 	private boolean playerExist(Player neuerSpieler) {
