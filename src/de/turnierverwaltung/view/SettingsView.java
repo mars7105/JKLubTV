@@ -96,6 +96,8 @@ public class SettingsView extends JPanel {
 	private JButton openPlayersELOButton;
 	private JLabel openPlayersELOLabel;
 	private JCheckBox checkBoxhtmlToClipboard;
+	private JCheckBox checkBoxohneELO;
+	private JCheckBox checkBoxohneFolgeELO;
 
 	/**
 	 * Create the panel.
@@ -640,6 +642,24 @@ public class SettingsView extends JPanel {
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(checkBoxohneFolgeDWZ);
 		htmlPanel.add(labelHeader);
+		htmlAll.add(htmlPanel);
+		// ohne ELO
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.61")); 
+		checkBoxohneELO = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxohneELO);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		// ohne Folge ELO
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.62"));
+		checkBoxohneFolgeELO = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxohneFolgeELO);
+		htmlPanel.add(labelHeader);
 
 		htmlAll.add(htmlPanel);
 		// HTML Tabellen in die Zwischenablage kopieren
@@ -975,6 +995,22 @@ public class SettingsView extends JPanel {
 
 	public void setCheckBoxhtmlToClipboard(JCheckBox checkBoxhtmlToClipboard) {
 		this.checkBoxhtmlToClipboard = checkBoxhtmlToClipboard;
+	}
+
+	public JCheckBox getCheckBoxohneELO() {
+		return checkBoxohneELO;
+	}
+
+	public void setCheckBoxohneELO(JCheckBox checkBoxohneELO) {
+		this.checkBoxohneELO = checkBoxohneELO;
+	}
+
+	public JCheckBox getCheckBoxohneFolgeELO() {
+		return checkBoxohneFolgeELO;
+	}
+
+	public void setCheckBoxohneFolgeELO(JCheckBox checkBoxohneFolgeELO) {
+		this.checkBoxohneFolgeELO = checkBoxohneFolgeELO;
 	}
 
 }

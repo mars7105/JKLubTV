@@ -56,17 +56,24 @@ public class ActionListenerSettingsControl {
 				eigenschaftenView.getCheckBoxHeaderFooter().setSelected(ppC.getOnlyTables());
 				eigenschaftenView.getCheckBoxohneDWZ().setSelected(ppC.getNoDWZ());
 				eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(ppC.getNoFolgeDWZ());
+				eigenschaftenView.getCheckBoxohneELO().setSelected(ppC.getNoELO());
+				eigenschaftenView.getCheckBoxohneFolgeELO().setSelected(ppC.getNoFolgeELO());
 				eigenschaftenView.getSpielerListeAuswahlBox().setSelectedIndex(ppC.getSpielerProTab());
 				eigenschaftenView.getTurnierListeAuswahlBox().setSelectedIndex(ppC.getTurniereProTab());
 				eigenschaftenView.getForenameLengthBox().setValue(ppC.getCutForename());
 				eigenschaftenView.getSurnameLengthBox().setValue(ppC.getCutSurname());
 				eigenschaftenView.getWebserverPathTextField().setText(ppC.getWebserverPath());
-				eigenschaftenView.getCheckBoxohneDWZ().setSelected(ppC.getNoDWZ());
+				// eigenschaftenView.getCheckBoxohneDWZ().setSelected(ppC.getNoDWZ());
 				eigenschaftenView.getCheckBoxhtmlToClipboard().setSelected(ppC.gethtmlToClipboard());
 				if (eigenschaftenView.getCheckBoxohneDWZ().isSelected() == true) {
 					eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(true);
 					eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(false);
 					ppC.setNoFolgeDWZ(true);
+				}
+				if (eigenschaftenView.getCheckBoxohneELO().isSelected() == true) {
+					eigenschaftenView.getCheckBoxohneFolgeELO().setSelected(true);
+					eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(false);
+					ppC.setNoFolgeELO(true);
 				}
 				eigenschaftenView.getCheckBoxPDFLinks().setSelected(ppC.getPDFLinks());
 				eigenschaftenView.getWebserverPathTextField().setEnabled(ppC.getPDFLinks());

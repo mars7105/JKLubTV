@@ -30,6 +30,8 @@ public class PropertiesControl {
 	public static final String ONLYTABLES = "onlyTables";
 	public static final String NODWZ = "noDWZ";
 	public static final String NOFOLGEDWZ = "noFolgeDWZ";
+	public static final String NOELO = "noELO";
+	public static final String NOFOLGEELO = "noFolgeELO";
 	public static final String PATHTODATABASE = "PathToDatabase";
 	public static final String ZPS = "ZPS";
 	public static final String TRUE = "true";
@@ -73,6 +75,8 @@ public class PropertiesControl {
 		prop.setProperty(ONLYTABLES, FALSE);
 		prop.setProperty(NODWZ, FALSE);
 		prop.setProperty(NOFOLGEDWZ, FALSE);
+		prop.setProperty(NOELO, FALSE);
+		prop.setProperty(NOFOLGEELO, FALSE);
 		prop.setProperty(ZPS, "");
 		prop.setProperty(LANGUAGE, "");
 		prop.setProperty(PATHTOVEREINECSV, "");
@@ -149,6 +153,14 @@ public class PropertiesControl {
 		}
 		if (!(prop.getProperty(NOFOLGEDWZ).equals(TRUE) || prop.getProperty(NOFOLGEDWZ).equals(FALSE))) {
 			prop.setProperty(NOFOLGEDWZ, FALSE);
+			saveChanges = true;
+		}
+		if (!(prop.getProperty(NOELO).equals(TRUE) || prop.getProperty(NOELO).equals(FALSE))) {
+			prop.setProperty(NOELO, FALSE);
+			saveChanges = true;
+		}
+		if (!(prop.getProperty(NOFOLGEELO).equals(TRUE) || prop.getProperty(NOFOLGEELO).equals(FALSE))) {
+			prop.setProperty(NOFOLGEELO, FALSE);
 			saveChanges = true;
 		}
 		if (!(turniereProTab >= 0 && turniereProTab <= 3)) {
@@ -268,6 +280,7 @@ public class PropertiesControl {
 			return false;
 		}
 	}
+
 	public Boolean gethtmlToClipboard() {
 		if (prop.getProperty(HTMLTOCLIPBOARD).equals(TRUE)) {
 			return true;
@@ -275,6 +288,7 @@ public class PropertiesControl {
 			return false;
 		}
 	}
+
 	public Boolean getNoDWZ() {
 		if (prop.getProperty(NODWZ).equals(TRUE)) {
 			return true;
@@ -592,6 +606,7 @@ public class PropertiesControl {
 			prop.setProperty(NOFOLGEDWZ, FALSE);
 		}
 	}
+
 	public void sethtmlToClipboard(Boolean htmlToClipboard) {
 		if (htmlToClipboard == true) {
 			prop.setProperty(HTMLTOCLIPBOARD, TRUE);
@@ -599,6 +614,7 @@ public class PropertiesControl {
 			prop.setProperty(HTMLTOCLIPBOARD, FALSE);
 		}
 	}
+
 	public void setPDFLinks(Boolean pdfLinks) {
 		if (pdfLinks == true) {
 			prop.setProperty(PDFLINKS, TRUE);
@@ -737,4 +753,35 @@ public class PropertiesControl {
 		prop.setProperty(TABLE_COLUMN_MEETING, tableColumns[4]);
 	}
 
+	public void setNoFolgeELO(boolean noFolgeELO) {
+		if (noFolgeELO == true) {
+			prop.setProperty(NOFOLGEELO, TRUE);
+		} else {
+			prop.setProperty(NOFOLGEELO, FALSE);
+		}
+	}
+
+	public void setNoELO(Boolean noELO) {
+		if (noELO == true) {
+			prop.setProperty(NOELO, TRUE);
+		} else {
+			prop.setProperty(NOELO, FALSE);
+		}
+
+	}
+	public Boolean getNoELO() {
+		if (prop.getProperty(NOELO).equals(TRUE)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Boolean getNoFolgeELO() {
+		if (prop.getProperty(NOFOLGEELO).equals(TRUE)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 }

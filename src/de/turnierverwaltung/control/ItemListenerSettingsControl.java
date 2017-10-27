@@ -115,6 +115,78 @@ public class ItemListenerSettingsControl {
 				mainControl.getPropertiesControl().writeProperties();
 			}
 		});
+		eigenschaftenView.getCheckBoxohneELO().addItemListener(new ItemListener() {
+
+			public void itemStateChanged(ItemEvent e) {
+				eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(false);
+
+				Boolean noELO = eigenschaftenView.getCheckBoxohneELO().isSelected();
+				mainControl.getPropertiesControl().setNoFolgeELO(noELO);
+				mainControl.getPropertiesControl().setNoELO(noELO);
+				eigenschaftenView.getCheckBoxohneFolgeELO().setSelected(noELO);
+				eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(!noELO);
+				if (mainControl.getTurnier() != null) {
+					mainControl.getTurnier().setNoFolgeELOCalc(noELO);
+					mainControl.getTurnier().setNoELOCalc(noELO);
+
+					if (noELO) {
+
+						for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
+
+							eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(false);
+						}
+					} else {
+
+						for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
+
+							mainControl.getTurnierTabelleControl().berechneFolgeELO(i);
+
+						}
+						eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(true);
+					}
+					try {
+						mainControl.getTurnierListeLadenControl().reloadTurnier();
+					} catch (SQLException e1) {
+						mainControl.fileSQLError();
+					}
+
+				}
+
+				mainControl.getPropertiesControl().writeProperties();
+			}
+		});
+
+		eigenschaftenView.getCheckBoxohneFolgeELO().addItemListener(new ItemListener() {
+
+			public void itemStateChanged(ItemEvent e) {
+
+				Boolean noFolgeELO = eigenschaftenView.getCheckBoxohneFolgeELO().isSelected();
+
+				mainControl.getPropertiesControl().setNoFolgeELO(noFolgeELO);
+				if (mainControl.getTurnier() != null) {
+					mainControl.getTurnier().setNoELOCalc(noFolgeELO);
+					if (noFolgeELO) {
+
+						mainControl.getPropertiesControl().setNoFolgeELO(true);
+
+					} else {
+
+						for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
+
+							mainControl.getTurnierTabelleControl().berechneFolgeELO(i);
+
+						}
+					}
+					try {
+						mainControl.getTurnierListeLadenControl().reloadTurnier();
+					} catch (SQLException e1) {
+						mainControl.fileSQLError();
+					}
+				}
+
+				mainControl.getPropertiesControl().writeProperties();
+			}
+		});
 		eigenschaftenView.getCheckBoxhtmlToClipboard().addItemListener(new ItemListener() {
 
 			public void itemStateChanged(ItemEvent e) {

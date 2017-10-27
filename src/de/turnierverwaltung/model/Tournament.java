@@ -138,4 +138,14 @@ public class Tournament {
 		this.turnierName = turnierName;
 	}
 
+	public void setNoFolgeELOCalc(Boolean noELO) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void setNoELOCalc(Boolean noELO) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

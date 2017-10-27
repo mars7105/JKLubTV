@@ -385,4 +385,9 @@ public class CrossTableControl {
 			}
 		}
 	}
+
+	public void berechneFolgeELO(int i) {
+		// TODO Auto-generated method stub
+		
+	}
 }
