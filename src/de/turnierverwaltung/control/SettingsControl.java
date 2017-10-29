@@ -43,6 +43,8 @@ public class SettingsControl {
 		eigenschaftenView.getMeetingTextField().setText(ppC.getTableComumnMeeting());
 		eigenschaftenView.getOldDWZTextField().setText(ppC.getTableComumnOldDWZ());
 		eigenschaftenView.getNewDWZTextField().setText(ppC.getTableComumnNewDWZ());
+		eigenschaftenView.getOldELOTextField().setText(ppC.getTableComumnOldELO());
+		eigenschaftenView.getNewELOTextField().setText(ppC.getTableComumnNewELO());
 		eigenschaftenView.getPlayerTextField().setText(ppC.getTableComumnPlayer());
 		eigenschaftenView.getPointsTextField().setText(ppC.getTableComumnPoints());
 		eigenschaftenView.getRankingTextField().setText(ppC.getTableComumnRanking());

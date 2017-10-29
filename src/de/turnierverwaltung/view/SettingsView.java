@@ -98,6 +98,8 @@ public class SettingsView extends JPanel {
 	private JCheckBox checkBoxhtmlToClipboard;
 	private JCheckBox checkBoxohneELO;
 	private JCheckBox checkBoxohneFolgeELO;
+	private JTextField oldELOTextField;
+	private JTextField newELOTextField;
 
 	/**
 	 * Create the panel.
@@ -204,13 +206,10 @@ public class SettingsView extends JPanel {
 	private void tableLabel() {
 		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.21"));
 		titleView.setFlowLayoutLeft();
-		// JPanel title = new JPanel();
-		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// title.add(new JLabel(Messages.getString("EigenschaftenView.21")));
-		// //$NON-NLS-1$
+		
 		htmlAll.add(titleView);
 		JPanel bothPanel = new JPanel();
-		bothPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		bothPanel.setLayout(new BorderLayout());
 		JPanel leftPanel = new JPanel();
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
 		leftPanel.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -227,6 +226,11 @@ public class SettingsView extends JPanel {
 
 		newDWZTextField = new JTextField(TournamentConstants.TABLE_COLUMN_NEW_DWZ, textFieldColumns);
 		newDWZTextField.setPreferredSize(dimTextField);
+		oldELOTextField = new JTextField(TournamentConstants.TABLE_COLUMN_OLD_ELO, textFieldColumns);
+		oldELOTextField.setPreferredSize(dimTextField);
+
+		newELOTextField = new JTextField(TournamentConstants.TABLE_COLUMN_NEW_ELO, textFieldColumns);
+		newELOTextField.setPreferredSize(dimTextField);
 
 		pointsTextField = new JTextField(TournamentConstants.TABLE_COLUMN_POINTS, textFieldColumns);
 		pointsTextField.setPreferredSize(dimTextField);
@@ -263,6 +267,11 @@ public class SettingsView extends JPanel {
 		oldDWZTextFieldLabel.setPreferredSize(dim);
 		JLabel newDWZTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.23") + ":");
 		newDWZTextFieldLabel.setPreferredSize(dim);
+
+		JLabel oldELOTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.63") + ":");
+		oldELOTextFieldLabel.setPreferredSize(dim);
+		JLabel newELOTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.64") + ":");
+		newELOTextFieldLabel.setPreferredSize(dim);
 
 		JLabel pointDWZTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.32") + ":");
 		pointDWZTextFieldLabel.setPreferredSize(dim);
@@ -321,6 +330,17 @@ public class SettingsView extends JPanel {
 		leftPanel.add(htmlPanel);
 
 		htmlPanel = new JPanel();
+		htmlPanel.add(oldELOTextFieldLabel);
+		htmlPanel.add(oldELOTextField);
+		leftPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(newELOTextFieldLabel);
+		htmlPanel.add(newELOTextField);
+		leftPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(pointDWZTextFieldLabel);
 		htmlPanel.add(pointsTextField);
@@ -368,22 +388,37 @@ public class SettingsView extends JPanel {
 		htmlPanel.add(meetingTextField);
 		rightPanel.add(htmlPanel);
 
-		JPanel leerPanel = new JPanel();
-		leerPanel.setPreferredSize(dim);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(leerPanel);
-		rightPanel.add(htmlPanel);
+//		JPanel leerPanel = new JPanel();
+//		leerPanel.setPreferredSize(dim);
+//		htmlPanel = new JPanel();
+//		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//		htmlPanel.add(leerPanel);
+//		rightPanel.add(htmlPanel);
 
-		// saveTableNamesButton = new
-		// JButton(Messages.getString("EigenschaftenView.35")); //$NON-NLS-1$
-		// htmlPanel = new JPanel();
-		// htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// htmlPanel.add(saveTableNamesButton);
-		bothPanel.add(leftPanel);
-		bothPanel.add(rightPanel);
+//		leerPanel = new JPanel();
+//		leerPanel.setPreferredSize(dim);
+//		htmlPanel = new JPanel();
+//		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//		htmlPanel.add(leerPanel);
+//		rightPanel.add(htmlPanel);
+//
+//		leerPanel.setPreferredSize(dim);
+//		htmlPanel = new JPanel();
+//		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+//		htmlPanel.add(leerPanel);
+//		rightPanel.add(htmlPanel);
+
+		JPanel leftP = new JPanel();
+		leftP.setLayout(new BorderLayout());
+		leftP.add(leftPanel, BorderLayout.NORTH);
+
+		JPanel rightP = new JPanel();
+		rightP.setLayout(new BorderLayout());
+		rightP.add(rightPanel, BorderLayout.NORTH);
+
+		bothPanel.add(leftP, BorderLayout.WEST);
+		bothPanel.add(rightP, BorderLayout.EAST);
 		htmlAll.add(bothPanel);
-		// htmlAll.add(htmlPanel);
 		htmlAll.add(new JSeparator());
 	}
 
@@ -392,11 +427,6 @@ public class SettingsView extends JPanel {
 		titleView.setFlowLayoutLeft();
 
 		htmlAll.add(titleView);
-
-		// JPanel title = new JPanel();
-		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// title.add(new JLabel(Messages.getString("EigenschaftenView.20")));
-		// //$NON-NLS-1$
 
 		openDefaultPathButton = new JButton(Messages.getString("EigenschaftenView.19")); //$NON-NLS-1$
 		JPanel htmlPanel = new JPanel();
@@ -458,11 +488,7 @@ public class SettingsView extends JPanel {
 		titleView.setFlowLayoutLeft();
 
 		htmlAll.add(titleView);
-		// JPanel title = new JPanel();
-		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// title.add(new JLabel(Messages.getString("EigenschaftenView.26")));
-		// //$NON-NLS-1$
-		// htmlAll.add(title);
+
 		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(spielerListeAuswahlBox);
@@ -644,7 +670,7 @@ public class SettingsView extends JPanel {
 		htmlPanel.add(labelHeader);
 		htmlAll.add(htmlPanel);
 		// ohne ELO
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.61")); 
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.61"));
 		checkBoxohneELO = new JCheckBox();
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -1011,6 +1037,22 @@ public class SettingsView extends JPanel {
 
 	public void setCheckBoxohneFolgeELO(JCheckBox checkBoxohneFolgeELO) {
 		this.checkBoxohneFolgeELO = checkBoxohneFolgeELO;
+	}
+
+	public JTextField getOldELOTextField() {
+		return oldELOTextField;
+	}
+
+	public void setOldELOTextField(JTextField oldELOTextField) {
+		this.oldELOTextField = oldELOTextField;
+	}
+
+	public JTextField getNewELOTextField() {
+		return newELOTextField;
+	}
+
+	public void setNewELOTextField(JTextField newELOTextField) {
+		this.newELOTextField = newELOTextField;
 	}
 
 }

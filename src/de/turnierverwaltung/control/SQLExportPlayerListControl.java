@@ -29,6 +29,8 @@ import javax.swing.JOptionPane;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.DAOFactory;
+import de.turnierverwaltung.mysql.DWZDataDAO;
+import de.turnierverwaltung.mysql.ELODataDAO;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.mysql.SpielerDAO;
 
@@ -38,19 +40,21 @@ public class SQLExportPlayerListControl {
 	private ArrayList<Player> spieler;
 	private DAOFactory daoFactory;
 	private SpielerDAO mySQLSpielerDAO;
-//	private ELODataDAO mySQLELODataDAO;
-//	private DWZDataDAO mySQLDWZDataDAO;
+	private DWZDataDAO mySQLDWZDAO;
+	// private ELODataDAO mySQLELODataDAO;
+	// private DWZDataDAO mySQLDWZDataDAO;
+	private ELODataDAO mySQLELODAO;
 
 	public SQLExportPlayerListControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 	}
 
 	public void exportSpielerTable() throws SQLException {
-//		mySQLELODataDAO = daoFactory.getELODataDAO();
-//		mySQLDWZDataDAO = daoFactory.getDWZDataDAO();
+		// mySQLELODataDAO = daoFactory.getELODataDAO();
+		// mySQLDWZDataDAO = daoFactory.getDWZDataDAO();
 		spielerTableControl = new SQLPlayerControl(this.mainControl);
 		spieler = spielerTableControl.getAllSpieler();
-		
+
 		String filename = SQLiteDAOFactory.getDB_PATH();
 		if (filename != null) {
 			BufferedWriter writer;
@@ -71,12 +75,20 @@ public class SQLExportPlayerListControl {
 				SQLControl sqlC = new SQLControl();
 				daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 				mySQLSpielerDAO = daoFactory.getSpielerDAO();
+				mySQLDWZDAO = daoFactory.getDWZDataDAO();
+				mySQLELODAO = daoFactory.getELODataDAO();
 				sqlC.createSpielerTables();
 				Player oneSpieler = null;
 				ListIterator<Player> li = spieler.listIterator();
 				while (li.hasNext()) {
 					oneSpieler = li.next();
 					mySQLSpielerDAO.insertSpieler(oneSpieler);
+					if (oneSpieler.getDwzData().getCsvDWZ() >= 0) {
+						mySQLDWZDAO.insertDWZ(oneSpieler.getDwzData());
+					}
+					if (oneSpieler.getEloData().getFideid() > 0) {
+						mySQLELODAO.insertELO(oneSpieler.getEloData());
+					}
 				}
 				JOptionPane.showMessageDialog(mainControl,
 						Messages.getString("SpielerTableExportController.3") + newFile, //$NON-NLS-1$

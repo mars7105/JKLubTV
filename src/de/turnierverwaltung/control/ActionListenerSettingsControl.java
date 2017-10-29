@@ -111,6 +111,8 @@ public class ActionListenerSettingsControl {
 				ppC.setTableComumnMeeting(settingsView.getMeetingTextField().getText());
 				ppC.setTableComumnNewDWZ(settingsView.getNewDWZTextField().getText());
 				ppC.setTableComumnOldDWZ(settingsView.getOldDWZTextField().getText());
+				ppC.setTableComumnNewELO(settingsView.getNewELOTextField().getText());
+				ppC.setTableComumnOldELO(settingsView.getOldELOTextField().getText());
 				ppC.setTableComumnPlayer(settingsView.getPlayerTextField().getText());
 				ppC.setTableComumnPoints(settingsView.getPointsTextField().getText());
 				ppC.setTableComumnRanking(settingsView.getRankingTextField().getText());

@@ -27,15 +27,7 @@ public class CrossTable {
 	private int zeile;
 	private int spalte;
 	private CrossTableToHTML turnierTabelleToHTML;
-	private String playerColumnName;
-	private String oldDWZColumnName;
-	private String newDWZColumnName;
-	private String poinsColumnName;
-	private String sbbColumnName;
-	private String rankingColumnName;
 	private String infoString;
-//	private String oldELOColumnName;
-//	private String newELOColumnName;
 
 	/**
 	 * 
@@ -75,14 +67,6 @@ public class CrossTable {
 	public void createMatrix(String playerColumnName, String oldDWZColumnName, String newDWZColumnName,
 			String oldELOColumnName, String newELOColumnName, String poinsColumnName, String sbbColumnName,
 			String rankingColumnName, Boolean ohneDWZ, Boolean ohneFolgeDWZ, Boolean ohneELO, Boolean ohneFolgeELO) {
-		this.playerColumnName = playerColumnName;
-		this.oldDWZColumnName = oldDWZColumnName;
-		this.newDWZColumnName = newDWZColumnName;
-//		this.oldELOColumnName = oldELOColumnName;
-//		this.newELOColumnName = newELOColumnName;
-		this.poinsColumnName = poinsColumnName;
-		this.sbbColumnName = sbbColumnName;
-		this.rankingColumnName = rankingColumnName;
 
 		String ohneDWZString = oldDWZColumnName.replaceAll("<br />", "") + " = "
 				+ Messages.getString("TurnierTabelleToHTML.1");
@@ -96,19 +80,28 @@ public class CrossTable {
 		int eloabstand = 0;
 		if (ohneDWZ == false) {
 			dwzabstand++;
-			// ohneDWZString = "";
+
+		} else {
+			ohneDWZString = "";
 		}
 		if (ohneFolgeDWZ == false) {
 			dwzabstand++;
-			// ohneFolgeDWZString = "";
+
+		} else {
+			ohneFolgeDWZString = "";
 		}
 		if (ohneELO == false) {
 			eloabstand++;
-			// ohneELOString = "";
+
+		} else {
+			ohneELOString = "";
+
 		}
 		if (ohneFolgeELO == false) {
 			eloabstand++;
-			// ohneFolgeELOString = "";
+
+		} else {
+			ohneFolgeELOString = "";
 		}
 		int gesamtabstand = dwzabstand + eloabstand;
 		this.infoString = rankingColumnName + " = " + Messages.getString("TurnierTabelleToHTML.0") + ohneDWZString
@@ -139,22 +132,22 @@ public class CrossTable {
 		if (ohneELO == false && ohneFolgeELO == false) {
 			tabellenMatrix[1 + dwzabstand][0] = oldELOColumnName;
 			tabellenMatrix[2 + dwzabstand][0] = newELOColumnName; // $NON-NLS-1$
-			
+
 		}
 		if (ohneELO == false && ohneFolgeELO == true) {
 			tabellenMatrix[1 + dwzabstand][0] = oldELOColumnName;
 		}
 		for (int i = 0; i < sp; i++) {
 			if (spieler[i].getKuerzel().length() >= 2) {
-				tabellenMatrix[i + gesamtabstand+1 ][0] = spieler[i].getKuerzel().substring(0, 1) + "<br />"
+				tabellenMatrix[i + gesamtabstand + 1][0] = spieler[i].getKuerzel().substring(0, 1) + "<br />"
 						+ spieler[i].getKuerzel().substring(1, 2);
 			} else {
-				tabellenMatrix[i + gesamtabstand+1 ][0] = spieler[i].getKuerzel();
+				tabellenMatrix[i + gesamtabstand + 1][0] = spieler[i].getKuerzel();
 			}
 
 		}
 
-		tabellenMatrix[gesamtabstand  +1+ sp][0] = poinsColumnName;
+		tabellenMatrix[gesamtabstand + 1 + sp][0] = poinsColumnName;
 		tabellenMatrix[gesamtabstand + 2 + sp][0] = sbbColumnName;
 		tabellenMatrix[gesamtabstand + 3 + sp][0] = rankingColumnName;
 		for (int i = 0; i < sp; i++) {
@@ -183,18 +176,18 @@ public class CrossTable {
 			if (ohneELO == false) {
 				if (spieler[i].getDwzData().getCsvFIDE_Elo() > 0) {
 
-					tabellenMatrix[1+ dwzabstand][i + 1] = Integer.toString(spieler[i].getDwzData().getCsvFIDE_Elo());
+					tabellenMatrix[1 + dwzabstand][i + 1] = Integer.toString(spieler[i].getDwzData().getCsvFIDE_Elo());
 				} else {
-					tabellenMatrix[1+ dwzabstand][i + 1] = ""; //$NON-NLS-1$
+					tabellenMatrix[1 + dwzabstand][i + 1] = ""; //$NON-NLS-1$
 				}
 			}
 			if (ohneFolgeELO == false) {
 				if (spieler[i].getFolgeELO() > 0) {
 					String diff = diffDWZ(spieler[i].getDwzData().getCsvFIDE_Elo(), spieler[i].getFolgeELO());
 
-					tabellenMatrix[2+ dwzabstand][i + 1] = Integer.toString(spieler[i].getFolgeELO()) + diff;
+					tabellenMatrix[2 + dwzabstand][i + 1] = Integer.toString(spieler[i].getFolgeELO()) + diff;
 				} else {
-					tabellenMatrix[2+ dwzabstand][i + 1] = ""; //$NON-NLS-1$
+					tabellenMatrix[2 + dwzabstand][i + 1] = ""; //$NON-NLS-1$
 				}
 			}
 		}
@@ -287,54 +280,6 @@ public class CrossTable {
 
 	public void setZeile(int zeile) {
 		this.zeile = zeile;
-	}
-
-	public String getPlayerColumnName() {
-		return playerColumnName;
-	}
-
-	public void setPlayerColumnName(String playerColumnName) {
-		this.playerColumnName = playerColumnName;
-	}
-
-	public String getOldDWZColumnName() {
-		return oldDWZColumnName;
-	}
-
-	public void setOldDWZColumnName(String oldDWZColumnName) {
-		this.oldDWZColumnName = oldDWZColumnName;
-	}
-
-	public String getNewDWZColumnName() {
-		return newDWZColumnName;
-	}
-
-	public void setNewDWZColumnName(String newDWZColumnName) {
-		this.newDWZColumnName = newDWZColumnName;
-	}
-
-	public String getPoinsColumnName() {
-		return poinsColumnName;
-	}
-
-	public void setPoinsColumnName(String poinsColumnName) {
-		this.poinsColumnName = poinsColumnName;
-	}
-
-	public String getSbbColumnName() {
-		return sbbColumnName;
-	}
-
-	public void setSbbColumnName(String sbbColumnName) {
-		this.sbbColumnName = sbbColumnName;
-	}
-
-	public String getRankingColumnName() {
-		return rankingColumnName;
-	}
-
-	public void setRankingColumnName(String rankingColumnName) {
-		this.rankingColumnName = rankingColumnName;
 	}
 
 	public Boolean[][] getColorMatrix() {

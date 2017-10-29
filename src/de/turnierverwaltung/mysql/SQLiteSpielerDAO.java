@@ -101,6 +101,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 		ArrayList<Player> spielerListe = new ArrayList<Player>();
 		DAOFactory daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		DWZDataDAO mySQLDWZDataDAO = daoFactory.getDWZDataDAO();
+		ELODataDAO mySQLELODataDAO = daoFactory.getELODataDAO();
 		Statement stmt;
 		if (this.dbConnect != null) {
 
@@ -123,7 +124,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				player.setSpielerId(idSpieler);
 
 				player.setDwzData(mySQLDWZDataDAO.getDWZData(idSpieler));
-
+				player.setEloData(mySQLELODataDAO.getELOData(idSpieler));
 				spielerListe.add(player);
 			}
 
@@ -214,6 +215,8 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 		ArrayList<Player> spielerListe = new ArrayList<Player>();
 		DAOFactory daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		DWZDataDAO mySQLDWZDataDAO = daoFactory.getDWZDataDAO();
+		ELODataDAO mySQLELODataDAO = daoFactory.getELODataDAO();
+
 		Statement stmt;
 		if (this.dbConnect != null) {
 
@@ -237,6 +240,7 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 					player = new Player(idSpieler, foreName, surName, kuerzel, age);
 					player.setDwzData(mySQLDWZDataDAO.getDWZData(idSpieler));
 				}
+				player.setEloData(mySQLELODataDAO.getELOData(idSpieler));
 				spielerListe.add(player);
 			}
 			stmt.close();
