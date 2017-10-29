@@ -30,6 +30,7 @@ public class Player implements Comparable<Object> {
 	private double soberg;
 	private int platz;
 	private int folgeDWZ;
+	private int folgeELO;
 	private int age;
 	private String forename;
 	private String surname;
@@ -500,6 +501,14 @@ public class Player implements Comparable<Object> {
 
 		
 
+	}
+
+	public int getFolgeELO() {
+		return folgeELO;
+	}
+
+	public void setFolgeELO(int folgeELO) {
+		this.folgeELO = folgeELO;
 	}
 
 }

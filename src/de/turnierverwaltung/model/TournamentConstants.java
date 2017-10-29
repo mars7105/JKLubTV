@@ -73,6 +73,8 @@ public class TournamentConstants {
 	public static String TABLE_COLUMN_PLAYER = Messages.getString("TurnierKonstanten.0");
 	public static String TABLE_COLUMN_OLD_DWZ = Messages.getString("TurnierKonstanten.1");
 	public static String TABLE_COLUMN_NEW_DWZ = Messages.getString("TurnierKonstanten.2");
+	public static String TABLE_COLUMN_OLD_ELO = Messages.getString("TurnierKonstanten.11");
+	public static String TABLE_COLUMN_NEW_ELO = Messages.getString("TurnierKonstanten.12");
 	public static String TABLE_COLUMN_POINTS = Messages.getString("TurnierKonstanten.3");
 	public static String TABLE_COLUMN_SONNEBORNBERGER = Messages.getString("TurnierKonstanten.4");
 	public static String TABLE_COLUMN_RANKING = Messages.getString("TurnierKonstanten.5");
@@ -106,6 +108,7 @@ public class TournamentConstants {
 		TABLE_COLUMN_BLACK = Messages.getString("TurnierKonstanten.8");
 		TABLE_COLUMN_RESULT = Messages.getString("TurnierKonstanten.9");
 		TABLE_COLUMN_MEETING = Messages.getString("TurnierKonstanten.10");
-
+		TABLE_COLUMN_OLD_ELO = Messages.getString("TurnierKonstanten.11");
+		TABLE_COLUMN_NEW_ELO = Messages.getString("TurnierKonstanten.12");
 	}
 }

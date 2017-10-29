@@ -38,7 +38,7 @@ public class CrossTableModel extends DefaultTableModel {
 	public CrossTableModel(CrossTable turnierTabelle, int abstand) {
 		super();
 		this.turnierTabelle = turnierTabelle;
-		this.abstand = abstand;
+		this.abstand = abstand + 1;
 		this.zeile = this.turnierTabelle.getZeile();
 		this.spalte = this.turnierTabelle.getSpalte();
 		rowData = new Object[this.spalte];
@@ -55,10 +55,13 @@ public class CrossTableModel extends DefaultTableModel {
 	}
 
 	private void initModelData() {
-
+		// System.out.println(spalte);
 		for (int i = 0; i < spalte; i++) {
+
+			// System.out.println(tabellenMatrix[i][0] + " - " +i + 0);
 			String replacedStr = tabellenMatrix[i][0].replaceAll("<br />", "");
 			this.addColumn(replacedStr);
+
 		}
 
 		for (int j = 1; j < zeile; j++) {

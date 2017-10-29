@@ -116,12 +116,15 @@ public class CrossTableControl {
 		String playerColumnName = ppC.getTableComumnPlayer();
 		String oldDWZColumnName = ppC.getTableComumnOldDWZ();
 		String newDWZColumnName = ppC.getTableComumnNewDWZ();
+		String oldELOColumnName = ppC.getTableComumnOldELO();
+		String newELOColumnName = ppC.getTableComumnNewELO();
 		String poinsColumnName = ppC.getTableComumnPoints();
 		String sbbColumnName = ppC.getTableComumnSonnebornBerger();
 		String rankingColumnName = ppC.getTableComumnRanking();
 		turnierTabelle[gruppenNummer].createMatrix(playerColumnName, oldDWZColumnName, newDWZColumnName,
-				poinsColumnName, sbbColumnName, rankingColumnName, mainControl.getPropertiesControl().getNoDWZ(),
-				mainControl.getPropertiesControl().getNoFolgeDWZ());
+				oldELOColumnName, newELOColumnName, poinsColumnName, sbbColumnName, rankingColumnName,
+				mainControl.getPropertiesControl().getNoDWZ(), mainControl.getPropertiesControl().getNoFolgeDWZ(),
+				mainControl.getPropertiesControl().getNoELO(), mainControl.getPropertiesControl().getNoFolgeELO());
 
 		abstand = mainControl.getPropertiesControl().getTabellenAbstand();
 		simpleTableView[gruppenNummer] = new CrossTableView(
@@ -273,9 +276,9 @@ public class CrossTableControl {
 
 			int colCount = simpleTableView[gruppenNummer].getTable().getModel().getColumnCount();
 			int spielery = row;
-			int spielerx = col - abstand;
+			int spielerx = col - abstand - 1;
 			int invertRow = spielerx;
-			int invertCol = spielery + abstand;
+			int invertCol = spielery + abstand+1;
 			String ergebniss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, col);
 
 			String invertErgebniss = " ";
@@ -388,6 +391,6 @@ public class CrossTableControl {
 
 	public void berechneFolgeELO(int i) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

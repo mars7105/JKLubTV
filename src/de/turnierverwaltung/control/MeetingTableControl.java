@@ -184,7 +184,7 @@ public class MeetingTableControl {
 							if (simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getValueAt(y, 0)
 									.equals(spielerSchwarz)) {
 								simpleTurnierTabelleView[gruppenNummer].getTable().getModel().setValueAt(ergebnissSet,
-										i, y + abstand);
+										i, y + abstand+1);
 							}
 						}
 

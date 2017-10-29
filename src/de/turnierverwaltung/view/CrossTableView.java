@@ -138,11 +138,7 @@ public class CrossTableView extends JPanel {
 			if (i >= 1 && i < 4) {
 				// c.setPreferredWidth(medium);
 			}
-			// if (i == 1) {
-			// c.setMinWidth(0);
-			// c.setMaxWidth(0);
-			// c.setPreferredWidth(0);
-			// }
+			
 			if (i >= abstand && i < punkte) {
 				c.setCellEditor(new DefaultCellEditor(comboBox));
 				c.setPreferredWidth(small);

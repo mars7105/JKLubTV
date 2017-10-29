@@ -46,6 +46,8 @@ public class PropertiesControl {
 	public static final String PACKAGE = "/de/jklubtv";
 	public static final String TABLE_COLUMN_OLD_DWZ = "tablecolumn-olddwz";
 	public static final String TABLE_COLUMN_NEW_DWZ = "tablecolumn-newdwz";
+	public static final String TABLE_COLUMN_OLD_ELO = "tablecolumn-oldelo";
+	public static final String TABLE_COLUMN_NEW_ELO = "tablecolumn-newelo";
 	public static final String TABLE_COLUMN_POINTS = "tablecolumn-points";
 	public static final String TABLE_COLUMN_SONNEBORNBERGER = "tablecolumn-sonnebornberger";
 	public static final String TABLE_COLUMN_RANKING = "tablecolumn-ranking";
@@ -87,6 +89,8 @@ public class PropertiesControl {
 		prop.setProperty(SPIELERPROTAB, "1");
 		prop.setProperty(TABLE_COLUMN_OLD_DWZ, "");
 		prop.setProperty(TABLE_COLUMN_NEW_DWZ, "");
+		prop.setProperty(TABLE_COLUMN_OLD_ELO, "");
+		prop.setProperty(TABLE_COLUMN_NEW_ELO, "");
 		prop.setProperty(TABLE_COLUMN_POINTS, "");
 		prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER, "");
 		prop.setProperty(TABLE_COLUMN_RANKING, "");
@@ -180,6 +184,15 @@ public class PropertiesControl {
 		}
 		if (prop.getProperty(TABLE_COLUMN_NEW_DWZ).equals("")) {
 			prop.setProperty(TABLE_COLUMN_NEW_DWZ, TournamentConstants.TABLE_COLUMN_NEW_DWZ);
+			saveChanges = true;
+		}
+		if (prop.getProperty(TABLE_COLUMN_OLD_ELO).equals("")) {
+			prop.setProperty(TABLE_COLUMN_OLD_ELO, TournamentConstants.TABLE_COLUMN_OLD_ELO);
+
+			saveChanges = true;
+		}
+		if (prop.getProperty(TABLE_COLUMN_NEW_ELO).equals("")) {
+			prop.setProperty(TABLE_COLUMN_NEW_ELO, TournamentConstants.TABLE_COLUMN_NEW_ELO);
 			saveChanges = true;
 		}
 		if (prop.getProperty(TABLE_COLUMN_POINTS).equals("")) {
@@ -492,6 +505,25 @@ public class PropertiesControl {
 		return prop.getProperty(TABLE_COLUMN_NEW_DWZ);
 	}
 
+	public void setTableComumnOldELO(String tableString) {
+		prop.setProperty(TABLE_COLUMN_OLD_ELO, tableString);
+
+	}
+
+	public String getTableComumnOldELO() {
+		return prop.getProperty(TABLE_COLUMN_OLD_ELO);
+	}
+
+	public void setTableComumnNewELO(String tableString) {
+		prop.setProperty(TABLE_COLUMN_NEW_ELO, tableString);
+
+	}
+
+	public String getTableComumnNewELO() {
+
+		return prop.getProperty(TABLE_COLUMN_NEW_ELO);
+	}
+
 	public void setTableComumnPoints(String tableString) {
 		prop.setProperty(TABLE_COLUMN_POINTS, tableString);
 
@@ -683,29 +715,44 @@ public class PropertiesControl {
 	}
 
 	public int getTabellenAbstand() {
-		int abstand = 3;
-		if (getNoDWZ() == true) {
-			abstand = abstand - 1;
+		int dwzabstand = 0;
+		int eloabstand = 0;
+		if (getNoDWZ() == false) {
+			dwzabstand++;
+			// ohneDWZString = "";
 		}
-		if (getNoFolgeDWZ() == true) {
-			abstand = abstand - 1;
+		if (getNoFolgeDWZ() == false) {
+			dwzabstand++;
+			// ohneFolgeDWZString = "";
 		}
-		return abstand;
+		if (getNoELO() == false) {
+			eloabstand++;
+			// ohneELOString = "";
+		}
+		if (getNoFolgeELO() == false) {
+			eloabstand++;
+			// ohneFolgeELOString = "";
+		}
+		int gesamtabstand = dwzabstand + eloabstand;
+
+		return gesamtabstand;
 	}
 
 	public void checkCrossTableColumnForDoubles() {
-		String[] tableColumns = new String[6];
+		String[] tableColumns = new String[8];
 		tableColumns[0] = prop.getProperty(TABLE_COLUMN_PLAYER);
 		tableColumns[1] = prop.getProperty(TABLE_COLUMN_OLD_DWZ);
 		tableColumns[2] = prop.getProperty(TABLE_COLUMN_NEW_DWZ);
-		tableColumns[3] = prop.getProperty(TABLE_COLUMN_POINTS);
-		tableColumns[4] = prop.getProperty(TABLE_COLUMN_SONNEBORNBERGER);
-		tableColumns[5] = prop.getProperty(TABLE_COLUMN_RANKING);
+		tableColumns[3] = prop.getProperty(TABLE_COLUMN_OLD_ELO);
+		tableColumns[4] = prop.getProperty(TABLE_COLUMN_NEW_ELO);
+		tableColumns[5] = prop.getProperty(TABLE_COLUMN_POINTS);
+		tableColumns[6] = prop.getProperty(TABLE_COLUMN_SONNEBORNBERGER);
+		tableColumns[7] = prop.getProperty(TABLE_COLUMN_RANKING);
 		Boolean loop = false;
 		do {
 			loop = false;
-			for (int i = 0; i < 6; i++) {
-				for (int y = 0; y < 6; y++) {
+			for (int i = 0; i < 8; i++) {
+				for (int y = 0; y < 8; y++) {
 					if (i != y) {
 						if (tableColumns[i].equals(tableColumns[y])) {
 							tableColumns[y] = tableColumns[y] + "#";
@@ -719,9 +766,11 @@ public class PropertiesControl {
 		prop.setProperty(TABLE_COLUMN_PLAYER, tableColumns[0]);
 		prop.setProperty(TABLE_COLUMN_OLD_DWZ, tableColumns[1]);
 		prop.setProperty(TABLE_COLUMN_NEW_DWZ, tableColumns[2]);
-		prop.setProperty(TABLE_COLUMN_POINTS, tableColumns[3]);
-		prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER, tableColumns[4]);
-		prop.setProperty(TABLE_COLUMN_RANKING, tableColumns[5]);
+		prop.setProperty(TABLE_COLUMN_OLD_ELO, tableColumns[3]);
+		prop.setProperty(TABLE_COLUMN_NEW_ELO, tableColumns[4]);
+		prop.setProperty(TABLE_COLUMN_POINTS, tableColumns[5]);
+		prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER, tableColumns[6]);
+		prop.setProperty(TABLE_COLUMN_RANKING, tableColumns[7]);
 	}
 
 	public void checkMeetingTableColumnForDoubles() {
@@ -769,6 +818,7 @@ public class PropertiesControl {
 		}
 
 	}
+
 	public Boolean getNoELO() {
 		if (prop.getProperty(NOELO).equals(TRUE)) {
 			return true;
@@ -784,4 +834,5 @@ public class PropertiesControl {
 			return false;
 		}
 	}
+
 }

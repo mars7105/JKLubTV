@@ -34,6 +34,8 @@ public class CrossTable {
 	private String sbbColumnName;
 	private String rankingColumnName;
 	private String infoString;
+//	private String oldELOColumnName;
+//	private String newELOColumnName;
 
 	/**
 	 * 
@@ -71,11 +73,13 @@ public class CrossTable {
 	 * @param ohneFolgeDWZ
 	 */
 	public void createMatrix(String playerColumnName, String oldDWZColumnName, String newDWZColumnName,
-			String poinsColumnName, String sbbColumnName, String rankingColumnName, Boolean ohneDWZ,
-			Boolean ohneFolgeDWZ) {
+			String oldELOColumnName, String newELOColumnName, String poinsColumnName, String sbbColumnName,
+			String rankingColumnName, Boolean ohneDWZ, Boolean ohneFolgeDWZ, Boolean ohneELO, Boolean ohneFolgeELO) {
 		this.playerColumnName = playerColumnName;
 		this.oldDWZColumnName = oldDWZColumnName;
 		this.newDWZColumnName = newDWZColumnName;
+//		this.oldELOColumnName = oldELOColumnName;
+//		this.newELOColumnName = newELOColumnName;
 		this.poinsColumnName = poinsColumnName;
 		this.sbbColumnName = sbbColumnName;
 		this.rankingColumnName = rankingColumnName;
@@ -84,27 +88,41 @@ public class CrossTable {
 				+ Messages.getString("TurnierTabelleToHTML.1");
 		String ohneFolgeDWZString = newDWZColumnName.replaceAll("<br />", "") + " = "
 				+ Messages.getString("TurnierTabelleToHTML.2");
-		int abstand = 0;
-		if (ohneDWZ == true) {
-			abstand++;
-			ohneDWZString = "";
+		String ohneELOString = oldELOColumnName.replaceAll("<br />", "") + " = "
+				+ Messages.getString("TurnierTabelleToHTML.12");
+		String ohneFolgeELOString = newELOColumnName.replaceAll("<br />", "") + " = "
+				+ Messages.getString("TurnierTabelleToHTML.13");
+		int dwzabstand = 0;
+		int eloabstand = 0;
+		if (ohneDWZ == false) {
+			dwzabstand++;
+			// ohneDWZString = "";
 		}
-		if (ohneFolgeDWZ == true) {
-			abstand++;
-			ohneFolgeDWZString = "";
+		if (ohneFolgeDWZ == false) {
+			dwzabstand++;
+			// ohneFolgeDWZString = "";
 		}
+		if (ohneELO == false) {
+			eloabstand++;
+			// ohneELOString = "";
+		}
+		if (ohneFolgeELO == false) {
+			eloabstand++;
+			// ohneFolgeELOString = "";
+		}
+		int gesamtabstand = dwzabstand + eloabstand;
 		this.infoString = rankingColumnName + " = " + Messages.getString("TurnierTabelleToHTML.0") + ohneDWZString
-				+ ohneFolgeDWZString + poinsColumnName + " = " + Messages.getString("TurnierTabelleToHTML.3")
-				+ sbbColumnName + " = " //$NON-NLS-1$
+				+ ohneFolgeDWZString + ohneELOString + ohneFolgeELOString + poinsColumnName + " = "
+				+ Messages.getString("TurnierTabelleToHTML.3") + sbbColumnName + " = " //$NON-NLS-2$
 				+ Messages.getString("TurnierTabelleToHTML.4");
 		int sp = 0;
 		if (checkForSpielfrei() == true) {
-			tabellenMatrix = new String[this.spielerAnzahl + 5 - abstand][this.spielerAnzahl];
-			colorMatrix = new Boolean[this.spielerAnzahl + 5 - abstand][this.spielerAnzahl];
+			tabellenMatrix = new String[this.spielerAnzahl + gesamtabstand + 3][this.spielerAnzahl];
+			colorMatrix = new Boolean[this.spielerAnzahl + gesamtabstand + 3][this.spielerAnzahl];
 			sp = spielerAnzahl - 1;
 		} else {
-			tabellenMatrix = new String[this.spielerAnzahl + 6 - abstand][this.spielerAnzahl + 1];
-			colorMatrix = new Boolean[this.spielerAnzahl + 6 - abstand][this.spielerAnzahl + 1];
+			tabellenMatrix = new String[this.spielerAnzahl + gesamtabstand + 4][this.spielerAnzahl + 1];
+			colorMatrix = new Boolean[this.spielerAnzahl + gesamtabstand + 4][this.spielerAnzahl + 1];
 			sp = spielerAnzahl;
 		}
 
@@ -118,20 +136,27 @@ public class CrossTable {
 			tabellenMatrix[1][0] = oldDWZColumnName;
 		}
 
-		int dwzAbstand = 3 - abstand;
-		for (int i = dwzAbstand; i < (sp + dwzAbstand); i++) {
-			if (spieler[i - dwzAbstand].getKuerzel().length() >= 2) {
-				tabellenMatrix[i][0] = spieler[i - dwzAbstand].getKuerzel().substring(0, 1) + "<br />" //$NON-NLS-1$
-						+ spieler[i - dwzAbstand].getKuerzel().substring(1);
+		if (ohneELO == false && ohneFolgeELO == false) {
+			tabellenMatrix[1 + dwzabstand][0] = oldELOColumnName;
+			tabellenMatrix[2 + dwzabstand][0] = newELOColumnName; // $NON-NLS-1$
+			
+		}
+		if (ohneELO == false && ohneFolgeELO == true) {
+			tabellenMatrix[1 + dwzabstand][0] = oldELOColumnName;
+		}
+		for (int i = 0; i < sp; i++) {
+			if (spieler[i].getKuerzel().length() >= 2) {
+				tabellenMatrix[i + gesamtabstand+1 ][0] = spieler[i].getKuerzel().substring(0, 1) + "<br />"
+						+ spieler[i].getKuerzel().substring(1, 2);
 			} else {
-				tabellenMatrix[i][0] = spieler[i - dwzAbstand].getKuerzel();
+				tabellenMatrix[i + gesamtabstand+1 ][0] = spieler[i].getKuerzel();
 			}
 
 		}
 
-		tabellenMatrix[3 + sp - abstand][0] = poinsColumnName;
-		tabellenMatrix[4 + sp - abstand][0] = sbbColumnName;
-		tabellenMatrix[5 + sp - abstand][0] = rankingColumnName;
+		tabellenMatrix[gesamtabstand  +1+ sp][0] = poinsColumnName;
+		tabellenMatrix[gesamtabstand + 2 + sp][0] = sbbColumnName;
+		tabellenMatrix[gesamtabstand + 3 + sp][0] = rankingColumnName;
 		for (int i = 0; i < sp; i++) {
 			if (spieler[i].getSurname().length() > 0) {
 				spieler[i].cutForename();
@@ -155,6 +180,23 @@ public class CrossTable {
 					tabellenMatrix[2][i + 1] = ""; //$NON-NLS-1$
 				}
 			}
+			if (ohneELO == false) {
+				if (spieler[i].getDwzData().getCsvFIDE_Elo() > 0) {
+
+					tabellenMatrix[1+ dwzabstand][i + 1] = Integer.toString(spieler[i].getDwzData().getCsvFIDE_Elo());
+				} else {
+					tabellenMatrix[1+ dwzabstand][i + 1] = ""; //$NON-NLS-1$
+				}
+			}
+			if (ohneFolgeELO == false) {
+				if (spieler[i].getFolgeELO() > 0) {
+					String diff = diffDWZ(spieler[i].getDwzData().getCsvFIDE_Elo(), spieler[i].getFolgeELO());
+
+					tabellenMatrix[2+ dwzabstand][i + 1] = Integer.toString(spieler[i].getFolgeELO()) + diff;
+				} else {
+					tabellenMatrix[2+ dwzabstand][i + 1] = ""; //$NON-NLS-1$
+				}
+			}
 		}
 		for (int x = 0; x < sp; x++) {
 			if (spieler[x].getSpielerId() != TournamentConstants.SPIELFREI_ID) {
@@ -162,21 +204,21 @@ public class CrossTable {
 					if (spieler[y].getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 
 						if (x == y) {
-							tabellenMatrix[x + 3 - abstand][y + 1] = TournamentConstants.LEERE_MENGE;
+							tabellenMatrix[x + gesamtabstand + 1][y + 1] = TournamentConstants.LEERE_MENGE;
 
 						} else {
 							for (int i = 0; i < partienAnzahl; i++) {
 
 								if (partien[i].getSpielerWeiss().equals(spieler[x])
 										&& partien[i].getSpielerSchwarz().equals(spieler[y])) {
-									tabellenMatrix[x + dwzAbstand][y + 1] = partien[i].getErgebnisSchwarz();
-									colorMatrix[x + dwzAbstand][y + 1] = false;
+									tabellenMatrix[x + gesamtabstand + 1][y + 1] = partien[i].getErgebnisSchwarz();
+									colorMatrix[x + gesamtabstand + 1][y + 1] = false;
 
 								}
 								if (partien[i].getSpielerSchwarz().equals(spieler[x])
 										&& partien[i].getSpielerWeiss().equals(spieler[y])) {
-									tabellenMatrix[x + dwzAbstand][y + 1] = partien[i].getErgebnisWeiss();
-									colorMatrix[x + dwzAbstand][y + 1] = true;
+									tabellenMatrix[x + gesamtabstand + 1][y + 1] = partien[i].getErgebnisWeiss();
+									colorMatrix[x + gesamtabstand + 1][y + 1] = true;
 
 								}
 							}

@@ -59,10 +59,8 @@ public class ItemListenerSettingsControl {
 
 					if (noDWZ) {
 
-						for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
+						eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(false);
 
-							eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(false);
-						}
 					} else {
 
 						for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
@@ -95,8 +93,6 @@ public class ItemListenerSettingsControl {
 					mainControl.getTurnier().setNoDWZCalc(noFolgeDWZ);
 					if (noFolgeDWZ) {
 
-						mainControl.getPropertiesControl().setNoFolgeDWZ(true);
-
 					} else {
 
 						for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
@@ -121,7 +117,7 @@ public class ItemListenerSettingsControl {
 				eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(false);
 
 				Boolean noELO = eigenschaftenView.getCheckBoxohneELO().isSelected();
-				mainControl.getPropertiesControl().setNoFolgeELO(noELO);
+				// mainControl.getPropertiesControl().setNoFolgeELO(noELO);
 				mainControl.getPropertiesControl().setNoELO(noELO);
 				eigenschaftenView.getCheckBoxohneFolgeELO().setSelected(noELO);
 				eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(!noELO);
@@ -131,10 +127,8 @@ public class ItemListenerSettingsControl {
 
 					if (noELO) {
 
-						for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
+						eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(true);
 
-							eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(false);
-						}
 					} else {
 
 						for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
@@ -165,18 +159,7 @@ public class ItemListenerSettingsControl {
 				mainControl.getPropertiesControl().setNoFolgeELO(noFolgeELO);
 				if (mainControl.getTurnier() != null) {
 					mainControl.getTurnier().setNoELOCalc(noFolgeELO);
-					if (noFolgeELO) {
 
-						mainControl.getPropertiesControl().setNoFolgeELO(true);
-
-					} else {
-
-						for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
-
-							mainControl.getTurnierTabelleControl().berechneFolgeELO(i);
-
-						}
-					}
 					try {
 						mainControl.getTurnierListeLadenControl().reloadTurnier();
 					} catch (SQLException e1) {
