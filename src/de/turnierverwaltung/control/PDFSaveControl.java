@@ -29,15 +29,17 @@ import de.turnierverwaltung.model.CrossTable;
 
 public class PDFSaveControl {
 	private MainControl mainControl;
+	private PDFOutputControl pdfoutput;
 
 	public PDFSaveControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
+		 pdfoutput = new PDFOutputControl();
 	}
 
 	public void savePDFFile() {
 		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
-
+		
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
 
@@ -52,7 +54,6 @@ public class PDFSaveControl {
 			savefile.setDialogType(JFileChooser.SAVE_DIALOG);
 			int sf = savefile.showSaveDialog(null);
 			if (sf == JFileChooser.APPROVE_OPTION) {
-
 				for (int i = 0; i < anzahlGruppen; i++) {
 					if (this.mainControl.getTurnierTabelle()[i] == null) {
 						this.mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
@@ -73,8 +74,7 @@ public class PDFSaveControl {
 						}
 					}
 
-					PDFOutputControl mftKreuz = new PDFOutputControl();
-					PDFOutputControl mftTermin = new PDFOutputControl();
+					
 
 					if (filename != null) {
 
@@ -91,19 +91,19 @@ public class PDFSaveControl {
 								+ mainControl.getTurnier().getTurnierName() + " - " //$NON-NLS-1$
 								+ mainControl.getTurnier().getGruppe()[i].getGruppenName();
 						String pathName = filename1.getAbsolutePath();
-						mftKreuz.createTurnierPdf(mainControl.getTurnier(), titel, pathName,
+						pdfoutput.createTurnierPdf(mainControl.getTurnier(), titel, pathName,
 								turnierTabelle.getTabellenMatrix());
 
 						titel = Messages.getString("PDFSaveControler.12") //$NON-NLS-1$
 								+ mainControl.getTurnier().getTurnierName() + " - " //$NON-NLS-1$
 								+ mainControl.getTurnier().getGruppe()[i].getGruppenName();
 						pathName = filename2.getAbsolutePath();
-						mftTermin.createTerminPdf(titel, pathName,
+						pdfoutput.createTerminPdf(titel, pathName,
 								mainControl.getTerminTabelle()[i].getTabellenMatrix());
 
 					}
 				}
-				JOptionPane.showMessageDialog(mainControl, Messages.getString("PDFSaveControler.14")); //$NON-NLS-1$
+//				JOptionPane.showMessageDialog(mainControl, Messages.getString("PDFSaveControler.14")); //$NON-NLS-1$
 				// first check if Desktop is supported by
 				// Platform or not
 				if (!Desktop.isDesktopSupported()) {

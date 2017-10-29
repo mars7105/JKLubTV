@@ -54,6 +54,8 @@ public class HTMLSaveControl {
 	 * 
 	 */
 	public void saveHTMLFile() {
+		Boolean fileExist = false;
+
 		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
 			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
@@ -116,7 +118,8 @@ public class HTMLSaveControl {
 								+ filename + Messages.getString("HTMLSaveControler.8") //$NON-NLS-1$
 								+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".html"); //$NON-NLS-1$
 						int n1 = 0;
-						if (filename1.exists()) {
+						if (filename1.exists() && fileExist == false) {
+							fileExist = true;
 							Object[] options = { Messages.getString("SaveDialog.2"),
 									Messages.getString("SaveDialog.3") };
 							n1 = JOptionPane.showOptionDialog(null,
@@ -127,7 +130,8 @@ public class HTMLSaveControl {
 
 						}
 						int n2 = 0;
-						if (filename2.exists()) {
+						if (filename2.exists() && fileExist == false) {
+							fileExist = true;
 							Object[] options = { Messages.getString("SaveDialog.2"),
 									Messages.getString("SaveDialog.3") };
 							n2 = JOptionPane.showOptionDialog(null,
@@ -137,7 +141,6 @@ public class HTMLSaveControl {
 									options, options[1]);
 
 						}
-						// BufferedWriter writer;
 						Writer writer1;
 						Writer writer2;
 						Boolean ohneHeaderundFooter = mainControl.getPropertiesControl().getOnlyTables();
@@ -192,7 +195,7 @@ public class HTMLSaveControl {
 					}
 
 				}
-				JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.18")); //$NON-NLS-1$
+//				JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.18")); //$NON-NLS-1$
 				// File file = savefile.getSelectedFile();
 				// first check if Desktop is supported by
 				// Platform or not
@@ -223,5 +226,4 @@ public class HTMLSaveControl {
 		}
 	}
 
-	
 }

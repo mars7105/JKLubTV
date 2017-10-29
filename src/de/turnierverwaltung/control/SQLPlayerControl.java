@@ -132,7 +132,13 @@ public class SQLPlayerControl {
 		spieler.setSpielerId(spielerId);
 		if (spielerId >= 0) {
 
-			mySQLDWZDataDAO.insertDWZ(spieler.getDwzData());
+//			mySQLDWZDataDAO.insertDWZ(spieler.getDwzData());
+			if (!spieler.getDwzData().getCsvZPS().equals("")) {
+				mySQLDWZDataDAO.insertDWZ(spieler.getDwzData());
+			}
+			if (spieler.getEloData().getFideid() > 0) {
+				mySQLELODataDAO.insertELO(spieler.getEloData());
+			}
 		}
 		return spielerId;
 	}
@@ -149,8 +155,11 @@ public class SQLPlayerControl {
 				Player temp = turnier.getGruppe()[gruppe].getSpieler()[y];
 				spielerId[y] = mySQLSpielerDAO.insertSpieler(temp);
 				temp.setSpielerId(spielerId[y]);
-				if (spielerId[y] >= 0) {
+				if (!temp.getDwzData().getCsvZPS().equals("")) {
 					mySQLDWZDataDAO.insertDWZ(temp.getDwzData());
+				}
+				if (temp.getEloData().getFideid() > 0) {
+					mySQLELODataDAO.insertELO(temp.getEloData());
 				}
 				turnier.getGruppe()[gruppe].getSpieler()[y].setSpielerId(spielerId[y]);
 				eintragGespeichert = true;
@@ -185,7 +194,12 @@ public class SQLPlayerControl {
 			// geloescht =
 			// turnier_has_spielerDAO.deleteTurnier_has_Spieler(tId);
 			geloescht = mySQLSpielerDAO.deleteSpieler(spieler.getSpielerId());
-			mySQLDWZDataDAO.deleteDWZ(spieler.getSpielerId());
+			if (!spieler.getDwzData().getCsvZPS().equals("")) {
+				mySQLDWZDataDAO.deleteDWZ(spieler.getSpielerId());
+			}
+			if (spieler.getEloData().getFideid() > 0) {
+				mySQLELODataDAO.deleteELO(spieler.getSpielerId());
+			}
 		}
 
 		return geloescht;
@@ -207,8 +221,15 @@ public class SQLPlayerControl {
 
 		boolean saved = false;
 		for (int i = 0; i < turnier.getGruppe()[gruppe].getSpielerAnzahl(); i++) {
-			saved = mySQLSpielerDAO.updateSpieler(turnier.getGruppe()[gruppe].getSpieler()[i]);
-			mySQLDWZDataDAO.updateDWZ(turnier.getGruppe()[gruppe].getSpieler()[i].getDwzData());
+			Player spieler = turnier.getGruppe()[gruppe].getSpieler()[i];
+			saved = mySQLSpielerDAO.updateSpieler(spieler);
+//			mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
+			if (!spieler.getDwzData().getCsvZPS().equals("")) {
+				mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
+			}
+			if (spieler.getEloData().getFideid() > 0) {
+				mySQLELODataDAO.updateELO(spieler.getEloData());
+			}
 		}
 		return saved;
 	}
@@ -223,7 +244,7 @@ public class SQLPlayerControl {
 
 	public Boolean playerFideExist(Player neuerSpieler) throws SQLException {
 		Boolean exist = false;
-		exist = mySQLDWZDataDAO.playerFideExist(neuerSpieler.getDwzData());
+		exist = mySQLELODataDAO.playerExist(neuerSpieler.getEloData().getFideid());
 
 		return exist;
 	}

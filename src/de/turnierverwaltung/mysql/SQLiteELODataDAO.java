@@ -50,7 +50,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 
 	@Override
 	public void deleteELO(int id) throws SQLException {
-		String sql = "delete from elo_data where ID_Number=?" + ";";
+		String sql = "delete from elo_data where idSpieler=?" + ";";
 		if (this.dbConnect != null) {
 
 			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
@@ -102,31 +102,32 @@ public class SQLiteELODataDAO implements ELODataDAO {
 
 	@Override
 	public void updateELO(ELOData eloData) throws SQLException {
-		String sql = "update elo_data set Name = ?, Fed = ?, Sex = ?, Tit = ?, WTit = ?, OTit = ?, FOA = ?, Rating = ?, Gms = ?, K = ?, Bday = ?, Flag = ?, ID_Number = ? where idSpieler = "
-				+ eloData.getSpielerId() + ";";
+			String sql = "update elo_data set Name = ?, Fed = ?, Sex = ?, Tit = ?, WTit = ?, OTit = ?, FOA = ?, Rating = ?, Gms = ?, K = ?, Bday = ?, Flag = ?, ID_Number = ? where idSpieler = "
+					+ eloData.getSpielerId() + ";";
 
-		if (this.dbConnect != null) {
-			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
-			preStm.setString(1, eloData.getName());
-			preStm.setString(2, eloData.getCountry());
-			preStm.setString(3, eloData.getSex());
-			preStm.setString(4, eloData.getTitle());
-			preStm.setString(5, eloData.getW_title());
-			preStm.setString(6, eloData.getO_title());
-			preStm.setString(7, eloData.getFoa_title());
-			preStm.setInt(8, eloData.getRating());
-			preStm.setInt(9, eloData.getGames());
-			preStm.setInt(10, eloData.getK());
-			preStm.setInt(11, eloData.getBirthday());
-			preStm.setString(12, eloData.getFlag());
-			preStm.setInt(13, eloData.getFideid());
-			preStm.addBatch();
-			this.dbConnect.setAutoCommit(false);
-			preStm.executeBatch();
-			this.dbConnect.setAutoCommit(true);
-			preStm.close();
+			if (this.dbConnect != null) {
+				PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+				preStm.setString(1, eloData.getName());
+				preStm.setString(2, eloData.getCountry());
+				preStm.setString(3, eloData.getSex());
+				preStm.setString(4, eloData.getTitle());
+				preStm.setString(5, eloData.getW_title());
+				preStm.setString(6, eloData.getO_title());
+				preStm.setString(7, eloData.getFoa_title());
+				preStm.setInt(8, eloData.getRating());
+				preStm.setInt(9, eloData.getGames());
+				preStm.setInt(10, eloData.getK());
+				preStm.setInt(11, eloData.getBirthday());
+				preStm.setString(12, eloData.getFlag());
+				preStm.setInt(13, eloData.getFideid());
+				preStm.addBatch();
+				this.dbConnect.setAutoCommit(false);
+				preStm.executeBatch();
+				this.dbConnect.setAutoCommit(true);
+				preStm.close();
 
-		}
+			}
+		
 	}
 
 	@Override
@@ -165,7 +166,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 
 	@Override
 	public boolean playerExist(int fideId) {
-		String sql = "Select * from elo_data where ID_Number LIKE '" + fideId + ";";
+		String sql = "Select idSpieler from elo_data where ID_Number LIKE '" + fideId + ";";
 
 		int id = -1;
 		Statement stmt;
@@ -180,8 +181,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 				}
 				stmt.close();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				id = -1;
 			}
 		}
 		Boolean returnStatement = false;

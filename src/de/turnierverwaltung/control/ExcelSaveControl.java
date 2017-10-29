@@ -83,7 +83,7 @@ public class ExcelSaveControl {
 				cellStyle.setBorderTop(CellStyle.BORDER_MEDIUM);
 				cellStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
 				cellStyle.setFont(font);
-				// cellStyle.setShrinkToFit(true);
+				
 				for (int i = 0; i < anzahlGruppen; i++) {
 
 					if (this.mainControl.getTurnierTabelle()[i] == null) {
@@ -184,7 +184,9 @@ public class ExcelSaveControl {
 				File filename1 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 						+ filename + ".xls"); //$NON-NLS-1$
 				int n = 0;
+				
 				if (filename1.exists()) {
+					
 					Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
 					n = JOptionPane.showOptionDialog(null,
 							Messages.getString("SaveDialog.0") + filename1.getAbsolutePath()
@@ -206,7 +208,7 @@ public class ExcelSaveControl {
 					}
 				}
 
-				JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.18")); //$NON-NLS-1$
+//				JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.18")); //$NON-NLS-1$
 				// first check if Desktop is supported by
 				// Platform or not
 				if (!Desktop.isDesktopSupported())

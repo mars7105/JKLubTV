@@ -25,6 +25,7 @@ public class ICalendarSaveControl {
 
 	public void saveiCalendarFile() throws IOException {
 		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
+		Boolean fileExist = false;
 		if (ready) {
 			int gruppenAnzahl = this.meetingTable.length;
 			File defaultPath = new File(mainControl.getPropertiesControl().getDefaultPath());
@@ -38,14 +39,17 @@ public class ICalendarSaveControl {
 			savefile.setDialogType(JFileChooser.SAVE_DIALOG);
 			int sf = savefile.showSaveDialog(null);
 			if (sf == JFileChooser.APPROVE_OPTION) {
+				
 				for (int i = 0; i < gruppenAnzahl; i++) {
+
 					ICal iCalendar = this.meetingTable[i].getiCalendar();
 					String fileName = savefile.getCurrentDirectory() + "/"
 							+ mainControl.getTurnier().getTurnierName().replaceAll(" ", "")
 							+ mainControl.getTurnier().getGruppe()[i].getGruppenName().replaceAll(" ", "") + ".ics";
 
 					File file = new File(fileName);
-					if (file.exists()) {
+					if (file.exists() && fileExist == false) {
+						fileExist = true;
 						Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
 						int n = JOptionPane.showOptionDialog(null,
 								Messages.getString("SaveDialog.0") + fileName + Messages.getString("SaveDialog.1"),

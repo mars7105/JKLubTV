@@ -17,6 +17,6 @@ public interface DWZDataDAO {
 
 	public boolean playerExist(DWZData dwzData);
 
-	public boolean playerFideExist(DWZData dwzData);
+//	public boolean playerFideExist(DWZData dwzData);
 
 }

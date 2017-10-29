@@ -68,7 +68,8 @@ public class UpdateRatingsControl {
 				if (elospieler != null) {
 					for (ELOPlayer eloplayer : elospieler) {
 
-						if (eloplayer.getEloData().getFideid() == player.getDwzData().getCsvFIDE_ID()) {
+						if (eloplayer.getEloData().getFideid() == player.getDwzData().getCsvFIDE_ID()
+								|| eloplayer.getEloData().getFideid() == player.getEloData().getFideid()) {
 							player.setEloData(eloplayer.getEloData());
 
 							spielerTableControl.updateOneSpieler(player);

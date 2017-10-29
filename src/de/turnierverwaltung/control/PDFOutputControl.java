@@ -37,6 +37,12 @@ import com.itextpdf.text.pdf.PdfWriter;
 import de.turnierverwaltung.model.Tournament;
 
 public class PDFOutputControl {
+	private Boolean fileExist;
+
+	public PDFOutputControl() {
+		fileExist = false;
+
+	}
 
 	/**
 	 * Creates a PDF with information about the movies
@@ -50,8 +56,10 @@ public class PDFOutputControl {
 	 */
 	public void createTurnierPdf(Tournament turnier, String titel, String absolutePath, String[][] tabellenMatrix) {
 		int n = 0;
+
 		File file = new File(absolutePath);
-		if (file.exists()) {
+		if (file.exists() && fileExist == false) {
+			fileExist = true;
 			Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
 			n = JOptionPane.showOptionDialog(null,
 					Messages.getString("SaveDialog.0") + file.getAbsolutePath() + Messages.getString("SaveDialog.1"),
@@ -91,7 +99,8 @@ public class PDFOutputControl {
 		int n = 0;
 
 		File file = new File(absolutePath);
-		if (file.exists()) {
+		if (file.exists() && fileExist == false) {
+			fileExist = true;
 			Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
 			n = JOptionPane.showOptionDialog(null,
 					Messages.getString("SaveDialog.0") + file.getAbsolutePath() + Messages.getString("SaveDialog.1"),
