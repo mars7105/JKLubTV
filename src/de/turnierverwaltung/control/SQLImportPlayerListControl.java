@@ -29,6 +29,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.DAOFactory;
+import de.turnierverwaltung.mysql.DWZDataDAO;
+import de.turnierverwaltung.mysql.ELODataDAO;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.mysql.SpielerDAO;
 
@@ -59,16 +61,24 @@ public class SQLImportPlayerListControl {
 			SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
 			daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 			mySQLSpielerDAO = daoFactory.getSpielerDAO();
+			
 			ArrayList<Player> spielerListe = mySQLSpielerDAO.getAllSpieler();
 			SQLiteDAOFactory.setDB_PATH(fileName);
 			daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 			mySQLSpielerDAO = daoFactory.getSpielerDAO();
-
+			DWZDataDAO mySQLDWZDAO = daoFactory.getDWZDataDAO();
+			ELODataDAO mySQLELODAO = daoFactory.getELODataDAO();
 			Player oneSpieler = null;
 			ListIterator<Player> li = spielerListe.listIterator();
 			while (li.hasNext()) {
 				oneSpieler = li.next();
 				mySQLSpielerDAO.insertSpieler(oneSpieler);
+				if (oneSpieler.getDwzData().getCsvDWZ() >= 0) {
+					mySQLDWZDAO.insertDWZ(oneSpieler.getDwzData());
+				}
+				if (oneSpieler.getEloData().getFideid() > 0) {
+					mySQLELODAO.insertELO(oneSpieler.getEloData());
+				}
 			}
 
 		} else {
