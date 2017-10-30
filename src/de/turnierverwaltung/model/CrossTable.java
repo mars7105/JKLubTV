@@ -174,16 +174,32 @@ public class CrossTable {
 				}
 			}
 			if (ohneELO == false) {
-				if (spieler[i].getDwzData().getCsvFIDE_Elo() > 0) {
+				int rating1 = spieler[i].getDwzData().getCsvFIDE_Elo();
+				int rating2 = spieler[i].getEloData().getRating();
+				if (rating1 > 0) {
 
-					tabellenMatrix[1 + dwzabstand][i + 1] = Integer.toString(spieler[i].getDwzData().getCsvFIDE_Elo());
+					tabellenMatrix[1 + dwzabstand][i + 1] = Integer.toString(rating1);
 				} else {
-					tabellenMatrix[1 + dwzabstand][i + 1] = ""; //$NON-NLS-1$
+					tabellenMatrix[1 + dwzabstand][i + 1] = "";
+				}
+				if (rating2 > 0) {
+
+					tabellenMatrix[1 + dwzabstand][i + 1] = Integer.toString(rating2);
+				} else {
+					tabellenMatrix[1 + dwzabstand][i + 1] = "";
 				}
 			}
 			if (ohneFolgeELO == false) {
+				int rating1 = spieler[i].getDwzData().getCsvFIDE_Elo();
+				int rating2 = spieler[i].getEloData().getRating();
 				if (spieler[i].getFolgeELO() > 0) {
-					String diff = diffDWZ(spieler[i].getDwzData().getCsvFIDE_Elo(), spieler[i].getFolgeELO());
+					String diff = "";
+					if (rating1 > 0) {
+						diff = diffDWZ(rating1, spieler[i].getFolgeELO());
+					}
+					if (rating2 > 0) {
+						diff = diffDWZ(rating2, spieler[i].getFolgeELO());
+					}
 
 					tabellenMatrix[2 + dwzabstand][i + 1] = Integer.toString(spieler[i].getFolgeELO()) + diff;
 				} else {

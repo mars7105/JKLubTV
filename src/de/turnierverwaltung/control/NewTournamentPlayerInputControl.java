@@ -111,7 +111,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		int sAnzahl = 0;
 
 		for (int i = 0; i < gruppenAnzahl; i++) {
-			if (arg0.getSource() .equals( okButton[i])) {
+			if (arg0.getSource().equals(okButton[i])) {
 				try {
 					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
@@ -150,21 +150,21 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 										temp = li.next();
 										if (spielerID == temp.getSpielerId()) {
 											spieler[counter] = temp;
-//											spieler[counter].setShowPlayer(false);
+											// spieler[counter].setShowPlayer(false);
 											stc.updateOneSpieler(spieler[counter]);
 										}
 
 									}
 								} else {
-									
+
 									spieler[counter].setForename(foreName);
 									spieler[counter].setSurname(surName);
 									spieler[counter].setKuerzel(kuerzel);
 									spieler[counter].setDwz(dwz);
 									spieler[counter].setAge(age);
-//									spieler[counter].setDwzindex(-1);
+									// spieler[counter].setDwzindex(-1);
 
-//									spieler[counter].setShowPlayer(false);
+									// spieler[counter].setShowPlayer(false);
 									spieler[counter].setSpielerId(stc.insertOneSpieler(spieler[counter]));
 								}
 							}
@@ -186,7 +186,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 					mainControl.fileSQLError();
 				}
 			}
-			if (arg0.getSource() .equals( cancelButton[i])) {
+			if (arg0.getSource().equals(cancelButton[i])) {
 				// Custom button text
 				Object[] options = { Messages.getString("SpielerEingabeControl.4"), //$NON-NLS-1$
 						Messages.getString("SpielerEingabeControl.5") }; //$NON-NLS-1$
@@ -199,37 +199,42 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 				}
 			}
 			for (int s = 0; s < spielerAnzahl[i]; s++) {
-				if (arg0.getSource() .equals( spielerEingabeView[i].getSpielerSuche()[s])) {
+				if (arg0.getSource().equals(spielerEingabeView[i].getSpielerSuche()[s])) {
+
 					JTextField field = spielerEingabeView[i].getSurnameTextfield()[s];
 					JTextField field2 = spielerEingabeView[i].getForenameTextfield()[s];
 					@SuppressWarnings("unchecked")
 					JComboBox<String> box = spielerEingabeView[i].getSpielerSuche()[s];
+					if (box.getSelectedIndex() > 0) {
+						field.setText((String) alleSpieler.get(box.getSelectedIndex() - 1).getSurname());
+						field2.setText((String) alleSpieler.get(box.getSelectedIndex() - 1).getForename());
+						Player temp = null;
 
-					field.setText((String) alleSpieler.get(box.getSelectedIndex() - 1).getSurname());
-					field2.setText((String) alleSpieler.get(box.getSelectedIndex() - 1).getForename());
-					Player temp = null;
+						ListIterator<Player> li = alleSpieler.listIterator();
 
-					ListIterator<Player> li = alleSpieler.listIterator();
+						String textField = field2.getText() + " " + field.getText();
+						while (li.hasNext()) {
+							temp = li.next();
 
-					String textField = field2.getText() + " " + field.getText();
-					while (li.hasNext()) {
-						temp = li.next();
-						if (textField.regionMatches(true, 0, temp.getName(), 0, textField.length())) {
-							foreName = temp.getForename();
-							surName = temp.getSurname();
-							dwz = temp.getDwz();
-							kuerzel = temp.getKuerzel();
-							spielerID = temp.getSpielerId();
-							age = temp.getAge();
 							temp.extractForenameAndSurenameToName();
-							spielerEingabeView[i].getForenameTextfield()[s].setText(foreName);
-							spielerEingabeView[i].getSurnameTextfield()[s].setText(surName);
-							spielerEingabeView[i].getKuerzelTextfield()[s].setText(kuerzel);
-							spielerEingabeView[i].getDwzTextfield()[s].setText(dwz);
-							spielerEingabeView[i].getSpielerID()[s] = spielerID;
-							spielerEingabeView[i].getTextComboBoxAge()[s].setSelectedIndex(age);
-						}
 
+							if (textField.regionMatches(true, 0, temp.getName(), 0, textField.length())) {
+								foreName = temp.getForename();
+								surName = temp.getSurname();
+								dwz = temp.getDwz();
+								kuerzel = temp.getKuerzel();
+								spielerID = temp.getSpielerId();
+								age = temp.getAge();
+								temp.extractForenameAndSurenameToName();
+								spielerEingabeView[i].getForenameTextfield()[s].setText(foreName);
+								spielerEingabeView[i].getSurnameTextfield()[s].setText(surName);
+								spielerEingabeView[i].getKuerzelTextfield()[s].setText(kuerzel);
+								spielerEingabeView[i].getDwzTextfield()[s].setText(dwz);
+								spielerEingabeView[i].getSpielerID()[s] = spielerID;
+								spielerEingabeView[i].getTextComboBoxAge()[s].setSelectedIndex(age);
+							}
+
+						}
 					}
 				}
 			}

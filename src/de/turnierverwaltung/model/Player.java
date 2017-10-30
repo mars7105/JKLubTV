@@ -145,12 +145,14 @@ public class Player implements Comparable<Object> {
 	}
 
 	public Player(ELOData eloData2) {
+		eloData = eloData2;
+
 		dwzData = new DWZData();
 		dwzData.setCsvIndex(-1);
 		dwzData.setCsvZPS("");
 		dwzData.setCsvMgl_Nr("");
-
-		eloData = eloData2;
+		dwzData.setCsvFIDE_Elo(eloData.getRating());
+		dwzData.setCsvFIDE_ID(eloData.getFideid());
 		this.spielerId = -1;
 
 		this.name = eloData.getName();
@@ -496,10 +498,10 @@ public class Player implements Comparable<Object> {
 
 	public void setEloData(ELOData eloData) {
 		this.eloData = eloData;
-		
-		this.eloData.setSpielerId(spielerId);
 
-		
+		this.eloData.setSpielerId(spielerId);
+		dwzData.setCsvFIDE_Elo(eloData.getRating());
+		dwzData.setCsvFIDE_ID(eloData.getFideid());
 
 	}
 
