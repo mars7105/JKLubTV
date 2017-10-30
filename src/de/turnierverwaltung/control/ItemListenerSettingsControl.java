@@ -54,7 +54,6 @@ public class ItemListenerSettingsControl {
 				eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(noDWZ);
 				eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(!noDWZ);
 				if (mainControl.getTurnier() != null) {
-					mainControl.getTurnier().setNoFolgeDWZCalc(noDWZ);
 					mainControl.getTurnier().setNoDWZCalc(noDWZ);
 
 					if (noDWZ) {
@@ -90,7 +89,7 @@ public class ItemListenerSettingsControl {
 
 				mainControl.getPropertiesControl().setNoFolgeDWZ(noFolgeDWZ);
 				if (mainControl.getTurnier() != null) {
-					mainControl.getTurnier().setNoDWZCalc(noFolgeDWZ);
+					mainControl.getTurnier().setNoFolgeDWZCalc(noFolgeDWZ);
 					if (noFolgeDWZ) {
 
 					} else {
@@ -117,12 +116,11 @@ public class ItemListenerSettingsControl {
 				eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(false);
 
 				Boolean noELO = eigenschaftenView.getCheckBoxohneELO().isSelected();
-				// mainControl.getPropertiesControl().setNoFolgeELO(noELO);
+				mainControl.getPropertiesControl().setNoFolgeELO(noELO);
 				mainControl.getPropertiesControl().setNoELO(noELO);
 				eigenschaftenView.getCheckBoxohneFolgeELO().setSelected(noELO);
 				eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(!noELO);
 				if (mainControl.getTurnier() != null) {
-					mainControl.getTurnier().setNoFolgeELOCalc(noELO);
 					mainControl.getTurnier().setNoELOCalc(noELO);
 
 					if (noELO) {
@@ -158,7 +156,7 @@ public class ItemListenerSettingsControl {
 
 				mainControl.getPropertiesControl().setNoFolgeELO(noFolgeELO);
 				if (mainControl.getTurnier() != null) {
-					mainControl.getTurnier().setNoELOCalc(noFolgeELO);
+					mainControl.getTurnier().setNoFolgeELOCalc(noFolgeELO);
 
 					try {
 						mainControl.getTurnierListeLadenControl().reloadTurnier();

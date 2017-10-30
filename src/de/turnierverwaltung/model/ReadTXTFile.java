@@ -25,15 +25,15 @@ public final class ReadTXTFile {
 				row[1] = line.substring(15, 75).trim();
 				row[2] = line.substring(76, 78).trim();
 				row[3] = line.substring(80, 81).trim();
-				row[4] = line.substring(84, 86).trim();
-				row[5] = line.substring(89, 91).trim();
-				row[6] = line.substring(94, 97).trim();
-				row[7] = line.substring(109, 111).trim();
+				row[4] = line.substring(84, 87).trim();
+				row[5] = line.substring(89, 92).trim();
+				row[6] = line.substring(94, 98).trim();
+				row[7] = line.substring(109, 112).trim();
 				row[8] = line.substring(113, 117).trim();
-				row[9] = line.substring(119, 121).trim();
+				row[9] = line.substring(119, 122).trim();
 				row[10] = line.substring(123, 125).trim();
 				row[11] = line.substring(126, 130).trim();
-				row[12] = line.substring(132, 134).trim();
+				row[12] = line.substring(132, 135).trim();
 
 				if (i > 0) {
 					int fideid = -1;

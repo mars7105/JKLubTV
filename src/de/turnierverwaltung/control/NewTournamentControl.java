@@ -99,8 +99,10 @@ public class NewTournamentControl implements ActionListener {
 		Boolean noDWZCalc = this.mainControl.getPropertiesControl().getNoDWZ();
 
 		Boolean noFolgeDWZCalc = mainControl.getPropertiesControl().getNoFolgeDWZ();
+		Boolean noELOCalc = this.mainControl.getPropertiesControl().getNoELO();
 
-		turnier = new Tournament(onlyTables, noDWZCalc, noFolgeDWZCalc);
+		Boolean noFolgeELOCalc = mainControl.getPropertiesControl().getNoFolgeELO();
+		turnier = new Tournament(onlyTables, noDWZCalc, noFolgeDWZCalc,noELOCalc,noFolgeELOCalc);
 		this.mainControl.setTurnier(turnier);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);

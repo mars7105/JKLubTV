@@ -29,6 +29,8 @@ public class Tournament {
 	private Boolean onlyTables;
 	private Boolean noDWZCalc;
 	private Boolean noFolgeDWZCalc;
+	private Boolean noELOCalc;
+	private Boolean noFolgeELOCalc;
 
 	/**
 	 * 
@@ -36,11 +38,14 @@ public class Tournament {
 	 * @param noDWZCalc
 	 * @param noFolgeDWZCalc
 	 */
-	public Tournament(Boolean onlyTables, Boolean noDWZCalc, Boolean noFolgeDWZCalc) {
+	public Tournament(Boolean onlyTables, Boolean noDWZCalc, Boolean noFolgeDWZCalc, Boolean noELOCalc,
+			Boolean noFolgeELOCalc) {
 		turnierId = -1;
 		this.onlyTables = onlyTables;
 		this.noDWZCalc = noDWZCalc;
 		this.noFolgeDWZCalc = noFolgeDWZCalc;
+		this.noELOCalc = noELOCalc;
+		this.noFolgeELOCalc = noFolgeELOCalc;
 	}
 
 	/**
@@ -54,7 +59,7 @@ public class Tournament {
 	 * @param noFolgeDWZCalc
 	 */
 	public Tournament(int turnierId, String turnierName, String startDatum, String endDatum, Boolean onlyTables,
-			Boolean noDWZCalc, Boolean noFolgeDWZCalc) {
+			Boolean noDWZCalc, Boolean noFolgeDWZCalc, Boolean noELOCalc, Boolean noFolgeELOCalc) {
 		super();
 		this.turnierName = turnierName;
 		this.startDatum = startDatum;
@@ -63,6 +68,8 @@ public class Tournament {
 		this.onlyTables = onlyTables;
 		this.noDWZCalc = noDWZCalc;
 		this.noFolgeDWZCalc = noFolgeDWZCalc;
+		this.noELOCalc = noELOCalc;
+		this.noFolgeELOCalc = noFolgeELOCalc;
 
 	}
 
@@ -139,13 +146,20 @@ public class Tournament {
 	}
 
 	public void setNoFolgeELOCalc(Boolean noELO) {
-		// TODO Auto-generated method stub
-		
+		this.noFolgeELOCalc = noELO;
 	}
 
 	public void setNoELOCalc(Boolean noELO) {
-		// TODO Auto-generated method stub
-		
+		this.noELOCalc = noELO;
+
+	}
+
+	public boolean getNoELOCalc() {
+		return noELOCalc;
+	}
+
+	public boolean getNoFolgeELOCalc() {
+		return noFolgeELOCalc;
 	}
 
 }

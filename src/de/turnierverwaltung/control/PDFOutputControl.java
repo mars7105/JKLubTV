@@ -144,22 +144,35 @@ public class PDFOutputControl {
 		PdfPTable table = new PdfPTable(zeilen);
 		float[] fl = new float[zeilen];
 		fl[0] = 5;
+		int count = 0;
 		if (turnier.getNoDWZCalc() == true) {
 			fl[1] = 1;
 
 		} else {
 			fl[1] = 3;
-
+			count++;
 		}
 		if (turnier.getNoFolgeDWZCalc() == true) {
 
 			fl[2] = 1;
+
 		} else {
 			fl[2] = 4;
+			count++;
 		}
+		if (turnier.getNoELOCalc() == false) {
+			fl[1 + count] = 3;
 
+		} else {
+			fl[1 + count] = 1;
+		}
+		if (turnier.getNoFolgeELOCalc() == false) {
+			fl[2 + count] = 4;
+		} else {
+			fl[2 + count] = 1;
+		}
 		for (int i = 0; i <= zeilen; i++) {
-			if (i > 2 && i < zeilen - 3) {
+			if (i > 2 + count && i < zeilen - 3) {
 				fl[i] = 1;
 			}
 			if (i >= zeilen - 2) {

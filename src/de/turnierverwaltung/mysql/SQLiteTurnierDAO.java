@@ -156,7 +156,7 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 					String endDatum = rs.getString("Enddatum");
 
 					turnier = new Tournament(turnierId, turnierName, startDatum, endDatum, prop.getOnlyTables(),
-							prop.getNoDWZ(), prop.getNoFolgeDWZ());
+							prop.getNoDWZ(), prop.getNoFolgeDWZ(), prop.getNoELO(), prop.getNoFolgeELO());
 
 				}
 				stmt.close();
@@ -220,7 +220,7 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				String startDatum = rs.getString("Startdatum");
 				String endDatum = rs.getString("Enddatum");
 				turnierListe.add(new Tournament(id, turnierName, startDatum, endDatum, prop.getOnlyTables(),
-						prop.getNoDWZ(), prop.getNoFolgeDWZ()));
+						prop.getNoDWZ(), prop.getNoFolgeDWZ(), prop.getNoELO(), prop.getNoFolgeELO()));
 			}
 			stmt.close();
 
