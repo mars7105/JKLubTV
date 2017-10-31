@@ -19,7 +19,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
-import de.turnierverwaltung.model.ELOData;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
@@ -54,34 +53,11 @@ public class SQLPlayerControl {
 
 	}
 
-	// public void createTablesOneTime() throws SQLException {
-	// mySQLVerbandDAO = daoFactory.getDWZVerbandDAO();
-	// mySQLVereineDAO = daoFactory.getDWZVereineDAO();
-	// mySQLELODataDAO = daoFactory.getELODataDAO();
-	// mySQLInfoDataDAO = daoFactory.getInfoDAO();
-	// mySQLVerbandDAO.createVerbandTable();
-	// mySQLVereineDAO.createVereineTable();
-	// mySQLELODataDAO.createELOTable();
-	// mySQLInfoDataDAO.createInfoTable();
-	// }
-
 	public ArrayList<Player> getAllSpieler() throws SQLException {
 		ArrayList<Player> spieler;
 
 		spieler = mySQLSpielerDAO.getAllSpieler();
 
-		// int cutForename = Integer.parseInt(prop.getCutForename());
-		// int cutSurname = Integer.parseInt(prop.getCutSurname());
-		// ListIterator<Player> li = spieler.listIterator();
-		//
-		// while (li.hasNext()) {
-		// Player temp = li.next();
-		// temp.cutForename(cutForename);
-		// temp.cutSurname(cutSurname);
-		// temp.extractForenameAndSurenameToName();
-		//
-		// }
-		// createTablesOneTime();
 		return spieler;
 
 	}
@@ -140,7 +116,7 @@ public class SQLPlayerControl {
 			if (spieler.getEloData().getFideid() > 0) {
 				mySQLELODataDAO.insertELO(spieler.getEloData());
 			} else {
-				
+
 				if (spieler.getDwzData().getCsvFIDE_ID() > 0) {
 					spieler.copyDWZDataToELOData();
 					mySQLELODataDAO.insertELO(spieler.getEloData());
