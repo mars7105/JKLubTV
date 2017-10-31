@@ -161,9 +161,9 @@ public class Player implements Comparable<Object> {
 		this.kuerzel = "";
 		extractNameToForenameAndSurename();
 		extractNameToKuerzel();
-//		cutForename();
-//		cutSurname();
-//		extractForenameAndSurenameToName();
+		// cutForename();
+		// cutSurname();
+		// extractForenameAndSurenameToName();
 		// this.dwz = "";
 		this.age = eloData.getAge();
 		this.punkte = 0;
@@ -182,9 +182,9 @@ public class Player implements Comparable<Object> {
 		this.name = this.dwzData.getCsvSpielername();
 		extractNameToForenameAndSurename();
 		extractNameToKuerzel();
-//		cutForename();
-//		cutSurname();
-//		extractForenameAndSurenameToName();
+		// cutForename();
+		// cutSurname();
+		// extractForenameAndSurenameToName();
 		// this.dwz = Integer.toString(this.dwzData.getCsvDWZ());
 		this.age = this.dwzData.getAge();
 		this.punkte = 0;
@@ -237,6 +237,18 @@ public class Player implements Comparable<Object> {
 		cutSurname();
 		extractForenameAndSurenameToName();
 
+	}
+
+	public void copyDWZDataToELOData() {
+		eloData = new ELOData();
+		eloData.setAge(dwzData.getAge());
+		eloData.setFideid(dwzData.getCsvFIDE_ID());
+		eloData.setRating(dwzData.getCsvFIDE_Elo());
+		eloData.setCountry(dwzData.getCsvFIDE_Land());
+		eloData.setName(dwzData.getCsvSpielername());
+		eloData.setSpielerId(dwzData.getSpielerId());
+		eloData.setTitle(dwzData.getCsvFIDE_Titel());
+		eloData.setBirthday(dwzData.getCsvGeburtsjahr());
 	}
 
 	private void correctMGLNumber() {
