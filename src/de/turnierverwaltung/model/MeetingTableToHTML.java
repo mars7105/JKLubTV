@@ -91,6 +91,32 @@ public class MeetingTableToHTML {
 
 	}
 
+	/**
+	 * 
+	 * @param ohneHeaderundFooter
+	 * @return
+	 */
+	public String getHTMLTableOnlyWithFooter(Boolean ohneHeaderundFooter) {
+		int col = this.tabellenMatrix.length;
+		reihenfolge = new int[col];
+
+		reihenfolge[0] = col - 1;
+		int x = 0;
+		for (int i = 1; i < col - 1; i++) {
+			if (x == 1) {
+				x++;
+			}
+			reihenfolge[i] = x;
+			x++;
+
+		}
+		if (ohneHeaderundFooter) {
+			return makeTerminTabelle(true);
+		} else {
+			return makeTerminTabelle(true) + getHTMLFooter();
+		}
+	}
+
 	private String makeTerminTabelle(Boolean ohneHeaderundFooter) {
 		int col = this.tabellenMatrix.length;
 		int row = this.tabellenMatrix[0].length;

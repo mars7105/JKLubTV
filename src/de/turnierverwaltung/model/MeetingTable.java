@@ -156,6 +156,14 @@ public class MeetingTable {
 		return terminTabelleToHTML.getHTMLTable(ohneHeaderundFooter);
 	}
 
+	public String getHTMLTableOnlyWithFooter(Boolean ohneHeaderundFooter, String path, String filename,
+			String icsfilename, Boolean showLink) {
+
+		terminTabelleToHTML = new MeetingTableToHTML(tabellenMatrix, turnier, gruppe, path, filename, icsfilename,
+				showLink);
+		return terminTabelleToHTML.getHTMLTableOnlyWithFooter(ohneHeaderundFooter);
+	}
+
 	public ICal getiCalendar() {
 		return iCalendar;
 	}

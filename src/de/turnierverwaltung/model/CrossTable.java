@@ -264,6 +264,13 @@ public class CrossTable {
 		return turnierTabelleToHTML.getHTMLTable(ohneHeaderundFooter);
 	}
 
+	public String getHTMLTableOnlyWithHeader(Boolean ohneHeaderundFooter, String webserverPath, String webfilename1,
+			Boolean showLink) {
+		turnierTabelleToHTML = new CrossTableToHTML(tabellenMatrix, turnier, gruppe.getGruppenName(), infoString,
+				webserverPath, webfilename1, showLink, colorMatrix);
+		return turnierTabelleToHTML.getHTMLTableOnlyWithHeader(ohneHeaderundFooter);
+	}
+
 	public int getSpalte() {
 		spalte = tabellenMatrix.length;
 		return spalte;

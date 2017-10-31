@@ -26,7 +26,6 @@ public class CrossTableToHTML {
 	private String htmlString;
 	private String infoString;
 	private int[] reihenfolge;
-	private Tournament turnier;
 	private String webServerPath;
 	private String filename;
 	private WebserverFileLink fileLink;
@@ -41,7 +40,6 @@ public class CrossTableToHTML {
 	 */
 	public CrossTableToHTML(String[][] tabellenMatrix, Tournament turnier, String gruppenName, String infoString,
 			String webServerPath, String filename, String icsfilename, Boolean showLink, Boolean colorMatrix[][]) {
-		this.turnier = turnier;
 		this.tabellenMatrix = tabellenMatrix;
 		this.turnierName = turnier.getTurnierName();
 		this.startDatum = turnier.getStartDatum();
@@ -57,7 +55,6 @@ public class CrossTableToHTML {
 
 	public CrossTableToHTML(String[][] tabellenMatrix2, Tournament turnier2, String gruppenName2, String infoString2,
 			String path, String filename2, Boolean showLink, Boolean colorMatrix[][]) {
-		this.turnier = turnier2;
 		this.tabellenMatrix = tabellenMatrix2;
 		this.turnierName = turnier2.getTurnierName();
 		this.startDatum = turnier2.getStartDatum();
@@ -108,6 +105,31 @@ public class CrossTableToHTML {
 		}
 		return makeTurnierTabelle(ohneHeaderundFooter);
 
+	}
+
+	/**
+	 * 
+	 * @param ohneHeaderundFooter
+	 * @return
+	 */
+	public String getHTMLTableOnlyWithHeader(Boolean ohneHeaderundFooter) {
+		int col = this.tabellenMatrix.length;
+		reihenfolge = new int[col];
+
+		reihenfolge[0] = col - 1;
+		int x = 0;
+		for (int i = 1; i < col; i++) {
+
+			reihenfolge[i] = x;
+			x++;
+
+		}
+
+		if (ohneHeaderundFooter) {
+			return makeTurnierTabelle(true);
+		} else {
+			return getHTMLHeader() + makeTurnierTabelle(true);
+		}
 	}
 
 	/**
@@ -173,7 +195,7 @@ public class CrossTableToHTML {
 		}
 		htmlString += "     </table>\n"; //$NON-NLS-1$
 
-		if (turnier.getOnlyTables() == false) {
+		if (ohneHeaderundFooter == false) {
 			htmlString += getHTMLFooter();
 		}
 		htmlString = htmlString.replaceAll("\u00e4", "&auml;");

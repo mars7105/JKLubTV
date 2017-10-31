@@ -116,14 +116,18 @@ public class HTMLCopyToClipboardControl {
 				htmlToClipboardArray.add(meetinghtmlToClipboard);
 				HTMLToClipBoardView allToClipboard = new HTMLToClipBoardView();
 				allToClipboard.getLabel().setText(allLabel);
-
-				
+				String crosstableall = this.mainControl.getTurnierTabelle()[i]
+						.getHTMLTableOnlyWithHeader(ohneHeaderundFooter, webserverPath, webfilename1, showLink);
+				String meetingtableall = this.mainControl.getTerminTabelleControl().getTerminTabelle()[i]
+						.getHTMLTableOnlyWithFooter(ohneHeaderundFooter, webserverPath, webfilename2, webfilename3,
+								showLink);
 				allToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
+
 						CopyToClipboard clipBoardcopy = new CopyToClipboard();
-						clipBoardcopy.copy(crosstable + "\n" + meetingtable);
+						clipBoardcopy.copy(crosstableall + "\n" + meetingtableall);
 						htmlToClipboardDialog.getStatusLabel().getTitleLabel().setText("Clipboard: " + allLabel);
 					}
 
