@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+import de.turnierverwaltung.model.ELOData;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
@@ -132,12 +133,25 @@ public class SQLPlayerControl {
 		spieler.setSpielerId(spielerId);
 		if (spielerId >= 0) {
 
-//			mySQLDWZDataDAO.insertDWZ(spieler.getDwzData());
+			// mySQLDWZDataDAO.insertDWZ(spieler.getDwzData());
 			if (!spieler.getDwzData().getCsvZPS().equals("")) {
 				mySQLDWZDataDAO.insertDWZ(spieler.getDwzData());
 			}
 			if (spieler.getEloData().getFideid() > 0) {
 				mySQLELODataDAO.insertELO(spieler.getEloData());
+			} else {
+				if (spieler.getDwzData().getCsvFIDE_ID() > 0) {
+					ELOData eloData = new ELOData();
+					eloData.setAge(spieler.getDwzData().getAge());
+					eloData.setFideid(spieler.getDwzData().getCsvFIDE_ID());
+					eloData.setRating(spieler.getDwzData().getCsvFIDE_Elo());
+					eloData.setCountry(spieler.getDwzData().getCsvFIDE_Land());
+					eloData.setName(spieler.getDwzData().getCsvSpielername());
+					eloData.setSpielerId(spieler.getDwzData().getSpielerId());
+					eloData.setTitle(spieler.getDwzData().getCsvFIDE_Titel());
+					spieler.setEloData(eloData);
+					mySQLELODataDAO.insertELO(spieler.getEloData());
+				}
 			}
 		}
 		return spielerId;
@@ -160,6 +174,19 @@ public class SQLPlayerControl {
 				}
 				if (temp.getEloData().getFideid() > 0) {
 					mySQLELODataDAO.insertELO(temp.getEloData());
+				} else {
+					if (temp.getDwzData().getCsvFIDE_ID() > 0) {
+						ELOData eloData = new ELOData();
+						eloData.setAge(temp.getDwzData().getAge());
+						eloData.setFideid(temp.getDwzData().getCsvFIDE_ID());
+						eloData.setRating(temp.getDwzData().getCsvFIDE_Elo());
+						eloData.setCountry(temp.getDwzData().getCsvFIDE_Land());
+						eloData.setName(temp.getDwzData().getCsvSpielername());
+						eloData.setSpielerId(temp.getDwzData().getSpielerId());
+						eloData.setTitle(temp.getDwzData().getCsvFIDE_Titel());
+						temp.setEloData(eloData);
+						mySQLELODataDAO.insertELO(temp.getEloData());
+					}
 				}
 				turnier.getGruppe()[gruppe].getSpieler()[y].setSpielerId(spielerId[y]);
 				eintragGespeichert = true;
@@ -213,6 +240,19 @@ public class SQLPlayerControl {
 		}
 		if (spieler.getEloData().getFideid() > 0) {
 			mySQLELODataDAO.updateELO(spieler.getEloData());
+		} else {
+			if (spieler.getDwzData().getCsvFIDE_ID() > 0) {
+				ELOData eloData = new ELOData();
+				eloData.setAge(spieler.getDwzData().getAge());
+				eloData.setFideid(spieler.getDwzData().getCsvFIDE_ID());
+				eloData.setRating(spieler.getDwzData().getCsvFIDE_Elo());
+				eloData.setCountry(spieler.getDwzData().getCsvFIDE_Land());
+				eloData.setName(spieler.getDwzData().getCsvSpielername());
+				eloData.setSpielerId(spieler.getDwzData().getSpielerId());
+				eloData.setTitle(spieler.getDwzData().getCsvFIDE_Titel());
+				spieler.setEloData(eloData);
+				mySQLELODataDAO.insertELO(spieler.getEloData());
+			}
 		}
 	}
 
@@ -223,12 +263,25 @@ public class SQLPlayerControl {
 		for (int i = 0; i < turnier.getGruppe()[gruppe].getSpielerAnzahl(); i++) {
 			Player spieler = turnier.getGruppe()[gruppe].getSpieler()[i];
 			saved = mySQLSpielerDAO.updateSpieler(spieler);
-//			mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
+			// mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
 			if (!spieler.getDwzData().getCsvZPS().equals("")) {
 				mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
 			}
 			if (spieler.getEloData().getFideid() > 0) {
 				mySQLELODataDAO.updateELO(spieler.getEloData());
+			} else {
+				if (spieler.getDwzData().getCsvFIDE_ID() > 0) {
+					ELOData eloData = new ELOData();
+					eloData.setAge(spieler.getDwzData().getAge());
+					eloData.setFideid(spieler.getDwzData().getCsvFIDE_ID());
+					eloData.setRating(spieler.getDwzData().getCsvFIDE_Elo());
+					eloData.setCountry(spieler.getDwzData().getCsvFIDE_Land());
+					eloData.setName(spieler.getDwzData().getCsvSpielername());
+					eloData.setSpielerId(spieler.getDwzData().getSpielerId());
+					eloData.setTitle(spieler.getDwzData().getCsvFIDE_Titel());
+					spieler.setEloData(eloData);
+					mySQLELODataDAO.insertELO(spieler.getEloData());
+				}
 			}
 		}
 		return saved;

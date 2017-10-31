@@ -117,6 +117,7 @@ public class ELOControl {
 					int counter = 0;
 					while (li.hasNext() && counter < 20) {
 						Player tmp = li.next().getPlayer();
+						tmp.extractNameToForenameAndSurename();
 						String surname = "";
 						String forename = "";
 						String name = "";

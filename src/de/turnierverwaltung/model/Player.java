@@ -161,9 +161,9 @@ public class Player implements Comparable<Object> {
 		this.kuerzel = "";
 		extractNameToForenameAndSurename();
 		extractNameToKuerzel();
-		cutForename();
-		cutSurname();
-		extractForenameAndSurenameToName();
+//		cutForename();
+//		cutSurname();
+//		extractForenameAndSurenameToName();
 		// this.dwz = "";
 		this.age = eloData.getAge();
 		this.punkte = 0;
@@ -182,9 +182,9 @@ public class Player implements Comparable<Object> {
 		this.name = this.dwzData.getCsvSpielername();
 		extractNameToForenameAndSurename();
 		extractNameToKuerzel();
-		cutForename();
-		cutSurname();
-		extractForenameAndSurenameToName();
+//		cutForename();
+//		cutSurname();
+//		extractForenameAndSurenameToName();
 		// this.dwz = Integer.toString(this.dwzData.getCsvDWZ());
 		this.age = this.dwzData.getAge();
 		this.punkte = 0;
