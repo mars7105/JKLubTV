@@ -45,89 +45,94 @@ public class ResultDWZControl {
 
 	public void caculateDWZ() {
 		if (turnier.getNoFolgeDWZCalc() == false) {
-			for (int s = 0; s < this.spielerAnzahl; s++) {
-				if (this.gruppe.getSpieler()[s].getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 
-					ArrayList<OpponentModel> opponents = new ArrayList<OpponentModel>();
-					Player player = this.gruppe.getSpieler()[s];
-					double gesamtpunkte = 0;
-					double ergebnis = 0;
-					Boolean check = false;
-					for (int i = 0; i < this.partienanzahl; i++) {
+			for (int loop = 0; loop < 10; loop++) {
 
-						if (partien[i].getSpielerWeiss() .equals(player)
-								&& partien[i].getSpielerSchwarz().getSpielerId() != TournamentConstants.SPIELFREI_ID) {
-							ergebnis = 0;
-							check = false;
-							if (this.partien[i].getErgebnisWeiss() .equals( TournamentConstants.GEWINN)) {
-								ergebnis = 1;
-								check = true;
-							}
-							if (this.partien[i].getErgebnisWeiss() .equals( TournamentConstants.VERLUST)) {
+				for (int s = 0; s < this.spielerAnzahl; s++) {
+					if (this.gruppe.getSpieler()[s].getSpielerId() != TournamentConstants.SPIELFREI_ID) {
+
+						ArrayList<OpponentModel> opponents = new ArrayList<OpponentModel>();
+						Player player = this.gruppe.getSpieler()[s];
+						double gesamtpunkte = 0;
+						double ergebnis = 0;
+						Boolean check = false;
+						for (int i = 0; i < this.partienanzahl; i++) {
+
+							if (partien[i].getSpielerWeiss().equals(player) && partien[i].getSpielerSchwarz()
+									.getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 								ergebnis = 0;
-								check = true;
-							}
-							if (this.partien[i].getErgebnisWeiss() .equals( TournamentConstants.REMIS)) {
-								ergebnis = 0.5;
-								check = true;
-							}
-
-							if (check == true) {
-								if (this.partien[i].getSpielerSchwarz().getDWZ() == 0) {
-									if (this.partien[i].getSpielerSchwarz().getFolgeDWZ() > 0) {
-										opponents.add(new OpponentModel(
-												this.partien[i].getSpielerSchwarz().getFolgeDWZ(), ergebnis));
-										gesamtpunkte += ergebnis;
-									}
-								} else {
-
-									opponents.add(
-											new OpponentModel(this.partien[i].getSpielerSchwarz().getDWZ(), ergebnis));
-									gesamtpunkte += ergebnis;
+								check = false;
+								if (this.partien[i].getErgebnisWeiss().equals(TournamentConstants.GEWINN)) {
+									ergebnis = 1;
+									check = true;
 								}
-							}
-						}
-						if (partien[i].getSpielerSchwarz().equals(player)
-								&& partien[i].getSpielerWeiss().getSpielerId() != TournamentConstants.SPIELFREI_ID) {
-							ergebnis = 0;
-							check = false;
-							if (this.partien[i].getErgebnisSchwarz().equals(TournamentConstants.GEWINN)) {
-								ergebnis = 1;
-								check = true;
-							}
-							if (this.partien[i].getErgebnisSchwarz() .equals( TournamentConstants.VERLUST)) {
-								ergebnis = 0;
-								check = true;
-							}
-							if (this.partien[i].getErgebnisSchwarz() .equals( TournamentConstants.REMIS)) {
-								ergebnis = 0.5;
-								check = true;
-							}
+								if (this.partien[i].getErgebnisWeiss().equals(TournamentConstants.VERLUST)) {
+									ergebnis = 0;
+									check = true;
+								}
+								if (this.partien[i].getErgebnisWeiss().equals(TournamentConstants.REMIS)) {
+									ergebnis = 0.5;
+									check = true;
+								}
 
-							if (check == true) {
-								if (this.partien[i].getSpielerWeiss().getDWZ() == 0) {
-									if (this.partien[i].getSpielerWeiss().getFolgeDWZ() > 0) {
-										opponents.add(new OpponentModel(this.partien[i].getSpielerWeiss().getFolgeDWZ(),
+								if (check == true) {
+									if (this.partien[i].getSpielerSchwarz().getDWZ() == 0) {
+										if (this.partien[i].getSpielerSchwarz().getFolgeDWZ() > 0) {
+											opponents.add(new OpponentModel(
+													this.partien[i].getSpielerSchwarz().getFolgeDWZ(), ergebnis));
+											gesamtpunkte += ergebnis;
+
+										}
+									} else {
+
+										opponents.add(new OpponentModel(this.partien[i].getSpielerSchwarz().getDWZ(),
 												ergebnis));
 										gesamtpunkte += ergebnis;
-
 									}
-								} else {
+								}
+							}
+							if (partien[i].getSpielerSchwarz().equals(player) && partien[i].getSpielerWeiss()
+									.getSpielerId() != TournamentConstants.SPIELFREI_ID) {
+								ergebnis = 0;
+								check = false;
+								if (this.partien[i].getErgebnisSchwarz().equals(TournamentConstants.GEWINN)) {
+									ergebnis = 1;
+									check = true;
+								}
+								if (this.partien[i].getErgebnisSchwarz().equals(TournamentConstants.VERLUST)) {
+									ergebnis = 0;
+									check = true;
+								}
+								if (this.partien[i].getErgebnisSchwarz().equals(TournamentConstants.REMIS)) {
+									ergebnis = 0.5;
+									check = true;
+								}
 
-									opponents.add(
-											new OpponentModel(this.partien[i].getSpielerWeiss().getDWZ(), ergebnis));
-									gesamtpunkte += ergebnis;
+								if (check == true) {
+									if (this.partien[i].getSpielerWeiss().getDWZ() == 0) {
+										if (this.partien[i].getSpielerWeiss().getFolgeDWZ() > 0) {
+											opponents.add(new OpponentModel(
+													this.partien[i].getSpielerWeiss().getFolgeDWZ(), ergebnis));
+											gesamtpunkte += ergebnis;
+
+										}
+									} else {
+
+										opponents.add(new OpponentModel(this.partien[i].getSpielerWeiss().getDWZ(),
+												ergebnis));
+										gesamtpunkte += ergebnis;
+									}
 								}
 							}
 						}
+
+						PlayerModel playerdwz = new PlayerModel(player.getAge(), player.getDWZ(), opponents.size());
+						playerdwz.setPunkte(gesamtpunkte);
+						MainModel mainModel = new MainModel(playerdwz, opponents);
+						mainModel.calculateDWZ();
+						player.setFolgeDWZ(playerdwz.getFolgeDWZ());
+
 					}
-
-					PlayerModel playerdwz = new PlayerModel(player.getAge(), player.getDWZ(), opponents.size());
-					playerdwz.setPunkte(gesamtpunkte);
-					MainModel mainModel = new MainModel(playerdwz, opponents);
-					mainModel.calculateDWZ();
-					player.setFolgeDWZ(playerdwz.getFolgeDWZ());
-
 				}
 			}
 		}
