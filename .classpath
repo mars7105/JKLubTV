@@ -4,7 +4,6 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="lib/jgoodies-common-1.7.0.jar"/>
 	<classpathentry kind="lib" path="lib/jgoodies-looks-2.5.3.jar"/>
-	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.8.11.1.jar"/>
 	<classpathentry kind="lib" path="lib/dewis.jar"/>
 	<classpathentry kind="lib" path="lib/itextpdf-5.5.6.jar"/>
 	<classpathentry kind="lib" path="lib/poi-3.14-20160307.jar"/>
@@ -16,5 +15,6 @@
 	<classpathentry kind="lib" path="lib/jackson-core-2.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/vinnie-2.0.0.jar"/>
 	<classpathentry kind="lib" path="/home/mamuck/git/JKLubTV/lib/opencsv-3.7.jar"/>
+	<classpathentry kind="lib" path="/home/mamuck/git/JKLubTV/lib/sqlite-jdbc-3.20.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
