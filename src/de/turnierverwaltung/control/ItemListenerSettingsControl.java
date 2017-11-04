@@ -125,7 +125,7 @@ public class ItemListenerSettingsControl {
 
 					if (noELO) {
 
-						eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(true);
+						eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(false);
 
 					} else {
 
