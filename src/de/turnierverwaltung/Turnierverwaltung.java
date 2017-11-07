@@ -40,7 +40,7 @@ public class Turnierverwaltung {
 	// Specify the look and feel to use by defining the LOOKANDFEEL constant
 	// Valid values are: null (use the default), "Metal", "System", "Motif",
 	// and "GTK"
-	final static String LOOKANDFEEL = "System";
+	final static String LOOKANDFEEL = "Metal";
 
 	// If you choose the Metal L&F, you can also choose a theme.
 	// Specify the theme to use by defining the THEME constant
