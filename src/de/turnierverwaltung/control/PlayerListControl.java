@@ -67,6 +67,8 @@ public class PlayerListControl implements ActionListener {
 					String dindex = spielerEditierenView.getTextFieldDwzIndex().getText();
 					String zps = spielerEditierenView.getTextFieldZPS().getText();
 					String mgl = spielerEditierenView.getTextFieldMGL().getText();
+					String fideid = spielerEditierenView.getTextFieldFideId().getText();
+					String elo = spielerEditierenView.getTextFieldELO().getText();
 					int dwzindex = -1;
 					try {
 						dwzindex = Integer.parseInt(dindex);
@@ -79,6 +81,18 @@ public class PlayerListControl implements ActionListener {
 					} catch (NumberFormatException e) {
 						dwzInt = 0;
 					}
+					int fideId = 0;
+					try {
+						fideId = Integer.parseInt(fideid);
+					} catch (NumberFormatException e) {
+						fideId = 0;
+					}
+					int rating = 0;
+					try {
+						rating = Integer.parseInt(elo);
+					} catch (NumberFormatException e) {
+						rating = 0;
+					}
 					int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
 
 					spieler.get(spielerIndex).setForename(foreName);
@@ -88,6 +102,14 @@ public class PlayerListControl implements ActionListener {
 					spieler.get(spielerIndex).getDwzData().setCsvZPS(zps);
 					spieler.get(spielerIndex).getDwzData().setCsvMgl_Nr(mgl);
 					spieler.get(spielerIndex).getDwzData().setCsvIndex(dwzindex);
+					if (fideId > 0) {
+						spieler.get(spielerIndex).getDwzData().setCsvFIDE_ID(fideId);
+						spieler.get(spielerIndex).getEloData().setFideid(fideId);
+					}
+					if (rating > 0) {
+						spieler.get(spielerIndex).getDwzData().setCsvFIDE_Elo(rating);
+						spieler.get(spielerIndex).getEloData().setRating(rating);
+					}
 					spieler.get(spielerIndex).setAge(age);
 					spieler.get(spielerIndex).extractForenameAndSurenameToName();
 
