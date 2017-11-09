@@ -9,14 +9,14 @@ import de.turnierverwaltung.model.Info;
 public interface InfoDAO {
 	public void createInfoTable() throws SQLException;
 
-	public boolean deleteInfo(int id) throws SQLException;
+	public void deleteInfo(int id) throws SQLException;
 
 	public Info findInfo(int id, PropertiesControl prop) throws SQLException;
 
-	public int insertInfo(String infoName, int infoId) throws SQLException;
+	public int insertInfo(Info info) throws SQLException;
 
-	public boolean updateInfo(Info info) throws SQLException;
+	public void updateInfo(Info info) throws SQLException;
 
-	public ArrayList<Info> selectAllInfo(PropertiesControl prop) throws SQLException;
+	public ArrayList<Info> getAllInfos() throws SQLException;
 
 }
