@@ -183,7 +183,8 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 						JOptionPane.showMessageDialog(null, Messages.getString("SpielerEingabeControl.9")); //$NON-NLS-1$
 					}
 				} catch (SQLException e) {
-					mainControl.fileSQLError(e.getMessage());
+					ExceptionHandler eh = new ExceptionHandler(mainControl);
+					eh.fileSQLError(e.getMessage());
 				}
 			}
 			if (arg0.getSource().equals(cancelButton[i])) {

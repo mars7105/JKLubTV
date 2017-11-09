@@ -138,7 +138,8 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 
 				mainControl.getSpielerLadenControl().updateSpielerListe();
 			} catch (SQLException e) {
-				mainControl.fileSQLError(e.getMessage());
+				ExceptionHandler eh = new ExceptionHandler(mainControl);
+				eh.fileSQLError(e.getMessage());
 			}
 		}
 
@@ -151,7 +152,8 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 			playerExist = spielerTableControl.playerExist(neuerSpieler);
 
 		} catch (SQLException e) {
-			mainControl.fileSQLError(e.getMessage());
+			ExceptionHandler eh = new ExceptionHandler(mainControl);
+			eh.fileSQLError(e.getMessage());
 		}
 
 		return playerExist;

@@ -87,14 +87,14 @@ public class NewTournamentGroupsControl implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 
-		if (arg0.getSource() .equals( gruppenOKButton)) {
+		if (arg0.getSource().equals(gruppenOKButton)) {
 			makeGruppe();
 
 			// mainControl.setSpielerAnzahlControl(new
 			// NewTournamentPlayerCountControl(this.mainControl));
 			runPlayerInput();
 		}
-		if (arg0.getSource() .equals( gruppenCancelButton)) {
+		if (arg0.getSource().equals(gruppenCancelButton)) {
 			this.mainControl.setTurnierControl(new NewTournamentControl(this.mainControl));
 		}
 
@@ -154,7 +154,8 @@ public class NewTournamentGroupsControl implements ActionListener {
 
 			}
 		} catch (SQLException e) {
-			mainControl.fileSQLError(e.getMessage());
+			ExceptionHandler eh = new ExceptionHandler(mainControl);
+			eh.fileSQLError(e.getMessage());
 		} catch (NumberFormatException e) {
 			spielerAnzahl[fehlerIndex] = 0;
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.1")); //$NON-NLS-1$

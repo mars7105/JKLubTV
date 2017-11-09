@@ -141,12 +141,12 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 				} catch (SQLException e) {
 					turnierEditierenView.dispose();
 					mainControl.setEnabled(true);
-					mainControl.fileSQLError(e.getMessage());
+					ExceptionHandler eh = new ExceptionHandler(mainControl);
+					eh.fileSQLError(e.getMessage());
 				}
 
 			}
 			if (arg0.getSource().equals(turnierEditierenView.getCancelButton())) {
-				
 
 				turnierEditierenView.dispose();
 				mainControl.setEnabled(true);
@@ -163,7 +163,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 					try {
 						loadTurnier(i);
 					} catch (SQLException e) {
-						mainControl.fileSQLError(e.getMessage());
+						ExceptionHandler eh = new ExceptionHandler(mainControl);
+						eh.fileSQLError(e.getMessage());
 					}
 				} else {
 					if (turnier.getTurnierId() == -1) {
@@ -182,7 +183,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 							try {
 								loadTurnier(i);
 							} catch (SQLException e) {
-								mainControl.fileSQLError(e.getMessage());
+								ExceptionHandler eh = new ExceptionHandler(mainControl);
+								eh.fileSQLError(e.getMessage());
 							}
 						}
 					} else {
@@ -213,7 +215,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 									try {
 										loadTurnier(i);
 									} catch (SQLException e) {
-										mainControl.fileSQLError(e.getMessage());
+										ExceptionHandler eh = new ExceptionHandler(mainControl);
+										eh.fileSQLError(e.getMessage());
 									}
 								}
 							} else if (changedPartien.size() == 0) {
@@ -221,7 +224,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 								try {
 									loadTurnier(i);
 								} catch (SQLException e) {
-									mainControl.fileSQLError(e.getMessage());
+									ExceptionHandler eh = new ExceptionHandler(mainControl);
+									eh.fileSQLError(e.getMessage());
 								}
 							}
 
@@ -230,7 +234,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 							try {
 								loadTurnier(i);
 							} catch (SQLException e) {
-								mainControl.fileSQLError(e.getMessage());
+								ExceptionHandler eh = new ExceptionHandler(mainControl);
+								eh.fileSQLError(e.getMessage());
 							}
 						}
 					}
@@ -250,7 +255,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 
 				} catch (SQLException e) {
 					turnierEditierenView.dispose();
-					mainControl.fileSQLError(e.getMessage());
+					ExceptionHandler eh = new ExceptionHandler(mainControl);
+					eh.fileSQLError(e.getMessage());
 					mainControl.setEnabled(true);
 				}
 			}

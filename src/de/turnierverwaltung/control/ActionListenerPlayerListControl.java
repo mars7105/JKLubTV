@@ -16,6 +16,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 	private NaviView naviView;
 	private DSBDWZControl dewisDialogControl;
 	private Player neuerSpieler;
+
 	public ActionListenerPlayerListControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
@@ -61,7 +62,8 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 					spielerHinzufuegenView.spielerPanel();
 					spielerHinzufuegenView.getTextFieldKuerzel().addFocusListener(this);
 				} catch (SQLException e) {
-					mainControl.fileSQLError(e.getMessage());
+					ExceptionHandler eh = new ExceptionHandler(mainControl);
+					eh.fileSQLError(e.getMessage());
 				}
 
 			}
@@ -70,7 +72,8 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 				try {
 					this.mainControl.getSpielerLadenControl().updateSpielerListe();
 				} catch (SQLException e) {
-					mainControl.fileSQLError(e.getMessage());
+					ExceptionHandler eh = new ExceptionHandler(mainControl);
+					eh.fileSQLError(e.getMessage());
 				}
 
 				spielerHinzufuegenView.closeWindow();
@@ -83,7 +86,8 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 
 				mainControl.getSpielerLadenControl().updateSpielerListe();
 			} catch (SQLException e) {
-				mainControl.fileSQLError(e.getMessage());
+				ExceptionHandler eh = new ExceptionHandler(mainControl);
+				eh.fileSQLError(e.getMessage());
 			}
 		}
 		if (arg0.getSource().equals(naviView.getSpielerExport())) {
@@ -91,7 +95,8 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 			try {
 				spielerExport.exportSpielerTable();
 			} catch (SQLException e) {
-				mainControl.fileSQLError(e.getMessage());
+				ExceptionHandler eh = new ExceptionHandler(mainControl);
+				eh.fileSQLError(e.getMessage());
 			}
 		}
 
@@ -136,7 +141,8 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 				updateRatings.updateSpieler();
 				mainControl.getSpielerLadenControl().updateSpielerListe();
 			} catch (SQLException e) {
-				mainControl.fileSQLError(e.getMessage());
+				ExceptionHandler eh = new ExceptionHandler(mainControl);
+				eh.fileSQLError(e.getMessage());
 			}
 		}
 	}
@@ -148,7 +154,8 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 		try {
 			this.mainControl.getSpielerLadenControl().updateSpielerListe();
 		} catch (SQLException e) {
-			mainControl.fileSQLError(e.getMessage());
+			ExceptionHandler eh = new ExceptionHandler(mainControl);
+			eh.fileSQLError(e.getMessage());
 		}
 		spielerHinzufuegenView = new NewPlayerView();
 

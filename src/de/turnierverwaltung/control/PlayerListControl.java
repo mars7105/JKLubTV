@@ -125,7 +125,8 @@ public class PlayerListControl implements ActionListener {
 					updateSpielerListe();
 				} catch (SQLException e1) {
 					spielerEditierenView.closeWindow();
-					mainControl.fileSQLError(e1.getMessage());
+					ExceptionHandler eh = new ExceptionHandler(mainControl);
+					eh.fileSQLError(e1.getMessage());
 
 				}
 
@@ -165,7 +166,8 @@ public class PlayerListControl implements ActionListener {
 
 							updateSpielerListe();
 						} catch (SQLException e) {
-							mainControl.fileSQLError(e.getMessage());
+							ExceptionHandler eh = new ExceptionHandler(mainControl);
+							eh.fileSQLError(e.getMessage());
 						}
 					} else {
 						JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerLadenControl.2"));

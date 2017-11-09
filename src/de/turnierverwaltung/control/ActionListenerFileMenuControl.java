@@ -109,7 +109,8 @@ public class ActionListenerFileMenuControl implements ActionListener {
 							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.13"));
 							// $NON-NLS-1$
 						} catch (SQLException e) {
-							mainControl.fileSQLError(e.getMessage());
+							ExceptionHandler eh = new ExceptionHandler(mainControl);
+							eh.fileSQLError(e.getMessage());
 						}
 					} else if (sf == JFileChooser.CANCEL_OPTION) {
 						JOptionPane.showMessageDialog(null, Messages.getString("NaviController.14"));
@@ -180,7 +181,9 @@ public class ActionListenerFileMenuControl implements ActionListener {
 							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.18")); //$NON-NLS-1$
 						}
 					} catch (SQLException e) {
-						mainControl.fileSQLError(e.getMessage());
+
+						ExceptionHandler eh = new ExceptionHandler(mainControl);
+						eh.fileSQLError(e.getMessage());
 					}
 				}
 

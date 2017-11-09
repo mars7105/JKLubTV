@@ -170,7 +170,8 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 
 					mainControl.getSpielerLadenControl().updateSpielerListe();
 				} catch (SQLException e) {
-					mainControl.fileSQLError(e.getMessage());
+					ExceptionHandler eh = new ExceptionHandler(mainControl);
+					eh.fileSQLError(e.getMessage());
 				}
 			}
 		} else {
@@ -203,7 +204,8 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 
 					mainControl.getSpielerLadenControl().updateSpielerListe();
 				} catch (SQLException e) {
-					mainControl.fileSQLError(e.getMessage());
+					ExceptionHandler eh = new ExceptionHandler(mainControl);
+					eh.fileSQLError(e.getMessage());
 				}
 			}
 		}
@@ -216,7 +218,8 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 			playerExist = spielerTableControl.playerExist(neuerSpieler);
 
 		} catch (SQLException e) {
-			mainControl.fileSQLError(e.getMessage());
+			ExceptionHandler eh = new ExceptionHandler(mainControl);
+			eh.fileSQLError(e.getMessage());
 		}
 
 		return playerExist;
