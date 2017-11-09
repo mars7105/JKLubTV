@@ -42,7 +42,7 @@ public class SQLInfoControl {
 
 	}
 
-	public void deleteInfo(Info info) throws SQLException {
+	public void deleteOneInfo(Info info) throws SQLException {
 		mySQLInfoDAO.deleteInfo(info.getInfoId());
 	}
 
