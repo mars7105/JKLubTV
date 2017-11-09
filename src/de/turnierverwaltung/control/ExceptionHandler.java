@@ -23,6 +23,21 @@ public class ExceptionHandler {
 	 * 
 	 */
 	public void fileSQLError(String error) {
+		writeErrorLog(error);
+		propertiesControl.setPathToDatabase("");
+		propertiesControl.checkProperties();
+		Boolean ok = propertiesControl.writeProperties();
+		if (ok) {
+			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.11"));
+
+		} else {
+			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.12"));
+
+		}
+		mainControl.resetApp();
+	}
+
+	private void writeErrorLog(String error) {
 		Boolean fexist = true;
 		File errorFile = null;
 		int errornumber = 0;
@@ -47,16 +62,6 @@ public class ExceptionHandler {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		propertiesControl.setPathToDatabase("");
-		propertiesControl.checkProperties();
-		Boolean ok = propertiesControl.writeProperties();
-		if (ok) {
-			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.11"));
 
-		} else {
-			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.12"));
-
-		}
-		mainControl.resetApp();
 	}
 }
