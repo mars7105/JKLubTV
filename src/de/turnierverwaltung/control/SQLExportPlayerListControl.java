@@ -63,7 +63,7 @@ public class SQLExportPlayerListControl {
 				int positionEXT = filename.lastIndexOf('.');
 				String newFile = ""; //$NON-NLS-1$
 				if (positionEXT > 0) {
-					newFile = filename.substring(0, positionEXT) + ".spl"; //$NON-NLS-1$
+					newFile = filename.substring(0, positionEXT) + "_playerlist" + ".sqlite"; //$NON-NLS-1$
 				}
 				File savefile = new File(newFile);
 				writer = new BufferedWriter(new FileWriter(savefile.getAbsolutePath()));

@@ -46,7 +46,7 @@ public class SQLImportPlayerListControl {
 
 		// Create a file chooser
 		JFileChooser fc = new JFileChooser();
-		FileFilter filter = new FileNameExtensionFilter(Messages.getString("SpielerTableImportController.0"), "spl"); //$NON-NLS-1$ //$NON-NLS-2$
+		FileFilter filter = new FileNameExtensionFilter(Messages.getString("SpielerTableImportController.0"), "sqlite"); //$NON-NLS-1$ //$NON-NLS-2$
 		fc.addChoosableFileFilter(filter);
 		fc.setFileFilter(filter);
 		int returnVal = fc.showOpenDialog(null);
