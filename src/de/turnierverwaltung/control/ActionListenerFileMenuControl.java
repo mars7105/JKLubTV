@@ -54,11 +54,11 @@ public class ActionListenerFileMenuControl implements ActionListener {
 						JOptionPane.PLAIN_MESSAGE);
 
 				if (filename != null) {
-					filename += ".ktv";
+					filename += ".sqlite";
 					File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 					JFileChooser savefile = new JFileChooser(path);
-					FileFilter filter = new FileNameExtensionFilter(Messages.getString("NaviController.8"), "ktv");
+					FileFilter filter = new FileNameExtensionFilter(Messages.getString("NaviController.8"), "sqlite");
 					savefile.addChoosableFileFilter(filter);
 					savefile.setFileFilter(filter);
 					savefile.setDialogType(JFileChooser.SAVE_DIALOG);
