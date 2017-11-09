@@ -32,7 +32,7 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 			try {
 				setTabsEnable(true);
 			} catch (SQLException e) {
-				mainControl.fileSQLError();
+				mainControl.fileSQLError(e.getMessage());
 			}
 			pairingIsActive = false;
 
@@ -45,7 +45,7 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 				try {
 					setTabsEnable(true);
 				} catch (SQLException e) {
-					mainControl.fileSQLError();
+					mainControl.fileSQLError(e.getMessage());
 				}
 				pairingIsActive = false;
 			}

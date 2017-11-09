@@ -1,7 +1,11 @@
 package de.turnierverwaltung.control;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
 
+import de.turnierverwaltung.model.Info;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -32,6 +36,9 @@ import de.turnierverwaltung.mysql.TurnierDAO;
 import de.turnierverwaltung.mysql.Turnier_has_SpielerDAO;
 
 public class SQLControl {
+	public static final String INFONAME = "JKlubTV";
+	public static final String VERSION = "4.0.x";
+	public static final String INFONOTICE = "Create table";
 	private DAOFactory daoFactory;
 	private SpielerDAO mySQLSpielerDAO;
 	private TurnierDAO mySQLTurnierDAO;
@@ -46,6 +53,7 @@ public class SQLControl {
 	private InfoDAO mySQLInfoDataDAO;
 
 	public SQLControl() {
+
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		mySQLTurnierDAO = daoFactory.getTurnierDAO();
 		mySQLSpielerDAO = daoFactory.getSpielerDAO();
@@ -58,6 +66,7 @@ public class SQLControl {
 		mySQLVereineDAO = daoFactory.getDWZVereineDAO();
 		mySQLELODataDAO = daoFactory.getELODataDAO();
 		mySQLInfoDataDAO = daoFactory.getInfoDAO();
+
 	}
 
 	public void createAllTables() throws SQLException {
@@ -72,6 +81,8 @@ public class SQLControl {
 		mySQLVereineDAO.createVereineTable();
 		mySQLELODataDAO.createELOTable();
 		mySQLInfoDataDAO.createInfoTable();
+		Info info = new Info(INFONAME, VERSION, INFONOTICE, getDate(), 0);
+		mySQLInfoDataDAO.insertInfo(info);
 	}
 
 	public void createSpielerTables() throws SQLException {
@@ -79,7 +90,19 @@ public class SQLControl {
 		mySQLDWZDataDAO.createDWZTable();
 		mySQLELODataDAO.createELOTable();
 		mySQLInfoDataDAO.createInfoTable();
+		Info info = new Info(INFONAME, VERSION, INFONOTICE, getDate(), 0);
+		mySQLInfoDataDAO.insertInfo(info);
 	}
-	
 
+	private String getDate() {
+		Date dt = new Date();
+		// Festlegung des Formats:
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+		df.setTimeZone(TimeZone.getDefault());
+		// nicht mehr unbedingt notwendig seit JDK 1.2
+		// Formatierung zu String:
+		String date = df.format(dt);
+		// z.B. '2001-01-26 19:03:56.731'
+		return date;
+	}
 }

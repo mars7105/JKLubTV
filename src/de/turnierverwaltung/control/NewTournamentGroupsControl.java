@@ -154,7 +154,7 @@ public class NewTournamentGroupsControl implements ActionListener {
 
 			}
 		} catch (SQLException e) {
-			mainControl.fileSQLError();
+			mainControl.fileSQLError(e.getMessage());
 		} catch (NumberFormatException e) {
 			spielerAnzahl[fehlerIndex] = 0;
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.1")); //$NON-NLS-1$

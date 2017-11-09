@@ -18,6 +18,13 @@ package de.turnierverwaltung.control;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -63,7 +70,7 @@ public class MainControl extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private int windowWidth;
 	private int windowHeight;
-//	private MainView mainView;
+	// private MainView mainView;
 	private JTabbedPane hauptPanel;
 
 	private NewTournamentControl turnierControl;
@@ -184,7 +191,7 @@ public class MainControl extends JFrame {
 				try {
 					this.getSpielerEditierenControl().updateSpielerListe();
 				} catch (SQLException e) {
-					fileSQLError();
+					fileSQLError(e.getMessage());
 				}
 			}
 			this.setNeuesTurnier(false);
@@ -196,7 +203,7 @@ public class MainControl extends JFrame {
 				try {
 					this.getTurnierListeLadenControl().loadTurnierListe();
 				} catch (SQLException e) {
-					fileSQLError();
+					fileSQLError(e.getMessage());
 				}
 				naviView.setPathToDatabase(new JLabel(path));
 
@@ -209,7 +216,7 @@ public class MainControl extends JFrame {
 					this.getTurnierListeLadenControl().loadTurnierListe();
 				} catch (SQLException e) {
 					e.printStackTrace();
-					fileSQLError();
+					fileSQLError(e.getMessage());
 				}
 				naviView.setPathToDatabase(new JLabel(path));
 			}
@@ -233,7 +240,7 @@ public class MainControl extends JFrame {
 	public void resetApp() {
 		windowWidth = 0;
 		windowHeight = 0;
-//		mainView = null;
+		// mainView = null;
 		hauptPanel = null;
 
 		turnierControl = null;
@@ -277,7 +284,33 @@ public class MainControl extends JFrame {
 	/**
 	 * 
 	 */
-	public void fileSQLError() {
+	public void fileSQLError(String error) {
+		Boolean fexist = true;
+		File errorFile = null;
+		int errornumber = 0;
+		while (fexist) {
+
+			errorFile = new File(propertiesControl.getDefaultPath() + "/error-" + errornumber + ".log");
+			if (errorFile.exists()) {
+				errornumber++;
+			} else {
+				fexist = false;
+			}
+		}
+
+		Writer writer;
+		try {
+			writer = new OutputStreamWriter(new FileOutputStream(errorFile), "UTF8");
+			writer.write(error);
+			writer.flush();
+			writer.close();
+		} catch (UnsupportedEncodingException | FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		propertiesControl.setPathToDatabase("");
 		propertiesControl.checkProperties();
 		Boolean ok = propertiesControl.writeProperties();
@@ -355,9 +388,9 @@ public class MainControl extends JFrame {
 		return hauptPanel;
 	}
 
-//	public MainView getMainView() {
-//		return mainView;
-//	}
+	// public MainView getMainView() {
+	// return mainView;
+	// }
 
 	public PairingsTables getPaarungsTafeln() {
 		return paarungsTafeln;
@@ -515,9 +548,9 @@ public class MainControl extends JFrame {
 		this.hauptPanel = hauptPanel;
 	}
 
-//	public void setMainView(MainView mainView) {
-//		this.mainView = mainView;
-//	}
+	// public void setMainView(MainView mainView) {
+	// this.mainView = mainView;
+	// }
 
 	public void setPaarungsTafeln(PairingsTables paarungsTafeln) {
 		this.paarungsTafeln = paarungsTafeln;

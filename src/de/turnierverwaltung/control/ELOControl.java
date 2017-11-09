@@ -179,7 +179,7 @@ public class ELOControl {
 			playerExist = spielerTableControl.playerFideExist(neuerSpieler);
 
 		} catch (SQLException e) {
-			mainControl.fileSQLError();
+			mainControl.fileSQLError(e.getMessage());
 		}
 		return playerExist;
 	}

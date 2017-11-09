@@ -141,7 +141,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 				} catch (SQLException e) {
 					turnierEditierenView.dispose();
 					mainControl.setEnabled(true);
-					mainControl.fileSQLError();
+					mainControl.fileSQLError(e.getMessage());
 				}
 
 			}
@@ -163,7 +163,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 					try {
 						loadTurnier(i);
 					} catch (SQLException e) {
-						mainControl.fileSQLError();
+						mainControl.fileSQLError(e.getMessage());
 					}
 				} else {
 					if (turnier.getTurnierId() == -1) {
@@ -182,7 +182,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 							try {
 								loadTurnier(i);
 							} catch (SQLException e) {
-								mainControl.fileSQLError();
+								mainControl.fileSQLError(e.getMessage());
 							}
 						}
 					} else {
@@ -213,7 +213,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 									try {
 										loadTurnier(i);
 									} catch (SQLException e) {
-										mainControl.fileSQLError();
+										mainControl.fileSQLError(e.getMessage());
 									}
 								}
 							} else if (changedPartien.size() == 0) {
@@ -221,7 +221,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 								try {
 									loadTurnier(i);
 								} catch (SQLException e) {
-									mainControl.fileSQLError();
+									mainControl.fileSQLError(e.getMessage());
 								}
 							}
 
@@ -230,7 +230,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 							try {
 								loadTurnier(i);
 							} catch (SQLException e) {
-								mainControl.fileSQLError();
+								mainControl.fileSQLError(e.getMessage());
 							}
 						}
 					}
@@ -250,7 +250,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 
 				} catch (SQLException e) {
 					turnierEditierenView.dispose();
-					mainControl.fileSQLError();
+					mainControl.fileSQLError(e.getMessage());
 					mainControl.setEnabled(true);
 				}
 			}

@@ -23,6 +23,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 	private JButton exitButton;
 	private NaviView naviView;
 	private ChangeListenerTabControl turnierAnsicht;
+
 	public ActionListenerFileMenuControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
@@ -108,7 +109,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.13"));
 							// $NON-NLS-1$
 						} catch (SQLException e) {
-							mainControl.fileSQLError();
+							mainControl.fileSQLError(e.getMessage());
 						}
 					} else if (sf == JFileChooser.CANCEL_OPTION) {
 						JOptionPane.showMessageDialog(null, Messages.getString("NaviController.14"));
@@ -179,7 +180,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.18")); //$NON-NLS-1$
 						}
 					} catch (SQLException e) {
-						mainControl.fileSQLError();
+						mainControl.fileSQLError(e.getMessage());
 					}
 				}
 
@@ -241,5 +242,4 @@ public class ActionListenerFileMenuControl implements ActionListener {
 		this.turnierAnsicht = turnierAnsicht;
 	}
 
-	
 }

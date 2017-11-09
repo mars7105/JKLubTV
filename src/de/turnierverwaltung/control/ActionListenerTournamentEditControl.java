@@ -116,14 +116,14 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 				try {
 					ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
 				} catch (SQLException e) {
-					mainControl.fileSQLError();
+					mainControl.fileSQLError(e.getMessage());
 				}
 
 			} else {
 				try {
 					ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
 				} catch (SQLException e) {
-					mainControl.fileSQLError();
+					mainControl.fileSQLError(e.getMessage());
 				}
 				if (ok) {
 					mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(false);

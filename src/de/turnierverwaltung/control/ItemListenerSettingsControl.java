@@ -72,7 +72,7 @@ public class ItemListenerSettingsControl {
 					try {
 						mainControl.getTurnierListeLadenControl().reloadTurnier();
 					} catch (SQLException e1) {
-						mainControl.fileSQLError();
+						mainControl.fileSQLError(e1.getMessage());
 					}
 
 				}
@@ -103,7 +103,7 @@ public class ItemListenerSettingsControl {
 					try {
 						mainControl.getTurnierListeLadenControl().reloadTurnier();
 					} catch (SQLException e1) {
-						mainControl.fileSQLError();
+						mainControl.fileSQLError(e1.getMessage());
 					}
 				}
 
@@ -139,7 +139,7 @@ public class ItemListenerSettingsControl {
 					try {
 						mainControl.getTurnierListeLadenControl().reloadTurnier();
 					} catch (SQLException e1) {
-						mainControl.fileSQLError();
+						mainControl.fileSQLError(e1.getMessage());
 					}
 
 				}
@@ -161,7 +161,7 @@ public class ItemListenerSettingsControl {
 					try {
 						mainControl.getTurnierListeLadenControl().reloadTurnier();
 					} catch (SQLException e1) {
-						mainControl.fileSQLError();
+						mainControl.fileSQLError(e1.getMessage());
 					}
 				}
 
