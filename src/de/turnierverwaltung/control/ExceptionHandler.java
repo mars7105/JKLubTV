@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-
 import javax.swing.JOptionPane;
 
 public class ExceptionHandler {
@@ -44,10 +43,8 @@ public class ExceptionHandler {
 			writer.flush();
 			writer.close();
 		} catch (UnsupportedEncodingException | FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		propertiesControl.setPathToDatabase("");
