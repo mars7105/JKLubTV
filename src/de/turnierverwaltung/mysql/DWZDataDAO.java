@@ -1,6 +1,7 @@
 package de.turnierverwaltung.mysql;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import de.turnierverwaltung.model.DWZData;
 
@@ -18,5 +19,7 @@ public interface DWZDataDAO {
 	public boolean playerExist(DWZData dwzData);
 
 	public boolean playerFideExist(DWZData dwzData);
+
+	public void flush(ArrayList<DWZData> dwzPlayer) throws SQLException;
 
 }

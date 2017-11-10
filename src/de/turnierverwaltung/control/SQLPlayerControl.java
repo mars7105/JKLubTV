@@ -34,8 +34,7 @@ public class SQLPlayerControl {
 	private DAOFactory daoFactory;
 	private SpielerDAO mySQLSpielerDAO;
 	private DWZDataDAO mySQLDWZDataDAO;
-	int turnierId;
-	int spielerId[];
+	private int spielerId[];
 	private PropertiesControl prop;
 	private ELODataDAO mySQLELODataDAO;
 
@@ -130,7 +129,7 @@ public class SQLPlayerControl {
 		boolean eintragGespeichert = false;
 		this.turnier = mainControl.getTurnier();
 
-		turnierId = turnier.getTurnierId();
+		turnier.getTurnierId();
 		int spielerAnzahl = turnier.getGruppe()[gruppe].getSpielerAnzahl();
 		spielerId = new int[spielerAnzahl];
 		for (int y = 0; y < spielerAnzahl; y++) {

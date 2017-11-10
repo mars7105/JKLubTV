@@ -262,6 +262,24 @@ public class ActionListenerSettingsControl {
 
 			}
 		});
+		esControl.getEigenschaftenView().getConvertELOToSQLITEButton().addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ELOListToSQLITEControl eloL = new ELOListToSQLITEControl(mainControl);
+				eloL.convertELOListToSQLITE();
+
+			}
+		});
+		esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				DWZListToSQLITEControl dwzL = new DWZListToSQLITEControl(mainControl);
+				dwzL.convertDWZListToSQLITE();
+
+			}
+		});
 	}
+	
 }

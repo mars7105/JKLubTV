@@ -1,8 +1,10 @@
 package de.turnierverwaltung.mysql;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import de.turnierverwaltung.model.ELOData;
+import de.turnierverwaltung.model.ELOPlayer;
 
 public interface ELODataDAO {
 	public void createELOTable() throws SQLException;
@@ -17,4 +19,5 @@ public interface ELODataDAO {
 
 	public boolean playerExist(int fideId);
 
+	public void flush(ArrayList<ELOPlayer> eloDataArray) throws SQLException;
 }
