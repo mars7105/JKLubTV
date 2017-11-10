@@ -100,6 +100,10 @@ public class SettingsView extends JPanel {
 	private JCheckBox checkBoxohneFolgeELO;
 	private JTextField oldELOTextField;
 	private JTextField newELOTextField;
+	private JButton convertELOToSQLITEButton;
+	private JLabel convertELOToSQLITELabel;
+	private JButton convertDWZToSQLITEButton;
+	private JLabel convertDWZToSQLITELabel;
 
 	/**
 	 * Create the panel.
@@ -206,7 +210,7 @@ public class SettingsView extends JPanel {
 	private void tableLabel() {
 		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.21"));
 		titleView.setFlowLayoutLeft();
-		
+
 		htmlAll.add(titleView);
 		JPanel bothPanel = new JPanel();
 		bothPanel.setLayout(new BorderLayout());
@@ -388,25 +392,25 @@ public class SettingsView extends JPanel {
 		htmlPanel.add(meetingTextField);
 		rightPanel.add(htmlPanel);
 
-//		JPanel leerPanel = new JPanel();
-//		leerPanel.setPreferredSize(dim);
-//		htmlPanel = new JPanel();
-//		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		htmlPanel.add(leerPanel);
-//		rightPanel.add(htmlPanel);
+		// JPanel leerPanel = new JPanel();
+		// leerPanel.setPreferredSize(dim);
+		// htmlPanel = new JPanel();
+		// htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// htmlPanel.add(leerPanel);
+		// rightPanel.add(htmlPanel);
 
-//		leerPanel = new JPanel();
-//		leerPanel.setPreferredSize(dim);
-//		htmlPanel = new JPanel();
-//		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		htmlPanel.add(leerPanel);
-//		rightPanel.add(htmlPanel);
-//
-//		leerPanel.setPreferredSize(dim);
-//		htmlPanel = new JPanel();
-//		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		htmlPanel.add(leerPanel);
-//		rightPanel.add(htmlPanel);
+		// leerPanel = new JPanel();
+		// leerPanel.setPreferredSize(dim);
+		// htmlPanel = new JPanel();
+		// htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// htmlPanel.add(leerPanel);
+		// rightPanel.add(htmlPanel);
+		//
+		// leerPanel.setPreferredSize(dim);
+		// htmlPanel = new JPanel();
+		// htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// htmlPanel.add(leerPanel);
+		// rightPanel.add(htmlPanel);
 
 		JPanel leftP = new JPanel();
 		leftP.setLayout(new BorderLayout());
@@ -571,6 +575,14 @@ public class SettingsView extends JPanel {
 		htmlPanel.add(openPlayersCSVLabel);
 		htmlAll.add(htmlPanel);
 
+		convertDWZToSQLITEButton = new JButton(Messages.getString("EigenschaftenView.65"));
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(convertDWZToSQLITEButton);
+		convertDWZToSQLITELabel = new JLabel();
+		htmlPanel.add(convertDWZToSQLITELabel);
+		htmlAll.add(htmlPanel);
+
 		htmlAll.add(new JSeparator());
 
 	}
@@ -632,6 +644,15 @@ public class SettingsView extends JPanel {
 		openPlayersELOLabel = new JLabel();
 		htmlPanel.add(openPlayersELOLabel);
 		htmlAll.add(htmlPanel);
+		
+		convertELOToSQLITEButton = new JButton(Messages.getString("EigenschaftenView.66"));
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(convertELOToSQLITEButton);
+		convertELOToSQLITELabel = new JLabel();
+		htmlPanel.add(convertELOToSQLITELabel);
+		htmlAll.add(htmlPanel);
+		
 		htmlAll.add(new JSeparator());
 	}
 
@@ -1053,6 +1074,38 @@ public class SettingsView extends JPanel {
 
 	public void setNewELOTextField(JTextField newELOTextField) {
 		this.newELOTextField = newELOTextField;
+	}
+
+	public JButton getConvertELOToSQLITEButton() {
+		return convertELOToSQLITEButton;
+	}
+
+	public void setConvertELOToSQLITEButton(JButton convertELOToSQLITEButton) {
+		this.convertELOToSQLITEButton = convertELOToSQLITEButton;
+	}
+
+	public JLabel getConvertELOToSQLITELabel() {
+		return convertELOToSQLITELabel;
+	}
+
+	public void setConvertELOToSQLITELabel(JLabel convertELOToSQLITELabel) {
+		this.convertELOToSQLITELabel = convertELOToSQLITELabel;
+	}
+
+	public JButton getConvertDWZToSQLITEButton() {
+		return convertDWZToSQLITEButton;
+	}
+
+	public void setConvertDWZToSQLITEButton(JButton convertDWZToSQLITEButton) {
+		this.convertDWZToSQLITEButton = convertDWZToSQLITEButton;
+	}
+
+	public JLabel getConvertDWZToSQLITELabel() {
+		return convertDWZToSQLITELabel;
+	}
+
+	public void setConvertDWZToSQLITELabel(JLabel convertDWZToSQLITELabel) {
+		this.convertDWZToSQLITELabel = convertDWZToSQLITELabel;
 	}
 
 }

@@ -242,8 +242,11 @@ public class SQLPlayerControl {
 
 	public Boolean playerFideExist(Player neuerSpieler) throws SQLException {
 		Boolean exist = false;
-		exist = mySQLELODataDAO.playerExist(neuerSpieler.getEloData().getFideid());
+		exist = mySQLDWZDataDAO.playerFideExist(neuerSpieler.getDwzData());
 
+		if (exist == false) {
+			exist = mySQLELODataDAO.playerExist(neuerSpieler.getEloData().getFideid());
+		}
 		return exist;
 	}
 }

@@ -107,14 +107,12 @@ public class ActionListenerFileMenuControl implements ActionListener {
 							prop.writeProperties();
 						} catch (IOException e) {
 							JOptionPane.showMessageDialog(null, Messages.getString("NaviController.13"));
-							// $NON-NLS-1$
 						} catch (SQLException e) {
 							ExceptionHandler eh = new ExceptionHandler(mainControl);
 							eh.fileSQLError(e.getMessage());
 						}
 					} else if (sf == JFileChooser.CANCEL_OPTION) {
 						JOptionPane.showMessageDialog(null, Messages.getString("NaviController.14"));
-						// $NON-NLS-1$
 					}
 				}
 			}

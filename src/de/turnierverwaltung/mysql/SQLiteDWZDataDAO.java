@@ -203,32 +203,32 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 		return returnStatement;
 	}
 
-//	@Override
-//	public boolean playerFideExist(DWZData dwzData) {
-//		
-//		String sql = "Select idSpieler from dwz_spieler where FIDE_ID LIKE '" + dwzData.getCsvFIDE_ID() + "';";
-//
-//		int id = -1;
-//		Statement stmt;
-//		if (this.dbConnect != null) {
-//
-//			try {
-//				stmt = this.dbConnect.createStatement();
-//				ResultSet rs = stmt.executeQuery(sql);
-//				while (rs.next()) {
-//					id = rs.getInt("idSpieler");
-//
-//				}
-//				stmt.close();
-//			} catch (SQLException e) {
-//				id = -1;
-//			}
-//		}
-//		Boolean returnStatement = false;
-//		if (id > 0) {
-//			returnStatement = true;
-//		}
-//
-//		return returnStatement;
-//	}
+	@Override
+	public boolean playerFideExist(DWZData dwzData) {
+		
+		String sql = "Select idSpieler from dwz_spieler where FIDE_ID LIKE '" + dwzData.getCsvFIDE_ID() + "';";
+
+		int id = -1;
+		Statement stmt;
+		if (this.dbConnect != null) {
+
+			try {
+				stmt = this.dbConnect.createStatement();
+				ResultSet rs = stmt.executeQuery(sql);
+				while (rs.next()) {
+					id = rs.getInt("idSpieler");
+
+				}
+				stmt.close();
+			} catch (SQLException e) {
+				id = -1;
+			}
+		}
+		Boolean returnStatement = false;
+		if (id > 0) {
+			returnStatement = true;
+		}
+
+		return returnStatement;
+	}
 }
