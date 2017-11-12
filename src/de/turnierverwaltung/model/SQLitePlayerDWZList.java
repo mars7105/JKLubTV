@@ -21,6 +21,7 @@ public class SQLitePlayerDWZList {
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		dwzDataDAO = daoFactory.getDWZDataDAO();
 		ArrayList<DWZData> dwzDataArray = null;
+
 		try {
 			dwzDataArray = dwzDataDAO.getPlayerOfVerein(zps);
 		} catch (SQLException e) {
@@ -29,8 +30,8 @@ public class SQLitePlayerDWZList {
 		} finally {
 			SQLiteDAOFactory.setDB_PATH(oldPath);
 		}
-
 		return dwzDataArray;
+
 	}
 
 	public ArrayList<DWZData> getPlayersByName(String pathToPlayersCSV, String eingabe) {

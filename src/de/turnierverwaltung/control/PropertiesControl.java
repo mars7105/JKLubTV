@@ -175,6 +175,7 @@ public class PropertiesControl {
 			prop.setProperty(SPIELERPROTAB, "1");
 			saveChanges = true;
 		}
+		
 		if (mainControl.getLanguagePropertiesControl().checkLanguage() == false) {
 			saveChanges = true;
 		}
@@ -247,6 +248,7 @@ public class PropertiesControl {
 			prop.setProperty(PDFLINKS, FALSE);
 			saveChanges = true;
 		}
+		
 		if (!(prop.getProperty(HTMLTOCLIPBOARD).equals(TRUE) || prop.getProperty(HTMLTOCLIPBOARD).equals(FALSE))) {
 			prop.setProperty(HTMLTOCLIPBOARD, FALSE);
 			saveChanges = true;

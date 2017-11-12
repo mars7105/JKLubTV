@@ -98,6 +98,8 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 				String zps = items.get(index).getCsvZPS();
 
 				dewisDialogControl.makeDWZListe(zps);
+				mainControl.getPropertiesControl().setZPS(zps);
+				mainControl.getPropertiesControl().writeProperties();
 
 			}
 
@@ -105,7 +107,6 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 
 		if (arg0.getSource().equals(dewisDialogControl.getDialog().getVereinsSucheButton())) {
 			String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
-
 			dewisDialogControl.makeDWZListe(zps);
 
 		}

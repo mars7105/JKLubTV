@@ -22,7 +22,7 @@ public interface DWZDataDAO {
 
 	public void flush(ArrayList<DWZData> dwzPlayer) throws SQLException;
 
-	public ArrayList<DWZData> getPlayerOfVerein(String zps) throws SQLException;
+	public ArrayList<DWZData> getPlayerOfVerein(String zps) throws SQLException ;
 
 	public ArrayList<DWZData> getDWZDataByName(String eingabe) throws SQLException;
 }

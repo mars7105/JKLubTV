@@ -160,7 +160,7 @@ public class ActionListenerSettingsControl {
 				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 				final JFileChooser fc = new JFileChooser(path);
-				FileFilter filter = new FileNameExtensionFilter("CSV file", "csv", "CSV");
+				FileFilter filter = new FileNameExtensionFilter("CSV file", "csv", "CSV", "sqlite");
 
 				fc.setFileFilter(filter);
 				int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
@@ -183,7 +183,7 @@ public class ActionListenerSettingsControl {
 				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 				final JFileChooser fc = new JFileChooser(path);
-				FileFilter filter = new FileNameExtensionFilter("TXT file", "txt", "TXT");
+				FileFilter filter = new FileNameExtensionFilter("TXT file", "txt", "TXT", "sqlite");
 
 				fc.setFileFilter(filter);
 				int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
@@ -262,24 +262,50 @@ public class ActionListenerSettingsControl {
 
 			}
 		});
-		esControl.getEigenschaftenView().getConvertELOToSQLITEButton().addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				ELOListToSQLITEControl eloL = new ELOListToSQLITEControl(mainControl);
-				eloL.convertELOListToSQLITE();
+		String filename = mainControl.getPropertiesControl().getPathToPlayersELO();
+		int positionEXT = filename.lastIndexOf('.');
+
+		if (positionEXT > 0) {
+			String newFile = filename.substring(positionEXT);
+			if (newFile.equals(".sqlite")) {
+				esControl.getEigenschaftenView().getConvertELOToSQLITEButton().setEnabled(false);
+			} else {
+				esControl.getEigenschaftenView().getConvertELOToSQLITEButton().setEnabled(true);
+				esControl.getEigenschaftenView().getConvertELOToSQLITEButton().addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						ELOListToSQLITEControl eloL = new ELOListToSQLITEControl(mainControl);
+						eloL.convertELOListToSQLITE();
+
+					}
+				});
 
 			}
-		});
-		esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().addActionListener(new ActionListener() {
+		}
 
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				DWZListToSQLITEControl dwzL = new DWZListToSQLITEControl(mainControl);
-				dwzL.convertDWZListToSQLITE();
+		filename = mainControl.getPropertiesControl().getPathToPlayersCSV();
+		positionEXT = filename.lastIndexOf('.');
+		if (positionEXT > 0) {
+			String newFile = filename.substring(positionEXT);
+			if (newFile.equals(".sqlite")) {
+				esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().setEnabled(false);
+			} else {
+				esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().setEnabled(true);
+				esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						DWZListToSQLITEControl dwzL = new DWZListToSQLITEControl(mainControl);
+						dwzL.convertDWZListToSQLITE();
+
+					}
+				});
 
 			}
-		});
+		}
+
 	}
-	
+
 }
