@@ -19,6 +19,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
+import de.turnierverwaltung.model.DWZData;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
@@ -239,13 +240,22 @@ public class SQLPlayerControl {
 		return exist;
 	}
 
-	public Boolean playerFideExist(Player neuerSpieler) throws SQLException {
+
+	public Boolean playerFideExist(int fideId) {
 		Boolean exist = false;
-		exist = mySQLDWZDataDAO.playerFideExist(neuerSpieler.getDwzData());
+		exist = mySQLDWZDataDAO.playerFideExist(fideId);
 
 		if (exist == false) {
-			exist = mySQLELODataDAO.playerExist(neuerSpieler.getEloData().getFideid());
+			exist = mySQLELODataDAO.playerExist(fideId);
 		}
+		return exist;
+	}
+
+	public boolean playerExist(DWZData tmp) {
+		boolean exist = false;
+
+		exist = mySQLDWZDataDAO.playerExist(tmp);
+
 		return exist;
 	}
 }

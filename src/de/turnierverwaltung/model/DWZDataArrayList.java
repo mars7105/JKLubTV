@@ -68,7 +68,13 @@ public class DWZDataArrayList {
 					dwzData.setCsvZPS(csvZPS);
 					dwzData.setCsvMgl_Nr(csvMgl_Nr);
 					dwzData.setCsvStatus(csvStatus);
-					dwzData.setCsvSpielername(csvSpielername);
+					
+					String[] getrennt = csvSpielername.split(",",2);
+					String name = csvSpielername;
+					if (getrennt.length >= 1) {
+						name = (getrennt[1] + " " + getrennt[0]).replaceAll(",", "").trim();
+					}
+					dwzData.setCsvSpielername(name);
 					dwzData.setCsvGeschlecht(csvGeschlecht);
 					dwzData.setCsvSpielberechtigung(csvSpielberechtigung);
 					try {

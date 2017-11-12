@@ -44,8 +44,8 @@ public final class ReadTXTFile {
 					}
 
 					String name = "";
-					String[] nameString = row[1].split("\\s");
-					if (nameString.length > 1) {
+					String[] nameString = row[1].split("\\s",2);
+					if (nameString.length >= 1) {
 						name = (nameString[1] + " " + nameString[0]).replaceAll(",", "").trim();
 					}
 

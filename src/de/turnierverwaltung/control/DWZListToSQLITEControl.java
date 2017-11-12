@@ -64,7 +64,7 @@ public class DWZListToSQLITEControl {
 						Messages.getString("SpielerTableExportController.4"), //$NON-NLS-1$
 						JOptionPane.INFORMATION_MESSAGE);
 				SQLiteDAOFactory.setDB_PATH(prop.getPathToDatabase());
-
+				prop.setPathToPlayersCSV(newFile);
 			}
 
 		} catch (IOException e) {

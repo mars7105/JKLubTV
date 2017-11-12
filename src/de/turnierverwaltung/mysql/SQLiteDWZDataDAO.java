@@ -205,9 +205,9 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 	}
 
 	@Override
-	public boolean playerFideExist(DWZData dwzData) {
+	public boolean playerFideExist(int fideId) {
 
-		String sql = "Select idSpieler from dwz_spieler where FIDE_ID LIKE '" + dwzData.getCsvFIDE_ID() + "';";
+		String sql = "Select idSpieler from dwz_spieler where FIDE_ID LIKE '" + fideId + "';";
 
 		int id = -1;
 		Statement stmt;
@@ -260,13 +260,100 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 				preStm.setString(14, dwzData.getCsvFIDE_Land());
 				preStm.setInt(15, dwzData.getSpielerId());
 				preStm.addBatch();
-				this.dbConnect.setAutoCommit(false);
-				preStm.executeBatch();
-				this.dbConnect.setAutoCommit(true);
-			}
 
+			}
+			this.dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			preStm.close();
 		}
 
 	}
 
+	@Override
+	public ArrayList<DWZData> getPlayerOfVerein(String zps) throws SQLException {
+		String sql = "Select * from dwz_spieler WHERE ZPS LIKE " + zps + " ORDER BY Spielername ASC;";
+		
+		ArrayList<DWZData> dwzDataArray = new ArrayList<DWZData>();
+		Statement stmt;
+		if (this.dbConnect != null) {
+
+			stmt = this.dbConnect.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				DWZData dwzData = new DWZData();
+				int sId = -1;
+				String spielerid = rs.getString("idSpieler");
+				try {
+					sId = Integer.parseInt(spielerid);
+				} catch (NumberFormatException e) {
+					sId = -1;
+				}
+				dwzData.setSpielerId(sId);
+				dwzData.setCsvZPS(rs.getString("ZPS"));
+				dwzData.setCsvMgl_Nr(rs.getString("Mgl_Nr"));
+				dwzData.setCsvStatus(rs.getString("Status"));
+				dwzData.setCsvSpielername(rs.getString("Spielername"));
+				dwzData.setCsvGeschlecht(rs.getString("Geschlecht"));
+				dwzData.setCsvSpielberechtigung(rs.getString("Spielberechtigung"));
+				dwzData.setCsvGeburtsjahr(rs.getInt("Geburtsjahr"));
+				dwzData.setCsvLetzte_Auswertung(rs.getInt("Letzte_Auswertung"));
+				dwzData.setCsvDWZ(rs.getInt("DWZ"));
+				dwzData.setCsvIndex(rs.getInt("DWZ_Index"));
+				dwzData.setCsvFIDE_Elo(rs.getInt("FIDE_Elo"));
+				dwzData.setCsvFIDE_Titel(rs.getString("FIDE_Titel"));
+				dwzData.setCsvFIDE_ID(rs.getInt("FIDE_ID"));
+				dwzData.setCsvFIDE_Land(rs.getString("FIDE_Land"));
+				dwzDataArray.add(dwzData);
+				
+			}
+
+			stmt.close();
+
+		}
+		return dwzDataArray;
+	}
+	@Override
+	public ArrayList<DWZData> getDWZDataByName(String eingabe) throws SQLException {
+		String sql = "Select * from dwz_spieler WHERE Spielername LIKE '%" + eingabe + "%' LIMIT 20;";
+		DWZData dwzData = new DWZData();
+		ArrayList<DWZData> dwzDataArray = new ArrayList<DWZData>();
+
+		Statement stmt;
+		if (this.dbConnect != null) {
+
+			stmt = this.dbConnect.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+
+				int sId = -1;
+				String spielerid = rs.getString("idSpieler");
+				try {
+					sId = Integer.parseInt(spielerid);
+				} catch (NumberFormatException e) {
+					sId = -1;
+				}
+				dwzData.setSpielerId(sId);
+				dwzData.setCsvZPS(rs.getString("ZPS"));
+				dwzData.setCsvMgl_Nr(rs.getString("Mgl_Nr"));
+				dwzData.setCsvStatus(rs.getString("Status"));
+				dwzData.setCsvSpielername(rs.getString("Spielername"));
+				dwzData.setCsvGeschlecht(rs.getString("Geschlecht"));
+				dwzData.setCsvSpielberechtigung(rs.getString("Spielberechtigung"));
+				dwzData.setCsvGeburtsjahr(rs.getInt("Geburtsjahr"));
+				dwzData.setCsvLetzte_Auswertung(rs.getInt("Letzte_Auswertung"));
+				dwzData.setCsvDWZ(rs.getInt("DWZ"));
+				dwzData.setCsvIndex(rs.getInt("DWZ_Index"));
+				dwzData.setCsvFIDE_Elo(rs.getInt("FIDE_Elo"));
+				dwzData.setCsvFIDE_Titel(rs.getString("FIDE_Titel"));
+				dwzData.setCsvFIDE_ID(rs.getInt("FIDE_ID"));
+				dwzData.setCsvFIDE_Land(rs.getString("FIDE_Land"));
+				dwzDataArray.add(dwzData);
+			}
+
+			stmt.close();
+
+		}
+		return dwzDataArray;
+	}
 }

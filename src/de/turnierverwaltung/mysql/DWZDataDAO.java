@@ -18,8 +18,11 @@ public interface DWZDataDAO {
 
 	public boolean playerExist(DWZData dwzData);
 
-	public boolean playerFideExist(DWZData dwzData);
+	public boolean playerFideExist(int fideId);
 
 	public void flush(ArrayList<DWZData> dwzPlayer) throws SQLException;
 
+	public ArrayList<DWZData> getPlayerOfVerein(String zps) throws SQLException;
+
+	public ArrayList<DWZData> getDWZDataByName(String eingabe) throws SQLException;
 }

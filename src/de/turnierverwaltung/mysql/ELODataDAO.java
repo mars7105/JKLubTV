@@ -20,4 +20,7 @@ public interface ELODataDAO {
 	public boolean playerExist(int fideId);
 
 	public void flush(ArrayList<ELOPlayer> eloDataArray) throws SQLException;
+
+	public ArrayList<ELOData> getELODataByName(String eingabe) throws SQLException;
+
 }

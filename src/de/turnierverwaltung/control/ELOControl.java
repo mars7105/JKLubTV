@@ -3,7 +3,7 @@ package de.turnierverwaltung.control;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
-import java.sql.SQLException;
+
 
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
@@ -26,10 +26,13 @@ import java.util.ListIterator;
 
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+
 import de.turnierverwaltung.model.CSVVereine;
+import de.turnierverwaltung.model.ELOData;
 import de.turnierverwaltung.model.ELOPlayer;
 import de.turnierverwaltung.model.ELOPlayerList;
 import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.model.SQLitePlayerELOList;
 import de.turnierverwaltung.view.ELODialogView;
 import de.turnierverwaltung.view.ELOPlayerView;
 
@@ -47,6 +50,8 @@ public class ELOControl {
 	private ArrayList<ELOPlayer> playerlist;
 	private ELOPlayerList csvplayerlist;
 	private Boolean runOnce;
+	private SQLitePlayerELOList sqlitePlayerlist;
+	private String playerELOList;
 
 	/**
 	 * 
@@ -59,10 +64,23 @@ public class ELOControl {
 		this.mainControl = mainControl;
 		eloFile = mainControl.getPropertiesControl().checkPathToELOXML();
 		if (eloFile == true) {
-			csvplayerlist = new ELOPlayerList();
+			playerELOList = mainControl.getPropertiesControl().getPathToPlayersELO();
+			int positionEXT = playerELOList.lastIndexOf('.');
+			String extender = ""; //$NON-NLS-1$
+			if (positionEXT > 0) {
+				extender = playerELOList.substring(positionEXT);
+				if (extender.equals(".sqlite")) {
 
-			csvplayerlist.readEloList(mainControl.getPropertiesControl().getPathToPlayersELO());
-			playerlist = csvplayerlist.getPlayerList();
+					sqlitePlayerlist = new SQLitePlayerELOList();
+					// dwzDataArray = sqlitePlayerlist.getPlayer(filename, zps);
+				} else {
+					csvplayerlist = new ELOPlayerList();
+
+					csvplayerlist.readEloList(mainControl.getPropertiesControl().getPathToPlayersELO());
+					playerlist = csvplayerlist.getPlayerList();
+				}
+			}
+
 		} else {
 			errorHandler();
 		}
@@ -73,7 +91,7 @@ public class ELOControl {
 	* 
 	*/
 	public void makeDialog() {
-		if (playerlist != null) {
+		if (playerlist != null || sqlitePlayerlist != null) {
 			if (dialog == null) {
 
 				dialog = new ELODialogView();
@@ -92,7 +110,7 @@ public class ELOControl {
 	}
 
 	public void makePlayerSearchList() {
-		if (playerlist != null) {
+		if (playerlist != null || sqlitePlayerlist != null) {
 			eloDialogActionListenerControl = new ELOActionListenerControl(this.mainControl, this);
 			dialog.getPlayerSearchView().getOkButton().addActionListener(eloDialogActionListenerControl);
 			dialog.getPlayerSearchView().getCancelButton().addActionListener(eloDialogActionListenerControl);
@@ -113,37 +131,57 @@ public class ELOControl {
 					dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
 					searchplayerlist = new ArrayList<Player>();
 					String eingabe = spielerSearchTextField.getText().toUpperCase();
-					ListIterator<ELOPlayer> li = playerlist.listIterator();
-					int counter = 0;
-					while (li.hasNext() && counter < 20) {
-						Player tmp = li.next().getPlayer();
-						tmp.extractNameToForenameAndSurename();
-						String surname = "";
-						String forename = "";
-						String name = "";
-						if (tmp.getSurname().length() >= eingabe.length()) {
-							surname = tmp.getSurname().substring(0, eingabe.length()).toUpperCase();
+					if (playerlist != null) {
+						ListIterator<ELOPlayer> li = playerlist.listIterator();
+
+						int counter = 0;
+						while (li.hasNext() && counter < 20) {
+							Player tmp = li.next().getPlayer();
+							tmp.extractNameToForenameAndSurename();
+							String surname = "";
+							String forename = "";
+							String name = "";
+							if (tmp.getSurname().length() >= eingabe.length()) {
+								surname = tmp.getSurname().substring(0, eingabe.length()).toUpperCase();
+							}
+							if (tmp.getForename().length() >= eingabe.length()) {
+								forename = tmp.getForename().substring(0, eingabe.length()).toUpperCase();
+							}
+							if (tmp.getName().length() >= eingabe.length()) {
+								name = tmp.getName().substring(0, eingabe.length()).toUpperCase();
+							}
+							if (eingabe.equals(surname) || eingabe.equals(forename) || eingabe.equals(name)) {
+								if (playerExist(tmp)) {
+									spielerSearchPanelList.makeSpielerZeile(tmp, 2);
+								} else {
+									spielerSearchPanelList.makeSpielerZeile(tmp, 0);
+								}
+
+								searchplayerlist.add(tmp);
+
+								counter++;
+							}
+
 						}
-						if (tmp.getForename().length() >= eingabe.length()) {
-							forename = tmp.getForename().substring(0, eingabe.length()).toUpperCase();
-						}
-						if (tmp.getName().length() >= eingabe.length()) {
-							name = tmp.getName().substring(0, eingabe.length()).toUpperCase();
-						}
-						if (eingabe.equals(surname) || eingabe.equals(forename) || eingabe.equals(name)) {
+					}
+					if (sqlitePlayerlist != null) {
+
+						ArrayList<ELOData> eloPlayer = sqlitePlayerlist.getPlayersByName(playerELOList, eingabe);
+						ListIterator<ELOData> li = eloPlayer.listIterator();
+						while (li.hasNext()) {
+							ELOData tmp = li.next();
+
 							if (playerExist(tmp)) {
 								spielerSearchPanelList.makeSpielerZeile(tmp, 2);
 							} else {
 								spielerSearchPanelList.makeSpielerZeile(tmp, 0);
 							}
+							Player player = new Player();
+							player.setEloData(tmp);
+							searchplayerlist.add(player);
 
-							searchplayerlist.add(tmp);
-
-							counter++;
 						}
-
 					}
-
 					spielerSearchPanelList.makeList();
 					spielerSearchPanelList.updateUI();
 					spielerSearchPanelList.getList().addListSelectionListener(eloDialogActionListenerControl);
@@ -174,14 +212,18 @@ public class ELOControl {
 	private boolean playerExist(Player neuerSpieler) {
 		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
 		Boolean playerExist = false;
-		try {
-			neuerSpieler.getDwzData().setCsvFIDE_ID(neuerSpieler.getEloData().getFideid());
-			playerExist = spielerTableControl.playerFideExist(neuerSpieler);
 
-		} catch (SQLException e) {
-			ExceptionHandler eh = new ExceptionHandler(mainControl);
-			eh.fileSQLError(e.getMessage());
-		}
+		neuerSpieler.getDwzData().setCsvFIDE_ID(neuerSpieler.getEloData().getFideid());
+		playerExist = spielerTableControl.playerFideExist(neuerSpieler.getEloData().getFideid());
+
+		return playerExist;
+	}
+
+	private boolean playerExist(ELOData tmp) {
+		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
+
+		Boolean playerExist = false;
+		playerExist = spielerTableControl.playerFideExist(tmp.getFideid());
 		return playerExist;
 	}
 

@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import de.turnierverwaltung.model.ELOData;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.TournamentConstants;
 
@@ -137,6 +138,25 @@ public class ELOPlayerView extends JPanel {
 
 	public void setListModel(DefaultListModel<ListItem> listModel) {
 		this.listModel = listModel;
+	}
+
+	public void makeSpielerZeile(ELOData tmp, int iconnumber) {
+		ListItem playerItem = null;
+		if (iconnumber == 0) {
+			playerItem = new ListItem(inserIcon,
+					tmp.getName() + " " + Messages.getString("ELOPlayerView.0") + tmp.getRating());
+		}
+		if (iconnumber == 1) {
+			playerItem = new ListItem(insertIcon2,
+					tmp.getName() + " " + Messages.getString("ELOPlayerView.0") + tmp.getRating());
+		}
+		if (iconnumber == 2) {
+			playerItem = new ListItem(insertIcon3,
+					tmp.getName() + " " + Messages.getString("ELOPlayerView.0") + tmp.getRating());
+
+		}
+		listModel.addElement(playerItem);
+
 	}
 
 }

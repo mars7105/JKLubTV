@@ -29,6 +29,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
 
+import de.turnierverwaltung.model.DWZData;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.TournamentConstants;
 
@@ -42,7 +43,7 @@ public class DSBDWZPlayerView extends JPanel {
 	private JScrollPane scrollPane;
 	private DefaultListModel<ListItem> listModel;
 	private JList<ListItem> list;
-	private int windowWidth; 
+	private int windowWidth;
 	private int windowHeight;
 	private ImageIcon inserIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user-offline.png")));
@@ -97,10 +98,9 @@ public class DSBDWZPlayerView extends JPanel {
 		if (iconnumber == 2) {
 			playerItem = new ListItem(insertIcon3,
 					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
-			
+
 		}
-		listModel.addElement(playerItem); 
-		
+		listModel.addElement(playerItem);
 
 	}
 
@@ -139,5 +139,24 @@ public class DSBDWZPlayerView extends JPanel {
 		this.listModel = listModel;
 	}
 
+	public void makeSpielerZeile(DWZData dwzData, int iconnumber) {
+		
+		ListItem playerItem = null;
+		if (iconnumber == 0) {
+			playerItem = new ListItem(inserIcon,
+					dwzData.getCsvSpielername() + Messages.getString("SpielerDewisView.2") + dwzData.getCsvDWZ());
+		}
+		if (iconnumber == 1) {
+			playerItem = new ListItem(insertIcon2,
+					dwzData.getCsvSpielername() + Messages.getString("SpielerDewisView.2") + dwzData.getCsvDWZ());
+		}
+		if (iconnumber == 2) {
+			playerItem = new ListItem(insertIcon3,
+					dwzData.getCsvSpielername() + Messages.getString("SpielerDewisView.2") + dwzData.getCsvDWZ());
+
+		}
+		listModel.addElement(playerItem);
+
+	}
 
 }

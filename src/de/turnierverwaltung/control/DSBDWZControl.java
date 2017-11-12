@@ -37,7 +37,9 @@ import de.turnierverwaltung.model.CSVPlayerList;
 import de.turnierverwaltung.model.CSVVereine;
 import de.turnierverwaltung.model.CSVVereineList;
 import de.turnierverwaltung.model.DSBDWZClub;
+import de.turnierverwaltung.model.DWZData;
 import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.model.SQLitePlayerDWZList;
 import de.turnierverwaltung.model.SortCSVVereine;
 import de.turnierverwaltung.model.SortSurname;
 import de.turnierverwaltung.view.DSBDWZDialogView;
@@ -56,6 +58,8 @@ public class DSBDWZControl {
 	private DSBDWZPlayerView spielerSearchPanelList;
 	private ArrayList<CSVPlayer> playerlist;
 	private ArrayList<Player> searchplayerlist;
+	private ArrayList<DWZData> dwzDataArray;
+	private SQLitePlayerDWZList sqlitePlayerlist;
 
 	/**
 	 * 
@@ -81,12 +85,24 @@ public class DSBDWZControl {
 		try {
 			spielerDewisView = new DSBDWZPlayerView();
 			DSBDWZClub verein = null;
-			players = new ArrayList<Player>();
+			players = null;
+			dwzDataArray = null;
 			if (csvFiles == true) {
+				String filename = mainControl.getPropertiesControl().getPathToPlayersCSV();
+				int positionEXT = filename.lastIndexOf('.');
+				String extender = ""; //$NON-NLS-1$
+				if (positionEXT > 0) {
+					extender = filename.substring(positionEXT);
+					if (extender.equals(".sqlite")) {
 
-				CSVPlayerList csvplayerlist = new CSVPlayerList();
-				csvplayerlist.loadPlayerCSVList(mainControl.getPropertiesControl().getPathToPlayersCSV());
-				players = csvplayerlist.getPlayerOfVerein(zps);
+						sqlitePlayerlist = new SQLitePlayerDWZList();
+						dwzDataArray = sqlitePlayerlist.getPlayerOfVerein(filename, zps);
+					} else {
+						CSVPlayerList csvplayerlist = new CSVPlayerList();
+						csvplayerlist.loadPlayerCSVList(filename);
+						players = csvplayerlist.getPlayerOfVerein(zps);
+					}
+				}
 
 			} else {
 				verein = new DSBDWZClub(zps);
@@ -111,22 +127,56 @@ public class DSBDWZControl {
 					Boolean foundPlayer = false;
 					while (li.hasNext()) {
 						Player tmp = li.next();
-						try {
-							String tmpzps = tmp.getDwzData().getCsvZPS();
-							String tmpmgl = tmp.getDwzData().getCsvMgl_Nr();
-							String playerzps = player.getDwzData().getCsvZPS();
-							String playermgl = player.getDwzData().getCsvMgl_Nr();
-							if (tmpzps.equals(playerzps) && tmpmgl.equals(playermgl)) {
-								spielerDewisView.makeSpielerZeile(player, 2);
-								foundPlayer = true;
 
-							}
-						} catch (NumberFormatException e) {
+						String tmpzps = tmp.getDwzData().getCsvZPS();
+						String tmpmgl = tmp.getDwzData().getCsvMgl_Nr();
+						String playerzps = player.getDwzData().getCsvZPS();
+						String playermgl = player.getDwzData().getCsvMgl_Nr();
+						if (tmpzps.equals(playerzps) && tmpmgl.equals(playermgl)) {
+							spielerDewisView.makeSpielerZeile(player, 2);
+							foundPlayer = true;
 
 						}
+
 					}
 					if (foundPlayer == false) {
 						spielerDewisView.makeSpielerZeile(player, 0);
+					}
+
+				}
+				spielerDewisView.makeList();
+				spielerDewisView.updateUI();
+				spielerDewisView.getList().addListSelectionListener(dewisDialogActionListenerControl);
+				dialog.setDsbPanel(spielerDewisView);
+				mainControl.getPropertiesControl().setZPS(zps);
+				mainControl.getPropertiesControl().writeProperties();
+				// dialog.getUpdateButton().setEnabled(true);
+			}
+			if (dwzDataArray != null) {
+				// Collections.sort(players, new SortSurname());
+
+				ListIterator<DWZData> list = dwzDataArray.listIterator();
+				while (list.hasNext()) {
+
+					DWZData dwzData = list.next();
+					ListIterator<Player> li = spielerListe.listIterator();
+					Boolean foundPlayer = false;
+					while (li.hasNext()) {
+						Player tmp = li.next();
+
+						String tmpzps = tmp.getDwzData().getCsvZPS();
+						String tmpmgl = tmp.getDwzData().getCsvMgl_Nr();
+						String playerzps = dwzData.getCsvZPS();
+						String playermgl = dwzData.getCsvMgl_Nr();
+						if (tmpzps.equals(playerzps) && tmpmgl.equals(playermgl)) {
+							spielerDewisView.makeSpielerZeile(dwzData, 2);
+							foundPlayer = true;
+
+						}
+
+					}
+					if (foundPlayer == false) {
+						spielerDewisView.makeSpielerZeile(dwzData, 0);
 					}
 
 				}
@@ -143,7 +193,6 @@ public class DSBDWZControl {
 				JPanel noItemPanel = new JPanel();
 				noItemPanel.add(noItemLabel);
 				dialog.setDsbPanel(noItemPanel);
-
 			}
 
 			dialog.refresh();
@@ -156,88 +205,149 @@ public class DSBDWZControl {
 
 	public void makePlayerSearchList() {
 		try {
+			String filename = mainControl.getPropertiesControl().getPathToPlayersCSV();
+			int positionEXT = filename.lastIndexOf('.');
+			String extender = ""; //$NON-NLS-1$
+			if (positionEXT > 0) {
+				extender = filename.substring(positionEXT);
+
+			}
+
 			if (csvFiles == true) {
-				CSVPlayerArrayList csvplayerlist = new CSVPlayerArrayList();
+				if (extender.equals(".sqlite") == false) {
+					CSVPlayerArrayList csvplayerlist = new CSVPlayerArrayList();
 
-				csvplayerlist.loadPlayerCSVList(mainControl.getPropertiesControl().getPathToPlayersCSV());
+					csvplayerlist.loadPlayerCSVList(mainControl.getPropertiesControl().getPathToPlayersCSV());
 
-				playerlist = csvplayerlist.getAllPlayer();
-				ActionListenerPlayerSearchControl psc = new ActionListenerPlayerSearchControl(mainControl, this);
-				spielerSearchTextField = dialog.getPlayerSearchView().getSearchField();
-				dialog.getPlayerSearchView().getOkButton().addActionListener(psc);
-				dialog.getPlayerSearchView().getCancelButton().addActionListener(psc);
-				spielerSearchTextField.addKeyListener(new KeyListener() {
+					playerlist = csvplayerlist.getAllPlayer();
+					ActionListenerPlayerSearchControl psc = new ActionListenerPlayerSearchControl(mainControl, this);
+					spielerSearchTextField = dialog.getPlayerSearchView().getSearchField();
+					dialog.getPlayerSearchView().getOkButton().addActionListener(psc);
+					dialog.getPlayerSearchView().getCancelButton().addActionListener(psc);
+					spielerSearchTextField.addKeyListener(new KeyListener() {
 
-					@Override
-					public void keyPressed(KeyEvent e) {
-
-					}
-
-					@Override
-					public void keyReleased(KeyEvent e) {
-
-						spielerSearchPanelList = new DSBDWZPlayerView();
-						dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
-						searchplayerlist = new ArrayList<Player>();
-						String eingabe = spielerSearchTextField.getText().toUpperCase();
-						ListIterator<CSVPlayer> li = playerlist.listIterator();
-						int counter = 0;
-						while (li.hasNext() && counter < 20) {
-							Player csvPlayer = li.next().getPlayer();
-							String surname = "";
-							String forename = "";
-							String name = "";
-							if (csvPlayer.getSurname().length() >= eingabe.length()) {
-								surname = csvPlayer.getSurname().substring(0, eingabe.length()).toUpperCase();
-							}
-							if (csvPlayer.getForename().length() >= eingabe.length()) {
-								forename = csvPlayer.getForename().substring(0, eingabe.length()).toUpperCase();
-							}
-							if (csvPlayer.getName().length() >= eingabe.length()) {
-								name = csvPlayer.getName().substring(0, eingabe.length()).toUpperCase();
-							}
-							if (eingabe.equals(surname) || eingabe.equals(forename) || eingabe.equals(name)) {
-
-								ListIterator<Player> list = spielerListe.listIterator();
-								Boolean foundPlayer = false;
-								while (list.hasNext()) {
-									Player temp = list.next();
-									try {
-										String tmpzps = temp.getDwzData().getCsvZPS();
-										String tmpmgl = temp.getDwzData().getCsvMgl_Nr();
-										String playerzps = csvPlayer.getDwzData().getCsvZPS();
-										String playermgl = csvPlayer.getDwzData().getCsvMgl_Nr();
-										if (tmpzps.equals(playerzps) && tmpmgl.equals(playermgl)) {
-											spielerSearchPanelList.makeSpielerZeile(csvPlayer, 2);
-											searchplayerlist.add(csvPlayer);
-											foundPlayer = true;
-
-										}
-									} catch (NumberFormatException e2) {
-
-									}
-								}
-
-								if (foundPlayer == false) {
-									spielerSearchPanelList.makeSpielerZeile(csvPlayer, 0);
-									searchplayerlist.add(csvPlayer);
-								}
-
-								counter++;
-							}
+						@Override
+						public void keyPressed(KeyEvent e) {
 
 						}
-						spielerSearchPanelList.makeList();
-						spielerSearchPanelList.updateUI();
-						spielerSearchPanelList.getList().addListSelectionListener(psc);
 
-					}
+						@Override
+						public void keyReleased(KeyEvent e) {
 
-					@Override
-					public void keyTyped(KeyEvent e) {
+							spielerSearchPanelList = new DSBDWZPlayerView();
+							dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
+							searchplayerlist = new ArrayList<Player>();
+							String eingabe = spielerSearchTextField.getText().toUpperCase();
+							ListIterator<CSVPlayer> li = playerlist.listIterator();
+							int counter = 0;
+							while (li.hasNext() && counter < 20) {
+								Player csvPlayer = li.next().getPlayer();
+								String surname = "";
+								String forename = "";
+								String name = "";
+								if (csvPlayer.getSurname().length() >= eingabe.length()) {
+									surname = csvPlayer.getSurname().substring(0, eingabe.length()).toUpperCase();
+								}
+								if (csvPlayer.getForename().length() >= eingabe.length()) {
+									forename = csvPlayer.getForename().substring(0, eingabe.length()).toUpperCase();
+								}
+								if (csvPlayer.getName().length() >= eingabe.length()) {
+									name = csvPlayer.getName().substring(0, eingabe.length()).toUpperCase();
+								}
+								if (eingabe.equals(surname) || eingabe.equals(forename) || eingabe.equals(name)) {
 
-					}
-				});
+									ListIterator<Player> list = spielerListe.listIterator();
+									Boolean foundPlayer = false;
+									while (list.hasNext()) {
+										Player temp = list.next();
+										try {
+											String tmpzps = temp.getDwzData().getCsvZPS();
+											String tmpmgl = temp.getDwzData().getCsvMgl_Nr();
+											String playerzps = csvPlayer.getDwzData().getCsvZPS();
+											String playermgl = csvPlayer.getDwzData().getCsvMgl_Nr();
+											if (tmpzps.equals(playerzps) && tmpmgl.equals(playermgl)) {
+												spielerSearchPanelList.makeSpielerZeile(csvPlayer, 2);
+												searchplayerlist.add(csvPlayer);
+												foundPlayer = true;
+
+											}
+										} catch (NumberFormatException e2) {
+
+										}
+									}
+
+									if (foundPlayer == false) {
+										spielerSearchPanelList.makeSpielerZeile(csvPlayer, 0);
+										searchplayerlist.add(csvPlayer);
+									}
+
+									counter++;
+								}
+
+							}
+							spielerSearchPanelList.makeList();
+							spielerSearchPanelList.updateUI();
+							spielerSearchPanelList.getList().addListSelectionListener(psc);
+
+						}
+
+						@Override
+						public void keyTyped(KeyEvent e) {
+
+						}
+					});
+				} else {
+					// CSVPlayerArrayList csvplayerlist = new CSVPlayerArrayList();
+					//
+					// csvplayerlist.loadPlayerCSVList(mainControl.getPropertiesControl().getPathToPlayersCSV());
+
+					// playerlist = csvplayerlist.getAllPlayer();
+					ActionListenerPlayerSearchControl psc = new ActionListenerPlayerSearchControl(mainControl, this);
+					spielerSearchTextField = dialog.getPlayerSearchView().getSearchField();
+					dialog.getPlayerSearchView().getOkButton().addActionListener(psc);
+					dialog.getPlayerSearchView().getCancelButton().addActionListener(psc);
+					spielerSearchTextField.addKeyListener(new KeyListener() {
+
+						@Override
+						public void keyPressed(KeyEvent e) {
+
+						}
+
+						@Override
+						public void keyReleased(KeyEvent e) {
+							SQLPlayerControl sqlpc = new SQLPlayerControl(mainControl);
+							spielerSearchPanelList = new DSBDWZPlayerView();
+							dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
+							searchplayerlist = new ArrayList<Player>();
+							String eingabe = spielerSearchTextField.getText().toUpperCase();
+							ArrayList<DWZData> dwzPlayer = sqlitePlayerlist.getPlayersByName(
+									mainControl.getPropertiesControl().getPathToPlayersCSV(), eingabe);
+							ListIterator<DWZData> li = dwzPlayer.listIterator();
+							while (li.hasNext()) {
+								DWZData tmp = li.next();
+
+								if (sqlpc.playerExist(tmp)) {
+									spielerSearchPanelList.makeSpielerZeile(tmp, 2);
+								} else {
+									spielerSearchPanelList.makeSpielerZeile(tmp, 0);
+								}
+								Player player = new Player();
+								player.setDwzData(tmp);
+								searchplayerlist.add(player);
+
+							}
+							spielerSearchPanelList.makeList();
+							spielerSearchPanelList.updateUI();
+							spielerSearchPanelList.getList().addListSelectionListener(psc);
+
+						}
+
+						@Override
+						public void keyTyped(KeyEvent e) {
+
+						}
+					});
+				}
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			errorHandler();
@@ -367,6 +477,19 @@ public class DSBDWZControl {
 	}
 
 	public ArrayList<Player> getPlayers() {
+		if (players == null) {
+			players = new ArrayList<Player>();
+			ListIterator<DWZData> list = dwzDataArray.listIterator();
+			while (list.hasNext()) {
+				DWZData dwzData = list.next();
+				Player player = new Player();
+				player.setDwzData(dwzData);
+				player.setName(dwzData.getCsvSpielername());
+				player.extractNameToForenameAndSurename();
+				player.extractNameToKuerzel();
+				players.add(player);
+			}
+		}
 		return players;
 	}
 
