@@ -101,6 +101,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 		}
 
 		if (arg0.getSource().equals(naviView.getSpielerDEWISSearchButton())) {
+			
 			dewisDialogControl = new DSBDWZControl(mainControl);
 			try {
 				dewisDialogControl.makeDialog();

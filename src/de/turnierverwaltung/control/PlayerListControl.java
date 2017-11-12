@@ -144,17 +144,16 @@ public class PlayerListControl implements ActionListener {
 
 			for (int i = 0; i < spielerAnzahl; i++) {
 				if (arg0.getSource().equals(spielerLadenView.getSpielerBearbeitenButton()[i])) {
+					mainControl.setEnabled(false);
 					if (mainControl.getNeuesTurnier() == false) {
 						spielerIndex = i;
-						// if (spieler.get(i).getSurname().equals("")) {
-						// spieler.get(i).extractNameToForenameAndSurename();
-						// }
+
 						spieler.get(i).setName(spieler.get(i).getDwzData().getCsvSpielername());
 						spieler.get(i).extractNameToForenameAndSurename();
 						spielerEditierenView = new EditPlayerView(spieler.get(i));
 						spielerEditierenView.getOkButton().addActionListener(this);
 						spielerEditierenView.getCancelButton().addActionListener(this);
-						mainControl.setEnabled(false);
+
 					} else {
 						JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerLadenControl.2"));
 					}
