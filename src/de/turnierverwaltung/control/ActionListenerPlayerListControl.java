@@ -42,9 +42,9 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 						String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
 						int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
 						neuerSpieler = new Player();
-						neuerSpieler.setForename(forename);
-						neuerSpieler.setSurname(surname);
-						neuerSpieler.extractForenameAndSurenameToName();
+						// neuerSpieler.setForename(forename);
+						// neuerSpieler.setSurname(surname);
+						neuerSpieler.setName(surname + "," + forename);
 						neuerSpieler.setKuerzel(kuerzel);
 						neuerSpieler.setDwz(dwz);
 						neuerSpieler.setAge(age);
@@ -101,7 +101,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 		}
 
 		if (arg0.getSource().equals(naviView.getSpielerDEWISSearchButton())) {
-			
+
 			dewisDialogControl = new DSBDWZControl(mainControl);
 			try {
 				dewisDialogControl.makeDialog();

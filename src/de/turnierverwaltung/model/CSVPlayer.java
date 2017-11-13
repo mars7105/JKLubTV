@@ -73,8 +73,8 @@ public class CSVPlayer {
 		player.setDwzData(dwzData);
 
 		player.setName(dwzData.getCsvSpielername());
-		player.extractNameToForenameAndSurename();
-		player.extractNameToKuerzel();
+//		player.extractNameToForenameAndSurename();
+//		player.extractNameToKuerzel();
 		return player;
 	}
 

@@ -79,12 +79,12 @@ public class CSVPlayerArrayList {
 					String csvFIDE_Land = new String(row[13]);
 //					String[] getrennt = csvSpielername.split("\\,");
 //					String name = getrennt[1] + " " + getrennt[0];
-					String[] getrennt = csvSpielername.split(",",2);
-					String name = csvSpielername;
-					if (getrennt.length >= 1) {
-						name = (getrennt[1] + " " + getrennt[0]).replaceAll(",", "").trim();
-					}
-					addPlayer(new CSVPlayer(csvZPS, csvMgl_Nr, csvStatus, name, csvGeschlecht, csvSpielberechtigung,
+//					String[] getrennt = csvSpielername.split(",",2);
+//					String name = csvSpielername;
+//					if (getrennt.length >= 1) {
+//						name = (getrennt[1] + " " + getrennt[0]).replaceAll(",", "").trim();
+//					}
+					addPlayer(new CSVPlayer(csvZPS, csvMgl_Nr, csvStatus, csvSpielername, csvGeschlecht, csvSpielberechtigung,
 							csvGeburtsjahr, csvLetzte_Auswertung, csvDWZ, csvIndex, csvFIDE_Elo, csvFIDE_Titel,
 							csvFIDE_ID, csvFIDE_Land));
 

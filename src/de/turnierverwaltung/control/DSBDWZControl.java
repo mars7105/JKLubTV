@@ -468,8 +468,7 @@ public class DSBDWZControl {
 				Player player = new Player();
 				player.setDwzData(dwzData);
 				player.setName(dwzData.getCsvSpielername());
-				player.extractNameToForenameAndSurename();
-				player.extractNameToKuerzel();
+				
 				players.add(player);
 			}
 		}

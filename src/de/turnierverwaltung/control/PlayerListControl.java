@@ -60,7 +60,7 @@ public class PlayerListControl implements ActionListener {
 			if (arg0.getSource().equals(spielerEditierenView.getOkButton())) {
 				String foreName = spielerEditierenView.getTextFieldForename().getText();
 				String surName = spielerEditierenView.getTextFieldSurname().getText();
-				// if (surName.equals("Spielfrei") == false) {
+				String name = surName + "," + foreName;
 				try {
 					String kuerzel = spielerEditierenView.getTextFieldKuerzel().getText();
 					String dwz = spielerEditierenView.getTextFieldDwz().getText();
@@ -111,8 +111,8 @@ public class PlayerListControl implements ActionListener {
 						spieler.get(spielerIndex).getEloData().setRating(rating);
 					}
 					spieler.get(spielerIndex).setAge(age);
-					spieler.get(spielerIndex).extractForenameAndSurenameToName();
-
+					// spieler.get(spielerIndex).extractForenameAndSurenameToName();
+					spieler.get(spielerIndex).setName(name);
 					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
 					stc.updateOneSpieler(spieler.get(spielerIndex));
@@ -253,8 +253,8 @@ public class PlayerListControl implements ActionListener {
 							zName++;
 							spieler.get(y)
 									.setSurname(spieler.get(y).getSurname() + "_" + new Integer(zName).toString());
-
-							spieler.get(y).extractForenameAndSurenameToName();
+							spieler.get(y).setName(spieler.get(y).getSurname() + "," + spieler.get(y).getForename());
+							// spieler.get(y).extractForenameAndSurenameToName();
 							stc.updateOneSpieler(spieler.get(y));
 							loop = true;
 						}

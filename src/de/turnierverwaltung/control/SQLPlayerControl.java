@@ -89,8 +89,7 @@ public class SQLPlayerControl {
 				Player temp = spieler.get(y);
 
 				temp.setDwzData(mySQLDWZDataDAO.getDWZData(temp.getSpielerId()));
-				temp.cutForename();
-				temp.cutSurname();
+
 				gamers[y] = temp;
 			}
 			this.turnier.getGruppe()[i].setSpieler(gamers);
@@ -104,25 +103,29 @@ public class SQLPlayerControl {
 		this.turnier = mainControl.getTurnier();
 
 		int spielerId = -1;
-
 		spielerId = mySQLSpielerDAO.insertSpieler(spieler);
 		spieler.setSpielerId(spielerId);
 		if (spielerId >= 0) {
 
 			// mySQLDWZDataDAO.insertDWZ(spieler.getDwzData());
-			if (!spieler.getDwzData().getCsvZPS().equals("")) {
+			if (spieler.getDwzData().getCsvZPS().length() > 0) {
+				spieler.setName(spieler.getDwzData().getCsvSpielername());
 				mySQLDWZDataDAO.insertDWZ(spieler.getDwzData());
 			}
 			if (spieler.getEloData().getFideid() > 0) {
+				spieler.setName(spieler.getEloData().getName());
 				mySQLELODataDAO.insertELO(spieler.getEloData());
 			} else {
 
 				if (spieler.getDwzData().getCsvFIDE_ID() > 0) {
+					spieler.setName(spieler.getDwzData().getCsvSpielername());
 					spieler.copyDWZDataToELOData();
 					mySQLELODataDAO.insertELO(spieler.getEloData());
 				}
 			}
 		}
+		
+
 		return spielerId;
 	}
 
@@ -239,7 +242,6 @@ public class SQLPlayerControl {
 
 		return exist;
 	}
-
 
 	public Boolean playerFideExist(int fideId) {
 		Boolean exist = false;

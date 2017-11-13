@@ -217,7 +217,8 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 						while (li.hasNext()) {
 							temp = li.next();
 
-							temp.extractForenameAndSurenameToName();
+							// temp.extractForenameAndSurenameToName();
+							// temp.setName(name);
 
 							if (textField.regionMatches(true, 0, temp.getName(), 0, textField.length())) {
 								foreName = temp.getForename();
@@ -226,7 +227,8 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 								kuerzel = temp.getKuerzel();
 								spielerID = temp.getSpielerId();
 								age = temp.getAge();
-								temp.extractForenameAndSurenameToName();
+								temp.setName(surName + "," + foreName);
+								// temp.extractForenameAndSurenameToName();
 								spielerEingabeView[i].getForenameTextfield()[s].setText(foreName);
 								spielerEingabeView[i].getSurnameTextfield()[s].setText(surName);
 								spielerEingabeView[i].getKuerzelTextfield()[s].setText(kuerzel);
@@ -340,7 +342,8 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 				int zKuerzel = 1;
 				for (int y = 0; y < spieler.length; y++) {
 
-					spieler[i].extractForenameAndSurenameToName();
+					// spieler[i].extractForenameAndSurenameToName();
+					spieler[i].setName(spieler[i].getSurname() + "," + spieler[i].getForename());
 					if (i != y) {
 
 						if (spieler[i].getSurname().equals(spieler[y].getSurname())
@@ -348,7 +351,8 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 								&& spieler[i].getSurname().equals("Spielfrei") != true) {
 							zName++;
 							spieler[y].setSurname(spieler[y].getSurname() + new Integer(zName).toString());
-							spieler[y].extractForenameAndSurenameToName();
+							// spieler[y].extractForenameAndSurenameToName();
+							spieler[y].setName(spieler[y].getSurname() + "," + spieler[y].getForename());
 							stc.updateOneSpieler(spieler[y]);
 							loop = true;
 						}

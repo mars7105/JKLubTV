@@ -154,7 +154,8 @@ public class CrossTable {
 			if (spieler[i].getSurname().length() > 0) {
 				spieler[i].cutForename();
 				spieler[i].cutSurname();
-				spieler[i].extractForenameAndSurenameToName();
+				// spieler[i].extractForenameAndSurenameToName();
+				spieler[i].setName(spieler[i].getSurname() + "," + spieler[i].getForename());
 			}
 			tabellenMatrix[0][i + 1] = spieler[i].getName();
 			if (ohneDWZ == false) {

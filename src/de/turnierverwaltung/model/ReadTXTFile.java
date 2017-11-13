@@ -43,11 +43,11 @@ public final class ReadTXTFile {
 						fideid = -1;
 					}
 
-					String name = "";
-					String[] nameString = row[1].split("\\s",2);
-					if (nameString.length >= 1) {
-						name = (nameString[1] + " " + nameString[0]).replaceAll(",", "").trim();
-					}
+					String name = row[1];
+//					String[] nameString = row[1].split("\\s",2);
+//					if (nameString.length >= 1) {
+//						name = (nameString[1] + " " + nameString[0]).replaceAll(",", "").trim();
+//					}
 
 					String country = row[2];
 					String sex = row[3];

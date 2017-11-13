@@ -75,12 +75,10 @@ public class Player implements Comparable<Object> {
 		this.spielerId = id;
 		dwzData.setSpielerId(id);
 		eloData.setSpielerId(id);
-		this.name = name;
-		dwzData.setCsvSpielername(name);
-		this.forename = "";
-		this.surname = "";
-		this.kuerzel = kuerzel;
-		// this.dwz = dwz;
+		setName(name);
+
+		dwzData.setCsvSpielername(this.name);
+
 		this.age = age;
 		this.punkte = 0;
 		this.soberg = 0;
@@ -90,12 +88,9 @@ public class Player implements Comparable<Object> {
 		// this.showPlayer = true;
 		dwzData.setCsvIndex(-1);
 		correctMGLNumber();
-		extractNameToForenameAndSurename();
-		extractNameToKuerzel();
+
 		setDwz(dwz);
-		cutForename();
-		cutSurname();
-		extractForenameAndSurenameToName();
+
 	}
 
 	/**
@@ -121,10 +116,9 @@ public class Player implements Comparable<Object> {
 		eloData.setSpielerId(id);
 		eloData.setRating(elo);
 		eloData.setFideid(fideid);
-		this.forename = forename;
-		this.surname = surname;
-		this.name = "";
-		this.kuerzel = kuerzel;
+		// this.forename = forename;
+		// this.surname = surname;
+		setName(surname + "," + forename);
 		// this.dwz = dwz;
 		this.age = age;
 		dwzData.setCsvIndex(dwzindex);
@@ -134,14 +128,10 @@ public class Player implements Comparable<Object> {
 		dwzData.setCsvZPS(zps);
 		dwzData.setCsvMgl_Nr(mgl);
 
-		extractForenameAndSurenameToName();
-		extractNameToKuerzel();
 		correctMGLNumber();
 		dwzData.setCsvSpielername(this.name);
 		setDwz(dwz);
-		cutForename();
-		cutSurname();
-		extractForenameAndSurenameToName();
+
 	}
 
 	public Player(ELOData eloData2) {
@@ -154,23 +144,12 @@ public class Player implements Comparable<Object> {
 		dwzData.setCsvFIDE_Elo(eloData.getRating());
 		dwzData.setCsvFIDE_ID(eloData.getFideid());
 		this.spielerId = -1;
+		setName(eloData.getName());
 
-		this.name = eloData.getName();
-		this.forename = "";
-		this.surname = "";
-		this.kuerzel = "";
-		extractNameToForenameAndSurename();
-		extractNameToKuerzel();
-		// cutForename();
-		// cutSurname();
-		// extractForenameAndSurenameToName();
-		// this.dwz = "";
 		this.age = eloData.getAge();
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
-
-		// this.showPlayer = true;
 
 	}
 
@@ -179,27 +158,20 @@ public class Player implements Comparable<Object> {
 		eloData = new ELOData();
 		this.spielerId = -1;
 
-		this.name = this.dwzData.getCsvSpielername();
-		extractNameToForenameAndSurename();
-		extractNameToKuerzel();
-		// cutForename();
-		// cutSurname();
-		// extractForenameAndSurenameToName();
-		// this.dwz = Integer.toString(this.dwzData.getCsvDWZ());
+		setName(this.dwzData.getCsvSpielername());
+
 		this.age = this.dwzData.getAge();
 		this.punkte = 0;
 		this.soberg = 0;
 		this.platz = 1;
 
-		// this.showPlayer = true;
 	}
 
 	public Player(int idSpieler, String name2, String kuerzel2, int age2) {
 		dwzData = new DWZData();
 		eloData = new ELOData();
-		this.name = name2;
-		this.forename = "";
-		this.surname = "";
+		setName(name2);
+
 		this.kuerzel = kuerzel2;
 		this.age = age2;
 		dwzData.setCsvIndex(-1);
@@ -209,20 +181,14 @@ public class Player implements Comparable<Object> {
 		this.spielerId = idSpieler;
 		dwzData.setCsvZPS("");
 		dwzData.setCsvMgl_Nr("");
-		extractNameToForenameAndSurename();
-		extractNameToKuerzel();
-		cutForename();
-		cutSurname();
-		extractForenameAndSurenameToName();
+
 	}
 
 	public Player(int idSpieler, String foreName2, String surName2, String kuerzel2, int age2) {
 		dwzData = new DWZData();
 		eloData = new ELOData();
-		this.name = "";
-		this.forename = foreName2;
-		this.surname = surName2;
-		this.kuerzel = kuerzel2;
+		setName(surName2 + "," + foreName2);
+
 		this.age = age2;
 		dwzData.setCsvIndex(-1);
 		this.punkte = 0;
@@ -231,11 +197,6 @@ public class Player implements Comparable<Object> {
 		this.spielerId = idSpieler;
 		dwzData.setCsvZPS("");
 		dwzData.setCsvMgl_Nr("");
-		extractForenameAndSurenameToName();
-		extractNameToKuerzel();
-		cutForename();
-		cutSurname();
-		extractForenameAndSurenameToName();
 
 	}
 
@@ -297,6 +258,7 @@ public class Player implements Comparable<Object> {
 	}
 
 	public String getName() {
+
 		return name;
 	}
 
@@ -333,22 +295,24 @@ public class Player implements Comparable<Object> {
 	}
 
 	public void extractNameToForenameAndSurename() {
-
+		if (dwzData.getCsvSpielername().length() > 0) {
+			name = dwzData.getCsvSpielername();
+		}
 		if (spielerId > TournamentConstants.SPIELFREI_ID && name.length() > 0) {
 			forename = "";
 			surname = "";
 			int i = 0;
-
-			for (String retval : name.split("\\s")) {
+			String fullname = name.replaceAll(",", " ").replaceAll("\"", "");
+			for (String retval : fullname.split("\\s")) {
 				if (i == 0) {
-					forename = retval;
+					surname = retval;
 				}
 
 				if (i == 1) {
-					surname = retval;
+					forename = retval;
 				}
 				if (i > 1) {
-					surname += " " + retval;
+					forename += " " + retval;
 				}
 				i++;
 			}
@@ -357,15 +321,15 @@ public class Player implements Comparable<Object> {
 
 	}
 
-	public void extractForenameAndSurenameToName() {
-		if (spielerId > TournamentConstants.SPIELFREI_ID) {
-			name = forename + " " + surname;
-
-		}
-	}
+	// public void extractForenameAndSurenameToName() {
+	// if (spielerId > TournamentConstants.SPIELFREI_ID) {
+	// name = forename + " " + surname;
+	//
+	// }
+	// }
 
 	public void extractNameToKuerzel() {
-		if (forename.length() > 0 && surname.length() > 0 && kuerzel.length() == 0) {
+		if (forename.length() > 0 && surname.length() > 0) {
 			kuerzel = forename.substring(0, 1) + surname.substring(0, 1);
 		}
 
@@ -411,10 +375,21 @@ public class Player implements Comparable<Object> {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		this.name = name.replaceAll("\"", "");
+		if ((eloData.getName().length() > 0)) {
+			this.name = eloData.getName().replaceAll("\"", "");
+
+		}
+		if (dwzData.getCsvSpielername().length() > 0) {
+			this.name = dwzData.getCsvSpielername().replaceAll("\"", "");
+
+		}
+
+		extractNameToForenameAndSurename();
 		cutForename();
 		cutSurname();
-
+		extractNameToKuerzel();
+		this.name = surname + "," + forename;
 	}
 
 	public void setPartie(Game[] partie) {

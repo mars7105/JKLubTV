@@ -125,6 +125,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 						Player neuerSpieler = spieler.get(temp);
 						if (playerExist(neuerSpieler) == false) {
 							SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+							neuerSpieler.setName(neuerSpieler.getDwzData().getCsvSpielername());
 							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
 							mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
 							dewisDialogControl.getSpielerDewisView().getListModel().getElementAt(temp)
