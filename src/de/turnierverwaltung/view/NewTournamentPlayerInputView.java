@@ -83,9 +83,11 @@ public class NewTournamentPlayerInputView extends JPanel {
 			JLabel label1 = new JLabel(
 					" " + new Integer(i + 1).toString() + ". " + Messages.getString("SpielerEingabeView.14"));
 			forenameTextfield[i] = new JTextField(10);
+			forenameTextfield[i].setEnabled(false);
 			JLabel label2 = new JLabel(" " + Messages.getString("SpielerEingabeView.15"));
 
 			surnameTextfield[i] = new JTextField(10);
+			surnameTextfield[i].setEnabled(false);
 			spielerSuche[i] = new JComboBox();
 			Dimension dimTextField = new Dimension(170, 30);
 
@@ -101,17 +103,20 @@ public class NewTournamentPlayerInputView extends JPanel {
 
 			JLabel label3 = new JLabel(Messages.getString("SpielerEingabeView.8")); //$NON-NLS-1$
 			kuerzelTextfield[i] = new JTextField(10);
+			kuerzelTextfield[i].setEnabled(false);
 			line.add(label3);
 			line.add(kuerzelTextfield[i]);
 
 			JLabel label4 = new JLabel(Messages.getString("SpielerEingabeView.9")); //$NON-NLS-1$
 			dwzTextfield[i] = new JTextField(10);
+			dwzTextfield[i].setEnabled(false);
 			line.add(label4);
 			line.add(dwzTextfield[i]);
 
 			String[] ageStrings = { Messages.getString("SpielerEingabeView.10"), //$NON-NLS-1$
 					Messages.getString("SpielerEingabeView.11"), Messages.getString("SpielerEingabeView.12") }; //$NON-NLS-1$ //$NON-NLS-2$
 			textComboBoxAge[i] = new JComboBox<String>(ageStrings);
+			textComboBoxAge[i].setEnabled(false);
 			line.add(new JLabel(Messages.getString("SpielerEingabeView.13"))); //$NON-NLS-1$
 			line.add(textComboBoxAge[i]);
 

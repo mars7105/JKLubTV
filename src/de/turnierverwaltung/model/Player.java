@@ -70,27 +70,31 @@ public class Player implements Comparable<Object> {
 	 * @param dwzindex2
 	 */
 	public Player(int id, String name, String kuerzel, String dwz, int age, String zps, String mgl, int dwzindex2) {
-		dwzData = new DWZData();
-		eloData = new ELOData();
-		this.spielerId = id;
-		dwzData.setSpielerId(id);
-		eloData.setSpielerId(id);
-		setName(name);
+		if (id == TournamentConstants.SPIELFREI_ID) {
+			this.name = name;
+			this.spielerId = id;
+		} else {
+			dwzData = new DWZData();
+			eloData = new ELOData();
+			this.spielerId = id;
+			dwzData.setSpielerId(id);
+			eloData.setSpielerId(id);
+			setName(name);
 
-		dwzData.setCsvSpielername(this.name);
+			dwzData.setCsvSpielername(this.name);
 
-		this.age = age;
-		this.punkte = 0;
-		this.soberg = 0;
-		this.platz = 1;
-		dwzData.setCsvZPS(zps);
-		dwzData.setCsvMgl_Nr(mgl);
-		// this.showPlayer = true;
-		dwzData.setCsvIndex(-1);
-		correctMGLNumber();
+			this.age = age;
+			this.punkte = 0;
+			this.soberg = 0;
+			this.platz = 1;
+			dwzData.setCsvZPS(zps);
+			dwzData.setCsvMgl_Nr(mgl);
+			// this.showPlayer = true;
+			dwzData.setCsvIndex(-1);
+			correctMGLNumber();
 
-		setDwz(dwz);
-
+			setDwz(dwz);
+		}
 	}
 
 	/**

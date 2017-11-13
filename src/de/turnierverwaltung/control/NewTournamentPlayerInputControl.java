@@ -30,8 +30,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-
 import de.turnierverwaltung.ZahlGroesserAlsN;
 import de.turnierverwaltung.ZahlKleinerAlsN;
 import de.turnierverwaltung.model.Group;
@@ -98,6 +96,13 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 		}
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+		try {
+			Player.cutFname = Integer.parseInt(this.mainControl.getPropertiesControl().getCutForename());
+			Player.cutSname = Integer.parseInt(this.mainControl.getPropertiesControl().getCutSurname());
+		} catch (NumberFormatException e) {
+			Player.cutFname = 20;
+			Player.cutSname = 20;
+		}
 	}
 
 	@Override
@@ -119,29 +124,19 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 					gruppe[i].setRundenAnzahl(sAnzahl + ((sAnzahl % 2) - 1));
 					readyToSave[i] = true;
 					spieler = new Player[sAnzahl];
-					Boolean correctName = true;
-					int counter = -1;
-
+					Boolean allOk = true;
 					if (testForDoubles(i) == true) {
 
 						for (int y = 0; y < sAnzahl; y++) {
-							if (spielerEingabeView[i].getSurnameTextfield()[y].getText().equals("Spielfrei")) {
-								correctName = false;
-							} else {
-								correctName = true;
-								counter++;
-							}
-
-							if (correctName == true) {
+							if (spielerEingabeView[i].getSpielerSuche()[y].getSelectedIndex() > 1) {
 								foreName = spielerEingabeView[i].getForenameTextfield()[y].getText();
 								surName = spielerEingabeView[i].getSurnameTextfield()[y].getText();
 								kuerzel = spielerEingabeView[i].getKuerzelTextfield()[y].getText();
 								dwz = spielerEingabeView[i].getDwzTextfield()[y].getText();
 								spielerID = spielerEingabeView[i].getSpielerID()[y];
 								age = spielerEingabeView[i].getTextComboBoxAge()[y].getSelectedIndex();
-								spieler[counter] = new Player();
+								spieler[y] = new Player();
 								if (spielerID >= 0) {
-									spieler[counter].setSpielerId(spielerID);
 
 									Player temp = null;
 
@@ -149,36 +144,33 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 									while (li.hasNext()) {
 										temp = li.next();
 										if (spielerID == temp.getSpielerId()) {
-											spieler[counter] = temp;
-											// spieler[counter].setShowPlayer(false);
-											stc.updateOneSpieler(spieler[counter]);
+											spieler[y] = temp;
+
 										}
 
 									}
 								} else {
 
-									spieler[counter].setForename(foreName);
-									spieler[counter].setSurname(surName);
-									spieler[counter].setKuerzel(kuerzel);
-									spieler[counter].setDwz(dwz);
-									spieler[counter].setAge(age);
-									// spieler[counter].setDwzindex(-1);
+									spieler[y].setName(surName + "," + foreName);
+									spieler[y].setKuerzel(kuerzel);
+									spieler[y].setDwz(dwz);
+									spieler[y].setAge(age);
 
-									// spieler[counter].setShowPlayer(false);
-									spieler[counter].setSpielerId(stc.insertOneSpieler(spieler[counter]));
+									spieler[y].setSpielerId(stc.insertOneSpieler(spieler[y]));
 								}
+							} else {
+								allOk = false;
 							}
 						}
-						testPlayerListForDoubles();
+						if (allOk) {
+							gruppe[i].setSpieler(spieler);
+							spielerEingabeView[i].removeAll();
 
-						gruppe[i].setSpieler(spieler);
-						// Arrays.sort(spieler);
-						spielerEingabeView[i].removeAll();
-						// rundenEingabeFormularControl.makeRundenEditView(i);
+							rundenEingabeFormularControl.makeTerminTabelle(i);
+						} else {
+							JOptionPane.showMessageDialog(null, Messages.getString("SpielerEingabeControl.11")); //$NON-NLS-1$
 
-						rundenEingabeFormularControl.makeTerminTabelle(i);
-						// rundenEingabeFormularControl.saveTurnier(i);
-
+						}
 					} else {
 						JOptionPane.showMessageDialog(null, Messages.getString("SpielerEingabeControl.9")); //$NON-NLS-1$
 					}
@@ -202,42 +194,25 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 			for (int s = 0; s < spielerAnzahl[i]; s++) {
 				if (arg0.getSource().equals(spielerEingabeView[i].getSpielerSuche()[s])) {
 
-					JTextField field = spielerEingabeView[i].getSurnameTextfield()[s];
-					JTextField field2 = spielerEingabeView[i].getForenameTextfield()[s];
 					@SuppressWarnings("unchecked")
 					JComboBox<String> box = spielerEingabeView[i].getSpielerSuche()[s];
 					if (box.getSelectedIndex() > 0) {
-						field.setText((String) alleSpieler.get(box.getSelectedIndex() - 1).getSurname());
-						field2.setText((String) alleSpieler.get(box.getSelectedIndex() - 1).getForename());
-						Player temp = null;
+						Player player = alleSpieler.get(box.getSelectedIndex() - 1);
 
-						ListIterator<Player> li = alleSpieler.listIterator();
+						foreName = player.getForename();
+						surName = player.getSurname();
+						dwz = player.getDwz();
+						kuerzel = player.getKuerzel();
+						spielerID = player.getSpielerId();
+						age = player.getAge();
 
-						String textField = field2.getText() + " " + field.getText();
-						while (li.hasNext()) {
-							temp = li.next();
+						spielerEingabeView[i].getForenameTextfield()[s].setText(foreName);
+						spielerEingabeView[i].getSurnameTextfield()[s].setText(surName);
+						spielerEingabeView[i].getKuerzelTextfield()[s].setText(kuerzel);
+						spielerEingabeView[i].getDwzTextfield()[s].setText(dwz);
+						spielerEingabeView[i].getSpielerID()[s] = spielerID;
+						spielerEingabeView[i].getTextComboBoxAge()[s].setSelectedIndex(age);
 
-							// temp.extractForenameAndSurenameToName();
-							// temp.setName(name);
-
-							if (textField.regionMatches(true, 0, temp.getName(), 0, textField.length())) {
-								foreName = temp.getForename();
-								surName = temp.getSurname();
-								dwz = temp.getDwz();
-								kuerzel = temp.getKuerzel();
-								spielerID = temp.getSpielerId();
-								age = temp.getAge();
-								temp.setName(surName + "," + foreName);
-								// temp.extractForenameAndSurenameToName();
-								spielerEingabeView[i].getForenameTextfield()[s].setText(foreName);
-								spielerEingabeView[i].getSurnameTextfield()[s].setText(surName);
-								spielerEingabeView[i].getKuerzelTextfield()[s].setText(kuerzel);
-								spielerEingabeView[i].getDwzTextfield()[s].setText(dwz);
-								spielerEingabeView[i].getSpielerID()[s] = spielerID;
-								spielerEingabeView[i].getTextComboBoxAge()[s].setSelectedIndex(age);
-							}
-
-						}
 					}
 				}
 			}
@@ -314,10 +289,6 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		this.mainControl.getHauptPanel();
 		tabAnzeigeView.getTabbedPane().addTab(null, spielerEingabeView[index]);
 
-		// if (spielerAnzahlView[index].getAnzahlSpielerTextField().getValue().length()
-		// > 0) {
-		// spielerAnzahl[index] =
-		// this.mainControl.getSpielerAnzahlControl().getSpielerAnzahl(index);
 		spielerEingabeView[index] = new NewTournamentPlayerInputView(spielerAnzahl[index]);
 		okButton[index] = spielerEingabeView[index].getOkButton();
 		okButton[index].addActionListener(this);
@@ -328,47 +299,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		tabAnzeigeView.getTabbedPane().setIconAt(index, gruppenIcon);
 
 		suchAnzeige(index);
-		// hauptPanel.updateUI();
-		// }
-	}
 
-	private void testPlayerListForDoubles() throws SQLException {
-		Boolean loop = false;
-		SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-		do {
-			loop = false;
-			for (int i = 0; i < spieler.length; i++) {
-				int zName = 0;
-				int zKuerzel = 1;
-				for (int y = 0; y < spieler.length; y++) {
-
-					// spieler[i].extractForenameAndSurenameToName();
-					spieler[i].setName(spieler[i].getSurname() + "," + spieler[i].getForename());
-					if (i != y) {
-
-						if (spieler[i].getSurname().equals(spieler[y].getSurname())
-								&& spieler[i].getForename().equals(spieler[y].getForename())
-								&& spieler[i].getSurname().equals("Spielfrei") != true) {
-							zName++;
-							spieler[y].setSurname(spieler[y].getSurname() + new Integer(zName).toString());
-							// spieler[y].extractForenameAndSurenameToName();
-							spieler[y].setName(spieler[y].getSurname() + "," + spieler[y].getForename());
-							stc.updateOneSpieler(spieler[y]);
-							loop = true;
-						}
-						if (spieler[i].getKuerzel().equals(spieler[y].getKuerzel())
-								&& spieler[i].getSurname().equals("Spielfrei") != true) {
-							zKuerzel++;
-							spieler[y].setKuerzel(spieler[y].getKuerzel() + new Integer(zKuerzel).toString());
-
-							stc.updateOneSpieler(spieler[y]);
-							loop = true;
-						}
-					}
-
-				}
-			}
-		} while (loop == true);
 	}
 
 	@SuppressWarnings("unchecked")
