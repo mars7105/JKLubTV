@@ -124,7 +124,6 @@ public class SQLPlayerControl {
 				}
 			}
 		}
-		
 
 		return spielerId;
 	}
@@ -199,7 +198,7 @@ public class SQLPlayerControl {
 	public void updateOneSpieler(Player spieler) throws SQLException {
 
 		mySQLSpielerDAO.updateSpieler(spieler);
-		if (!spieler.getDwzData().getCsvZPS().equals("")) {
+		if (spieler.getDwzData().getCsvZPS().length() > 0) {
 			mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
 		}
 		if (spieler.getEloData().getFideid() > 0) {

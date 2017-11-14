@@ -4,7 +4,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
-
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -72,7 +71,6 @@ public class ELOControl {
 				if (extender.equals(".sqlite")) {
 
 					sqlitePlayerlist = new SQLitePlayerELOList();
-					// dwzDataArray = sqlitePlayerlist.getPlayer(filename, zps);
 				} else {
 					csvplayerlist = new ELOPlayerList();
 
@@ -114,8 +112,7 @@ public class ELOControl {
 			eloDialogActionListenerControl = new ELOActionListenerControl(this.mainControl, this);
 			dialog.getPlayerSearchView().getOkButton().addActionListener(eloDialogActionListenerControl);
 			dialog.getPlayerSearchView().getCancelButton().addActionListener(eloDialogActionListenerControl);
-			// ELOActionListenerControl psc = new ELOActionListenerControl(mainControl,
-			// this);
+
 			spielerSearchTextField = dialog.getPlayerSearchView().getSearchField();
 
 			spielerSearchTextField.addKeyListener(new KeyListener() {

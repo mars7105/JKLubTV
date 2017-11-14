@@ -23,4 +23,5 @@ public interface ELODataDAO {
 
 	public ArrayList<ELOData> getELODataByName(String eingabe) throws SQLException;
 
+	public ELOData getELODataByFideId(int id) throws SQLException;
 }

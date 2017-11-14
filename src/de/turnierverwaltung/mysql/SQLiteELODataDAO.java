@@ -157,7 +157,41 @@ public class SQLiteELODataDAO implements ELODataDAO {
 				eloData.setBirthday(rs.getInt("Bday"));
 				eloData.setFlag(rs.getString("Flag"));
 				eloData.setFideid(rs.getInt("ID_Number"));
+				eloData.setSpielerId(rs.getInt("idSpieler"));
+			}
 
+			stmt.close();
+
+		}
+		return eloData;
+	}
+
+	@Override
+	public ELOData getELODataByFideId(int id) throws SQLException {
+		String sql = "Select * from elo_data WHERE ID_Number=" + id + ";";
+		ELOData eloData = new ELOData();
+
+		Statement stmt;
+		if (this.dbConnect != null) {
+
+			stmt = this.dbConnect.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				eloData.setSpielerId(id);
+				eloData.setName(rs.getString("Name"));
+				eloData.setCountry(rs.getString("Fed"));
+				eloData.setSex(rs.getString("Sex"));
+				eloData.setTitle(rs.getString("Tit"));
+				eloData.setW_title(rs.getString("WTit"));
+				eloData.setO_title(rs.getString("OTit"));
+				eloData.setFoa_title(rs.getString("FOA"));
+				eloData.setRating(rs.getInt("Rating"));
+				eloData.setGames(rs.getInt("Gms"));
+				eloData.setK(rs.getInt("K"));
+				eloData.setBirthday(rs.getInt("Bday"));
+				eloData.setFlag(rs.getString("Flag"));
+				eloData.setFideid(rs.getInt("ID_Number"));
+				eloData.setSpielerId(rs.getInt("idSpieler"));
 			}
 
 			stmt.close();
@@ -232,7 +266,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	@Override
 	public ArrayList<ELOData> getELODataByName(String eingabe) throws SQLException {
 		String sql = "Select * from elo_data WHERE Name LIKE '%" + eingabe + "%' LIMIT 20;";
-		
+
 		ArrayList<ELOData> eloDataArray = new ArrayList<ELOData>();
 
 		Statement stmt;

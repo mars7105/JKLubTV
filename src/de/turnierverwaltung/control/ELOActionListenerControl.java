@@ -104,6 +104,7 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 					while (lit.hasNext()) {
 						int temp = lit.next();
 						Player neuerSpieler = spieler.get(temp);
+						neuerSpieler.copyELODataToPlayer();
 						if (playerExist(neuerSpieler) == false) {
 							SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));

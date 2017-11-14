@@ -23,7 +23,7 @@ public class SQLitePlayerELOList {
 		eloDataDAO = daoFactory.getELODataDAO();
 		ELOData eloData = null;
 		try {
-			eloData = eloDataDAO.getELOData(fideId);
+			eloData = eloDataDAO.getELODataByFideId(fideId);
 		} catch (SQLException e) {
 			eloData = null;
 			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.11"));

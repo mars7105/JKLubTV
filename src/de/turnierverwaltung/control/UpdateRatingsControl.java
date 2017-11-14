@@ -9,6 +9,7 @@ import de.turnierverwaltung.model.DSBDWZClub;
 import de.turnierverwaltung.model.ELOPlayer;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.ReadTXTFile;
+import de.turnierverwaltung.model.SQLitePlayerELOList;
 import de.turnierverwaltung.view.ProgressBarDWZUpdateView;
 
 public class UpdateRatingsControl {
@@ -34,15 +35,30 @@ public class UpdateRatingsControl {
 	}
 
 	public void updateSpieler() {
-		ReadTXTFile rtf = new ReadTXTFile();
+		String elofilename = mainControl.getPropertiesControl().getPathToPlayersELO();
+
+		int positionEXT = elofilename.lastIndexOf('.');
+		String elofileextender = "";
+		if (positionEXT > 0) {
+			elofileextender = elofilename.substring(positionEXT);
+		}
+
 		ArrayList<ELOPlayer> elospieler = null;
-
-		elospieler = rtf.readFile(mainControl.getPropertiesControl().getPathToPlayersELO());
-
 		DSBDWZClub verein = null;
 		ArrayList<Player> spieler = null;
 		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
 		ArrayList<Player> spielerliste = null;
+		SQLitePlayerELOList elolist = null;
+		if (elofileextender.equals(".sqlite")) {
+			elolist = new SQLitePlayerELOList();
+
+		} else {
+			ReadTXTFile rtf = new ReadTXTFile();
+
+			elospieler = rtf.readFile(elofilename);
+
+		}
+
 		try {
 			spielerliste = spielerTableControl.getAllSpielerOrderByZPS();
 			// Sorting
@@ -71,11 +87,28 @@ public class UpdateRatingsControl {
 						if (eloplayer.getEloData().getFideid() == player.getDwzData().getCsvFIDE_ID()
 								|| eloplayer.getEloData().getFideid() == player.getEloData().getFideid()) {
 							player.setEloData(eloplayer.getEloData());
-
+							player.getEloData().setSpielerId(player.getSpielerId());
 							spielerTableControl.updateOneSpieler(player);
 
 						}
 					}
+				}
+				if (elolist != null) {
+					int dwzfideid = player.getDwzData().getCsvFIDE_ID();
+					int elofideid = player.getEloData().getFideid();
+					Player temp = new Player();
+					if (dwzfideid > 0) {
+						temp.setEloData(elolist.getPlayer(elofilename, dwzfideid));
+					}
+					if (elofideid > 0) {
+						temp.setEloData(elolist.getPlayer(elofilename, elofideid));
+					}
+					player.setEloData(temp.getEloData());
+
+					player.copyELODataToPlayer();
+					player.getEloData().setSpielerId(player.getSpielerId());
+					spielerTableControl.updateOneSpieler(player);
+
 				}
 				if (spieler != null) {
 					for (Player temp : spieler) {
@@ -85,12 +118,10 @@ public class UpdateRatingsControl {
 							if (tempMGL.equals(playerMGL)) {
 								if (player.getDWZ() != temp.getDWZ()
 										|| player.getDwzData().getCsvIndex() != temp.getDwzData().getCsvIndex()) {
-									// player.setDwzData(temp.getDwzData());
 									player.setDwz(temp.getDWZ());
 									player.getDwzData().setCsvIndex(temp.getDwzData().getCsvIndex());
 
 									spielerTableControl.updateOneSpieler(player);
-									// System.out.println(player.getName());
 
 								}
 							}
@@ -103,7 +134,9 @@ public class UpdateRatingsControl {
 
 				ladebalkenView.iterate();
 			}
-		} catch (SQLException e1) {
+		} catch (
+
+		SQLException e1) {
 			spielerliste = null;
 		}
 
