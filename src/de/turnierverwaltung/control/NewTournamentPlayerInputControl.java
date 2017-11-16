@@ -128,7 +128,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 					if (testForDoubles(i) == true) {
 
 						for (int y = 0; y < sAnzahl; y++) {
-							if (spielerEingabeView[i].getSpielerSuche()[y].getSelectedIndex() > 1) {
+							if (spielerEingabeView[i].getSpielerSuche()[y].getSelectedIndex() >= 1) {
 								foreName = spielerEingabeView[i].getForenameTextfield()[y].getText();
 								surName = spielerEingabeView[i].getSurnameTextfield()[y].getText();
 								kuerzel = spielerEingabeView[i].getKuerzelTextfield()[y].getText();
