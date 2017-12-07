@@ -131,11 +131,11 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 			roundNumbers = new JComboBox[gruppenAnzahl][];
 			spielerAnzahl = new int[gruppenAnzahl];
 			pairingsTables = new PairingsTables[gruppenAnzahl];
-			if (this.mainControl.getChangedPartien() == null) {
+			if (this.mainControl.getChangedGames() == null) {
 				changedGames = new ArrayList<Game>();
 				this.mainControl.setChangedPartien(changedGames);
 			} else {
-				changedGames = this.mainControl.getChangedPartien();
+				changedGames = this.mainControl.getChangedGames();
 
 			}
 			for (int i = 0; i < gruppenAnzahl; i++) {
@@ -180,8 +180,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.SORTIEREN;
 
 				}
-				pairingsView[index].getStatusLabel()
-						.setText(new Integer(changedGames.size()).toString());
+				pairingsView[index].getStatusLabel().setText(new Integer(changedGames.size()).toString());
 
 			}
 
@@ -206,8 +205,8 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 				datum = "";
 			}
 
-			runde = pruefeObZahlKleinerEinsIst(Integer
-					.parseInt((String) pairingsView[index].getRundenNummer()[nummer].getSelectedItem()));
+			runde = pruefeObZahlKleinerEinsIst(
+					Integer.parseInt((String) pairingsView[index].getRundenNummer()[nummer].getSelectedItem()));
 			games[nummer].setSpielDatum(datum);
 			games[nummer].setRunde(runde);
 
@@ -233,8 +232,8 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 		int runde = 0;
 
 		try {
-			runde = pruefeObZahlKleinerEinsIst(Integer
-					.parseInt((String) pairingsView[index].getRundenNummer()[nummer].getSelectedItem()));
+			runde = pruefeObZahlKleinerEinsIst(
+					Integer.parseInt((String) pairingsView[index].getRundenNummer()[nummer].getSelectedItem()));
 
 			DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 			datum = "";
@@ -282,11 +281,11 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 			tabAnzeigeView2[index].getTabbedPane().setComponentAt(2, pairingsView[index]);
 			tabAnzeigeView2[index].getTabbedPane().setIconAt(2, pairingsIcon);
 		}
-		if (this.mainControl.getChangedPartien() == null) {
+		if (this.mainControl.getChangedGames() == null) {
 			changedGames = new ArrayList<Game>();
 			this.mainControl.setChangedPartien(changedGames);
 		} else {
-			changedGames = this.mainControl.getChangedPartien();
+			changedGames = this.mainControl.getChangedGames();
 
 		}
 
@@ -376,7 +375,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 		Boolean ok = true;
 		try {
-			ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
+			ok = this.mainControl.getSqlTournamentControl().saveChangedPartien();
 		} catch (SQLException e) {
 			ok = false;
 			e.printStackTrace();
@@ -438,16 +437,14 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 						changeWerte(index, i);
 						changedGames.add(groups[index].getPartien()[i]);
 						changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
-						for (int y = i; y < (pairingsView[index].getTabbedPane().getSelectedIndex() + 1)
-								* max / 2; y++) {
+						for (int y = i; y < (pairingsView[index].getTabbedPane().getSelectedIndex() + 1) * max
+								/ 2; y++) {
 
 							if ((y != i) && (pairingsView[index].getDatum()[y].getDate() == null)) {
-								pairingsView[index].getDatum()[y]
-										.setDate(pairingsView[index].getDatum()[i].getDate());
+								pairingsView[index].getDatum()[y].setDate(pairingsView[index].getDatum()[i].getDate());
 							}
 						}
-						pairingsView[index].getStatusLabel()
-								.setText(new Integer(changedGames.size()).toString());
+						pairingsView[index].getStatusLabel().setText(new Integer(changedGames.size()).toString());
 						pairingsView[index].getStatusLabel().setBackground(Color.ORANGE);
 					}
 				}

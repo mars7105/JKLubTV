@@ -33,7 +33,7 @@ public class ActionListenerTournamentListControl implements ActionListener {
 				mainControl.setTurnierControl(new NewTournamentControl(mainControl));
 			} else {
 
-				ArrayList<Game> changedPartien = this.mainControl.getChangedPartien();
+				ArrayList<Game> changedPartien = this.mainControl.getChangedGames();
 				if (changedPartien != null) {
 					if (changedPartien.size() > 0) {
 						// Custom button text

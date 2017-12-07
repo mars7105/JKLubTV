@@ -74,14 +74,14 @@ public class CrossTableControl {
 		this.saveTurnierControl = new SaveTournamentControl(this.mainControl);
 		this.mainControl.setSaveTurnierControl(saveTurnierControl);
 		spielerAnzahl = new int[anzahlGruppen];
-		if (mainControl.getNeuesTurnier() == false) {
+		if (mainControl.getNewTournament() == false) {
 			this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
 		}
-		if (this.mainControl.getChangedPartien() == null) {
+		if (this.mainControl.getChangedGames() == null) {
 			changedPartien = new ArrayList<Game>();
 			this.mainControl.setChangedPartien(changedPartien);
 		} else {
-			changedPartien = this.mainControl.getChangedPartien();
+			changedPartien = this.mainControl.getChangedGames();
 
 		}
 
@@ -165,7 +165,7 @@ public class CrossTableControl {
 	}
 
 	public void berechneFolgeDWZ(int gruppenNummer) {
-		if (mainControl.getNeuesTurnier() == false) {
+		if (mainControl.getNewTournament() == false) {
 			ResultDWZControl folgeDWZ = new ResultDWZControl(mainControl.getTurnier(),
 					mainControl.getTurnier().getGruppe()[gruppenNummer]);
 			folgeDWZ.caculateDWZ();

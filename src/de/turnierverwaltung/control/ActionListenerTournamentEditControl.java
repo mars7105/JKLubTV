@@ -84,7 +84,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 
 				}
 				this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
-				mainControl.getPairingsMenuActionControl().setPairingIsActive(true);
+				mainControl.getActionListenerPairingsMenuControl().setPairingIsActive(true);
 				progressBar.iterate(gruppenAnzahl);
 				progressBar.iterate(gruppenAnzahl);
 
@@ -112,9 +112,9 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 
 		{
 			Boolean ok = false;
-			if (mainControl.getNeuesTurnier()) {
+			if (mainControl.getNewTournament()) {
 				try {
-					ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
+					ok = this.mainControl.getSaveTournamentControl().saveChangedPartien();
 				} catch (SQLException e) {
 					ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());
@@ -122,7 +122,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 
 			} else {
 				try {
-					ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
+					ok = this.mainControl.getSaveTournamentControl().saveChangedPartien();
 				} catch (SQLException e) {
 					ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());

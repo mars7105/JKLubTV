@@ -68,8 +68,8 @@ public class NewTournamentGroupsControl implements ActionListener {
 		turnier = this.mainControl.getTurnier();
 		hauptPanel = this.mainControl.getHauptPanel();
 		gruppenAnzahl = turnier.getAnzahlGruppen();
-		this.mainControl.setGruppenView(new NewTournamentGroupsView());
-		this.gruppenView = this.mainControl.getGruppenView();
+		this.mainControl.setNewTournamentGroupsView(new NewTournamentGroupsView());
+		this.gruppenView = this.mainControl.getNewTournamentGroupsView();
 		gruppenView.runView(gruppenAnzahl);
 		gruppenOKButton = this.gruppenView.getOkButton();
 		gruppenOKButton.addActionListener(this);

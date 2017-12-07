@@ -106,7 +106,7 @@ public class NewTournamentControl implements ActionListener {
 		this.mainControl.setTurnier(turnier);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
-		this.mainControl.getPairingsMenuActionControl().setPairingIsActive(false);
+		this.mainControl.getActionListenerPairingsMenuControl().setPairingIsActive(false);
 		this.turnierView.getTurnierNameTextField().grabFocus();
 
 	}

@@ -188,7 +188,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 							}
 						}
 					} else {
-						ArrayList<Game> changedPartien = this.mainControl.getChangedPartien();
+						ArrayList<Game> changedPartien = this.mainControl.getChangedGames();
 						if (changedPartien != null) {
 							if (changedPartien.size() > 0) {
 								// Custom button text
@@ -323,8 +323,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 
 		turnier = turnierListe.get(index);
 		mainControl.setTurnier(turnier);
-		mainControl.setGruppenTableControl(new SQLGroupsControl(mainControl));
-		mainControl.getGruppenTableControl().getGruppe();
+		mainControl.setSqlGroupsControl(new SQLGroupsControl(mainControl));
+		mainControl.getSqlGroupsControl().getGruppe();
 		mainControl.setSpielerTableControl(new SQLPlayerControl(mainControl));
 		mainControl.getSpielerTableControl().getSpieler();
 		tabbedPaneView = new TabbedPaneView(mainControl, Messages.getString("TurnierListeLadenControl.15"));
@@ -332,7 +332,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 		mainControl.setTabAnzeigeView(tabbedPaneView);
 		mainControl.setPartienTableControl(new SQLGamesControl(mainControl));
 		for (int z = 0; z < mainControl.getTurnier().getAnzahlGruppen(); z++) {
-			mainControl.getPartienTableControl().getPartien(z);
+			mainControl.getSqlGamesControl().getPartien(z);
 		}
 		tabbedPaneView2 = new TabbedPaneView[turnier.getAnzahlGruppen()];
 
@@ -359,7 +359,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 		mainControl.getTurnier().setNoFolgeDWZCalc(mainControl.getPropertiesControl().getNoFolgeDWZ());
 		mainControl.getNaviView().setTabellenname(
 				Messages.getString("TurnierListeLadenControl.5") + mainControl.getTurnier().getTurnierName()); //$NON-NLS-1$
-		mainControl.getPairingsMenuActionControl().setPairingIsActive(false);
+		mainControl.getActionListenerPairingsMenuControl().setPairingIsActive(false);
 		this.mainControl.setNeuesTurnier(false);
 
 		hauptPanel.addTab(turnier.getTurnierName(), turnierIcon, tabbedPaneView);
@@ -462,7 +462,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 			progressBar.iterate(gruppenAnzahl);
 
 			this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
-			this.mainControl.getPairingsMenuActionControl().setPairingIsActive(true);
+			this.mainControl.getActionListenerPairingsMenuControl().setPairingIsActive(true);
 			progressBar.iterate(gruppenAnzahl);
 
 		} else {

@@ -70,10 +70,10 @@ public class SaveTournamentControl {
 	public Boolean saveChangedPartien() throws SQLException {
 		Boolean ready = false;
 
-		if (mainControl.getNeuesTurnier()) {
+		if (mainControl.getNewTournament()) {
 			ready = saveNewTurnier();
 			if (ready) {
-				mainControl.setNeuesTurnier(false);
+				mainControl.setNewTournament(false);
 				mainControl.getTurnierListeLadenControl().loadTurnierListe();
 				mainControl.getTurnierListeLadenControl().reloadTurnier();
 				mainControl.getTurnierListeLadenControl().loadPairingsView();
@@ -83,13 +83,13 @@ public class SaveTournamentControl {
 			ready = mainControl.getPairingsControl().checkNewTurnier();
 			if (ready) {
 				ArrayList<Game> changedPartien;
-				if (this.mainControl.getChangedPartien() == null) {
+				if (this.mainControl.getChangedGames() == null) {
 					JOptionPane.showMessageDialog(mainControl, Messages.getString("SaveTurnierControl.1") //$NON-NLS-1$
 							+ this.mainControl.getTurnier().getTurnierName()
 							+ Messages.getString("SaveTurnierControl.2")); //$NON-NLS-1$
 					return false;
 				} else {
-					changedPartien = this.mainControl.getChangedPartien();
+					changedPartien = this.mainControl.getChangedGames();
 
 				}
 
@@ -160,16 +160,16 @@ public class SaveTournamentControl {
 				}
 				ladebalkenView.iterate();
 				if (mainControl.getTurnier().getGruppe()[index].getGruppeId() < 0) {
-					saveOK2 = this.mainControl.getGruppenTableControl().insertGruppe(index);
+					saveOK2 = this.mainControl.getCrossTableControl().insertGruppe(index);
 					ladebalkenView.iterate();
 					ladebalkenView.iterate();
-					saveOK4 = this.mainControl.getPartienTableControl().insertPartien(index);
+					saveOK4 = this.mainControl.getSqlGamesControl().insertPartien(index);
 					this.mainControl.getTurnier_has_SpielerTableControl().insertTurnier_has_Spieler(index);
 				} else {
-					saveOK2 = this.mainControl.getGruppenTableControl().updateGruppe(index);
+					saveOK2 = this.mainControl.getCrossTableControl().updateGruppe(index);
 					ladebalkenView.iterate();
 					ladebalkenView.iterate();
-					saveOK4 = this.mainControl.getPartienTableControl().updatePartien(index);
+					saveOK4 = this.mainControl.getSqlGamesControl().updatePartien(index);
 
 				}
 				ladebalkenView.iterate();

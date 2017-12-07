@@ -63,11 +63,11 @@ public class MeetingTableControl {
 		this.mainControl.setTerminTabelle(terminTabelle);
 		hauptPanel = mainControl.getHauptPanel();
 		tml = new MyTableModelListener[anzahlGruppen];
-		if (this.mainControl.getChangedPartien() == null) {
+		if (this.mainControl.getChangedGames() == null) {
 			changedPartien = new ArrayList<Game>();
 			this.mainControl.setChangedPartien(changedPartien);
 		} else {
-			changedPartien = this.mainControl.getChangedPartien();
+			changedPartien = this.mainControl.getChangedGames();
 
 		}
 	}
