@@ -72,7 +72,7 @@ public class SQLPlayerControl {
 	}
 
 	public void getSpieler() throws SQLException {
-		this.turnier = this.mainControl.getTurnier();
+		this.turnier = this.mainControl.getTournament();
 
 		ArrayList<Player> spieler = new ArrayList<Player>();
 		for (int i = 0; i < this.turnier.getAnzahlGruppen(); i++) {
@@ -100,7 +100,7 @@ public class SQLPlayerControl {
 	}
 
 	public int insertOneSpieler(Player spieler) throws SQLException {
-		this.turnier = mainControl.getTurnier();
+		this.turnier = mainControl.getTournament();
 
 		int spielerId = -1;
 		spielerId = mySQLSpielerDAO.insertSpieler(spieler);
@@ -130,7 +130,7 @@ public class SQLPlayerControl {
 
 	public boolean insertSpieler(int gruppe) throws SQLException {
 		boolean eintragGespeichert = false;
-		this.turnier = mainControl.getTurnier();
+		this.turnier = mainControl.getTournament();
 
 		turnier.getTurnierId();
 		int spielerAnzahl = turnier.getGruppe()[gruppe].getSpielerAnzahl();
@@ -212,7 +212,7 @@ public class SQLPlayerControl {
 	}
 
 	public boolean updateSpieler(int gruppe) throws SQLException {
-		this.turnier = mainControl.getTurnier();
+		this.turnier = mainControl.getTournament();
 
 		boolean saved = false;
 		for (int i = 0; i < turnier.getGruppe()[gruppe].getSpielerAnzahl(); i++) {

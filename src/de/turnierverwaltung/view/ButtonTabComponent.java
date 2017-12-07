@@ -156,8 +156,8 @@ public class ButtonTabComponent extends JPanel {
 				int abfrage = checkForChangedGames();
 				if (abfrage == 0 || abfrage == 1) {
 					pane.remove(i);
-					mainControl.setTurnier(null);
-					mainControl.getTurnierListeLadenControl().setLoadedTurnierID(-1);
+					mainControl.setNewTournament(null);
+					mainControl.getActionListenerTournamentItemsControl().setLoadedTurnierID(-1);
 
 				}
 
@@ -165,7 +165,7 @@ public class ButtonTabComponent extends JPanel {
 		}
 
 		private int checkForChangedGames() {
-			ArrayList<Game> changedPartien = mainControl.getChangedPartien();
+			ArrayList<Game> changedPartien = mainControl.getChangedGames();
 			int abfrage = 0;
 			if (changedPartien != null) {
 				if (changedPartien.size() > 0) {

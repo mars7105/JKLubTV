@@ -72,30 +72,30 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	}
 
 	private MainControl mainControl;
-	private Tournament turnier;
-	private Group[] gruppe;
-	private Game[] partien;
-	private MeetingTable terminTabelle[];
+	private Tournament tournament;
+	private Group[] groups;
+	private Game[] games;
+	private MeetingTable meetingTable[];
 	private int gruppenAnzahl;
-	private PairingsView[] rundenEingabeFormularView;
-	private JButton changeColor[][];
+	private PairingsView[] pairingsView;
+	private JButton changeColorButton[][];
 	private int[] spielerAnzahl;
-	private PairingsTables[] paarungsTafeln;
+	private PairingsTables[] pairingsTables;
 	private TabbedPaneView[] tabAnzeigeView2;
 	private Boolean[] neuesTurnier;
-	private ArrayList<Game> changedPartien;
+	private ArrayList<Game> changedGames;
 	private DateChooserPanel[][] datePicker;
-	private JComboBox<String>[][] rundenNummer;
+	private JComboBox<String>[][] roundNumbers;
 	private int[][] changedGroups;
-	private ImageIcon paarungenIcon = new ImageIcon(
+	private ImageIcon pairingsIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/media-playlist-shuffle-3.png"))); //$NON-NLS-1$
 
 	public PairingsControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 
-		turnier = this.mainControl.getTurnier();
-		gruppe = turnier.getGruppe();
-		gruppenAnzahl = turnier.getAnzahlGruppen();
+		tournament = this.mainControl.getTurnier();
+		groups = tournament.getGruppe();
+		gruppenAnzahl = tournament.getAnzahlGruppen();
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		init();
 	}
@@ -103,18 +103,18 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	@SuppressWarnings("unchecked")
 	public void init() {
 
-		if (rundenEingabeFormularView == null) {
+		if (pairingsView == null) {
 			if (mainControl.getTurnierTabelleControl() == null) {
-				terminTabelle = new MeetingTable[gruppenAnzahl];
-				this.mainControl.setTerminTabelle(terminTabelle);
+				meetingTable = new MeetingTable[gruppenAnzahl];
+				this.mainControl.setTerminTabelle(meetingTable);
 			} else {
-				terminTabelle = this.mainControl.getTerminTabelle();
+				meetingTable = this.mainControl.getTerminTabelle();
 			}
-			rundenEingabeFormularView = new PairingsView[gruppenAnzahl];
+			pairingsView = new PairingsView[gruppenAnzahl];
 			neuesTurnier = new Boolean[gruppenAnzahl];
 			changedGroups = new int[gruppenAnzahl][3];
 			for (int i = 0; i < gruppenAnzahl; i++) {
-				rundenEingabeFormularView[i] = new PairingsView(gruppe[i].getSpielerAnzahl());
+				pairingsView[i] = new PairingsView(groups[i].getSpielerAnzahl());
 				neuesTurnier[i] = false;
 				for (int x = 0; x < 3; x++) {
 
@@ -125,21 +125,21 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 					}
 				}
 			}
-			this.mainControl.setRundenEingabeFormularView(rundenEingabeFormularView);
-			changeColor = new JButton[gruppenAnzahl][];
+			this.mainControl.setRundenEingabeFormularView(pairingsView);
+			changeColorButton = new JButton[gruppenAnzahl][];
 			datePicker = new DateChooserPanel[gruppenAnzahl][];
-			rundenNummer = new JComboBox[gruppenAnzahl][];
+			roundNumbers = new JComboBox[gruppenAnzahl][];
 			spielerAnzahl = new int[gruppenAnzahl];
-			paarungsTafeln = new PairingsTables[gruppenAnzahl];
+			pairingsTables = new PairingsTables[gruppenAnzahl];
 			if (this.mainControl.getChangedPartien() == null) {
-				changedPartien = new ArrayList<Game>();
-				this.mainControl.setChangedPartien(changedPartien);
+				changedGames = new ArrayList<Game>();
+				this.mainControl.setChangedPartien(changedGames);
 			} else {
-				changedPartien = this.mainControl.getChangedPartien();
+				changedGames = this.mainControl.getChangedPartien();
 
 			}
 			for (int i = 0; i < gruppenAnzahl; i++) {
-				rundenEingabeFormularView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
+				pairingsView[i].getStatusLabel().setText(new Integer(changedGames.size()).toString());
 			}
 
 		}
@@ -158,30 +158,30 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 			for (int i = 0; i < anzahl; i++) {
 
-				if (arg0.getSource().equals(changeColor[index][i])) {
+				if (arg0.getSource().equals(changeColorButton[index][i])) {
 					changeColor(index, i);
-					changedPartien.add(gruppe[index].getPartien()[i]);
+					changedGames.add(groups[index].getPartien()[i]);
 					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
 
-					rundenEingabeFormularView[index].getWeissSpieler()[i].setText("");
-					rundenEingabeFormularView[index].getWeissSpieler()[i]
+					pairingsView[index].getWeissSpieler()[i].setText("");
+					pairingsView[index].getWeissSpieler()[i]
 							.setText(Messages.getString("RundenEingabeFormularControl.8")
-									+ gruppe[index].getPartien()[i].getSpielerWeiss().getName() + " - ");
-					rundenEingabeFormularView[index].getSchwarzSpieler()[i].setText("");
-					rundenEingabeFormularView[index].getSchwarzSpieler()[i]
+									+ groups[index].getPartien()[i].getSpielerWeiss().getName() + " - ");
+					pairingsView[index].getSchwarzSpieler()[i].setText("");
+					pairingsView[index].getSchwarzSpieler()[i]
 							.setText(Messages.getString("RundenEingabeFormularControl.9")
-									+ gruppe[index].getPartien()[i].getSpielerSchwarz().getName());
+									+ groups[index].getPartien()[i].getSpielerSchwarz().getName());
 
 				}
 
-				if (arg0.getSource().equals(rundenNummer[index][i])) {
+				if (arg0.getSource().equals(roundNumbers[index][i])) {
 					changeWerte(index, i);
-					changedPartien.add(gruppe[index].getPartien()[i]);
+					changedGames.add(groups[index].getPartien()[i]);
 					changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.SORTIEREN;
 
 				}
-				rundenEingabeFormularView[index].getStatusLabel()
-						.setText(new Integer(changedPartien.size()).toString());
+				pairingsView[index].getStatusLabel()
+						.setText(new Integer(changedGames.size()).toString());
 
 			}
 
@@ -192,7 +192,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	public void changeWerte(int index, int nummer) {
 
 		String datum;
-		partien = gruppe[index].getPartien();
+		games = groups[index].getPartien();
 		int runde;
 		DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 		datum = "";
@@ -200,16 +200,16 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 		try {
 
 			try {
-				date = rundenEingabeFormularView[index].getDatum()[nummer].getDate();
+				date = pairingsView[index].getDatum()[nummer].getDate();
 				datum = formatter.format(date);
 			} catch (NullPointerException e2) {
 				datum = "";
 			}
 
 			runde = pruefeObZahlKleinerEinsIst(Integer
-					.parseInt((String) rundenEingabeFormularView[index].getRundenNummer()[nummer].getSelectedItem()));
-			partien[nummer].setSpielDatum(datum);
-			partien[nummer].setRunde(runde);
+					.parseInt((String) pairingsView[index].getRundenNummer()[nummer].getSelectedItem()));
+			games[nummer].setSpielDatum(datum);
+			games[nummer].setRunde(runde);
 
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("RundenEingabeFormularControl.1")); //$NON-NLS-1$
@@ -224,23 +224,23 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	private void changeColor(int index, int nummer) {
 		Player tauscheFarbe1;
 		Player tauscheFarbe2;
-		partien = gruppe[index].getPartien();
-		tauscheFarbe1 = partien[nummer].getSpielerWeiss();
-		tauscheFarbe2 = partien[nummer].getSpielerSchwarz();
-		partien[nummer].setSpielerWeiss(tauscheFarbe2);
-		partien[nummer].setSpielerSchwarz(tauscheFarbe1);
+		games = groups[index].getPartien();
+		tauscheFarbe1 = games[nummer].getSpielerWeiss();
+		tauscheFarbe2 = games[nummer].getSpielerSchwarz();
+		games[nummer].setSpielerWeiss(tauscheFarbe2);
+		games[nummer].setSpielerSchwarz(tauscheFarbe1);
 		String datum = "";
 		int runde = 0;
 
 		try {
 			runde = pruefeObZahlKleinerEinsIst(Integer
-					.parseInt((String) rundenEingabeFormularView[index].getRundenNummer()[nummer].getSelectedItem()));
+					.parseInt((String) pairingsView[index].getRundenNummer()[nummer].getSelectedItem()));
 
 			DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 			datum = "";
 			Date date;
 
-			date = rundenEingabeFormularView[index].getDatum()[nummer].getDate();
+			date = pairingsView[index].getDatum()[nummer].getDate();
 			datum = formatter.format(date);
 
 		} catch (NumberFormatException e) {
@@ -252,64 +252,64 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 		} catch (NullPointerException e2) {
 			datum = "";
 		}
-		partien[nummer].setSpielDatum(datum);
-		partien[nummer].setRunde(runde);
+		games[nummer].setSpielDatum(datum);
+		games[nummer].setRunde(runde);
 	}
 
 	@SuppressWarnings("unchecked")
 	public void makeNewFormular(int index) {
 
-		terminTabelle = mainControl.getTerminTabelle();
+		meetingTable = mainControl.getTerminTabelle();
 
-		String[][] terminMatrix = terminTabelle[index].getTabellenMatrix();
+		String[][] terminMatrix = meetingTable[index].getTabellenMatrix();
 
-		rundenEingabeFormularView[index].makeZeilen(terminMatrix);
+		pairingsView[index].makeZeilen(terminMatrix);
 
-		changeColor[index] = rundenEingabeFormularView[index].getChangeColor();
-		datePicker[index] = rundenEingabeFormularView[index].getDatum();
-		rundenNummer[index] = rundenEingabeFormularView[index].getRundenNummer();
+		changeColorButton[index] = pairingsView[index].getChangeColor();
+		datePicker[index] = pairingsView[index].getDatum();
+		roundNumbers[index] = pairingsView[index].getRundenNummer();
 		for (int i = 0; i < (spielerAnzahl[index] * (spielerAnzahl[index] - 1) / 2); i++) {
 
-			changeColor[index][i].addActionListener(this);
+			changeColorButton[index][i].addActionListener(this);
 			datePicker[index][i].getJDateChooser().addPropertyChangeListener(this);
-			rundenNummer[index][i].addActionListener(this);
+			roundNumbers[index][i].addActionListener(this);
 		}
 
 		if (tabAnzeigeView2[index].getTabbedPane().getComponentCount() == 2) {
 			tabAnzeigeView2[index].getTabbedPane().insertTab(Messages.getString("RundenEingabeFormularControl.5"), //$NON-NLS-1$
-					paarungenIcon, rundenEingabeFormularView[index], null, 2);
+					pairingsIcon, pairingsView[index], null, 2);
 		} else {
-			tabAnzeigeView2[index].getTabbedPane().setComponentAt(2, rundenEingabeFormularView[index]);
-			tabAnzeigeView2[index].getTabbedPane().setIconAt(2, paarungenIcon);
+			tabAnzeigeView2[index].getTabbedPane().setComponentAt(2, pairingsView[index]);
+			tabAnzeigeView2[index].getTabbedPane().setIconAt(2, pairingsIcon);
 		}
 		if (this.mainControl.getChangedPartien() == null) {
-			changedPartien = new ArrayList<Game>();
-			this.mainControl.setChangedPartien(changedPartien);
+			changedGames = new ArrayList<Game>();
+			this.mainControl.setChangedPartien(changedGames);
 		} else {
-			changedPartien = this.mainControl.getChangedPartien();
+			changedGames = this.mainControl.getChangedPartien();
 
 		}
 
-		rundenEingabeFormularView[index].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
+		pairingsView[index].getStatusLabel().setText(new Integer(changedGames.size()).toString());
 
-		rundenEingabeFormularView[index].updateUI();
+		pairingsView[index].updateUI();
 
 	}
 
 	public void makeRundenEditView(int index) {
 		neuesTurnier[index] = true;
-		partien = gruppe[index].getPartien();
+		games = groups[index].getPartien();
 
-		spielerAnzahl[index] = gruppe[index].getSpielerAnzahl();
+		spielerAnzahl[index] = groups[index].getSpielerAnzahl();
 
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 		if (tabAnzeigeView2 != null) {
 			if (tabAnzeigeView2[index].getTabbedPane().getTabCount() < 3) {
 				tabAnzeigeView2[index].getTabbedPane().insertTab(Messages.getString("RundenEingabeFormularControl.6"), //$NON-NLS-1$
-						null, rundenEingabeFormularView[index], null, 2);
+						null, pairingsView[index], null, 2);
 			} else {
 
-				tabAnzeigeView2[index].getTabbedPane().setComponentAt(2, rundenEingabeFormularView[index]);
+				tabAnzeigeView2[index].getTabbedPane().setComponentAt(2, pairingsView[index]);
 			}
 		}
 		makeNewFormular(index);
@@ -318,9 +318,9 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	public void makeTerminTabelle(int index) {
 		init();
 		neuesTurnier[index] = true;
-		paarungsTafeln[index] = new PairingsTables(gruppe[index]);
-		gruppe[index] = paarungsTafeln[index].getGruppe();
-		spielerAnzahl[index] = gruppe[index].getSpielerAnzahl();
+		pairingsTables[index] = new PairingsTables(groups[index]);
+		groups[index] = pairingsTables[index].getGruppe();
+		spielerAnzahl[index] = groups[index].getSpielerAnzahl();
 
 		CrossTableControl turnierTabelleControl = new CrossTableControl(mainControl);
 		MeetingTableControl terminTabelleControl = new MeetingTableControl(mainControl);
@@ -329,9 +329,9 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 		turnierTabelleControl.makeSimpleTableView(index);
 
 		terminTabelleControl.makeSimpleTableView(index);
-		partien = gruppe[index].getPartien();
+		games = groups[index].getPartien();
 
-		spielerAnzahl[index] = gruppe[index].getSpielerAnzahl();
+		spielerAnzahl[index] = groups[index].getSpielerAnzahl();
 
 		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
 
@@ -401,11 +401,11 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	}
 
 	public ArrayList<Game> getChangedPartien() {
-		return changedPartien;
+		return changedGames;
 	}
 
 	public void setChangedPartien(ArrayList<Game> changedPartien) {
-		this.changedPartien = changedPartien;
+		this.changedGames = changedPartien;
 	}
 
 	public Boolean checkNewTurnier() {
@@ -436,19 +436,19 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 					if (arg0.getSource().equals(datePicker[index][i].getJDateChooser())) {
 
 						changeWerte(index, i);
-						changedPartien.add(gruppe[index].getPartien()[i]);
+						changedGames.add(groups[index].getPartien()[i]);
 						changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
-						for (int y = i; y < (rundenEingabeFormularView[index].getTabbedPane().getSelectedIndex() + 1)
+						for (int y = i; y < (pairingsView[index].getTabbedPane().getSelectedIndex() + 1)
 								* max / 2; y++) {
 
-							if ((y != i) && (rundenEingabeFormularView[index].getDatum()[y].getDate() == null)) {
-								rundenEingabeFormularView[index].getDatum()[y]
-										.setDate(rundenEingabeFormularView[index].getDatum()[i].getDate());
+							if ((y != i) && (pairingsView[index].getDatum()[y].getDate() == null)) {
+								pairingsView[index].getDatum()[y]
+										.setDate(pairingsView[index].getDatum()[i].getDate());
 							}
 						}
-						rundenEingabeFormularView[index].getStatusLabel()
-								.setText(new Integer(changedPartien.size()).toString());
-						rundenEingabeFormularView[index].getStatusLabel().setBackground(Color.ORANGE);
+						pairingsView[index].getStatusLabel()
+								.setText(new Integer(changedGames.size()).toString());
+						pairingsView[index].getStatusLabel().setBackground(Color.ORANGE);
 					}
 				}
 

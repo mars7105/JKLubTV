@@ -34,20 +34,20 @@ public class SQLGroupsControl {
 
 	public SQLGroupsControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		this.turnier = this.mainControl.getTurnier();
+		this.turnier = this.mainControl.getTournament();
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		mySQLGruppenDAO = daoFactory.getGruppenDAO();
 	}
 
 	public void getGruppe() throws SQLException {
-		this.turnier = this.mainControl.getTurnier();
+		this.turnier = this.mainControl.getTournament();
 		gruppe = mySQLGruppenDAO.selectAllGruppen(turnier.getTurnierId());
 		Group[] group = new Group[gruppe.size()];
 		for (int i = 0; i < gruppe.size(); i++) {
 			group[i] = gruppe.get(i);
 		}
-		mainControl.getTurnier().setGruppe(group);
-		mainControl.getTurnier().setAnzahlGruppen(gruppe.size());
+		mainControl.getTournament().setGruppe(group);
+		mainControl.getTournament().setAnzahlGruppen(gruppe.size());
 	}
 
 	public Tournament getGruppe(Tournament turnierName) throws SQLException {
@@ -75,7 +75,7 @@ public class SQLGroupsControl {
 	}
 
 	public boolean updateGruppe(int gruppe) throws SQLException {
-		this.turnier = mainControl.getTurnier();
+		this.turnier = mainControl.getTournament();
 
 		boolean saved = false;
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);

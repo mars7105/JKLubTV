@@ -117,8 +117,8 @@ public class PlayerListControl implements ActionListener {
 
 					stc.updateOneSpieler(spieler.get(spielerIndex));
 
-					if (mainControl.getTurnier() != null) {
-						mainControl.getTurnierListeLadenControl().reloadTurnier();
+					if (mainControl.getTournament() != null) {
+						mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
 					}
 					spielerEditierenView.closeWindow();
 					mainControl.setEnabled(true);
@@ -145,7 +145,7 @@ public class PlayerListControl implements ActionListener {
 			for (int i = 0; i < spielerAnzahl; i++) {
 				if (arg0.getSource().equals(spielerLadenView.getSpielerBearbeitenButton()[i])) {
 					mainControl.setEnabled(false);
-					if (mainControl.getNeuesTurnier() == false) {
+					if (mainControl.getNewTournament() == false) {
 						spielerIndex = i;
 
 						spieler.get(i).setName(spieler.get(i).getDwzData().getCsvSpielername());
@@ -162,7 +162,7 @@ public class PlayerListControl implements ActionListener {
 
 			for (int i = 0; i < spielerAnzahl; i++) {
 				if (arg0.getSource().equals(spielerLadenView.getSpielerLoeschenButton()[i])) {
-					if (mainControl.getNeuesTurnier() == false) {
+					if (mainControl.getNewTournament() == false) {
 						try {
 							SQLPlayerControl stC = new SQLPlayerControl(mainControl);
 

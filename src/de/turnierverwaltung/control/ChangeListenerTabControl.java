@@ -40,7 +40,7 @@ public class ChangeListenerTabControl implements ChangeListener {
 			this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
 			this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
 		}
-		if (this.mainControl.getNeuesTurnier() == true) {
+		if (this.mainControl.getNewTournament() == true) {
 			this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 			this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
 		}
@@ -48,13 +48,13 @@ public class ChangeListenerTabControl implements ChangeListener {
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		boolean pairingIsActive = this.mainControl.getPairingsMenuActionControl().getPairingIsActive();
+		boolean pairingIsActive = this.mainControl.getActionListenerPairingsMenuControl().getPairingIsActive();
 		if (e.getSource() instanceof JTabbedPane) {
 			JTabbedPane pane = (JTabbedPane) e.getSource();
 			int selectedIndex = pane.getSelectedIndex();
-			if (this.mainControl.getTurnier() != null) {
+			if (this.mainControl.getTournament() != null) {
 				if (selectedIndex == TournamentConstants.TAB_ACTIVE_TOURNAMENT) {
-					if (this.mainControl.getNeuesTurnier() == false) {
+					if (this.mainControl.getNewTournament() == false) {
 						if (pairingIsActive == true) {
 							this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 							this.mainControl.getNaviView().getPairingsPanel().setVisible(true);

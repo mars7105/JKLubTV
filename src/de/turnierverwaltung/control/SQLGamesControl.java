@@ -34,13 +34,13 @@ public class SQLGamesControl {
 
 	public SQLGamesControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		turnier = this.mainControl.getTurnier();
+		turnier = this.mainControl.getTournament();
 	}
 
 	public void getPartien(int gruppenID) throws SQLException {
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
-		this.turnier = this.mainControl.getTurnier();
+		this.turnier = this.mainControl.getTournament();
 		ArrayList<Game> partie = new ArrayList<Game>();
 
 		partie = mySQLPartienDAO.selectAllPartien(turnier.getGruppe()[gruppenID].getGruppeId());

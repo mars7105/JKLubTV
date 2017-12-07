@@ -25,8 +25,8 @@ public class TabbedPaneViewControl {
 
 	public TabbedPaneViewControl(MainControl mainControl, String title) {
 		this.mainControl = mainControl;
-		this.mainControl.setTabAnzeigeView(new TabbedPaneView(this.mainControl, title));
-		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
+		this.mainControl.setTabbedPaneView(new TabbedPaneView(this.mainControl, title));
+		tabAnzeigeView = this.mainControl.getTabbedPaneView();
 	}
 
 	public void makeTab(String title, JPanel panel) {

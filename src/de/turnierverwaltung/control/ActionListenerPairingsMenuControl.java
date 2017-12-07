@@ -26,7 +26,7 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() .equals(naviView.getPairingsSaveButton())) {
+		if (arg0.getSource().equals(naviView.getPairingsSaveButton())) {
 
 			saveAndReloadTurnier();
 			try {
@@ -38,7 +38,7 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 			pairingIsActive = false;
 
 		}
-		if (arg0.getSource().equals(naviView.getPairingsCancelButton()) ){
+		if (arg0.getSource().equals(naviView.getPairingsCancelButton())) {
 			int abfrage = abbrechenHinweis();
 			if (abfrage == 0) {
 				PairingsControl pairingsControl = mainControl.getPairingsControl();
@@ -73,7 +73,7 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 
 		Boolean ok = true;
 		try {
-			ok = this.mainControl.getSaveTurnierControl().saveChangedPartien();
+			ok = this.mainControl.getSaveTournamentControl().saveChangedPartien();
 		} catch (SQLException e) {
 			ok = false;
 			e.printStackTrace();
@@ -91,8 +91,8 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 	}
 
 	private void setTabsEnable(Boolean enable) throws SQLException {
-		int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
-		TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+		int gruppenAnzahl = mainControl.getTournament().getAnzahlGruppen();
+		TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabbedPaneViewArray();
 		mainControl.getNaviView().getTabellenPanel().setVisible(enable);
 		mainControl.getNaviView().getPairingsPanel().setVisible(!enable);
 		for (int i = 0; i < gruppenAnzahl; i++) {
@@ -100,7 +100,7 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 			tabAnzeigeView2[i].getTabbedPane().setEnabledAt(1, enable);
 			tabAnzeigeView2[i].getTabbedPane().setEnabledAt(2, !enable);
 		}
-		mainControl.getTurnierListeLadenControl().reloadTurnier();
+		mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
 
 	}
 }

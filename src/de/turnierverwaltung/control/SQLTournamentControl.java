@@ -49,13 +49,13 @@ public class SQLTournamentControl {
 	public void getTurnier(int tID) throws SQLException {
 
 		turnier = mySQLTurnierDao.findTurnier(tID, mainControl.getPropertiesControl());
-		mainControl.setTurnier(turnier);
-		mainControl.getGruppenTableControl().getGruppe();
+		mainControl.setTournament(turnier);
+		mainControl.getSqlGroupsControl().getGruppe();
 
 	}
 
 	public int insertTurnier() throws SQLException {
-		this.turnier = mainControl.getTurnier();
+		this.turnier = mainControl.getTournament();
 		turnierId = -1;
 		if (turnier.getTurnierId() == -1) {
 			String turnierName = turnier.getTurnierName();

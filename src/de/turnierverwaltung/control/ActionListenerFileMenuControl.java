@@ -31,7 +31,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 		this.newdbButton = this.naviView.getNewDatabseButton();
 		this.loaddbButton = this.naviView.getLoadDatabaseButton();
 		this.exitButton = this.naviView.getExitButton();
-		this.mainControl.getPairingsMenuActionControl().getPairingIsActive();
+		this.mainControl.getActionListenerPairingsMenuControl().getPairingIsActive();
 		newdbButton = naviView.getNewDatabseButton();
 		newdbButton.addActionListener(this);
 		loaddbButton = naviView.getLoadDatabaseButton();
@@ -80,7 +80,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 							mainControl.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
 									+ SQLiteDAOFactory.getDB_PATH());
 							prop.setDefaultPath(file.getParent());
-							mainControl.getEigenschaftenControl().getEigenschaftenView()
+							mainControl.getSettingsControl().getEigenschaftenView()
 									.setOpenDefaultPathLabel(file.getParent());
 							SQLControl sqlC = new SQLControl();
 							sqlC.createAllTables();
@@ -88,14 +88,14 @@ public class ActionListenerFileMenuControl implements ActionListener {
 									// $NON-NLS-1$
 									Messages.getString("NaviController.12"), //$NON-NLS-1$
 									JOptionPane.INFORMATION_MESSAGE);
-							this.mainControl.setNeuesTurnier(false);
-							mainControl.setTurnierTableControl(new SQLTournamentControl(mainControl));
+							this.mainControl.setNewTournament(false);
+							mainControl.setSqlTournamentControl(new SQLTournamentControl(mainControl));
 
-							mainControl.setSpielerEditierenControl(new PlayerListControl(mainControl));
-							mainControl.getSpielerEditierenControl().updateSpielerListe();
-							mainControl.setTurnierListeLadenControl(
+							mainControl.setPlayerListControl(new PlayerListControl(mainControl));
+							mainControl.getPlayerListControl().updateSpielerListe();
+							mainControl.setActionListenerTournamentItemsControl(
 									new ActionListenerTournamentItemsControl(this.mainControl));
-							mainControl.getTurnierListeLadenControl().loadTurnierListe();
+							mainControl.getActionListenerTournamentItemsControl().loadTurnierListe();
 
 							prop.setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
 							turnierAnsicht = new ChangeListenerTabControl(mainControl);
@@ -144,20 +144,20 @@ public class ActionListenerFileMenuControl implements ActionListener {
 							// This is where a real application would open the file.
 							SQLiteDAOFactory.setDB_PATH(file.getAbsolutePath());
 
-							mainControl.setNeuesTurnier(false);
+							mainControl.setNewTournament(false);
 							// mainControl.getNaviView().getTabellenPanel().setVisible(false);
-							mainControl.setTurnierTableControl(new SQLTournamentControl(mainControl));
+							mainControl.setSqlTournamentControl(new SQLTournamentControl(mainControl));
 							// mainControl.getTurnierTableControl().loadTurnierListe();
-							mainControl.setSpielerEditierenControl(new PlayerListControl(mainControl));
-							mainControl.getSpielerEditierenControl().updateSpielerListe();
-							mainControl.setTurnierListeLadenControl(
+							mainControl.setPlayerListControl(new PlayerListControl(mainControl));
+							mainControl.getPlayerListControl().updateSpielerListe();
+							mainControl.setActionListenerTournamentItemsControl(
 									new ActionListenerTournamentItemsControl(this.mainControl));
 
-							mainControl.getTurnierListeLadenControl().loadTurnierListe();
+							mainControl.getActionListenerTournamentItemsControl().loadTurnierListe();
 
 							prop.setPathToDatabase(SQLiteDAOFactory.getDB_PATH());
 							prop.setDefaultPath(file.getParent());
-							mainControl.getEigenschaftenControl().getEigenschaftenView()
+							mainControl.getSettingsControl().getEigenschaftenView()
 									.setOpenDefaultPathLabel(file.getParent());
 							prop.writeProperties();
 							naviView.setPathToDatabase(new JLabel(SQLiteDAOFactory.getDB_PATH()));
@@ -214,7 +214,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 
 		}
 		if (abfrage == 0) {
-			mainControl.setNeuesTurnier(false);
+			mainControl.setNewTournament(false);
 
 		}
 		return abfrage;

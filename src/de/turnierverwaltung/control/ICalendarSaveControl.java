@@ -19,7 +19,7 @@ public class ICalendarSaveControl {
 
 	public ICalendarSaveControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		this.meetingTable = this.mainControl.getTerminTabelle();
+		this.meetingTable = this.mainControl.getMeetingTable();
 
 	}
 
@@ -29,7 +29,7 @@ public class ICalendarSaveControl {
 		if (ready) {
 			int gruppenAnzahl = this.meetingTable.length;
 			File defaultPath = new File(mainControl.getPropertiesControl().getDefaultPath());
-			String filename = mainControl.getTurnier().getTurnierName();
+			String filename = mainControl.getTournament().getTurnierName();
 
 			JFileChooser savefile = new JFileChooser(defaultPath);
 			FileFilter filter = new FileNameExtensionFilter("ICS", "ics");
@@ -39,13 +39,13 @@ public class ICalendarSaveControl {
 			savefile.setDialogType(JFileChooser.SAVE_DIALOG);
 			int sf = savefile.showSaveDialog(null);
 			if (sf == JFileChooser.APPROVE_OPTION) {
-				
+
 				for (int i = 0; i < gruppenAnzahl; i++) {
 
 					ICal iCalendar = this.meetingTable[i].getiCalendar();
 					String fileName = savefile.getCurrentDirectory() + "/"
-							+ mainControl.getTurnier().getTurnierName().replaceAll(" ", "")
-							+ mainControl.getTurnier().getGruppe()[i].getGruppenName().replaceAll(" ", "") + ".ics";
+							+ mainControl.getTournament().getTurnierName().replaceAll(" ", "")
+							+ mainControl.getTournament().getGruppe()[i].getGruppenName().replaceAll(" ", "") + ".ics";
 
 					File file = new File(fileName);
 					if (file.exists() && fileExist == false) {

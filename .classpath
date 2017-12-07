@@ -14,7 +14,7 @@
 	<classpathentry kind="lib" path="lib/biweekly-0.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-core-2.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/vinnie-2.0.0.jar"/>
-	<classpathentry kind="lib" path="/home/mamuck/git/JKLubTV/lib/opencsv-3.7.jar"/>
-	<classpathentry kind="lib" path="/home/mamuck/git/JKLubTV/lib/sqlite-jdbc-3.20.0.jar"/>
+	<classpathentry kind="lib" path="/home/martin/JKLubTV/lib/opencsv-3.7.jar"/>
+	<classpathentry kind="lib" path="/home/martin/JKLubTV/lib/sqlite-jdbc-3.20.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

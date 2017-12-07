@@ -127,7 +127,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 							SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 							neuerSpieler.setName(neuerSpieler.getDwzData().getCsvSpielername());
 							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-							mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+							mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
 							dewisDialogControl.getSpielerDewisView().getListModel().getElementAt(temp)
 									.setIcon(insertIcon3);
 
@@ -138,7 +138,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 
 				}
 
-				mainControl.getSpielerLadenControl().updateSpielerListe();
+				mainControl.getPlayerListControl().updateSpielerListe();
 			} catch (SQLException e) {
 				ExceptionHandler eh = new ExceptionHandler(mainControl);
 				eh.fileSQLError(e.getMessage());

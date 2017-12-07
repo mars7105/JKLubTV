@@ -55,10 +55,10 @@ public class NaviControl {
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
 		this.mainControl.getNaviView().getTurnierListePanel().setVisible(false);
 		this.mainControl.getNaviView().getSpielerListePanel().setVisible(false);
-		this.mainControl.setPairingMenuActionControl(new ActionListenerPairingsMenuControl(this.mainControl));
-		this.mainControl.setFileMenuActionControl(new ActionListenerFileMenuControl(this.mainControl));
-		this.mainControl.setPlayerListMenuActionControl(new ActionListenerPlayerListControl(this.mainControl));
-		this.mainControl.setTournamentListMenuActionControl(new ActionListenerTournamentListControl(mainControl));
+		this.mainControl.setActionListenerPairingsMenuControl(new ActionListenerPairingsMenuControl(this.mainControl));
+		this.mainControl.setActionListenerFileMenuControl(new ActionListenerFileMenuControl(this.mainControl));
+		this.mainControl.setActionListenerPlayerListControl(new ActionListenerPlayerListControl(this.mainControl));
+		this.mainControl.setActionListenerTournamentListControl(new ActionListenerTournamentListControl(mainControl));
 		this.mainControl
 				.setActionListenerTournamentEditControl(new ActionListenerTournamentEditControl(this.mainControl));
 

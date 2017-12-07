@@ -39,7 +39,7 @@ public class SQLTournament_has_PlayerControl {
 	public void insertTurnier_has_Spieler(int gruppenNr) throws SQLException {
 		int gruppeId = 0;
 		int spielerId = 0;
-		this.turnier = mainControl.getTurnier();
+		this.turnier = mainControl.getTournament();
 		gruppe = turnier.getGruppe();
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		Turnier_has_SpielerDAO turnier_has_SpielerDAO = daoFactory.getTurnier_has_SpielerDAO();

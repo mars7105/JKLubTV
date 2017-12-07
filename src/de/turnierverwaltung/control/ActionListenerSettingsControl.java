@@ -29,11 +29,11 @@ public class ActionListenerSettingsControl {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
-				mainControl.getEigenschaftenControl().setEigenschaftenView(new SettingsView());
-				SettingsView eigenschaftenView = mainControl.getEigenschaftenControl().getEigenschaftenView();
-				mainControl.getEigenschaftenControl().setItemListenerControl(
-						new ItemListenerSettingsControl(mainControl, mainControl.getEigenschaftenControl()));
-				mainControl.getEigenschaftenControl().getItemListenerControl().addItemListeners();
+				mainControl.getSettingsControl().setEigenschaftenView(new SettingsView());
+				SettingsView eigenschaftenView = mainControl.getSettingsControl().getEigenschaftenView();
+				mainControl.getSettingsControl().setItemListenerControl(
+						new ItemListenerSettingsControl(mainControl, mainControl.getSettingsControl()));
+				mainControl.getSettingsControl().getItemListenerControl().addItemListeners();
 				if (dialog == null) {
 					dialog = new JDialog();
 				} else {
