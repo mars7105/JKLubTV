@@ -159,12 +159,12 @@ public class DSBDWZControl {
 				while (list.hasNext()) {
 
 					DWZData dwzData = list.next();
-//					System.out.println( "-" + dwzData.getCsvZPS());
+					// System.out.println( "-" + dwzData.getCsvZPS());
 					ListIterator<Player> li = spielerListe.listIterator();
 					Boolean foundPlayer = false;
 					while (li.hasNext()) {
 						Player tmp = li.next();
-						
+
 						String tmpzps = tmp.getDwzData().getCsvZPS();
 						String tmpmgl = tmp.getDwzData().getCsvMgl_Nr();
 						String playerzps = dwzData.getCsvZPS();
@@ -188,7 +188,8 @@ public class DSBDWZControl {
 				mainControl.getPropertiesControl().setZPS(zps);
 				mainControl.getPropertiesControl().writeProperties();
 				// dialog.getUpdateButton().setEnabled(true);
-			} else {
+			}
+			if (players == null && dwzDataArray == null) {
 				// dialog.getUpdateButton().setEnabled(false);
 				JLabel noItemLabel = new JLabel(Messages.getString("DewisDialogControl.0")); //$NON-NLS-1$
 				JPanel noItemPanel = new JPanel();
@@ -414,7 +415,7 @@ public class DSBDWZControl {
 			int selectIndex = 0;
 			while (it.hasNext()) {
 				CSVVereine temp = it.next();
-//				System.out.println(temp.getCsvZPS() + " " + zps);
+				// System.out.println(temp.getCsvZPS() + " " + zps);
 				if (temp.getCsvZPS().equals(zps)) {
 					selectIndex = counter;
 				}
@@ -468,7 +469,7 @@ public class DSBDWZControl {
 				Player player = new Player();
 				player.setDwzData(dwzData);
 				player.setName(dwzData.getCsvSpielername());
-				
+
 				players.add(player);
 			}
 		}
