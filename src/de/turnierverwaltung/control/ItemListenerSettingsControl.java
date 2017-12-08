@@ -25,8 +25,8 @@ public class ItemListenerSettingsControl {
 				Boolean onlyTable = eigenschaftenView.getCheckBoxHeaderFooter().isSelected();
 
 				mainControl.getPropertiesControl().setOnlyTables(onlyTable);
-				if (mainControl.getTurnier() != null) {
-					mainControl.getTurnier().setOnlyTables(onlyTable);
+				if (mainControl.getTournament() != null) {
+					mainControl.getTournament().setOnlyTables(onlyTable);
 				}
 
 				mainControl.getPropertiesControl().writeProperties();
@@ -53,8 +53,8 @@ public class ItemListenerSettingsControl {
 				mainControl.getPropertiesControl().setNoDWZ(noDWZ);
 				eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(noDWZ);
 				eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(!noDWZ);
-				if (mainControl.getTurnier() != null) {
-					mainControl.getTurnier().setNoDWZCalc(noDWZ);
+				if (mainControl.getTournament() != null) {
+					mainControl.getTournament().setNoDWZCalc(noDWZ);
 
 					if (noDWZ) {
 
@@ -62,15 +62,15 @@ public class ItemListenerSettingsControl {
 
 					} else {
 
-						for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
+						for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
 
-							mainControl.getTurnierTabelleControl().berechneFolgeDWZ(i);
+							mainControl.getCrossTableControl().berechneFolgeDWZ(i);
 
 						}
 						eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(true);
 					}
 					try {
-						mainControl.getTurnierListeLadenControl().reloadTurnier();
+						mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
 					} catch (SQLException e1) {
 						ExceptionHandler eh = new ExceptionHandler(mainControl);
 						eh.fileSQLError(e1.getMessage());
@@ -89,20 +89,20 @@ public class ItemListenerSettingsControl {
 				Boolean noFolgeDWZ = eigenschaftenView.getCheckBoxohneFolgeDWZ().isSelected();
 
 				mainControl.getPropertiesControl().setNoFolgeDWZ(noFolgeDWZ);
-				if (mainControl.getTurnier() != null) {
-					mainControl.getTurnier().setNoFolgeDWZCalc(noFolgeDWZ);
+				if (mainControl.getTournament() != null) {
+					mainControl.getTournament().setNoFolgeDWZCalc(noFolgeDWZ);
 					if (noFolgeDWZ) {
 
 					} else {
 
-						for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
+						for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
 
-							mainControl.getTurnierTabelleControl().berechneFolgeDWZ(i);
+							mainControl.getCrossTableControl().berechneFolgeDWZ(i);
 
 						}
 					}
 					try {
-						mainControl.getTurnierListeLadenControl().reloadTurnier();
+						mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
 					} catch (SQLException e1) {
 						ExceptionHandler eh = new ExceptionHandler(mainControl);
 						eh.fileSQLError(e1.getMessage());
@@ -122,8 +122,8 @@ public class ItemListenerSettingsControl {
 				mainControl.getPropertiesControl().setNoELO(noELO);
 				eigenschaftenView.getCheckBoxohneFolgeELO().setSelected(noELO);
 				eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(!noELO);
-				if (mainControl.getTurnier() != null) {
-					mainControl.getTurnier().setNoELOCalc(noELO);
+				if (mainControl.getTournament() != null) {
+					mainControl.getTournament().setNoELOCalc(noELO);
 
 					if (noELO) {
 
@@ -131,15 +131,15 @@ public class ItemListenerSettingsControl {
 
 					} else {
 
-						for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
+						for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
 
-							mainControl.getTurnierTabelleControl().berechneFolgeELO(i);
+							mainControl.getCrossTableControl().berechneFolgeELO(i);
 
 						}
 						eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(true);
 					}
 					try {
-						mainControl.getTurnierListeLadenControl().reloadTurnier();
+						mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
 					} catch (SQLException e1) {
 						ExceptionHandler eh = new ExceptionHandler(mainControl);
 						eh.fileSQLError(e1.getMessage());
@@ -158,11 +158,11 @@ public class ItemListenerSettingsControl {
 				Boolean noFolgeELO = eigenschaftenView.getCheckBoxohneFolgeELO().isSelected();
 
 				mainControl.getPropertiesControl().setNoFolgeELO(noFolgeELO);
-				if (mainControl.getTurnier() != null) {
-					mainControl.getTurnier().setNoFolgeELOCalc(noFolgeELO);
+				if (mainControl.getTournament() != null) {
+					mainControl.getTournament().setNoFolgeELOCalc(noFolgeELO);
 
 					try {
-						mainControl.getTurnierListeLadenControl().reloadTurnier();
+						mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
 					} catch (SQLException e1) {
 						ExceptionHandler eh = new ExceptionHandler(mainControl);
 						eh.fileSQLError(e1.getMessage());

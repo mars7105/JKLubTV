@@ -157,7 +157,7 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 							if (playerExist(neuerSpieler) == false) {
 								SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 								neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-								mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+								mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
 								dewisDialogControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
 										.setIcon(insertIcon3);
 
@@ -168,7 +168,7 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 
 					}
 
-					mainControl.getSpielerLadenControl().updateSpielerListe();
+					mainControl.getPlayerListControl().updateSpielerListe();
 				} catch (SQLException e) {
 					ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());
@@ -191,7 +191,7 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 							if (playerExist(neuerSpieler) == false) {
 								SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 								neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-								mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+								mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
 								eloControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
 										.setIcon(insertIcon3);
 
@@ -202,7 +202,7 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 
 					}
 
-					mainControl.getSpielerLadenControl().updateSpielerListe();
+					mainControl.getPlayerListControl().updateSpielerListe();
 				} catch (SQLException e) {
 					ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());

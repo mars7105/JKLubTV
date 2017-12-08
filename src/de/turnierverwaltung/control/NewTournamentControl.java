@@ -69,20 +69,20 @@ public class NewTournamentControl implements ActionListener {
 
 	public NewTournamentControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		this.mainControl.setGruppenControl(null);
+		this.mainControl.setNewTournamentGroupsControl(null);
 		// this.mainControl.setSpielerAnzahlControl(null);
-		this.mainControl.setSpielerEingabeControl(null);
+		this.mainControl.setNewTournamentPlayerInputControl(null);
 		this.mainControl.setPairingsControl(null);
-		this.mainControl.setTurnierTabelleControl(null);
+		this.mainControl.setCrossTableControl(null);
 		hauptPanel = this.mainControl.getHauptPanel();
-		this.mainControl.setTurnierView(new NewTournamentView());
-		this.turnierView = this.mainControl.getTurnierView();
+		this.mainControl.setNewTournamentView(new NewTournamentView());
+		this.turnierView = this.mainControl.getNewTournamentView();
 		this.turnierView.setVisible(true);
-		turnierOkButton = this.mainControl.getTurnierView().getOkButton();
+		turnierOkButton = this.mainControl.getNewTournamentView().getOkButton();
 		turnierOkButton.addActionListener(this);
-		this.mainControl.setNeuesTurnier(true);
+		this.mainControl.setNewTournament(true);
 		buttonTabComponent = mainControl.getButtonTabComponent();
-		if (mainControl.getTurnier() != null) {
+		if (mainControl.getTournament() != null) {
 			if (hauptPanel.getTabCount() - 1 == TournamentConstants.TAB_ACTIVE_TOURNAMENT) {
 				hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
 
@@ -103,7 +103,7 @@ public class NewTournamentControl implements ActionListener {
 
 		Boolean noFolgeELOCalc = mainControl.getPropertiesControl().getNoFolgeELO();
 		turnier = new Tournament(onlyTables, noDWZCalc, noFolgeDWZCalc,noELOCalc,noFolgeELOCalc);
-		this.mainControl.setTurnier(turnier);
+		this.mainControl.setTournament(turnier);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
 		this.mainControl.getActionListenerPairingsMenuControl().setPairingIsActive(false);
@@ -160,7 +160,7 @@ public class NewTournamentControl implements ActionListener {
 		turnier.setStartDatum(startDatum);
 		turnier.setEndDatum(endDatum);
 		turnier.setAnzahlGruppen(gruppenAnzahl);
-		this.mainControl.setTurnier(turnier);
+		this.mainControl.setTournament(turnier);
 		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());
 	}
 
@@ -209,7 +209,7 @@ public class NewTournamentControl implements ActionListener {
 			if (turnierName.length() > 0 && startDatum.length() > 0 && endDatum.length() > 0 && gruppenAnzahl > 0) {
 				makeTurnier();
 
-				this.mainControl.setGruppenControl(new NewTournamentGroupsControl(this.mainControl));
+				this.mainControl.setNewTournamentGroupsControl(new NewTournamentGroupsControl(this.mainControl));
 
 			}
 

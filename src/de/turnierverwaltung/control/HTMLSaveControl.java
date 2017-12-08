@@ -58,8 +58,8 @@ public class HTMLSaveControl {
 
 		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
-			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
-			String filename = mainControl.getTurnier().getTurnierName();
+			int anzahlGruppen = this.mainControl.getTournament().getAnzahlGruppen();
+			String filename = mainControl.getTournament().getTurnierName();
 
 			File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 			String webserverPath = mainControl.getPropertiesControl().getWebserverPath();
@@ -76,36 +76,36 @@ public class HTMLSaveControl {
 
 				for (int i = 0; i < anzahlGruppen; i++) {
 
-					String wfn = mainControl.getTurnier().getTurnierName();
+					String wfn = mainControl.getTournament().getTurnierName();
 					wfn += Messages.getString("PDFSaveControler.2")
-							+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".pdf";
+							+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".pdf";
 					String webfilename1 = wfn.replaceAll(" ", "");
 
-					String wfn2 = mainControl.getTurnier().getTurnierName();
+					String wfn2 = mainControl.getTournament().getTurnierName();
 					wfn2 += Messages.getString("PDFSaveControler.8")
-							+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".pdf";
+							+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".pdf";
 					String webfilename2 = wfn2.replaceAll(" ", "");
 
-					String ical = mainControl.getTurnier().getTurnierName()
-							+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".ics";
+					String ical = mainControl.getTournament().getTurnierName()
+							+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".ics";
 					String webfilename3 = ical.replaceAll(" ", "");
 
-					if (this.mainControl.getTurnierTabelle()[i] == null) {
-						this.mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
+					if (this.mainControl.getCrossTable()[i] == null) {
+						this.mainControl.getCrossTableControl().makeSimpleTableView(i);
 
-						this.mainControl.getTerminTabelleControl().makeSimpleTableView(i);
+						this.mainControl.getMeetingTableControl().makeSimpleTableView(i);
 
 					}
 
-					CrossTable turnierTabelle = mainControl.getTurnierTabelle()[i];
+					CrossTable turnierTabelle = mainControl.getCrossTable()[i];
 
-					int spalte = this.mainControl.getSimpleTableView()[i].getTable().getModel().getColumnCount();
-					int zeile = this.mainControl.getSimpleTableView()[i].getTable().getModel().getRowCount();
+					int spalte = this.mainControl.getCrossTableView()[i].getTable().getModel().getColumnCount();
+					int zeile = this.mainControl.getCrossTableView()[i].getTable().getModel().getRowCount();
 					for (int x = 0; x < spalte; x++) {
 						for (int y = 0; y < zeile; y++) {
 
 							turnierTabelle.getTabellenMatrix()[x][y
-									+ 1] = (String) this.mainControl.getSimpleTableView()[i].getTable().getValueAt(y,
+									+ 1] = (String) this.mainControl.getCrossTableView()[i].getTable().getValueAt(y,
 											x);
 
 						}
@@ -113,10 +113,10 @@ public class HTMLSaveControl {
 					if (filename != null) {
 						File filename1 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 								+ filename + Messages.getString("HTMLSaveControler.5") //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".html"); //$NON-NLS-1$
+								+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".html"); //$NON-NLS-1$
 						File filename2 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 								+ filename + Messages.getString("HTMLSaveControler.8") //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".html"); //$NON-NLS-1$
+								+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".html"); //$NON-NLS-1$
 						int n1 = 0;
 						if (filename1.exists() && fileExist == false) {
 							fileExist = true;
@@ -151,14 +151,14 @@ public class HTMLSaveControl {
 								// Construct a writer for a specific encoding
 								writer1 = new OutputStreamWriter(new FileOutputStream(filename1), "UTF8"); //$NON-NLS-1$
 
-								writer1.write(this.mainControl.getTurnierTabelle()[i].getHTMLTable(ohneHeaderundFooter,
+								writer1.write(this.mainControl.getCrossTable()[i].getHTMLTable(ohneHeaderundFooter,
 										webserverPath, webfilename1, showLink));
 								writer1.flush();
 								writer1.close();
 							}
 							if (n2 == 0) {
 								writer2 = new OutputStreamWriter(new FileOutputStream(filename2), "UTF8"); //$NON-NLS-1$
-								writer2.write(this.mainControl.getTerminTabelleControl().getTerminTabelle()[i]
+								writer2.write(this.mainControl.getMeetingTableControl().getTerminTabelle()[i]
 										.getHTMLTable(ohneHeaderundFooter, webserverPath, webfilename2, webfilename3,
 												showLink));
 								writer2.flush();

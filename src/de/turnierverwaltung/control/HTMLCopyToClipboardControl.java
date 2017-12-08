@@ -24,7 +24,7 @@ public class HTMLCopyToClipboardControl {
 	public void copyToClipboard() {
 		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
-			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
+			int anzahlGruppen = this.mainControl.getTournament().getAnzahlGruppen();
 
 			String webserverPath = mainControl.getPropertiesControl().getWebserverPath();
 
@@ -34,44 +34,44 @@ public class HTMLCopyToClipboardControl {
 
 			for (int i = 0; i < anzahlGruppen; i++) {
 
-				String wfn = mainControl.getTurnier().getTurnierName();
+				String wfn = mainControl.getTournament().getTurnierName();
 				wfn += Messages.getString("PDFSaveControler.2")
-						+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".pdf";
+						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".pdf";
 				String webfilename1 = wfn.replaceAll(" ", "");
 
-				String wfn2 = mainControl.getTurnier().getTurnierName();
+				String wfn2 = mainControl.getTournament().getTurnierName();
 				wfn2 += Messages.getString("PDFSaveControler.8")
-						+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".pdf";
+						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".pdf";
 				String webfilename2 = wfn2.replaceAll(" ", "");
 
-				String ical = mainControl.getTurnier().getTurnierName()
-						+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + ".ics";
+				String ical = mainControl.getTournament().getTurnierName()
+						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".ics";
 				String webfilename3 = ical.replaceAll(" ", "");
 
-				String crossLabel = mainControl.getTurnier().getTurnierName() + " "
-						+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + " "
+				String crossLabel = mainControl.getTournament().getTurnierName() + " "
+						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + " "
 						+ Messages.getString("PDFSaveControler.22");
-				String meetingLabel = mainControl.getTurnier().getTurnierName() + " "
-						+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + " "
+				String meetingLabel = mainControl.getTournament().getTurnierName() + " "
+						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + " "
 						+ Messages.getString("PDFSaveControler.23");
-				String allLabel = mainControl.getTurnier().getTurnierName() + " "
-						+ mainControl.getTurnier().getGruppe()[i].getGruppenName() + " "
+				String allLabel = mainControl.getTournament().getTurnierName() + " "
+						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + " "
 						+ Messages.getString("PDFSaveControler.21");
-				if (this.mainControl.getTurnierTabelle()[i] == null) {
-					this.mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
+				if (this.mainControl.getCrossTable()[i] == null) {
+					this.mainControl.getCrossTableControl().makeSimpleTableView(i);
 
-					this.mainControl.getTerminTabelleControl().makeSimpleTableView(i);
+					this.mainControl.getMeetingTableControl().makeSimpleTableView(i);
 
 				}
 
-				CrossTable turnierTabelle = mainControl.getTurnierTabelle()[i];
+				CrossTable turnierTabelle = mainControl.getCrossTable()[i];
 
-				int spalte = this.mainControl.getSimpleTableView()[i].getTable().getModel().getColumnCount();
-				int zeile = this.mainControl.getSimpleTableView()[i].getTable().getModel().getRowCount();
+				int spalte = this.mainControl.getCrossTableView()[i].getTable().getModel().getColumnCount();
+				int zeile = this.mainControl.getCrossTableView()[i].getTable().getModel().getRowCount();
 				for (int x = 0; x < spalte; x++) {
 					for (int y = 0; y < zeile; y++) {
 
-						turnierTabelle.getTabellenMatrix()[x][y + 1] = (String) this.mainControl.getSimpleTableView()[i]
+						turnierTabelle.getTabellenMatrix()[x][y + 1] = (String) this.mainControl.getCrossTableView()[i]
 								.getTable().getValueAt(y, x);
 
 					}
@@ -82,7 +82,7 @@ public class HTMLCopyToClipboardControl {
 
 				HTMLToClipBoardView crosshtmlToClipboard = new HTMLToClipBoardView();
 				crosshtmlToClipboard.getLabel().setText(crossLabel);
-				String crosstable = this.mainControl.getTurnierTabelle()[i].getHTMLTable(ohneHeaderundFooter,
+				String crosstable = this.mainControl.getCrossTable()[i].getHTMLTable(ohneHeaderundFooter,
 						webserverPath, webfilename1, showLink);
 				crosshtmlToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {
 
@@ -100,7 +100,7 @@ public class HTMLCopyToClipboardControl {
 				HTMLToClipBoardView meetinghtmlToClipboard = new HTMLToClipBoardView();
 				meetinghtmlToClipboard.getLabel().setText(meetingLabel);
 
-				String meetingtable = this.mainControl.getTerminTabelleControl().getTerminTabelle()[i]
+				String meetingtable = this.mainControl.getMeetingTableControl().getTerminTabelle()[i]
 						.getHTMLTable(ohneHeaderundFooter, webserverPath, webfilename2, webfilename3, showLink);
 				meetinghtmlToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {
 
@@ -116,9 +116,9 @@ public class HTMLCopyToClipboardControl {
 				htmlToClipboardArray.add(meetinghtmlToClipboard);
 				HTMLToClipBoardView allToClipboard = new HTMLToClipBoardView();
 				allToClipboard.getLabel().setText(allLabel);
-				String crosstableall = this.mainControl.getTurnierTabelle()[i]
+				String crosstableall = this.mainControl.getCrossTable()[i]
 						.getHTMLTableOnlyWithHeader(ohneHeaderundFooter, webserverPath, webfilename1, showLink);
-				String meetingtableall = this.mainControl.getTerminTabelleControl().getTerminTabelle()[i]
+				String meetingtableall = this.mainControl.getMeetingTableControl().getTerminTabelle()[i]
 						.getHTMLTableOnlyWithFooter(ohneHeaderundFooter, webserverPath, webfilename2, webfilename3,
 								showLink);
 				allToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {

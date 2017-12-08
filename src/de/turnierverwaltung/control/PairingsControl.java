@@ -93,10 +93,10 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	public PairingsControl(MainControl mainControl) {
 		this.mainControl = mainControl;
 
-		tournament = this.mainControl.getTurnier();
+		tournament = this.mainControl.getTournament();
 		groups = tournament.getGruppe();
 		gruppenAnzahl = tournament.getAnzahlGruppen();
-		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+		tabAnzeigeView2 = this.mainControl.getTabbedPaneViewArray();
 		init();
 	}
 
@@ -104,11 +104,11 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	public void init() {
 
 		if (pairingsView == null) {
-			if (mainControl.getTurnierTabelleControl() == null) {
+			if (mainControl.getCrossTableControl() == null) {
 				meetingTable = new MeetingTable[gruppenAnzahl];
-				this.mainControl.setTerminTabelle(meetingTable);
+				this.mainControl.setMeetingTable(meetingTable);
 			} else {
-				meetingTable = this.mainControl.getTerminTabelle();
+				meetingTable = this.mainControl.getMeetingTable();
 			}
 			pairingsView = new PairingsView[gruppenAnzahl];
 			neuesTurnier = new Boolean[gruppenAnzahl];
@@ -125,7 +125,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 					}
 				}
 			}
-			this.mainControl.setRundenEingabeFormularView(pairingsView);
+			this.mainControl.setPairingsView(pairingsView);
 			changeColorButton = new JButton[gruppenAnzahl][];
 			datePicker = new DateChooserPanel[gruppenAnzahl][];
 			roundNumbers = new JComboBox[gruppenAnzahl][];
@@ -133,7 +133,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 			pairingsTables = new PairingsTables[gruppenAnzahl];
 			if (this.mainControl.getChangedGames() == null) {
 				changedGames = new ArrayList<Game>();
-				this.mainControl.setChangedPartien(changedGames);
+				this.mainControl.setChangedGames(changedGames);
 			} else {
 				changedGames = this.mainControl.getChangedGames();
 
@@ -149,7 +149,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		init();
-		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+		tabAnzeigeView2 = this.mainControl.getTabbedPaneViewArray();
 		int max;
 		int anzahl;
 		for (int index = 0; index < gruppenAnzahl; index++) {
@@ -258,7 +258,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	@SuppressWarnings("unchecked")
 	public void makeNewFormular(int index) {
 
-		meetingTable = mainControl.getTerminTabelle();
+		meetingTable = mainControl.getMeetingTable();
 
 		String[][] terminMatrix = meetingTable[index].getTabellenMatrix();
 
@@ -283,7 +283,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 		}
 		if (this.mainControl.getChangedGames() == null) {
 			changedGames = new ArrayList<Game>();
-			this.mainControl.setChangedPartien(changedGames);
+			this.mainControl.setChangedGames(changedGames);
 		} else {
 			changedGames = this.mainControl.getChangedGames();
 
@@ -301,7 +301,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 		spielerAnzahl[index] = groups[index].getSpielerAnzahl();
 
-		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+		tabAnzeigeView2 = this.mainControl.getTabbedPaneViewArray();
 		if (tabAnzeigeView2 != null) {
 			if (tabAnzeigeView2[index].getTabbedPane().getTabCount() < 3) {
 				tabAnzeigeView2[index].getTabbedPane().insertTab(Messages.getString("RundenEingabeFormularControl.6"), //$NON-NLS-1$
@@ -323,8 +323,8 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 		CrossTableControl turnierTabelleControl = new CrossTableControl(mainControl);
 		MeetingTableControl terminTabelleControl = new MeetingTableControl(mainControl);
-		mainControl.setTurnierTabelleControl(turnierTabelleControl);
-		mainControl.setTerminTabelleControl(terminTabelleControl);
+		mainControl.setCrossTableControl(turnierTabelleControl);
+		mainControl.setMeetingTableControl(terminTabelleControl);
 		turnierTabelleControl.makeSimpleTableView(index);
 
 		terminTabelleControl.makeSimpleTableView(index);
@@ -332,10 +332,10 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 		spielerAnzahl[index] = groups[index].getSpielerAnzahl();
 
-		tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+		tabAnzeigeView2 = this.mainControl.getTabbedPaneViewArray();
 
 		mainControl.getNaviView().setTabellenname(
-				Messages.getString("RundenEingabeFormularControl.7") + mainControl.getTurnier().getTurnierName()); //$NON-NLS-1$
+				Messages.getString("RundenEingabeFormularControl.7") + mainControl.getTournament().getTurnierName()); //$NON-NLS-1$
 
 		Boolean readyToSave = checkIfReadyToSave();
 		if (readyToSave == true) {
@@ -343,11 +343,11 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 		} else {
 			Boolean nextTab = true;
-			for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
-				if (nextTab == true && mainControl.getSpielerEingabeControl().getReadyToSave()[i] == false) {
+			for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
+				if (nextTab == true && mainControl.getNewTournamentPlayerInputControl().getReadyToSave()[i] == false) {
 					nextTab = false;
 
-					this.mainControl.getTabAnzeigeView().getTabbedPane().setSelectedIndex(i);
+					this.mainControl.getTabbedPaneView().getTabbedPane().setSelectedIndex(i);
 					tabAnzeigeView2[index].getTabbedPane().removeAll();
 					tabAnzeigeView2[index].getTabbedPane().addTab("Info", new WaitForAllGroupsView());
 
@@ -360,9 +360,9 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 	private Boolean checkIfReadyToSave() {
 		Boolean readyToSave = false;
-		for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
+		for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
 
-			if (mainControl.getSpielerEingabeControl().getReadyToSave()[i] == true) {
+			if (mainControl.getNewTournamentPlayerInputControl().getReadyToSave()[i] == true) {
 				readyToSave = true;
 			} else {
 				return false;
@@ -375,7 +375,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 		Boolean ok = true;
 		try {
-			ok = this.mainControl.getSqlTournamentControl().saveChangedPartien();
+			ok = this.mainControl.getSaveTournamentControl().saveChangedPartien();
 		} catch (SQLException e) {
 			ok = false;
 			e.printStackTrace();
@@ -409,9 +409,9 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 	public Boolean checkNewTurnier() {
 		Boolean ready = true;
-		if (mainControl.getSpielerEingabeControl() != null) {
-			for (int i = 0; i < mainControl.getTurnier().getAnzahlGruppen(); i++) {
-				if (mainControl.getSpielerEingabeControl().getReadyToSave()[i] == false) {
+		if (mainControl.getNewTournamentPlayerInputControl() != null) {
+			for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
+				if (mainControl.getNewTournamentPlayerInputControl().getReadyToSave()[i] == false) {
 					ready = false;
 				}
 			}
@@ -424,7 +424,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 		if (arg0.getPropertyName().equals("date")) {
 
 			init();
-			tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+			tabAnzeigeView2 = this.mainControl.getTabbedPaneViewArray();
 			int max;
 			int anzahl;
 			for (int index = 0; index < gruppenAnzahl; index++) {

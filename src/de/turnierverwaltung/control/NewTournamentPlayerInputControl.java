@@ -65,24 +65,24 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		this.mainControl = mainControl;
 		SQLPlayerControl spielerTableControl = new SQLPlayerControl(mainControl);
 		alleSpieler = spielerTableControl.getAllSpieler();
-		turnier = this.mainControl.getTurnier();
+		turnier = this.mainControl.getTournament();
 		gruppe = turnier.getGruppe();
 		hauptPanel = this.mainControl.getHauptPanel();
-		this.mainControl.setTabAnzeigeControl(new TabbedPaneViewControl(this.mainControl, "S"));
+		this.mainControl.setTabbedPaneViewControl(new TabbedPaneViewControl(this.mainControl, "S"));
 		this.mainControl
-				.setTabAnzeigeView(new TabbedPaneView(mainControl, Messages.getString("SpielerEingabeControl.10")));
-		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
+				.setTabbedPaneView(new TabbedPaneView(mainControl, Messages.getString("SpielerEingabeControl.10")));
+		tabAnzeigeView = this.mainControl.getTabbedPaneView();
 		tabAnzeigeView.setPreferredSize(new Dimension(windowWidth, windowHeight));
 		hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
 		hauptPanel.add(tabAnzeigeView, TournamentConstants.TAB_ACTIVE_TOURNAMENT);
 		hauptPanel.setTitleAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, turnier.getTurnierName());
 		hauptPanel.setIconAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, gruppenIcon);
 		hauptPanel.setSelectedIndex(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
-		gruppenAnzahl = this.mainControl.getTurnier().getAnzahlGruppen();
+		gruppenAnzahl = this.mainControl.getTournament().getAnzahlGruppen();
 		spielerAnzahl = new int[gruppenAnzahl];
 
 		spielerEingabeView = new NewTournamentPlayerInputView[gruppenAnzahl];
-		this.mainControl.setSpielerEingabeView(spielerEingabeView);
+		this.mainControl.setNewTournamentPlayerInputView(spielerEingabeView);
 
 		okButton = new JButton[gruppenAnzahl];
 		cancelButton = new JButton[gruppenAnzahl];
@@ -188,7 +188,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 						Messages.getString("SpielerEingabeControl.8"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
 						JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 				if (abfrage == 0) {
-					this.mainControl.setTurnierControl(new NewTournamentControl(this.mainControl));
+					this.mainControl.setNewTournamentControl(new NewTournamentControl(this.mainControl));
 				}
 			}
 			for (int s = 0; s < spielerAnzahl[i]; s++) {

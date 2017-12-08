@@ -82,10 +82,10 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 		loadedTurnierID = -1;
 		this.mainControl = mainControl;
 
-		this.mainControl.setTurnierListeLadenView(turnierListeLadenView);
-		turnierTableControl = mainControl.getTurnierTableControl();
+		this.mainControl.setTournamentListView(turnierListeLadenView);
+		turnierTableControl = mainControl.getSqlTournamentControl();
 
-		this.mainControl.setTabAnzeigeControl(new TabbedPaneViewControl(this.mainControl, "X"));
+		this.mainControl.setTabbedPaneViewControl(new TabbedPaneViewControl(this.mainControl, "X"));
 
 		hauptPanel = this.mainControl.getHauptPanel();
 		selectTurnierTab = false;
@@ -156,7 +156,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 		for (int i = 0; i < anzahlTurniere; i++) {
 
 			if (arg0.getSource().equals(turnierListeLadenView.getTurnierLadeButton()[i])) {
-				Tournament turnier = this.mainControl.getTurnier();
+				Tournament turnier = this.mainControl.getTournament();
 
 				if (turnier == null) {
 					selectTurnierTab = true;
@@ -265,8 +265,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 			// Diese Abfrage muss an letzter Stelle stehen,
 			// da ansonsten eine ArraOutOfBounds Exception auftritt!
 			if (arg0.getSource().equals(turnierListeLadenView.getTurnierLoeschenButton()[i])) {
-				if (mainControl.getTurnier() != null) {
-					if (mainControl.getTurnier().getTurnierId() == turnierListe.get(i).getTurnierId()) {
+				if (mainControl.getTournament() != null) {
+					if (mainControl.getTournament().getTurnierId() == turnierListe.get(i).getTurnierId()) {
 						JOptionPane.showMessageDialog(mainControl, Messages.getString("TurnierListeLadenControl.4")); //$NON-NLS-1$
 
 					} else {
@@ -298,7 +298,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 	}
 
 	public void reloadTurnier() throws SQLException {
-		turnier = mainControl.getTurnier();
+		turnier = mainControl.getTournament();
 		if (turnier != null && loadedTurnierID >= 0) {
 			for (int i = 0; i < anzahlTurniere; i++) {
 				if (turnierListe.get(i).getTurnierId() == loadedTurnierID) {
@@ -312,8 +312,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 	public void loadTurnier(int index) throws SQLException {
 		int selectedTab = hauptPanel.getSelectedIndex();
 
-		mainControl.setSpielerEingabeControl(null);
-		if (mainControl.getTurnier() != null) {
+		mainControl.setNewTournamentPlayerInputControl(null);
+		if (mainControl.getTournament() != null) {
 			if (hauptPanel.getTabCount() - 1 == TournamentConstants.TAB_ACTIVE_TOURNAMENT) {
 				hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
 
@@ -322,45 +322,45 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 		}
 
 		turnier = turnierListe.get(index);
-		mainControl.setTurnier(turnier);
+		mainControl.setTournament(turnier);
 		mainControl.setSqlGroupsControl(new SQLGroupsControl(mainControl));
 		mainControl.getSqlGroupsControl().getGruppe();
-		mainControl.setSpielerTableControl(new SQLPlayerControl(mainControl));
-		mainControl.getSpielerTableControl().getSpieler();
+		mainControl.setSqlPlayerControl(new SQLPlayerControl(mainControl));
+		mainControl.getSqlPlayerControl().getSpieler();
 		tabbedPaneView = new TabbedPaneView(mainControl, Messages.getString("TurnierListeLadenControl.15"));
 		tabbedPaneView.getTitleView().setFlowLayoutLeft();
-		mainControl.setTabAnzeigeView(tabbedPaneView);
-		mainControl.setPartienTableControl(new SQLGamesControl(mainControl));
-		for (int z = 0; z < mainControl.getTurnier().getAnzahlGruppen(); z++) {
+		mainControl.setTabbedPaneView(tabbedPaneView);
+		mainControl.setSqlGamesControl(new SQLGamesControl(mainControl));
+		for (int z = 0; z < mainControl.getTournament().getAnzahlGruppen(); z++) {
 			mainControl.getSqlGamesControl().getPartien(z);
 		}
 		tabbedPaneView2 = new TabbedPaneView[turnier.getAnzahlGruppen()];
 
-		mainControl.setTabAnzeigeView2(tabbedPaneView2);
+		mainControl.setTabbedPaneViewArray(tabbedPaneView2);
 		CrossTableControl turnierTabelleControl = new CrossTableControl(mainControl);
 		MeetingTableControl terminTabelleControl = new MeetingTableControl(mainControl);
 
-		mainControl.setTurnierTabelleControl(turnierTabelleControl);
-		mainControl.setTerminTabelleControl(terminTabelleControl);
+		mainControl.setCrossTableControl(turnierTabelleControl);
+		mainControl.setMeetingTableControl(terminTabelleControl);
 
 		for (int z = 0; z < turnier.getAnzahlGruppen(); z++) {
 			tabbedPaneView2[z] = new TabbedPaneView(mainControl, "Gruppen");
 			tabbedPaneView.getTabbedPane().insertTab(turnier.getGruppe()[z].getGruppenName(), gruppenIcon,
 					tabbedPaneView2[z], null, z);
-			mainControl.getTurnierTabelleControl().makeSimpleTableView(z);
+			mainControl.getCrossTableControl().makeSimpleTableView(z);
 
-			mainControl.getTerminTabelleControl().makeSimpleTableView(z);
-			mainControl.getTurnierTabelleControl().okAction(z);
+			mainControl.getMeetingTableControl().makeSimpleTableView(z);
+			mainControl.getCrossTableControl().okAction(z);
 
 		}
 		PairingsControl rundenEingabeFormularControl = new PairingsControl(mainControl);
 		mainControl.setPairingsControl(rundenEingabeFormularControl);
-		mainControl.getTurnier().setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
-		mainControl.getTurnier().setNoFolgeDWZCalc(mainControl.getPropertiesControl().getNoFolgeDWZ());
+		mainControl.getTournament().setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
+		mainControl.getTournament().setNoFolgeDWZCalc(mainControl.getPropertiesControl().getNoFolgeDWZ());
 		mainControl.getNaviView().setTabellenname(
-				Messages.getString("TurnierListeLadenControl.5") + mainControl.getTurnier().getTurnierName()); //$NON-NLS-1$
+				Messages.getString("TurnierListeLadenControl.5") + mainControl.getTournament().getTurnierName()); //$NON-NLS-1$
 		mainControl.getActionListenerPairingsMenuControl().setPairingIsActive(false);
-		this.mainControl.setNeuesTurnier(false);
+		this.mainControl.setNewTournament(false);
 
 		hauptPanel.addTab(turnier.getTurnierName(), turnierIcon, tabbedPaneView);
 		buttonTabComponent = new ButtonTabComponent(hauptPanel, mainControl, turnierIcon, true);
@@ -385,8 +385,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 		if (turnierTableControl != null) {
 			turnierListe = turnierTableControl.loadTurnierListe();
 		} else {
-			mainControl.setTurnierTableControl(new SQLTournamentControl(mainControl));
-			turnierTableControl = mainControl.getTurnierTableControl();
+			mainControl.setSqlTournamentControl(new SQLTournamentControl(mainControl));
+			turnierTableControl = mainControl.getSqlTournamentControl();
 			turnierListe = turnierTableControl.loadTurnierListe();
 
 		}
@@ -438,7 +438,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 	public void loadPairingsView() {
 		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
-			int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
+			int gruppenAnzahl = mainControl.getTournament().getAnzahlGruppen();
 
 			ProgressBarView progressBar = new ProgressBarView(Messages.getString("NaviController.32"),
 					Messages.getString("NaviController.31"), gruppenAnzahl);
@@ -447,7 +447,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 
 			PairingsControl pairingsControl = mainControl.getPairingsControl();
 			pairingsControl.init();
-			TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+			TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabbedPaneViewArray();
 
 			for (int i = 0; i < gruppenAnzahl; i++) {
 				progressBar.iterate();

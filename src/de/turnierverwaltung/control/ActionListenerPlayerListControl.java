@@ -52,7 +52,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 
 						neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
 
-						this.mainControl.getSpielerLadenControl().getSpieler().add(neuerSpieler);
+						this.mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
 					}
 					spielerHinzufuegenView.getTextFieldForeName().setEditable(false);
 					spielerHinzufuegenView.getTextFieldSurName().setEditable(false);
@@ -70,7 +70,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 			if (arg0.getSource().equals(spielerHinzufuegenView.getCancelButton())) {
 				mainControl.setEnabled(true);
 				try {
-					this.mainControl.getSpielerLadenControl().updateSpielerListe();
+					this.mainControl.getPlayerListControl().updateSpielerListe();
 				} catch (SQLException e) {
 					ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());
@@ -84,7 +84,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 			try {
 				spielerImport.importSpielerTable();
 
-				mainControl.getSpielerLadenControl().updateSpielerListe();
+				mainControl.getPlayerListControl().updateSpielerListe();
 			} catch (SQLException e) {
 				ExceptionHandler eh = new ExceptionHandler(mainControl);
 				eh.fileSQLError(e.getMessage());
@@ -140,7 +140,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 
 				UpdateRatingsControl updateRatings = new UpdateRatingsControl(mainControl);
 				updateRatings.updateSpieler();
-				mainControl.getSpielerLadenControl().updateSpielerListe();
+				mainControl.getPlayerListControl().updateSpielerListe();
 			} catch (SQLException e) {
 				ExceptionHandler eh = new ExceptionHandler(mainControl);
 				eh.fileSQLError(e.getMessage());
@@ -153,7 +153,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 	 */
 	public void neuerSpieler() {
 		try {
-			this.mainControl.getSpielerLadenControl().updateSpielerListe();
+			this.mainControl.getPlayerListControl().updateSpielerListe();
 		} catch (SQLException e) {
 			ExceptionHandler eh = new ExceptionHandler(mainControl);
 			eh.fileSQLError(e.getMessage());

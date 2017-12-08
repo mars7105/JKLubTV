@@ -65,7 +65,7 @@ public class NewTournamentGroupsControl implements ActionListener {
 	}
 
 	public void init() {
-		turnier = this.mainControl.getTurnier();
+		turnier = this.mainControl.getTournament();
 		hauptPanel = this.mainControl.getHauptPanel();
 		gruppenAnzahl = turnier.getAnzahlGruppen();
 		this.mainControl.setNewTournamentGroupsView(new NewTournamentGroupsView());
@@ -95,7 +95,7 @@ public class NewTournamentGroupsControl implements ActionListener {
 			runPlayerInput();
 		}
 		if (arg0.getSource().equals(gruppenCancelButton)) {
-			this.mainControl.setTurnierControl(new NewTournamentControl(this.mainControl));
+			this.mainControl.setNewTournamentControl(new NewTournamentControl(this.mainControl));
 		}
 
 	}
@@ -138,11 +138,11 @@ public class NewTournamentGroupsControl implements ActionListener {
 		int fehlerIndex = 0;
 		try {
 			NewTournamentPlayerInputControl spielerEingabeControl;
-			if (mainControl.getSpielerEingabeControl() == null) {
+			if (mainControl.getNewTournamentPlayerInputControl() == null) {
 				spielerEingabeControl = new NewTournamentPlayerInputControl(mainControl);
-				mainControl.setSpielerEingabeControl(spielerEingabeControl);
+				mainControl.setNewTournamentPlayerInputControl(spielerEingabeControl);
 			} else {
-				spielerEingabeControl = mainControl.getSpielerEingabeControl();
+				spielerEingabeControl = mainControl.getNewTournamentPlayerInputControl();
 			}
 
 			for (int i = 0; i < gruppenAnzahl; i++) {

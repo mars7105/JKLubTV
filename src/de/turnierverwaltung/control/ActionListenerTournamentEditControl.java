@@ -64,7 +64,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 
 			Boolean ready = pairingsControl.checkNewTurnier();
 			if (ready) {
-				int gruppenAnzahl = mainControl.getTurnier().getAnzahlGruppen();
+				int gruppenAnzahl = mainControl.getTournament().getAnzahlGruppen();
 
 				progressBar = new ProgressBarView(Messages.getString("NaviController.32"),
 						Messages.getString("NaviController.31"), gruppenAnzahl);
@@ -72,7 +72,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 				mainControl.getNaviView().getTabellenPanel().setVisible(false);
 				progressBar.iterate(gruppenAnzahl);
 
-				TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
+				TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabbedPaneViewArray();
 
 				for (int i = 0; i < gruppenAnzahl; i++) {
 					progressBar.iterate();
@@ -149,15 +149,15 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 	}
 
 	private void makeNewTables() {
-		int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
+		int anzahlGruppen = this.mainControl.getTournament().getAnzahlGruppen();
 
 		for (int i = 0; i < anzahlGruppen; i++) {
 
-			this.mainControl.getTurnierTabelleControl().okAction(i);
+			this.mainControl.getCrossTableControl().okAction(i);
 
-			mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
+			mainControl.getCrossTableControl().makeSimpleTableView(i);
 
-			mainControl.getTerminTabelleControl().makeSimpleTableView(i);
+			mainControl.getMeetingTableControl().makeSimpleTableView(i);
 
 		}
 	}

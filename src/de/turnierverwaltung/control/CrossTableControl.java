@@ -52,34 +52,34 @@ public class CrossTableControl {
 		this.mainControl = mainControl;
 		hauptPanel = this.mainControl.getHauptPanel();
 
-		if (this.mainControl.getTabAnzeigeView() == null) {
+		if (this.mainControl.getTabbedPaneView() == null) {
 			this.mainControl
-					.setTabAnzeigeView(new TabbedPaneView(mainControl, mainControl.getTurnier().getTurnierName()));
+					.setTabbedPaneView(new TabbedPaneView(mainControl, mainControl.getTournament().getTurnierName()));
 		}
-		tabAnzeigeView = this.mainControl.getTabAnzeigeView();
+		tabAnzeigeView = this.mainControl.getTabbedPaneView();
 
 		// tabAnzeigeView.setBackground(new Color(249, 222, 112));
-		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
+		int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
 		tabAnzeigeView2 = new TabbedPaneView[anzahlGruppen];
 		for (int i = 0; i < anzahlGruppen; i++) {
 			tabAnzeigeView2[i] = new TabbedPaneView(mainControl, Messages.getString("TurnierTabelleControl.8"));
 			tabAnzeigeView2[i].getTitleView().setFlowLayoutLeft();
 
 		}
-		this.mainControl.setTabAnzeigeView2(tabAnzeigeView2);
+		this.mainControl.setTabbedPaneViewArray(tabAnzeigeView2);
 		simpleTableView = new CrossTableView[anzahlGruppen];
 		tml = new MyTableModelListener[anzahlGruppen];
 		this.turnierTabelle = new CrossTable[anzahlGruppen];
-		this.mainControl.setTurnierTabelle(turnierTabelle);
+		this.mainControl.setCrossTable(turnierTabelle);
 		this.saveTurnierControl = new SaveTournamentControl(this.mainControl);
-		this.mainControl.setSaveTurnierControl(saveTurnierControl);
+		this.mainControl.setSaveTournamentControl(saveTurnierControl);
 		spielerAnzahl = new int[anzahlGruppen];
 		if (mainControl.getNewTournament() == false) {
 			this.mainControl.getNaviView().getTabellenPanel().setVisible(true);
 		}
 		if (this.mainControl.getChangedGames() == null) {
 			changedPartien = new ArrayList<Game>();
-			this.mainControl.setChangedPartien(changedPartien);
+			this.mainControl.setChangedGames(changedPartien);
 		} else {
 			changedPartien = this.mainControl.getChangedGames();
 
@@ -101,7 +101,7 @@ public class CrossTableControl {
 	 */
 	public void makeSimpleTableView(int gruppenNummer) {
 
-		turnier = mainControl.getTurnier();
+		turnier = mainControl.getTournament();
 		if (tml[gruppenNummer] == null) {
 			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer);
 		}
@@ -111,7 +111,7 @@ public class CrossTableControl {
 			spielerAnzahl[gruppenNummer]--;
 		}
 		this.turnierTabelle[gruppenNummer] = new CrossTable(turnier,
-				mainControl.getTurnier().getGruppe()[gruppenNummer]);
+				mainControl.getTournament().getGruppe()[gruppenNummer]);
 		PropertiesControl ppC = mainControl.getPropertiesControl();
 		String playerColumnName = ppC.getTableComumnPlayer();
 		String oldDWZColumnName = ppC.getTableComumnOldDWZ();
@@ -145,7 +145,7 @@ public class CrossTableControl {
 			tabAnzeigeView2[gruppenNummer].getTabbedPane().setComponentAt(0, simpleTableView[gruppenNummer]);
 		}
 
-		mainControl.setSimpleTableView(simpleTableView);
+		mainControl.setCrossTableView(simpleTableView);
 		if (tabAnzeigeView.getTabbedPane().getTabCount() < 1) {
 			tabAnzeigeView.getTabbedPane().insertTab(turnier.getGruppe()[gruppenNummer].getGruppenName(), null,
 					tabAnzeigeView2[gruppenNummer], null, gruppenNummer);
@@ -166,8 +166,8 @@ public class CrossTableControl {
 
 	public void berechneFolgeDWZ(int gruppenNummer) {
 		if (mainControl.getNewTournament() == false) {
-			ResultDWZControl folgeDWZ = new ResultDWZControl(mainControl.getTurnier(),
-					mainControl.getTurnier().getGruppe()[gruppenNummer]);
+			ResultDWZControl folgeDWZ = new ResultDWZControl(mainControl.getTournament(),
+					mainControl.getTournament().getGruppe()[gruppenNummer]);
 			folgeDWZ.caculateDWZ();
 		}
 	}
@@ -201,8 +201,8 @@ public class CrossTableControl {
 	 * @throws SQLException
 	 */
 	public void readDataFromDatabase(int tID) throws SQLException {
-		mainControl.getTurnierTableControl().getTurnier(tID);
-		turnier = mainControl.getTurnier();
+		mainControl.getSqlTournamentControl().getTurnier(tID);
+		turnier = mainControl.getTournament();
 
 	}
 
@@ -239,7 +239,7 @@ public class CrossTableControl {
 	}
 
 	public void updateStatus() {
-		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
+		int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
 		for (int i = 0; i < anzahlGruppen; i++) {
 			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
 			simpleTableView[i].getStatusLabel().setBackground(Color.ORANGE);
@@ -355,11 +355,11 @@ public class CrossTableControl {
 				}
 			}
 			// mainControl.getTerminTabelleControl().makeSimpleTableView(gruppenNummer);
-			mainControl.getTerminTabelleControl().updateSimpleTableView(changedPartien.get(changedPartien.size() - 1),
+			mainControl.getMeetingTableControl().updateSimpleTableView(changedPartien.get(changedPartien.size() - 1),
 					gruppenNummer);
 			simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
 
-			mainControl.getTerminTabelleControl().updateStatus();
+			mainControl.getMeetingTableControl().updateStatus();
 			if (changedPartien.size() > 0) {
 				mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(true);
 			}

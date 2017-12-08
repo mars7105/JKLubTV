@@ -47,8 +47,8 @@ public class ExcelSaveControl {
 	public void saveExcelFile() {
 		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
-			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
-			String filename = mainControl.getTurnier().getTurnierName();
+			int anzahlGruppen = this.mainControl.getTournament().getAnzahlGruppen();
+			String filename = mainControl.getTournament().getTurnierName();
 
 			File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
@@ -83,26 +83,26 @@ public class ExcelSaveControl {
 				cellStyle.setBorderTop(CellStyle.BORDER_MEDIUM);
 				cellStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
 				cellStyle.setFont(font);
-				
+
 				for (int i = 0; i < anzahlGruppen; i++) {
 
-					if (this.mainControl.getTurnierTabelle()[i] == null) {
-						this.mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
+					if (this.mainControl.getCrossTable()[i] == null) {
+						this.mainControl.getCrossTableControl().makeSimpleTableView(i);
 
-						this.mainControl.getTerminTabelleControl().makeSimpleTableView(i);
+						this.mainControl.getMeetingTableControl().makeSimpleTableView(i);
 
 					}
 
-					CrossTable turnierTabelle = mainControl.getTurnierTabelle()[i];
+					CrossTable turnierTabelle = mainControl.getCrossTable()[i];
 
-					int spalte = this.mainControl.getSimpleTableView()[i].getTable().getModel().getColumnCount();
-					int zeile = this.mainControl.getSimpleTableView()[i].getTable().getModel().getRowCount();
-					int spalte2 = this.mainControl.getTerminTabelle()[i].getSpaltenAnzahl();
-					int zeile2 = this.mainControl.getTerminTabelle()[i].getZeilenAnzahl();
+					int spalte = this.mainControl.getCrossTableView()[i].getTable().getModel().getColumnCount();
+					int zeile = this.mainControl.getCrossTableView()[i].getTable().getModel().getRowCount();
+					int spalte2 = this.mainControl.getMeetingTable()[i].getSpaltenAnzahl();
+					int zeile2 = this.mainControl.getMeetingTable()[i].getZeilenAnzahl();
 					s[i] = wb.createSheet(
-							this.mainControl.getTurnier().getGruppe()[i].getGruppenName() + " - Kreuztabelle");
+							this.mainControl.getTournament().getGruppe()[i].getGruppenName() + " - Kreuztabelle");
 					s2[i] = wb.createSheet(
-							this.mainControl.getTurnier().getGruppe()[i].getGruppenName() + " - Termintabelle");
+							this.mainControl.getTournament().getGruppe()[i].getGruppenName() + " - Termintabelle");
 					PrintSetup ps = s[i].getPrintSetup();
 
 					s[i].setAutobreaks(true);
@@ -138,8 +138,8 @@ public class ExcelSaveControl {
 
 							if (y < zeile) {
 								turnierTabelle.getTabellenMatrix()[x][y
-										+ 1] = (String) this.mainControl.getSimpleTableView()[i].getTable()
-												.getValueAt(y, x);
+										+ 1] = (String) this.mainControl.getCrossTableView()[i].getTable().getValueAt(y,
+												x);
 							}
 							cellnum = (short) (x - inc);
 							// create a numeric cell
@@ -170,7 +170,7 @@ public class ExcelSaveControl {
 
 							c2.setCellStyle(cellStyle);
 
-							c2.setCellValue((String) this.mainControl.getTerminTabelleControl().getTerminTabelle()[i]
+							c2.setCellValue((String) this.mainControl.getMeetingTableControl().getTerminTabelle()[i]
 									.getTabellenMatrix()[x][y]);
 
 							s2[i].autoSizeColumn(x);
@@ -184,9 +184,9 @@ public class ExcelSaveControl {
 				File filename1 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 						+ filename + ".xls"); //$NON-NLS-1$
 				int n = 0;
-				
+
 				if (filename1.exists()) {
-					
+
 					Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
 					n = JOptionPane.showOptionDialog(null,
 							Messages.getString("SaveDialog.0") + filename1.getAbsolutePath()
@@ -208,7 +208,8 @@ public class ExcelSaveControl {
 					}
 				}
 
-//				JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.18")); //$NON-NLS-1$
+				// JOptionPane.showMessageDialog(null,
+				// Messages.getString("HTMLSaveControler.18")); //$NON-NLS-1$
 				// first check if Desktop is supported by
 				// Platform or not
 				if (!Desktop.isDesktopSupported())

@@ -41,9 +41,9 @@ public class PDFSaveControl {
 		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		
 		if (ready) {
-			int anzahlGruppen = this.mainControl.getTurnier().getAnzahlGruppen();
+			int anzahlGruppen = this.mainControl.getTournament().getAnzahlGruppen();
 
-			String filename = mainControl.getTurnier().getTurnierName().replaceAll(" ", "");
+			String filename = mainControl.getTournament().getTurnierName().replaceAll(" ", "");
 			File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 			JFileChooser savefile = new JFileChooser(path);
@@ -55,21 +55,21 @@ public class PDFSaveControl {
 			int sf = savefile.showSaveDialog(null);
 			if (sf == JFileChooser.APPROVE_OPTION) {
 				for (int i = 0; i < anzahlGruppen; i++) {
-					if (this.mainControl.getTurnierTabelle()[i] == null) {
-						this.mainControl.getTurnierTabelleControl().makeSimpleTableView(i);
+					if (this.mainControl.getCrossTable()[i] == null) {
+						this.mainControl.getCrossTableControl().makeSimpleTableView(i);
 
-						this.mainControl.getTerminTabelleControl().makeSimpleTableView(i);
+						this.mainControl.getMeetingTableControl().makeSimpleTableView(i);
 
 					}
 
-					CrossTable turnierTabelle = mainControl.getTurnierTabelle()[i];
-					int spalte = this.mainControl.getSimpleTableView()[i].getTable().getModel().getColumnCount();
-					int zeile = this.mainControl.getSimpleTableView()[i].getTable().getModel().getRowCount();
+					CrossTable turnierTabelle = mainControl.getCrossTable()[i];
+					int spalte = this.mainControl.getCrossTableView()[i].getTable().getModel().getColumnCount();
+					int zeile = this.mainControl.getCrossTableView()[i].getTable().getModel().getRowCount();
 					for (int x = 0; x < spalte; x++) {
 						for (int y = 0; y < zeile; y++) {
 
 							turnierTabelle.getTabellenMatrix()[x][y
-									+ 1] = (String) this.mainControl.getSimpleTableView()[i].getTable().getValueAt(y,
+									+ 1] = (String) this.mainControl.getCrossTableView()[i].getTable().getValueAt(y,
 											x);
 						}
 					}
@@ -80,26 +80,26 @@ public class PDFSaveControl {
 
 						File filename1 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 								+ filename + Messages.getString("PDFSaveControler.2") //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName().replaceAll(" ", "") //$NON-NLS-1$
+								+ mainControl.getTournament().getGruppe()[i].getGruppenName().replaceAll(" ", "") //$NON-NLS-1$
 								+ ".pdf");
 						File filename2 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 								+ filename + Messages.getString("PDFSaveControler.8") //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName().replaceAll(" ", "") //$NON-NLS-1$
+								+ mainControl.getTournament().getGruppe()[i].getGruppenName().replaceAll(" ", "") //$NON-NLS-1$
 								+ ".pdf");
 
 						String titel = Messages.getString("PDFSaveControler.10") //$NON-NLS-1$
-								+ mainControl.getTurnier().getTurnierName() + " - " //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName();
+								+ mainControl.getTournament().getTurnierName() + " - " //$NON-NLS-1$
+								+ mainControl.getTournament().getGruppe()[i].getGruppenName();
 						String pathName = filename1.getAbsolutePath();
-						pdfoutput.createTurnierPdf(mainControl.getTurnier(), titel, pathName,
+						pdfoutput.createTurnierPdf(mainControl.getTournament(), titel, pathName,
 								turnierTabelle.getTabellenMatrix());
 
 						titel = Messages.getString("PDFSaveControler.12") //$NON-NLS-1$
-								+ mainControl.getTurnier().getTurnierName() + " - " //$NON-NLS-1$
-								+ mainControl.getTurnier().getGruppe()[i].getGruppenName();
+								+ mainControl.getTournament().getTurnierName() + " - " //$NON-NLS-1$
+								+ mainControl.getTournament().getGruppe()[i].getGruppenName();
 						pathName = filename2.getAbsolutePath();
 						pdfoutput.createTerminPdf(titel, pathName,
-								mainControl.getTerminTabelle()[i].getTabellenMatrix());
+								mainControl.getMeetingTable()[i].getTabellenMatrix());
 
 					}
 				}

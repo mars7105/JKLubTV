@@ -27,10 +27,10 @@ public class ActionListenerTournamentListControl implements ActionListener {
 
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() .equals( newTurnierButton)) {
-			mainControl.setSpielerEingabeControl(null);
-			Tournament turnier = this.mainControl.getTurnier();
+			mainControl.setNewTournamentPlayerInputControl(null);
+			Tournament turnier = this.mainControl.getTournament();
 			if (turnier == null) {
-				mainControl.setTurnierControl(new NewTournamentControl(mainControl));
+				mainControl.setNewTournamentControl(new NewTournamentControl(mainControl));
 			} else {
 
 				ArrayList<Game> changedPartien = this.mainControl.getChangedGames();
@@ -55,13 +55,13 @@ public class ActionListenerTournamentListControl implements ActionListener {
 							} catch (SQLException e) {
 								changedPartien.clear();
 							}
-							mainControl.setTurnierControl(new NewTournamentControl(mainControl));
+							mainControl.setNewTournamentControl(new NewTournamentControl(mainControl));
 						}
 					} else if (changedPartien.size() == 0) {
-						mainControl.setTurnierControl(new NewTournamentControl(mainControl));
+						mainControl.setNewTournamentControl(new NewTournamentControl(mainControl));
 					}
 				} else {
-					mainControl.setTurnierControl(new NewTournamentControl(mainControl));
+					mainControl.setNewTournamentControl(new NewTournamentControl(mainControl));
 				}
 			}
 		}

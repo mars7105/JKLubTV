@@ -58,8 +58,8 @@ public class SaveTournamentControl {
 	private void createAndShowGUI() {
 
 		ladebalkenView = new ProgressBarView(
-				Messages.getString("SaveTurnierControl.0") + this.mainControl.getTurnier().getTurnierName(), //$NON-NLS-1$
-				this.mainControl.getTurnier().getAnzahlGruppen());
+				Messages.getString("SaveTurnierControl.0") + this.mainControl.getTournament().getTurnierName(), //$NON-NLS-1$
+				this.mainControl.getTournament().getAnzahlGruppen());
 
 		// Display the window.
 		ladebalkenView.pack();
@@ -74,9 +74,9 @@ public class SaveTournamentControl {
 			ready = saveNewTurnier();
 			if (ready) {
 				mainControl.setNewTournament(false);
-				mainControl.getTurnierListeLadenControl().loadTurnierListe();
-				mainControl.getTurnierListeLadenControl().reloadTurnier();
-				mainControl.getTurnierListeLadenControl().loadPairingsView();
+				mainControl.getActionListenerTournamentItemsControl().loadTurnierListe();
+				mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
+				mainControl.getActionListenerTournamentItemsControl().loadPairingsView();
 			}
 			return ready;
 		} else {
@@ -85,7 +85,7 @@ public class SaveTournamentControl {
 				ArrayList<Game> changedPartien;
 				if (this.mainControl.getChangedGames() == null) {
 					JOptionPane.showMessageDialog(mainControl, Messages.getString("SaveTurnierControl.1") //$NON-NLS-1$
-							+ this.mainControl.getTurnier().getTurnierName()
+							+ this.mainControl.getTournament().getTurnierName()
 							+ Messages.getString("SaveTurnierControl.2")); //$NON-NLS-1$
 					return false;
 				} else {
@@ -93,7 +93,7 @@ public class SaveTournamentControl {
 
 				}
 
-				this.mainControl.setPartienTableControl(new SQLGamesControl(this.mainControl));
+				this.mainControl.setSqlGamesControl(new SQLGamesControl(this.mainControl));
 
 				boolean saved = false;
 				DAOFactory daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
@@ -110,7 +110,7 @@ public class SaveTournamentControl {
 				} else {
 
 					JOptionPane.showMessageDialog(mainControl, Messages.getString("SaveTurnierControl.5") //$NON-NLS-1$
-							+ this.mainControl.getTurnier().getTurnierName()
+							+ this.mainControl.getTournament().getTurnierName()
 							+ Messages.getString("SaveTurnierControl.6")); //$NON-NLS-1$
 					return false;
 				}
@@ -134,39 +134,39 @@ public class SaveTournamentControl {
 
 			// ladebalkenView.iterate();
 
-			this.mainControl.setTurnierTableControl(new SQLTournamentControl(this.mainControl));
+			this.mainControl.setSqlTournamentControl(new SQLTournamentControl(this.mainControl));
 
-			this.mainControl.setGruppenTableControl(new SQLGroupsControl(this.mainControl));
+			this.mainControl.setSqlGroupsControl(new SQLGroupsControl(this.mainControl));
 
-			this.mainControl.setSpielerTableControl(new SQLPlayerControl(this.mainControl));
+			this.mainControl.setSqlPlayerControl(new SQLPlayerControl(this.mainControl));
 
-			this.mainControl.setPartienTableControl(new SQLGamesControl(this.mainControl));
+			this.mainControl.setSqlGamesControl(new SQLGamesControl(this.mainControl));
 
-			this.mainControl.setTurnier_has_SpielerTableControl(new SQLTournament_has_PlayerControl(this.mainControl));
+			this.mainControl.setSqlTournament_has_PlayerControl(new SQLTournament_has_PlayerControl(this.mainControl));
 
-			for (int index = 0; index < this.mainControl.getTurnier().getAnzahlGruppen(); index++) {
+			for (int index = 0; index < this.mainControl.getTournament().getAnzahlGruppen(); index++) {
 
 				ladebalkenView.iterate();
-				if (mainControl.getTurnier().getTurnierId() < 0) {
-					turnierId = this.mainControl.getTurnierTableControl().insertTurnier();
+				if (mainControl.getTournament().getTurnierId() < 0) {
+					turnierId = this.mainControl.getSqlTournamentControl().insertTurnier();
 					if (turnierId >= 0) {
 						saveOK1 = true;
-						mainControl.getTurnierListeLadenControl().setLoadedTurnierID(turnierId);
+						mainControl.getActionListenerTournamentItemsControl().setLoadedTurnierID(turnierId);
 					}
 
 				} else {
-					this.mainControl.getTurnierTableControl().updateTurnier(this.mainControl.getTurnier());
+					this.mainControl.getSqlTournamentControl().updateTurnier(this.mainControl.getTournament());
 					saveOK1 = true;
 				}
 				ladebalkenView.iterate();
-				if (mainControl.getTurnier().getGruppe()[index].getGruppeId() < 0) {
-					saveOK2 = this.mainControl.getCrossTableControl().insertGruppe(index);
+				if (mainControl.getTournament().getGruppe()[index].getGruppeId() < 0) {
+					saveOK2 = this.mainControl.getSqlGroupsControl().insertGruppe(index);
 					ladebalkenView.iterate();
 					ladebalkenView.iterate();
 					saveOK4 = this.mainControl.getSqlGamesControl().insertPartien(index);
-					this.mainControl.getTurnier_has_SpielerTableControl().insertTurnier_has_Spieler(index);
+					this.mainControl.getSqlTournament_has_PlayerControl().insertTurnier_has_Spieler(index);
 				} else {
-					saveOK2 = this.mainControl.getCrossTableControl().updateGruppe(index);
+					saveOK2 = this.mainControl.getSqlGroupsControl().updateGruppe(index);
 					ladebalkenView.iterate();
 					ladebalkenView.iterate();
 					saveOK4 = this.mainControl.getSqlGamesControl().updatePartien(index);
@@ -177,7 +177,7 @@ public class SaveTournamentControl {
 
 				} else {
 					JOptionPane.showMessageDialog(mainControl, Messages.getString("SaveTurnierControl.9") //$NON-NLS-1$
-							+ this.mainControl.getTurnier().getTurnierName()
+							+ this.mainControl.getTournament().getTurnierName()
 							+ Messages.getString("SaveTurnierControl.10")); //$NON-NLS-1$
 					return false;
 
@@ -189,17 +189,17 @@ public class SaveTournamentControl {
 				// + this.mainControl.getTurnier().getTurnierName() +
 				// Messages.getString("SaveTurnierControl.12")); //$NON-NLS-1$
 				try {
-					mainControl.getTurnierListeLadenControl().loadTurnierListe();
+					mainControl.getActionListenerTournamentItemsControl().loadTurnierListe();
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				mainControl.getSpielerLadenControl().updateSpielerListe();
+				mainControl.getPlayerListControl().updateSpielerListe();
 				return true;
 			} else {
 
 				JOptionPane.showMessageDialog(mainControl,
-						Messages.getString("SaveTurnierControl.13") + this.mainControl.getTurnier().getTurnierName() //$NON-NLS-1$
+						Messages.getString("SaveTurnierControl.13") + this.mainControl.getTournament().getTurnierName() //$NON-NLS-1$
 								+ Messages.getString("SaveTurnierControl.14")); //$NON-NLS-1$
 				return false;
 			}

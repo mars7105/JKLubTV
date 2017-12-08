@@ -54,18 +54,18 @@ public class MeetingTableControl {
 	 */
 	public MeetingTableControl(MainControl mainControl) {
 		this.mainControl = mainControl;
-		this.turnier = mainControl.getTurnier();
-		this.tabAnzeigeView2 = this.mainControl.getTabAnzeigeView2();
-		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
+		this.turnier = mainControl.getTournament();
+		this.tabAnzeigeView2 = this.mainControl.getTabbedPaneViewArray();
+		int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
 		simpleTableView = new MeetingTableView[anzahlGruppen];
-		this.mainControl.setSimpleTerminTabelleView(simpleTableView);
+		this.mainControl.setMeetingTableView(simpleTableView);
 		this.terminTabelle = new MeetingTable[anzahlGruppen];
-		this.mainControl.setTerminTabelle(terminTabelle);
+		this.mainControl.setMeetingTable(terminTabelle);
 		hauptPanel = mainControl.getHauptPanel();
 		tml = new MyTableModelListener[anzahlGruppen];
 		if (this.mainControl.getChangedGames() == null) {
 			changedPartien = new ArrayList<Game>();
-			this.mainControl.setChangedPartien(changedPartien);
+			this.mainControl.setChangedGames(changedPartien);
 		} else {
 			changedPartien = this.mainControl.getChangedGames();
 
@@ -84,11 +84,11 @@ public class MeetingTableControl {
 		String resultColumnName = ppC.getTableComumnResult();
 		String meetingColumnName = ppC.getTableComumnMeeting();
 		this.terminTabelle[gruppenNummer] = new MeetingTable(turnier,
-				mainControl.getTurnier().getGruppe()[gruppenNummer], roundColumnName, whiteColumnName, blackColumnName,
+				mainControl.getTournament().getGruppe()[gruppenNummer], roundColumnName, whiteColumnName, blackColumnName,
 				resultColumnName, meetingColumnName);
-		this.mainControl.setTerminTabelle(terminTabelle);
+		this.mainControl.setMeetingTable(terminTabelle);
 		simpleTableView[gruppenNummer] = new MeetingTableView(new MeetingTableModel(this.terminTabelle[gruppenNummer]));
-		simpleTurnierTabelleView = mainControl.getSimpleTableView();
+		simpleTurnierTabelleView = mainControl.getCrossTableView();
 		// mainControl.getTurnierTabelle();
 		if (tml[gruppenNummer] == null) {
 			int abstand = mainControl.getPropertiesControl().getTabellenAbstand();
@@ -118,7 +118,7 @@ public class MeetingTableControl {
 	}
 
 	public void updateStatus() {
-		int anzahlGruppen = mainControl.getTurnier().getAnzahlGruppen();
+		int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
 		for (int i = 0; i < anzahlGruppen; i++) {
 			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
 			simpleTableView[i].getStatusLabel().setBackground(Color.ORANGE);
@@ -190,7 +190,7 @@ public class MeetingTableControl {
 
 					}
 				}
-				mainControl.getTurnierTabelleControl().updateStatus();
+				mainControl.getCrossTableControl().updateStatus();
 				updateStatus();
 			}
 		}
