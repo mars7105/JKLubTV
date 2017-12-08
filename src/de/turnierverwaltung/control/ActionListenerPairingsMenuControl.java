@@ -29,27 +29,44 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 		if (arg0.getSource().equals(naviView.getPairingsSaveButton())) {
 
 			saveAndReloadTurnier();
+			// try {
+			// setTabsEnable(true);
+			// } catch (SQLException e) {
+			// ExceptionHandler eh = new ExceptionHandler(mainControl);
+			// eh.fileSQLError(e.getMessage());
+			// }
+			pairingIsActive = false;
+			mainControl.setNewTournament(false);
 			try {
-				setTabsEnable(true);
+				mainControl.getActionListenerTournamentItemsControl().loadTurnierListe();
+				mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
+				mainControl.getActionListenerTournamentItemsControl().loadPairingsView();
 			} catch (SQLException e) {
 				ExceptionHandler eh = new ExceptionHandler(mainControl);
 				eh.fileSQLError(e.getMessage());
 			}
-			pairingIsActive = false;
-
 		}
 		if (arg0.getSource().equals(naviView.getPairingsCancelButton())) {
-			int abfrage = abbrechenHinweis();
-			if (abfrage == 0) {
-				PairingsControl pairingsControl = mainControl.getPairingsControl();
-				pairingsControl.getChangedPartien().clear();
+			if (mainControl.getPairingsControl().getChangedPartien().size() > 0) {
+				int abfrage = abbrechenHinweis();
+				if (abfrage == 0) {
+					PairingsControl pairingsControl = mainControl.getPairingsControl();
+					pairingsControl.getChangedPartien().clear();
+					try {
+						setTabsEnable(true);
+					} catch (SQLException e) {
+						ExceptionHandler eh = new ExceptionHandler(mainControl);
+						eh.fileSQLError(e.getMessage());
+					}
+					pairingIsActive = false;
+				}
+			} else {
 				try {
 					setTabsEnable(true);
 				} catch (SQLException e) {
 					ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());
 				}
-				pairingIsActive = false;
 			}
 		}
 	}
