@@ -193,8 +193,7 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 				stmt.close();
 			} catch (SQLException e) {
 				id = -1;
-				ExceptionHandler eh = new ExceptionHandler(null);
-				eh.fileSQLError(e.getMessage());
+
 			}
 
 		}
@@ -225,8 +224,7 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 				stmt.close();
 			} catch (SQLException e) {
 				id = -1;
-				ExceptionHandler eh = new ExceptionHandler(null);
-				eh.fileSQLError(e.getMessage());
+
 			}
 		}
 		Boolean returnStatement = false;

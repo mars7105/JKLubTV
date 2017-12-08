@@ -207,7 +207,7 @@ public class Player implements Comparable<Object> {
 		eloData.setSpielerId(dwzData.getSpielerId());
 		eloData.setTitle(dwzData.getCsvFIDE_Titel());
 		eloData.setBirthday(dwzData.getCsvGeburtsjahr());
-//		eloData.setSpielerId(dwzData.getSpielerId());
+		// eloData.setSpielerId(dwzData.getSpielerId());
 	}
 
 	public void copyELODataToPlayer() {
@@ -215,7 +215,7 @@ public class Player implements Comparable<Object> {
 
 		this.age = eloData.getAge();
 
-//		spielerId = eloData.getSpielerId();
+		// spielerId = eloData.getSpielerId();
 	}
 
 	public void copyDWZDataToPlayer() {
@@ -223,7 +223,7 @@ public class Player implements Comparable<Object> {
 
 		this.age = dwzData.getAge();
 
-//		spielerId = dwzData.getSpielerId();
+		// spielerId = dwzData.getSpielerId();
 	}
 
 	private void correctMGLNumber() {
@@ -330,6 +330,9 @@ public class Player implements Comparable<Object> {
 				i++;
 			}
 
+		} else {
+			forename = "";
+			surname = "";
 		}
 
 	}

@@ -15,8 +15,11 @@ public class ExceptionHandler {
 
 	public ExceptionHandler(MainControl mainControl) {
 		super();
+
 		this.mainControl = mainControl;
-		propertiesControl = this.mainControl.getPropertiesControl();
+		if (mainControl != null) {
+			propertiesControl = this.mainControl.getPropertiesControl();
+		}
 	}
 
 	/**
@@ -29,15 +32,14 @@ public class ExceptionHandler {
 			propertiesControl.setPathToDatabase("");
 			propertiesControl.checkProperties();
 			ok = propertiesControl.writeProperties();
-		}
-		if (ok) {
-			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.11"));
+			if (ok) {
+				JOptionPane.showMessageDialog(null, Messages.getString("MainControl.11"));
 
-		} else {
-			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.12"));
+			} else {
+				JOptionPane.showMessageDialog(null, Messages.getString("MainControl.12"));
 
-		}
-		if (mainControl != null) {
+			}
+
 			mainControl.resetApp();
 		}
 	}

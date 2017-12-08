@@ -34,6 +34,7 @@ import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.MeetingTable;
 import de.turnierverwaltung.model.MeetingTableModel;
 import de.turnierverwaltung.model.PairingsTables;
+import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
@@ -182,6 +183,17 @@ public class MainControl extends JFrame {
 				this.setPlayerListControl(new PlayerListControl(this));
 				try {
 					this.getPlayerListControl().updateSpielerListe();
+					int cutForename = 20;
+					int cutSurname = 20;
+					try {
+						cutForename = Integer.parseInt(propertiesControl.getCutForename());
+						cutSurname = Integer.parseInt(propertiesControl.getCutSurname());
+					} catch (NumberFormatException e) {
+						cutForename = 20;
+						cutSurname = 20;
+					}
+					Player.cutFname = cutForename;
+					Player.cutSname = cutSurname;
 				} catch (SQLException e) {
 					ExceptionHandler eh = new ExceptionHandler(this);
 					eh.fileSQLError(e.getMessage());
