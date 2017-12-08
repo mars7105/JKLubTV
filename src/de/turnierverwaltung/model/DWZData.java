@@ -53,7 +53,7 @@ public class DWZData {
 		this.csvGeburtsjahr = 0;
 		this.csvLetzte_Auswertung = 0;
 		this.csvDWZ = 0;
-		this.csvIndex = 0;
+		this.csvIndex = -1;
 		this.csvFIDE_Elo = 0;
 		this.csvFIDE_Titel = "";
 		this.csvFIDE_ID = -1;

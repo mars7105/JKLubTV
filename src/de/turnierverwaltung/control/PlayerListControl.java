@@ -212,22 +212,7 @@ public class PlayerListControl implements ActionListener {
 		int index = 0;
 		for (Player player : spieler) {
 
-			// if (!player.getName().equals("") && player.getSurname().equals("")) {
-			// player.extractNameToForenameAndSurename();
-			// player.cutForename();
-			// player.cutSurname();
-			// player.extractForenameAndSurenameToName();
-			// } else if (player.getName().equals("") && !player.getSurname().equals("")) {
-			// player.cutForename();
-			// player.cutSurname();
-			// player.extractForenameAndSurenameToName();
-			// } else {
-			// player.cutForename();
-			// player.cutSurname();
-			// player.extractForenameAndSurenameToName();
-			//
-			// }
-			// spielerTableControl.updateOneSpieler(player);
+			
 			spielerLadenView.makeSpielerZeile(player, index);
 			spielerLadenView.getSpielerBearbeitenButton()[index].addActionListener(this);
 			spielerLadenView.getSpielerLoeschenButton()[index].addActionListener(this);

@@ -140,7 +140,7 @@ public class MainControl extends JFrame {
 	}
 
 	private void init() {
-		setNewTournament(false);
+		newTournament = false;
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		this.hauptPanel = new JTabbedPane();
@@ -680,7 +680,5 @@ public class MainControl extends JFrame {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-	
 
 }

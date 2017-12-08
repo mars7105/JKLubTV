@@ -120,11 +120,12 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				player.setForename(foreName);
 				player.setSurname(surName);
 				player.setKuerzel(kuerzel);
-				player.setAge(age);
+				
 				player.setSpielerId(idSpieler);
 
 				player.setDwzData(mySQLDWZDataDAO.getDWZData(idSpieler));
 				player.setEloData(mySQLELODataDAO.getELOData(idSpieler));
+				player.setAge(age);
 				spielerListe.add(player);
 			}
 

@@ -37,23 +37,23 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 				try {
 					String forename = spielerHinzufuegenView.getTextFieldForeName().getText();
 					String surname = spielerHinzufuegenView.getTextFieldSurName().getText();
-					if (!surname.equals("Spielfrei")) {
-						String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
-						String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
-						int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
-						neuerSpieler = new Player();
-						// neuerSpieler.setForename(forename);
-						// neuerSpieler.setSurname(surname);
-						neuerSpieler.setName(surname + "," + forename);
-						neuerSpieler.setKuerzel(kuerzel);
-						neuerSpieler.setDwz(dwz);
-						neuerSpieler.setAge(age);
-						SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
-						neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+					String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
+					String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
+					int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
+					neuerSpieler = new Player();
+					// neuerSpieler.setForename(forename);
+					// neuerSpieler.setSurname(surname);
+					neuerSpieler.setName(surname + "," + forename);
+					neuerSpieler.setKuerzel(kuerzel);
+					neuerSpieler.setDwz(dwz);
+					neuerSpieler.setAge(age);
+					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
-						this.mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
-					}
+					neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+
+					this.mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
+
 					spielerHinzufuegenView.getTextFieldForeName().setEditable(false);
 					spielerHinzufuegenView.getTextFieldSurName().setEditable(false);
 					spielerHinzufuegenView.getTextFieldKuerzel().setEditable(false);

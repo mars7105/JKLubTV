@@ -111,6 +111,22 @@ public class SQLPlayerControl {
 			if (spieler.getDwzData().getCsvZPS().length() > 0) {
 				spieler.setName(spieler.getDwzData().getCsvSpielername());
 				mySQLDWZDataDAO.insertDWZ(spieler.getDwzData());
+			} else if (spieler.getDwz().length() > 0) {
+
+				int dwzNumber = 0;
+				try {
+					dwzNumber = Integer.parseInt(spieler.getDwz());
+					DWZData dwzData = new DWZData();
+					dwzData.setSpielerId(spielerId);
+					dwzData.setCsvDWZ(dwzNumber);
+					dwzData.setAge(spieler.getAge());
+					dwzData.setCsvSpielername(spieler.getName());
+					spieler.setDwzData(dwzData);
+					mySQLDWZDataDAO.insertDWZ(dwzData);
+				} catch (NumberFormatException e) {
+					dwzNumber = 0;
+				}
+
 			}
 			if (spieler.getEloData().getFideid() > 0) {
 				spieler.setName(spieler.getEloData().getName());
