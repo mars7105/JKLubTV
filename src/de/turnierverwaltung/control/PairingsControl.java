@@ -378,7 +378,8 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 			ok = this.mainControl.getSaveTournamentControl().saveChangedPartien();
 		} catch (SQLException e) {
 			ok = false;
-			e.printStackTrace();
+			ExceptionHandler eh = new ExceptionHandler(mainControl);
+			eh.fileSQLError(e.getMessage());
 		}
 		return ok;
 	}

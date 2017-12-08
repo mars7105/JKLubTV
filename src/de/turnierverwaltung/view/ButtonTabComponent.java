@@ -54,6 +54,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.plaf.basic.BasicButtonUI;
 
+import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.SaveTournamentControl;
 import de.turnierverwaltung.model.Game;
@@ -186,6 +187,8 @@ public class ButtonTabComponent extends JPanel {
 
 						} catch (SQLException e) {
 							changedPartien.clear();
+							ExceptionHandler eh = new ExceptionHandler(null);
+							eh.fileSQLError(e.getMessage());
 						}
 
 					}

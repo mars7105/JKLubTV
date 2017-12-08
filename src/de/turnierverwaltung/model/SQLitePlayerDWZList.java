@@ -2,8 +2,7 @@ package de.turnierverwaltung.model;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import de.turnierverwaltung.control.Messages;
+import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.DWZDataDAO;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
@@ -26,7 +25,8 @@ public class SQLitePlayerDWZList {
 			dwzDataArray = dwzDataDAO.getPlayerOfVerein(zps);
 		} catch (SQLException e) {
 			dwzDataArray = null;
-			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.11"));
+			ExceptionHandler eh = new ExceptionHandler(null);
+			eh.fileSQLError(e.getMessage());
 		} finally {
 			SQLiteDAOFactory.setDB_PATH(oldPath);
 		}
@@ -49,7 +49,8 @@ public class SQLitePlayerDWZList {
 			dwzPlayers = dwzDataDAO.getDWZDataByName(eingabe);
 		} catch (SQLException e) {
 			dwzPlayers = null;
-			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.11"));
+			ExceptionHandler eh = new ExceptionHandler(null);
+			eh.fileSQLError(e.getMessage());
 		} finally {
 			SQLiteDAOFactory.setDB_PATH(oldPath);
 		}

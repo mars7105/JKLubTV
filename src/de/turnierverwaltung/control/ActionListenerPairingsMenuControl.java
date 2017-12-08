@@ -76,7 +76,8 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 			ok = this.mainControl.getSaveTournamentControl().saveChangedPartien();
 		} catch (SQLException e) {
 			ok = false;
-			e.printStackTrace();
+			ExceptionHandler eh = new ExceptionHandler(mainControl);
+			eh.fileSQLError(e.getMessage());
 		}
 
 		return ok;

@@ -162,6 +162,8 @@ public class UpdateRatingsControl {
 
 			SQLException e1) {
 				spielerliste = null;
+				ExceptionHandler eh = new ExceptionHandler(mainControl);
+				eh.fileSQLError(e1.getMessage());
 			}
 		}
 	}

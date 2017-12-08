@@ -54,6 +54,8 @@ public class ActionListenerTournamentListControl implements ActionListener {
 
 							} catch (SQLException e) {
 								changedPartien.clear();
+								ExceptionHandler eh = new ExceptionHandler(mainControl);
+								eh.fileSQLError(e.getMessage());
 							}
 							mainControl.setNewTournamentControl(new NewTournamentControl(mainControl));
 						}

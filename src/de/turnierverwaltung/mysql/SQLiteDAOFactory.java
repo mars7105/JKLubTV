@@ -19,6 +19,8 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import de.turnierverwaltung.control.ExceptionHandler;
+
 public class SQLiteDAOFactory extends DAOFactory {
 
 	private static String classNameSQLite = "org.sqlite.JDBC";
@@ -42,14 +44,16 @@ public class SQLiteDAOFactory extends DAOFactory {
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 				} catch (SQLException e) {
-					e.printStackTrace();
+					ExceptionHandler eh = new ExceptionHandler(null);
+					eh.fileSQLError(e.getMessage());
 				}
 
 			} else {
 				return connection;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			ExceptionHandler eh = new ExceptionHandler(null);
+			eh.fileSQLError(e.getMessage());
 		}
 		return null;
 	}

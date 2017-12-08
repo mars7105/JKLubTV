@@ -3,8 +3,7 @@ package de.turnierverwaltung.model;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-import de.turnierverwaltung.control.Messages;
+import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.mysql.DAOFactory;
 import de.turnierverwaltung.mysql.ELODataDAO;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
@@ -26,7 +25,8 @@ public class SQLitePlayerELOList {
 			eloData = eloDataDAO.getELODataByFideId(fideId);
 		} catch (SQLException e) {
 			eloData = null;
-			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.11"));
+			ExceptionHandler eh = new ExceptionHandler(null);
+			eh.fileSQLError(e.getMessage());
 		} finally {
 			SQLiteDAOFactory.setDB_PATH(oldPath);
 		}
@@ -48,7 +48,8 @@ public class SQLitePlayerELOList {
 			eloPlayers = eloDataDAO.getELODataByName(eingabe);
 		} catch (SQLException e) {
 			eloPlayers = null;
-			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.11"));
+			ExceptionHandler eh = new ExceptionHandler(null);
+			eh.fileSQLError(e.getMessage());
 		} finally {
 			SQLiteDAOFactory.setDB_PATH(oldPath);
 		}

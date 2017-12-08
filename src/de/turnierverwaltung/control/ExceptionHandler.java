@@ -23,10 +23,13 @@ public class ExceptionHandler {
 	 * 
 	 */
 	public void fileSQLError(String error) {
-		writeErrorLog(error);
-		propertiesControl.setPathToDatabase("");
-		propertiesControl.checkProperties();
-		Boolean ok = propertiesControl.writeProperties();
+		Boolean ok = true;
+		if (mainControl != null) {
+			writeErrorLog(error);
+			propertiesControl.setPathToDatabase("");
+			propertiesControl.checkProperties();
+			ok = propertiesControl.writeProperties();
+		}
 		if (ok) {
 			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.11"));
 
@@ -34,7 +37,9 @@ public class ExceptionHandler {
 			JOptionPane.showMessageDialog(null, Messages.getString("MainControl.12"));
 
 		}
-		mainControl.resetApp();
+		if (mainControl != null) {
+			mainControl.resetApp();
+		}
 	}
 
 	private void writeErrorLog(String error) {

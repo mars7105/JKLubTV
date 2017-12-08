@@ -191,8 +191,8 @@ public class SaveTournamentControl {
 				try {
 					mainControl.getActionListenerTournamentItemsControl().loadTurnierListe();
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					ExceptionHandler eh = new ExceptionHandler(mainControl);
+					eh.fileSQLError(e.getMessage());
 				}
 				mainControl.getPlayerListControl().updateSpielerListe();
 				return true;

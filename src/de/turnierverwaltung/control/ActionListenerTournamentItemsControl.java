@@ -210,6 +210,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 
 									} catch (SQLException e) {
 										changedPartien.clear();
+										ExceptionHandler eh = new ExceptionHandler(mainControl);
+										eh.fileSQLError(e.getMessage());
 									}
 									selectTurnierTab = true;
 									try {
@@ -273,16 +275,16 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 						try {
 							deleteTurnier(i);
 						} catch (SQLException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+							ExceptionHandler eh = new ExceptionHandler(mainControl);
+							eh.fileSQLError(e.getMessage());
 						}
 					}
 				} else {
 					try {
 						deleteTurnier(i);
 					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+						ExceptionHandler eh = new ExceptionHandler(mainControl);
+						eh.fileSQLError(e.getMessage());
 					}
 				}
 			}

@@ -22,8 +22,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
+import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.control.PropertiesControl;
 import de.turnierverwaltung.model.Tournament;
 
@@ -129,8 +128,8 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				preStm.close();
 				ok = true;
 			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+				ExceptionHandler eh = new ExceptionHandler(null);
+				eh.fileSQLError(e.getMessage());
 			}
 
 		}
@@ -162,8 +161,8 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				stmt.close();
 
 			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+				ExceptionHandler eh = new ExceptionHandler(null);
+				eh.fileSQLError(e.getMessage());
 
 			}
 		}
@@ -193,8 +192,8 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				}
 				preStm.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+				ExceptionHandler eh = new ExceptionHandler(null);
+				eh.fileSQLError(e.getMessage());
 
 			}
 
@@ -248,8 +247,8 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				}
 				stmt.close();
 			} catch (SQLException e) {
-				// TODO Automatisch generierter Erfassungsblock
-				e.printStackTrace();
+				ExceptionHandler eh = new ExceptionHandler(null);
+				eh.fileSQLError(e.getMessage());
 			}
 		}
 		// String sql0 = "BEGIN;";
@@ -267,8 +266,8 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				preStm.close();
 				ok = true;
 			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+				ExceptionHandler eh = new ExceptionHandler(null);
+				eh.fileSQLError(e.getMessage());
 			}
 		}
 		if (this.dbConnect != null) {
@@ -284,8 +283,8 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				preStm.close();
 				ok = true;
 			} catch (SQLException e) {
-				e.printStackTrace();
-				JOptionPane.showMessageDialog(null, e.getMessage());
+				ExceptionHandler eh = new ExceptionHandler(null);
+				eh.fileSQLError(e.getMessage());
 			}
 		}
 		return ok;

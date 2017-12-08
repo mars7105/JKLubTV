@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.model.DWZData;
 
 public class SQLiteDWZDataDAO implements DWZDataDAO {
@@ -192,7 +193,8 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 				stmt.close();
 			} catch (SQLException e) {
 				id = -1;
-
+				ExceptionHandler eh = new ExceptionHandler(null);
+				eh.fileSQLError(e.getMessage());
 			}
 
 		}
@@ -223,6 +225,8 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 				stmt.close();
 			} catch (SQLException e) {
 				id = -1;
+				ExceptionHandler eh = new ExceptionHandler(null);
+				eh.fileSQLError(e.getMessage());
 			}
 		}
 		Boolean returnStatement = false;
@@ -312,8 +316,8 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 				}
 				stmt.close();
 			} catch (SQLException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				ExceptionHandler eh = new ExceptionHandler(null);
+				eh.fileSQLError(e1.getMessage());
 			}
 		}
 

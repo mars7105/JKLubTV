@@ -113,8 +113,8 @@ public class DSBDWZControl {
 			try {
 				spielerListe = sqlpc.getAllSpielerOrderByZPS();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				ExceptionHandler eh = new ExceptionHandler(mainControl);
+				eh.fileSQLError(e.getMessage());
 			}
 			if (players != null) {
 				Collections.sort(players, new SortSurname());

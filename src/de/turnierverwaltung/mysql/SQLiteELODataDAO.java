@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.model.ELOData;
 import de.turnierverwaltung.model.ELOPlayer;
 
@@ -218,6 +219,8 @@ public class SQLiteELODataDAO implements ELODataDAO {
 				stmt.close();
 			} catch (SQLException e) {
 				id = -1;
+				ExceptionHandler eh = new ExceptionHandler(null);
+				eh.fileSQLError(e.getMessage());
 			}
 		}
 		Boolean returnStatement = false;
