@@ -35,7 +35,7 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 			// ExceptionHandler eh = new ExceptionHandler(mainControl);
 			// eh.fileSQLError(e.getMessage());
 			// }
-			pairingIsActive = false;
+//			pairingIsActive = false;
 			mainControl.setNewTournament(false);
 			try {
 				mainControl.getActionListenerTournamentItemsControl().loadTurnierListe();
