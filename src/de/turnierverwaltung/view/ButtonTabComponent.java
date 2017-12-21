@@ -157,7 +157,7 @@ public class ButtonTabComponent extends JPanel {
 				int abfrage = checkForChangedGames();
 				if (abfrage == 0 || abfrage == 1) {
 					pane.remove(i);
-					mainControl.setNewTournament(null);
+					mainControl.setNewTournament(false);
 					mainControl.getActionListenerTournamentItemsControl().setLoadedTurnierID(-1);
 
 				}
