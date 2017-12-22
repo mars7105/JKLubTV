@@ -160,7 +160,7 @@ public class ActionListenerSettingsControl {
 				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 				final JFileChooser fc = new JFileChooser(path);
-				FileFilter filter = new FileNameExtensionFilter("CSV file", "csv", "CSV", "sqlite");
+				FileFilter filter = new FileNameExtensionFilter("CSV or SQLite file", "csv", "CSV", "sqlite");
 
 				fc.setFileFilter(filter);
 				int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
@@ -169,10 +169,23 @@ public class ActionListenerSettingsControl {
 					File file = fc.getSelectedFile();
 					// This is where a real application would open the
 					// file.
+
 					mainControl.getPropertiesControl().setPathToPlayersCSV(file.getAbsolutePath());
 					mainControl.getPropertiesControl().writeProperties();
 					esControl.getEigenschaftenView()
 							.setOpenPlayersCSVLabel(mainControl.getPropertiesControl().getPathToPlayersCSV());
+
+					String filename = mainControl.getPropertiesControl().getPathToPlayersCSV();
+					int positionEXT = filename.lastIndexOf('.');
+
+					if (positionEXT > 0) {
+						String newFile = filename.substring(positionEXT);
+						if (newFile.equals(".sqlite")) {
+							esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().setEnabled(false);
+						} else {
+							esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().setEnabled(true);
+						}
+					}
 				}
 
 			}
@@ -183,7 +196,7 @@ public class ActionListenerSettingsControl {
 				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 				final JFileChooser fc = new JFileChooser(path);
-				FileFilter filter = new FileNameExtensionFilter("TXT file", "txt", "TXT", "sqlite");
+				FileFilter filter = new FileNameExtensionFilter("TXT or SQLite file", "txt", "TXT", "sqlite", "SQLite");
 
 				fc.setFileFilter(filter);
 				int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
@@ -196,6 +209,17 @@ public class ActionListenerSettingsControl {
 					mainControl.getPropertiesControl().writeProperties();
 					esControl.getEigenschaftenView()
 							.setOpenPlayersELOLabel(mainControl.getPropertiesControl().getPathToPlayersELO());
+					String filename = mainControl.getPropertiesControl().getPathToPlayersELO();
+					int positionEXT = filename.lastIndexOf('.');
+
+					if (positionEXT > 0) {
+						String newFile = filename.substring(positionEXT);
+						if (newFile.equals(".sqlite")) {
+							esControl.getEigenschaftenView().getConvertELOToSQLITEButton().setEnabled(false);
+						} else {
+							esControl.getEigenschaftenView().getConvertELOToSQLITEButton().setEnabled(true);
+						}
+					}
 				}
 
 			}
@@ -278,7 +302,7 @@ public class ActionListenerSettingsControl {
 					public void actionPerformed(ActionEvent arg0) {
 						ELOListToSQLITEControl eloL = new ELOListToSQLITEControl(mainControl);
 						eloL.convertELOListToSQLITE();
-
+						esControl.getEigenschaftenView().getConvertELOToSQLITEButton().setEnabled(false);
 					}
 				});
 
