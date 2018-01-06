@@ -122,8 +122,8 @@ public class NewTournamentGroupsView extends JPanel {
 
 			JPanel countBox = new JPanel();
 			countBox.setLayout(new FlowLayout(FlowLayout.LEFT));
-			String[] listString = new String[20];
-			for (int x = 0; x < 18; x++) {
+			String[] listString = new String[30];
+			for (int x = 0; x < 30; x++) {
 				listString[x] = new Integer(x + 3).toString();
 
 			}
