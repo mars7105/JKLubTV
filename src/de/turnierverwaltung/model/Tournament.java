@@ -162,4 +162,20 @@ public class Tournament {
 		return noFolgeELOCalc;
 	}
 
+	public String getStartDatumTRF() {
+		// String newDate = startDatum.replaceAll(".", "/");
+		String year = startDatum.substring(6, 10);
+		String month = startDatum.substring(3, 5);
+		String day = startDatum.substring(0, 2);
+		return year + "/" + month + "/" + day;
+	}
+
+	public String getEndDatumTRF() {
+		// String newDate = endDatum.replaceAll(".", "/");
+		String year = endDatum.substring(6, 10);
+		String month = endDatum.substring(3, 5);
+		String day = endDatum.substring(0, 2);
+		return year + "/" + month + "/" + day;
+	}
+
 }

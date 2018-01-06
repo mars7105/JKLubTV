@@ -225,4 +225,14 @@ public class Group {
 	public void setTurnierTabelle(CrossTable turnierTabelle) {
 		this.turnierTabelle = turnierTabelle;
 	}
+
+	public int getRatedPlayersCount() {
+		int ratedPlayers = 0;
+		for (int i = 0; i < spielerAnzahl; i++) {
+			if (spieler[i].getEloData().getRating() > 0) {
+				ratedPlayers++;
+			}
+		}
+		return ratedPlayers;
+	}
 }
