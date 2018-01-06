@@ -31,6 +31,8 @@ public class Tournament {
 	private Boolean noFolgeDWZCalc;
 	private Boolean noELOCalc;
 	private Boolean noFolgeELOCalc;
+	private EventDate eventstartDate;
+	private EventDate eventendDate;
 
 	/**
 	 * 
@@ -62,8 +64,12 @@ public class Tournament {
 			Boolean noDWZCalc, Boolean noFolgeDWZCalc, Boolean noELOCalc, Boolean noFolgeELOCalc) {
 		super();
 		this.turnierName = turnierName;
-		this.startDatum = startDatum;
-		this.endDatum = endDatum;
+
+		eventstartDate = new EventDate(startDatum);
+		this.startDatum = eventstartDate.getDateString();
+		eventendDate = new EventDate(endDatum);
+		this.endDatum = eventendDate.getDateString();
+		;
 		this.turnierId = turnierId;
 		this.onlyTables = onlyTables;
 		this.noDWZCalc = noDWZCalc;
@@ -126,7 +132,9 @@ public class Tournament {
 	}
 
 	public void setEndDatum(String endDatum) {
-		this.endDatum = endDatum;
+		
+		eventendDate = new EventDate(endDatum);
+		this.endDatum = eventendDate.getDateString();
 	}
 
 	public void setGruppe(Group[] gruppe) {
@@ -134,7 +142,9 @@ public class Tournament {
 	}
 
 	public void setStartDatum(String startDatum) {
-		this.startDatum = startDatum;
+		eventstartDate = new EventDate(startDatum);
+		this.startDatum = eventstartDate.getDateString();
+		
 	}
 
 	public void setTurnierId(int turnierId) {
@@ -163,19 +173,13 @@ public class Tournament {
 	}
 
 	public String getStartDatumTRF() {
-		// String newDate = startDatum.replaceAll(".", "/");
-		String year = startDatum.substring(6, 10);
-		String month = startDatum.substring(3, 5);
-		String day = startDatum.substring(0, 2);
-		return year + "/" + month + "/" + day;
+		
+		return eventstartDate.getEnglishFormat();
 	}
 
 	public String getEndDatumTRF() {
-		// String newDate = endDatum.replaceAll(".", "/");
-		String year = endDatum.substring(6, 10);
-		String month = endDatum.substring(3, 5);
-		String day = endDatum.substring(0, 2);
-		return year + "/" + month + "/" + day;
+		
+		return eventendDate.getEnglishFormat();
 	}
 
 }

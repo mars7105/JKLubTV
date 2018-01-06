@@ -18,9 +18,6 @@ package de.turnierverwaltung.view;
 import java.awt.BorderLayout;
 //import java.awt.Color;
 import java.awt.FlowLayout;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
@@ -33,6 +30,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
+
+import de.turnierverwaltung.model.EventDate;
 
 public class PairingsView extends JPanel {
 
@@ -238,14 +237,18 @@ public class PairingsView extends JPanel {
 					DateChooserPanel datePanel = new DateChooserPanel();
 					datePanel.setLocale(Locale.getDefault());
 					// datePanel.setDateFormatString(zeile[4]);
-					DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-					try {
-						Date d = formatter.parse(zeile[4]);
-						datePanel.setDate(d);
-
-					} catch (ParseException e) {
-
+					// DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy",
+					// Locale.getDefault());
+					EventDate eventDate = new EventDate(zeile[4]);
+					Date d = eventDate.getDate();
+					if (zeile[4].contains("/")) {
+						datePanel.setDateFormatString(eventDate.getEnglishFormat());
 					}
+					if (zeile[4].contains(".")) {
+						datePanel.setDateFormatString(eventDate.getGermanFormat());
+					}
+
+					datePanel.setDate(d);
 
 					// datePanel.setForeground(Color.WHITE);
 					datum[anzahlElemente] = datePanel;

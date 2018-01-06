@@ -21,6 +21,7 @@ package de.turnierverwaltung.model;
 public class Game implements Comparable<Object> {
 
 	private String spielDatum;
+	private EventDate eventDate;
 	private Player spielerWeiss;
 	private Player spielerSchwarz;
 	private String ergebnisWeiss;
@@ -46,7 +47,8 @@ public class Game implements Comparable<Object> {
 	 */
 	public Game(int idPartie, String spielDatum, int ergebnis, int runde, Player spielerWeiss, Player spielerSchwarz) {
 		this.partieId = idPartie;
-		this.spielDatum = spielDatum;
+		eventDate = new EventDate(spielDatum);
+		this.spielDatum = eventDate.getDateString();
 		this.spielerWeiss = spielerWeiss;
 		this.spielerSchwarz = spielerSchwarz;
 		this.runde = runde;
@@ -173,7 +175,8 @@ public class Game implements Comparable<Object> {
 	}
 
 	public void setSpielDatum(String spielDatum) {
-		this.spielDatum = spielDatum;
+		eventDate.setDate(spielDatum);
+		this.spielDatum = eventDate.getDateString();
 	}
 
 	public void setSpielerSchwarz(Player spielerSchwarz) {

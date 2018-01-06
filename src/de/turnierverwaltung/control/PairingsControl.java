@@ -51,6 +51,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 
 import de.turnierverwaltung.ZahlKleinerAlsN;
+import de.turnierverwaltung.model.EventDate;
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.MeetingTable;
@@ -189,18 +190,21 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	}
 
 	public void changeWerte(int index, int nummer) {
-
+		
 		String datum;
 		games = groups[index].getPartien();
 		int runde;
-		DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+//		DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 		datum = "";
-		Date date;
+//		Date date;
 		try {
 
 			try {
-				date = pairingsView[index].getDatum()[nummer].getDate();
-				datum = formatter.format(date);
+				EventDate	eventDate = new EventDate(pairingsView[index].getDatum()[nummer].getDate());
+//				date = eventDate.getDate();
+				
+				datum = eventDate.getDateString();
+//				datum = formatter.format(date);
 			} catch (NullPointerException e2) {
 				datum = "";
 			}

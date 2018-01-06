@@ -24,6 +24,7 @@ public class Language {
 		de.turnierverwaltung.model.Messages.setLocale(locale);
 		TournamentConstants.setConstantLanguage();
 		Locale.setDefault(locale);
+		System.out.println(Locale.getDefault() + " " + Locale.GERMANY);
 	}
 
 	public String getLanguage() {

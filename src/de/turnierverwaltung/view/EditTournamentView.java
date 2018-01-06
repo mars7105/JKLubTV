@@ -18,10 +18,10 @@ package de.turnierverwaltung.view;
 //import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -34,6 +34,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
+import de.turnierverwaltung.model.EventDate;
 import de.turnierverwaltung.model.Tournament;
 
 public class EditTournamentView extends JDialog {
@@ -113,14 +114,15 @@ public class EditTournamentView extends JDialog {
 		// property), new DateLabelFormatter());
 		startDatumTextField = new DateChooserPanel();
 		startDatumTextField.setLocale(Locale.getDefault());
-		DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-
-		try {
-			startDatumTextField.setDate(formatter.parse(turnier.getStartDatum()));
-
-		} catch (ParseException e) {
-
+		EventDate evstart = new EventDate(turnier.getStartDatum());
+		if (turnier.getStartDatum().contains("/")) {
+			startDatumTextField.setDateFormatString(evstart.getEnglishFormat());
 		}
+		if (turnier.getStartDatum().contains(".")) {
+			startDatumTextField.setDateFormatString(evstart.getGermanFormat());
+		}
+		Date dstart = evstart.getDate();
+		startDatumTextField.setDate(dstart);
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// centerPane.setBackground(new Color(249, 222, 112));
@@ -133,15 +135,17 @@ public class EditTournamentView extends JDialog {
 
 		endDatumTextField = new DateChooserPanel();
 		endDatumTextField.setLocale(Locale.getDefault());
-		endDatumTextField = new DateChooserPanel();
-		endDatumTextField.setLocale(Locale.getDefault());
-		try {
-
-			endDatumTextField.setDate(formatter.parse(turnier.getEndDatum()));
-
-		} catch (ParseException e) {
-
+		EventDate evend = new EventDate(turnier.getEndDatum());
+		if (turnier.getEndDatum().contains("/")) {
+			endDatumTextField.setDateFormatString(evend.getEnglishFormat());
 		}
+		if (turnier.getEndDatum().contains(".")) {
+			endDatumTextField.setDateFormatString(evend.getGermanFormat());
+		}
+		
+		Date dend = evend.getDate();
+		endDatumTextField.setDate(dend);
+
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// centerPane.setBackground(new Color(249, 222, 112));
