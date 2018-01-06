@@ -33,6 +33,8 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
 
+import de.turnierverwaltung.model.TournamentConstants;
+
 public class NewTournamentGroupsView extends JPanel {
 
 	/**
@@ -122,8 +124,9 @@ public class NewTournamentGroupsView extends JPanel {
 
 			JPanel countBox = new JPanel();
 			countBox.setLayout(new FlowLayout(FlowLayout.LEFT));
-			String[] listString = new String[30];
-			for (int x = 0; x < 30; x++) {
+			int maxPlayers = TournamentConstants.MAX_PLAYERS - 2;
+			String[] listString = new String[maxPlayers];
+			for (int x = 0; x < maxPlayers; x++) {
 				listString[x] = new Integer(x + 3).toString();
 
 			}
