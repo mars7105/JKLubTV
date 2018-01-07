@@ -175,7 +175,7 @@ public class Game implements Comparable<Object> {
 	}
 
 	public void setSpielDatum(String spielDatum) {
-		eventDate.setDate(spielDatum);
+		eventDate = new EventDate(spielDatum);
 		this.spielDatum = eventDate.getDateString();
 	}
 

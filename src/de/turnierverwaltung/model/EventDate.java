@@ -15,7 +15,12 @@ public class EventDate {
 	public EventDate(Date date) {
 		super();
 		this.date = date;
-
+		englishFormat = "yyyy/MM/dd";
+		germanFormat = "dd.MM.yyyy";
+		englishdateFormatter = new SimpleDateFormat(englishFormat, Locale.ENGLISH);
+		germandateFormatter = new SimpleDateFormat(germanFormat, Locale.GERMAN);
+		
+		System.out.println(getDateString());
 	}
 
 	public EventDate(String dateString) {
@@ -23,9 +28,9 @@ public class EventDate {
 		if (dateString == null) {
 			dateString = "";
 		}
-		englishFormat = "yyyy/mm/dd";
-		germanFormat = "dd.mm.yyyy";
-		englishdateFormatter = new SimpleDateFormat(englishFormat);
+		englishFormat = "yyyy/MM/dd";
+		germanFormat = "dd.MM.yyyy";
+		englishdateFormatter = new SimpleDateFormat(englishFormat, Locale.ENGLISH);
 		germandateFormatter = new SimpleDateFormat(germanFormat);
 		if (dateString.contains("/")) {
 
@@ -35,6 +40,7 @@ public class EventDate {
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
+					date = null;
 				}
 			
 		}

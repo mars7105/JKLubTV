@@ -39,12 +39,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -190,24 +185,21 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 	}
 
 	public void changeWerte(int index, int nummer) {
-		
+
 		String datum;
 		games = groups[index].getPartien();
 		int runde;
-//		DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 		datum = "";
-//		Date date;
 		try {
+//			if (Locale.getDefault().equals(Locale.US)) {
+//				pairingsView[index].getDatum()[nummer].setDateFormatString("yyyy/mm/dd");
+//			}
+//			if (Locale.getDefault().equals(Locale.GERMANY)) {
+//				pairingsView[index].getDatum()[nummer].setDateFormatString("dd.mm.yyyy");
+//			}
+			EventDate eventDate = new EventDate(pairingsView[index].getDatum()[nummer].getDate());
 
-			try {
-				EventDate	eventDate = new EventDate(pairingsView[index].getDatum()[nummer].getDate());
-//				date = eventDate.getDate();
-				
-				datum = eventDate.getDateString();
-//				datum = formatter.format(date);
-			} catch (NullPointerException e2) {
-				datum = "";
-			}
+			datum = eventDate.getDateString();
 
 			runde = pruefeObZahlKleinerEinsIst(
 					Integer.parseInt((String) pairingsView[index].getRundenNummer()[nummer].getSelectedItem()));
@@ -239,12 +231,21 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 			runde = pruefeObZahlKleinerEinsIst(
 					Integer.parseInt((String) pairingsView[index].getRundenNummer()[nummer].getSelectedItem()));
 
-			DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-			datum = "";
-			Date date;
+			// DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy",
+			// Locale.getDefault());
+			// datum = "";
+			// Date date
+//			if (Locale.getDefault().equals(Locale.US)) {
+//				pairingsView[index].getDatum()[nummer].setDateFormatString("yyyy/mm/dd");
+//			}
+//			if (Locale.getDefault().equals(Locale.GERMANY)) {
+//				pairingsView[index].getDatum()[nummer].setDateFormatString("dd.mm.yyyy");
+//			}
+			EventDate eventDate = new EventDate(pairingsView[index].getDatum()[nummer].getDate());
 
-			date = pairingsView[index].getDatum()[nummer].getDate();
-			datum = formatter.format(date);
+			// datum = eventDate.getDateString();
+			// date = eventDate.getDateString();;
+			datum = eventDate.getDateString();
 
 		} catch (NumberFormatException e) {
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("RundenEingabeFormularControl.3")); //$NON-NLS-1$

@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.control.PropertiesControl;
+import de.turnierverwaltung.model.EventDate;
 import de.turnierverwaltung.model.Tournament;
 
 public class SQLiteTurnierDAO implements TurnierDAO {
@@ -153,9 +154,11 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 					String turnierName = rs.getString("Turniername");
 					String startDatum = rs.getString("Startdatum");
 					String endDatum = rs.getString("Enddatum");
-
-					turnier = new Tournament(turnierId, turnierName, startDatum, endDatum, prop.getOnlyTables(),
-							prop.getNoDWZ(), prop.getNoFolgeDWZ(), prop.getNoELO(), prop.getNoFolgeELO());
+					EventDate startevent = new EventDate(startDatum);
+					EventDate endevent = new EventDate(endDatum);
+					turnier = new Tournament(turnierId, turnierName, startevent.getDateString(),
+							endevent.getDateString(), prop.getOnlyTables(), prop.getNoDWZ(), prop.getNoFolgeDWZ(),
+							prop.getNoELO(), prop.getNoFolgeELO());
 
 				}
 				stmt.close();
@@ -218,8 +221,11 @@ public class SQLiteTurnierDAO implements TurnierDAO {
 				String turnierName = rs.getString("Turniername");
 				String startDatum = rs.getString("Startdatum");
 				String endDatum = rs.getString("Enddatum");
-				turnierListe.add(new Tournament(id, turnierName, startDatum, endDatum, prop.getOnlyTables(),
-						prop.getNoDWZ(), prop.getNoFolgeDWZ(), prop.getNoELO(), prop.getNoFolgeELO()));
+				EventDate startevent = new EventDate(startDatum);
+				EventDate endevent = new EventDate(endDatum);
+				turnierListe.add(new Tournament(id, turnierName, startevent.getDateString(), endevent.getDateString(),
+						prop.getOnlyTables(), prop.getNoDWZ(), prop.getNoFolgeDWZ(), prop.getNoELO(),
+						prop.getNoFolgeELO()));
 			}
 			stmt.close();
 

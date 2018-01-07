@@ -133,10 +133,10 @@ public class NewTournamentView extends JPanel {
 		startDatumTextField = new DateChooserPanel();
 		startDatumTextField.setLocale(Locale.getDefault());
 		if (Locale.getDefault().equals(Locale.US)) {
-			startDatumTextField.setDateFormatString("yyyy/mm/dd");
+			startDatumTextField.setDateFormatString("yyyy/MM/dd");
 		}
 		if (Locale.getDefault().equals(Locale.GERMANY)) {
-			startDatumTextField.setDateFormatString("dd.mm.yyyy");
+			startDatumTextField.setDateFormatString("dd.MM.yyyy");
 		}
 		panel2.add(startDatumTextField);
 		panel2.add(label);
@@ -151,10 +151,10 @@ public class NewTournamentView extends JPanel {
 		endDatumeTextField = new DateChooserPanel();
 		endDatumeTextField.setLocale(Locale.getDefault());
 		if (Locale.getDefault().equals(Locale.US)) {
-			endDatumeTextField.setDateFormatString("yyyy/mm/dd");
+			endDatumeTextField.setDateFormatString("yyyy/MM/dd");
 		}
 		if (Locale.getDefault().equals(Locale.GERMANY)) {
-			endDatumeTextField.setDateFormatString("dd.mm.yyyy");
+			endDatumeTextField.setDateFormatString("dd.MM.yyyy");
 		}
 		panel3.add(endDatumeTextField);
 		panel3.add(lblEndDatum);

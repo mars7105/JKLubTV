@@ -22,6 +22,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import de.turnierverwaltung.model.EventDate;
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.TournamentConstants;
@@ -91,9 +92,9 @@ public class SQLitePartienDAO implements PartienDAO {
 		if (this.dbConnect != null) {
 
 			PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
+			EventDate event = new EventDate(spielDatum);
 			preStm.setInt(1, idGruppe);
-			preStm.setString(2, spielDatum);
+			preStm.setString(2, event.getDateString());
 			preStm.setInt(3, Runde);
 			preStm.setInt(4, ergebnis);
 			preStm.setInt(5, spielerIdweiss);
@@ -135,8 +136,9 @@ public class SQLitePartienDAO implements PartienDAO {
 				spielerWeiss.setSpielerId(idSpielerWeiss);
 				Player spielerSchwarz = new Player();
 				spielerSchwarz.setSpielerId(idSpielerSchwarz);
-
-				partieListe.add(new Game(idPartie, spielDatum, ergebnis, runde, spielerWeiss, spielerSchwarz));
+				EventDate event = new EventDate(spielDatum);
+				partieListe
+						.add(new Game(idPartie, event.getDateString(), ergebnis, runde, spielerWeiss, spielerSchwarz));
 
 			}
 			stmt.close();
@@ -167,7 +169,8 @@ public class SQLitePartienDAO implements PartienDAO {
 				preStm.setInt(2, partie.getSpielerSchwarz().getSpielerId());
 				preStm.setInt(3, partie.getRunde());
 				preStm.setInt(4, partie.getErgebnis());
-				preStm.setString(5, partie.getSpielDatum());
+				EventDate event = new EventDate(partie.getSpielDatum());
+				preStm.setString(5, event.getDateString());
 				preStm.setInt(6, partie.getPartieId());
 				preStm.addBatch();
 
@@ -203,7 +206,8 @@ public class SQLitePartienDAO implements PartienDAO {
 				preStm.setInt(2, partie.getSpielerSchwarz().getSpielerId());
 				preStm.setInt(3, partie.getRunde());
 				preStm.setInt(4, partie.getErgebnis());
-				preStm.setString(5, partie.getSpielDatum());
+				EventDate event = new EventDate(partie.getSpielDatum());
+				preStm.setString(5, event.getDateString());
 				preStm.setInt(6, partie.getPartieId());
 				preStm.addBatch();
 

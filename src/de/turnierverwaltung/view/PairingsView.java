@@ -18,7 +18,6 @@ package de.turnierverwaltung.view;
 import java.awt.BorderLayout;
 //import java.awt.Color;
 import java.awt.FlowLayout;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -240,15 +239,15 @@ public class PairingsView extends JPanel {
 					// DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy",
 					// Locale.getDefault());
 					EventDate eventDate = new EventDate(zeile[4]);
-					Date d = eventDate.getDate();
-					if (zeile[4].contains("/")) {
+//					Date d = eventDate.getDate();
+					if (Locale.getDefault().equals(Locale.US)) {
 						datePanel.setDateFormatString(eventDate.getEnglishFormat());
 					}
-					if (zeile[4].contains(".")) {
+					if (Locale.getDefault().equals(Locale.GERMANY)) {
 						datePanel.setDateFormatString(eventDate.getGermanFormat());
 					}
-
-					datePanel.setDate(d);
+//					datePanel.setDefaultLocale(Locale.getDefault());
+					datePanel.setDate(eventDate.getDate());
 
 					// datePanel.setForeground(Color.WHITE);
 					datum[anzahlElemente] = datePanel;
