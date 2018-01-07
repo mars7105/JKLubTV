@@ -65,6 +65,7 @@ public class DWZListToSQLITEControl {
 						JOptionPane.INFORMATION_MESSAGE);
 				SQLiteDAOFactory.setDB_PATH(prop.getPathToDatabase());
 				prop.setPathToPlayersCSV(newFile);
+				prop.writeProperties();
 			}
 
 		} catch (IOException e) {

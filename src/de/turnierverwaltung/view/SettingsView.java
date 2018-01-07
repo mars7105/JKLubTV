@@ -51,7 +51,6 @@ public class SettingsView extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel contentPanel;
 	private JScrollPane scrollPane;
 	private JPanel centerPane;
 
@@ -112,8 +111,8 @@ public class SettingsView extends JPanel {
 		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.0"));
 
 		JTabbedPane tabbedPane = new JTabbedPane();
-		contentPanel = new JPanel();
-		contentPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// contentPanel = new JPanel();
+		// contentPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		setLayout(new BorderLayout());
 		spielerListeAuswahlBox = new JComboBox<String>();
 		spielerListeAuswahlBox.addItem(" 5"); //$NON-NLS-1$
@@ -140,7 +139,7 @@ public class SettingsView extends JPanel {
 		add(northPanel, BorderLayout.NORTH);
 		centerPane = new JPanel();
 		centerPane.setLayout(new BorderLayout());
-		// centerPane.setPreferredSize(new Dimension(900,1000));
+		setPreferredSize(new Dimension(800, 600));
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		languageSupport();
@@ -196,15 +195,16 @@ public class SettingsView extends JPanel {
 		wrapper.add(htmlAll, BorderLayout.NORTH);
 		tabbedPane.addTab(Messages.getString("EigenschaftenView.51"), wrapper);
 
-		centerPane.add(tabbedPane, BorderLayout.NORTH);
+		centerPane.add(tabbedPane, BorderLayout.CENTER);
 		ButtonPanelView buttonPane = new ButtonPanelView();
 		buttonPane.makeOKButton();
 		this.okButton = buttonPane.getOkButton();
 
-		centerPane.add(buttonPane, BorderLayout.SOUTH);
+		// centerPane.add(buttonPane, BorderLayout.SOUTH);
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(centerPane);
 		add(scrollPane, BorderLayout.CENTER);
+		add(buttonPane, BorderLayout.SOUTH);
 	}
 
 	private void tableLabel() {
@@ -421,7 +421,7 @@ public class SettingsView extends JPanel {
 		rightP.add(rightPanel, BorderLayout.NORTH);
 
 		bothPanel.add(leftP, BorderLayout.WEST);
-		bothPanel.add(rightP, BorderLayout.EAST);
+		bothPanel.add(rightP, BorderLayout.CENTER);
 		htmlAll.add(bothPanel);
 		htmlAll.add(new JSeparator());
 	}
@@ -644,7 +644,7 @@ public class SettingsView extends JPanel {
 		openPlayersELOLabel = new JLabel();
 		htmlPanel.add(openPlayersELOLabel);
 		htmlAll.add(htmlPanel);
-		
+
 		convertELOToSQLITEButton = new JButton(Messages.getString("EigenschaftenView.66"));
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -652,7 +652,7 @@ public class SettingsView extends JPanel {
 		convertELOToSQLITELabel = new JLabel();
 		htmlPanel.add(convertELOToSQLITELabel);
 		htmlAll.add(htmlPanel);
-		
+
 		htmlAll.add(new JSeparator());
 	}
 

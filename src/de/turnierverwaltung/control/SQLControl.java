@@ -39,6 +39,7 @@ public class SQLControl {
 	public static final String INFONAME = Version.getString("version.0");
 	public static final String VERSION = Version.getString("version.1");
 	public static final String INFONOTICE = Version.getString("version.2");
+	public static final String INFONAME_EXPORT_PLAYERLIST = Version.getString("version.4");
 	private DAOFactory daoFactory;
 	private SpielerDAO mySQLSpielerDAO;
 	private TurnierDAO mySQLTurnierDAO;
@@ -90,7 +91,7 @@ public class SQLControl {
 		mySQLDWZDataDAO.createDWZTable();
 		mySQLELODataDAO.createELOTable();
 		mySQLInfoDataDAO.createInfoTable();
-		Info info = new Info(INFONAME, VERSION, INFONOTICE, getDate(), 0);
+		Info info = new Info(INFONAME_EXPORT_PLAYERLIST, VERSION, INFONOTICE, getDate(), 0);
 		mySQLInfoDataDAO.insertInfo(info);
 	}
 

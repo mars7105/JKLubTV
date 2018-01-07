@@ -154,13 +154,22 @@ public class ActionListenerSettingsControl {
 
 			}
 		});
+		esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				DWZListToSQLITEControl dwzL = new DWZListToSQLITEControl(mainControl);
+				dwzL.convertDWZListToSQLITE();
+				esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().setEnabled(false);
+			}
+		});
 		esControl.getEigenschaftenView().getOpenPlayersCSVButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				// spieler.csv
 				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 				final JFileChooser fc = new JFileChooser(path);
-				FileFilter filter = new FileNameExtensionFilter("CSV or SQLite file", "csv", "CSV", "sqlite");
+				FileFilter filter = new FileNameExtensionFilter("CSV or SQLite file", "csv", "CSV", "sqlite", "SQLite");
 
 				fc.setFileFilter(filter);
 				int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
@@ -175,7 +184,7 @@ public class ActionListenerSettingsControl {
 					esControl.getEigenschaftenView()
 							.setOpenPlayersCSVLabel(mainControl.getPropertiesControl().getPathToPlayersCSV());
 
-					String filename = mainControl.getPropertiesControl().getPathToPlayersCSV();
+					String filename = file.getName();
 					int positionEXT = filename.lastIndexOf('.');
 
 					if (positionEXT > 0) {
@@ -184,10 +193,21 @@ public class ActionListenerSettingsControl {
 							esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().setEnabled(false);
 						} else {
 							esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().setEnabled(true);
+
 						}
 					}
 				}
 
+			}
+		});
+		
+		esControl.getEigenschaftenView().getConvertELOToSQLITEButton().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				ELOListToSQLITEControl eloL = new ELOListToSQLITEControl(mainControl);
+				eloL.convertELOListToSQLITE();
+				esControl.getEigenschaftenView().getConvertELOToSQLITEButton().setEnabled(false);
 			}
 		});
 		esControl.getEigenschaftenView().getOpenPlayersELOButton().addActionListener(new ActionListener() {
@@ -209,7 +229,7 @@ public class ActionListenerSettingsControl {
 					mainControl.getPropertiesControl().writeProperties();
 					esControl.getEigenschaftenView()
 							.setOpenPlayersELOLabel(mainControl.getPropertiesControl().getPathToPlayersELO());
-					String filename = mainControl.getPropertiesControl().getPathToPlayersELO();
+					String filename = file.getName();
 					int positionEXT = filename.lastIndexOf('.');
 
 					if (positionEXT > 0) {
@@ -218,12 +238,14 @@ public class ActionListenerSettingsControl {
 							esControl.getEigenschaftenView().getConvertELOToSQLITEButton().setEnabled(false);
 						} else {
 							esControl.getEigenschaftenView().getConvertELOToSQLITEButton().setEnabled(true);
+
 						}
 					}
 				}
 
 			}
 		});
+
 		esControl.getEigenschaftenView().getOpenDefaultPathButton().addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
@@ -296,15 +318,6 @@ public class ActionListenerSettingsControl {
 				esControl.getEigenschaftenView().getConvertELOToSQLITEButton().setEnabled(false);
 			} else {
 				esControl.getEigenschaftenView().getConvertELOToSQLITEButton().setEnabled(true);
-				esControl.getEigenschaftenView().getConvertELOToSQLITEButton().addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						ELOListToSQLITEControl eloL = new ELOListToSQLITEControl(mainControl);
-						eloL.convertELOListToSQLITE();
-						esControl.getEigenschaftenView().getConvertELOToSQLITEButton().setEnabled(false);
-					}
-				});
 
 			}
 		}
@@ -317,15 +330,6 @@ public class ActionListenerSettingsControl {
 				esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().setEnabled(false);
 			} else {
 				esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().setEnabled(true);
-				esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().addActionListener(new ActionListener() {
-
-					@Override
-					public void actionPerformed(ActionEvent arg0) {
-						DWZListToSQLITEControl dwzL = new DWZListToSQLITEControl(mainControl);
-						dwzL.convertDWZListToSQLITE();
-
-					}
-				});
 
 			}
 		}

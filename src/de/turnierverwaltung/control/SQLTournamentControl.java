@@ -31,9 +31,14 @@ public class SQLTournamentControl {
 	private DAOFactory daoFactory;
 	private TurnierDAO mySQLTurnierDao;
 	private DatumDAO mySQLDatumDAO;
-	int turnierId;
+	private int turnierId;
+//	private InfoDAO infoDao;
+	public static final String INFONAME = Version.getString("version.0");
+	public static final String VERSION = Version.getString("version.1");
+	public static final String INFONOTICE = Version.getString("version.2");
 
 	public SQLTournamentControl(MainControl mainControl) {
+//		Boolean checkDatabase = false;
 		this.mainControl = mainControl;
 		daoFactory = DAOFactory.getDAOFactory(3);
 		if (daoFactory == null) {
@@ -41,8 +46,24 @@ public class SQLTournamentControl {
 			this.mainControl.getPropertiesControl().writeProperties();
 
 		} else {
+//			infoDao = daoFactory.getInfoDAO();
+//			ArrayList<Info> infoArrayList = null;
+//			try {
+//				infoArrayList = infoDao.getAllInfos();
+//			} catch (SQLException e) {
+//				ExceptionHandler eh = new ExceptionHandler(mainControl);
+//				eh.fileSQLError(e.getMessage());
+//			}
+//
+//			for (Info info : infoArrayList) {
+//				if (info.getInfoname().equals(INFONAME)) {
+//					checkDatabase = true;
+//				}
+//
+//			}
 			mySQLTurnierDao = daoFactory.getTurnierDAO();
 			mySQLDatumDAO = daoFactory.getDatumDAO();
+
 		}
 	}
 

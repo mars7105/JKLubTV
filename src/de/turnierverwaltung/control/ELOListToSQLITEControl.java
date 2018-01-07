@@ -64,7 +64,7 @@ public class ELOListToSQLITEControl {
 						JOptionPane.INFORMATION_MESSAGE);
 				SQLiteDAOFactory.setDB_PATH(prop.getPathToDatabase());
 				prop.setPathToPlayersELO(newFile);
-
+				prop.writeProperties();
 			}
 
 		} catch (IOException e) {
