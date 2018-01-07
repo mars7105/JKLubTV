@@ -36,9 +36,9 @@ import de.turnierverwaltung.mysql.TurnierDAO;
 import de.turnierverwaltung.mysql.Turnier_has_SpielerDAO;
 
 public class SQLControl {
-	public static final String INFONAME = "JKlubTV";
-	public static final String VERSION = "4.0.x";
-	public static final String INFONOTICE = "Create table";
+	public static final String INFONAME = Version.getString("version.0");
+	public static final String VERSION = Version.getString("version.1");
+	public static final String INFONOTICE = Version.getString("version.2");
 	private DAOFactory daoFactory;
 	private SpielerDAO mySQLSpielerDAO;
 	private TurnierDAO mySQLTurnierDAO;

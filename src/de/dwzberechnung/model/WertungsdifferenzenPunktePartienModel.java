@@ -3,6 +3,7 @@ package de.dwzberechnung.model;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class WertungsdifferenzenPunktePartienModel {
 	public static final int NULL = 1000;
@@ -23,11 +24,15 @@ public class WertungsdifferenzenPunktePartienModel {
 	}
 
 	public double getValue(double anzahlPunkte, int anzahlPartien) {
-		NumberFormat numberFormat = new DecimalFormat("0.0");
-		// numberFormat.setRoundingMode(RoundingMode.DOWN);
+
+		Locale locale = new Locale("de", "DE");
+		DecimalFormat numberFormat = (DecimalFormat) NumberFormat.getInstance(locale);
+		numberFormat.applyLocalizedPattern("#,0");
 
 		String key = numberFormat.format(anzahlPunkte);
-		// System.out.println(key);
+
+//		System.out.println(key);
+
 		return (double) hmap.get(key)[anzahlPartien - 2];
 
 	}

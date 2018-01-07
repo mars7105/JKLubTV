@@ -192,7 +192,7 @@ public class PlayerListControl implements ActionListener {
 		spielerTableControl = new SQLPlayerControl(this.mainControl);
 		spieler = new ArrayList<Player>();
 		spieler = spielerTableControl.getAllSpieler();
-		testPlayerListForDoubles();
+//		testPlayerListForDoubles();
 		spielerAnzahl = spieler.size();
 		int selectedTab = 0;
 		if (spielerLadenView == null) {
@@ -225,30 +225,30 @@ public class PlayerListControl implements ActionListener {
 
 	}
 
-	private void testPlayerListForDoubles() throws SQLException {
-		Boolean loop = false;
-		SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-		do {
-			loop = false;
-			for (int i = 0; i < spieler.size(); i++) {
-				int zName = 0;
-				for (int y = 0; y < spieler.size(); y++) {
-					if (i != y) {
-						if (spieler.get(i).getName().equals(spieler.get(y).getName())) {
-							zName++;
-							spieler.get(y)
-									.setSurname(spieler.get(y).getSurname() + "_" + new Integer(zName).toString());
-							spieler.get(y).setName(spieler.get(y).getSurname() + "," + spieler.get(y).getForename());
-							// spieler.get(y).extractForenameAndSurenameToName();
-							stc.updateOneSpieler(spieler.get(y));
-							loop = true;
-						}
-					}
-
-				}
-			}
-		} while (loop == true);
-	}
+//	private void testPlayerListForDoubles() throws SQLException {
+//		Boolean loop = false;
+//		SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+//		do {
+//			loop = false;
+//			for (int i = 0; i < spieler.size(); i++) {
+//				int zName = 0;
+//				for (int y = 0; y < spieler.size(); y++) {
+//					if (i != y) {
+//						if (spieler.get(i).getName().equals(spieler.get(y).getName())) {
+//							zName++;
+//							spieler.get(y)
+//									.setSurname(spieler.get(y).getSurname() + "_" + new Integer(zName).toString());
+//							spieler.get(y).setName(spieler.get(y).getSurname() + "," + spieler.get(y).getForename());
+//							// spieler.get(y).extractForenameAndSurenameToName();
+//							stc.updateOneSpieler(spieler.get(y));
+//							loop = true;
+//						}
+//					}
+//
+//				}
+//			}
+//		} while (loop == true);
+//	}
 
 	public ArrayList<Player> getSpieler() {
 		return spieler;

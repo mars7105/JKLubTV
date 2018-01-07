@@ -20,7 +20,7 @@ public class EventDate {
 		englishdateFormatter = new SimpleDateFormat(englishFormat, Locale.ENGLISH);
 		germandateFormatter = new SimpleDateFormat(germanFormat, Locale.GERMAN);
 		
-		System.out.println(getDateString());
+//		System.out.println(getDateString());
 	}
 
 	public EventDate(String dateString) {

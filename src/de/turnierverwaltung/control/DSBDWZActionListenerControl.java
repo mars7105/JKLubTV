@@ -11,7 +11,9 @@ import javax.swing.ImageIcon;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import de.turnierverwaltung.model.CSVVereine;
+import de.turnierverwaltung.model.ELOData;
 import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.model.SQLitePlayerELOList;
 
 /**
  * 
@@ -124,6 +126,13 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 						int temp = lit.next();
 						Player neuerSpieler = spieler.get(temp);
 						if (playerExist(neuerSpieler) == false) {
+							SQLitePlayerELOList spelolist = new SQLitePlayerELOList();
+							String pathToPlayersELO = mainControl.getPropertiesControl().getPathToPlayersELO();
+							ELOData eloDataList = spelolist.getPlayer(pathToPlayersELO,
+									neuerSpieler.getDwzData().getCsvFIDE_ID());
+							if (eloDataList != null) {
+								neuerSpieler.setEloData(eloDataList);
+							}
 							SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 							neuerSpieler.setName(neuerSpieler.getDwzData().getCsvSpielername());
 							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));

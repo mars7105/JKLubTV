@@ -9,7 +9,10 @@ import java.util.ListIterator;
 import javax.swing.ImageIcon;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import de.turnierverwaltung.model.DWZData;
 import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.model.SQLitePlayerDWZList;
 
 /**
  * 
@@ -106,7 +109,17 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 						Player neuerSpieler = spieler.get(temp);
 						neuerSpieler.copyELODataToPlayer();
 						if (playerExist(neuerSpieler) == false) {
+							SQLitePlayerDWZList spdwzlist = new SQLitePlayerDWZList();
+							String pathToPlayersCSV = mainControl.getPropertiesControl().getPathToPlayersCSV();
+							ArrayList<DWZData> dwzDataList = spdwzlist.getPlayersByFideId(pathToPlayersCSV,
+									neuerSpieler.getEloData().getFideid());
+							if (dwzDataList != null) {
+								if (dwzDataList.size() == 1) {
+									neuerSpieler.setDwzData(dwzDataList.get(0));
+								}
+							}
 							SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+
 							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
 							mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
 							eloDialogControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)

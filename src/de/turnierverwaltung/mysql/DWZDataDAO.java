@@ -25,4 +25,6 @@ public interface DWZDataDAO {
 	public ArrayList<DWZData> getPlayerOfVerein(String zps) throws SQLException ;
 
 	public ArrayList<DWZData> getDWZDataByName(String eingabe) throws SQLException;
+
+	public ArrayList<DWZData> getDWZDataByFideId(int eingabe) throws SQLException;
 }
