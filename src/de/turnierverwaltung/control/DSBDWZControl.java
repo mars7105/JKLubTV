@@ -330,6 +330,7 @@ public class DSBDWZControl {
 								}
 								Player player = new Player();
 								player.setDwzData(tmp);
+								player.copyDWZDataToPlayer();
 								searchplayerlist.add(player);
 
 							}
