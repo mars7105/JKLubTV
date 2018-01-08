@@ -266,7 +266,7 @@ public class SQLiteELODataDAO implements ELODataDAO {
 
 	@Override
 	public ArrayList<ELOData> getELODataByName(String eingabe) throws SQLException {
-		String sql = "Select * from elo_data WHERE Name LIKE '%" + eingabe + "%' LIMIT 20;";
+		String sql = "Select * from elo_data WHERE Name LIKE '%" + eingabe + "%' LIMIT 40;";
 
 		ArrayList<ELOData> eloDataArray = new ArrayList<ELOData>();
 

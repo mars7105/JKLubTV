@@ -325,8 +325,8 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 
 	@Override
 	public ArrayList<DWZData> getDWZDataByName(String eingabe) throws SQLException {
-		String sql = "Select * from dwz_spieler WHERE Spielername LIKE '%" + eingabe + "%' LIMIT 20;";
-		DWZData dwzData = new DWZData();
+		String sql = "Select * from dwz_spieler WHERE Spielername LIKE '%" + eingabe + "%' LIMIT 40;";
+
 		ArrayList<DWZData> dwzDataArray = new ArrayList<DWZData>();
 
 		Statement stmt;
@@ -335,7 +335,7 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 			stmt = this.dbConnect.createStatement();
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-
+				DWZData dwzData = new DWZData();
 				int sId = -1;
 				String spielerid = rs.getString("idSpieler");
 				try {
