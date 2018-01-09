@@ -3,8 +3,6 @@ package de.turnierverwaltung.view;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
-import java.net.URISyntaxException;
-
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;

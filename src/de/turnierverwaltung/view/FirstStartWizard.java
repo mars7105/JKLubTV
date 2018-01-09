@@ -1,8 +1,6 @@
 package de.turnierverwaltung.view;
 
 import java.awt.BorderLayout;
-import java.net.URISyntaxException;
-
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
