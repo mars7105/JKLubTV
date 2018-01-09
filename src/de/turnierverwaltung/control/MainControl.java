@@ -40,6 +40,7 @@ import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.ButtonTabComponent;
 import de.turnierverwaltung.view.CrossTableView;
+//import de.turnierverwaltung.view.FirstStartWizard;
 //import de.turnierverwaltung.view.MainView;
 import de.turnierverwaltung.view.MeetingTableView;
 import de.turnierverwaltung.view.NaviView;
@@ -235,7 +236,8 @@ public class MainControl extends JFrame {
 				}
 			}
 		} else {
-			this.setTitle(Messages.getString("MainControl.10")); //$NON-NLS-1$
+			this.setTitle(Messages.getString("MainControl.10"));
+//			FirstStartWizard fsw = new FirstStartWizard();
 
 		}
 	}
