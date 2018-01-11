@@ -52,6 +52,15 @@ import de.turnierverwaltung.view.NewTournamentView;
 
 public class NewTournamentControl implements ActionListener {
 
+	private static int pruefeObZahlKleinerEinsIst(int zahl) throws ZahlKleinerAlsN, ZahlGroesserAlsN {
+		if (zahl <= 0) {
+			throw new ZahlKleinerAlsN();
+		}
+		if (zahl > 15) {
+			throw new ZahlGroesserAlsN();
+		}
+		return zahl;
+	}
 	private int selectIndex;
 	private MainControl mainControl;
 	private NewTournamentView turnierView;
@@ -61,10 +70,11 @@ public class NewTournamentControl implements ActionListener {
 	private String startDatum;
 	private String endDatum;
 	private int gruppenAnzahl;
+
 	private ImageIcon turnierIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png"))); //$NON-NLS-1$
-
 	private Tournament turnier;
+
 	private ButtonTabComponent buttonTabComponent;
 
 	public NewTournamentControl(MainControl mainControl) {
@@ -118,16 +128,6 @@ public class NewTournamentControl implements ActionListener {
 
 		}
 
-	}
-
-	private static int pruefeObZahlKleinerEinsIst(int zahl) throws ZahlKleinerAlsN, ZahlGroesserAlsN {
-		if (zahl <= 0) {
-			throw new ZahlKleinerAlsN();
-		}
-		if (zahl > 15) {
-			throw new ZahlGroesserAlsN();
-		}
-		return zahl;
 	}
 
 	public String getEndDatum() {

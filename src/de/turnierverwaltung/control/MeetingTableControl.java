@@ -20,6 +20,7 @@ import java.awt.Color;
 
 import java.awt.Toolkit;
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 import javax.swing.event.TableModelEvent;
@@ -35,96 +36,6 @@ import de.turnierverwaltung.view.MeetingTableView;
 import de.turnierverwaltung.view.TabbedPaneView;
 
 public class MeetingTableControl {
-
-	private MainControl mainControl;
-	private MeetingTable[] terminTabelle;
-	private TabbedPaneView[] tabAnzeigeView2;
-	private MeetingTableView[] simpleTableView;
-	private CrossTableView[] simpleTurnierTabelleView;
-	private JTabbedPane hauptPanel;
-	private Tournament turnier;
-	private MyTableModelListener tml[];
-	private ArrayList<Game> changedPartien;
-	private ImageIcon terminTabelleIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
-
-	/**
-	 * 
-	 * @param mainControl
-	 */
-	public MeetingTableControl(MainControl mainControl) {
-		this.mainControl = mainControl;
-		this.turnier = mainControl.getTournament();
-		this.tabAnzeigeView2 = this.mainControl.getTabbedPaneViewArray();
-		int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
-		simpleTableView = new MeetingTableView[anzahlGruppen];
-		this.mainControl.setMeetingTableView(simpleTableView);
-		this.terminTabelle = new MeetingTable[anzahlGruppen];
-		this.mainControl.setMeetingTable(terminTabelle);
-		hauptPanel = mainControl.getHauptPanel();
-		tml = new MyTableModelListener[anzahlGruppen];
-		if (this.mainControl.getChangedGames() == null) {
-			changedPartien = new ArrayList<Game>();
-			this.mainControl.setChangedGames(changedPartien);
-		} else {
-			changedPartien = this.mainControl.getChangedGames();
-
-		}
-	}
-
-	/**
-	 * 
-	 * @param gruppenNummer
-	 */
-	public void makeSimpleTableView(int gruppenNummer) {
-		PropertiesControl ppC = mainControl.getPropertiesControl();
-		String roundColumnName = ppC.getTableComumnRound();
-		String whiteColumnName = ppC.getTableComumnWhite();
-		String blackColumnName = ppC.getTableComumnBlack();
-		String resultColumnName = ppC.getTableComumnResult();
-		String meetingColumnName = ppC.getTableComumnMeeting();
-		this.terminTabelle[gruppenNummer] = new MeetingTable(turnier,
-				mainControl.getTournament().getGruppe()[gruppenNummer], roundColumnName, whiteColumnName, blackColumnName,
-				resultColumnName, meetingColumnName);
-		this.mainControl.setMeetingTable(terminTabelle);
-		simpleTableView[gruppenNummer] = new MeetingTableView(new MeetingTableModel(this.terminTabelle[gruppenNummer]));
-		simpleTurnierTabelleView = mainControl.getCrossTableView();
-		// mainControl.getTurnierTabelle();
-		if (tml[gruppenNummer] == null) {
-			int abstand = mainControl.getPropertiesControl().getTabellenAbstand();
-			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer, abstand);
-		}
-
-		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
-
-		if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() == 1) {
-			tabAnzeigeView2[gruppenNummer].getTabbedPane().insertTab(Messages.getString("TerminTabelleControl.1"), //$NON-NLS-1$
-					terminTabelleIcon, simpleTableView[gruppenNummer], null, 1);
-		} else if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() > 1) {
-
-			tabAnzeigeView2[gruppenNummer].getTabbedPane().setComponentAt(1, simpleTableView[gruppenNummer]);
-		}
-
-		hauptPanel.updateUI();
-
-	}
-
-	public MeetingTable[] getTerminTabelle() {
-		return terminTabelle;
-	}
-
-	public void setTerminTabelle(MeetingTable[] terminTabelle) {
-		this.terminTabelle = terminTabelle;
-	}
-
-	public void updateStatus() {
-		int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
-		for (int i = 0; i < anzahlGruppen; i++) {
-			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
-			simpleTableView[i].getStatusLabel().setBackground(Color.ORANGE);
-		}
-
-	}
 
 	/**
 	 * 
@@ -196,6 +107,87 @@ public class MeetingTableControl {
 		}
 
 	}
+	private MainControl mainControl;
+	private MeetingTable[] terminTabelle;
+	private TabbedPaneView[] tabAnzeigeView2;
+	private MeetingTableView[] simpleTableView;
+	private CrossTableView[] simpleTurnierTabelleView;
+	private JTabbedPane hauptPanel;
+	private Tournament turnier;
+	private MyTableModelListener tml[];
+	private ArrayList<Game> changedPartien;
+
+	private ImageIcon terminTabelleIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
+
+	/**
+	 * 
+	 * @param mainControl
+	 */
+	public MeetingTableControl(MainControl mainControl) {
+		this.mainControl = mainControl;
+		this.turnier = mainControl.getTournament();
+		this.tabAnzeigeView2 = this.mainControl.getTabbedPaneViewArray();
+		int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
+		simpleTableView = new MeetingTableView[anzahlGruppen];
+		this.mainControl.setMeetingTableView(simpleTableView);
+		this.terminTabelle = new MeetingTable[anzahlGruppen];
+		this.mainControl.setMeetingTable(terminTabelle);
+		hauptPanel = mainControl.getHauptPanel();
+		tml = new MyTableModelListener[anzahlGruppen];
+		if (this.mainControl.getChangedGames() == null) {
+			changedPartien = new ArrayList<Game>();
+			this.mainControl.setChangedGames(changedPartien);
+		} else {
+			changedPartien = this.mainControl.getChangedGames();
+
+		}
+	}
+
+	public MeetingTable[] getTerminTabelle() {
+		return terminTabelle;
+	}
+
+	/**
+	 * 
+	 * @param gruppenNummer
+	 */
+	public void makeSimpleTableView(int gruppenNummer) {
+		PropertiesControl ppC = mainControl.getPropertiesControl();
+		String roundColumnName = ppC.getTableComumnRound();
+		String whiteColumnName = ppC.getTableComumnWhite();
+		String blackColumnName = ppC.getTableComumnBlack();
+		String resultColumnName = ppC.getTableComumnResult();
+		String meetingColumnName = ppC.getTableComumnMeeting();
+		this.terminTabelle[gruppenNummer] = new MeetingTable(turnier,
+				mainControl.getTournament().getGruppe()[gruppenNummer], roundColumnName, whiteColumnName, blackColumnName,
+				resultColumnName, meetingColumnName);
+		this.mainControl.setMeetingTable(terminTabelle);
+		simpleTableView[gruppenNummer] = new MeetingTableView(new MeetingTableModel(this.terminTabelle[gruppenNummer]));
+		simpleTurnierTabelleView = mainControl.getCrossTableView();
+		// mainControl.getTurnierTabelle();
+		if (tml[gruppenNummer] == null) {
+			int abstand = mainControl.getPropertiesControl().getTabellenAbstand();
+			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer, abstand);
+		}
+
+		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
+
+		if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() == 1) {
+			tabAnzeigeView2[gruppenNummer].getTabbedPane().insertTab(Messages.getString("TerminTabelleControl.1"), //$NON-NLS-1$
+					terminTabelleIcon, simpleTableView[gruppenNummer], null, 1);
+		} else if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() > 1) {
+
+			tabAnzeigeView2[gruppenNummer].getTabbedPane().setComponentAt(1, simpleTableView[gruppenNummer]);
+		}
+
+		hauptPanel.updateUI();
+
+	}
+
+	public void setTerminTabelle(MeetingTable[] terminTabelle) {
+		this.terminTabelle = terminTabelle;
+	}
 
 	public void updateSimpleTableView(Game game, int gruppenNummer) {
 
@@ -233,6 +225,15 @@ public class MeetingTableControl {
 				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(ergebnissSet, i, 3);
 
 			}
+		}
+
+	}
+
+	public void updateStatus() {
+		int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
+		for (int i = 0; i < anzahlGruppen; i++) {
+			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
+			simpleTableView[i].getStatusLabel().setBackground(Color.ORANGE);
 		}
 
 	}

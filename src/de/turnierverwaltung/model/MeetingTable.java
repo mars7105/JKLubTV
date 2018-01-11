@@ -118,6 +118,10 @@ public class MeetingTable {
 		}
 	}
 
+	public String getBlackColumnName() {
+		return blackColumnName;
+	}
+
 	private String getErgebnisToString(int ergebnis) {
 		String ergebnisString = TournamentConstants.KEIN_ERGEBNIS;
 		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_WEISS) {
@@ -168,8 +172,16 @@ public class MeetingTable {
 		return iCalendar;
 	}
 
-	public void setiCalendar(ICal iCalendar) {
-		this.iCalendar = iCalendar;
+	public String getMeetingColumnName() {
+		return meetingColumnName;
+	}
+
+	public String getResultColumnName() {
+		return resultColumnName;
+	}
+
+	public String getRoundColumnName() {
+		return roundColumnName;
 	}
 
 	public int getSpaltenAnzahl() {
@@ -184,8 +196,32 @@ public class MeetingTable {
 		return terminTabelleToHTML;
 	}
 
+	public String getWhiteColumnName() {
+		return whiteColumnName;
+	}
+
 	public int getZeilenAnzahl() {
 		return zeilenAnzahl;
+	}
+
+	public void setBlackColumnName(String blackColumnName) {
+		this.blackColumnName = blackColumnName;
+	}
+
+	public void setiCalendar(ICal iCalendar) {
+		this.iCalendar = iCalendar;
+	}
+
+	public void setMeetingColumnName(String meetingColumnName) {
+		this.meetingColumnName = meetingColumnName;
+	}
+
+	public void setResultColumnName(String resultColumnName) {
+		this.resultColumnName = resultColumnName;
+	}
+
+	public void setRoundColumnName(String roundColumnName) {
+		this.roundColumnName = roundColumnName;
 	}
 
 	public void setSpaltenAnzahl(int spaltenAnzahl) {
@@ -200,48 +236,12 @@ public class MeetingTable {
 		this.terminTabelleToHTML = terminTabelleToHTML;
 	}
 
-	public void setZeilenAnzahl(int zeilenAnzahl) {
-		this.zeilenAnzahl = zeilenAnzahl;
-	}
-
-	public String getRoundColumnName() {
-		return roundColumnName;
-	}
-
-	public void setRoundColumnName(String roundColumnName) {
-		this.roundColumnName = roundColumnName;
-	}
-
-	public String getWhiteColumnName() {
-		return whiteColumnName;
-	}
-
 	public void setWhiteColumnName(String whiteColumnName) {
 		this.whiteColumnName = whiteColumnName;
 	}
 
-	public String getBlackColumnName() {
-		return blackColumnName;
-	}
-
-	public void setBlackColumnName(String blackColumnName) {
-		this.blackColumnName = blackColumnName;
-	}
-
-	public String getResultColumnName() {
-		return resultColumnName;
-	}
-
-	public void setResultColumnName(String resultColumnName) {
-		this.resultColumnName = resultColumnName;
-	}
-
-	public String getMeetingColumnName() {
-		return meetingColumnName;
-	}
-
-	public void setMeetingColumnName(String meetingColumnName) {
-		this.meetingColumnName = meetingColumnName;
+	public void setZeilenAnzahl(int zeilenAnzahl) {
+		this.zeilenAnzahl = zeilenAnzahl;
 	}
 
 }

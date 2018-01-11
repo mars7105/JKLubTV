@@ -85,18 +85,6 @@ public class TournamentConstants {
 	public static String TABLE_COLUMN_RESULT = Messages.getString("TurnierKonstanten.9");
 	public static String TABLE_COLUMN_MEETING = Messages.getString("TurnierKonstanten.10");
 
-	private static int setWidth() {
-
-		int widthAllowed = Toolkit.getDefaultToolkit().getScreenSize().width;
-		int widthDreamSize = TournamentConstants.WINDOW_HEIGHT * 4 / 3;
-		if (widthDreamSize < widthAllowed) {
-			return widthDreamSize;
-		} else {
-			return widthAllowed;
-		}
-
-	}
-
 	public static void setConstantLanguage() {
 		TABLE_COLUMN_PLAYER = Messages.getString("TurnierKonstanten.0");
 		TABLE_COLUMN_OLD_DWZ = Messages.getString("TurnierKonstanten.1");
@@ -111,5 +99,17 @@ public class TournamentConstants {
 		TABLE_COLUMN_MEETING = Messages.getString("TurnierKonstanten.10");
 		TABLE_COLUMN_OLD_ELO = Messages.getString("TurnierKonstanten.11");
 		TABLE_COLUMN_NEW_ELO = Messages.getString("TurnierKonstanten.12");
+	}
+
+	private static int setWidth() {
+
+		int widthAllowed = Toolkit.getDefaultToolkit().getScreenSize().width;
+		int widthDreamSize = TournamentConstants.WINDOW_HEIGHT * 4 / 3;
+		if (widthDreamSize < widthAllowed) {
+			return widthDreamSize;
+		} else {
+			return widthAllowed;
+		}
+
 	}
 }

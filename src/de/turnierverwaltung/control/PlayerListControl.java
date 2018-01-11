@@ -21,6 +21,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -183,6 +184,47 @@ public class PlayerListControl implements ActionListener {
 
 	}
 
+	public ArrayList<Player> getSpieler() {
+		return spieler;
+	}
+
+//	private void testPlayerListForDoubles() throws SQLException {
+//		Boolean loop = false;
+//		SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+//		do {
+//			loop = false;
+//			for (int i = 0; i < spieler.size(); i++) {
+//				int zName = 0;
+//				for (int y = 0; y < spieler.size(); y++) {
+//					if (i != y) {
+//						if (spieler.get(i).getName().equals(spieler.get(y).getName())) {
+//							zName++;
+//							spieler.get(y)
+//									.setSurname(spieler.get(y).getSurname() + "_" + new Integer(zName).toString());
+//							spieler.get(y).setName(spieler.get(y).getSurname() + "," + spieler.get(y).getForename());
+//							// spieler.get(y).extractForenameAndSurenameToName();
+//							stc.updateOneSpieler(spieler.get(y));
+//							loop = true;
+//						}
+//					}
+//
+//				}
+//			}
+//		} while (loop == true);
+//	}
+
+	public PlayerListView getSpielerLadenView() {
+		return spielerLadenView;
+	}
+
+	public void setSpieler(ArrayList<Player> spieler) {
+		this.spieler = spieler;
+	}
+
+	public void setSpielerLadenView(PlayerListView spielerLadenView) {
+		this.spielerLadenView = spielerLadenView;
+	}
+
 	public void updateSpielerListe() throws SQLException {
 		PropertiesControl prop = mainControl.getPropertiesControl();
 		int cutForename = Integer.parseInt(prop.getCutForename());
@@ -223,47 +265,6 @@ public class PlayerListControl implements ActionListener {
 		}
 		spielerLadenView.updateUI();
 
-	}
-
-//	private void testPlayerListForDoubles() throws SQLException {
-//		Boolean loop = false;
-//		SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-//		do {
-//			loop = false;
-//			for (int i = 0; i < spieler.size(); i++) {
-//				int zName = 0;
-//				for (int y = 0; y < spieler.size(); y++) {
-//					if (i != y) {
-//						if (spieler.get(i).getName().equals(spieler.get(y).getName())) {
-//							zName++;
-//							spieler.get(y)
-//									.setSurname(spieler.get(y).getSurname() + "_" + new Integer(zName).toString());
-//							spieler.get(y).setName(spieler.get(y).getSurname() + "," + spieler.get(y).getForename());
-//							// spieler.get(y).extractForenameAndSurenameToName();
-//							stc.updateOneSpieler(spieler.get(y));
-//							loop = true;
-//						}
-//					}
-//
-//				}
-//			}
-//		} while (loop == true);
-//	}
-
-	public ArrayList<Player> getSpieler() {
-		return spieler;
-	}
-
-	public void setSpieler(ArrayList<Player> spieler) {
-		this.spieler = spieler;
-	}
-
-	public PlayerListView getSpielerLadenView() {
-		return spielerLadenView;
-	}
-
-	public void setSpielerLadenView(PlayerListView spielerLadenView) {
-		this.spielerLadenView = spielerLadenView;
 	}
 
 }

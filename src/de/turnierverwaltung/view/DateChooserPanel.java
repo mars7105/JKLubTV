@@ -61,12 +61,70 @@ public class DateChooserPanel extends JPanel implements PropertyChangeListener {
 	}
 
 	/**
+	 * Returns the date. If the JDateChooser is started with an empty date and no
+	 * date is set by the user, null is returned.
+	 * 
+	 * @return the current date
+	 */
+	public Date getDate() {
+		return components.getDate();
+	}
+
+	/**
 	 * Gets the date format string.
 	 * 
 	 * @return Returns the dateFormatString.
 	 */
 	public String getDateFormatString() {
 		return components.getDateFormatString();
+	}
+
+	public JDateChooser getJDateChooser() {
+		return components;
+	}
+
+	/**
+	 * Returns the locale of the first JDateChooser.
+	 */
+	@Override
+	public Locale getLocale() {
+		return components.getLocale();
+	}
+
+	public Date getMaxSelectableDate() {
+		return components.getMaxSelectableDate();
+	}
+
+	public Date getMinSelectableDate() {
+		return components.getMinSelectableDate();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.awt.Component#isEnabled()
+	 */
+	@Override
+	public boolean isEnabled() {
+		return components.isEnabled();
+	}
+
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName().equals("date")) {
+			setDate((Date) evt.getNewValue());
+		}
+	}
+
+	/**
+	 * Sets the date. Fires the property change "date" if date != null.
+	 * 
+	 * @param date
+	 *            the new date.
+	 */
+	public void setDate(Date date) {
+		components.setDate(date);
+
 	}
 
 	/**
@@ -81,79 +139,25 @@ public class DateChooserPanel extends JPanel implements PropertyChangeListener {
 
 	}
 
-	/**
-	 * Returns the date. If the JDateChooser is started with an empty date and no
-	 * date is set by the user, null is returned.
-	 * 
-	 * @return the current date
-	 */
-	public Date getDate() {
-		return components.getDate();
-	}
-
-	/**
-	 * Sets the date. Fires the property change "date" if date != null.
-	 * 
-	 * @param date
-	 *            the new date.
-	 */
-	public void setDate(Date date) {
-		components.setDate(date);
-
-	}
-
-	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equals("date")) {
-			setDate((Date) evt.getNewValue());
-		}
-	}
-
-	/**
-	 * Returns the locale of the first JDateChooser.
-	 */
-	public Locale getLocale() {
-		return components.getLocale();
-	}
-
-	/**
-	 * Sets the locale of the first 4 JDateChoosers.
-	 */
-	public void setLocale(Locale locale) {
-
-		components.setLocale(locale);
-
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.awt.Component#isEnabled()
-	 */
-	public boolean isEnabled() {
-		return components.isEnabled();
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
 	 * @see javax.swing.JComponent#setEnabled(boolean)
 	 */
+	@Override
 	public void setEnabled(boolean enabled) {
 		components.setEnabled(enabled);
 
 	}
 
-	public Date getMinSelectableDate() {
-		return components.getMinSelectableDate();
-	}
+	/**
+	 * Sets the locale of the first 4 JDateChoosers.
+	 */
+	@Override
+	public void setLocale(Locale locale) {
 
-	public void setMinSelectableDate(Date date) {
-		components.setMinSelectableDate(date);
+		components.setLocale(locale);
 
-	}
-
-	public Date getMaxSelectableDate() {
-		return components.getMaxSelectableDate();
 	}
 
 	public void setMaxSelectableDate(Date date) {
@@ -161,8 +165,9 @@ public class DateChooserPanel extends JPanel implements PropertyChangeListener {
 
 	}
 
-	public JDateChooser getJDateChooser() {
-		return components;
+	public void setMinSelectableDate(Date date) {
+		components.setMinSelectableDate(date);
+
 	}
 
 }

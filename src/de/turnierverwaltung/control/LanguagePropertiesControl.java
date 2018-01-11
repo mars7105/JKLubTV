@@ -14,11 +14,11 @@ import de.turnierverwaltung.model.Language;
  *
  */
 public class LanguagePropertiesControl {
-	private MainControl mainControl;
-	private PropertiesControl propertiesControl;
 	public static final String LANGUAGE = "language";
 	public static final String ENGLISH = "english";
 	public static final String GERMAN = "german";
+	private MainControl mainControl;
+	private PropertiesControl propertiesControl;
 	private Language englishLanguage;
 	private Language germanLanguage;
 	private Language defaultLanguage;
@@ -36,30 +36,23 @@ public class LanguagePropertiesControl {
 		englishLanguage = new Language(ENGLISH, new Locale("en", "US"));
 	}
 
-	/**
-	 * 
-	 */
-	public void setLanguageToEnglish() {
-		propertiesControl.setLanguage(englishLanguage.getLanguage());
-		englishLanguage.enableLocale();
+	private void abfrage() {
+		Object[] possibilities = { "English", "German" };
+		String s = (String) JOptionPane.showInputDialog(mainControl, "Which Language?\n", "Language Support",
+				JOptionPane.PLAIN_MESSAGE, icon, possibilities, "ham");
 
-	}
+		defaultLanguage = englishLanguage;
+		// If a string was returned, say so.
+		if ((s != null) && (s.length() > 0)) {
+			if (s.equals("English")) {
+				defaultLanguage = englishLanguage;
 
-	/**
-	 * 
-	 */
-	public void setLanguageToGerman() {
-		propertiesControl.setLanguage(germanLanguage.getLanguage());
-		germanLanguage.enableLocale();
+			}
+			if (s.equals("German")) {
+				defaultLanguage = germanLanguage;
 
-	}
-
-	/**
-	 * 
-	 */
-	public void setLanguageToDefault() {
-		propertiesControl.setLanguage(defaultLanguage.getLanguage());
-		defaultLanguage.enableLocale();
+			}
+		}
 	}
 
 	/**
@@ -84,22 +77,29 @@ public class LanguagePropertiesControl {
 		return ok;
 	}
 
-	private void abfrage() {
-		Object[] possibilities = { "English", "German" };
-		String s = (String) JOptionPane.showInputDialog(mainControl, "Which Language?\n", "Language Support",
-				JOptionPane.PLAIN_MESSAGE, icon, possibilities, "ham");
+	/**
+	 * 
+	 */
+	public void setLanguageToDefault() {
+		propertiesControl.setLanguage(defaultLanguage.getLanguage());
+		defaultLanguage.enableLocale();
+	}
 
-		defaultLanguage = englishLanguage;
-		// If a string was returned, say so.
-		if ((s != null) && (s.length() > 0)) {
-			if (s.equals("English")) {
-				defaultLanguage = englishLanguage;
+	/**
+	 * 
+	 */
+	public void setLanguageToEnglish() {
+		propertiesControl.setLanguage(englishLanguage.getLanguage());
+		englishLanguage.enableLocale();
 
-			}
-			if (s.equals("German")) {
-				defaultLanguage = germanLanguage;
+	}
 
-			}
-		}
+	/**
+	 * 
+	 */
+	public void setLanguageToGerman() {
+		propertiesControl.setLanguage(germanLanguage.getLanguage());
+		germanLanguage.enableLocale();
+
 	}
 }

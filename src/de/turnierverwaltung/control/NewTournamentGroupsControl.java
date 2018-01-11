@@ -35,6 +35,15 @@ import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.NewTournamentGroupsView;
 
 public class NewTournamentGroupsControl implements ActionListener {
+	private static int pruefeObZahlKleinerDreiIst(int zahl) throws ZahlKleinerAlsN, ZahlGroesserAlsN {
+		if (zahl < 3) {
+			throw new ZahlKleinerAlsN();
+		}
+		if (zahl > 20) {
+			throw new ZahlGroesserAlsN();
+		}
+		return zahl;
+	}
 	private MainControl mainControl;
 	private NewTournamentGroupsView gruppenView;
 	private JButton gruppenOKButton;
@@ -46,42 +55,13 @@ public class NewTournamentGroupsControl implements ActionListener {
 	private ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
 	private Player[][] spieler;
-	private int spielerAnzahl[];
 
-	private static int pruefeObZahlKleinerDreiIst(int zahl) throws ZahlKleinerAlsN, ZahlGroesserAlsN {
-		if (zahl < 3) {
-			throw new ZahlKleinerAlsN();
-		}
-		if (zahl > 20) {
-			throw new ZahlGroesserAlsN();
-		}
-		return zahl;
-	}
+	private int spielerAnzahl[];
 
 	public NewTournamentGroupsControl(MainControl mainControl) {
 
 		this.mainControl = mainControl;
 		init();
-	}
-
-	public void init() {
-		turnier = this.mainControl.getTournament();
-		hauptPanel = this.mainControl.getHauptPanel();
-		gruppenAnzahl = turnier.getAnzahlGruppen();
-		this.mainControl.setNewTournamentGroupsView(new NewTournamentGroupsView());
-		this.gruppenView = this.mainControl.getNewTournamentGroupsView();
-		gruppenView.runView(gruppenAnzahl);
-		gruppenOKButton = this.gruppenView.getOkButton();
-		gruppenOKButton.addActionListener(this);
-		gruppenCancelButton = this.gruppenView.getCancelButton();
-		gruppenCancelButton.addActionListener(this);
-		gruppenView.getGruppenNameTextField()[0].grabFocus();
-		hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
-		hauptPanel.add(this.gruppenView, TournamentConstants.TAB_ACTIVE_TOURNAMENT);
-		hauptPanel.setTitleAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, turnier.getTurnierName());
-		hauptPanel.setIconAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, gruppenIcon);
-		hauptPanel.setSelectedIndex(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
-		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 	}
 
 	@Override
@@ -104,6 +84,34 @@ public class NewTournamentGroupsControl implements ActionListener {
 		return gruppenAnzahl;
 	}
 
+	public int getSpielerAnzahl(int indexI) throws ZahlKleinerAlsN, NumberFormatException, ZahlGroesserAlsN {
+
+		spielerAnzahl[indexI] = pruefeObZahlKleinerDreiIst(
+				Integer.parseInt(gruppenView.getAnzahlSpielerSpinner()[indexI].getValue()));
+
+		return spielerAnzahl[indexI];
+	}
+
+	public void init() {
+		turnier = this.mainControl.getTournament();
+		hauptPanel = this.mainControl.getHauptPanel();
+		gruppenAnzahl = turnier.getAnzahlGruppen();
+		this.mainControl.setNewTournamentGroupsView(new NewTournamentGroupsView());
+		this.gruppenView = this.mainControl.getNewTournamentGroupsView();
+		gruppenView.runView(gruppenAnzahl);
+		gruppenOKButton = this.gruppenView.getOkButton();
+		gruppenOKButton.addActionListener(this);
+		gruppenCancelButton = this.gruppenView.getCancelButton();
+		gruppenCancelButton.addActionListener(this);
+		gruppenView.getGruppenNameTextField()[0].grabFocus();
+		hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		hauptPanel.add(this.gruppenView, TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		hauptPanel.setTitleAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, turnier.getTurnierName());
+		hauptPanel.setIconAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, gruppenIcon);
+		hauptPanel.setSelectedIndex(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+	}
+
 	private void makeGruppe() {
 		gruppe = new Group[gruppenAnzahl];
 		spieler = new Player[gruppenAnzahl][];
@@ -120,18 +128,6 @@ public class NewTournamentGroupsControl implements ActionListener {
 		}
 		turnier.setGruppe(gruppe);
 
-	}
-
-	public void setGruppenAnzahl(int gruppenAnzahl) {
-		this.gruppenAnzahl = gruppenAnzahl;
-	}
-
-	public int getSpielerAnzahl(int indexI) throws ZahlKleinerAlsN, NumberFormatException, ZahlGroesserAlsN {
-
-		spielerAnzahl[indexI] = pruefeObZahlKleinerDreiIst(
-				Integer.parseInt(gruppenView.getAnzahlSpielerSpinner()[indexI].getValue()));
-
-		return spielerAnzahl[indexI];
 	}
 
 	private void runPlayerInput() {
@@ -172,5 +168,9 @@ public class NewTournamentGroupsControl implements ActionListener {
 			// spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
 		}
 
+	}
+
+	public void setGruppenAnzahl(int gruppenAnzahl) {
+		this.gruppenAnzahl = gruppenAnzahl;
 	}
 }

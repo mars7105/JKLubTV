@@ -3,8 +3,7 @@ package de.turnierverwaltung.view;
 //ListItem.java
 
 /* Eventuell hier erst das Paket definieren, falls erforderlich! */
-
-import javax.swing.*;
+import javax.swing.ImageIcon;
 
 public class ListItem {
 	// Das anzuzeigende Icon

@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+
 import com.opencsv.CSVReader;
 
 public class DWZDataArrayList {
@@ -17,24 +18,36 @@ public class DWZDataArrayList {
 		dwzDataArray = new ArrayList<DWZData>();
 	}
 
-	public ArrayList<DWZData> getdwzDataArray() {
-		return dwzDataArray;
-	}
-
-	public void setdwzDataArray(ArrayList<DWZData> csvPlayer) {
-		this.dwzDataArray = csvPlayer;
-	}
-
 	public void adddwzData(DWZData csv_Player) {
 
 		dwzDataArray.add(csv_Player);
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public Boolean checkifSpielerFileExist(String csvFilenameSpieler) {
+		if (csvFilenameSpieler.equals("")) {
+			return false;
+		}
+		File f = new File(csvFilenameSpieler);
+		if (f.exists()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public ArrayList<DWZData> getAlldwzData() {
 
 		return dwzDataArray;
 
+	}
+
+	public ArrayList<DWZData> getdwzDataArray() {
+		return dwzDataArray;
 	}
 
 	public void loadPlayerCSVList(String csvFilenameSpieler) throws IOException, ArrayIndexOutOfBoundsException {
@@ -118,19 +131,7 @@ public class DWZDataArrayList {
 		}
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public Boolean checkifSpielerFileExist(String csvFilenameSpieler) {
-		if (csvFilenameSpieler.equals("")) {
-			return false;
-		}
-		File f = new File(csvFilenameSpieler);
-		if (f.exists()) {
-			return true;
-		} else {
-			return false;
-		}
+	public void setdwzDataArray(ArrayList<DWZData> csvPlayer) {
+		this.dwzDataArray = csvPlayer;
 	}
 }

@@ -23,14 +23,14 @@ public class ELOPlayer {
 		eloData.setFlag(flag);
 	}
 
+	public ELOData getEloData() {
+		return eloData;
+	}
+
 	public Player getPlayer() {
 
 		Player player = new Player(eloData);
 		return player;
-	}
-
-	public ELOData getEloData() {
-		return eloData;
 	}
 
 	public void setEloData(ELOData eloData) {

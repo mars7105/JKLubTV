@@ -21,6 +21,25 @@ public class DWZData {
 	private int age;
 	private int spielerId;
 
+	public DWZData() {
+		this.csvZPS = "";
+		this.csvMgl_Nr = "";
+		this.csvStatus = "";
+		this.csvSpielername = "";
+		this.csvGeschlecht = "";
+		this.csvSpielberechtigung = "";
+		this.csvGeburtsjahr = 0;
+		this.csvLetzte_Auswertung = 0;
+		this.csvDWZ = 0;
+		this.csvIndex = -1;
+		this.csvFIDE_Elo = 0;
+		this.csvFIDE_Titel = "";
+		this.csvFIDE_ID = -1;
+		this.csvFIDE_Land = "";
+		spielerId = -1;
+		
+	}
+
 	public DWZData(String csvZPS, String csvMgl_Nr, String csvStatus, String csvSpielername, String csvGeschlecht,
 			String csvSpielberechtigung, int csvGeburtsjahr, int csvLetzte_Auswertung, int csvDWZ, int csvIndex,
 			int csvFIDE_Elo, String csvFIDE_Titel, int csvFIDE_ID, String csvFIDE_Land) {
@@ -43,136 +62,22 @@ public class DWZData {
 		correctMGLNumber();
 	}
 
-	public DWZData() {
-		this.csvZPS = "";
-		this.csvMgl_Nr = "";
-		this.csvStatus = "";
-		this.csvSpielername = "";
-		this.csvGeschlecht = "";
-		this.csvSpielberechtigung = "";
-		this.csvGeburtsjahr = 0;
-		this.csvLetzte_Auswertung = 0;
-		this.csvDWZ = 0;
-		this.csvIndex = -1;
-		this.csvFIDE_Elo = 0;
-		this.csvFIDE_Titel = "";
-		this.csvFIDE_ID = -1;
-		this.csvFIDE_Land = "";
-		spielerId = -1;
-		
-	}
+	private void correctMGLNumber() {
+		int length = getCsvMgl_Nr().length();
+		if (length > 0 && length < 4) {
+			StringBuffer sb = new StringBuffer(getCsvMgl_Nr());
+			for (int i = length; i < 4; i++) {
+				sb.insert(0, "0");
+			}
+			// csvMgl_Nr = sb.toString();
+			setCsvMgl_Nr(sb.toString());
 
-	public String getCsvZPS() {
-		return csvZPS;
-	}
+		}
+		if (getCsvMgl_Nr().equals("0000")) {
+			// csvMgl_Nr = "";
+			setCsvMgl_Nr("");
 
-	public void setCsvZPS(String csvZPS) {
-		this.csvZPS = csvZPS;
-	}
-
-	public String getCsvMgl_Nr() {
-		return csvMgl_Nr;
-	}
-
-	public void setCsvMgl_Nr(String csvMgl_Nr) {
-		this.csvMgl_Nr = csvMgl_Nr;
-		correctMGLNumber();
-	}
-
-	public String getCsvStatus() {
-		return csvStatus;
-	}
-
-	public void setCsvStatus(String csvStatus) {
-		this.csvStatus = csvStatus;
-	}
-
-	public String getCsvSpielername() {
-		return csvSpielername;
-	}
-
-	public void setCsvSpielername(String csvSpielername) {
-		this.csvSpielername = csvSpielername;
-	}
-
-	public String getCsvGeschlecht() {
-		return csvGeschlecht;
-	}
-
-	public void setCsvGeschlecht(String csvGeschlecht) {
-		this.csvGeschlecht = csvGeschlecht;
-	}
-
-	public String getCsvSpielberechtigung() {
-		return csvSpielberechtigung;
-	}
-
-	public void setCsvSpielberechtigung(String csvSpielberechtigung) {
-		this.csvSpielberechtigung = csvSpielberechtigung;
-	}
-
-	public int getCsvGeburtsjahr() {
-		return csvGeburtsjahr;
-	}
-
-	public void setCsvGeburtsjahr(int csvGeburtsjahr) {
-		this.csvGeburtsjahr = csvGeburtsjahr;
-	}
-
-	public int getCsvLetzte_Auswertung() {
-		return csvLetzte_Auswertung;
-	}
-
-	public void setCsvLetzte_Auswertung(int csvLetzte_Auswertung) {
-		this.csvLetzte_Auswertung = csvLetzte_Auswertung;
-	}
-
-	public int getCsvDWZ() {
-		return csvDWZ;
-	}
-
-	public void setCsvDWZ(int csvDWZ) {
-		this.csvDWZ = csvDWZ;
-	}
-
-	public int getCsvIndex() {
-		return csvIndex;
-	}
-
-	public void setCsvIndex(int csvIndex) {
-		this.csvIndex = csvIndex;
-	}
-
-	public int getCsvFIDE_Elo() {
-		return csvFIDE_Elo;
-	}
-
-	public void setCsvFIDE_Elo(int csvFIDE_Elo) {
-		this.csvFIDE_Elo = csvFIDE_Elo;
-	}
-
-	public String getCsvFIDE_Titel() {
-		return csvFIDE_Titel;
-	}
-
-	public void setCsvFIDE_Titel(String csvFIDE_Titel) {
-		this.csvFIDE_Titel = csvFIDE_Titel;
-	}
-
-	public int getCsvFIDE_ID() {
-		return csvFIDE_ID;
-	}
-
-	public void setCsvFIDE_ID(int csvFIDE_ID) {
-		this.csvFIDE_ID = csvFIDE_ID;
-	}
-
-	public String getCsvFIDE_Land() {
-		return csvFIDE_Land;
-	}
-
-	public void setCsvFIDE_Land(String csvFIDE_Land) {
-		this.csvFIDE_Land = csvFIDE_Land;
+		}
 	}
 
 	public int getAge() {
@@ -194,33 +99,128 @@ public class DWZData {
 		return age;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public int getCsvDWZ() {
+		return csvDWZ;
+	}
+
+	public int getCsvFIDE_Elo() {
+		return csvFIDE_Elo;
+	}
+
+	public int getCsvFIDE_ID() {
+		return csvFIDE_ID;
+	}
+
+	public String getCsvFIDE_Land() {
+		return csvFIDE_Land;
+	}
+
+	public String getCsvFIDE_Titel() {
+		return csvFIDE_Titel;
+	}
+
+	public int getCsvGeburtsjahr() {
+		return csvGeburtsjahr;
+	}
+
+	public String getCsvGeschlecht() {
+		return csvGeschlecht;
+	}
+
+	public int getCsvIndex() {
+		return csvIndex;
+	}
+
+	public int getCsvLetzte_Auswertung() {
+		return csvLetzte_Auswertung;
+	}
+
+	public String getCsvMgl_Nr() {
+		return csvMgl_Nr;
+	}
+
+	public String getCsvSpielberechtigung() {
+		return csvSpielberechtigung;
+	}
+
+	public String getCsvSpielername() {
+		return csvSpielername;
+	}
+
+	public String getCsvStatus() {
+		return csvStatus;
+	}
+
+	public String getCsvZPS() {
+		return csvZPS;
 	}
 
 	public int getSpielerId() {
 		return spielerId;
 	}
 
-	public void setSpielerId(int spielerId) {
-		this.spielerId = spielerId;
+	public void setAge(int age) {
+		this.age = age;
 	}
 
-	private void correctMGLNumber() {
-		int length = getCsvMgl_Nr().length();
-		if (length > 0 && length < 4) {
-			StringBuffer sb = new StringBuffer(getCsvMgl_Nr());
-			for (int i = length; i < 4; i++) {
-				sb.insert(0, "0");
-			}
-			// csvMgl_Nr = sb.toString();
-			setCsvMgl_Nr(sb.toString());
+	public void setCsvDWZ(int csvDWZ) {
+		this.csvDWZ = csvDWZ;
+	}
 
-		}
-		if (getCsvMgl_Nr().equals("0000")) {
-			// csvMgl_Nr = "";
-			setCsvMgl_Nr("");
+	public void setCsvFIDE_Elo(int csvFIDE_Elo) {
+		this.csvFIDE_Elo = csvFIDE_Elo;
+	}
 
-		}
+	public void setCsvFIDE_ID(int csvFIDE_ID) {
+		this.csvFIDE_ID = csvFIDE_ID;
+	}
+
+	public void setCsvFIDE_Land(String csvFIDE_Land) {
+		this.csvFIDE_Land = csvFIDE_Land;
+	}
+
+	public void setCsvFIDE_Titel(String csvFIDE_Titel) {
+		this.csvFIDE_Titel = csvFIDE_Titel;
+	}
+
+	public void setCsvGeburtsjahr(int csvGeburtsjahr) {
+		this.csvGeburtsjahr = csvGeburtsjahr;
+	}
+
+	public void setCsvGeschlecht(String csvGeschlecht) {
+		this.csvGeschlecht = csvGeschlecht;
+	}
+
+	public void setCsvIndex(int csvIndex) {
+		this.csvIndex = csvIndex;
+	}
+
+	public void setCsvLetzte_Auswertung(int csvLetzte_Auswertung) {
+		this.csvLetzte_Auswertung = csvLetzte_Auswertung;
+	}
+
+	public void setCsvMgl_Nr(String csvMgl_Nr) {
+		this.csvMgl_Nr = csvMgl_Nr;
+		correctMGLNumber();
+	}
+
+	public void setCsvSpielberechtigung(String csvSpielberechtigung) {
+		this.csvSpielberechtigung = csvSpielberechtigung;
+	}
+
+	public void setCsvSpielername(String csvSpielername) {
+		this.csvSpielername = csvSpielername;
+	}
+
+	public void setCsvStatus(String csvStatus) {
+		this.csvStatus = csvStatus;
+	}
+
+	public void setCsvZPS(String csvZPS) {
+		this.csvZPS = csvZPS;
+	}
+
+	public void setSpielerId(int spielerId) {
+		this.spielerId = spielerId;
 	}
 }

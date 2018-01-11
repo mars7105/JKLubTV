@@ -63,6 +63,30 @@ public class PlayerListView extends JPanel {
 
 	}
 
+	public int getAnzahlElemente() {
+		return anzahlElemente;
+	}
+
+	public int getSpielerAnzahl() {
+		return spielerAnzahl;
+	}
+
+	public JButton[] getSpielerBearbeitenButton() {
+		return spielerBearbeitenButton;
+	}
+
+	public JTabbedPane getSpielerListe() {
+		return spielerListe;
+	}
+
+	public JButton[] getSpielerLoeschenButton() {
+		return spielerLoeschenButton;
+	}
+
+	public TitleLabelView getTitleView() {
+		return titleView;
+	}
+
 	public void init(int anzahl) {
 		spielerAnzahl = anzahl;
 		anzahlElemente = 0;
@@ -84,14 +108,6 @@ public class PlayerListView extends JPanel {
 
 		add(spielerListe, BorderLayout.CENTER);
 
-	}
-
-	public JButton[] getSpielerBearbeitenButton() {
-		return spielerBearbeitenButton;
-	}
-
-	public JButton[] getSpielerLoeschenButton() {
-		return spielerLoeschenButton;
 	}
 
 	public void makeSpielerZeile(Player spieler, int index) {
@@ -177,40 +193,24 @@ public class PlayerListView extends JPanel {
 
 	}
 
-	public void setSpielerBearbeitenButton(JButton[] spielerBearbeitenButton) {
-		this.spielerBearbeitenButton = spielerBearbeitenButton;
-	}
-
-	public void setSpielerLoeschenButton(JButton[] spielerLoeschenButton) {
-		this.spielerLoeschenButton = spielerLoeschenButton;
-	}
-
-	public int getAnzahlElemente() {
-		return anzahlElemente;
-	}
-
 	public void setAnzahlElemente(int anzahlElemente) {
 		this.anzahlElemente = anzahlElemente;
-	}
-
-	public int getSpielerAnzahl() {
-		return spielerAnzahl;
 	}
 
 	public void setSpielerAnzahl(int spielerAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
 	}
 
-	public JTabbedPane getSpielerListe() {
-		return spielerListe;
+	public void setSpielerBearbeitenButton(JButton[] spielerBearbeitenButton) {
+		this.spielerBearbeitenButton = spielerBearbeitenButton;
 	}
 
 	public void setSpielerListe(JTabbedPane spielerListe) {
 		this.spielerListe = spielerListe;
 	}
 
-	public TitleLabelView getTitleView() {
-		return titleView;
+	public void setSpielerLoeschenButton(JButton[] spielerLoeschenButton) {
+		this.spielerLoeschenButton = spielerLoeschenButton;
 	}
 
 	public void setTitleView(TitleLabelView titleView) {

@@ -67,14 +67,6 @@ public class InfoView extends JPanel {
 
 	}
 
-	public JTextArea getTextArea() {
-		return textArea;
-	}
-
-	public void setTextArea(JTextArea textArea) {
-		this.textArea = textArea;
-	}
-
 	public JTabbedPane getLizenzenPane() {
 		return lizenzenPane;
 	}
@@ -83,8 +75,16 @@ public class InfoView extends JPanel {
 		return okButton;
 	}
 
+	public JTextArea getTextArea() {
+		return textArea;
+	}
+
 	public void setOkButton(JButton okButton) {
 		this.okButton = okButton;
+	}
+
+	public void setTextArea(JTextArea textArea) {
+		this.textArea = textArea;
 	}
 
 }

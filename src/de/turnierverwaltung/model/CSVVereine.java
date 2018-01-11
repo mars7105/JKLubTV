@@ -14,36 +14,36 @@ public class CSVVereine {
 		this.csvVereinname = csvVereinname;
 	}
 
-	public String getCsvZPS() {
-		return csvZPS;
-	}
-
-	public void setCsvZPS(String csvZPS) {
-		this.csvZPS = csvZPS;
-	}
-
 	public String getCsvLV() {
 		return csvLV;
-	}
-
-	public void setCsvLV(String csvLV) {
-		this.csvLV = csvLV;
 	}
 
 	public String getCsvVerband() {
 		return csvVerband;
 	}
 
-	public void setCsvVerband(String csvVerband) {
-		this.csvVerband = csvVerband;
-	}
-
 	public String getCsvVereinname() {
 		return csvVereinname;
 	}
 
+	public String getCsvZPS() {
+		return csvZPS;
+	}
+
+	public void setCsvLV(String csvLV) {
+		this.csvLV = csvLV;
+	}
+
+	public void setCsvVerband(String csvVerband) {
+		this.csvVerband = csvVerband;
+	}
+
 	public void setCsvVereinname(String csvVereinname) {
 		this.csvVereinname = csvVereinname;
+	}
+
+	public void setCsvZPS(String csvZPS) {
+		this.csvZPS = csvZPS;
 	}
 
 }

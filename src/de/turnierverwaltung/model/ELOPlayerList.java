@@ -12,23 +12,9 @@ public class ELOPlayerList {
 		playerList = new ArrayList<ELOPlayer>();
 	}
 
-	public ArrayList<ELOPlayer> getPlayerList() {
-		return playerList;
-	}
-
-	public void setCsvPlayer(ArrayList<ELOPlayer> csvPlayer) {
-		this.playerList = csvPlayer;
-	}
-
 	public void addPlayer(String key, ELOPlayer csv_Player) {
 
 		playerList.add(csv_Player);
-
-	}
-
-	public void readEloList(String filename) throws IOException {
-		ReadTXTFile readTXTFile = new ReadTXTFile();
-		playerList = readTXTFile.readFile(filename);
 
 	}
 
@@ -46,6 +32,20 @@ public class ELOPlayerList {
 		} else {
 			return false;
 		}
+	}
+
+	public ArrayList<ELOPlayer> getPlayerList() {
+		return playerList;
+	}
+
+	public void readEloList(String filename) throws IOException {
+		ReadTXTFile readTXTFile = new ReadTXTFile();
+		playerList = readTXTFile.readFile(filename);
+
+	}
+
+	public void setCsvPlayer(ArrayList<ELOPlayer> csvPlayer) {
+		this.playerList = csvPlayer;
 	}
 
 }

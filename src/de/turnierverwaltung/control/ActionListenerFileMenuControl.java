@@ -7,12 +7,14 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.SQLException;
+
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
 import de.turnierverwaltung.mysql.SQLiteDAOFactory;
 import de.turnierverwaltung.view.NaviView;
 
@@ -200,26 +202,6 @@ public class ActionListenerFileMenuControl implements ActionListener {
 
 	}
 
-	private int warnHinweis() {
-		int abfrage = 0;
-		String hinweisText = Messages.getString("NaviController.21") //$NON-NLS-1$
-				+ Messages.getString("NaviController.22") //$NON-NLS-1$
-				+ Messages.getString("NaviController.23"); //$NON-NLS-1$
-		if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
-			abfrage = 1;
-			// Custom button text
-			Object[] options = { Messages.getString("NaviController.24"), Messages.getString("NaviController.25") }; //$NON-NLS-1$ //$NON-NLS-2$
-			abfrage = JOptionPane.showOptionDialog(mainControl, hinweisText, Messages.getString("NaviController.26"), //$NON-NLS-1$
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
-
-		}
-		if (abfrage == 0) {
-			mainControl.setNewTournament(false);
-
-		}
-		return abfrage;
-	}
-
 	private int beendenHinweis() {
 		int abfrage = 0;
 		String hinweisText = Messages.getString("NaviController.21") //$NON-NLS-1$
@@ -241,6 +223,26 @@ public class ActionListenerFileMenuControl implements ActionListener {
 
 	public void setTurnierAnsicht(ChangeListenerTabControl turnierAnsicht) {
 		this.turnierAnsicht = turnierAnsicht;
+	}
+
+	private int warnHinweis() {
+		int abfrage = 0;
+		String hinweisText = Messages.getString("NaviController.21") //$NON-NLS-1$
+				+ Messages.getString("NaviController.22") //$NON-NLS-1$
+				+ Messages.getString("NaviController.23"); //$NON-NLS-1$
+		if (this.mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
+			abfrage = 1;
+			// Custom button text
+			Object[] options = { Messages.getString("NaviController.24"), Messages.getString("NaviController.25") }; //$NON-NLS-1$ //$NON-NLS-2$
+			abfrage = JOptionPane.showOptionDialog(mainControl, hinweisText, Messages.getString("NaviController.26"), //$NON-NLS-1$
+					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+
+		}
+		if (abfrage == 0) {
+			mainControl.setNewTournament(false);
+
+		}
+		return abfrage;
 	}
 
 }

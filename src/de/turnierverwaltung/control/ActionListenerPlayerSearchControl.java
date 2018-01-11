@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ListIterator;
+
 import javax.swing.ImageIcon;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -48,6 +49,94 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 		indices = new ArrayList<Integer>();
 	}
 
+	@Override
+	public void actionPerformed(ActionEvent arg0) {
+		if (eloControl == null) {
+			if (arg0.getSource().equals(dewisDialogControl.getDialog().getPlayerSearchView().getCancelButton())) {
+				dewisDialogControl.getDialog().closeWindow();
+			}
+			if (arg0.getSource().equals(dewisDialogControl.getDialog().getPlayerSearchView().getOkButton())) {
+				try {
+					ArrayList<Player> spieler = dewisDialogControl.getSearchplayerlist();
+					if (spieler != null) {
+
+						ListIterator<Integer> lit = indices.listIterator();
+
+						while (lit.hasNext()) {
+							int temp = lit.next();
+							Player neuerSpieler = spieler.get(temp);
+							if (playerExist(neuerSpieler) == false) {
+								SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+								neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+								mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
+								dewisDialogControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
+										.setIcon(insertIcon3);
+
+							}
+							dewisDialogControl.getSpielerSearchPanelList().getList().setSelectedIndex(temp);
+
+						}
+
+					}
+
+					mainControl.getPlayerListControl().updateSpielerListe();
+				} catch (SQLException e) {
+					ExceptionHandler eh = new ExceptionHandler(mainControl);
+					eh.fileSQLError(e.getMessage());
+				}
+			}
+		} else {
+			if (arg0.getSource().equals(eloControl.getDialog().getPlayerSearchView().getCancelButton())) {
+				eloControl.getDialog().closeWindow();
+			}
+			if (arg0.getSource().equals(eloControl.getDialog().getPlayerSearchView().getOkButton())) {
+				try {
+					ArrayList<Player> spieler = eloControl.getSearchplayerlist();
+					if (spieler != null) {
+
+						ListIterator<Integer> lit = indices.listIterator();
+
+						while (lit.hasNext()) {
+							int temp = lit.next();
+							Player neuerSpieler = spieler.get(temp);
+							if (playerExist(neuerSpieler) == false) {
+								SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+								neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+								mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
+								eloControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
+										.setIcon(insertIcon3);
+
+							}
+							eloControl.getSpielerSearchPanelList().getList().setSelectedIndex(temp);
+
+						}
+
+					}
+
+					mainControl.getPlayerListControl().updateSpielerListe();
+				} catch (SQLException e) {
+					ExceptionHandler eh = new ExceptionHandler(mainControl);
+					eh.fileSQLError(e.getMessage());
+				}
+			}
+		}
+	}
+
+	private boolean playerExist(Player neuerSpieler) {
+		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
+		Boolean playerExist = false;
+		try {
+			playerExist = spielerTableControl.playerExist(neuerSpieler);
+
+		} catch (SQLException e) {
+			ExceptionHandler eh = new ExceptionHandler(mainControl);
+			eh.fileSQLError(e.getMessage());
+		}
+
+		return playerExist;
+	}
+
+	@Override
 	public void valueChanged(ListSelectionEvent e) {
 		if (e.getValueIsAdjusting() == false) {
 			if (eloControl == null) {
@@ -136,93 +225,6 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 
 			}
 		}
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		if (eloControl == null) {
-			if (arg0.getSource().equals(dewisDialogControl.getDialog().getPlayerSearchView().getCancelButton())) {
-				dewisDialogControl.getDialog().closeWindow();
-			}
-			if (arg0.getSource().equals(dewisDialogControl.getDialog().getPlayerSearchView().getOkButton())) {
-				try {
-					ArrayList<Player> spieler = dewisDialogControl.getSearchplayerlist();
-					if (spieler != null) {
-
-						ListIterator<Integer> lit = indices.listIterator();
-
-						while (lit.hasNext()) {
-							int temp = lit.next();
-							Player neuerSpieler = spieler.get(temp);
-							if (playerExist(neuerSpieler) == false) {
-								SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-								neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-								mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
-								dewisDialogControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
-										.setIcon(insertIcon3);
-
-							}
-							dewisDialogControl.getSpielerSearchPanelList().getList().setSelectedIndex(temp);
-
-						}
-
-					}
-
-					mainControl.getPlayerListControl().updateSpielerListe();
-				} catch (SQLException e) {
-					ExceptionHandler eh = new ExceptionHandler(mainControl);
-					eh.fileSQLError(e.getMessage());
-				}
-			}
-		} else {
-			if (arg0.getSource().equals(eloControl.getDialog().getPlayerSearchView().getCancelButton())) {
-				eloControl.getDialog().closeWindow();
-			}
-			if (arg0.getSource().equals(eloControl.getDialog().getPlayerSearchView().getOkButton())) {
-				try {
-					ArrayList<Player> spieler = eloControl.getSearchplayerlist();
-					if (spieler != null) {
-
-						ListIterator<Integer> lit = indices.listIterator();
-
-						while (lit.hasNext()) {
-							int temp = lit.next();
-							Player neuerSpieler = spieler.get(temp);
-							if (playerExist(neuerSpieler) == false) {
-								SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-								neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-								mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
-								eloControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
-										.setIcon(insertIcon3);
-
-							}
-							eloControl.getSpielerSearchPanelList().getList().setSelectedIndex(temp);
-
-						}
-
-					}
-
-					mainControl.getPlayerListControl().updateSpielerListe();
-				} catch (SQLException e) {
-					ExceptionHandler eh = new ExceptionHandler(mainControl);
-					eh.fileSQLError(e.getMessage());
-				}
-			}
-		}
-	}
-
-	private boolean playerExist(Player neuerSpieler) {
-		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
-		Boolean playerExist = false;
-		try {
-			playerExist = spielerTableControl.playerExist(neuerSpieler);
-
-		} catch (SQLException e) {
-			ExceptionHandler eh = new ExceptionHandler(mainControl);
-			eh.fileSQLError(e.getMessage());
-		}
-
-		return playerExist;
 	}
 
 }

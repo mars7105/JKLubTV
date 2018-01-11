@@ -60,6 +60,33 @@ public class SQLiteInfoDAO implements InfoDAO {
 	}
 
 	@Override
+	public ArrayList<Info> getAllInfos() throws SQLException {
+		String sql = "Select * from info;";
+		ArrayList<Info> infoList = new ArrayList<Info>();
+		Statement stmt;
+		if (this.dbConnect != null) {
+
+			stmt = this.dbConnect.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				String infoName = rs.getString("Infoname");
+				String version = rs.getString("Version");
+				String infoNotice = rs.getString("Infonotice");
+				String datum = rs.getString("Datum");
+				int infoId = rs.getInt("idInfo");
+				Info info = new Info(infoName, version, infoNotice, datum, infoId);
+
+				infoList.add(info);
+			}
+
+			stmt.close();
+
+		}
+
+		return infoList;
+	}
+
+	@Override
 	public int insertInfo(Info info) throws SQLException {
 		String sql;
 		int id = -1;
@@ -107,33 +134,6 @@ public class SQLiteInfoDAO implements InfoDAO {
 			preStm.close();
 
 		}
-	}
-
-	@Override
-	public ArrayList<Info> getAllInfos() throws SQLException {
-		String sql = "Select * from info;";
-		ArrayList<Info> infoList = new ArrayList<Info>();
-		Statement stmt;
-		if (this.dbConnect != null) {
-
-			stmt = this.dbConnect.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				String infoName = rs.getString("Infoname");
-				String version = rs.getString("Version");
-				String infoNotice = rs.getString("Infonotice");
-				String datum = rs.getString("Datum");
-				int infoId = rs.getInt("idInfo");
-				Info info = new Info(infoName, version, infoNotice, datum, infoId);
-
-				infoList.add(info);
-			}
-
-			stmt.close();
-
-		}
-
-		return infoList;
 	}
 
 }

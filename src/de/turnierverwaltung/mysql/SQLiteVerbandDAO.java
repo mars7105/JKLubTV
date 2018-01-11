@@ -55,6 +55,12 @@ public class SQLiteVerbandDAO implements DWZVerbandDAO {
 	}
 
 	@Override
+	public DWZData findPlayer(int id) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public int insertDWZ(DWZData dwzData) throws SQLException {
 		// TODO Auto-generated method stub
 		return 0;
@@ -64,12 +70,6 @@ public class SQLiteVerbandDAO implements DWZVerbandDAO {
 	public boolean updateDWZ(DWZData dwzData) throws SQLException {
 		// TODO Auto-generated method stub
 		return false;
-	}
-
-	@Override
-	public DWZData findPlayer(int id) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

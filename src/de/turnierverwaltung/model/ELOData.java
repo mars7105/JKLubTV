@@ -21,6 +21,24 @@ public class ELOData {
 	private int age;
 	private int spielerId;
 
+	public ELOData() {
+		this.fideid = -1;
+		this.name = "";
+		this.country = "";
+		this.sex = "";
+		this.title = "";
+		this.w_title = "";
+		this.o_title = "";
+		this.foa_title = "";
+		this.rating = -1;
+		this.games = -1;
+		this.k = -1;
+		this.birthday = -1;
+		this.flag = "";
+
+		spielerId = -1;
+	}
+
 	public ELOData(int fideid, String name, String country, String sex, String title, String w_title, String o_title,
 			String foa_title, int rating, int games, int k, int birthday, String flag) {
 		super();
@@ -40,130 +58,7 @@ public class ELOData {
 		spielerId = -1;
 	}
 
-	public ELOData() {
-		this.fideid = -1;
-		this.name = "";
-		this.country = "";
-		this.sex = "";
-		this.title = "";
-		this.w_title = "";
-		this.o_title = "";
-		this.foa_title = "";
-		this.rating = -1;
-		this.games = -1;
-		this.k = -1;
-		this.birthday = -1;
-		this.flag = "";
-
-		spielerId = -1;
-	}
-
 	
-	public int getFideid() {
-		
-		return fideid;
-	}
-
-	public void setFideid(int fideid) {
-		this.fideid = fideid;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getSex() {
-		return sex;
-	}
-
-	public void setSex(String sex) {
-		this.sex = sex;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public void setTitle(String title) {
-		this.title = title;
-	}
-
-	public String getW_title() {
-		return w_title;
-	}
-
-	public void setW_title(String w_title) {
-		this.w_title = w_title;
-	}
-
-	public String getO_title() {
-		return o_title;
-	}
-
-	public void setO_title(String o_title) {
-		this.o_title = o_title;
-	}
-
-	public String getFoa_title() {
-		return foa_title;
-	}
-
-	public void setFoa_title(String foa_title) {
-		this.foa_title = foa_title;
-	}
-
-	public int getRating() {
-		return rating;
-	}
-
-	public void setRating(int rating) {
-		this.rating = rating;
-	}
-
-	public int getGames() {
-		return games;
-	}
-
-	public void setGames(int games) {
-		this.games = games;
-	}
-
-	public int getK() {
-		return k;
-	}
-
-	public void setK(int k) {
-		this.k = k;
-	}
-
-	public int getBirthday() {
-		return birthday;
-	}
-
-	public void setBirthday(int birthday) {
-		this.birthday = birthday;
-	}
-
-	public String getFlag() {
-		return flag;
-	}
-
-	public void setFlag(String flag) {
-		this.flag = flag;
-	}
-
 	public int getAge() {
 		String timeStamp = new SimpleDateFormat("yyyy").format(Calendar.getInstance().getTime());
 
@@ -181,16 +76,121 @@ public class ELOData {
 		return age;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public int getBirthday() {
+		return birthday;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+
+	public int getFideid() {
+		
+		return fideid;
+	}
+
+	public String getFlag() {
+		return flag;
+	}
+
+	public String getFoa_title() {
+		return foa_title;
+	}
+
+	public int getGames() {
+		return games;
+	}
+
+	public int getK() {
+		return k;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public String getO_title() {
+		return o_title;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public String getSex() {
+		return sex;
 	}
 
 	public int getSpielerId() {
 		return spielerId;
 	}
 
+	public String getTitle() {
+		return title;
+	}
+
+	public String getW_title() {
+		return w_title;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public void setBirthday(int birthday) {
+		this.birthday = birthday;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
+	public void setFideid(int fideid) {
+		this.fideid = fideid;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+
+	public void setFoa_title(String foa_title) {
+		this.foa_title = foa_title;
+	}
+
+	public void setGames(int games) {
+		this.games = games;
+	}
+
+	public void setK(int k) {
+		this.k = k;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setO_title(String o_title) {
+		this.o_title = o_title;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
 	public void setSpielerId(int spielerId) {
 		this.spielerId = spielerId;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public void setW_title(String w_title) {
+		this.w_title = w_title;
 	}
 
 }

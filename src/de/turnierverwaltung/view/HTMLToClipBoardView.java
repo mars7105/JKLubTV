@@ -37,12 +37,12 @@ public class HTMLToClipBoardView extends JPanel {
 		return copyToClipBoardButton;
 	}
 
-	public void setCopyToClipBoardButton(JButton copyToClipBoardButton) {
-		this.copyToClipBoardButton = copyToClipBoardButton;
-	}
-
 	public JLabel getLabel() {
 		return label;
+	}
+
+	public void setCopyToClipBoardButton(JButton copyToClipBoardButton) {
+		this.copyToClipBoardButton = copyToClipBoardButton;
 	}
 
 	public void setLabel(JLabel label) {

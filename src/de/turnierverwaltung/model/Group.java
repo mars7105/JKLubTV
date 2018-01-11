@@ -18,7 +18,7 @@ package de.turnierverwaltung.model;
 import java.util.Arrays;
 
 /**
- * 
+ *
  * @author mars
  *
  */
@@ -36,24 +36,24 @@ public class Group {
 	private CrossTable turnierTabelle;
 
 	/**
-	 * 
+	 *
 	 */
 	public Group() {
-		this.gruppeId = -1;
+		gruppeId = -1;
 	}
 
 	/**
-	 * 
+	 *
 	 * @param idGruppe
 	 * @param gruppenName
 	 */
-	public Group(int idGruppe, String gruppenName) {
-		this.gruppeId = idGruppe;
+	public Group(final int idGruppe, final String gruppenName) {
+		gruppeId = idGruppe;
 		this.gruppenName = gruppenName;
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void berechnePlatz() {
 		Arrays.sort(spieler);
@@ -71,7 +71,7 @@ public class Group {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void berechnePunkte() {
 		Player weiss;
@@ -99,7 +99,7 @@ public class Group {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void berechneSoBerg() {
 		double soberg = 0;
@@ -129,11 +129,11 @@ public class Group {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param erg
 	 * @return
 	 */
-	private double convertErgebnisStringToDouble(String erg) {
+	private double convertErgebnisStringToDouble(final String erg) {
 		double ergebniss = 0;
 		if (erg.equals(TournamentConstants.REMIS)) {
 			ergebniss = 0.5;
@@ -164,11 +164,21 @@ public class Group {
 		return partienAnzahl;
 	}
 
+	public int getRatedPlayersCount() {
+		int ratedPlayers = 0;
+		for (int i = 0; i < spielerAnzahl; i++) {
+			if (spieler[i].getEloData().getRating() > 0) {
+				ratedPlayers++;
+			}
+		}
+		return ratedPlayers;
+	}
+
 	public int getRundenAnzahl() {
 		if (spielerAnzahl % 2 == 0) {
-			this.rundenAnzahl = spielerAnzahl - 1;
+			rundenAnzahl = spielerAnzahl - 1;
 		} else {
-			this.rundenAnzahl = spielerAnzahl;
+			rundenAnzahl = spielerAnzahl;
 		}
 
 		return rundenAnzahl;
@@ -190,49 +200,39 @@ public class Group {
 		return turnierTabelle;
 	}
 
-	public void setGruppeId(int gruppeId) {
+	public void setGruppeId(final int gruppeId) {
 		this.gruppeId = gruppeId;
 	}
 
-	public void setGruppenName(String gruppenName) {
+	public void setGruppenName(final String gruppenName) {
 		this.gruppenName = gruppenName;
 	}
 
-	public void setPartien(Game[] partien) {
+	public void setPartien(final Game[] partien) {
 		this.partien = partien;
 	}
 
-	public void setPartienAnzahl(int partienAnzahl) {
+	public void setPartienAnzahl(final int partienAnzahl) {
 		this.partienAnzahl = partienAnzahl;
 	}
 
-	public void setRundenAnzahl(int rundenAnzahl) {
+	public void setRundenAnzahl(final int rundenAnzahl) {
 		this.rundenAnzahl = rundenAnzahl;
 	}
 
-	public void setSpieler(Player[] spieler) {
+	public void setSpieler(final Player[] spieler) {
 		this.spieler = spieler;
 	}
 
-	public void setSpielerAnzahl(int spielerAnzahl) {
+	public void setSpielerAnzahl(final int spielerAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
 	}
 
-	public void setTeminTabelle(MeetingTable teminTabelle) {
+	public void setTeminTabelle(final MeetingTable teminTabelle) {
 		this.teminTabelle = teminTabelle;
 	}
 
-	public void setTurnierTabelle(CrossTable turnierTabelle) {
+	public void setTurnierTabelle(final CrossTable turnierTabelle) {
 		this.turnierTabelle = turnierTabelle;
-	}
-
-	public int getRatedPlayersCount() {
-		int ratedPlayers = 0;
-		for (int i = 0; i < spielerAnzahl; i++) {
-			if (spieler[i].getEloData().getRating() > 0) {
-				ratedPlayers++;
-			}
-		}
-		return ratedPlayers;
 	}
 }

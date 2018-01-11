@@ -35,8 +35,6 @@ import de.turnierverwaltung.control.MainControl;
  */
 public class Turnierverwaltung {
 	private static String labelPrefix = "Number of button clicks: ";
-	final JLabel label = new JLabel(labelPrefix + "0    ");
-
 	// Specify the look and feel to use by defining the LOOKANDFEEL constant
 	// Valid values are: null (use the default), "Metal", "System", "Motif",
 	// and "GTK"
@@ -46,35 +44,6 @@ public class Turnierverwaltung {
 	// Specify the theme to use by defining the THEME constant
 	// Valid values are: "DefaultMetal", "Ocean", and "Test"
 	final static String THEME = "Ocean";
-
-	public Turnierverwaltung() {
-
-	}
-
-	/**
-	 * 
-	 * @param args
-	 */
-	public static void main(String args[]) {
-		EventQueue.invokeLater(new Runnable() {
-			@Override
-			public void run() {
-
-				// Schedule a job for the event dispatch thread:
-				// creating and showing this application's GUI.
-
-				initLookAndFeel();
-
-				try {
-					new MainControl();
-
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-
-		});
-	}
 
 	private static void initLookAndFeel() {
 		String lookAndFeel = null;
@@ -141,5 +110,36 @@ public class Turnierverwaltung {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	/**
+	 * 
+	 * @param args
+	 */
+	public static void main(String args[]) {
+		EventQueue.invokeLater(new Runnable() {
+			@Override
+			public void run() {
+
+				// Schedule a job for the event dispatch thread:
+				// creating and showing this application's GUI.
+
+				initLookAndFeel();
+
+				try {
+					new MainControl();
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
+		});
+	}
+
+	final JLabel label = new JLabel(labelPrefix + "0    ");
+
+	public Turnierverwaltung() {
+
 	}
 }

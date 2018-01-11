@@ -35,6 +35,11 @@ public class InfoHTMLView {
 		language = lang;
 	}
 
+	public String getHelpText() {
+		return null;
+
+	}
+
 	public JPanel getLizenzText() throws URISyntaxException {
 		ContextMenuMouseListener cmmL = new ContextMenuMouseListener();
 		java.net.URL helpURL = getClass().getResource("/files/JKlubTV.html");
@@ -75,11 +80,6 @@ public class InfoHTMLView {
 		editorPane.setPreferredSize(new Dimension(500, 900));
 
 		return all;
-
-	}
-
-	public String getHelpText() {
-		return null;
 
 	}
 

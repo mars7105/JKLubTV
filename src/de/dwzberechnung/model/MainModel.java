@@ -65,7 +65,7 @@ public class MainModel {
 								this.player.getOldDWZ(), this.player.getPunkte(), this.player.getPunkterwartung());
 						double entwicklungskoeffizient = ekM.getEntwicklungskoeffizient();
 						this.player.setEntwicklungskoeffizient(entwicklungskoeffizient);
-						FolgeDWZModel fDWZ = new FolgeDWZModel((int) player.getOldDWZ(), player.getPunkte(),
+						FolgeDWZModel fDWZ = new FolgeDWZModel(player.getOldDWZ(), player.getPunkte(),
 								this.player.getPunkterwartung(), entwicklungskoeffizient,
 								this.player.getNumberOfOpponents());
 						this.player.setFolgeDWZ(fDWZ.getFolgeDWZ());
@@ -84,20 +84,20 @@ public class MainModel {
 		}
 	}
 
-	public PlayerModel getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(PlayerModel player) {
-		this.player = player;
-	}
-
 	public ArrayList<OpponentModel> getOpponents() {
 		return opponents;
 	}
 
+	public PlayerModel getPlayer() {
+		return player;
+	}
+
 	public void setOpponents(ArrayList<OpponentModel> opponents) {
 		this.opponents = opponents;
+	}
+
+	public void setPlayer(PlayerModel player) {
+		this.player = player;
 	}
 
 }

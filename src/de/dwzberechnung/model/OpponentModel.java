@@ -30,20 +30,20 @@ public class OpponentModel {
 		return dwz;
 	}
 
-	public void setDwz(int dwz) {
-		this.dwz = dwz;
-	}
-
 	public double getErgebnis() {
 		return ergebnis;
 	}
 
-	public void setErgebnis(double ergebnis) {
-		this.ergebnis = ergebnis;
-	}
-
 	public double getGewinnerwartung() {
 		return gewinnerwartung;
+	}
+
+	public void setDwz(int dwz) {
+		this.dwz = dwz;
+	}
+
+	public void setErgebnis(double ergebnis) {
+		this.ergebnis = ergebnis;
 	}
 
 	public void setGewinnerwartung(double gewinnerwartung) {

@@ -7,6 +7,15 @@ public class WebserverFileLink {
 	private Boolean showLink;
 	private String icsfilename;
 
+	public WebserverFileLink(String webServerPath2, String filename2, Boolean showLink2) {
+		super();
+		this.webserverPath = webServerPath2;
+		this.filename = filename2.replaceAll(" ", "");
+		this.showLink = showLink2;
+
+		pathToFile = "";
+	}
+
 	public WebserverFileLink(String webserverPath, String filename, String icsfilename, Boolean showLink) {
 		super();
 		this.webserverPath = webserverPath;
@@ -18,13 +27,14 @@ public class WebserverFileLink {
 
 	}
 
-	public WebserverFileLink(String webServerPath2, String filename2, Boolean showLink2) {
-		super();
-		this.webserverPath = webServerPath2;
-		this.filename = filename2.replaceAll(" ", "");
-		this.showLink = showLink2;
-
-		pathToFile = "";
+	public String getPathToEXCEL() {
+		if (showLink) {
+			pathToFile = "&nbsp;&nbsp;&nbsp;<a href='" + this.webserverPath + this.filename
+					+ "' target='_blank'><img src='" + this.webserverPath + "excel-1.png' alt='"
+					+ Messages.getString("WebserverFileLink.1") + "' />&nbsp;"
+					+ Messages.getString("WebserverFileLink.1") + "</a>";
+		}
+		return pathToFile;
 	}
 
 	public String getPathToICS() {
@@ -45,12 +55,19 @@ public class WebserverFileLink {
 		return pathToFile;
 	}
 
-	public String getPathToEXCEL() {
+	public String getPathToUserImageBlack() {
 		if (showLink) {
-			pathToFile = "&nbsp;&nbsp;&nbsp;<a href='" + this.webserverPath + this.filename
-					+ "' target='_blank'><img src='" + this.webserverPath + "excel-1.png' alt='"
-					+ Messages.getString("WebserverFileLink.1") + "' />&nbsp;"
-					+ Messages.getString("WebserverFileLink.1") + "</a>";
+			pathToFile = "<img src='" + this.webserverPath + "im-user-black.png' alt='black' />&nbsp;";
+
+		}
+		return pathToFile;
+	}
+
+	public String getPathToUserImageBlackWhite() {
+		if (showLink) {
+			pathToFile = "style='background-image: url(" + this.webserverPath
+					+ "im-user-black-small.png); background-repeat: no-repeat;background-position: right bottom;'";
+
 		}
 		return pathToFile;
 	}
@@ -63,27 +80,10 @@ public class WebserverFileLink {
 		return pathToFile;
 	}
 
-	public String getPathToUserImageBlack() {
-		if (showLink) {
-			pathToFile = "<img src='" + this.webserverPath + "im-user-black.png' alt='black' />&nbsp;";
-
-		}
-		return pathToFile;
-	}
-
 	public String getPathToUserImageWhiteBlack() {
 		if (showLink) {
 			pathToFile = "style='background-image: url(" + this.webserverPath
 					+ "im-user-white-small.png); background-repeat: no-repeat;background-position: right bottom;'";
-
-		}
-		return pathToFile;
-	}
-
-	public String getPathToUserImageBlackWhite() {
-		if (showLink) {
-			pathToFile = "style='background-image: url(" + this.webserverPath
-					+ "im-user-black-small.png); background-repeat: no-repeat;background-position: right bottom;'";
 
 		}
 		return pathToFile;

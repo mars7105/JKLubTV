@@ -17,6 +17,7 @@ package de.turnierverwaltung.control;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import javax.swing.JOptionPane;
 
 import de.turnierverwaltung.model.DWZData;
@@ -211,6 +212,32 @@ public class SQLPlayerControl {
 		return geloescht;
 	}
 
+	public boolean playerExist(DWZData tmp) {
+		boolean exist = false;
+
+		exist = mySQLDWZDataDAO.playerExist(tmp);
+
+		return exist;
+	}
+
+	public Boolean playerExist(Player neuerSpieler) throws SQLException {
+		boolean exist = false;
+
+		exist = mySQLDWZDataDAO.playerExist(neuerSpieler.getDwzData());
+
+		return exist;
+	}
+
+	public Boolean playerFideExist(int fideId) {
+		Boolean exist = false;
+		exist = mySQLDWZDataDAO.playerFideExist(fideId);
+
+		if (exist == false) {
+			exist = mySQLELODataDAO.playerExist(fideId);
+		}
+		return exist;
+	}
+
 	public void updateOneSpieler(Player spieler) throws SQLException {
 
 		mySQLSpielerDAO.updateSpieler(spieler);
@@ -248,31 +275,5 @@ public class SQLPlayerControl {
 			}
 		}
 		return saved;
-	}
-
-	public Boolean playerExist(Player neuerSpieler) throws SQLException {
-		boolean exist = false;
-
-		exist = mySQLDWZDataDAO.playerExist(neuerSpieler.getDwzData());
-
-		return exist;
-	}
-
-	public Boolean playerFideExist(int fideId) {
-		Boolean exist = false;
-		exist = mySQLDWZDataDAO.playerFideExist(fideId);
-
-		if (exist == false) {
-			exist = mySQLELODataDAO.playerExist(fideId);
-		}
-		return exist;
-	}
-
-	public boolean playerExist(DWZData tmp) {
-		boolean exist = false;
-
-		exist = mySQLDWZDataDAO.playerExist(tmp);
-
-		return exist;
 	}
 }

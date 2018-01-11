@@ -3,6 +3,7 @@ package de.turnierverwaltung.view;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
+
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -13,17 +14,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 
 public class FirstStartWizardPage2 extends JPanel {
-	private JPanel htmlAll;
-	private ImageIcon germanFlag = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/de.png"))); 
-	private ImageIcon englishFlag = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/flag-gb.png")));
-	private JRadioButton germanLanguageCheckBox;
-	private JRadioButton englishLanguageCheckBox;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JPanel htmlAll; 
+	private ImageIcon germanFlag = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/de.png")));
+	private ImageIcon englishFlag = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/flag-gb.png")));
+	private JRadioButton germanLanguageCheckBox;
+	private JRadioButton englishLanguageCheckBox;
 
 	public FirstStartWizardPage2() {
 		htmlAll = new JPanel();

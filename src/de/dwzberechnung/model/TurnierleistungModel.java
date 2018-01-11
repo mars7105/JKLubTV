@@ -105,7 +105,7 @@ public class TurnierleistungModel {
 				// P(D) - Durchschnitt = (W - We) / n + 0,500
 				pD = (leistungszahlSpieler.getPunkte() - leistungszahlSpieler.getPunkterwartung()) / opponents.size()
 						+ 0.5;
-				pD = (double) (Math.round(100.0 * pD)) / 100.0;
+				pD = (Math.round(100.0 * pD)) / 100.0;
 				// In der Tabelle Anhang 2.2 Wertungsdifferenzen abhängig von
 				// den Gewinnprozenten P
 				// nach der Differenz den Wert herraus suchen

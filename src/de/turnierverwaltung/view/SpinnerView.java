@@ -9,12 +9,12 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerListModel;
 
 public class SpinnerView extends JPanel {
-	private JSpinner spinner;
-	private String[] model;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JSpinner spinner;
+	private String[] model;
 
 	public SpinnerView(String[] model, int setValue, String labelHeader) {
 		this.model = model;
@@ -31,11 +31,11 @@ public class SpinnerView extends JPanel {
 		return (String) spinner.getValue();
 	}
 
-	public void setValue(String value) {
-		spinner.setValue(value);
-	}
-
 	public void resetValue() {
 		spinner.setValue(model[model.length - 1]);
+	}
+
+	public void setValue(String value) {
+		spinner.setValue(value);
 	}
 }

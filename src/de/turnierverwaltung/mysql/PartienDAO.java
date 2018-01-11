@@ -27,14 +27,14 @@ public interface PartienDAO {
 
 	public String[] findPartien(int id) throws SQLException;
 
+	public String getErgebnis(int SpielerIDWeiss, int SpielerIDSchwarz, int idGruppe) throws SQLException;
+
 	public int insertPartien(int idGruppe, String spielDatum, int Runde, int ergebnis, int spielerIdweiss,
 			int spielerIdschwarz) throws SQLException;
 
 	public ArrayList<Game> selectAllPartien(int idGruppe) throws SQLException;
 
-	public boolean updatePartien(Game[] parties) throws SQLException;
-
 	public boolean updatePartien(ArrayList<Game> changedPartien) throws SQLException;
 
-	public String getErgebnis(int SpielerIDWeiss, int SpielerIDSchwarz, int idGruppe) throws SQLException;
+	public boolean updatePartien(Game[] parties) throws SQLException;
 }

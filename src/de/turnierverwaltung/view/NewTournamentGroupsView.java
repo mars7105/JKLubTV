@@ -58,6 +58,10 @@ public class NewTournamentGroupsView extends JPanel {
 
 	}
 
+	public SpinnerView[] getAnzahlSpielerSpinner() {
+		return anzahlSpielerSpinner;
+	}
+
 	public JButton getCancelButton() {
 		return cancelButton;
 	}
@@ -179,6 +183,10 @@ public class NewTournamentGroupsView extends JPanel {
 
 	}
 
+	public void setAnzahlSpielerSpinner(SpinnerView[] anzahlSpielerSpinner) {
+		this.anzahlSpielerSpinner = anzahlSpielerSpinner;
+	}
+
 	public void setCancelButton(JButton cancelButton) {
 		this.cancelButton = cancelButton;
 	}
@@ -197,14 +205,6 @@ public class NewTournamentGroupsView extends JPanel {
 
 	public void setOkButton(JButton okButton) {
 		this.okButton = okButton;
-	}
-
-	public SpinnerView[] getAnzahlSpielerSpinner() {
-		return anzahlSpielerSpinner;
-	}
-
-	public void setAnzahlSpielerSpinner(SpinnerView[] anzahlSpielerSpinner) {
-		this.anzahlSpielerSpinner = anzahlSpielerSpinner;
 	}
 
 }

@@ -11,7 +11,8 @@ public class Messages {
 
 	private static ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, LOCALE);
 
-	private Messages() {
+	public static Locale getLocale() {
+		return RESOURCE_BUNDLE.getLocale();
 	}
 
 	public static String getString(String key) {
@@ -27,7 +28,6 @@ public class Messages {
 		RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, LOCALE);
 	}
 
-	public static Locale getLocale() {
-		return RESOURCE_BUNDLE.getLocale();
+	private Messages() {
 	}
 }

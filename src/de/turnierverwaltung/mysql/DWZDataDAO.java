@@ -10,9 +10,15 @@ public interface DWZDataDAO {
 
 	public void deleteDWZ(int spielerId) throws SQLException;
 
-	public void updateDWZ(DWZData dwzData) throws SQLException;
+	public void flush(ArrayList<DWZData> dwzPlayer) throws SQLException;
 
 	public DWZData getDWZData(int spielerId) throws SQLException;
+
+	public ArrayList<DWZData> getDWZDataByFideId(int eingabe) throws SQLException;
+
+	public ArrayList<DWZData> getDWZDataByName(String eingabe) throws SQLException;
+
+	public ArrayList<DWZData> getPlayerOfVerein(String zps) throws SQLException ;
 
 	public void insertDWZ(DWZData dwzData) throws SQLException;
 
@@ -20,11 +26,5 @@ public interface DWZDataDAO {
 
 	public boolean playerFideExist(int fideId);
 
-	public void flush(ArrayList<DWZData> dwzPlayer) throws SQLException;
-
-	public ArrayList<DWZData> getPlayerOfVerein(String zps) throws SQLException ;
-
-	public ArrayList<DWZData> getDWZDataByName(String eingabe) throws SQLException;
-
-	public ArrayList<DWZData> getDWZDataByFideId(int eingabe) throws SQLException;
+	public void updateDWZ(DWZData dwzData) throws SQLException;
 }

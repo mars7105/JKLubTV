@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.ListIterator;
+
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -71,6 +72,98 @@ public class DSBDWZControl {
 		csvFiles = mainControl.getPropertiesControl().checkPathToVereineCSV()
 				&& mainControl.getPropertiesControl().checkPathToSpielerCSV();
 		dewisDialogActionListenerControl = new DSBDWZActionListenerControl(this.mainControl, this);
+
+	}
+
+	private void errorHandler() {
+		csvFiles = false;
+		mainControl.getPropertiesControl().setPathToVereineCSV("");
+		mainControl.getPropertiesControl().setPathToPlayersCSV("");
+		dialog.dispose();
+		JOptionPane.showMessageDialog(null, Messages.getString("DewisDialogControl.7"),
+				Messages.getString("DewisDialogControl.8"), JOptionPane.INFORMATION_MESSAGE);
+	}
+
+	public DSBDWZDialogView getDialog() {
+		return dialog;
+	}
+
+	public ArrayList<CSVPlayer> getPlayerlist() {
+		return playerlist;
+	}
+
+	public ArrayList<Player> getPlayers() {
+		if (players == null) {
+			players = new ArrayList<Player>();
+			ListIterator<DWZData> list = dwzDataArray.listIterator();
+			while (list.hasNext()) {
+				DWZData dwzData = list.next();
+				Player player = new Player();
+				player.setDwzData(dwzData);
+				player.setName(dwzData.getCsvSpielername());
+
+				players.add(player);
+			}
+		}
+		return players;
+	}
+
+	public ArrayList<Player> getSearchplayerlist() {
+		return searchplayerlist;
+	}
+
+	public DSBDWZPlayerView getSpielerDewisView() {
+		return spielerDewisView;
+	}
+
+	public DSBDWZPlayerView getSpielerSearchPanelList() {
+		return spielerSearchPanelList;
+	}
+
+	public ArrayList<CSVVereine> getZpsItems() {
+		return zpsItems;
+	}
+
+	/**
+	 * @throws IOException
+	 * @throws ArrayIndexOutOfBoundsException
+	 * 
+	 */
+	public void makeDialog() throws ArrayIndexOutOfBoundsException, IOException {
+		// Boolean csvFiles = vereinsSuche.checkifSpielerFileExist();
+		if (dialog == null) {
+			try {
+				dialog = new DSBDWZDialogView(csvFiles);
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} else {
+			dialog.dispose();
+			try {
+				dialog = new DSBDWZDialogView(csvFiles);
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String zps = mainControl.getPropertiesControl().getZPS();
+		if (csvFiles == true) {
+			dialog.getVereinsAuswahlOkButton().addActionListener(dewisDialogActionListenerControl);
+			makeVereinsListe(zps);
+		} else {
+			dialog.getVereinsSucheButton().addActionListener(dewisDialogActionListenerControl);
+		}
+
+		dialog.getOkButton().addActionListener(dewisDialogActionListenerControl);
+		dialog.getCancelButton().addActionListener(dewisDialogActionListenerControl);
+		dialog.getOkButton().setEnabled(false);
+
+		if (zps.length() > 0) {
+			dialog.getVereinsSuche().setText(zps);
+
+			makeDWZListe(zps);
+		}
 
 	}
 
@@ -355,49 +448,6 @@ public class DSBDWZControl {
 	}
 
 	/**
-	 * @throws IOException
-	 * @throws ArrayIndexOutOfBoundsException
-	 * 
-	 */
-	public void makeDialog() throws ArrayIndexOutOfBoundsException, IOException {
-		// Boolean csvFiles = vereinsSuche.checkifSpielerFileExist();
-		if (dialog == null) {
-			try {
-				dialog = new DSBDWZDialogView(csvFiles);
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else {
-			dialog.dispose();
-			try {
-				dialog = new DSBDWZDialogView(csvFiles);
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		String zps = mainControl.getPropertiesControl().getZPS();
-		if (csvFiles == true) {
-			dialog.getVereinsAuswahlOkButton().addActionListener(dewisDialogActionListenerControl);
-			makeVereinsListe(zps);
-		} else {
-			dialog.getVereinsSucheButton().addActionListener(dewisDialogActionListenerControl);
-		}
-
-		dialog.getOkButton().addActionListener(dewisDialogActionListenerControl);
-		dialog.getCancelButton().addActionListener(dewisDialogActionListenerControl);
-		dialog.getOkButton().setEnabled(false);
-
-		if (zps.length() > 0) {
-			dialog.getVereinsSuche().setText(zps);
-
-			makeDWZListe(zps);
-		}
-
-	}
-
-	/**
 	 * 
 	 */
 	public void makeVereinsListe(String zps) {
@@ -436,81 +486,32 @@ public class DSBDWZControl {
 		}
 	}
 
-	private void errorHandler() {
-		csvFiles = false;
-		mainControl.getPropertiesControl().setPathToVereineCSV("");
-		mainControl.getPropertiesControl().setPathToPlayersCSV("");
-		dialog.dispose();
-		JOptionPane.showMessageDialog(null, Messages.getString("DewisDialogControl.7"),
-				Messages.getString("DewisDialogControl.8"), JOptionPane.INFORMATION_MESSAGE);
-	}
-
-	public DSBDWZDialogView getDialog() {
-		return dialog;
-	}
-
 	public void setDialog(DSBDWZDialogView dialog) {
 		this.dialog = dialog;
-	}
-
-	public DSBDWZPlayerView getSpielerDewisView() {
-		return spielerDewisView;
-	}
-
-	public void setSpielerDewisView(DSBDWZPlayerView spielerDewisView) {
-		this.spielerDewisView = spielerDewisView;
-	}
-
-	public ArrayList<Player> getPlayers() {
-		if (players == null) {
-			players = new ArrayList<Player>();
-			ListIterator<DWZData> list = dwzDataArray.listIterator();
-			while (list.hasNext()) {
-				DWZData dwzData = list.next();
-				Player player = new Player();
-				player.setDwzData(dwzData);
-				player.setName(dwzData.getCsvSpielername());
-
-				players.add(player);
-			}
-		}
-		return players;
-	}
-
-	public void setPlayers(ArrayList<Player> players) {
-		this.players = players;
-	}
-
-	public ArrayList<CSVVereine> getZpsItems() {
-		return zpsItems;
-	}
-
-	public void setZpsItems(ArrayList<CSVVereine> zpsItems) {
-		this.zpsItems = zpsItems;
-	}
-
-	public DSBDWZPlayerView getSpielerSearchPanelList() {
-		return spielerSearchPanelList;
-	}
-
-	public void setSpielerSearchPanelList(DSBDWZPlayerView spielerSearchPanelList) {
-		this.spielerSearchPanelList = spielerSearchPanelList;
-	}
-
-	public ArrayList<CSVPlayer> getPlayerlist() {
-		return playerlist;
 	}
 
 	public void setPlayerlist(ArrayList<CSVPlayer> playerlist) {
 		this.playerlist = playerlist;
 	}
 
-	public ArrayList<Player> getSearchplayerlist() {
-		return searchplayerlist;
+	public void setPlayers(ArrayList<Player> players) {
+		this.players = players;
 	}
 
 	public void setSearchplayerlist(ArrayList<Player> searchplayerlist) {
 		this.searchplayerlist = searchplayerlist;
+	}
+
+	public void setSpielerDewisView(DSBDWZPlayerView spielerDewisView) {
+		this.spielerDewisView = spielerDewisView;
+	}
+
+	public void setSpielerSearchPanelList(DSBDWZPlayerView spielerSearchPanelList) {
+		this.spielerSearchPanelList = spielerSearchPanelList;
+	}
+
+	public void setZpsItems(ArrayList<CSVVereine> zpsItems) {
+		this.zpsItems = zpsItems;
 	}
 
 }

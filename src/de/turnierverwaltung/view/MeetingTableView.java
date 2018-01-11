@@ -166,15 +166,6 @@ public class MeetingTableView extends JPanel {
 
 	}
 
-	public JLabel getStatusLabel() {
-		return statusLabel.getTitleLabel();
-	}
-
-	public void setStatusLabel(JLabel statusLabel) {
-		this.statusLabel.setTitleLabel(statusLabel);
-
-	}
-
 	public JButton getHtmlButton() {
 		return htmlButton;
 	}
@@ -185,6 +176,10 @@ public class MeetingTableView extends JPanel {
 
 	public JButton getSaveButton() {
 		return saveButton;
+	}
+
+	public JLabel getStatusLabel() {
+		return statusLabel.getTitleLabel();
 	}
 
 	public JTable getTable() {
@@ -214,6 +209,11 @@ public class MeetingTableView extends JPanel {
 
 	public void setSaveButton(JButton saveButton) {
 		this.saveButton = saveButton;
+	}
+
+	public void setStatusLabel(JLabel statusLabel) {
+		this.statusLabel.setTitleLabel(statusLabel);
+
 	}
 
 	public void setTable(JTable table) {

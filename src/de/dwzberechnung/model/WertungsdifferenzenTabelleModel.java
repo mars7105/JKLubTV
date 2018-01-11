@@ -16,13 +16,21 @@ package de.dwzberechnung.model;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 public class WertungsdifferenzenTabelleModel {
-	private double[][] wertungsdifferenzenTabelle;
 	public static int P = 0;
 	public static int D = 1;
+	private double[][] wertungsdifferenzenTabelle;
 
 	public WertungsdifferenzenTabelleModel() {
 		wertungsdifferenzenTabelle = new double[2][100];
 		tabelleFuellen();
+	}
+
+	public double[][] getWertungsdifferenzenTabelle() {
+		return wertungsdifferenzenTabelle;
+	}
+
+	public void setWertungsdifferenzenTabelle(double[][] wertungsdifferenzenTabelle) {
+		this.wertungsdifferenzenTabelle = wertungsdifferenzenTabelle;
 	}
 
 	private void tabelleFuellen() {
@@ -226,14 +234,6 @@ public class WertungsdifferenzenTabelleModel {
 		wertungsdifferenzenTabelle[P][98] = 0.98;
 		wertungsdifferenzenTabelle[P][99] = 0.99;
 
-	}
-
-	public double[][] getWertungsdifferenzenTabelle() {
-		return wertungsdifferenzenTabelle;
-	}
-
-	public void setWertungsdifferenzenTabelle(double[][] wertungsdifferenzenTabelle) {
-		this.wertungsdifferenzenTabelle = wertungsdifferenzenTabelle;
 	}
 
 }

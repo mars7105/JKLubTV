@@ -15,28 +15,6 @@ public class WertungsdifferenzenPunktePartienModel {
 		fillHMap();
 	}
 
-	public HashMap<String, int[]> getHmap() {
-		return hmap;
-	}
-
-	public void setHmap(HashMap<String, int[]> hmap) {
-		this.hmap = hmap;
-	}
-
-	public double getValue(double anzahlPunkte, int anzahlPartien) {
-
-		Locale locale = new Locale("de", "DE");
-		DecimalFormat numberFormat = (DecimalFormat) NumberFormat.getInstance(locale);
-		numberFormat.applyLocalizedPattern("#,0");
-
-		String key = numberFormat.format(anzahlPunkte);
-
-//		System.out.println(key);
-
-		return (double) hmap.get(key)[anzahlPartien - 2];
-
-	}
-
 	private void fillHMap() {
 		{
 			int[] col = { -191, -274, -325, -362, -391, -414, -434, -451, -465, -478, -490, -500, -510, -519, -527,
@@ -272,5 +250,27 @@ public class WertungsdifferenzenPunktePartienModel {
 			hmap.put("19,5", col);
 		}
 
+	}
+
+	public HashMap<String, int[]> getHmap() {
+		return hmap;
+	}
+
+	public double getValue(double anzahlPunkte, int anzahlPartien) {
+
+		Locale locale = new Locale("de", "DE");
+		DecimalFormat numberFormat = (DecimalFormat) NumberFormat.getInstance(locale);
+		numberFormat.applyLocalizedPattern("#,0");
+
+		String key = numberFormat.format(anzahlPunkte);
+
+//		System.out.println(key);
+
+		return hmap.get(key)[anzahlPartien - 2];
+
+	}
+
+	public void setHmap(HashMap<String, int[]> hmap) {
+		this.hmap = hmap;
 	}
 }

@@ -92,12 +92,24 @@ public class NewPlayerView extends JDialog {
 		return okButton;
 	}
 
+	public JComboBox<String> getTextComboBoxAge() {
+		return textComboBoxAge;
+	}
+
 	public JTextField getTextFieldDwz() {
 		return textFieldDwz;
 	}
 
+	public JTextField getTextFieldForeName() {
+		return textFieldForeName;
+	}
+
 	public JTextField getTextFieldKuerzel() {
 		return textFieldKuerzel;
+	}
+
+	public JTextField getTextFieldSurName() {
+		return textFieldSurName;
 	}
 
 	public void setCancelButton(JButton cancelButton) {
@@ -108,36 +120,24 @@ public class NewPlayerView extends JDialog {
 		this.okButton = okButton;
 	}
 
+	public void setTextComboBoxAge(JComboBox<String> textComboBoxAge) {
+		this.textComboBoxAge = textComboBoxAge;
+	}
+
 	public void setTextFieldDwz(JTextField textFieldDwz) {
 		this.textFieldDwz = textFieldDwz;
-	}
-
-	public void setTextFieldKuerzel(JTextField textFieldKuerzel) {
-		this.textFieldKuerzel = textFieldKuerzel;
-	}
-
-	public JTextField getTextFieldForeName() {
-		return textFieldForeName;
 	}
 
 	public void setTextFieldForeName(JTextField textFieldForeName) {
 		this.textFieldForeName = textFieldForeName;
 	}
 
-	public JTextField getTextFieldSurName() {
-		return textFieldSurName;
+	public void setTextFieldKuerzel(JTextField textFieldKuerzel) {
+		this.textFieldKuerzel = textFieldKuerzel;
 	}
 
 	public void setTextFieldSurName(JTextField textFieldSurName) {
 		this.textFieldSurName = textFieldSurName;
-	}
-
-	public JComboBox<String> getTextComboBoxAge() {
-		return textComboBoxAge;
-	}
-
-	public void setTextComboBoxAge(JComboBox<String> textComboBoxAge) {
-		this.textComboBoxAge = textComboBoxAge;
 	}
 
 	public void spielerPanel() {

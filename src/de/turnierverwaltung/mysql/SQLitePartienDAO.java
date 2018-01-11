@@ -80,6 +80,48 @@ public class SQLitePartienDAO implements PartienDAO {
 	}
 
 	@Override
+	public String getErgebnis(int SpielerIDWeiss, int SpielerIDSchwarz, int idGruppe) throws SQLException {
+		String sql = "Select Ergebnis " + "from partien where idGruppe=" + idGruppe + " AND idSpielerWeiss="
+				+ SpielerIDWeiss + " AND idSpielerSchwarz=" + SpielerIDSchwarz + ";";
+		Statement stmt;
+		int ergebnis = -1;
+		if (this.dbConnect != null) {
+
+			stmt = this.dbConnect.createStatement();
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				ergebnis = rs.getInt("Ergebnis");
+
+			}
+			stmt.close();
+
+		}
+		String ergebnisString = "";
+		if (ergebnis == TournamentConstants.MYSQL_KEIN_ERGEBNIS) {
+			ergebnisString = TournamentConstants.KEIN_ERGEBNIS;
+		}
+		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_WEISS) {
+			ergebnisString = TournamentConstants.GEWINN;
+		}
+		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_SCHWARZ) {
+			ergebnisString = TournamentConstants.VERLUST;
+		}
+		if (ergebnis == TournamentConstants.MYSQL_PARTIE_REMIS) {
+			ergebnisString = TournamentConstants.REMIS;
+		}
+		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS) {
+			ergebnisString = TournamentConstants.GEWINN_KAMPFLOS;
+		}
+		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ) {
+			ergebnisString = TournamentConstants.VERLUST_KAMPFLOS;
+		}
+		if (ergebnis == TournamentConstants.MYSQL_PARTIE_VERLUST_KAMPFLOS_BEIDE) {
+			ergebnisString = TournamentConstants.VERLUST_KAMPFLOS_BEIDE;
+		}
+		return ergebnisString;
+	}
+
+	@Override
 	public int insertPartien(int idGruppe, String spielDatum, int Runde, int ergebnis, int spielerIdweiss,
 			int spielerIdschwarz) throws SQLException {
 
@@ -148,43 +190,6 @@ public class SQLitePartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public boolean updatePartien(Game[] partien) throws SQLException {
-		Game partie;
-		boolean ok = false;
-		PreparedStatement preStm = null;
-
-		if (this.dbConnect != null) {
-
-			this.dbConnect.setAutoCommit(false);
-
-			String sql = "update partien set idSpielerWeiss = ?, idSpielerSchwarz = ?"
-					+ ", Runde = ?, Ergebnis = ?, Spieldatum = ? where idPartie = ?;";
-			// + "COMMIT;";
-
-			preStm = this.dbConnect.prepareStatement(sql);
-			for (int i = 0; i < partien.length; i++) {
-				partie = partien[i];
-
-				preStm.setInt(1, partie.getSpielerWeiss().getSpielerId());
-				preStm.setInt(2, partie.getSpielerSchwarz().getSpielerId());
-				preStm.setInt(3, partie.getRunde());
-				preStm.setInt(4, partie.getErgebnis());
-				EventDate event = new EventDate(partie.getSpielDatum());
-				preStm.setString(5, event.getDateString());
-				preStm.setInt(6, partie.getPartieId());
-				preStm.addBatch();
-
-			}
-
-			preStm.executeBatch();
-			this.dbConnect.setAutoCommit(true);
-			preStm.close();
-			ok = true;
-
-		}
-		return ok;
-	}
-
 	public boolean updatePartien(ArrayList<Game> partien) throws SQLException {
 		Game partie;
 		boolean ok = false;
@@ -223,44 +228,40 @@ public class SQLitePartienDAO implements PartienDAO {
 	}
 
 	@Override
-	public String getErgebnis(int SpielerIDWeiss, int SpielerIDSchwarz, int idGruppe) throws SQLException {
-		String sql = "Select Ergebnis " + "from partien where idGruppe=" + idGruppe + " AND idSpielerWeiss="
-				+ SpielerIDWeiss + " AND idSpielerSchwarz=" + SpielerIDSchwarz + ";";
-		Statement stmt;
-		int ergebnis = -1;
+	public boolean updatePartien(Game[] partien) throws SQLException {
+		Game partie;
+		boolean ok = false;
+		PreparedStatement preStm = null;
+
 		if (this.dbConnect != null) {
 
-			stmt = this.dbConnect.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
-			while (rs.next()) {
-				ergebnis = rs.getInt("Ergebnis");
+			this.dbConnect.setAutoCommit(false);
+
+			String sql = "update partien set idSpielerWeiss = ?, idSpielerSchwarz = ?"
+					+ ", Runde = ?, Ergebnis = ?, Spieldatum = ? where idPartie = ?;";
+			// + "COMMIT;";
+
+			preStm = this.dbConnect.prepareStatement(sql);
+			for (int i = 0; i < partien.length; i++) {
+				partie = partien[i];
+
+				preStm.setInt(1, partie.getSpielerWeiss().getSpielerId());
+				preStm.setInt(2, partie.getSpielerSchwarz().getSpielerId());
+				preStm.setInt(3, partie.getRunde());
+				preStm.setInt(4, partie.getErgebnis());
+				EventDate event = new EventDate(partie.getSpielDatum());
+				preStm.setString(5, event.getDateString());
+				preStm.setInt(6, partie.getPartieId());
+				preStm.addBatch();
 
 			}
-			stmt.close();
+
+			preStm.executeBatch();
+			this.dbConnect.setAutoCommit(true);
+			preStm.close();
+			ok = true;
 
 		}
-		String ergebnisString = "";
-		if (ergebnis == TournamentConstants.MYSQL_KEIN_ERGEBNIS) {
-			ergebnisString = TournamentConstants.KEIN_ERGEBNIS;
-		}
-		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_WEISS) {
-			ergebnisString = TournamentConstants.GEWINN;
-		}
-		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_SCHWARZ) {
-			ergebnisString = TournamentConstants.VERLUST;
-		}
-		if (ergebnis == TournamentConstants.MYSQL_PARTIE_REMIS) {
-			ergebnisString = TournamentConstants.REMIS;
-		}
-		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS) {
-			ergebnisString = TournamentConstants.GEWINN_KAMPFLOS;
-		}
-		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ) {
-			ergebnisString = TournamentConstants.VERLUST_KAMPFLOS;
-		}
-		if (ergebnis == TournamentConstants.MYSQL_PARTIE_VERLUST_KAMPFLOS_BEIDE) {
-			ergebnisString = TournamentConstants.VERLUST_KAMPFLOS_BEIDE;
-		}
-		return ergebnisString;
+		return ok;
 	}
 }

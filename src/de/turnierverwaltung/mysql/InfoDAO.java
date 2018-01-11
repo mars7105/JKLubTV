@@ -13,10 +13,10 @@ public interface InfoDAO {
 
 	public Info findInfo(int id, PropertiesControl prop) throws SQLException;
 
+	public ArrayList<Info> getAllInfos() throws SQLException;
+
 	public int insertInfo(Info info) throws SQLException;
 
 	public void updateInfo(Info info) throws SQLException;
-
-	public ArrayList<Info> getAllInfos() throws SQLException;
 
 }

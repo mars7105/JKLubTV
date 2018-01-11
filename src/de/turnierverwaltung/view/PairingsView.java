@@ -115,6 +115,14 @@ public class PairingsView extends JPanel {
 		return spielerAnzahl;
 	}
 
+	public JLabel getStatusLabel() {
+		return statusLabel.getTitleLabel();
+	}
+
+	public JTabbedPane getTabbedPane() {
+		return tabbedPane;
+	}
+
 	public JLabel[] getWeissSpieler() {
 		return weissSpieler;
 	}
@@ -148,60 +156,6 @@ public class PairingsView extends JPanel {
 
 		southPanel.add(status, BorderLayout.WEST);
 		add(southPanel, BorderLayout.SOUTH);
-	}
-
-	public void setAnzahlElemente(int anzahlElemente) {
-		this.anzahlElemente = anzahlElemente;
-	}
-
-	public void setChangeColor(JButton[] changeColor) {
-		this.changeColor = changeColor;
-	}
-
-	public void setDatum(DateChooserPanel[] datum) {
-		this.datum = datum;
-	}
-
-	public JLabel getStatusLabel() {
-		return statusLabel.getTitleLabel();
-	}
-
-	public void setStatusLabel(JLabel statusLabel) {
-		this.statusLabel.setTitleLabel(statusLabel);
-
-	}
-
-	@SuppressWarnings("unchecked")
-	public void setRundenNummer(@SuppressWarnings("rawtypes") JComboBox[] rundenNummer) {
-		this.rundenNummer = rundenNummer;
-	}
-
-	public void setSchwarzSpieler(JLabel[] schwarzSpieler) {
-		this.schwarzSpieler = schwarzSpieler;
-	}
-
-	@SuppressWarnings("unchecked")
-	public void setSpielerAnzahl(int spielerAnzahl) {
-		this.spielerAnzahl = spielerAnzahl;
-		anzahlZeilen = this.spielerAnzahl * (this.spielerAnzahl - 1) / 2;
-		changeColor = new JButton[anzahlZeilen];
-		rundenNummer = new JComboBox[anzahlZeilen];
-		weissSpieler = new JLabel[anzahlZeilen];
-		schwarzSpieler = new JLabel[anzahlZeilen];
-
-		datum = new DateChooserPanel[anzahlZeilen];
-	}
-
-	public void setWeissSpieler(JLabel[] weissSpieler) {
-		this.weissSpieler = weissSpieler;
-	}
-
-	public JTabbedPane getTabbedPane() {
-		return tabbedPane;
-	}
-
-	public void setTabbedPane(JTabbedPane tabbedPane) {
-		this.tabbedPane = tabbedPane;
 	}
 
 	public void makeZeilen(String[][] terminMatrix) {
@@ -296,6 +250,52 @@ public class PairingsView extends JPanel {
 		}
 		contentPanel.add(tabbedPane, BorderLayout.CENTER);
 		contentPanel.updateUI();
+	}
+
+	public void setAnzahlElemente(int anzahlElemente) {
+		this.anzahlElemente = anzahlElemente;
+	}
+
+	public void setChangeColor(JButton[] changeColor) {
+		this.changeColor = changeColor;
+	}
+
+	public void setDatum(DateChooserPanel[] datum) {
+		this.datum = datum;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void setRundenNummer(@SuppressWarnings("rawtypes") JComboBox[] rundenNummer) {
+		this.rundenNummer = rundenNummer;
+	}
+
+	public void setSchwarzSpieler(JLabel[] schwarzSpieler) {
+		this.schwarzSpieler = schwarzSpieler;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void setSpielerAnzahl(int spielerAnzahl) {
+		this.spielerAnzahl = spielerAnzahl;
+		anzahlZeilen = this.spielerAnzahl * (this.spielerAnzahl - 1) / 2;
+		changeColor = new JButton[anzahlZeilen];
+		rundenNummer = new JComboBox[anzahlZeilen];
+		weissSpieler = new JLabel[anzahlZeilen];
+		schwarzSpieler = new JLabel[anzahlZeilen];
+
+		datum = new DateChooserPanel[anzahlZeilen];
+	}
+
+	public void setStatusLabel(JLabel statusLabel) {
+		this.statusLabel.setTitleLabel(statusLabel);
+
+	}
+
+	public void setTabbedPane(JTabbedPane tabbedPane) {
+		this.tabbedPane = tabbedPane;
+	}
+
+	public void setWeissSpieler(JLabel[] weissSpieler) {
+		this.weissSpieler = weissSpieler;
 	}
 
 }

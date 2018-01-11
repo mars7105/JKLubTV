@@ -45,22 +45,22 @@ public class TitleLabelView extends JPanel {
 		add(titlePanel, BorderLayout.NORTH);
 	}
 
+	public JLabel getTitleLabel() {
+		return titleLabel;
+	}
+
+	public JPanel getTitlePanel() {
+		return titlePanel;
+	}
+
 	public void setFlowLayoutLeft() {
 		titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// setPreferredSize(new Dimension(200, 30));
 		this.updateUI();
 	}
 
-	public JLabel getTitleLabel() {
-		return titleLabel;
-	}
-
 	public void setTitleLabel(JLabel titleLabel) {
 		this.titleLabel = titleLabel;
-	}
-
-	public JPanel getTitlePanel() {
-		return titlePanel;
 	}
 
 	public void setTitlePanel(JPanel titlePanel) {

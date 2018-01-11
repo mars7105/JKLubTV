@@ -21,6 +21,7 @@ public class ItemListenerSettingsControl {
 	public void addItemListeners() {
 
 		eigenschaftenView.getCheckBoxHeaderFooter().addItemListener(new ItemListener() {
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 				Boolean onlyTable = eigenschaftenView.getCheckBoxHeaderFooter().isSelected();
 
@@ -33,6 +34,7 @@ public class ItemListenerSettingsControl {
 			}
 		});
 		eigenschaftenView.getCheckBoxPDFLinks().addItemListener(new ItemListener() {
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 				Boolean pdflink = eigenschaftenView.getCheckBoxPDFLinks().isSelected();
 				eigenschaftenView.getWebserverPathTextField().setEnabled(pdflink);
@@ -45,6 +47,7 @@ public class ItemListenerSettingsControl {
 		});
 		eigenschaftenView.getCheckBoxohneDWZ().addItemListener(new ItemListener() {
 
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 				eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(false);
 
@@ -84,6 +87,7 @@ public class ItemListenerSettingsControl {
 
 		eigenschaftenView.getCheckBoxohneFolgeDWZ().addItemListener(new ItemListener() {
 
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 
 				Boolean noFolgeDWZ = eigenschaftenView.getCheckBoxohneFolgeDWZ().isSelected();
@@ -114,6 +118,7 @@ public class ItemListenerSettingsControl {
 		});
 		eigenschaftenView.getCheckBoxohneELO().addItemListener(new ItemListener() {
 
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 				eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(false);
 
@@ -153,6 +158,7 @@ public class ItemListenerSettingsControl {
 
 		eigenschaftenView.getCheckBoxohneFolgeELO().addItemListener(new ItemListener() {
 
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 
 				Boolean noFolgeELO = eigenschaftenView.getCheckBoxohneFolgeELO().isSelected();
@@ -174,6 +180,7 @@ public class ItemListenerSettingsControl {
 		});
 		eigenschaftenView.getCheckBoxhtmlToClipboard().addItemListener(new ItemListener() {
 
+			@Override
 			public void itemStateChanged(ItemEvent e) {
 
 				Boolean copy = eigenschaftenView.getCheckBoxhtmlToClipboard().isSelected();

@@ -30,6 +30,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
+
 import de.turnierverwaltung.ZahlGroesserAlsN;
 import de.turnierverwaltung.ZahlKleinerAlsN;
 import de.turnierverwaltung.model.Group;
@@ -220,21 +221,8 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 	}
 
-	private boolean testForDoubles(int index) {
-		int sAnzahl = gruppe[index].getSpielerAnzahl();
-		Boolean testOK = true;
-		for (int y = 0; y < sAnzahl - 1; y++) {
-
-			int spielerYID = spielerEingabeView[index].getSpielerID()[y];
-
-			for (int x = y + 1; x < sAnzahl; x++) {
-				int spielerXID = spielerEingabeView[index].getSpielerID()[x];
-				if (spielerYID == spielerXID && spielerYID >= 0) {
-					testOK = false;
-				}
-			}
-		}
-		return testOK;
+	public Boolean[] getReadyToSave() {
+		return readyToSave;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -302,6 +290,10 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 	}
 
+	public void setReadyToSave(Boolean[] readyToSave) {
+		this.readyToSave = readyToSave;
+	}
+
 	@SuppressWarnings("unchecked")
 	private void suchAnzeige(int index) {
 		for (int i = 0; i < spielerAnzahl[index]; i++) {
@@ -340,12 +332,21 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		}
 	}
 
-	public Boolean[] getReadyToSave() {
-		return readyToSave;
-	}
+	private boolean testForDoubles(int index) {
+		int sAnzahl = gruppe[index].getSpielerAnzahl();
+		Boolean testOK = true;
+		for (int y = 0; y < sAnzahl - 1; y++) {
 
-	public void setReadyToSave(Boolean[] readyToSave) {
-		this.readyToSave = readyToSave;
+			int spielerYID = spielerEingabeView[index].getSpielerID()[y];
+
+			for (int x = y + 1; x < sAnzahl; x++) {
+				int spielerXID = spielerEingabeView[index].getSpielerID()[x];
+				if (spielerYID == spielerXID && spielerYID >= 0) {
+					testOK = false;
+				}
+			}
+		}
+		return testOK;
 	}
 
 }

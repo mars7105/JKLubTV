@@ -16,44 +16,44 @@ public class Info {
 		this.datum = datum;
 	}
 
-	public String getInfoname() {
-		return infoname;
-	}
-
-	public String getVersion() {
-		return version;
-	}
-
-	public String getInfonotice() {
-		return infonotice;
-	}
-
 	public String getDatum() {
 		return datum;
-	}
-
-	public void setInfoname(String infoname) {
-		this.infoname = infoname;
-	}
-
-	public void setVersion(String version) {
-		this.version = version;
-	}
-
-	public void setInfonotice(String infonotice) {
-		this.infonotice = infonotice;
-	}
-
-	public void setDatum(String datum) {
-		this.datum = datum;
 	}
 
 	public int getInfoId() {
 		return infoId;
 	}
 
+	public String getInfoname() {
+		return infoname;
+	}
+
+	public String getInfonotice() {
+		return infonotice;
+	}
+
+	public String getVersion() {
+		return version;
+	}
+
+	public void setDatum(String datum) {
+		this.datum = datum;
+	}
+
 	public void setInfoId(int infoId) {
 		this.infoId = infoId;
+	}
+
+	public void setInfoname(String infoname) {
+		this.infoname = infoname;
+	}
+
+	public void setInfonotice(String infonotice) {
+		this.infonotice = infonotice;
+	}
+
+	public void setVersion(String version) {
+		this.version = version;
 	}
 
 }

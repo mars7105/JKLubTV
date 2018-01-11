@@ -58,6 +58,10 @@ public class SQLiteDAOFactory extends DAOFactory {
 		return null;
 	}
 
+	public static String getDB_PATH() {
+		return DB_PATH;
+	}
+
 	public static void setDB_PATH(String dbPath) {
 		SQLiteDAOFactory.DB_PATH = dbPath;
 		SQLiteDAOFactory.dbStringSQLite = "jdbc:sqlite:" + SQLiteDAOFactory.DB_PATH;
@@ -75,9 +79,39 @@ public class SQLiteDAOFactory extends DAOFactory {
 	}
 
 	@Override
+	public DWZDataDAO getDWZDataDAO() {
+		DWZDataDAO dwzDataDAO = new SQLiteDWZDataDAO();
+		return dwzDataDAO;
+	}
+
+	@Override
+	public DWZVerbandDAO getDWZVerbandDAO() {
+		DWZVerbandDAO verbandDAO = new SQLiteVerbandDAO();
+		return verbandDAO;
+	}
+
+	@Override
+	public DWZVereineDAO getDWZVereineDAO() {
+		DWZVereineDAO dwzVereineDAO = new SQLiteVereineDAO();
+		return dwzVereineDAO;
+	}
+
+	@Override
+	public ELODataDAO getELODataDAO() {
+		ELODataDAO eloDataDAO = new SQLiteELODataDAO();
+		return eloDataDAO;
+	}
+
+	@Override
 	public GruppenDAO getGruppenDAO() {
 		GruppenDAO gruppenDAO = new SQLiteGruppenDAO();
 		return gruppenDAO;
+	}
+
+	@Override
+	public InfoDAO getInfoDAO() {
+		InfoDAO infoDAO = new SQLiteInfoDAO();
+		return infoDAO;
 	}
 
 	@Override
@@ -102,40 +136,6 @@ public class SQLiteDAOFactory extends DAOFactory {
 	public TurnierDAO getTurnierDAO() {
 		TurnierDAO turnierDAO = new SQLiteTurnierDAO();
 		return turnierDAO;
-	}
-
-	public static String getDB_PATH() {
-		return DB_PATH;
-	}
-
-	@Override
-	public InfoDAO getInfoDAO() {
-		InfoDAO infoDAO = new SQLiteInfoDAO();
-		return infoDAO;
-	}
-
-	@Override
-	public DWZDataDAO getDWZDataDAO() {
-		DWZDataDAO dwzDataDAO = new SQLiteDWZDataDAO();
-		return dwzDataDAO;
-	}
-
-	@Override
-	public DWZVereineDAO getDWZVereineDAO() {
-		DWZVereineDAO dwzVereineDAO = new SQLiteVereineDAO();
-		return dwzVereineDAO;
-	}
-
-	@Override
-	public DWZVerbandDAO getDWZVerbandDAO() {
-		DWZVerbandDAO verbandDAO = new SQLiteVerbandDAO();
-		return verbandDAO;
-	}
-
-	@Override
-	public ELODataDAO getELODataDAO() {
-		ELODataDAO eloDataDAO = new SQLiteELODataDAO();
-		return eloDataDAO;
 	}
 
 }

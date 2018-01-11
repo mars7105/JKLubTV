@@ -35,7 +35,17 @@ public abstract class DAOFactory {
 
 	public abstract DatumDAO getDatumDAO();
 
+	public abstract DWZDataDAO getDWZDataDAO();
+
+	public abstract DWZVerbandDAO getDWZVerbandDAO();
+
+	public abstract DWZVereineDAO getDWZVereineDAO();
+
+	public abstract ELODataDAO getELODataDAO();
+
 	public abstract GruppenDAO getGruppenDAO();
+
+	public abstract InfoDAO getInfoDAO();
 
 	public abstract PartienDAO getPartienDAO();
 
@@ -44,14 +54,4 @@ public abstract class DAOFactory {
 	public abstract Turnier_has_SpielerDAO getTurnier_has_SpielerDAO();
 
 	public abstract TurnierDAO getTurnierDAO();
-
-	public abstract InfoDAO getInfoDAO();
-
-	public abstract DWZVerbandDAO getDWZVerbandDAO();
-
-	public abstract DWZVereineDAO getDWZVereineDAO();
-
-	public abstract DWZDataDAO getDWZDataDAO();
-
-	public abstract ELODataDAO getELODataDAO();
 }

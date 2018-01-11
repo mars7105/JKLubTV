@@ -79,30 +79,6 @@ public class Tournament {
 
 	}
 
-	public Boolean getOnlyTables() {
-		return onlyTables;
-	}
-
-	public void setOnlyTables(Boolean onlyTables) {
-		this.onlyTables = onlyTables;
-	}
-
-	public Boolean getNoDWZCalc() {
-		return noDWZCalc;
-	}
-
-	public void setNoDWZCalc(Boolean noDWZCalc) {
-		this.noDWZCalc = noDWZCalc;
-	}
-
-	public Boolean getNoFolgeDWZCalc() {
-		return noFolgeDWZCalc;
-	}
-
-	public void setNoFolgeDWZCalc(Boolean noFolgeDWZCalc) {
-		this.noFolgeDWZCalc = noFolgeDWZCalc;
-	}
-
 	public int getAnzahlGruppen() {
 		return anzahlGruppen;
 	}
@@ -111,12 +87,42 @@ public class Tournament {
 		return endDatum;
 	}
 
+	public String getEndDatumTRF() {
+		
+		return eventendDate.getEnglishFormat();
+	}
+
 	public Group[] getGruppe() {
 		return gruppe;
 	}
 
+	public Boolean getNoDWZCalc() {
+		return noDWZCalc;
+	}
+
+	public boolean getNoELOCalc() {
+		return noELOCalc;
+	}
+
+	public Boolean getNoFolgeDWZCalc() {
+		return noFolgeDWZCalc;
+	}
+
+	public boolean getNoFolgeELOCalc() {
+		return noFolgeELOCalc;
+	}
+
+	public Boolean getOnlyTables() {
+		return onlyTables;
+	}
+
 	public String getStartDatum() {
 		return startDatum;
+	}
+
+	public String getStartDatumTRF() {
+		
+		return eventstartDate.getEnglishFormat();
 	}
 
 	public int getTurnierId() {
@@ -141,6 +147,27 @@ public class Tournament {
 		this.gruppe = gruppe;
 	}
 
+	public void setNoDWZCalc(Boolean noDWZCalc) {
+		this.noDWZCalc = noDWZCalc;
+	}
+
+	public void setNoELOCalc(Boolean noELO) {
+		this.noELOCalc = noELO;
+
+	}
+
+	public void setNoFolgeDWZCalc(Boolean noFolgeDWZCalc) {
+		this.noFolgeDWZCalc = noFolgeDWZCalc;
+	}
+
+	public void setNoFolgeELOCalc(Boolean noELO) {
+		this.noFolgeELOCalc = noELO;
+	}
+
+	public void setOnlyTables(Boolean onlyTables) {
+		this.onlyTables = onlyTables;
+	}
+
 	public void setStartDatum(String startDatum) {
 		eventstartDate = new EventDate(startDatum);
 		this.startDatum = eventstartDate.getDateString();
@@ -153,33 +180,6 @@ public class Tournament {
 
 	public void setTurnierName(String turnierName) {
 		this.turnierName = turnierName;
-	}
-
-	public void setNoFolgeELOCalc(Boolean noELO) {
-		this.noFolgeELOCalc = noELO;
-	}
-
-	public void setNoELOCalc(Boolean noELO) {
-		this.noELOCalc = noELO;
-
-	}
-
-	public boolean getNoELOCalc() {
-		return noELOCalc;
-	}
-
-	public boolean getNoFolgeELOCalc() {
-		return noFolgeELOCalc;
-	}
-
-	public String getStartDatumTRF() {
-		
-		return eventstartDate.getEnglishFormat();
-	}
-
-	public String getEndDatumTRF() {
-		
-		return eventendDate.getEnglishFormat();
 	}
 
 }

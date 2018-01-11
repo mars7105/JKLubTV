@@ -32,6 +32,11 @@ public class MyCellRenderer extends JPanel implements ListCellRenderer {
 		add(label);
 	}
 
+	public JLabel getLabel() {
+		return label;
+	}
+
+	@Override
 	public Component getListCellRendererComponent(JList list, // JList Objekt
 			Object value, // anzuzeigende Komponente
 			int index, // Zellenindex
@@ -52,10 +57,6 @@ public class MyCellRenderer extends JPanel implements ListCellRenderer {
 			setBackground(list.getBackground()); // Hat den Fokus nicht
 		}
 		return this;
-	}
-
-	public JLabel getLabel() {
-		return label;
 	}
 
 	public void setLabel(JLabel label) {

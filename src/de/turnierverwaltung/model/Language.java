@@ -31,12 +31,12 @@ public class Language {
 		return language;
 	}
 
-	public void setLanguage(String language) {
-		this.language = language;
-	}
-
 	public Locale getLocale() {
 		return locale;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
 	}
 
 	public void setLocale(Locale locale) {

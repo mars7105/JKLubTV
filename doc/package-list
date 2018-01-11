@@ -1,1 +1,6 @@
 de.dwzberechnung.model
+de.turnierverwaltung
+de.turnierverwaltung.control
+de.turnierverwaltung.model
+de.turnierverwaltung.mysql
+de.turnierverwaltung.view

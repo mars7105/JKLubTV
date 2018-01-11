@@ -39,6 +39,26 @@ public class PlayerSearchView extends JPanel {
 		add(buttonPane, BorderLayout.SOUTH);
 	}
 
+	public JButton getCancelButton() {
+		return cancelButton;
+	}
+
+	public JPanel getDsbPanel() {
+		return dsbPanel;
+	}
+
+	public JButton getOkButton() {
+		return okButton;
+	}
+
+	public JTextField getSearchField() {
+		return searchField;
+	}
+
+	public void setCancelButton(JButton cancelButton) {
+		this.cancelButton = cancelButton;
+	}
+
 	public void setDsbPanel(DSBDWZPlayerView dsbPanel) {
 		remove(this.dsbPanel);
 		this.dsbPanel = dsbPanel;
@@ -51,32 +71,12 @@ public class PlayerSearchView extends JPanel {
 		add(spielerSearchPanelList, BorderLayout.CENTER);
 	}
 
-	public JTextField getSearchField() {
-		return searchField;
-	}
-
-	public void setSearchField(JTextField searchField) {
-		this.searchField = searchField;
-	}
-
-	public JPanel getDsbPanel() {
-		return dsbPanel;
-	}
-
-	public JButton getOkButton() {
-		return okButton;
-	}
-
 	public void setOkButton(JButton okButton) {
 		this.okButton = okButton;
 	}
 
-	public JButton getCancelButton() {
-		return cancelButton;
-	}
-
-	public void setCancelButton(JButton cancelButton) {
-		this.cancelButton = cancelButton;
+	public void setSearchField(JTextField searchField) {
+		this.searchField = searchField;
 	}
 
 }

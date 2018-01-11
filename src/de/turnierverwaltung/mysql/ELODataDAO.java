@@ -11,17 +11,17 @@ public interface ELODataDAO {
 
 	public void deleteELO(int id) throws SQLException;
 
-	public void insertELO(ELOData eloData) throws SQLException;
-
-	public void updateELO(ELOData eloData) throws SQLException;
+	public void flush(ArrayList<ELOPlayer> eloDataArray) throws SQLException;
 
 	public ELOData getELOData(int id) throws SQLException;
 
-	public boolean playerExist(int fideId);
-
-	public void flush(ArrayList<ELOPlayer> eloDataArray) throws SQLException;
+	public ELOData getELODataByFideId(int id) throws SQLException;
 
 	public ArrayList<ELOData> getELODataByName(String eingabe) throws SQLException;
 
-	public ELOData getELODataByFideId(int id) throws SQLException;
+	public void insertELO(ELOData eloData) throws SQLException;
+
+	public boolean playerExist(int fideId);
+
+	public void updateELO(ELOData eloData) throws SQLException;
 }

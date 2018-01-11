@@ -41,12 +41,12 @@ import javax.swing.border.EmptyBorder;
 import de.turnierverwaltung.control.MainControl;
 
 public class TabbedPaneView extends JPanel {
-	private JTabbedPane tabbedPane;
-	private TitleLabelView titleView;
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JTabbedPane tabbedPane;
+	private TitleLabelView titleView;
 
 	public TabbedPaneView(MainControl mainCtrl, String title) {
 		setLayout(new BorderLayout());
@@ -64,12 +64,12 @@ public class TabbedPaneView extends JPanel {
 		return tabbedPane;
 	}
 
-	public void setTabbedPane(JTabbedPane tabbedPane) {
-		this.tabbedPane = tabbedPane;
-	}
-
 	public TitleLabelView getTitleView() {
 		return titleView;
+	}
+
+	public void setTabbedPane(JTabbedPane tabbedPane) {
+		this.tabbedPane = tabbedPane;
 	}
 
 	public void setTitleView(TitleLabelView titleView) {

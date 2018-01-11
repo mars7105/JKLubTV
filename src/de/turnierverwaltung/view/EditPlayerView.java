@@ -18,6 +18,7 @@ package de.turnierverwaltung.view;
 
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -26,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+
 import de.turnierverwaltung.model.Player;
 
 public class EditPlayerView extends JDialog {
@@ -225,16 +227,48 @@ public class EditPlayerView extends JDialog {
 		return okButton;
 	}
 
+	public JComboBox<String> getTextComboBoxAge() {
+		return textComboBoxAge;
+	}
+
 	public JTextField getTextFieldDwz() {
 		return textFieldDwz;
+	}
+
+	public JTextField getTextFieldDwzIndex() {
+		return textFieldDwzIndex;
+	}
+
+	public JTextField getTextFieldELO() {
+		return textFieldELO;
+	}
+
+	public JTextField getTextFieldFideId() {
+		return textFieldFideId;
+	}
+
+	public JTextField getTextFieldForename() {
+		return textFieldForename;
 	}
 
 	public JTextField getTextFieldKuerzel() {
 		return textFieldKuerzel;
 	}
 
+	public JTextField getTextFieldMGL() {
+		return textFieldMGL;
+	}
+
 	public JTextField getTextFieldName() {
 		return textFieldName;
+	}
+
+	public JTextField getTextFieldSurname() {
+		return textFieldSurname;
+	}
+
+	public JTextField getTextFieldZPS() {
+		return textFieldZPS;
 	}
 
 	public void setAddSpielerButton(JButton addSpielerButton) {
@@ -249,80 +283,48 @@ public class EditPlayerView extends JDialog {
 		this.okButton = okButton;
 	}
 
-	public void setTextFieldDwz(JTextField textFieldDwz) {
-		this.textFieldDwz = textFieldDwz;
-	}
-
-	public void setTextFieldKuerzel(JTextField textFieldKuerzel) {
-		this.textFieldKuerzel = textFieldKuerzel;
-	}
-
-	public void setTextFieldName(JTextField name) {
-		this.textFieldName = name;
-	}
-
-	public JComboBox<String> getTextComboBoxAge() {
-		return textComboBoxAge;
-	}
-
 	public void setTextComboBoxAge(JComboBox<String> textComboBoxAge) {
 		this.textComboBoxAge = textComboBoxAge;
 	}
 
-	public JTextField getTextFieldForename() {
-		return textFieldForename;
-	}
-
-	public void setTextFieldForename(JTextField textFieldForename) {
-		this.textFieldForename = textFieldForename;
-	}
-
-	public JTextField getTextFieldSurname() {
-		return textFieldSurname;
-	}
-
-	public void setTextFieldSurname(JTextField textFieldSurname) {
-		this.textFieldSurname = textFieldSurname;
-	}
-
-	public JTextField getTextFieldZPS() {
-		return textFieldZPS;
-	}
-
-	public void setTextFieldZPS(JTextField textFieldZPS) {
-		this.textFieldZPS = textFieldZPS;
-	}
-
-	public JTextField getTextFieldMGL() {
-		return textFieldMGL;
-	}
-
-	public void setTextFieldMGL(JTextField textFieldMGL) {
-		this.textFieldMGL = textFieldMGL;
-	}
-
-	public JTextField getTextFieldDwzIndex() {
-		return textFieldDwzIndex;
+	public void setTextFieldDwz(JTextField textFieldDwz) {
+		this.textFieldDwz = textFieldDwz;
 	}
 
 	public void setTextFieldDwzIndex(JTextField textFieldDwzIndex) {
 		this.textFieldDwzIndex = textFieldDwzIndex;
 	}
 
-	public JTextField getTextFieldFideId() {
-		return textFieldFideId;
+	public void setTextFieldELO(JTextField textFieldELO) {
+		this.textFieldELO = textFieldELO;
 	}
 
 	public void setTextFieldFideId(JTextField textFieldFideId) {
 		this.textFieldFideId = textFieldFideId;
 	}
 
-	public JTextField getTextFieldELO() {
-		return textFieldELO;
+	public void setTextFieldForename(JTextField textFieldForename) {
+		this.textFieldForename = textFieldForename;
 	}
 
-	public void setTextFieldELO(JTextField textFieldELO) {
-		this.textFieldELO = textFieldELO;
+	public void setTextFieldKuerzel(JTextField textFieldKuerzel) {
+		this.textFieldKuerzel = textFieldKuerzel;
+	}
+
+	public void setTextFieldMGL(JTextField textFieldMGL) {
+		this.textFieldMGL = textFieldMGL;
+	}
+
+	public void setTextFieldName(JTextField name) {
+		this.textFieldName = name;
+	}
+
+	public void setTextFieldSurname(JTextField textFieldSurname) {
+		this.textFieldSurname = textFieldSurname;
+	}
+
+	public void setTextFieldZPS(JTextField textFieldZPS) {
+		this.textFieldZPS = textFieldZPS;
 	}
 
 }

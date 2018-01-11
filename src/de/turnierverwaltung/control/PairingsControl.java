@@ -40,6 +40,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -96,52 +97,6 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 		init();
 	}
 
-	@SuppressWarnings("unchecked")
-	public void init() {
-
-		if (pairingsView == null) {
-			if (mainControl.getCrossTableControl() == null) {
-				meetingTable = new MeetingTable[gruppenAnzahl];
-				this.mainControl.setMeetingTable(meetingTable);
-			} else {
-				meetingTable = this.mainControl.getMeetingTable();
-			}
-			pairingsView = new PairingsView[gruppenAnzahl];
-			neuesTurnier = new Boolean[gruppenAnzahl];
-			changedGroups = new int[gruppenAnzahl][3];
-			for (int i = 0; i < gruppenAnzahl; i++) {
-				pairingsView[i] = new PairingsView(groups[i].getSpielerAnzahl());
-				neuesTurnier[i] = false;
-				for (int x = 0; x < 3; x++) {
-
-					if (checkNewTurnier() == true) {
-						changedGroups[i][x] = 1;
-					} else {
-						changedGroups[i][x] = 0;
-					}
-				}
-			}
-			this.mainControl.setPairingsView(pairingsView);
-			changeColorButton = new JButton[gruppenAnzahl][];
-			datePicker = new DateChooserPanel[gruppenAnzahl][];
-			roundNumbers = new JComboBox[gruppenAnzahl][];
-			spielerAnzahl = new int[gruppenAnzahl];
-			pairingsTables = new PairingsTables[gruppenAnzahl];
-			if (this.mainControl.getChangedGames() == null) {
-				changedGames = new ArrayList<Game>();
-				this.mainControl.setChangedGames(changedGames);
-			} else {
-				changedGames = this.mainControl.getChangedGames();
-
-			}
-			for (int i = 0; i < gruppenAnzahl; i++) {
-				pairingsView[i].getStatusLabel().setText(new Integer(changedGames.size()).toString());
-			}
-
-		}
-
-	}
-
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		init();
@@ -179,38 +134,6 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 				pairingsView[index].getStatusLabel().setText(new Integer(changedGames.size()).toString());
 
 			}
-
-		}
-
-	}
-
-	public void changeWerte(int index, int nummer) {
-
-		String datum;
-		games = groups[index].getPartien();
-		int runde;
-		datum = "";
-		try {
-//			if (Locale.getDefault().equals(Locale.US)) {
-//				pairingsView[index].getDatum()[nummer].setDateFormatString("yyyy/mm/dd");
-//			}
-//			if (Locale.getDefault().equals(Locale.GERMANY)) {
-//				pairingsView[index].getDatum()[nummer].setDateFormatString("dd.mm.yyyy");
-//			}
-			EventDate eventDate = new EventDate(pairingsView[index].getDatum()[nummer].getDate());
-
-			datum = eventDate.getDateString();
-
-			runde = pruefeObZahlKleinerEinsIst(
-					Integer.parseInt((String) pairingsView[index].getRundenNummer()[nummer].getSelectedItem()));
-			games[nummer].setSpielDatum(datum);
-			games[nummer].setRunde(runde);
-
-		} catch (NumberFormatException e) {
-			JOptionPane.showMessageDialog(mainControl, Messages.getString("RundenEingabeFormularControl.1")); //$NON-NLS-1$
-
-		} catch (ZahlKleinerAlsN e) {
-			JOptionPane.showMessageDialog(mainControl, Messages.getString("RundenEingabeFormularControl.2")); //$NON-NLS-1$
 
 		}
 
@@ -258,6 +181,121 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 		}
 		games[nummer].setSpielDatum(datum);
 		games[nummer].setRunde(runde);
+	}
+
+	public void changeWerte(int index, int nummer) {
+
+		String datum;
+		games = groups[index].getPartien();
+		int runde;
+		datum = "";
+		try {
+//			if (Locale.getDefault().equals(Locale.US)) {
+//				pairingsView[index].getDatum()[nummer].setDateFormatString("yyyy/mm/dd");
+//			}
+//			if (Locale.getDefault().equals(Locale.GERMANY)) {
+//				pairingsView[index].getDatum()[nummer].setDateFormatString("dd.mm.yyyy");
+//			}
+			EventDate eventDate = new EventDate(pairingsView[index].getDatum()[nummer].getDate());
+
+			datum = eventDate.getDateString();
+
+			runde = pruefeObZahlKleinerEinsIst(
+					Integer.parseInt((String) pairingsView[index].getRundenNummer()[nummer].getSelectedItem()));
+			games[nummer].setSpielDatum(datum);
+			games[nummer].setRunde(runde);
+
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(mainControl, Messages.getString("RundenEingabeFormularControl.1")); //$NON-NLS-1$
+
+		} catch (ZahlKleinerAlsN e) {
+			JOptionPane.showMessageDialog(mainControl, Messages.getString("RundenEingabeFormularControl.2")); //$NON-NLS-1$
+
+		}
+
+	}
+
+	private Boolean checkIfReadyToSave() {
+		Boolean readyToSave = false;
+		for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
+
+			if (mainControl.getNewTournamentPlayerInputControl().getReadyToSave()[i] == true) {
+				readyToSave = true;
+			} else {
+				return false;
+			}
+		}
+		return readyToSave;
+	}
+
+	public Boolean checkNewTurnier() {
+		Boolean ready = true;
+		if (mainControl.getNewTournamentPlayerInputControl() != null) {
+			for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
+				if (mainControl.getNewTournamentPlayerInputControl().getReadyToSave()[i] == false) {
+					ready = false;
+				}
+			}
+		}
+		return ready;
+	}
+
+	public int[][] getChangedGroups() {
+		return changedGroups;
+	}
+
+	public ArrayList<Game> getChangedPartien() {
+		return changedGames;
+	}
+
+	public Boolean[] getNeuesTurnier() {
+		return neuesTurnier;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void init() {
+
+		if (pairingsView == null) {
+			if (mainControl.getCrossTableControl() == null) {
+				meetingTable = new MeetingTable[gruppenAnzahl];
+				this.mainControl.setMeetingTable(meetingTable);
+			} else {
+				meetingTable = this.mainControl.getMeetingTable();
+			}
+			pairingsView = new PairingsView[gruppenAnzahl];
+			neuesTurnier = new Boolean[gruppenAnzahl];
+			changedGroups = new int[gruppenAnzahl][3];
+			for (int i = 0; i < gruppenAnzahl; i++) {
+				pairingsView[i] = new PairingsView(groups[i].getSpielerAnzahl());
+				neuesTurnier[i] = false;
+				for (int x = 0; x < 3; x++) {
+
+					if (checkNewTurnier() == true) {
+						changedGroups[i][x] = 1;
+					} else {
+						changedGroups[i][x] = 0;
+					}
+				}
+			}
+			this.mainControl.setPairingsView(pairingsView);
+			changeColorButton = new JButton[gruppenAnzahl][];
+			datePicker = new DateChooserPanel[gruppenAnzahl][];
+			roundNumbers = new JComboBox[gruppenAnzahl][];
+			spielerAnzahl = new int[gruppenAnzahl];
+			pairingsTables = new PairingsTables[gruppenAnzahl];
+			if (this.mainControl.getChangedGames() == null) {
+				changedGames = new ArrayList<Game>();
+				this.mainControl.setChangedGames(changedGames);
+			} else {
+				changedGames = this.mainControl.getChangedGames();
+
+			}
+			for (int i = 0; i < gruppenAnzahl; i++) {
+				pairingsView[i].getStatusLabel().setText(new Integer(changedGames.size()).toString());
+			}
+
+		}
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -363,68 +401,6 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 	}
 
-	private Boolean checkIfReadyToSave() {
-		Boolean readyToSave = false;
-		for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
-
-			if (mainControl.getNewTournamentPlayerInputControl().getReadyToSave()[i] == true) {
-				readyToSave = true;
-			} else {
-				return false;
-			}
-		}
-		return readyToSave;
-	}
-
-	private Boolean saveAndReloadTurnier() {
-
-		Boolean ok = true;
-		try {
-			ok = this.mainControl.getSaveTournamentControl().saveChangedPartien();
-		} catch (SQLException e) {
-			ok = false;
-			ExceptionHandler eh = new ExceptionHandler(mainControl);
-			eh.fileSQLError(e.getMessage());
-		}
-		return ok;
-	}
-
-	public Boolean[] getNeuesTurnier() {
-		return neuesTurnier;
-	}
-
-	public void setNeuesTurnier(Boolean[] neuesTurnier) {
-		this.neuesTurnier = neuesTurnier;
-	}
-
-	public int[][] getChangedGroups() {
-		return changedGroups;
-	}
-
-	public void setChangedGroups(int[][] changedGroups) {
-		this.changedGroups = changedGroups;
-	}
-
-	public ArrayList<Game> getChangedPartien() {
-		return changedGames;
-	}
-
-	public void setChangedPartien(ArrayList<Game> changedPartien) {
-		this.changedGames = changedPartien;
-	}
-
-	public Boolean checkNewTurnier() {
-		Boolean ready = true;
-		if (mainControl.getNewTournamentPlayerInputControl() != null) {
-			for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
-				if (mainControl.getNewTournamentPlayerInputControl().getReadyToSave()[i] == false) {
-					ready = false;
-				}
-			}
-		}
-		return ready;
-	}
-
 	@Override
 	public void propertyChange(PropertyChangeEvent arg0) {
 		if (arg0.getPropertyName().equals("date")) {
@@ -457,6 +433,31 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 			}
 		}
+	}
+
+	private Boolean saveAndReloadTurnier() {
+
+		Boolean ok = true;
+		try {
+			ok = this.mainControl.getSaveTournamentControl().saveChangedPartien();
+		} catch (SQLException e) {
+			ok = false;
+			ExceptionHandler eh = new ExceptionHandler(mainControl);
+			eh.fileSQLError(e.getMessage());
+		}
+		return ok;
+	}
+
+	public void setChangedGroups(int[][] changedGroups) {
+		this.changedGroups = changedGroups;
+	}
+
+	public void setChangedPartien(ArrayList<Game> changedPartien) {
+		this.changedGames = changedPartien;
+	}
+
+	public void setNeuesTurnier(Boolean[] neuesTurnier) {
+		this.neuesTurnier = neuesTurnier;
 	}
 
 }

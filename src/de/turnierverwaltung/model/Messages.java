@@ -11,9 +11,6 @@ public class Messages {
 
 	private static ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_COMTROLER_NAME, LOCALE);
 
-	private Messages() {
-	}
-
 	public static String getString(String key) {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
@@ -25,5 +22,8 @@ public class Messages {
 	public static void setLocale(Locale locale) {
 		LOCALE = locale;
 		RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_COMTROLER_NAME, LOCALE);
+	}
+
+	private Messages() {
 	}
 }

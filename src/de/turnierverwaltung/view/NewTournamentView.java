@@ -42,23 +42,6 @@ import javax.swing.ScrollPaneConstants;
 import de.turnierverwaltung.model.Tournament;
 
 public class NewTournamentView extends JPanel {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	private JPanel hauptPanel;
-	private JTextField turnierNameTextField;
-	private DateChooserPanel startDatumTextField;
-	private DateChooserPanel endDatumeTextField;
-	private SpinnerView gruppenAnzahlTextField;
-	private Tournament turnier;
-	private JButton okButton;
-	private String turnierName;
-	private String startDatum;
-	private String endDatum;
-	private int gruppenAnzahl;
-	private Properties property;
-
 	public class DateLabelFormatter extends AbstractFormatter {
 
 		/**
@@ -87,6 +70,23 @@ public class NewTournamentView extends JPanel {
 		}
 
 	}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JPanel hauptPanel;
+	private JTextField turnierNameTextField;
+	private DateChooserPanel startDatumTextField;
+	private DateChooserPanel endDatumeTextField;
+	private SpinnerView gruppenAnzahlTextField;
+	private Tournament turnier;
+	private JButton okButton;
+	private String turnierName;
+	private String startDatum;
+	private String endDatum;
+	private int gruppenAnzahl;
+
+	private Properties property;
 
 	/**
 	 * Create the dialog.

@@ -19,24 +19,36 @@ public class CSVPlayerArrayList {
 		csvPlayer = new ArrayList<CSVPlayer>();
 	}
 
-	public ArrayList<CSVPlayer> getCsvPlayer() {
-		return csvPlayer;
-	}
-
-	public void setCsvPlayer(ArrayList<CSVPlayer> csvPlayer) {
-		this.csvPlayer = csvPlayer;
-	}
-
 	public void addPlayer(CSVPlayer csv_Player) {
 
 		csvPlayer.add(csv_Player);
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
+	public Boolean checkifSpielerFileExist(String csvFilenameSpieler) {
+		if (csvFilenameSpieler.equals("")) {
+			return false;
+		}
+		File f = new File(csvFilenameSpieler);
+		if (f.exists()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public ArrayList<CSVPlayer> getAllPlayer() {
 
 		return csvPlayer;
 
+	}
+
+	public ArrayList<CSVPlayer> getCsvPlayer() {
+		return csvPlayer;
 	}
 
 	public Player getPlayer(String zps, String mgl) {
@@ -95,19 +107,7 @@ public class CSVPlayerArrayList {
 		}
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public Boolean checkifSpielerFileExist(String csvFilenameSpieler) {
-		if (csvFilenameSpieler.equals("")) {
-			return false;
-		}
-		File f = new File(csvFilenameSpieler);
-		if (f.exists()) {
-			return true;
-		} else {
-			return false;
-		}
+	public void setCsvPlayer(ArrayList<CSVPlayer> csvPlayer) {
+		this.csvPlayer = csvPlayer;
 	}
 }

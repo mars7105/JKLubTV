@@ -142,6 +142,10 @@ public class NewTournamentPlayerInputView extends JPanel {
 		return dwzTextfield;
 	}
 
+	public JTextField[] getForenameTextfield() {
+		return forenameTextfield;
+	}
+
 	public JTextField[] getKuerzelTextfield() {
 		return kuerzelTextfield;
 	}
@@ -163,12 +167,24 @@ public class NewTournamentPlayerInputView extends JPanel {
 		return spielerSuche;
 	}
 
+	public JTextField[] getSurnameTextfield() {
+		return surnameTextfield;
+	}
+
+	public JComboBox<String>[] getTextComboBoxAge() {
+		return textComboBoxAge;
+	}
+
 	public void setCancelButton(JButton cancelButton) {
 		this.cancelButton = cancelButton;
 	}
 
 	public void setDwzTextfield(JTextField[] dwzTextfield) {
 		this.dwzTextfield = dwzTextfield;
+	}
+
+	public void setForenameTextfield(JTextField[] forenameTextfield) {
+		this.forenameTextfield = forenameTextfield;
 	}
 
 	public void setKuerzelTextfield(JTextField[] kuerzelTextfield) {
@@ -192,28 +208,12 @@ public class NewTournamentPlayerInputView extends JPanel {
 		this.spielerSuche = spielerSuche;
 	}
 
-	public JComboBox<String>[] getTextComboBoxAge() {
-		return textComboBoxAge;
+	public void setSurnameTextfield(JTextField[] surnameTextfield) {
+		this.surnameTextfield = surnameTextfield;
 	}
 
 	public void setTextComboBoxAge(JComboBox<String>[] textComboBoxAge) {
 		this.textComboBoxAge = textComboBoxAge;
-	}
-
-	public JTextField[] getForenameTextfield() {
-		return forenameTextfield;
-	}
-
-	public void setForenameTextfield(JTextField[] forenameTextfield) {
-		this.forenameTextfield = forenameTextfield;
-	}
-
-	public JTextField[] getSurnameTextfield() {
-		return surnameTextfield;
-	}
-
-	public void setSurnameTextfield(JTextField[] surnameTextfield) {
-		this.surnameTextfield = surnameTextfield;
 	}
 
 }

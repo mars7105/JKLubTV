@@ -27,17 +27,6 @@ public class ICal {
 		}
 	}
 
-	public void saveICalender(String filename) {
-
-		File file = new File(filename);
-		try {
-			Biweekly.write(calendar).go(file);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-
 	private VEvent checkDate(String datum, String event) throws NumberFormatException {
 		java.util.Calendar cal = java.util.Calendar.getInstance();
 		VEvent ev = new VEvent();
@@ -72,5 +61,16 @@ public class ICal {
 		}
 
 		return ev;
+	}
+
+	public void saveICalender(String filename) {
+
+		File file = new File(filename);
+		try {
+			Biweekly.write(calendar).go(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

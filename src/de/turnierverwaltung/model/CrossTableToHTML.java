@@ -31,6 +31,21 @@ public class CrossTableToHTML {
 	private WebserverFileLink fileLink;
 	private String icsfilename;
 
+	public CrossTableToHTML(String[][] tabellenMatrix2, Tournament turnier2, String gruppenName2, String infoString2,
+			String path, String filename2, Boolean showLink, Boolean colorMatrix[][]) {
+		this.tabellenMatrix = tabellenMatrix2;
+		this.turnierName = turnier2.getTurnierName();
+		this.startDatum = turnier2.getStartDatum();
+		this.endDatum = turnier2.getEndDatum();
+		this.gruppenName = gruppenName2;
+		this.infoString = infoString2;
+		this.webServerPath = path;
+		this.filename = filename2;
+		this.icsfilename = "";
+		this.fileLink = new WebserverFileLink(this.webServerPath, this.filename, showLink);
+		this.colorMatrix = colorMatrix;
+	}
+
 	/**
 	 * 
 	 * @param tabellenMatrix
@@ -50,21 +65,6 @@ public class CrossTableToHTML {
 		this.filename = filename;
 		this.icsfilename = icsfilename;
 		this.fileLink = new WebserverFileLink(this.webServerPath, this.filename, this.icsfilename, showLink);
-		this.colorMatrix = colorMatrix;
-	}
-
-	public CrossTableToHTML(String[][] tabellenMatrix2, Tournament turnier2, String gruppenName2, String infoString2,
-			String path, String filename2, Boolean showLink, Boolean colorMatrix[][]) {
-		this.tabellenMatrix = tabellenMatrix2;
-		this.turnierName = turnier2.getTurnierName();
-		this.startDatum = turnier2.getStartDatum();
-		this.endDatum = turnier2.getEndDatum();
-		this.gruppenName = gruppenName2;
-		this.infoString = infoString2;
-		this.webServerPath = path;
-		this.filename = filename2;
-		this.icsfilename = "";
-		this.fileLink = new WebserverFileLink(this.webServerPath, this.filename, showLink);
 		this.colorMatrix = colorMatrix;
 	}
 

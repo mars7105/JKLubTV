@@ -126,33 +126,6 @@ public class EloRatingSystem {
 	// }
 
 	/**
-	 * Get new rating.
-	 * 
-	 * @param rating
-	 *            Rating of either the current player or the average of the current
-	 *            team.
-	 * @param opponentRating
-	 *            Rating of either the opponent player or the average of the
-	 *            opponent team or teams.
-	 * @param score
-	 *            Score: 0=Loss 0.5=Draw 1.0=Win
-	 * @param gameMode
-	 *            This param for K Factor: gameMode=1 - Blitz mode gameMode=0 -
-	 *            Standart game mode
-	 * @param isNewbie
-	 *            for a player new to the rating list until he has completed events
-	 *            with a total of at least 30 games. true if <=30, false if > 30
-	 * @return the new rating
-	 */
-	public int getNewRating(int rating, int opponentRating, double score, boolean isNewbie) {
-		double kFactor = getKFactor(rating, isNewbie);
-		double expectedScore = getExpectedScore(rating, opponentRating);
-		int newRating = calculateNewRating(rating, score, expectedScore, kFactor);
-
-		return newRating;
-	}
-
-	/**
 	 * Calculate the new rating based on the ELO standard formula. newRating =
 	 * oldRating + constant * (score - expectedScore)
 	 * 
@@ -168,6 +141,22 @@ public class EloRatingSystem {
 	 */
 	private int calculateNewRating(int oldRating, double score, double expectedScore, double kFactor) {
 		return oldRating + (int) (kFactor * (score - expectedScore));
+	}
+
+	/**
+	 * Get expected score based on two players. If more than two players are
+	 * competing, then opponentRating will be the average of all other opponent's
+	 * ratings. If there is two teams against each other, rating and opponentRating
+	 * will be the average of those players.
+	 * 
+	 * @param rating
+	 *            Rating
+	 * @param opponentRating
+	 *            Opponent(s) rating
+	 * @return the expected score
+	 */
+	private double getExpectedScore(int rating, int opponentRating) {
+		return 1.0 / (1.0 + Math.pow(10.0, ((opponentRating - rating) / 400.0)));
 	}
 
 	/**
@@ -194,18 +183,29 @@ public class EloRatingSystem {
 	}
 
 	/**
-	 * Get expected score based on two players. If more than two players are
-	 * competing, then opponentRating will be the average of all other opponent's
-	 * ratings. If there is two teams against each other, rating and opponentRating
-	 * will be the average of those players.
+	 * Get new rating.
 	 * 
 	 * @param rating
-	 *            Rating
+	 *            Rating of either the current player or the average of the current
+	 *            team.
 	 * @param opponentRating
-	 *            Opponent(s) rating
-	 * @return the expected score
+	 *            Rating of either the opponent player or the average of the
+	 *            opponent team or teams.
+	 * @param score
+	 *            Score: 0=Loss 0.5=Draw 1.0=Win
+	 * @param gameMode
+	 *            This param for K Factor: gameMode=1 - Blitz mode gameMode=0 -
+	 *            Standart game mode
+	 * @param isNewbie
+	 *            for a player new to the rating list until he has completed events
+	 *            with a total of at least 30 games. true if <=30, false if > 30
+	 * @return the new rating
 	 */
-	private double getExpectedScore(int rating, int opponentRating) {
-		return 1.0 / (1.0 + Math.pow(10.0, ((double) (opponentRating - rating) / 400.0)));
+	public int getNewRating(int rating, int opponentRating, double score, boolean isNewbie) {
+		double kFactor = getKFactor(rating, isNewbie);
+		double expectedScore = getExpectedScore(rating, opponentRating);
+		int newRating = calculateNewRating(rating, score, expectedScore, kFactor);
+
+		return newRating;
 	}
 }

@@ -373,24 +373,132 @@ public class NaviView extends JToolBar {
 
 	}
 
-	public JButton getTurnierAddButton() {
-		return turnierAddButton;
+	public JPanel getDateiPanel() {
+		return dateiPanel;
 	}
 
-	public void setTurnierAddButton(JButton turnierAddButton) {
-		this.turnierAddButton = turnierAddButton;
+	public JButton getExcelSpeichernButton() {
+		return excelSpeichernButton;
+	}
+
+	public JButton getExitButton() {
+		return exitButton;
+	}
+
+	public String getGruppenname() {
+		return gruppenname;
+	}
+
+	public JButton getiCalendarSpeichernButton() {
+		return iCalendarSpeichernButton;
+	}
+
+	public JButton getInfoButton() {
+		return infoButton;
+	}
+
+	public JButton getLoadDatabaseButton() {
+		return loadDatabaseButton;
+	}
+
+	public JButton getNewDatabseButton() {
+		return newDatabseButton;
+	}
+
+	public JButton getPairingsCancelButton() {
+		return pairingsCancelButton;
+	}
+
+	public JButton getPairingsLoadButton() {
+		return pairingsLoadButton;
+	}
+
+	public JPanel getPairingsPanel() {
+		return pairingsPanel;
+	}
+
+	public JButton getPairingsSaveButton() {
+		return pairingsSaveButton;
+	}
+
+	public JLabel getPathToDatabase() {
+		return pathToDatabase;
+	}
+
+	public JButton getPdfSpeichernButton() {
+		return pdfSpeichernButton;
+	}
+
+	public JButton getPropertiesButton() {
+		return propertiesButton;
+	}
+
+	public JButton getSpielerAddButton() {
+		return spielerAddButton;
+	}
+
+	public JButton getSpielerDEWISSearchButton() {
+		return spielerDEWISSearchButton;
+	}
+
+	public JButton getSpielerELOSearchButton() {
+		return spielerELOSearchButton;
+	}
+
+	public JButton getSpielerExport() {
+		return spielerExport;
+	}
+
+	public JButton getSpielerImport() {
+		return spielerImport;
+	}
+
+	public JPanel getSpielerListePanel() {
+		return spielerListePanel;
+	}
+
+	public JButton getTabelleAktualisierenButton() {
+		return tabelleAktualisierenButton;
+	}
+
+	public JButton getTabelleHTMLAusgabeButton() {
+		return tabelleHTMLAusgabeButton;
+	}
+
+	public String getTabellenname() {
+		return tabellenname;
+	}
+
+	public JPanel getTabellenPanel() {
+		return tabellenPanel;
+	}
+
+	public JButton getTabelleSpeichernButton() {
+		return tabelleSpeichernButton;
+	}
+
+	public JButton getTurnierAddButton() {
+		return turnierAddButton;
 	}
 
 	public JPanel getTurnierListePanel() {
 		return turnierListePanel;
 	}
 
-	public void setTurnierListePanel(JPanel turnierListePanel) {
-		this.turnierListePanel = turnierListePanel;
+	public JButton getUpdateButton() {
+		return updateButton;
 	}
 
-	public String getGruppenname() {
-		return gruppenname;
+	public void setDateiPanel(JPanel dateiPanel) {
+		this.dateiPanel = dateiPanel;
+	}
+
+	public void setExcelSpeichernButton(JButton excelSpeichernButton) {
+		this.excelSpeichernButton = excelSpeichernButton;
+	}
+
+	public void setExitButton(JButton exitButton) {
+		this.exitButton = exitButton;
 	}
 
 	public void setGruppenname(String gruppenname) {
@@ -399,8 +507,81 @@ public class NaviView extends JToolBar {
 		gruppenLabel.updateUI();
 	}
 
-	public String getTabellenname() {
-		return tabellenname;
+	public void setiCalendarSpeichernButton(JButton iCalendarSpeichernButton) {
+		this.iCalendarSpeichernButton = iCalendarSpeichernButton;
+	}
+
+	public void setInfoButton(JButton infoButton) {
+		this.infoButton = infoButton;
+	}
+
+	public void setLoadDatabaseButton(JButton loadDatabaseButton) {
+		this.loadDatabaseButton = loadDatabaseButton;
+	}
+
+	public void setNewDatabseButton(JButton newDatabseButton) {
+		this.newDatabseButton = newDatabseButton;
+	}
+
+	public void setPairingsCancelButton(JButton pairingsCancelButton) {
+		this.pairingsCancelButton = pairingsCancelButton;
+	}
+
+	public void setPairingsLoadButton(JButton pairingsLoadButton) {
+		this.pairingsLoadButton = pairingsLoadButton;
+	}
+
+	public void setPairingsPanel(JPanel pairingsPanel) {
+		this.pairingsPanel = pairingsPanel;
+	}
+
+	public void setPairingsSaveButton(JButton pairingsSaveButton) {
+		this.pairingsSaveButton = pairingsSaveButton;
+	}
+
+	public void setPathToDatabase(JLabel pathToDatabase) {
+		this.pathToDatabase = pathToDatabase;
+		this.pathToDatabase.updateUI();
+	}
+
+	public void setPdfSpeichernButton(JButton pdfSpeichernButton) {
+		this.pdfSpeichernButton = pdfSpeichernButton;
+	}
+
+	public void setPropertiesButton(JButton propertiesButton) {
+		this.propertiesButton = propertiesButton;
+	}
+
+	public void setSpielerAddButton(JButton spielerAddButton) {
+		this.spielerAddButton = spielerAddButton;
+	}
+
+	public void setSpielerDEWISSearchButton(JButton spielerDEWISSearchButton) {
+		this.spielerDEWISSearchButton = spielerDEWISSearchButton;
+	}
+
+	public void setSpielerELOSearchButton(JButton spielerELOSearchButton) {
+		this.spielerELOSearchButton = spielerELOSearchButton;
+	}
+
+	public void setSpielerExport(JButton spielerExport) {
+		this.spielerExport = spielerExport;
+	}
+
+	public void setSpielerImport(JButton spielerImport) {
+		this.spielerImport = spielerImport;
+	}
+
+	public void setSpielerListePanel(JPanel spielerListePanel) {
+		this.spielerListePanel = spielerListePanel;
+	}
+
+	public void setTabelleAktualisierenButton(JButton tabelleAktualisierenButton) {
+		this.tabelleAktualisierenButton = tabelleAktualisierenButton;
+	}
+
+	public void setTabelleHTMLAusgabeButton(JButton tabelleHTMLAusgabeButton) {
+		this.tabelleHTMLAusgabeButton = tabelleHTMLAusgabeButton;
 	}
 
 	public void setTabellenname(String tabellenname) {
@@ -412,205 +593,24 @@ public class NaviView extends JToolBar {
 		pairingsLabel.updateUI();
 	}
 
-	public JLabel getPathToDatabase() {
-		return pathToDatabase;
-	}
-
-	public void setPathToDatabase(JLabel pathToDatabase) {
-		this.pathToDatabase = pathToDatabase;
-		this.pathToDatabase.updateUI();
-	}
-
-	public JButton getNewDatabseButton() {
-		return newDatabseButton;
-	}
-
-	public void setNewDatabseButton(JButton newDatabseButton) {
-		this.newDatabseButton = newDatabseButton;
-	}
-
-	public JButton getLoadDatabaseButton() {
-		return loadDatabaseButton;
-	}
-
-	public void setLoadDatabaseButton(JButton loadDatabaseButton) {
-		this.loadDatabaseButton = loadDatabaseButton;
-	}
-
-	public JPanel getTabellenPanel() {
-		return tabellenPanel;
-	}
-
 	public void setTabellenPanel(JPanel tabellenPanel) {
 		this.tabellenPanel = tabellenPanel;
-	}
-
-	public JPanel getDateiPanel() {
-		return dateiPanel;
-	}
-
-	public void setDateiPanel(JPanel dateiPanel) {
-		this.dateiPanel = dateiPanel;
-	}
-
-	public JButton getTabelleSpeichernButton() {
-		return tabelleSpeichernButton;
 	}
 
 	public void setTabelleSpeichernButton(JButton tabelleSpeichernButton) {
 		this.tabelleSpeichernButton = tabelleSpeichernButton;
 	}
 
-	public JButton getTabelleAktualisierenButton() {
-		return tabelleAktualisierenButton;
+	public void setTurnierAddButton(JButton turnierAddButton) {
+		this.turnierAddButton = turnierAddButton;
 	}
 
-	public void setTabelleAktualisierenButton(JButton tabelleAktualisierenButton) {
-		this.tabelleAktualisierenButton = tabelleAktualisierenButton;
-	}
-
-	public JButton getTabelleHTMLAusgabeButton() {
-		return tabelleHTMLAusgabeButton;
-	}
-
-	public void setTabelleHTMLAusgabeButton(JButton tabelleHTMLAusgabeButton) {
-		this.tabelleHTMLAusgabeButton = tabelleHTMLAusgabeButton;
-	}
-
-	public JButton getPdfSpeichernButton() {
-		return pdfSpeichernButton;
-	}
-
-	public void setPdfSpeichernButton(JButton pdfSpeichernButton) {
-		this.pdfSpeichernButton = pdfSpeichernButton;
-	}
-
-	public JButton getSpielerImport() {
-		return spielerImport;
-	}
-
-	public void setSpielerImport(JButton spielerImport) {
-		this.spielerImport = spielerImport;
-	}
-
-	public JButton getSpielerExport() {
-		return spielerExport;
-	}
-
-	public void setSpielerExport(JButton spielerExport) {
-		this.spielerExport = spielerExport;
-	}
-
-	public JButton getSpielerDEWISSearchButton() {
-		return spielerDEWISSearchButton;
-	}
-
-	public void setSpielerDEWISSearchButton(JButton spielerDEWISSearchButton) {
-		this.spielerDEWISSearchButton = spielerDEWISSearchButton;
-	}
-
-	public JButton getSpielerAddButton() {
-		return spielerAddButton;
-	}
-
-	public void setSpielerAddButton(JButton spielerAddButton) {
-		this.spielerAddButton = spielerAddButton;
-	}
-
-	public JPanel getSpielerListePanel() {
-		return spielerListePanel;
-	}
-
-	public void setSpielerListePanel(JPanel spielerListePanel) {
-		this.spielerListePanel = spielerListePanel;
-	}
-
-	public JButton getExcelSpeichernButton() {
-		return excelSpeichernButton;
-	}
-
-	public void setExcelSpeichernButton(JButton excelSpeichernButton) {
-		this.excelSpeichernButton = excelSpeichernButton;
-	}
-
-	public JButton getPairingsLoadButton() {
-		return pairingsLoadButton;
-	}
-
-	public void setPairingsLoadButton(JButton pairingsLoadButton) {
-		this.pairingsLoadButton = pairingsLoadButton;
-	}
-
-	public JButton getPairingsSaveButton() {
-		return pairingsSaveButton;
-	}
-
-	public void setPairingsSaveButton(JButton pairingsSaveButton) {
-		this.pairingsSaveButton = pairingsSaveButton;
-	}
-
-	public JPanel getPairingsPanel() {
-		return pairingsPanel;
-	}
-
-	public void setPairingsPanel(JPanel pairingsPanel) {
-		this.pairingsPanel = pairingsPanel;
-	}
-
-	public JButton getPropertiesButton() {
-		return propertiesButton;
-	}
-
-	public void setPropertiesButton(JButton propertiesButton) {
-		this.propertiesButton = propertiesButton;
-	}
-
-	public JButton getInfoButton() {
-		return infoButton;
-	}
-
-	public void setInfoButton(JButton infoButton) {
-		this.infoButton = infoButton;
-	}
-
-	public JButton getiCalendarSpeichernButton() {
-		return iCalendarSpeichernButton;
-	}
-
-	public void setiCalendarSpeichernButton(JButton iCalendarSpeichernButton) {
-		this.iCalendarSpeichernButton = iCalendarSpeichernButton;
-	}
-
-	public JButton getExitButton() {
-		return exitButton;
-	}
-
-	public void setExitButton(JButton exitButton) {
-		this.exitButton = exitButton;
-	}
-
-	public JButton getPairingsCancelButton() {
-		return pairingsCancelButton;
-	}
-
-	public void setPairingsCancelButton(JButton pairingsCancelButton) {
-		this.pairingsCancelButton = pairingsCancelButton;
-	}
-
-	public JButton getUpdateButton() {
-		return updateButton;
+	public void setTurnierListePanel(JPanel turnierListePanel) {
+		this.turnierListePanel = turnierListePanel;
 	}
 
 	public void setUpdateButton(JButton updateButton) {
 		this.updateButton = updateButton;
-	}
-
-	public JButton getSpielerELOSearchButton() {
-		return spielerELOSearchButton;
-	}
-
-	public void setSpielerELOSearchButton(JButton spielerELOSearchButton) {
-		this.spielerELOSearchButton = spielerELOSearchButton;
 	}
 
 }

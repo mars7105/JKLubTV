@@ -18,6 +18,10 @@ public class SQLInfoControl {
 
 	}
 
+	public void deleteOneInfo(Info info) throws SQLException {
+		mySQLInfoDAO.deleteInfo(info.getInfoId());
+	}
+
 	public ArrayList<Info> getAllInfos() throws SQLException {
 		ArrayList<Info> infos;
 		infos = mySQLInfoDAO.getAllInfos();
@@ -40,10 +44,6 @@ public class SQLInfoControl {
 
 		mySQLInfoDAO.updateInfo(info);
 
-	}
-
-	public void deleteOneInfo(Info info) throws SQLException {
-		mySQLInfoDAO.deleteInfo(info.getInfoId());
 	}
 
 }

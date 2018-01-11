@@ -38,11 +38,6 @@ import de.turnierverwaltung.model.EventDate;
 import de.turnierverwaltung.model.Tournament;
 
 public class EditTournamentView extends JDialog {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
 	public class DateLabelFormatter extends AbstractFormatter {
 
 		/**
@@ -68,6 +63,11 @@ public class EditTournamentView extends JDialog {
 		}
 
 	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	private JButton okButton;
 	private JButton cancelButton;
@@ -237,6 +237,10 @@ public class EditTournamentView extends JDialog {
 		return startDatumTextField;
 	}
 
+	public JTextField[] getTextFieldGruppenName() {
+		return textFieldGruppenName;
+	}
+
 	public JTextField getTextFieldTurnierName() {
 		return textFieldTurnierName;
 	}
@@ -257,15 +261,11 @@ public class EditTournamentView extends JDialog {
 		this.startDatumTextField = startDatumTextField;
 	}
 
-	public void setTextFieldTurnierName(JTextField textFieldTurnierName) {
-		this.textFieldTurnierName = textFieldTurnierName;
-	}
-
-	public JTextField[] getTextFieldGruppenName() {
-		return textFieldGruppenName;
-	}
-
 	public void setTextFieldGruppenName(JTextField[] textFieldGruppenName) {
 		this.textFieldGruppenName = textFieldGruppenName;
+	}
+
+	public void setTextFieldTurnierName(JTextField textFieldTurnierName) {
+		this.textFieldTurnierName = textFieldTurnierName;
 	}
 }

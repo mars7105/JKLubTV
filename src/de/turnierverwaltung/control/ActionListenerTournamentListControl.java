@@ -25,6 +25,7 @@ public class ActionListenerTournamentListControl implements ActionListener {
 		newTurnierButton.addActionListener(this);
 	}
 
+	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() .equals( newTurnierButton)) {
 			mainControl.setNewTournamentPlayerInputControl(null);

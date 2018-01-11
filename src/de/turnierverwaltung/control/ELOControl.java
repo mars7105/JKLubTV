@@ -85,6 +85,41 @@ public class ELOControl {
 
 	}
 
+	private void errorHandler() {
+		if (runOnce == false) {
+			eloFile = false;
+			mainControl.getPropertiesControl().setPathToPlayersELO("");
+
+			JOptionPane.showMessageDialog(null, Messages.getString("DewisDialogControl.9"),
+					Messages.getString("DewisDialogControl.8"), JOptionPane.INFORMATION_MESSAGE);
+		}
+		runOnce = true;
+	}
+
+	public ELODialogView getDialog() {
+		return dialog;
+	}
+
+	public ArrayList<ELOPlayer> getPlayers() {
+		return players;
+	}
+
+	public ArrayList<Player> getSearchplayerlist() {
+		return searchplayerlist;
+	}
+
+	public ELOPlayerView getSpielerDewisView() {
+		return spielerDewisView;
+	}
+
+	public ELOPlayerView getSpielerSearchPanelList() {
+		return spielerSearchPanelList;
+	}
+
+	public ArrayList<CSVVereine> getZpsItems() {
+		return zpsItems;
+	}
+
 	/**
 	* 
 	*/
@@ -195,15 +230,12 @@ public class ELOControl {
 		}
 	}
 
-	private void errorHandler() {
-		if (runOnce == false) {
-			eloFile = false;
-			mainControl.getPropertiesControl().setPathToPlayersELO("");
+	private boolean playerExist(ELOData tmp) {
+		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
 
-			JOptionPane.showMessageDialog(null, Messages.getString("DewisDialogControl.9"),
-					Messages.getString("DewisDialogControl.8"), JOptionPane.INFORMATION_MESSAGE);
-		}
-		runOnce = true;
+		Boolean playerExist = false;
+		playerExist = spielerTableControl.playerFideExist(tmp.getFideid());
+		return playerExist;
 	}
 
 	private boolean playerExist(Player neuerSpieler) {
@@ -216,60 +248,28 @@ public class ELOControl {
 		return playerExist;
 	}
 
-	private boolean playerExist(ELOData tmp) {
-		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
-
-		Boolean playerExist = false;
-		playerExist = spielerTableControl.playerFideExist(tmp.getFideid());
-		return playerExist;
-	}
-
-	public ELODialogView getDialog() {
-		return dialog;
-	}
-
 	public void setDialog(ELODialogView dialog) {
 		this.dialog = dialog;
-	}
-
-	public ELOPlayerView getSpielerDewisView() {
-		return spielerDewisView;
-	}
-
-	public void setSpielerDewisView(ELOPlayerView spielerDewisView) {
-		this.spielerDewisView = spielerDewisView;
-	}
-
-	public ArrayList<ELOPlayer> getPlayers() {
-		return players;
 	}
 
 	public void setPlayers(ArrayList<ELOPlayer> players) {
 		this.players = players;
 	}
 
-	public ArrayList<CSVVereine> getZpsItems() {
-		return zpsItems;
+	public void setSearchplayerlist(ArrayList<Player> searchplayerlist) {
+		this.searchplayerlist = searchplayerlist;
 	}
 
-	public void setZpsItems(ArrayList<CSVVereine> zpsItems) {
-		this.zpsItems = zpsItems;
-	}
-
-	public ELOPlayerView getSpielerSearchPanelList() {
-		return spielerSearchPanelList;
+	public void setSpielerDewisView(ELOPlayerView spielerDewisView) {
+		this.spielerDewisView = spielerDewisView;
 	}
 
 	public void setSpielerSearchPanelList(ELOPlayerView spielerSearchPanelList) {
 		this.spielerSearchPanelList = spielerSearchPanelList;
 	}
 
-	public ArrayList<Player> getSearchplayerlist() {
-		return searchplayerlist;
-	}
-
-	public void setSearchplayerlist(ArrayList<Player> searchplayerlist) {
-		this.searchplayerlist = searchplayerlist;
+	public void setZpsItems(ArrayList<CSVVereine> zpsItems) {
+		this.zpsItems = zpsItems;
 	}
 
 }

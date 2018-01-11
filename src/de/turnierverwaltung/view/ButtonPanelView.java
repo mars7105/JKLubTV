@@ -31,18 +31,22 @@ public class ButtonPanelView extends JPanel {
 
 	}
 
+	public JButton getCancelButton() {
+		return cancelButton;
+	}
+
+	public JButton getHelpButton() {
+		return helpButton;
+	}
+
+	public JButton getOkButton() {
+		return okButton;
+	}
+
 	public void makeAllButtons() {
 		makeOKButton();
 		makeCancelButton();
 
-	}
-
-	public void makeOKButton() {
-		okButton = new JButton(Messages.getString("ButtonPanelView.0"), okIcon);
-		okButton.setActionCommand(Messages.getString("ButtonPanelView.0")); //$NON-NLS-1$
-
-		add(okButton);
-		// makeHelpButton();
 	}
 
 	public void makeCancelButton() {
@@ -58,28 +62,24 @@ public class ButtonPanelView extends JPanel {
 		add(helpButton);
 	}
 
-	public JButton getOkButton() {
-		return okButton;
-	}
+	public void makeOKButton() {
+		okButton = new JButton(Messages.getString("ButtonPanelView.0"), okIcon);
+		okButton.setActionCommand(Messages.getString("ButtonPanelView.0")); //$NON-NLS-1$
 
-	public void setOkButton(JButton okButton) {
-		this.okButton = okButton;
-	}
-
-	public JButton getCancelButton() {
-		return cancelButton;
+		add(okButton);
+		// makeHelpButton();
 	}
 
 	public void setCancelButton(JButton cancelButton) {
 		this.cancelButton = cancelButton;
 	}
 
-	public JButton getHelpButton() {
-		return helpButton;
-	}
-
 	public void setHelpButton(JButton helpButton) {
 		this.helpButton = helpButton;
+	}
+
+	public void setOkButton(JButton okButton) {
+		this.okButton = okButton;
 	}
 
 }

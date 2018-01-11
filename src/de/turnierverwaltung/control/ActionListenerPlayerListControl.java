@@ -6,6 +6,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.io.IOException;
 import java.sql.SQLException;
+
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.view.NaviView;
 import de.turnierverwaltung.view.NewPlayerView;
@@ -148,6 +149,21 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 		}
 	}
 
+	@Override
+	public void focusGained(FocusEvent e) {
+		String forename = spielerHinzufuegenView.getTextFieldForeName().getText();
+		String surname = spielerHinzufuegenView.getTextFieldSurName().getText();
+		String kuerzel = forename.substring(0, 1) + surname.substring(0, 1);
+		spielerHinzufuegenView.getTextFieldKuerzel().setText(kuerzel);
+
+	}
+
+	@Override
+	public void focusLost(FocusEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
 	/**
 	 * 
 	 */
@@ -163,21 +179,6 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 		spielerHinzufuegenView.getOkButton().addActionListener(this);
 		spielerHinzufuegenView.getCancelButton().addActionListener(this);
 		mainControl.setEnabled(false);
-	}
-
-	@Override
-	public void focusGained(FocusEvent e) {
-		String forename = spielerHinzufuegenView.getTextFieldForeName().getText();
-		String surname = spielerHinzufuegenView.getTextFieldSurName().getText();
-		String kuerzel = forename.substring(0, 1) + surname.substring(0, 1);
-		spielerHinzufuegenView.getTextFieldKuerzel().setText(kuerzel);
-
-	}
-
-	@Override
-	public void focusLost(FocusEvent e) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

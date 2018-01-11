@@ -85,23 +85,16 @@ public class DSBDWZPlayerView extends JPanel {
 
 	}
 
-	public void makeSpielerZeile(Player spieler, int iconnumber) {
-		ListItem playerItem = null;
-		if (iconnumber == 0) {
-			playerItem = new ListItem(inserIcon,
-					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
-		}
-		if (iconnumber == 1) {
-			playerItem = new ListItem(insertIcon2,
-					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
-		}
-		if (iconnumber == 2) {
-			playerItem = new ListItem(insertIcon3,
-					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
+	public JPanel getContentPanel() {
+		return contentPanel;
+	}
 
-		}
-		listModel.addElement(playerItem);
+	public JList<ListItem> getList() {
+		return list;
+	}
 
+	public DefaultListModel<ListItem> getListModel() {
+		return listModel;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -113,30 +106,6 @@ public class DSBDWZPlayerView extends JPanel {
 		list.setCellRenderer(new MyCellRenderer());
 		contentPanel.add(list);
 		contentPanel.updateUI();
-	}
-
-	public JPanel getContentPanel() {
-		return contentPanel;
-	}
-
-	public void setContentPanel(JPanel contentPanel) {
-		this.contentPanel = contentPanel;
-	}
-
-	public JList<ListItem> getList() {
-		return list;
-	}
-
-	public void setList(JList<ListItem> list) {
-		this.list = list;
-	}
-
-	public DefaultListModel<ListItem> getListModel() {
-		return listModel;
-	}
-
-	public void setListModel(DefaultListModel<ListItem> listModel) {
-		this.listModel = listModel;
 	}
 
 	public void makeSpielerZeile(DWZData dwzData, int iconnumber) {
@@ -157,6 +126,37 @@ public class DSBDWZPlayerView extends JPanel {
 		}
 		listModel.addElement(playerItem);
 
+	}
+
+	public void makeSpielerZeile(Player spieler, int iconnumber) {
+		ListItem playerItem = null;
+		if (iconnumber == 0) {
+			playerItem = new ListItem(inserIcon,
+					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
+		}
+		if (iconnumber == 1) {
+			playerItem = new ListItem(insertIcon2,
+					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
+		}
+		if (iconnumber == 2) {
+			playerItem = new ListItem(insertIcon3,
+					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
+
+		}
+		listModel.addElement(playerItem);
+
+	}
+
+	public void setContentPanel(JPanel contentPanel) {
+		this.contentPanel = contentPanel;
+	}
+
+	public void setList(JList<ListItem> list) {
+		this.list = list;
+	}
+
+	public void setListModel(DefaultListModel<ListItem> listModel) {
+		this.listModel = listModel;
 	}
 
 }

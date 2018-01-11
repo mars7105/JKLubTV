@@ -299,16 +299,46 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 		loadTurnierListe();
 	}
 
-	public void reloadTurnier() throws SQLException {
-		turnier = mainControl.getTournament();
-		if (turnier != null && loadedTurnierID >= 0) {
-			for (int i = 0; i < anzahlTurniere; i++) {
-				if (turnierListe.get(i).getTurnierId() == loadedTurnierID) {
+	public int getLoadedTurnierID() {
+		return loadedTurnierID;
+	}
 
-					loadTurnier(i);
-				}
+	public void loadPairingsView() {
+		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
+		if (ready) {
+			int gruppenAnzahl = mainControl.getTournament().getAnzahlGruppen();
+
+			ProgressBarView progressBar = new ProgressBarView(Messages.getString("NaviController.32"),
+					Messages.getString("NaviController.31"), gruppenAnzahl);
+			mainControl.getNaviView().getTabellenPanel().setVisible(false);
+			progressBar.iterate(gruppenAnzahl);
+
+			PairingsControl pairingsControl = mainControl.getPairingsControl();
+			pairingsControl.init();
+			TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabbedPaneViewArray();
+
+			for (int i = 0; i < gruppenAnzahl; i++) {
+				progressBar.iterate();
+
+				tabAnzeigeView2[i].getTabbedPane().setEnabledAt(0, false);
+				tabAnzeigeView2[i].getTabbedPane().setEnabledAt(1, false);
+				pairingsControl.makeRundenEditView(i);
+				tabAnzeigeView2[i].getTabbedPane().setSelectedIndex(2);
+				progressBar.iterate();
+
 			}
+			progressBar.iterate(gruppenAnzahl);
+
+			this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
+			this.mainControl.getActionListenerPairingsMenuControl().setPairingIsActive(true);
+			progressBar.iterate(gruppenAnzahl);
+
+		} else {
+			JOptionPane.showMessageDialog(null,
+					Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$
+
 		}
+
 	}
 
 	public void loadTurnier(int index) throws SQLException {
@@ -429,50 +459,20 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 		}
 	}
 
-	public int getLoadedTurnierID() {
-		return loadedTurnierID;
+	public void reloadTurnier() throws SQLException {
+		turnier = mainControl.getTournament();
+		if (turnier != null && loadedTurnierID >= 0) {
+			for (int i = 0; i < anzahlTurniere; i++) {
+				if (turnierListe.get(i).getTurnierId() == loadedTurnierID) {
+
+					loadTurnier(i);
+				}
+			}
+		}
 	}
 
 	public void setLoadedTurnierID(int loadedTurnierID) {
 		this.loadedTurnierID = loadedTurnierID;
-	}
-
-	public void loadPairingsView() {
-		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
-		if (ready) {
-			int gruppenAnzahl = mainControl.getTournament().getAnzahlGruppen();
-
-			ProgressBarView progressBar = new ProgressBarView(Messages.getString("NaviController.32"),
-					Messages.getString("NaviController.31"), gruppenAnzahl);
-			mainControl.getNaviView().getTabellenPanel().setVisible(false);
-			progressBar.iterate(gruppenAnzahl);
-
-			PairingsControl pairingsControl = mainControl.getPairingsControl();
-			pairingsControl.init();
-			TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabbedPaneViewArray();
-
-			for (int i = 0; i < gruppenAnzahl; i++) {
-				progressBar.iterate();
-
-				tabAnzeigeView2[i].getTabbedPane().setEnabledAt(0, false);
-				tabAnzeigeView2[i].getTabbedPane().setEnabledAt(1, false);
-				pairingsControl.makeRundenEditView(i);
-				tabAnzeigeView2[i].getTabbedPane().setSelectedIndex(2);
-				progressBar.iterate();
-
-			}
-			progressBar.iterate(gruppenAnzahl);
-
-			this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
-			this.mainControl.getActionListenerPairingsMenuControl().setPairingIsActive(true);
-			progressBar.iterate(gruppenAnzahl);
-
-		} else {
-			JOptionPane.showMessageDialog(null,
-					Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$
-
-		}
-
 	}
 
 }

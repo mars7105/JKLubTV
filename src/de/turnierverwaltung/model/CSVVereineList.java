@@ -20,6 +20,42 @@ public class CSVVereineList {
 		csvVerein = new HashMap<String, CSVVereine>();
 	}
 
+	public void addVerein(CSVVereine csv_Verein) {
+
+		csvvereine.add(csv_Verein);
+
+	}
+
+	public void addVerein(String zps, CSVVereine csv_Verein) {
+
+		csvVerein.put(zps, csv_Verein);
+
+	}
+
+	/**
+	 * 
+	 * @return
+	 */
+	public Boolean checkifFileExist(String csvFilenameVereine) {
+		if (csvFilenameVereine.equals("")) {
+			return false;
+		}
+		File f = new File(csvFilenameVereine);
+		if (f.exists()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public HashMap<String, CSVVereine> getCsvVerein() {
+		return csvVerein;
+	}
+
+	public ArrayList<CSVVereine> getCsvvereine() {
+		return csvvereine;
+	}
+
 	/**
 	 * 
 	 * @param searchString
@@ -49,48 +85,12 @@ public class CSVVereineList {
 
 	}
 
-	/**
-	 * 
-	 * @return
-	 */
-	public Boolean checkifFileExist(String csvFilenameVereine) {
-		if (csvFilenameVereine.equals("")) {
-			return false;
-		}
-		File f = new File(csvFilenameVereine);
-		if (f.exists()) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-
-	public ArrayList<CSVVereine> getCsvvereine() {
-		return csvvereine;
+	public void setCsvVerein(HashMap<String, CSVVereine> csvVerein) {
+		this.csvVerein = csvVerein;
 	}
 
 	public void setCsvvereine(ArrayList<CSVVereine> csvvereine) {
 		this.csvvereine = csvvereine;
-	}
-
-	public void addVerein(String zps, CSVVereine csv_Verein) {
-
-		csvVerein.put(zps, csv_Verein);
-
-	}
-
-	public void addVerein(CSVVereine csv_Verein) {
-
-		csvvereine.add(csv_Verein);
-
-	}
-
-	public HashMap<String, CSVVereine> getCsvVerein() {
-		return csvVerein;
-	}
-
-	public void setCsvVerein(HashMap<String, CSVVereine> csvVerein) {
-		this.csvVerein = csvVerein;
 	}
 
 }

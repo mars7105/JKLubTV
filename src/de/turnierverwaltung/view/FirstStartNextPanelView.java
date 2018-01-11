@@ -31,10 +31,30 @@ public class FirstStartNextPanelView extends JPanel {
 
 	}
 
+	public JButton getHelpButton() {
+		return helpButton;
+	}
+
+	public JButton getNextButton() {
+		return nextButton;
+	}
+
+	public JButton getPrevButton() {
+		return prevButton;
+	}
+
 	public void makeAllButtons() {
 		
 		makePrevButton();
 		makeNextButton();
+	}
+
+
+
+	public void makeHelpButton() {
+		helpButton = new JButton(helpIcon);
+
+		add(helpButton);
 	}
 
 	public void makeNextButton() {
@@ -51,36 +71,16 @@ public class FirstStartNextPanelView extends JPanel {
 		add(prevButton);
 	}
 
-	public void makeHelpButton() {
-		helpButton = new JButton(helpIcon);
-
-		add(helpButton);
-	}
-
-
-
-	public JButton getNextButton() {
-		return nextButton;
+	public void setHelpButton(JButton helpButton) {
+		this.helpButton = helpButton;
 	}
 
 	public void setNextButton(JButton nextButton) {
 		this.nextButton = nextButton;
 	}
 
-	public JButton getPrevButton() {
-		return prevButton;
-	}
-
 	public void setPrevButton(JButton prevButton) {
 		this.prevButton = prevButton;
-	}
-
-	public JButton getHelpButton() {
-		return helpButton;
-	}
-
-	public void setHelpButton(JButton helpButton) {
-		this.helpButton = helpButton;
 	}
 
 }

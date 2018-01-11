@@ -37,100 +37,34 @@ import com.itextpdf.text.pdf.PdfWriter;
 import de.turnierverwaltung.model.Tournament;
 
 public class PDFOutputControl {
-	private Boolean fileExist;
-
-	public PDFOutputControl() {
-		fileExist = false;
-
-	}
-
-	/**
-	 * Creates a PDF with information about the movies
-	 * 
-	 * @param turnier
-	 * 
-	 * @param filename
-	 *            the name of the PDF file that will be created.
-	 * @throws DocumentException
-	 * @throws IOException
-	 */
-	public void createTurnierPdf(Tournament turnier, String titel, String absolutePath, String[][] tabellenMatrix) {
-		int n = 0;
-
-		File file = new File(absolutePath);
-		if (file.exists() && fileExist == false) {
-			fileExist = true;
-			Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
-			n = JOptionPane.showOptionDialog(null,
-					Messages.getString("SaveDialog.0") + file.getAbsolutePath() + Messages.getString("SaveDialog.1"),
-					"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
-					options[1]);
+	public static PdfPTable createTerminTabelle(String[][] stringTable) throws DocumentException {
+		int spalten = stringTable[0].length;
+		int zeilen = stringTable.length;
+		for (int i = 0; i < zeilen; i++) {
+			String replacedStr = stringTable[i][0].replaceAll("<br />", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			stringTable[i][0] = replacedStr;
 		}
-		if (n == 0) {
-			// step 1
-			Document document = new Document();
-			// step 2
-			try {
-				PdfWriter.getInstance(document, new FileOutputStream(file));
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (DocumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// step 3
-			document.open();
-			// step 4
-			try {
-				document.add(new Paragraph(titel));
-				document.add(new Paragraph(" ")); //$NON-NLS-1$
-				document.add(createTurnierTabelle(turnier, tabellenMatrix));
-			} catch (DocumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// step 5
-			document.close();
-		}
-	}
 
-	public void createTerminPdf(String titel, String absolutePath, String[][] tabellenMatrix) {
-		int n = 0;
+		PdfPTable table = new PdfPTable(zeilen);
 
-		File file = new File(absolutePath);
-		if (file.exists() && fileExist == false) {
-			fileExist = true;
-			Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
-			n = JOptionPane.showOptionDialog(null,
-					Messages.getString("SaveDialog.0") + file.getAbsolutePath() + Messages.getString("SaveDialog.1"),
-					"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
-					options[1]);
-		}
-		if (n == 0) {
-			// step 1
-			Document document = new Document();
-			// step 2
-			try {
-				PdfWriter.getInstance(document, new FileOutputStream(file));
-			} catch (FileNotFoundException | DocumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		Font font = new Font(FontFamily.HELVETICA, 8);
+
+		for (int x = 0; x < spalten; x++) {
+
+			for (int y = 0; y < zeilen; y++) {
+
+				Phrase ph = new Phrase(stringTable[y][x]);
+				ph.setFont(font);
+				PdfPCell cell = new PdfPCell(ph);
+
+				table.addCell(cell);
+
 			}
-			// step 3
-			document.open();
-			// step 4
-			try {
-				document.add(new Paragraph(titel));
-				document.add(new Paragraph(" ")); //$NON-NLS-1$
-				document.add(createTerminTabelle(tabellenMatrix));
-			} catch (DocumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// step 5
-			document.close();
+
 		}
+
+		return table;
+
 	}
 
 	public static PdfPTable createTurnierTabelle(Tournament turnier, String[][] stringTable) throws DocumentException {
@@ -200,34 +134,100 @@ public class PDFOutputControl {
 
 	}
 
-	public static PdfPTable createTerminTabelle(String[][] stringTable) throws DocumentException {
-		int spalten = stringTable[0].length;
-		int zeilen = stringTable.length;
-		for (int i = 0; i < zeilen; i++) {
-			String replacedStr = stringTable[i][0].replaceAll("<br />", ""); //$NON-NLS-1$ //$NON-NLS-2$
-			stringTable[i][0] = replacedStr;
+	private Boolean fileExist;
+
+	public PDFOutputControl() {
+		fileExist = false;
+
+	}
+
+	public void createTerminPdf(String titel, String absolutePath, String[][] tabellenMatrix) {
+		int n = 0;
+
+		File file = new File(absolutePath);
+		if (file.exists() && fileExist == false) {
+			fileExist = true;
+			Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
+			n = JOptionPane.showOptionDialog(null,
+					Messages.getString("SaveDialog.0") + file.getAbsolutePath() + Messages.getString("SaveDialog.1"),
+					"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+					options[1]);
 		}
-
-		PdfPTable table = new PdfPTable(zeilen);
-
-		Font font = new Font(FontFamily.HELVETICA, 8);
-
-		for (int x = 0; x < spalten; x++) {
-
-			for (int y = 0; y < zeilen; y++) {
-
-				Phrase ph = new Phrase(stringTable[y][x]);
-				ph.setFont(font);
-				PdfPCell cell = new PdfPCell(ph);
-
-				table.addCell(cell);
-
+		if (n == 0) {
+			// step 1
+			Document document = new Document();
+			// step 2
+			try {
+				PdfWriter.getInstance(document, new FileOutputStream(file));
+			} catch (FileNotFoundException | DocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-
+			// step 3
+			document.open();
+			// step 4
+			try {
+				document.add(new Paragraph(titel));
+				document.add(new Paragraph(" ")); //$NON-NLS-1$
+				document.add(createTerminTabelle(tabellenMatrix));
+			} catch (DocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// step 5
+			document.close();
 		}
+	}
 
-		return table;
+	/**
+	 * Creates a PDF with information about the movies
+	 * 
+	 * @param turnier
+	 * 
+	 * @param filename
+	 *            the name of the PDF file that will be created.
+	 * @throws DocumentException
+	 * @throws IOException
+	 */
+	public void createTurnierPdf(Tournament turnier, String titel, String absolutePath, String[][] tabellenMatrix) {
+		int n = 0;
 
+		File file = new File(absolutePath);
+		if (file.exists() && fileExist == false) {
+			fileExist = true;
+			Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
+			n = JOptionPane.showOptionDialog(null,
+					Messages.getString("SaveDialog.0") + file.getAbsolutePath() + Messages.getString("SaveDialog.1"),
+					"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
+					options[1]);
+		}
+		if (n == 0) {
+			// step 1
+			Document document = new Document();
+			// step 2
+			try {
+				PdfWriter.getInstance(document, new FileOutputStream(file));
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (DocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// step 3
+			document.open();
+			// step 4
+			try {
+				document.add(new Paragraph(titel));
+				document.add(new Paragraph(" ")); //$NON-NLS-1$
+				document.add(createTurnierTabelle(turnier, tabellenMatrix));
+			} catch (DocumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			// step 5
+			document.close();
+		}
 	}
 
 }

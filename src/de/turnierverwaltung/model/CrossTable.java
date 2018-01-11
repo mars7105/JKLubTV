@@ -254,6 +254,10 @@ public class CrossTable {
 		return differenz;
 	}
 
+	public Boolean[][] getColorMatrix() {
+		return colorMatrix;
+	}
+
 	/**
 	 * 
 	 * @param ohneHeaderundFooter
@@ -290,6 +294,10 @@ public class CrossTable {
 		return zeile;
 	}
 
+	public void setColorMatrix(Boolean[][] colorMatrix) {
+		this.colorMatrix = colorMatrix;
+	}
+
 	public void setSpalte(int spalte) {
 		this.spalte = spalte;
 	}
@@ -304,14 +312,6 @@ public class CrossTable {
 
 	public void setZeile(int zeile) {
 		this.zeile = zeile;
-	}
-
-	public Boolean[][] getColorMatrix() {
-		return colorMatrix;
-	}
-
-	public void setColorMatrix(Boolean[][] colorMatrix) {
-		this.colorMatrix = colorMatrix;
 	}
 
 }

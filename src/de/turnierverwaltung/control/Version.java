@@ -11,9 +11,6 @@ public class Version {
 
 	private static ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_COMTROLER_NAME, LOCALE);
 
-	private Version() {
-	}
-
 	public static String getString(String key) {
 		try {
 			return RESOURCE_BUNDLE.getString(key);
@@ -25,5 +22,8 @@ public class Version {
 	public static void setLocale(Locale locale) {
 		LOCALE = locale;
 		RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_COMTROLER_NAME, LOCALE);
+	}
+
+	private Version() {
 	}
 }

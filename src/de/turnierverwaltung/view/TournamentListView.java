@@ -63,6 +63,22 @@ public class TournamentListView extends JPanel {
 		makePanel(anzahlTurniere);
 	}
 
+	public TitleLabelView getTitleView() {
+		return titleView;
+	}
+
+	public JButton[] getTurnierBearbeitenButton() {
+		return turnierBearbeitenButton;
+	}
+
+	public JButton[] getTurnierLadeButton() {
+		return turnierLadeButton;
+	}
+
+	public JButton[] getTurnierLoeschenButton() {
+		return turnierLoeschenButton;
+	}
+
 	public void makePanel(int anzahlTurniere) {
 		this.anzahlTurniere = anzahlTurniere;
 		anzahlElemente = 0;
@@ -87,26 +103,6 @@ public class TournamentListView extends JPanel {
 		turnierBearbeitenButton = new JButton[anzahlTurniere];
 		add(northPanel, BorderLayout.NORTH);
 		add(turnierListe, BorderLayout.CENTER);
-	}
-
-	public TitleLabelView getTitleView() {
-		return titleView;
-	}
-
-	public void setTitleView(TitleLabelView titleView) {
-		this.titleView = titleView;
-	}
-
-	public JButton[] getTurnierBearbeitenButton() {
-		return turnierBearbeitenButton;
-	}
-
-	public JButton[] getTurnierLadeButton() {
-		return turnierLadeButton;
-	}
-
-	public JButton[] getTurnierLoeschenButton() {
-		return turnierLoeschenButton;
 	}
 
 	public void makeTurnierZeile(String turnierName, String startDatum, String endDatum) {
@@ -168,6 +164,10 @@ public class TournamentListView extends JPanel {
 			centerPane = new JPanel();
 			centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
 		}
+	}
+
+	public void setTitleView(TitleLabelView titleView) {
+		this.titleView = titleView;
 	}
 
 	public void setTurnierBearbeitenButton(JButton[] turnierBearbeitenButton) {

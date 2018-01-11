@@ -64,66 +64,6 @@ import de.turnierverwaltung.model.Game;
  * a JButton to close the tab it belongs to
  */
 public class ButtonTabComponent extends JPanel {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 8004316423128246344L;
-	/**
-	 * 
-	 */
-	private final JTabbedPane pane;
-	private MainControl mainControl;
-	private ImageIcon image;
-
-	public ButtonTabComponent(final JTabbedPane pane, MainControl mainControl, ImageIcon image, Boolean setButton) {
-		// unset default FlowLayout' gaps
-
-		super();
-		this.mainControl = mainControl;
-		this.image = image;
-		if (pane == null) {
-			throw new NullPointerException("TabbedPane is null");
-		}
-		this.pane = pane;
-		setOpaque(false);
-
-		// make JLabel read titles from JTabbedPane
-		JLabel label = new JLabel() {
-			/**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
-
-			public String getText() {
-				int i = pane.indexOfTabComponent(ButtonTabComponent.this);
-				if (i != -1) {
-					return pane.getTitleAt(i);
-				}
-				return null;
-			}
-		};
-
-		add(new JLabel(image));
-		add(label);
-		// add more space between the label and the button
-		label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
-		// tab button
-		JButton button = new TabButton();
-		if (setButton) {
-			add(button);
-		}
-		// add more space to the top of the component
-		setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
-	}
-
-	public ImageIcon getImage() {
-		return image;
-	}
-
-	public void setImage(ImageIcon image) {
-		this.image = image;
-	}
-
 	private class TabButton extends JButton implements ActionListener {
 		/**
 		 * 
@@ -150,6 +90,7 @@ public class ButtonTabComponent extends JPanel {
 			addActionListener(this);
 		}
 
+		@Override
 		public void actionPerformed(ActionEvent e) {
 			int i = pane.indexOfTabComponent(ButtonTabComponent.this);
 			if (i != -1) {
@@ -201,11 +142,8 @@ public class ButtonTabComponent extends JPanel {
 			return abfrage;
 		}
 
-		// we don't want to update UI for this button
-		public void updateUI() {
-		}
-
 		// paint the cross
+		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			Graphics2D g2 = (Graphics2D) g.create();
@@ -223,9 +161,18 @@ public class ButtonTabComponent extends JPanel {
 			g2.drawLine(getWidth() - delta - 1, delta, delta, getHeight() - delta - 1);
 			g2.dispose();
 		}
-	}
 
+		// we don't want to update UI for this button
+		@Override
+		public void updateUI() {
+		}
+	}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8004316423128246344L;
 	private final static MouseListener buttonMouseListener = new MouseAdapter() {
+		@Override
 		public void mouseEntered(MouseEvent e) {
 			Component component = e.getComponent();
 			if (component instanceof AbstractButton) {
@@ -234,6 +181,7 @@ public class ButtonTabComponent extends JPanel {
 			}
 		}
 
+		@Override
 		public void mouseExited(MouseEvent e) {
 			Component component = e.getComponent();
 			if (component instanceof AbstractButton) {
@@ -242,4 +190,62 @@ public class ButtonTabComponent extends JPanel {
 			}
 		}
 	};
+	/**
+	 * 
+	 */
+	private final JTabbedPane pane;
+
+	private MainControl mainControl;
+
+	private ImageIcon image;
+
+	public ButtonTabComponent(final JTabbedPane pane, MainControl mainControl, ImageIcon image, Boolean setButton) {
+		// unset default FlowLayout' gaps
+
+		super();
+		this.mainControl = mainControl;
+		this.image = image;
+		if (pane == null) {
+			throw new NullPointerException("TabbedPane is null");
+		}
+		this.pane = pane;
+		setOpaque(false);
+
+		// make JLabel read titles from JTabbedPane
+		JLabel label = new JLabel() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public String getText() {
+				int i = pane.indexOfTabComponent(ButtonTabComponent.this);
+				if (i != -1) {
+					return pane.getTitleAt(i);
+				}
+				return null;
+			}
+		};
+
+		add(new JLabel(image));
+		add(label);
+		// add more space between the label and the button
+		label.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 5));
+		// tab button
+		JButton button = new TabButton();
+		if (setButton) {
+			add(button);
+		}
+		// add more space to the top of the component
+		setBorder(BorderFactory.createEmptyBorder(2, 0, 0, 0));
+	}
+
+	public ImageIcon getImage() {
+		return image;
+	}
+
+	public void setImage(ImageIcon image) {
+		this.image = image;
+	}
 }

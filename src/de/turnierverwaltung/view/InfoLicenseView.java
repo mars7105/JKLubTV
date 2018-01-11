@@ -38,29 +38,6 @@ import javax.swing.JTextArea;
 
 public class InfoLicenseView {
 
-	private URI datepickerUri;
-	private JButton buttonDatePicker;
-	private URI sqLiteUri;
-	private JButton buttonSQlite;
-	private URI iTextUri;
-	private JButton buttoniText;
-	private URI openIconUri;
-	private JButton buttonopenIcon;
-	private URI emailUri;
-	private JButton buttonemailUri;
-	private URI dewisUri;
-	private JButton buttondewisUri;
-	private ImageIcon logoImg = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Logo.png"))); //$NON-NLS-1$
-	private URI jgoodiesUri;
-	private JButton buttonjgoodies;
-	private URI opencsvUri;
-	private JButton buttonopencsv;
-	private URI poiUri;
-	private JButton buttonpoi;
-	private URI biweekly;
-	private JButton buttonbiweekly;
-
 	class OpenUrlAction implements ActionListener {
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -96,6 +73,44 @@ public class InfoLicenseView {
 			}
 
 		}
+
+	}
+	private static void open(URI uri) {
+		if (Desktop.isDesktopSupported()) {
+			try {
+				Desktop.getDesktop().browse(uri);
+			} catch (IOException e) {
+				/* TODO: error handling */ }
+		} else {
+			/* TODO: error handling */ }
+	}
+	private URI datepickerUri;
+	private JButton buttonDatePicker;
+	private URI sqLiteUri;
+	private JButton buttonSQlite;
+	private URI iTextUri;
+	private JButton buttoniText;
+	private URI openIconUri;
+	private JButton buttonopenIcon;
+	private URI emailUri;
+	private JButton buttonemailUri;
+	private URI dewisUri;
+	private JButton buttondewisUri;
+	private ImageIcon logoImg = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Logo.png"))); //$NON-NLS-1$
+	private URI jgoodiesUri;
+	private JButton buttonjgoodies;
+	private URI opencsvUri;
+	private JButton buttonopencsv;
+	private URI poiUri;
+	private JButton buttonpoi;
+
+	private URI biweekly;
+
+	private JButton buttonbiweekly;
+
+	public String getHelpText() {
+		return null;
 
 	}
 
@@ -309,20 +324,5 @@ public class InfoLicenseView {
 
 		return all;
 
-	}
-
-	public String getHelpText() {
-		return null;
-
-	}
-
-	private static void open(URI uri) {
-		if (Desktop.isDesktopSupported()) {
-			try {
-				Desktop.getDesktop().browse(uri);
-			} catch (IOException e) {
-				/* TODO: error handling */ }
-		} else {
-			/* TODO: error handling */ }
 	}
 }

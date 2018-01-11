@@ -7,9 +7,11 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.ListIterator;
+
 import javax.swing.ImageIcon;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 import de.turnierverwaltung.model.CSVVereine;
 import de.turnierverwaltung.model.ELOData;
 import de.turnierverwaltung.model.Player;
@@ -41,54 +43,6 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 		this.mainControl = mainControl;
 		this.dewisDialogControl = dewisDialogControl;
 		indices = new ArrayList<Integer>();
-	}
-
-	public void valueChanged(ListSelectionEvent e) {
-		if (e.getValueIsAdjusting() == false) {
-			int index = dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex();
-			ArrayList<Player> spieler = dewisDialogControl.getPlayers();
-			if (index > -1) {
-
-				Player neuerSpieler = spieler.get(index);
-				Boolean savedPlayer = playerExist(neuerSpieler);
-				ListIterator<Integer> lit = indices.listIterator();
-				int counter = 0;
-				Boolean notfound = false;
-				int nf = 0;
-				if (savedPlayer == false) {
-					while (lit.hasNext()) {
-						int temp = lit.next();
-
-						if (temp == index) {
-
-							notfound = true;
-							nf = counter;
-							break;
-
-						}
-						counter++;
-					}
-					if (notfound == true) {
-						indices.remove(nf);
-
-						dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon1);
-					} else {
-						indices.add(dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex());
-
-						dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon2);
-					}
-					if (indices.size() > 0) {
-						dewisDialogControl.getDialog().getOkButton().setEnabled(true);
-
-					} else {
-						dewisDialogControl.getDialog().getOkButton().setEnabled(false);
-					}
-				}
-
-				dewisDialogControl.getSpielerDewisView().getList().clearSelection();
-			}
-
-		}
 	}
 
 	@Override
@@ -156,6 +110,16 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 
 	}
 
+	public void makeVereinsListe() throws ArrayIndexOutOfBoundsException, IOException {
+		if (dewisDialogControl.getDialog().getVereinsName().isEnabled()) {
+			String zps = mainControl.getPropertiesControl().getZPS();
+			dewisDialogControl.makeVereinsListe(zps);
+		} else if (dewisDialogControl.getDialog().getVereinsSuche().getText().length() > 0) {
+			String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
+			dewisDialogControl.makeDWZListe(zps);
+		}
+	}
+
 	private boolean playerExist(Player neuerSpieler) {
 		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
 		Boolean playerExist = false;
@@ -170,13 +134,52 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 		return playerExist;
 	}
 
-	public void makeVereinsListe() throws ArrayIndexOutOfBoundsException, IOException {
-		if (dewisDialogControl.getDialog().getVereinsName().isEnabled()) {
-			String zps = mainControl.getPropertiesControl().getZPS();
-			dewisDialogControl.makeVereinsListe(zps);
-		} else if (dewisDialogControl.getDialog().getVereinsSuche().getText().length() > 0) {
-			String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
-			dewisDialogControl.makeDWZListe(zps);
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		if (e.getValueIsAdjusting() == false) {
+			int index = dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex();
+			ArrayList<Player> spieler = dewisDialogControl.getPlayers();
+			if (index > -1) {
+
+				Player neuerSpieler = spieler.get(index);
+				Boolean savedPlayer = playerExist(neuerSpieler);
+				ListIterator<Integer> lit = indices.listIterator();
+				int counter = 0;
+				Boolean notfound = false;
+				int nf = 0;
+				if (savedPlayer == false) {
+					while (lit.hasNext()) {
+						int temp = lit.next();
+
+						if (temp == index) {
+
+							notfound = true;
+							nf = counter;
+							break;
+
+						}
+						counter++;
+					}
+					if (notfound == true) {
+						indices.remove(nf);
+
+						dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon1);
+					} else {
+						indices.add(dewisDialogControl.getSpielerDewisView().getList().getSelectedIndex());
+
+						dewisDialogControl.getSpielerDewisView().getList().getSelectedValue().setIcon(insertIcon2);
+					}
+					if (indices.size() > 0) {
+						dewisDialogControl.getDialog().getOkButton().setEnabled(true);
+
+					} else {
+						dewisDialogControl.getDialog().getOkButton().setEnabled(false);
+					}
+				}
+
+				dewisDialogControl.getSpielerDewisView().getList().clearSelection();
+			}
+
 		}
 	}
 }

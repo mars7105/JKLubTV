@@ -106,22 +106,17 @@ public class ELODialogView extends JDialog {
 		this.dispose();
 	}
 
+	public JPanel getContentPanel() {
+		return contentPanel;
+	}
+
 	public JPanel getDsbPanel() {
 		return dsbPanel;
 
 	}
 
-	public void setDsbPanel(JPanel dsbPanel) {
-		contentPanel.remove(this.dsbPanel);
-		this.dsbPanel = dsbPanel;
-		contentPanel.add(dsbPanel, BorderLayout.CENTER);
-	}
-
-	public void refresh() {
-//		getButtonPanel().updateUI();
-		getContentPanel().updateUI();
-		pack();
-		setLocationRelativeTo(null);
+	public PlayerSearchView getPlayerSearchView() {
+		return playerSearchView;
 	}
 
 //	public ButtonPanelView getButtonPanel() {
@@ -148,56 +143,61 @@ public class ELODialogView extends JDialog {
 //		this.cancelButton = cancelButton;
 //	}
 
-	public JButton getVereinsSucheButton() {
-		return vereinsSucheButton;
-	}
-
-	public void setVereinsSucheButton(JButton vereinsSucheButton) {
-		this.vereinsSucheButton = vereinsSucheButton;
-	}
-
-	public JTextField getVereinsSuche() {
-		return vereinsSuche;
-	}
-
-	public void setVereinsSuche(JTextField vereinsSuche) {
-		this.vereinsSuche = vereinsSuche;
-	}
-
-	public JPanel getContentPanel() {
-		return contentPanel;
-	}
-
-	public JTextField getVereinsName() {
-		return vereinsName;
-	}
-
-	public void setVereinsName(JTextField vereinsName) {
-		this.vereinsName = vereinsName;
-	}
-
 	public JComboBox<String> getVereinsAuswahl() {
 		return vereinsAuswahl;
-	}
-
-	public void setVereinsAuswahl(JComboBox<String> vereinsAuswahl) {
-		this.vereinsAuswahl = vereinsAuswahl;
 	}
 
 	public JButton getVereinsAuswahlOkButton() {
 		return vereinsAuswahlOkButton;
 	}
 
-	public void setVereinsAuswahlOkButton(JButton vereinsAuswahlOkButton) {
-		this.vereinsAuswahlOkButton = vereinsAuswahlOkButton;
+	public JTextField getVereinsName() {
+		return vereinsName;
 	}
 
-	public PlayerSearchView getPlayerSearchView() {
-		return playerSearchView;
+	public JTextField getVereinsSuche() {
+		return vereinsSuche;
+	}
+
+	public JButton getVereinsSucheButton() {
+		return vereinsSucheButton;
+	}
+
+	public void refresh() {
+//		getButtonPanel().updateUI();
+		getContentPanel().updateUI();
+		pack();
+		setLocationRelativeTo(null);
+	}
+
+	public void setDsbPanel(JPanel dsbPanel) {
+		contentPanel.remove(this.dsbPanel);
+		this.dsbPanel = dsbPanel;
+		contentPanel.add(dsbPanel, BorderLayout.CENTER);
 	}
 
 	public void setPlayerSearchView(PlayerSearchView playerSearchView) {
 		this.playerSearchView = playerSearchView;
+	}
+
+	public void setVereinsAuswahl(JComboBox<String> vereinsAuswahl) {
+		this.vereinsAuswahl = vereinsAuswahl;
+	}
+
+	public void setVereinsAuswahlOkButton(JButton vereinsAuswahlOkButton) {
+		this.vereinsAuswahlOkButton = vereinsAuswahlOkButton;
+	}
+
+	public void setVereinsName(JTextField vereinsName) {
+		this.vereinsName = vereinsName;
+	}
+
+	public void setVereinsSuche(JTextField vereinsSuche) {
+		this.vereinsSuche = vereinsSuche;
+	}
+
+	public void setVereinsSucheButton(JButton vereinsSucheButton) {
+		this.vereinsSucheButton = vereinsSucheButton;
 	}
 
 }

@@ -34,8 +34,56 @@ public class PlayerModel {
 		this.numberOfOpponents = numberOfOpponents;
 	}
 
+	public int getAge() {
+		return age;
+	}
+
+	public double getDurchschnittderGegnerDWZ() {
+		return durchschnittderGegnerDWZ;
+	}
+
+	public double getEntwicklungskoeffizient() {
+		return entwicklungskoeffizient;
+	}
+
 	public double getFolgeDWZ() {
 		return folgeDWZ;
+	}
+
+	public double getLeistungsDWZ() {
+		return leistungsDWZ;
+	}
+
+	public int getNumberOfOpponents() {
+		return numberOfOpponents;
+	}
+
+	public int getOldDWZ() {
+		return oldDWZ;
+	}
+
+	public double getPunkte() {
+		return punkte;
+	}
+
+	public double getPunkterwartung() {
+		return punkterwartung;
+	}
+
+	public double getPunkterwartung_temp() {
+		return punkterwartung_temp;
+	}
+
+	public void setAge(int age) {
+		this.age = age;
+	}
+
+	public void setDurchschnittderGegnerDWZ(double durchschnittderGegnerDWZ) {
+		this.durchschnittderGegnerDWZ = durchschnittderGegnerDWZ;
+	}
+
+	public void setEntwicklungskoeffizient(double entwicklungskoeffizient) {
+		this.entwicklungskoeffizient = entwicklungskoeffizient;
 	}
 
 	public void setFolgeDWZ(double folgeDWZ) {
@@ -43,76 +91,28 @@ public class PlayerModel {
 		// Math.round(this.folgeDWZ);
 	}
 
-	public int getAge() {
-		return age;
-	}
-
-	public void setAge(int age) {
-		this.age = age;
-	}
-
-	public int getOldDWZ() {
-		return oldDWZ;
-	}
-
-	public void setOldDWZ(int oldDWZ) {
-		this.oldDWZ = oldDWZ;
-	}
-
-	public int getNumberOfOpponents() {
-		return numberOfOpponents;
+	public void setLeistungsDWZ(double leistungsDWZ) {
+		this.leistungsDWZ = leistungsDWZ;
 	}
 
 	public void setNumberOfOpponents(int numberOfOpponents) {
 		this.numberOfOpponents = numberOfOpponents;
 	}
 
-	public double getPunkterwartung() {
-		return punkterwartung;
-	}
-
-	public void setPunkterwartung(double punkterwartung) {
-		this.punkterwartung = punkterwartung;
-	}
-
-	public double getDurchschnittderGegnerDWZ() {
-		return durchschnittderGegnerDWZ;
-	}
-
-	public void setDurchschnittderGegnerDWZ(double durchschnittderGegnerDWZ) {
-		this.durchschnittderGegnerDWZ = durchschnittderGegnerDWZ;
-	}
-
-	public double getPunkte() {
-		return punkte;
+	public void setOldDWZ(int oldDWZ) {
+		this.oldDWZ = oldDWZ;
 	}
 
 	public void setPunkte(double punkte) {
 		this.punkte = punkte;
 	}
 
-	public double getLeistungsDWZ() {
-		return leistungsDWZ;
-	}
-
-	public void setLeistungsDWZ(double leistungsDWZ) {
-		this.leistungsDWZ = leistungsDWZ;
-	}
-
-	public double getPunkterwartung_temp() {
-		return punkterwartung_temp;
+	public void setPunkterwartung(double punkterwartung) {
+		this.punkterwartung = punkterwartung;
 	}
 
 	public void setPunkterwartung_temp(double punkterwartung_temp) {
 		this.punkterwartung_temp = punkterwartung_temp;
-	}
-
-	public double getEntwicklungskoeffizient() {
-		return entwicklungskoeffizient;
-	}
-
-	public void setEntwicklungskoeffizient(double entwicklungskoeffizient) {
-		this.entwicklungskoeffizient = entwicklungskoeffizient;
 	}
 
 }

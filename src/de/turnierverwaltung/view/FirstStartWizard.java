@@ -1,6 +1,7 @@
 package de.turnierverwaltung.view;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -33,6 +34,9 @@ public class FirstStartWizard extends JDialog {
 		setLocationRelativeTo(null);
 	}
 
+	public FirstStartNextPanelView getFirstStartNextPanel() {
+		return firstStartNextPanel;
+	}
 	public void makeFirstPage() {
 		firstStartNextPanel.getPrevButton().setEnabled(false);
 		FirstStartWizardPage1 page1 = new FirstStartWizardPage1();
@@ -41,6 +45,7 @@ public class FirstStartWizard extends JDialog {
 		
 
 	}
+
 	public void makeSecondPage() {
 		firstStartNextPanel.getPrevButton().setEnabled(true);
 		FirstStartWizardPage2 page2 = new FirstStartWizardPage2();
@@ -48,10 +53,6 @@ public class FirstStartWizard extends JDialog {
 
 		
 
-	}
-
-	public FirstStartNextPanelView getFirstStartNextPanel() {
-		return firstStartNextPanel;
 	}
 
 	public void setFirstStartNextPanel(FirstStartNextPanelView firstStartNextPanel) {

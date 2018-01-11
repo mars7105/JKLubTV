@@ -56,6 +56,10 @@ public class EventDate {
 
 	}
 
+	public Date getDate() {
+		return date;
+	}
+
 	public String getDateString() {
 		if (date != null) {
 			if (Locale.getDefault().equals(Locale.US)) {
@@ -70,50 +74,30 @@ public class EventDate {
 		return "";
 	}
 
-	public java.sql.Date getSQLDate() {
-		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
-		return sqlDate;
-
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
 	public SimpleDateFormat getEnglishdateFormatter() {
 		return englishdateFormatter;
-	}
-
-	public void setEnglishdateFormatter(SimpleDateFormat englishdateFormatter) {
-		this.englishdateFormatter = englishdateFormatter;
-	}
-
-	public SimpleDateFormat getGermandateFormatter() {
-		return germandateFormatter;
-	}
-
-	public void setGermandateFormatter(SimpleDateFormat germandateFormatter) {
-		this.germandateFormatter = germandateFormatter;
 	}
 
 	public String getEnglishFormat() {
 		return englishFormat;
 	}
 
-	public void setEnglishFormat(String englishFormat) {
-		this.englishFormat = englishFormat;
+	public SimpleDateFormat getGermandateFormatter() {
+		return germandateFormatter;
 	}
 
 	public String getGermanFormat() {
 		return germanFormat;
 	}
 
-	public void setGermanFormat(String germanFormat) {
-		this.germanFormat = germanFormat;
+	public java.sql.Date getSQLDate() {
+		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		return sqlDate;
+
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	public void setDate(String dateString) {
@@ -142,5 +126,21 @@ public class EventDate {
 			
 		}
 
+	}
+
+	public void setEnglishdateFormatter(SimpleDateFormat englishdateFormatter) {
+		this.englishdateFormatter = englishdateFormatter;
+	}
+
+	public void setEnglishFormat(String englishFormat) {
+		this.englishFormat = englishFormat;
+	}
+
+	public void setGermandateFormatter(SimpleDateFormat germandateFormatter) {
+		this.germandateFormatter = germandateFormatter;
+	}
+
+	public void setGermanFormat(String germanFormat) {
+		this.germanFormat = germanFormat;
 	}
 }

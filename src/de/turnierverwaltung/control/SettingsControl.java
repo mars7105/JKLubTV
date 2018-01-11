@@ -36,6 +36,30 @@ public class SettingsControl {
 
 	}
 
+	public ActionListenerSettingsControl getActionListenerControl() {
+		return actionListenerControl;
+	}
+
+	public SettingsView getEigenschaftenView() {
+		return eigenschaftenView;
+	}
+
+	public ItemListenerSettingsControl getItemListenerControl() {
+		return itemListenerControl;
+	}
+
+	public void setActionListenerControl(ActionListenerSettingsControl actionListenerControl) {
+		this.actionListenerControl = actionListenerControl;
+	}
+
+	public void setEigenschaftenView(SettingsView eigenschaftenView) {
+		this.eigenschaftenView = eigenschaftenView;
+	}
+
+	public void setItemListenerControl(ItemListenerSettingsControl itemListenerControl) {
+		this.itemListenerControl = itemListenerControl;
+	}
+
 	public void setTableColumns() {
 		PropertiesControl ppC = mainControl.getPropertiesControl();
 		eigenschaftenView.getWhiteTextField().setText(ppC.getTableComumnWhite());
@@ -53,30 +77,6 @@ public class SettingsControl {
 		eigenschaftenView.getRoundTextField().setText(ppC.getTableComumnRound());
 		eigenschaftenView.getForenameLengthBox().setValue(ppC.getCutForename());
 		eigenschaftenView.getSurnameLengthBox().setValue(ppC.getCutSurname());
-	}
-
-	public SettingsView getEigenschaftenView() {
-		return eigenschaftenView;
-	}
-
-	public void setEigenschaftenView(SettingsView eigenschaftenView) {
-		this.eigenschaftenView = eigenschaftenView;
-	}
-
-	public ActionListenerSettingsControl getActionListenerControl() {
-		return actionListenerControl;
-	}
-
-	public void setActionListenerControl(ActionListenerSettingsControl actionListenerControl) {
-		this.actionListenerControl = actionListenerControl;
-	}
-
-	public ItemListenerSettingsControl getItemListenerControl() {
-		return itemListenerControl;
-	}
-
-	public void setItemListenerControl(ItemListenerSettingsControl itemListenerControl) {
-		this.itemListenerControl = itemListenerControl;
 	}
 
 }

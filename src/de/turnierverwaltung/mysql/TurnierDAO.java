@@ -30,8 +30,8 @@ public interface TurnierDAO {
 
 	public int insertTurnier(String turnierName, int datumId) throws SQLException;
 
-	public boolean updateTurnier(Tournament turnier) throws SQLException;
-
 	public ArrayList<Tournament> selectAllTurnier(PropertiesControl prop) throws SQLException;
+
+	public boolean updateTurnier(Tournament turnier) throws SQLException;
 
 }

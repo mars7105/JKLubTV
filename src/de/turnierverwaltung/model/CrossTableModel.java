@@ -46,6 +46,10 @@ public class CrossTableModel extends DefaultTableModel {
 		initModelData();
 	}
 
+	public int getAbstand() {
+		return abstand;
+	}
+
 	public int getSpalte() {
 		return spalte;
 	}
@@ -90,20 +94,16 @@ public class CrossTableModel extends DefaultTableModel {
 		return icE;
 	}
 
+	public void setAbstand(int abstand) {
+		this.abstand = abstand;
+	}
+
 	public void setSpalte(int spalte) {
 		this.spalte = spalte;
 	}
 
 	public void setZeile(int zeile) {
 		this.zeile = zeile;
-	}
-
-	public int getAbstand() {
-		return abstand;
-	}
-
-	public void setAbstand(int abstand) {
-		this.abstand = abstand;
 	}
 
 }

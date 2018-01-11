@@ -12,6 +12,7 @@ import de.fahsel.dewis.Player;
  */
 public class SortLastName implements Comparator<Player> {
 
+	@Override
 	public int compare(Player arg0, Player arg1) {
 		try {
 			return arg0.getLastName().compareTo(arg1.getLastName());

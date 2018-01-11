@@ -17,6 +17,7 @@ package de.turnierverwaltung.mysql;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.sql.SQLException;
 import java.util.ArrayList;
+
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 
@@ -29,12 +30,12 @@ public interface SpielerDAO {
 
 	public ArrayList<Player> getAllSpieler() throws SQLException;
 
-	public ArrayList<Player> selectAllSpieler(int idGruppe) throws SQLException;
+	public int insertSpieler(Player spieler) throws SQLException;
 
-	public boolean updateSpieler(Player spieler) throws SQLException;
+	public ArrayList<Player> selectAllSpieler(int idGruppe) throws SQLException;
 
 //	public ArrayList<Player> getAllSpielerOrderByZPS() throws SQLException;
 
-	public int insertSpieler(Player spieler) throws SQLException;
+	public boolean updateSpieler(Player spieler) throws SQLException;
 
 }

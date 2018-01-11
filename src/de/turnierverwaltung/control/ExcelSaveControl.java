@@ -147,7 +147,7 @@ public class ExcelSaveControl {
 
 							c.setCellStyle(cellStyle);
 
-							rep = (String) turnierTabelle.getTabellenMatrix()[x][y];
+							rep = turnierTabelle.getTabellenMatrix()[x][y];
 							rep = rep.replaceAll("<br />", "");
 							c.setCellValue(rep);
 							s[i].autoSizeColumn((x - inc));
@@ -170,7 +170,7 @@ public class ExcelSaveControl {
 
 							c2.setCellStyle(cellStyle);
 
-							c2.setCellValue((String) this.mainControl.getMeetingTableControl().getTerminTabelle()[i]
+							c2.setCellValue(this.mainControl.getMeetingTableControl().getTerminTabelle()[i]
 									.getTabellenMatrix()[x][y]);
 
 							s2[i].autoSizeColumn(x);

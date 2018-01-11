@@ -17,11 +17,32 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 
 public class DSBDWZInfoView extends JPanel {
+	class OpenUrlAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource().equals(dsbHomepageButton)) {
+				open(dsbHomepage);
+			}
+
+		}
+
+	}
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static void open(URI uri) {
+		if (Desktop.isDesktopSupported()) {
+			try {
+				Desktop.getDesktop().browse(uri);
+			} catch (IOException e) {
+				/* TODO: error handling */}
+		} else {
+			/* TODO: error handling */}
+	}
+
 	private JButton dsbHomepageButton;
+
 	private URI dsbHomepage;
 
 	private JPanel htmlAll;
@@ -102,27 +123,6 @@ public class DSBDWZInfoView extends JPanel {
 		htmlAll.add(htmlPanel);
 
 		htmlAll.add(new JSeparator());
-
-	}
-
-	private static void open(URI uri) {
-		if (Desktop.isDesktopSupported()) {
-			try {
-				Desktop.getDesktop().browse(uri);
-			} catch (IOException e) {
-				/* TODO: error handling */}
-		} else {
-			/* TODO: error handling */}
-	}
-
-	class OpenUrlAction implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (e.getSource().equals(dsbHomepageButton)) {
-				open(dsbHomepage);
-			}
-
-		}
 
 	}
 

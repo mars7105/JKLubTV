@@ -80,6 +80,19 @@ public class EntwicklungskoeffizientModel {
 
 	}
 
+	private double beschleunigungsfaktorBerechnen() {
+		// fB = Ro / 2000 mit 0,5 ≤ fB ≤ 1,0
+		// nur für Jugendliche bis 20 Jahre bei W ≥ We, sonst fB = 1.
+		double fb = 1;
+		if (age == 0 && punkte >= punkterwartung) {
+			fb = oldDWZ / 2000;
+			if (fb < 0.5 || fb > 1.0) {
+				fb = 1;
+			}
+		}
+		return fb;
+	}
+
 	private double bremszuschlagBerechnen() {
 		// SBr = e (1300-Ro)/150 - 1
 		//
@@ -113,17 +126,8 @@ public class EntwicklungskoeffizientModel {
 		return sBr;
 	}
 
-	private double beschleunigungsfaktorBerechnen() {
-		// fB = Ro / 2000 mit 0,5 ≤ fB ≤ 1,0
-		// nur für Jugendliche bis 20 Jahre bei W ≥ We, sonst fB = 1.
-		double fb = 1;
-		if (age == 0 && punkte >= punkterwartung) {
-			fb = oldDWZ / 2000;
-			if (fb < 0.5 || fb > 1.0) {
-				fb = 1;
-			}
-		}
-		return fb;
+	public double getEntwicklungskoeffizient() {
+		return entwicklungskoeffizient;
 	}
 
 	private double grundwertBerechnen() {
@@ -140,10 +144,6 @@ public class EntwicklungskoeffizientModel {
 		}
 		double ageD1000 = oldDWZ / 1000;
 		return Math.pow(ageD1000, 4) + j;
-	}
-
-	public double getEntwicklungskoeffizient() {
-		return entwicklungskoeffizient;
 	}
 
 }

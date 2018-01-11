@@ -39,37 +39,58 @@ import javax.swing.border.EmptyBorder;
 
 public class DSBDWZDialogView extends JDialog {
 
+	class OpenUrlAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource().equals(dwzdbButton)) {
+				open(dwzdbURI);
+			}
+
+		}
+
+	}
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
+	private static void open(URI uri) {
+		if (Desktop.isDesktopSupported()) {
+			try {
+				Desktop.getDesktop().browse(uri);
+			} catch (IOException e) {
+				/* TODO: error handling */}
+		} else {
+			/* TODO: error handling */}
+	}
 	private final JPanel contentPanel = new JPanel();
 	private JPanel dsbPanel;
 	private JTextField vereinsSuche;
 	private JButton vereinsSucheButton;
+
 	private JButton okButton;
 	private JButton cancelButton;
-
 	private ButtonPanelView buttonPane;
+
 	private URI dwzdbURI;
+
 	private JButton dwzdbButton;
 
 	private JTextField vereinsName;
 
 	private JComboBox<String> vereinsAuswahl;
-
 	private JButton vereinsAuswahlOkButton;
-
 	// private JButton infoButton;
 	private ImageIcon infoIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png")));
+
 	private ImageIcon searchIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-find.png")));
 	private ImageIcon tabIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-new-2.png")));
 
 	private PlayerSearchView playerSearchView;
+
 	private JLabel statusLabel;
 
 	/**
@@ -181,29 +202,20 @@ public class DSBDWZDialogView extends JDialog {
 		setLocationRelativeTo(null);
 	}
 
-	class OpenUrlAction implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (e.getSource().equals(dwzdbButton)) {
-				open(dwzdbURI);
-			}
-
-		}
-
-	}
-
-	private static void open(URI uri) {
-		if (Desktop.isDesktopSupported()) {
-			try {
-				Desktop.getDesktop().browse(uri);
-			} catch (IOException e) {
-				/* TODO: error handling */}
-		} else {
-			/* TODO: error handling */}
-	}
-
 	public void closeWindow() {
 		this.dispose();
+	}
+
+	public ButtonPanelView getButtonPanel() {
+		return buttonPane;
+	}
+
+	public JButton getCancelButton() {
+		return cancelButton;
+	}
+
+	public JPanel getContentPanel() {
+		return contentPanel;
 	}
 
 	public JPanel getDsbPanel() {
@@ -211,10 +223,32 @@ public class DSBDWZDialogView extends JDialog {
 
 	}
 
-	public void setDsbPanel(JPanel dsbPanel) {
-		contentPanel.remove(this.dsbPanel);
-		this.dsbPanel = dsbPanel;
-		contentPanel.add(dsbPanel, BorderLayout.CENTER);
+	public JButton getOkButton() {
+		return okButton;
+	}
+
+	public PlayerSearchView getPlayerSearchView() {
+		return playerSearchView;
+	}
+
+	public JComboBox<String> getVereinsAuswahl() {
+		return vereinsAuswahl;
+	}
+
+	public JButton getVereinsAuswahlOkButton() {
+		return vereinsAuswahlOkButton;
+	}
+
+	public JTextField getVereinsName() {
+		return vereinsName;
+	}
+
+	public JTextField getVereinsSuche() {
+		return vereinsSuche;
+	}
+
+	public JButton getVereinsSucheButton() {
+		return vereinsSucheButton;
 	}
 
 	public void refresh() {
@@ -224,80 +258,46 @@ public class DSBDWZDialogView extends JDialog {
 		setLocationRelativeTo(null);
 	}
 
-	public PlayerSearchView getPlayerSearchView() {
-		return playerSearchView;
-	}
-
-	public void setPlayerSearchView(PlayerSearchView playerSearchView) {
-		this.playerSearchView = playerSearchView;
-	}
-
-	public ButtonPanelView getButtonPanel() {
-		return buttonPane;
-	}
-
 	public void setButtonPanel(ButtonPanelView buttonPane) {
 		this.buttonPane = buttonPane;
-	}
-
-	public JButton getOkButton() {
-		return okButton;
-	}
-
-	public void setOkButton(JButton okButton) {
-		this.okButton = okButton;
-	}
-
-	public JButton getCancelButton() {
-		return cancelButton;
 	}
 
 	public void setCancelButton(JButton cancelButton) {
 		this.cancelButton = cancelButton;
 	}
 
-	public JButton getVereinsSucheButton() {
-		return vereinsSucheButton;
+	public void setDsbPanel(JPanel dsbPanel) {
+		contentPanel.remove(this.dsbPanel);
+		this.dsbPanel = dsbPanel;
+		contentPanel.add(dsbPanel, BorderLayout.CENTER);
 	}
 
-	public void setVereinsSucheButton(JButton vereinsSucheButton) {
-		this.vereinsSucheButton = vereinsSucheButton;
+	public void setOkButton(JButton okButton) {
+		this.okButton = okButton;
 	}
 
-	public JTextField getVereinsSuche() {
-		return vereinsSuche;
-	}
-
-	public void setVereinsSuche(JTextField vereinsSuche) {
-		this.vereinsSuche = vereinsSuche;
-	}
-
-	public JPanel getContentPanel() {
-		return contentPanel;
-	}
-
-	public JTextField getVereinsName() {
-		return vereinsName;
-	}
-
-	public void setVereinsName(JTextField vereinsName) {
-		this.vereinsName = vereinsName;
-	}
-
-	public JComboBox<String> getVereinsAuswahl() {
-		return vereinsAuswahl;
+	public void setPlayerSearchView(PlayerSearchView playerSearchView) {
+		this.playerSearchView = playerSearchView;
 	}
 
 	public void setVereinsAuswahl(JComboBox<String> vereinsAuswahl) {
 		this.vereinsAuswahl = vereinsAuswahl;
 	}
 
-	public JButton getVereinsAuswahlOkButton() {
-		return vereinsAuswahlOkButton;
-	}
-
 	public void setVereinsAuswahlOkButton(JButton vereinsAuswahlOkButton) {
 		this.vereinsAuswahlOkButton = vereinsAuswahlOkButton;
+	}
+
+	public void setVereinsName(JTextField vereinsName) {
+		this.vereinsName = vereinsName;
+	}
+
+	public void setVereinsSuche(JTextField vereinsSuche) {
+		this.vereinsSuche = vereinsSuche;
+	}
+
+	public void setVereinsSucheButton(JButton vereinsSucheButton) {
+		this.vereinsSucheButton = vereinsSucheButton;
 	}
 
 }

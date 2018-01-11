@@ -108,6 +108,129 @@ public class PropertiesControl {
 		prop.setProperty(HTMLTOCLIPBOARD, FALSE);
 	}
 
+	public void checkCrossTableColumnForDoubles() {
+		String[] tableColumns = new String[8];
+		tableColumns[0] = prop.getProperty(TABLE_COLUMN_PLAYER);
+		tableColumns[1] = prop.getProperty(TABLE_COLUMN_OLD_DWZ);
+		tableColumns[2] = prop.getProperty(TABLE_COLUMN_NEW_DWZ);
+		tableColumns[3] = prop.getProperty(TABLE_COLUMN_OLD_ELO);
+		tableColumns[4] = prop.getProperty(TABLE_COLUMN_NEW_ELO);
+		tableColumns[5] = prop.getProperty(TABLE_COLUMN_POINTS);
+		tableColumns[6] = prop.getProperty(TABLE_COLUMN_SONNEBORNBERGER);
+		tableColumns[7] = prop.getProperty(TABLE_COLUMN_RANKING);
+		Boolean loop = false;
+		do {
+			loop = false;
+			for (int i = 0; i < 8; i++) {
+				for (int y = 0; y < 8; y++) {
+					if (i != y) {
+						if (tableColumns[i].equals(tableColumns[y])) {
+							tableColumns[y] = tableColumns[y] + "#";
+							loop = true;
+						}
+					}
+
+				}
+			}
+		} while (loop == true);
+		prop.setProperty(TABLE_COLUMN_PLAYER, tableColumns[0]);
+		prop.setProperty(TABLE_COLUMN_OLD_DWZ, tableColumns[1]);
+		prop.setProperty(TABLE_COLUMN_NEW_DWZ, tableColumns[2]);
+		prop.setProperty(TABLE_COLUMN_OLD_ELO, tableColumns[3]);
+		prop.setProperty(TABLE_COLUMN_NEW_ELO, tableColumns[4]);
+		prop.setProperty(TABLE_COLUMN_POINTS, tableColumns[5]);
+		prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER, tableColumns[6]);
+		prop.setProperty(TABLE_COLUMN_RANKING, tableColumns[7]);
+	}
+
+	private Boolean checkDefaultPath() {
+		String path = prop.getProperty(DEFAULTPATH);
+
+		File f = new File(path);
+
+		if (f.isDirectory()) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public void checkMeetingTableColumnForDoubles() {
+		String[] tableColumns = new String[6];
+		tableColumns[0] = prop.getProperty(TABLE_COLUMN_ROUND);
+		tableColumns[1] = prop.getProperty(TABLE_COLUMN_WHITE);
+		tableColumns[2] = prop.getProperty(TABLE_COLUMN_BLACK);
+		tableColumns[3] = prop.getProperty(TABLE_COLUMN_RESULT);
+		tableColumns[4] = prop.getProperty(TABLE_COLUMN_MEETING);
+		Boolean loop = false;
+		do {
+			loop = false;
+			for (int i = 0; i < 5; i++) {
+				for (int y = 0; y < 5; y++) {
+					if (i != y) {
+						if (tableColumns[i].equals(tableColumns[y])) {
+							tableColumns[y] = tableColumns[y] + "#";
+							loop = true;
+						}
+					}
+
+				}
+			}
+		} while (loop == true);
+		prop.setProperty(TABLE_COLUMN_ROUND, tableColumns[0]);
+		prop.setProperty(TABLE_COLUMN_WHITE, tableColumns[1]);
+		prop.setProperty(TABLE_COLUMN_BLACK, tableColumns[2]);
+		prop.setProperty(TABLE_COLUMN_RESULT, tableColumns[3]);
+		prop.setProperty(TABLE_COLUMN_MEETING, tableColumns[4]);
+	}
+
+	private Boolean checkPath(String path) {
+
+		File f = new File(path);
+
+		if (f.exists() && !f.isDirectory()) {
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public Boolean checkPathToDatabase() {
+		String path = prop.getProperty(PATHTODATABASE);
+		return checkPath(path);
+	}
+
+	public Boolean checkPathToELOXML() {
+		String path = prop.getProperty(PATHTOPLAYERSELO);
+		return checkPath(path);
+
+	}
+
+	private boolean checkPathToPlayersCSV() {
+		String path = prop.getProperty(PATHTOPLAYERSCSV);
+		return checkPath(path);
+
+	}
+
+	private boolean checkPathToPlayersELO() {
+		String path = prop.getProperty(PATHTOPLAYERSELO);
+		return checkPath(path);
+	}
+
+	public Boolean checkPathToSpielerCSV() {
+		String path = prop.getProperty(PATHTOPLAYERSCSV);
+		return checkPath(path);
+
+	}
+
+	public Boolean checkPathToVereineCSV() {
+		String path = prop.getProperty(PATHTOVEREINECSV);
+		return checkPath(path);
+
+	}
+
 	public void checkProperties() {
 		Boolean saveChanges = false;
 		int turniereProTab = 0;
@@ -260,15 +383,12 @@ public class PropertiesControl {
 		}
 	}
 
-	private boolean checkPathToPlayersELO() {
-		String path = prop.getProperty(PATHTOPLAYERSELO);
-		return checkPath(path);
+	public String getCutForename() {
+		return prop.getProperty(CUT_FORENAME);
 	}
 
-	private boolean checkPathToPlayersCSV() {
-		String path = prop.getProperty(PATHTOPLAYERSCSV);
-		return checkPath(path);
-
+	public String getCutSurname() {
+		return prop.getProperty(CUT_SURNAME);
 	}
 
 	public Boolean getDatabaseUpdated() {
@@ -279,21 +399,8 @@ public class PropertiesControl {
 		}
 	}
 
-	public void setDatabaseUpdated(boolean b) {
-		if (b == true) {
-			prop.setProperty(DATABASE_UPDATED, TRUE);
-		} else {
-			prop.setProperty(DATABASE_UPDATED, FALSE);
-		}
-
-	}
-
-	public Boolean getOnlyTables() {
-		if (prop.getProperty(ONLYTABLES).equals(TRUE)) {
-			return true;
-		} else {
-			return false;
-		}
+	public String getDefaultPath() {
+		return prop.getProperty(DEFAULTPATH);
 	}
 
 	public Boolean gethtmlToClipboard() {
@@ -304,8 +411,20 @@ public class PropertiesControl {
 		}
 	}
 
+	public String getLanguage() {
+		return prop.getProperty(LANGUAGE);
+	}
+
 	public Boolean getNoDWZ() {
 		if (prop.getProperty(NODWZ).equals(TRUE)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Boolean getNoELO() {
+		if (prop.getProperty(NOELO).equals(TRUE)) {
 			return true;
 		} else {
 			return false;
@@ -320,6 +439,46 @@ public class PropertiesControl {
 		}
 	}
 
+	public Boolean getNoFolgeELO() {
+		if (prop.getProperty(NOFOLGEELO).equals(TRUE)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Boolean getNoWritableProperties() {
+		return NoWritableProperties;
+	}
+
+	public Boolean getOnlyTables() {
+		if (prop.getProperty(ONLYTABLES).equals(TRUE)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public String getPathToDatabase() {
+		return prop.getProperty(PATHTODATABASE);
+	}
+
+	public String getPathToPlayersCSV() {
+		return prop.getProperty(PATHTOPLAYERSCSV);
+	}
+
+	public String getPathToPlayersELO() {
+		return prop.getProperty(PATHTOPLAYERSELO);
+	}
+
+	public String getPathToVereineCSV() {
+		return prop.getProperty(PATHTOVEREINECSV);
+	}
+
+	public String getPathToVereineCVS() {
+		return prop.getProperty(PATHTOVEREINECSV);
+	}
+
 	public Boolean getPDFLinks() {
 		if (prop.getProperty(PDFLINKS).equals(TRUE)) {
 			return true;
@@ -328,380 +487,8 @@ public class PropertiesControl {
 		}
 	}
 
-	public String getZPS() {
-		return prop.getProperty(ZPS);
-	}
-
-	public String getCutForename() {
-		return prop.getProperty(CUT_FORENAME);
-	}
-
-	public void setCutForename(String namecut) {
-		prop.setProperty(CUT_FORENAME, namecut);
-	}
-
-	public String getCutSurname() {
-		return prop.getProperty(CUT_SURNAME);
-	}
-
-	public void setCutSurname(String namecut) {
-		prop.setProperty(CUT_SURNAME, namecut);
-	}
-
-	public String getWebserverPath() {
-		return prop.getProperty(WEBSERVER_PATH);
-	}
-
-	public void setWebserverPath(String path) {
-		prop.setProperty(WEBSERVER_PATH, path);
-	}
-
-	public Boolean writeProperties() {
-		Boolean ok = true;
-
-		// speichern
-		StringWriter sw = new StringWriter();
-		try {
-			prop.store(sw, null);
-			prefs.put("properties", sw.toString());
-			ok = true;
-			NoWritableProperties = false;
-		} catch (IOException e) {
-			e.printStackTrace();
-			ok = false;
-			NoWritableProperties = true;
-		}
-
-		return ok;
-	}
-
-	public Boolean readProperties() {
-		Boolean ok = true;
-
-		// auslesen
-		try {
-			prop.load(new StringReader(prefs.get("properties", null)));
-			checkProperties();
-			ok = true;
-		} catch (IOException e) {
-
-			ok = false;
-		} catch (NullPointerException e) {
-			checkProperties();
-			writeProperties();
-			ok = true;
-		}
-		return ok;
-	}
-
-	private Boolean checkPath(String path) {
-
-		File f = new File(path);
-
-		if (f.exists() && !f.isDirectory()) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
-	private Boolean checkDefaultPath() {
-		String path = prop.getProperty(DEFAULTPATH);
-
-		File f = new File(path);
-
-		if (f.isDirectory()) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
-
-	public Boolean checkPathToDatabase() {
-		String path = prop.getProperty(PATHTODATABASE);
-		return checkPath(path);
-	}
-
-	public Boolean checkPathToVereineCSV() {
-		String path = prop.getProperty(PATHTOVEREINECSV);
-		return checkPath(path);
-
-	}
-
-	public Boolean checkPathToSpielerCSV() {
-		String path = prop.getProperty(PATHTOPLAYERSCSV);
-		return checkPath(path);
-
-	}
-
-	public Boolean checkPathToELOXML() {
-		String path = prop.getProperty(PATHTOPLAYERSELO);
-		return checkPath(path);
-
-	}
-
-	public String getPathToDatabase() {
-		return prop.getProperty(PATHTODATABASE);
-	}
-
-	public void setPathToDatabase(String db_PATH) {
-		prop.setProperty(PATHTODATABASE, db_PATH);
-	}
-
-	public String getPathToVereineCSV() {
-		return prop.getProperty(PATHTOVEREINECSV);
-	}
-
-	public void setPathToVereineCSV(String vereinecsv_PATH) {
-		prop.setProperty(PATHTOVEREINECSV, vereinecsv_PATH);
-	}
-
-	public String getPathToPlayersCSV() {
-		return prop.getProperty(PATHTOPLAYERSCSV);
-	}
-
-	public void setPathToPlayersCSV(String csv_PATH) {
-		prop.setProperty(PATHTOPLAYERSCSV, csv_PATH);
-	}
-
 	public Properties getProp() {
 		return prop;
-	}
-
-	public void setProp(Properties prop) {
-		this.prop = prop;
-	}
-
-	public Boolean getNoWritableProperties() {
-		return NoWritableProperties;
-	}
-
-	public void setNoWritableProperties(Boolean noWritableProperties) {
-		NoWritableProperties = noWritableProperties;
-	}
-
-	public void setZPS(String zps) {
-		prop.setProperty(ZPS, zps);
-
-	}
-
-	public void setTableComumnOldDWZ(String tableString) {
-		prop.setProperty(TABLE_COLUMN_OLD_DWZ, tableString);
-
-	}
-
-	public String getTableComumnOldDWZ() {
-
-		return prop.getProperty(TABLE_COLUMN_OLD_DWZ);
-	}
-
-	public void setTableComumnNewDWZ(String tableString) {
-		prop.setProperty(TABLE_COLUMN_NEW_DWZ, tableString);
-
-	}
-
-	public String getTableComumnNewDWZ() {
-
-		return prop.getProperty(TABLE_COLUMN_NEW_DWZ);
-	}
-
-	public void setTableComumnOldELO(String tableString) {
-		prop.setProperty(TABLE_COLUMN_OLD_ELO, tableString);
-
-	}
-
-	public String getTableComumnOldELO() {
-		return prop.getProperty(TABLE_COLUMN_OLD_ELO);
-	}
-
-	public void setTableComumnNewELO(String tableString) {
-		prop.setProperty(TABLE_COLUMN_NEW_ELO, tableString);
-
-	}
-
-	public String getTableComumnNewELO() {
-
-		return prop.getProperty(TABLE_COLUMN_NEW_ELO);
-	}
-
-	public void setTableComumnPoints(String tableString) {
-		prop.setProperty(TABLE_COLUMN_POINTS, tableString);
-
-	}
-
-	public String getTableComumnPoints() {
-
-		return prop.getProperty(TABLE_COLUMN_POINTS);
-	}
-
-	public void setTableComumnSonnebornBerger(String tableString) {
-		prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER, tableString);
-
-	}
-
-	public String getTableComumnSonnebornBerger() {
-
-		return prop.getProperty(TABLE_COLUMN_SONNEBORNBERGER);
-	}
-
-	public void setTableComumnRanking(String tableString) {
-		prop.setProperty(TABLE_COLUMN_RANKING, tableString);
-
-	}
-
-	public String getTableComumnRanking() {
-
-		return prop.getProperty(TABLE_COLUMN_RANKING);
-	}
-
-	public void setTableComumnWhite(String tableString) {
-		prop.setProperty(TABLE_COLUMN_WHITE, tableString);
-
-	}
-
-	public String getTableComumnWhite() {
-
-		return prop.getProperty(TABLE_COLUMN_WHITE);
-	}
-
-	public void setTableComumnBlack(String tableString) {
-		prop.setProperty(TABLE_COLUMN_BLACK, tableString);
-
-	}
-
-	public String getTableComumnBlack() {
-
-		return prop.getProperty(TABLE_COLUMN_BLACK);
-	}
-
-	public void setTableComumnResult(String tableString) {
-		prop.setProperty(TABLE_COLUMN_RESULT, tableString);
-
-	}
-
-	public String getTableComumnResult() {
-
-		return prop.getProperty(TABLE_COLUMN_RESULT);
-	}
-
-	public void setTableComumnMeeting(String tableString) {
-		prop.setProperty(TABLE_COLUMN_MEETING, tableString);
-
-	}
-
-	public String getTableComumnMeeting() {
-
-		return prop.getProperty(TABLE_COLUMN_MEETING);
-	}
-
-	public void setTableComumnPlayer(String tableString) {
-		prop.setProperty(TABLE_COLUMN_PLAYER, tableString);
-
-	}
-
-	public String getTableComumnPlayer() {
-
-		return prop.getProperty(TABLE_COLUMN_PLAYER);
-	}
-
-	public void setTableComumnRound(String tableString) {
-		prop.setProperty(TABLE_COLUMN_ROUND, tableString);
-
-	}
-
-	public String getTableComumnRound() {
-
-		return prop.getProperty(TABLE_COLUMN_ROUND);
-	}
-
-	public void setOnlyTables(boolean b) {
-		if (b == true) {
-			prop.setProperty(ONLYTABLES, TRUE);
-		} else {
-			prop.setProperty(ONLYTABLES, FALSE);
-		}
-
-	}
-
-	public void setNoDWZ(Boolean noDWZWert) {
-		if (noDWZWert == true) {
-			prop.setProperty(NODWZ, TRUE);
-		} else {
-			prop.setProperty(NODWZ, FALSE);
-		}
-	}
-
-	public void setNoFolgeDWZ(Boolean noDWZWert) {
-		if (noDWZWert == true) {
-			prop.setProperty(NOFOLGEDWZ, TRUE);
-		} else {
-			prop.setProperty(NOFOLGEDWZ, FALSE);
-		}
-	}
-
-	public void sethtmlToClipboard(Boolean htmlToClipboard) {
-		if (htmlToClipboard == true) {
-			prop.setProperty(HTMLTOCLIPBOARD, TRUE);
-		} else {
-			prop.setProperty(HTMLTOCLIPBOARD, FALSE);
-		}
-	}
-
-	public void setPDFLinks(Boolean pdfLinks) {
-		if (pdfLinks == true) {
-			prop.setProperty(PDFLINKS, TRUE);
-		} else {
-			prop.setProperty(PDFLINKS, FALSE);
-		}
-	}
-
-	public String getLanguage() {
-		return prop.getProperty(LANGUAGE);
-	}
-
-	public void setPathToVereineCVS(String absolutePath) {
-		prop.setProperty(PATHTOVEREINECSV, absolutePath);
-	}
-
-	public String getPathToVereineCVS() {
-		return prop.getProperty(PATHTOVEREINECSV);
-	}
-
-	public void setPathToPlayersELO(String absolutePath) {
-		prop.setProperty(PATHTOPLAYERSELO, absolutePath);
-
-	}
-
-	public String getPathToPlayersELO() {
-		return prop.getProperty(PATHTOPLAYERSELO);
-	}
-
-	public void setDefaultPath(String absolutePath) {
-		prop.setProperty(DEFAULTPATH, absolutePath);
-	}
-
-	public String getDefaultPath() {
-		return prop.getProperty(DEFAULTPATH);
-	}
-
-	public void setTurniereProTab(int anzahlprotab) {
-		prop.setProperty(TURNIEREPROTAB, new Integer(anzahlprotab).toString());
-	}
-
-	public int getTurniereProTab() {
-		try {
-			return Integer.parseInt(prop.getProperty(TURNIEREPROTAB));
-		} catch (NumberFormatException e) {
-			return 1;
-		}
-	}
-
-	public void setSpielerProTab(int anzahlprotab) {
-
-		prop.setProperty(SPIELERPROTAB, new Integer(anzahlprotab).toString());
-
 	}
 
 	public int getSpielerProTab() {
@@ -710,10 +497,6 @@ public class PropertiesControl {
 		} catch (NumberFormatException e) {
 			return 1;
 		}
-	}
-
-	public void setLanguage(String language) {
-		prop.setProperty(LANGUAGE, language);
 	}
 
 	public int getTabellenAbstand() {
@@ -740,75 +523,143 @@ public class PropertiesControl {
 		return gesamtabstand;
 	}
 
-	public void checkCrossTableColumnForDoubles() {
-		String[] tableColumns = new String[8];
-		tableColumns[0] = prop.getProperty(TABLE_COLUMN_PLAYER);
-		tableColumns[1] = prop.getProperty(TABLE_COLUMN_OLD_DWZ);
-		tableColumns[2] = prop.getProperty(TABLE_COLUMN_NEW_DWZ);
-		tableColumns[3] = prop.getProperty(TABLE_COLUMN_OLD_ELO);
-		tableColumns[4] = prop.getProperty(TABLE_COLUMN_NEW_ELO);
-		tableColumns[5] = prop.getProperty(TABLE_COLUMN_POINTS);
-		tableColumns[6] = prop.getProperty(TABLE_COLUMN_SONNEBORNBERGER);
-		tableColumns[7] = prop.getProperty(TABLE_COLUMN_RANKING);
-		Boolean loop = false;
-		do {
-			loop = false;
-			for (int i = 0; i < 8; i++) {
-				for (int y = 0; y < 8; y++) {
-					if (i != y) {
-						if (tableColumns[i].equals(tableColumns[y])) {
-							tableColumns[y] = tableColumns[y] + "#";
-							loop = true;
-						}
-					}
+	public String getTableComumnBlack() {
 
-				}
-			}
-		} while (loop == true);
-		prop.setProperty(TABLE_COLUMN_PLAYER, tableColumns[0]);
-		prop.setProperty(TABLE_COLUMN_OLD_DWZ, tableColumns[1]);
-		prop.setProperty(TABLE_COLUMN_NEW_DWZ, tableColumns[2]);
-		prop.setProperty(TABLE_COLUMN_OLD_ELO, tableColumns[3]);
-		prop.setProperty(TABLE_COLUMN_NEW_ELO, tableColumns[4]);
-		prop.setProperty(TABLE_COLUMN_POINTS, tableColumns[5]);
-		prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER, tableColumns[6]);
-		prop.setProperty(TABLE_COLUMN_RANKING, tableColumns[7]);
+		return prop.getProperty(TABLE_COLUMN_BLACK);
 	}
 
-	public void checkMeetingTableColumnForDoubles() {
-		String[] tableColumns = new String[6];
-		tableColumns[0] = prop.getProperty(TABLE_COLUMN_ROUND);
-		tableColumns[1] = prop.getProperty(TABLE_COLUMN_WHITE);
-		tableColumns[2] = prop.getProperty(TABLE_COLUMN_BLACK);
-		tableColumns[3] = prop.getProperty(TABLE_COLUMN_RESULT);
-		tableColumns[4] = prop.getProperty(TABLE_COLUMN_MEETING);
-		Boolean loop = false;
-		do {
-			loop = false;
-			for (int i = 0; i < 5; i++) {
-				for (int y = 0; y < 5; y++) {
-					if (i != y) {
-						if (tableColumns[i].equals(tableColumns[y])) {
-							tableColumns[y] = tableColumns[y] + "#";
-							loop = true;
-						}
-					}
+	public String getTableComumnMeeting() {
 
-				}
-			}
-		} while (loop == true);
-		prop.setProperty(TABLE_COLUMN_ROUND, tableColumns[0]);
-		prop.setProperty(TABLE_COLUMN_WHITE, tableColumns[1]);
-		prop.setProperty(TABLE_COLUMN_BLACK, tableColumns[2]);
-		prop.setProperty(TABLE_COLUMN_RESULT, tableColumns[3]);
-		prop.setProperty(TABLE_COLUMN_MEETING, tableColumns[4]);
+		return prop.getProperty(TABLE_COLUMN_MEETING);
 	}
 
-	public void setNoFolgeELO(boolean noFolgeELO) {
-		if (noFolgeELO == true) {
-			prop.setProperty(NOFOLGEELO, TRUE);
+	public String getTableComumnNewDWZ() {
+
+		return prop.getProperty(TABLE_COLUMN_NEW_DWZ);
+	}
+
+	public String getTableComumnNewELO() {
+
+		return prop.getProperty(TABLE_COLUMN_NEW_ELO);
+	}
+
+	public String getTableComumnOldDWZ() {
+
+		return prop.getProperty(TABLE_COLUMN_OLD_DWZ);
+	}
+
+	public String getTableComumnOldELO() {
+		return prop.getProperty(TABLE_COLUMN_OLD_ELO);
+	}
+
+	public String getTableComumnPlayer() {
+
+		return prop.getProperty(TABLE_COLUMN_PLAYER);
+	}
+
+	public String getTableComumnPoints() {
+
+		return prop.getProperty(TABLE_COLUMN_POINTS);
+	}
+
+	public String getTableComumnRanking() {
+
+		return prop.getProperty(TABLE_COLUMN_RANKING);
+	}
+
+	public String getTableComumnResult() {
+
+		return prop.getProperty(TABLE_COLUMN_RESULT);
+	}
+
+	public String getTableComumnRound() {
+
+		return prop.getProperty(TABLE_COLUMN_ROUND);
+	}
+
+	public String getTableComumnSonnebornBerger() {
+
+		return prop.getProperty(TABLE_COLUMN_SONNEBORNBERGER);
+	}
+
+	public String getTableComumnWhite() {
+
+		return prop.getProperty(TABLE_COLUMN_WHITE);
+	}
+
+	public int getTurniereProTab() {
+		try {
+			return Integer.parseInt(prop.getProperty(TURNIEREPROTAB));
+		} catch (NumberFormatException e) {
+			return 1;
+		}
+	}
+
+	public String getWebserverPath() {
+		return prop.getProperty(WEBSERVER_PATH);
+	}
+
+	public String getZPS() {
+		return prop.getProperty(ZPS);
+	}
+
+	public Boolean readProperties() {
+		Boolean ok = true;
+
+		// auslesen
+		try {
+			prop.load(new StringReader(prefs.get("properties", null)));
+			checkProperties();
+			ok = true;
+		} catch (IOException e) {
+
+			ok = false;
+		} catch (NullPointerException e) {
+			checkProperties();
+			writeProperties();
+			ok = true;
+		}
+		return ok;
+	}
+
+	public void setCutForename(String namecut) {
+		prop.setProperty(CUT_FORENAME, namecut);
+	}
+
+	public void setCutSurname(String namecut) {
+		prop.setProperty(CUT_SURNAME, namecut);
+	}
+
+	public void setDatabaseUpdated(boolean b) {
+		if (b == true) {
+			prop.setProperty(DATABASE_UPDATED, TRUE);
 		} else {
-			prop.setProperty(NOFOLGEELO, FALSE);
+			prop.setProperty(DATABASE_UPDATED, FALSE);
+		}
+
+	}
+
+	public void setDefaultPath(String absolutePath) {
+		prop.setProperty(DEFAULTPATH, absolutePath);
+	}
+
+	public void sethtmlToClipboard(Boolean htmlToClipboard) {
+		if (htmlToClipboard == true) {
+			prop.setProperty(HTMLTOCLIPBOARD, TRUE);
+		} else {
+			prop.setProperty(HTMLTOCLIPBOARD, FALSE);
+		}
+	}
+
+	public void setLanguage(String language) {
+		prop.setProperty(LANGUAGE, language);
+	}
+
+	public void setNoDWZ(Boolean noDWZWert) {
+		if (noDWZWert == true) {
+			prop.setProperty(NODWZ, TRUE);
+		} else {
+			prop.setProperty(NODWZ, FALSE);
 		}
 	}
 
@@ -821,20 +672,169 @@ public class PropertiesControl {
 
 	}
 
-	public Boolean getNoELO() {
-		if (prop.getProperty(NOELO).equals(TRUE)) {
-			return true;
+	public void setNoFolgeDWZ(Boolean noDWZWert) {
+		if (noDWZWert == true) {
+			prop.setProperty(NOFOLGEDWZ, TRUE);
 		} else {
-			return false;
+			prop.setProperty(NOFOLGEDWZ, FALSE);
 		}
 	}
 
-	public Boolean getNoFolgeELO() {
-		if (prop.getProperty(NOFOLGEELO).equals(TRUE)) {
-			return true;
+	public void setNoFolgeELO(boolean noFolgeELO) {
+		if (noFolgeELO == true) {
+			prop.setProperty(NOFOLGEELO, TRUE);
 		} else {
-			return false;
+			prop.setProperty(NOFOLGEELO, FALSE);
 		}
+	}
+
+	public void setNoWritableProperties(Boolean noWritableProperties) {
+		NoWritableProperties = noWritableProperties;
+	}
+
+	public void setOnlyTables(boolean b) {
+		if (b == true) {
+			prop.setProperty(ONLYTABLES, TRUE);
+		} else {
+			prop.setProperty(ONLYTABLES, FALSE);
+		}
+
+	}
+
+	public void setPathToDatabase(String db_PATH) {
+		prop.setProperty(PATHTODATABASE, db_PATH);
+	}
+
+	public void setPathToPlayersCSV(String csv_PATH) {
+		prop.setProperty(PATHTOPLAYERSCSV, csv_PATH);
+	}
+
+	public void setPathToPlayersELO(String absolutePath) {
+		prop.setProperty(PATHTOPLAYERSELO, absolutePath);
+
+	}
+
+	public void setPathToVereineCSV(String vereinecsv_PATH) {
+		prop.setProperty(PATHTOVEREINECSV, vereinecsv_PATH);
+	}
+
+	public void setPathToVereineCVS(String absolutePath) {
+		prop.setProperty(PATHTOVEREINECSV, absolutePath);
+	}
+
+	public void setPDFLinks(Boolean pdfLinks) {
+		if (pdfLinks == true) {
+			prop.setProperty(PDFLINKS, TRUE);
+		} else {
+			prop.setProperty(PDFLINKS, FALSE);
+		}
+	}
+
+	public void setProp(Properties prop) {
+		this.prop = prop;
+	}
+
+	public void setSpielerProTab(int anzahlprotab) {
+
+		prop.setProperty(SPIELERPROTAB, new Integer(anzahlprotab).toString());
+
+	}
+
+	public void setTableComumnBlack(String tableString) {
+		prop.setProperty(TABLE_COLUMN_BLACK, tableString);
+
+	}
+
+	public void setTableComumnMeeting(String tableString) {
+		prop.setProperty(TABLE_COLUMN_MEETING, tableString);
+
+	}
+
+	public void setTableComumnNewDWZ(String tableString) {
+		prop.setProperty(TABLE_COLUMN_NEW_DWZ, tableString);
+
+	}
+
+	public void setTableComumnNewELO(String tableString) {
+		prop.setProperty(TABLE_COLUMN_NEW_ELO, tableString);
+
+	}
+
+	public void setTableComumnOldDWZ(String tableString) {
+		prop.setProperty(TABLE_COLUMN_OLD_DWZ, tableString);
+
+	}
+
+	public void setTableComumnOldELO(String tableString) {
+		prop.setProperty(TABLE_COLUMN_OLD_ELO, tableString);
+
+	}
+
+	public void setTableComumnPlayer(String tableString) {
+		prop.setProperty(TABLE_COLUMN_PLAYER, tableString);
+
+	}
+
+	public void setTableComumnPoints(String tableString) {
+		prop.setProperty(TABLE_COLUMN_POINTS, tableString);
+
+	}
+
+	public void setTableComumnRanking(String tableString) {
+		prop.setProperty(TABLE_COLUMN_RANKING, tableString);
+
+	}
+
+	public void setTableComumnResult(String tableString) {
+		prop.setProperty(TABLE_COLUMN_RESULT, tableString);
+
+	}
+
+	public void setTableComumnRound(String tableString) {
+		prop.setProperty(TABLE_COLUMN_ROUND, tableString);
+
+	}
+
+	public void setTableComumnSonnebornBerger(String tableString) {
+		prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER, tableString);
+
+	}
+
+	public void setTableComumnWhite(String tableString) {
+		prop.setProperty(TABLE_COLUMN_WHITE, tableString);
+
+	}
+
+	public void setTurniereProTab(int anzahlprotab) {
+		prop.setProperty(TURNIEREPROTAB, new Integer(anzahlprotab).toString());
+	}
+
+	public void setWebserverPath(String path) {
+		prop.setProperty(WEBSERVER_PATH, path);
+	}
+
+	public void setZPS(String zps) {
+		prop.setProperty(ZPS, zps);
+
+	}
+
+	public Boolean writeProperties() {
+		Boolean ok = true;
+
+		// speichern
+		StringWriter sw = new StringWriter();
+		try {
+			prop.store(sw, null);
+			prefs.put("properties", sw.toString());
+			ok = true;
+			NoWritableProperties = false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			ok = false;
+			NoWritableProperties = true;
+		}
+
+		return ok;
 	}
 
 }

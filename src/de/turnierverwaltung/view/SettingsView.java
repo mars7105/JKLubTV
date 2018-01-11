@@ -47,13 +47,35 @@ import de.turnierverwaltung.model.TournamentConstants;
 
 public class SettingsView extends JPanel {
 
+	class OpenUrlAction implements ActionListener {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if (e.getSource().equals(dsbHomepageButton)) {
+				open(dsbHomepage);
+			}
+			if (e.getSource().equals(fideHomepageButton)) {
+				open(fideHomepage);
+			}
+
+		}
+
+	}
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private static void open(URI uri) {
+		if (Desktop.isDesktopSupported()) {
+			try {
+				Desktop.getDesktop().browse(uri);
+			} catch (IOException e) {
+				/* TODO: error handling */}
+		} else {
+			/* TODO: error handling */}
+	}
+
 	private JScrollPane scrollPane;
 	private JPanel centerPane;
-
 	private JCheckBox checkBoxHeaderFooter;
 	private JCheckBox checkBoxohneDWZ;
 	private JCheckBox checkBoxohneFolgeDWZ;
@@ -101,7 +123,9 @@ public class SettingsView extends JPanel {
 	private JTextField newELOTextField;
 	private JButton convertELOToSQLITEButton;
 	private JLabel convertELOToSQLITELabel;
+
 	private JButton convertDWZToSQLITEButton;
+
 	private JLabel convertDWZToSQLITELabel;
 
 	/**
@@ -205,6 +229,664 @@ public class SettingsView extends JPanel {
 		scrollPane.setViewportView(centerPane);
 		add(scrollPane, BorderLayout.CENTER);
 		add(buttonPane, BorderLayout.SOUTH);
+	}
+
+	private void anzahlElemente() {
+		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.26"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(spielerListeAuswahlBox);
+		htmlPanel.add(new JLabel(Messages.getString("EigenschaftenView.24"))); //$NON-NLS-1$
+
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(turnierListeAuswahlBox);
+		htmlPanel.add(new JLabel(Messages.getString("EigenschaftenView.25"))); //$NON-NLS-1$
+
+		htmlAll.add(htmlPanel);
+
+		htmlAll.add(new JSeparator());
+	}
+
+	private void defaultPath() {
+		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.20"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+
+		openDefaultPathButton = new JButton(Messages.getString("EigenschaftenView.19")); //$NON-NLS-1$
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(openDefaultPathButton);
+		openDefaultPathLabel = new JLabel();
+		htmlPanel.add(openDefaultPathLabel);
+		htmlAll.add(htmlPanel);
+
+		htmlAll.add(new JSeparator());
+	}
+
+	private void downloadDWZListe() {
+		// ohne Header und Footer
+		try {
+			dsbHomepage = new URI("http://www.schachbund.de/download.html"); //$NON-NLS-1$
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+
+		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.5"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+
+		dsbHomepageButton = new JButton();
+		dsbHomepageButton
+				.setText("<HTML><FONT color=\"#000099\"><U>http://www.schachbund.de/download.html</U></FONT></HTML>"); //$NON-NLS-1$
+
+		dsbHomepageButton.setOpaque(false);
+		dsbHomepageButton.setToolTipText(dsbHomepage.toString());
+		dsbHomepageButton.addActionListener(new OpenUrlAction());
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(dsbHomepageButton);
+		htmlAll.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JLabel labelHeader1 = new JLabel(Messages.getString("EigenschaftenView.10") //$NON-NLS-1$
+				+ Messages.getString("EigenschaftenView.11")); //$NON-NLS-1$
+		JLabel labelHeader1b = new JLabel(Messages.getString("EigenschaftenView.12") //$NON-NLS-1$
+				+ Messages.getString("EigenschaftenView.13")); //$NON-NLS-1$
+		JLabel labelHeader2 = new JLabel(Messages.getString("EigenschaftenView.14") //$NON-NLS-1$
+				+ Messages.getString("EigenschaftenView.15")); //$NON-NLS-1$
+		JLabel labelHeader2b = new JLabel(Messages.getString("EigenschaftenView.16")); //$NON-NLS-1$
+		htmlPanel.add(labelHeader1);
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(labelHeader1b);
+
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(labelHeader2);
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(labelHeader2b);
+		htmlAll.add(htmlPanel);
+
+		openVereineCSVButton = new JButton(Messages.getString("EigenschaftenView.18")); //$NON-NLS-1$
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(openVereineCSVButton);
+		openVereineCSVLabel = new JLabel();
+		htmlPanel.add(openVereineCSVLabel);
+		htmlAll.add(htmlPanel);
+
+		openPlayersCSVButton = new JButton(Messages.getString("EigenschaftenView.43")); //$NON-NLS-1$
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(openPlayersCSVButton);
+		openPlayersCSVLabel = new JLabel();
+		htmlPanel.add(openPlayersCSVLabel);
+		htmlAll.add(htmlPanel);
+
+		convertDWZToSQLITEButton = new JButton(Messages.getString("EigenschaftenView.65"));
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(convertDWZToSQLITEButton);
+		convertDWZToSQLITELabel = new JLabel();
+		htmlPanel.add(convertDWZToSQLITELabel);
+		htmlAll.add(htmlPanel);
+
+		htmlAll.add(new JSeparator());
+
+	}
+
+	private void downloadELOListe() {
+
+		try {
+			fideHomepage = new URI("https://ratings.fide.com/download.phtml"); //$NON-NLS-1$
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
+		}
+
+		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.51"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+		fideHomepageButton = new JButton();
+		fideHomepageButton
+				.setText("<HTML><FONT color=\"#000099\"><U>https://ratings.fide.com/download.phtml</U></FONT></HTML>"); //$NON-NLS-1$
+
+		fideHomepageButton.setOpaque(false);
+		fideHomepageButton.setToolTipText(fideHomepage.toString());
+		fideHomepageButton.addActionListener(new OpenUrlAction());
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(fideHomepageButton);
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JLabel labelHeader1 = new JLabel(Messages.getString("EigenschaftenView.53") //$NON-NLS-1$
+				+ Messages.getString("EigenschaftenView.54")); //$NON-NLS-1$
+		JLabel labelHeader1b = new JLabel(Messages.getString("EigenschaftenView.55") //$NON-NLS-1$
+				+ Messages.getString("EigenschaftenView.56")); //$NON-NLS-1$
+		JLabel labelHeader2 = new JLabel(Messages.getString("EigenschaftenView.57") //$NON-NLS-1$
+				+ Messages.getString("EigenschaftenView.58")); //$NON-NLS-1$
+		JLabel labelHeader2b = new JLabel(Messages.getString("EigenschaftenView.59")); //$NON-NLS-1$
+		htmlPanel.add(labelHeader1);
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(labelHeader1b);
+
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(labelHeader2);
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(labelHeader2b);
+		htmlAll.add(htmlPanel);
+
+		htmlAll.add(htmlPanel);
+
+		openPlayersELOButton = new JButton(Messages.getString("EigenschaftenView.52")); //$NON-NLS-1$
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(openPlayersELOButton);
+		openPlayersELOLabel = new JLabel();
+		htmlPanel.add(openPlayersELOLabel);
+		htmlAll.add(htmlPanel);
+
+		convertELOToSQLITEButton = new JButton(Messages.getString("EigenschaftenView.66"));
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(convertELOToSQLITEButton);
+		convertELOToSQLITELabel = new JLabel();
+		htmlPanel.add(convertELOToSQLITELabel);
+		htmlAll.add(htmlPanel);
+
+		htmlAll.add(new JSeparator());
+	}
+
+	public JTextField getBlackTextField() {
+		return blackTextField;
+	}
+
+	public JCheckBox getCheckBoxHeaderFooter() {
+		return checkBoxHeaderFooter;
+	}
+
+	public JCheckBox getCheckBoxhtmlToClipboard() {
+		return checkBoxhtmlToClipboard;
+	}
+
+	public JCheckBox getCheckBoxohneDWZ() {
+		return checkBoxohneDWZ;
+	}
+
+	public JCheckBox getCheckBoxohneELO() {
+		return checkBoxohneELO;
+	}
+
+	public JCheckBox getCheckBoxohneFolgeDWZ() {
+		return checkBoxohneFolgeDWZ;
+	}
+
+	public JCheckBox getCheckBoxohneFolgeELO() {
+		return checkBoxohneFolgeELO;
+	}
+
+	public JCheckBox getCheckBoxPDFLinks() {
+		return checkBoxPDFLinks;
+	}
+
+	public JButton getConvertDWZToSQLITEButton() {
+		return convertDWZToSQLITEButton;
+	}
+
+	public JLabel getConvertDWZToSQLITELabel() {
+		return convertDWZToSQLITELabel;
+	}
+
+	public JButton getConvertELOToSQLITEButton() {
+		return convertELOToSQLITEButton;
+	}
+
+	public JLabel getConvertELOToSQLITELabel() {
+		return convertELOToSQLITELabel;
+	}
+
+	public JRadioButton getEnglishLanguageCheckBox() {
+		return englishLanguageCheckBox;
+	}
+
+	public SpinnerView getForenameLengthBox() {
+		return forenameLengthBox;
+	}
+
+	public JRadioButton getGermanLanguageCheckBox() {
+		return germanLanguageCheckBox;
+	}
+
+	public JTextField getMeetingTextField() {
+		return meetingTextField;
+	}
+
+	public JTextField getNewDWZTextField() {
+		return newDWZTextField;
+	}
+
+	public JTextField getNewELOTextField() {
+		return newELOTextField;
+	}
+
+	public JButton getOkButton() {
+		return okButton;
+	}
+
+	public JTextField getOldDWZTextField() {
+		return oldDWZTextField;
+	}
+
+	public JTextField getOldELOTextField() {
+		return oldELOTextField;
+	}
+
+	public JButton getOpenDefaultPathButton() {
+		return openDefaultPathButton;
+	}
+
+	public String getOpenDefaultPathLabel() {
+		return openDefaultPathLabel.getText();
+	}
+
+	public JButton getOpenPlayersCSVButton() {
+		return openPlayersCSVButton;
+	}
+
+	public JLabel getOpenPlayersCSVLabel() {
+		return openPlayersCSVLabel;
+	}
+
+	public JButton getOpenPlayersELOButton() {
+		return openPlayersELOButton;
+	}
+
+	public JLabel getOpenPlayersELOLabel() {
+		return openPlayersELOLabel;
+	}
+
+	public JButton getOpenVereineCSVButton() {
+		return openVereineCSVButton;
+	}
+
+	public String getOpenVereineCSVLabel() {
+		return openVereineCSVLabel.getText();
+	}
+
+	public JTextField getPlayerTextField() {
+		return playerTextField;
+	}
+
+	public JTextField getPointsTextField() {
+		return pointsTextField;
+	}
+
+	public JTextField getRankingTextField() {
+		return rankingTextField;
+	}
+
+	public JTextField getResultTextField() {
+		return resultTextField;
+	}
+
+	public JTextField getRoundTextField() {
+		return roundTextField;
+	}
+
+	public JTextField getSbbTextField() {
+		return sbbTextField;
+	}
+
+	public JComboBox<String> getSpielerListeAuswahlBox() {
+		return spielerListeAuswahlBox;
+	}
+
+	public SpinnerView getSurnameLengthBox() {
+		return surnameLengthBox;
+	}
+
+	public JComboBox<String> getTurnierListeAuswahlBox() {
+		return turnierListeAuswahlBox;
+	}
+
+	public JTextField getWebserverPathTextField() {
+		return webserverPathTextField;
+	}
+
+	public JTextField getWhiteTextField() {
+		return whiteTextField;
+	}
+
+	private void languageSupport() {
+		ButtonGroup group = new ButtonGroup();
+		// deutsch
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JLabel labelHeader = new JLabel("Deutsch (erst nach Neustart sichtbar)"); //$NON-NLS-1$
+		JLabel germanFlagLabel = new JLabel(germanFlag);
+		TitleLabelView titleView = new TitleLabelView("Sprache / Language");
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+		// JPanel title = new JPanel();
+		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// title.add(new JLabel("Sprache / Language")); //$NON-NLS-1$
+		// htmlAll.add(title);
+		germanLanguageCheckBox = new JRadioButton();
+		germanLanguageCheckBox.setSelected(true);
+		group.add(germanLanguageCheckBox);
+		htmlPanel.add(germanLanguageCheckBox);
+		htmlPanel.add(germanFlagLabel);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		// englisch
+		labelHeader = new JLabel("English (visible after restart)"); //$NON-NLS-1$
+		JLabel englishFlagLabel = new JLabel(englishFlag);
+
+		englishLanguageCheckBox = new JRadioButton();
+		group.add(englishLanguageCheckBox);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(englishLanguageCheckBox);
+		htmlPanel.add(englishFlagLabel);
+
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		htmlAll.add(new JSeparator());
+
+	}
+
+	private void makeHTMLEigenschaften() {
+		// ohne Header und Footer
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JLabel labelHeader = new JLabel(Messages.getString("EigenschaftenView.1")); //$NON-NLS-1$
+
+		checkBoxHeaderFooter = new JCheckBox();
+		htmlPanel.add(checkBoxHeaderFooter);
+		htmlPanel.add(labelHeader);
+		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.2"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+
+		htmlAll.add(htmlPanel);
+
+		// ohne DWZ
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.3")); //$NON-NLS-1$
+		checkBoxohneDWZ = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxohneDWZ);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		// ohne Folge DWZ
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.4")); //$NON-NLS-1$
+		checkBoxohneFolgeDWZ = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxohneFolgeDWZ);
+		htmlPanel.add(labelHeader);
+		htmlAll.add(htmlPanel);
+		// ohne ELO
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.61"));
+		checkBoxohneELO = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxohneELO);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		// ohne Folge ELO
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.62"));
+		checkBoxohneFolgeELO = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxohneFolgeELO);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+		// HTML Tabellen in die Zwischenablage kopieren
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.60")); //$NON-NLS-1$
+		checkBoxhtmlToClipboard = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxhtmlToClipboard);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		// PDF Links in HTML Tabellen einbinden
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.42")); //$NON-NLS-1$
+		checkBoxPDFLinks = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxPDFLinks);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		// Webserver Path
+		Dimension dimTextField = new Dimension(225, 30);
+
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.41")); //$NON-NLS-1$
+		webserverPathTextField = new JTextField(22);
+		webserverPathTextField.setPreferredSize(dimTextField);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(webserverPathTextField);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+		// buchstaben anzahl
+		String[] listString = new String[20];
+		for (int i = 0; i < 20; i++) {
+			listString[i] = new Integer(i + 1).toString();
+
+		}
+		// forename length
+		forenameLengthBox = new SpinnerView(listString, listString.length - 1,
+				Messages.getString("EigenschaftenView.39"));
+		htmlAll.add(forenameLengthBox);
+
+		// surname length
+		surnameLengthBox = new SpinnerView(listString, listString.length - 1,
+				Messages.getString("EigenschaftenView.40"));
+		htmlAll.add(surnameLengthBox);
+
+		htmlAll.add(new JSeparator());
+
+	}
+
+	public void setBlackTextField(JTextField blackTextField) {
+		this.blackTextField = blackTextField;
+	}
+
+	public void setCheckBoxHeaderFooter(JCheckBox checkBoxHeaderFooter) {
+		this.checkBoxHeaderFooter = checkBoxHeaderFooter;
+	}
+
+	public void setCheckBoxhtmlToClipboard(JCheckBox checkBoxhtmlToClipboard) {
+		this.checkBoxhtmlToClipboard = checkBoxhtmlToClipboard;
+	}
+
+	public void setCheckBoxohneDWZ(JCheckBox checkBoxohneDWZ) {
+		this.checkBoxohneDWZ = checkBoxohneDWZ;
+	}
+
+	public void setCheckBoxohneELO(JCheckBox checkBoxohneELO) {
+		this.checkBoxohneELO = checkBoxohneELO;
+	}
+
+	public void setCheckBoxohneFolgeDWZ(JCheckBox checkBoxohneFolgeDWZ) {
+		this.checkBoxohneFolgeDWZ = checkBoxohneFolgeDWZ;
+	}
+
+	public void setCheckBoxohneFolgeELO(JCheckBox checkBoxohneFolgeELO) {
+		this.checkBoxohneFolgeELO = checkBoxohneFolgeELO;
+	}
+
+	public void setCheckBoxPDFLinks(JCheckBox checkBoxPDFLinks) {
+		this.checkBoxPDFLinks = checkBoxPDFLinks;
+	}
+
+	public void setConvertDWZToSQLITEButton(JButton convertDWZToSQLITEButton) {
+		this.convertDWZToSQLITEButton = convertDWZToSQLITEButton;
+	}
+
+	public void setConvertDWZToSQLITELabel(JLabel convertDWZToSQLITELabel) {
+		this.convertDWZToSQLITELabel = convertDWZToSQLITELabel;
+	}
+
+	public void setConvertELOToSQLITEButton(JButton convertELOToSQLITEButton) {
+		this.convertELOToSQLITEButton = convertELOToSQLITEButton;
+	}
+
+	public void setConvertELOToSQLITELabel(JLabel convertELOToSQLITELabel) {
+		this.convertELOToSQLITELabel = convertELOToSQLITELabel;
+	}
+
+	public void setEnglishLanguageCheckBox(JRadioButton englishLanguageCheckBox) {
+		this.englishLanguageCheckBox = englishLanguageCheckBox;
+	}
+
+	public void setForenameLengthBox(SpinnerView forenameLengthBox) {
+		this.forenameLengthBox = forenameLengthBox;
+	}
+
+	public void setGermanLanguageCheckBox(JRadioButton germanLanguageCheckBox) {
+		this.germanLanguageCheckBox = germanLanguageCheckBox;
+	}
+
+	public void setMeetingTextField(JTextField meetingTextField) {
+		this.meetingTextField = meetingTextField;
+	}
+
+	public void setNewDWZTextField(JTextField newDWZTextField) {
+		this.newDWZTextField = newDWZTextField;
+	}
+
+	public void setNewELOTextField(JTextField newELOTextField) {
+		this.newELOTextField = newELOTextField;
+	}
+
+	public void setOkButton(JButton okButton) {
+		this.okButton = okButton;
+	}
+
+	public void setOldDWZTextField(JTextField oldDWZTextField) {
+		this.oldDWZTextField = oldDWZTextField;
+	}
+
+	public void setOldELOTextField(JTextField oldELOTextField) {
+		this.oldELOTextField = oldELOTextField;
+	}
+
+	public void setOpenDefaultPathButton(JButton openDefaultPathButton) {
+		this.openDefaultPathButton = openDefaultPathButton;
+	}
+
+	public void setOpenDefaultPathLabel(String openDefaultPathLabel) {
+		this.openDefaultPathLabel.setText(openDefaultPathLabel);
+		this.openDefaultPathLabel.updateUI();
+	}
+
+	public void setOpenPlayersCSVButton(JButton openPlayersCSVButton) {
+		this.openPlayersCSVButton = openPlayersCSVButton;
+	}
+
+	public void setOpenPlayersCSVLabel(String openVereineCSV) {
+		this.openPlayersCSVLabel.setText(openVereineCSV);
+		this.openPlayersCSVLabel.updateUI();
+	}
+
+	public void setOpenPlayersELOButton(JButton openPlayersELOButton) {
+		this.openPlayersELOButton = openPlayersELOButton;
+	}
+
+	public void setOpenPlayersELOLabel(String openPlayersELOLabel) {
+		this.openPlayersELOLabel.setText(openPlayersELOLabel);
+	}
+
+	public void setOpenVereineCSVButton(JButton openVereineCSVButton) {
+		this.openVereineCSVButton = openVereineCSVButton;
+	}
+
+	public void setOpenVereineCSVLabel(String openVereineCSVLabel) {
+		this.openVereineCSVLabel.setText(openVereineCSVLabel);
+		this.openVereineCSVLabel.updateUI();
+	}
+
+	public void setPlayerTextField(JTextField playerTextField) {
+		this.playerTextField = playerTextField;
+	}
+
+	public void setPointsTextField(JTextField pointsTextField) {
+		this.pointsTextField = pointsTextField;
+	}
+
+	public void setRankingTextField(JTextField rankingTextField) {
+		this.rankingTextField = rankingTextField;
+	}
+
+	public void setResultTextField(JTextField resultTextField) {
+		this.resultTextField = resultTextField;
+	}
+
+	public void setRoundTextField(JTextField roundTextField) {
+		this.roundTextField = roundTextField;
+	}
+
+	public void setSbbTextField(JTextField sbbTextField) {
+		this.sbbTextField = sbbTextField;
+	}
+
+	public void setSpielerListeAuswahlBox(JComboBox<String> spielerListeAuswahlBox) {
+		this.spielerListeAuswahlBox = spielerListeAuswahlBox;
+	}
+
+	public void setSurnameLengthBox(SpinnerView surnameLengthBox) {
+		this.surnameLengthBox = surnameLengthBox;
+	}
+
+	public void setTurnierListeAuswahlBox(JComboBox<String> turnierListeAuswahlBox) {
+		this.turnierListeAuswahlBox = turnierListeAuswahlBox;
+	}
+
+	public void setWebserverPathTextField(JTextField webserverPathTextField) {
+		this.webserverPathTextField = webserverPathTextField;
+	}
+
+	public void setWhiteTextField(JTextField whiteTextField) {
+		this.whiteTextField = whiteTextField;
 	}
 
 	private void tableLabel() {
@@ -424,688 +1106,6 @@ public class SettingsView extends JPanel {
 		bothPanel.add(rightP, BorderLayout.CENTER);
 		htmlAll.add(bothPanel);
 		htmlAll.add(new JSeparator());
-	}
-
-	private void defaultPath() {
-		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.20"));
-		titleView.setFlowLayoutLeft();
-
-		htmlAll.add(titleView);
-
-		openDefaultPathButton = new JButton(Messages.getString("EigenschaftenView.19")); //$NON-NLS-1$
-		JPanel htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(openDefaultPathButton);
-		openDefaultPathLabel = new JLabel();
-		htmlPanel.add(openDefaultPathLabel);
-		htmlAll.add(htmlPanel);
-
-		htmlAll.add(new JSeparator());
-	}
-
-	private void languageSupport() {
-		ButtonGroup group = new ButtonGroup();
-		// deutsch
-		JPanel htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel labelHeader = new JLabel("Deutsch (erst nach Neustart sichtbar)"); //$NON-NLS-1$
-		JLabel germanFlagLabel = new JLabel(germanFlag);
-		TitleLabelView titleView = new TitleLabelView("Sprache / Language");
-		titleView.setFlowLayoutLeft();
-
-		htmlAll.add(titleView);
-		// JPanel title = new JPanel();
-		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// title.add(new JLabel("Sprache / Language")); //$NON-NLS-1$
-		// htmlAll.add(title);
-		germanLanguageCheckBox = new JRadioButton();
-		germanLanguageCheckBox.setSelected(true);
-		group.add(germanLanguageCheckBox);
-		htmlPanel.add(germanLanguageCheckBox);
-		htmlPanel.add(germanFlagLabel);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
-		// englisch
-		labelHeader = new JLabel("English (visible after restart)"); //$NON-NLS-1$
-		JLabel englishFlagLabel = new JLabel(englishFlag);
-
-		englishLanguageCheckBox = new JRadioButton();
-		group.add(englishLanguageCheckBox);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(englishLanguageCheckBox);
-		htmlPanel.add(englishFlagLabel);
-
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
-		htmlAll.add(new JSeparator());
-
-	}
-
-	private void anzahlElemente() {
-		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.26"));
-		titleView.setFlowLayoutLeft();
-
-		htmlAll.add(titleView);
-
-		JPanel htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(spielerListeAuswahlBox);
-		htmlPanel.add(new JLabel(Messages.getString("EigenschaftenView.24"))); //$NON-NLS-1$
-
-		htmlAll.add(htmlPanel);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(turnierListeAuswahlBox);
-		htmlPanel.add(new JLabel(Messages.getString("EigenschaftenView.25"))); //$NON-NLS-1$
-
-		htmlAll.add(htmlPanel);
-
-		htmlAll.add(new JSeparator());
-	}
-
-	private void downloadDWZListe() {
-		// ohne Header und Footer
-		try {
-			dsbHomepage = new URI("http://www.schachbund.de/download.html"); //$NON-NLS-1$
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-
-		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.5"));
-		titleView.setFlowLayoutLeft();
-
-		htmlAll.add(titleView);
-
-		dsbHomepageButton = new JButton();
-		dsbHomepageButton
-				.setText("<HTML><FONT color=\"#000099\"><U>http://www.schachbund.de/download.html</U></FONT></HTML>"); //$NON-NLS-1$
-
-		dsbHomepageButton.setOpaque(false);
-		dsbHomepageButton.setToolTipText(dsbHomepage.toString());
-		dsbHomepageButton.addActionListener(new OpenUrlAction());
-		JPanel htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(dsbHomepageButton);
-		htmlAll.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel labelHeader1 = new JLabel(Messages.getString("EigenschaftenView.10") //$NON-NLS-1$
-				+ Messages.getString("EigenschaftenView.11")); //$NON-NLS-1$
-		JLabel labelHeader1b = new JLabel(Messages.getString("EigenschaftenView.12") //$NON-NLS-1$
-				+ Messages.getString("EigenschaftenView.13")); //$NON-NLS-1$
-		JLabel labelHeader2 = new JLabel(Messages.getString("EigenschaftenView.14") //$NON-NLS-1$
-				+ Messages.getString("EigenschaftenView.15")); //$NON-NLS-1$
-		JLabel labelHeader2b = new JLabel(Messages.getString("EigenschaftenView.16")); //$NON-NLS-1$
-		htmlPanel.add(labelHeader1);
-		htmlAll.add(htmlPanel);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(labelHeader1b);
-
-		htmlAll.add(htmlPanel);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(labelHeader2);
-		htmlAll.add(htmlPanel);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(labelHeader2b);
-		htmlAll.add(htmlPanel);
-
-		openVereineCSVButton = new JButton(Messages.getString("EigenschaftenView.18")); //$NON-NLS-1$
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(openVereineCSVButton);
-		openVereineCSVLabel = new JLabel();
-		htmlPanel.add(openVereineCSVLabel);
-		htmlAll.add(htmlPanel);
-
-		openPlayersCSVButton = new JButton(Messages.getString("EigenschaftenView.43")); //$NON-NLS-1$
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(openPlayersCSVButton);
-		openPlayersCSVLabel = new JLabel();
-		htmlPanel.add(openPlayersCSVLabel);
-		htmlAll.add(htmlPanel);
-
-		convertDWZToSQLITEButton = new JButton(Messages.getString("EigenschaftenView.65"));
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(convertDWZToSQLITEButton);
-		convertDWZToSQLITELabel = new JLabel();
-		htmlPanel.add(convertDWZToSQLITELabel);
-		htmlAll.add(htmlPanel);
-
-		htmlAll.add(new JSeparator());
-
-	}
-
-	private void downloadELOListe() {
-
-		try {
-			fideHomepage = new URI("https://ratings.fide.com/download.phtml"); //$NON-NLS-1$
-		} catch (URISyntaxException e) {
-			e.printStackTrace();
-		}
-
-		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.51"));
-		titleView.setFlowLayoutLeft();
-
-		htmlAll.add(titleView);
-		fideHomepageButton = new JButton();
-		fideHomepageButton
-				.setText("<HTML><FONT color=\"#000099\"><U>https://ratings.fide.com/download.phtml</U></FONT></HTML>"); //$NON-NLS-1$
-
-		fideHomepageButton.setOpaque(false);
-		fideHomepageButton.setToolTipText(fideHomepage.toString());
-		fideHomepageButton.addActionListener(new OpenUrlAction());
-		JPanel htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(fideHomepageButton);
-		htmlAll.add(htmlPanel);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel labelHeader1 = new JLabel(Messages.getString("EigenschaftenView.53") //$NON-NLS-1$
-				+ Messages.getString("EigenschaftenView.54")); //$NON-NLS-1$
-		JLabel labelHeader1b = new JLabel(Messages.getString("EigenschaftenView.55") //$NON-NLS-1$
-				+ Messages.getString("EigenschaftenView.56")); //$NON-NLS-1$
-		JLabel labelHeader2 = new JLabel(Messages.getString("EigenschaftenView.57") //$NON-NLS-1$
-				+ Messages.getString("EigenschaftenView.58")); //$NON-NLS-1$
-		JLabel labelHeader2b = new JLabel(Messages.getString("EigenschaftenView.59")); //$NON-NLS-1$
-		htmlPanel.add(labelHeader1);
-		htmlAll.add(htmlPanel);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(labelHeader1b);
-
-		htmlAll.add(htmlPanel);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(labelHeader2);
-		htmlAll.add(htmlPanel);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(labelHeader2b);
-		htmlAll.add(htmlPanel);
-
-		htmlAll.add(htmlPanel);
-
-		openPlayersELOButton = new JButton(Messages.getString("EigenschaftenView.52")); //$NON-NLS-1$
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(openPlayersELOButton);
-		openPlayersELOLabel = new JLabel();
-		htmlPanel.add(openPlayersELOLabel);
-		htmlAll.add(htmlPanel);
-
-		convertELOToSQLITEButton = new JButton(Messages.getString("EigenschaftenView.66"));
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(convertELOToSQLITEButton);
-		convertELOToSQLITELabel = new JLabel();
-		htmlPanel.add(convertELOToSQLITELabel);
-		htmlAll.add(htmlPanel);
-
-		htmlAll.add(new JSeparator());
-	}
-
-	private void makeHTMLEigenschaften() {
-		// ohne Header und Footer
-		JPanel htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel labelHeader = new JLabel(Messages.getString("EigenschaftenView.1")); //$NON-NLS-1$
-
-		checkBoxHeaderFooter = new JCheckBox();
-		htmlPanel.add(checkBoxHeaderFooter);
-		htmlPanel.add(labelHeader);
-		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.2"));
-		titleView.setFlowLayoutLeft();
-
-		htmlAll.add(titleView);
-
-		htmlAll.add(htmlPanel);
-
-		// ohne DWZ
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.3")); //$NON-NLS-1$
-		checkBoxohneDWZ = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxohneDWZ);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
-		// ohne Folge DWZ
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.4")); //$NON-NLS-1$
-		checkBoxohneFolgeDWZ = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxohneFolgeDWZ);
-		htmlPanel.add(labelHeader);
-		htmlAll.add(htmlPanel);
-		// ohne ELO
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.61"));
-		checkBoxohneELO = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxohneELO);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
-		// ohne Folge ELO
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.62"));
-		checkBoxohneFolgeELO = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxohneFolgeELO);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-		// HTML Tabellen in die Zwischenablage kopieren
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.60")); //$NON-NLS-1$
-		checkBoxhtmlToClipboard = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxhtmlToClipboard);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
-		// PDF Links in HTML Tabellen einbinden
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.42")); //$NON-NLS-1$
-		checkBoxPDFLinks = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxPDFLinks);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
-		// Webserver Path
-		Dimension dimTextField = new Dimension(225, 30);
-
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.41")); //$NON-NLS-1$
-		webserverPathTextField = new JTextField(22);
-		webserverPathTextField.setPreferredSize(dimTextField);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(webserverPathTextField);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-		// buchstaben anzahl
-		String[] listString = new String[20];
-		for (int i = 0; i < 20; i++) {
-			listString[i] = new Integer(i + 1).toString();
-
-		}
-		// forename length
-		forenameLengthBox = new SpinnerView(listString, listString.length - 1,
-				Messages.getString("EigenschaftenView.39"));
-		htmlAll.add(forenameLengthBox);
-
-		// surname length
-		surnameLengthBox = new SpinnerView(listString, listString.length - 1,
-				Messages.getString("EigenschaftenView.40"));
-		htmlAll.add(surnameLengthBox);
-
-		htmlAll.add(new JSeparator());
-
-	}
-
-	public JCheckBox getCheckBoxHeaderFooter() {
-		return checkBoxHeaderFooter;
-	}
-
-	public void setCheckBoxHeaderFooter(JCheckBox checkBoxHeaderFooter) {
-		this.checkBoxHeaderFooter = checkBoxHeaderFooter;
-	}
-
-	public JCheckBox getCheckBoxohneDWZ() {
-		return checkBoxohneDWZ;
-	}
-
-	public void setCheckBoxohneDWZ(JCheckBox checkBoxohneDWZ) {
-		this.checkBoxohneDWZ = checkBoxohneDWZ;
-	}
-
-	public JCheckBox getCheckBoxohneFolgeDWZ() {
-		return checkBoxohneFolgeDWZ;
-	}
-
-	public void setCheckBoxohneFolgeDWZ(JCheckBox checkBoxohneFolgeDWZ) {
-		this.checkBoxohneFolgeDWZ = checkBoxohneFolgeDWZ;
-	}
-
-	public JRadioButton getGermanLanguageCheckBox() {
-		return germanLanguageCheckBox;
-	}
-
-	public void setGermanLanguageCheckBox(JRadioButton germanLanguageCheckBox) {
-		this.germanLanguageCheckBox = germanLanguageCheckBox;
-	}
-
-	public JRadioButton getEnglishLanguageCheckBox() {
-		return englishLanguageCheckBox;
-	}
-
-	public void setEnglishLanguageCheckBox(JRadioButton englishLanguageCheckBox) {
-		this.englishLanguageCheckBox = englishLanguageCheckBox;
-	}
-
-	private static void open(URI uri) {
-		if (Desktop.isDesktopSupported()) {
-			try {
-				Desktop.getDesktop().browse(uri);
-			} catch (IOException e) {
-				/* TODO: error handling */}
-		} else {
-			/* TODO: error handling */}
-	}
-
-	public JButton getOpenVereineCSVButton() {
-		return openVereineCSVButton;
-	}
-
-	public void setOpenVereineCSVButton(JButton openVereineCSVButton) {
-		this.openVereineCSVButton = openVereineCSVButton;
-	}
-
-	public String getOpenVereineCSVLabel() {
-		return openVereineCSVLabel.getText();
-	}
-
-	public void setOpenVereineCSVLabel(String openVereineCSVLabel) {
-		this.openVereineCSVLabel.setText(openVereineCSVLabel);
-		this.openVereineCSVLabel.updateUI();
-	}
-
-	public JComboBox<String> getSpielerListeAuswahlBox() {
-		return spielerListeAuswahlBox;
-	}
-
-	public void setSpielerListeAuswahlBox(JComboBox<String> spielerListeAuswahlBox) {
-		this.spielerListeAuswahlBox = spielerListeAuswahlBox;
-	}
-
-	public JComboBox<String> getTurnierListeAuswahlBox() {
-		return turnierListeAuswahlBox;
-	}
-
-	public void setTurnierListeAuswahlBox(JComboBox<String> turnierListeAuswahlBox) {
-		this.turnierListeAuswahlBox = turnierListeAuswahlBox;
-	}
-
-	public JButton getOpenDefaultPathButton() {
-		return openDefaultPathButton;
-	}
-
-	public void setOpenDefaultPathButton(JButton openDefaultPathButton) {
-		this.openDefaultPathButton = openDefaultPathButton;
-	}
-
-	public String getOpenDefaultPathLabel() {
-		return openDefaultPathLabel.getText();
-	}
-
-	public void setOpenDefaultPathLabel(String openDefaultPathLabel) {
-		this.openDefaultPathLabel.setText(openDefaultPathLabel);
-		this.openDefaultPathLabel.updateUI();
-	}
-
-	public JTextField getPlayerTextField() {
-		return playerTextField;
-	}
-
-	public void setPlayerTextField(JTextField playerTextField) {
-		this.playerTextField = playerTextField;
-	}
-
-	public JTextField getNewDWZTextField() {
-		return newDWZTextField;
-	}
-
-	public void setNewDWZTextField(JTextField newDWZTextField) {
-		this.newDWZTextField = newDWZTextField;
-	}
-
-	public JTextField getOldDWZTextField() {
-		return oldDWZTextField;
-	}
-
-	public void setOldDWZTextField(JTextField oldDWZTextField) {
-		this.oldDWZTextField = oldDWZTextField;
-	}
-
-	public JTextField getSbbTextField() {
-		return sbbTextField;
-	}
-
-	public void setSbbTextField(JTextField sbbTextField) {
-		this.sbbTextField = sbbTextField;
-	}
-
-	public JTextField getRankingTextField() {
-		return rankingTextField;
-	}
-
-	public void setRankingTextField(JTextField rankingTextField) {
-		this.rankingTextField = rankingTextField;
-	}
-
-	public JTextField getRoundTextField() {
-		return roundTextField;
-	}
-
-	public void setRoundTextField(JTextField roundTextField) {
-		this.roundTextField = roundTextField;
-	}
-
-	public JTextField getWhiteTextField() {
-		return whiteTextField;
-	}
-
-	public void setWhiteTextField(JTextField whiteTextField) {
-		this.whiteTextField = whiteTextField;
-	}
-
-	public JTextField getBlackTextField() {
-		return blackTextField;
-	}
-
-	public void setBlackTextField(JTextField blackTextField) {
-		this.blackTextField = blackTextField;
-	}
-
-	public JTextField getResultTextField() {
-		return resultTextField;
-	}
-
-	public void setResultTextField(JTextField resultTextField) {
-		this.resultTextField = resultTextField;
-	}
-
-	public JTextField getMeetingTextField() {
-		return meetingTextField;
-	}
-
-	public void setMeetingTextField(JTextField meetingTextField) {
-		this.meetingTextField = meetingTextField;
-	}
-
-	public JTextField getPointsTextField() {
-		return pointsTextField;
-	}
-
-	public void setPointsTextField(JTextField pointsTextField) {
-		this.pointsTextField = pointsTextField;
-	}
-
-	public JButton getOkButton() {
-		return okButton;
-	}
-
-	public void setOkButton(JButton okButton) {
-		this.okButton = okButton;
-	}
-
-	public SpinnerView getForenameLengthBox() {
-		return forenameLengthBox;
-	}
-
-	public void setForenameLengthBox(SpinnerView forenameLengthBox) {
-		this.forenameLengthBox = forenameLengthBox;
-	}
-
-	public SpinnerView getSurnameLengthBox() {
-		return surnameLengthBox;
-	}
-
-	public void setSurnameLengthBox(SpinnerView surnameLengthBox) {
-		this.surnameLengthBox = surnameLengthBox;
-	}
-
-	public JTextField getWebserverPathTextField() {
-		return webserverPathTextField;
-	}
-
-	public void setWebserverPathTextField(JTextField webserverPathTextField) {
-		this.webserverPathTextField = webserverPathTextField;
-	}
-
-	public JCheckBox getCheckBoxPDFLinks() {
-		return checkBoxPDFLinks;
-	}
-
-	public void setCheckBoxPDFLinks(JCheckBox checkBoxPDFLinks) {
-		this.checkBoxPDFLinks = checkBoxPDFLinks;
-	}
-
-	class OpenUrlAction implements ActionListener {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if (e.getSource().equals(dsbHomepageButton)) {
-				open(dsbHomepage);
-			}
-			if (e.getSource().equals(fideHomepageButton)) {
-				open(fideHomepage);
-			}
-
-		}
-
-	}
-
-	public JButton getOpenPlayersCSVButton() {
-		return openPlayersCSVButton;
-	}
-
-	public void setOpenPlayersCSVButton(JButton openPlayersCSVButton) {
-		this.openPlayersCSVButton = openPlayersCSVButton;
-	}
-
-	public JLabel getOpenPlayersCSVLabel() {
-		return openPlayersCSVLabel;
-	}
-
-	public void setOpenPlayersCSVLabel(String openVereineCSV) {
-		this.openPlayersCSVLabel.setText(openVereineCSV);
-		this.openPlayersCSVLabel.updateUI();
-	}
-
-	public JButton getOpenPlayersELOButton() {
-		return openPlayersELOButton;
-	}
-
-	public void setOpenPlayersELOButton(JButton openPlayersELOButton) {
-		this.openPlayersELOButton = openPlayersELOButton;
-	}
-
-	public JLabel getOpenPlayersELOLabel() {
-		return openPlayersELOLabel;
-	}
-
-	public void setOpenPlayersELOLabel(String openPlayersELOLabel) {
-		this.openPlayersELOLabel.setText(openPlayersELOLabel);
-	}
-
-	public JCheckBox getCheckBoxhtmlToClipboard() {
-		return checkBoxhtmlToClipboard;
-	}
-
-	public void setCheckBoxhtmlToClipboard(JCheckBox checkBoxhtmlToClipboard) {
-		this.checkBoxhtmlToClipboard = checkBoxhtmlToClipboard;
-	}
-
-	public JCheckBox getCheckBoxohneELO() {
-		return checkBoxohneELO;
-	}
-
-	public void setCheckBoxohneELO(JCheckBox checkBoxohneELO) {
-		this.checkBoxohneELO = checkBoxohneELO;
-	}
-
-	public JCheckBox getCheckBoxohneFolgeELO() {
-		return checkBoxohneFolgeELO;
-	}
-
-	public void setCheckBoxohneFolgeELO(JCheckBox checkBoxohneFolgeELO) {
-		this.checkBoxohneFolgeELO = checkBoxohneFolgeELO;
-	}
-
-	public JTextField getOldELOTextField() {
-		return oldELOTextField;
-	}
-
-	public void setOldELOTextField(JTextField oldELOTextField) {
-		this.oldELOTextField = oldELOTextField;
-	}
-
-	public JTextField getNewELOTextField() {
-		return newELOTextField;
-	}
-
-	public void setNewELOTextField(JTextField newELOTextField) {
-		this.newELOTextField = newELOTextField;
-	}
-
-	public JButton getConvertELOToSQLITEButton() {
-		return convertELOToSQLITEButton;
-	}
-
-	public void setConvertELOToSQLITEButton(JButton convertELOToSQLITEButton) {
-		this.convertELOToSQLITEButton = convertELOToSQLITEButton;
-	}
-
-	public JLabel getConvertELOToSQLITELabel() {
-		return convertELOToSQLITELabel;
-	}
-
-	public void setConvertELOToSQLITELabel(JLabel convertELOToSQLITELabel) {
-		this.convertELOToSQLITELabel = convertELOToSQLITELabel;
-	}
-
-	public JButton getConvertDWZToSQLITEButton() {
-		return convertDWZToSQLITEButton;
-	}
-
-	public void setConvertDWZToSQLITEButton(JButton convertDWZToSQLITEButton) {
-		this.convertDWZToSQLITEButton = convertDWZToSQLITEButton;
-	}
-
-	public JLabel getConvertDWZToSQLITELabel() {
-		return convertDWZToSQLITELabel;
-	}
-
-	public void setConvertDWZToSQLITELabel(JLabel convertDWZToSQLITELabel) {
-		this.convertDWZToSQLITELabel = convertDWZToSQLITELabel;
 	}
 
 }

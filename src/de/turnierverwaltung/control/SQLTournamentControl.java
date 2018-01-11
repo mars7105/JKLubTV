@@ -26,16 +26,16 @@ import de.turnierverwaltung.mysql.DatumDAO;
 import de.turnierverwaltung.mysql.TurnierDAO;
 
 public class SQLTournamentControl {
-	private MainControl mainControl;
-	private Tournament turnier;
-	private DAOFactory daoFactory;
-	private TurnierDAO mySQLTurnierDao;
-	private DatumDAO mySQLDatumDAO;
-	private int turnierId;
-//	private InfoDAO infoDao;
+	//	private InfoDAO infoDao;
 	public static final String INFONAME = Version.getString("version.0");
 	public static final String VERSION = Version.getString("version.1");
 	public static final String INFONOTICE = Version.getString("version.2");
+	private MainControl mainControl;
+	private Tournament turnier;
+	private DAOFactory daoFactory;
+private TurnierDAO mySQLTurnierDao;
+	private DatumDAO mySQLDatumDAO;
+	private int turnierId;
 
 	public SQLTournamentControl(MainControl mainControl) {
 //		Boolean checkDatabase = false;

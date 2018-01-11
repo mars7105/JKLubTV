@@ -36,6 +36,18 @@ public class HTMLToClipBoardDialogView extends JDialog {
 		makeDialog(htmlToClipBoard);
 	}
 
+	public ButtonPanelView getButtonPanel() {
+		return buttonPanel;
+	}
+
+	public ArrayList<HTMLToClipBoardView> getHtmlToClipBoard() {
+		return htmlToClipBoard;
+	}
+
+	public TitleLabelView getStatusLabel() {
+		return statusLabel;
+	}
+
 	public void makeDialog(ArrayList<HTMLToClipBoardView> htmlToClipBoard) {
 		TitleLabelView titleview = new TitleLabelView(Messages.getString("HTMLToClipBoardView.1"));
 		titleview.setFlowLayoutLeft();
@@ -75,24 +87,12 @@ public class HTMLToClipBoardDialogView extends JDialog {
 		setLocationRelativeTo(null);
 	}
 
-	public ButtonPanelView getButtonPanel() {
-		return buttonPanel;
-	}
-
 	public void setButtonPanel(ButtonPanelView buttonPanel) {
 		this.buttonPanel = buttonPanel;
 	}
 
-	public ArrayList<HTMLToClipBoardView> getHtmlToClipBoard() {
-		return htmlToClipBoard;
-	}
-
 	public void setHtmlToClipBoard(ArrayList<HTMLToClipBoardView> htmlToClipBoard) {
 		this.htmlToClipBoard = htmlToClipBoard;
-	}
-
-	public TitleLabelView getStatusLabel() {
-		return statusLabel;
 	}
 
 	public void setStatusLabel(TitleLabelView statusLabel) {
