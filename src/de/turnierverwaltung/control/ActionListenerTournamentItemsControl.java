@@ -55,11 +55,11 @@ import de.turnierverwaltung.view.TabbedPaneView;
 import de.turnierverwaltung.view.TournamentListView;
 
 public class ActionListenerTournamentItemsControl implements ActionListener {
-	private MainControl mainControl;
+	private final MainControl mainControl;
 	private TournamentListView turnierListeLadenView;
 	private SQLTournamentControl turnierTableControl;
 	private EditTournamentView turnierEditierenView;
-	private JTabbedPane hauptPanel;
+	private final JTabbedPane hauptPanel;
 	private int anzahlTurniere;
 	private Tournament turnier;
 	private TabbedPaneView tabbedPaneView;
@@ -67,22 +67,23 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 	private ArrayList<Tournament> turnierListe;
 	private int loadedTurnierID;
 
-	private ImageIcon turnierListeIcon = new ImageIcon(
+	private final ImageIcon turnierListeIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/games-highscores.png"))); //$NON-NLS-1$
-	private ImageIcon turnierIcon = new ImageIcon(
+	private final ImageIcon turnierIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png"))); //$NON-NLS-1$
-	private ImageIcon gruppenIcon = new ImageIcon(
+	private final ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png"))); //$NON-NLS-1$
 	private Tournament turnierEdit;
 	private boolean selectTurnierTab;
 	private ButtonTabComponent buttonTabComponent;
 
-	public ActionListenerTournamentItemsControl(MainControl mainControl) {
+	public ActionListenerTournamentItemsControl(final MainControl mainControl) {
 		anzahlTurniere = 0;
 		loadedTurnierID = -1;
 		this.mainControl = mainControl;
-
-		this.mainControl.setTournamentListView(turnierListeLadenView);
+		// turnierListeLadenView = new TournamentListView(anzahlTurniere,
+		// anzahlTurniere);
+		// this.mainControl.setTournamentListView(turnierListeLadenView);
 		turnierTableControl = mainControl.getSqlTournamentControl();
 
 		this.mainControl.setTabbedPaneViewControl(new TabbedPaneViewControl(this.mainControl, "X"));
@@ -95,14 +96,14 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(final ActionEvent arg0) {
 
 		if (turnierEditierenView != null) {
 
 			if (arg0.getSource().equals(turnierEditierenView.getOkButton())) {
-				String turnierName = turnierEditierenView.getTextFieldTurnierName().getText();
-				DateFormat formatter1 = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
-				DateFormat formatter2 = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+				final String turnierName = turnierEditierenView.getTextFieldTurnierName().getText();
+				final DateFormat formatter1 = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+				final DateFormat formatter2 = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 				String startDatum = "";
 				String endDatum = "";
 				try {
@@ -110,7 +111,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 					startDatum = formatter1.format(turnierEditierenView.getStartDatumTextField().getDate());
 					endDatum = formatter2.format(turnierEditierenView.getEndDatumTextField().getDate());
 
-				} catch (NullPointerException e2) {
+				} catch (final NullPointerException e2) {
 					startDatum = "";
 					endDatum = "";
 				}
@@ -121,7 +122,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 
 				for (int i = 0; i < turnierEdit.getAnzahlGruppen(); i++) {
 
-					String gEV = turnierEditierenView.getTextFieldGruppenName()[i].getText();
+					final String gEV = turnierEditierenView.getTextFieldGruppenName()[i].getText();
 
 					turnierEdit.getGruppe()[i].setGruppenName(gEV);
 				}
@@ -129,7 +130,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 				try {
 					turnierTableControl.updateTurnier(turnierEdit);
 
-					SQLGroupsControl gtC = new SQLGroupsControl(mainControl);
+					final SQLGroupsControl gtC = new SQLGroupsControl(mainControl);
 					gtC.updateGruppen(turnierEdit);
 
 					turnierEditierenView.dispose();
@@ -138,10 +139,10 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 					if (turnierEdit.getTurnierId() == loadedTurnierID) {
 						reloadTurnier();
 					}
-				} catch (SQLException e) {
+				} catch (final SQLException e) {
 					turnierEditierenView.dispose();
 					mainControl.setEnabled(true);
-					ExceptionHandler eh = new ExceptionHandler(mainControl);
+					final ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());
 				}
 
@@ -155,23 +156,23 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 
 		for (int i = 0; i < anzahlTurniere; i++) {
 
-			if (arg0.getSource().equals(turnierListeLadenView.getTurnierLadeButton()[i])) {
-				Tournament turnier = this.mainControl.getTournament();
+			if (arg0.getSource().equals(turnierListeLadenView.getTournamentListItems().get(i).getTurnierLadeButton())) {
+				final Tournament turnier = mainControl.getTournament();
 
 				if (turnier == null) {
 					selectTurnierTab = true;
 					try {
 						loadTurnier(i);
-					} catch (SQLException e) {
-						ExceptionHandler eh = new ExceptionHandler(mainControl);
+					} catch (final SQLException e) {
+						final ExceptionHandler eh = new ExceptionHandler(mainControl);
 						eh.fileSQLError(e.getMessage());
 					}
 				} else {
 					if (turnier.getTurnierId() == -1) {
 						// Custom button text
-						Object[] options = { Messages.getString("TurnierListeLadenControl.16"), //$NON-NLS-1$
+						final Object[] options = { Messages.getString("TurnierListeLadenControl.16"), //$NON-NLS-1$
 								Messages.getString("TurnierListeLadenControl.17") }; //$NON-NLS-1$
-						int abfrage = JOptionPane.showOptionDialog(mainControl,
+						final int abfrage = JOptionPane.showOptionDialog(mainControl,
 								Messages.getString("TurnierListeLadenControl.18") //$NON-NLS-1$
 										+ Messages.getString("TurnierListeLadenControl.19"), //$NON-NLS-1$
 								Messages.getString("TurnierListeLadenControl.20"), //$NON-NLS-1$
@@ -182,42 +183,42 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 							selectTurnierTab = true;
 							try {
 								loadTurnier(i);
-							} catch (SQLException e) {
-								ExceptionHandler eh = new ExceptionHandler(mainControl);
+							} catch (final SQLException e) {
+								final ExceptionHandler eh = new ExceptionHandler(mainControl);
 								eh.fileSQLError(e.getMessage());
 							}
 						}
 					} else {
-						ArrayList<Game> changedPartien = this.mainControl.getChangedGames();
+						final ArrayList<Game> changedPartien = mainControl.getChangedGames();
 						if (changedPartien != null) {
 							if (changedPartien.size() > 0) {
 								// Custom button text
-								Object[] options = { Messages.getString("TurnierListeLadenControl.10"), //$NON-NLS-1$
+								final Object[] options = { Messages.getString("TurnierListeLadenControl.10"), //$NON-NLS-1$
 										Messages.getString("TurnierListeLadenControl.11") }; //$NON-NLS-1$
-								int abfrage = JOptionPane.showOptionDialog(mainControl,
+								final int abfrage = JOptionPane.showOptionDialog(mainControl,
 										Messages.getString("TurnierListeLadenControl.12") //$NON-NLS-1$
 												+ Messages.getString("TurnierListeLadenControl.13"), //$NON-NLS-1$
 										Messages.getString("TurnierListeLadenControl.14"), //$NON-NLS-1$
 										JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options,
 										options[1]);
 								if (abfrage == 0) {
-									SaveTournamentControl saveGames = new SaveTournamentControl(mainControl);
+									final SaveTournamentControl saveGames = new SaveTournamentControl(mainControl);
 									try {
-										Boolean saved = saveGames.saveChangedPartien();
+										final Boolean saved = saveGames.saveChangedPartien();
 										if (saved == false) {
 											changedPartien.clear();
 										}
 
-									} catch (SQLException e) {
+									} catch (final SQLException e) {
 										changedPartien.clear();
-										ExceptionHandler eh = new ExceptionHandler(mainControl);
+										final ExceptionHandler eh = new ExceptionHandler(mainControl);
 										eh.fileSQLError(e.getMessage());
 									}
 									selectTurnierTab = true;
 									try {
 										loadTurnier(i);
-									} catch (SQLException e) {
-										ExceptionHandler eh = new ExceptionHandler(mainControl);
+									} catch (final SQLException e) {
+										final ExceptionHandler eh = new ExceptionHandler(mainControl);
 										eh.fileSQLError(e.getMessage());
 									}
 								}
@@ -225,8 +226,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 								selectTurnierTab = true;
 								try {
 									loadTurnier(i);
-								} catch (SQLException e) {
-									ExceptionHandler eh = new ExceptionHandler(mainControl);
+								} catch (final SQLException e) {
+									final ExceptionHandler eh = new ExceptionHandler(mainControl);
 									eh.fileSQLError(e.getMessage());
 								}
 							}
@@ -235,8 +236,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 							selectTurnierTab = true;
 							try {
 								loadTurnier(i);
-							} catch (SQLException e) {
-								ExceptionHandler eh = new ExceptionHandler(mainControl);
+							} catch (final SQLException e) {
+								final ExceptionHandler eh = new ExceptionHandler(mainControl);
 								eh.fileSQLError(e.getMessage());
 							}
 						}
@@ -244,9 +245,10 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 				}
 			}
 
-			if (arg0.getSource().equals(turnierListeLadenView.getTurnierBearbeitenButton()[i])) {
+			if (arg0.getSource()
+					.equals(turnierListeLadenView.getTournamentListItems().get(i).getTurnierBearbeitenButton())) {
 				turnierEdit = turnierListe.get(i);
-				SQLGroupsControl gTC = new SQLGroupsControl(mainControl);
+				final SQLGroupsControl gTC = new SQLGroupsControl(mainControl);
 				try {
 					mainControl.setEnabled(false);
 					turnierEdit = gTC.getGruppe(turnierEdit);
@@ -255,9 +257,9 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 					turnierEditierenView.getOkButton().addActionListener(this);
 					turnierEditierenView.getCancelButton().addActionListener(this);
 
-				} catch (SQLException e) {
+				} catch (final SQLException e) {
 					turnierEditierenView.dispose();
-					ExceptionHandler eh = new ExceptionHandler(mainControl);
+					final ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());
 					mainControl.setEnabled(true);
 				}
@@ -266,7 +268,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 			// Wichtig:
 			// Diese Abfrage muss an letzter Stelle stehen,
 			// da ansonsten eine ArraOutOfBounds Exception auftritt!
-			if (arg0.getSource().equals(turnierListeLadenView.getTurnierLoeschenButton()[i])) {
+			if (arg0.getSource()
+					.equals(turnierListeLadenView.getTournamentListItems().get(i).getTurnierLoeschenButton())) {
 				if (mainControl.getTournament() != null) {
 					if (mainControl.getTournament().getTurnierId() == turnierListe.get(i).getTurnierId()) {
 						JOptionPane.showMessageDialog(mainControl, Messages.getString("TurnierListeLadenControl.4")); //$NON-NLS-1$
@@ -274,16 +277,16 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 					} else {
 						try {
 							deleteTurnier(i);
-						} catch (SQLException e) {
-							ExceptionHandler eh = new ExceptionHandler(mainControl);
+						} catch (final SQLException e) {
+							final ExceptionHandler eh = new ExceptionHandler(mainControl);
 							eh.fileSQLError(e.getMessage());
 						}
 					}
 				} else {
 					try {
 						deleteTurnier(i);
-					} catch (SQLException e) {
-						ExceptionHandler eh = new ExceptionHandler(mainControl);
+					} catch (final SQLException e) {
+						final ExceptionHandler eh = new ExceptionHandler(mainControl);
 						eh.fileSQLError(e.getMessage());
 					}
 				}
@@ -293,8 +296,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 
 	}
 
-	private void deleteTurnier(int turnierId) throws SQLException {
-		SQLTournamentControl ttC = new SQLTournamentControl(mainControl);
+	private void deleteTurnier(final int turnierId) throws SQLException {
+		final SQLTournamentControl ttC = new SQLTournamentControl(mainControl);
 		ttC.loescheTurnier(turnierListe.get(turnierId));
 		loadTurnierListe();
 	}
@@ -304,18 +307,18 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 	}
 
 	public void loadPairingsView() {
-		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
+		final Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
-			int gruppenAnzahl = mainControl.getTournament().getAnzahlGruppen();
+			final int gruppenAnzahl = mainControl.getTournament().getAnzahlGruppen();
 
-			ProgressBarView progressBar = new ProgressBarView(Messages.getString("NaviController.32"),
+			final ProgressBarView progressBar = new ProgressBarView(Messages.getString("NaviController.32"),
 					Messages.getString("NaviController.31"), gruppenAnzahl);
 			mainControl.getNaviView().getTabellenPanel().setVisible(false);
 			progressBar.iterate(gruppenAnzahl);
 
-			PairingsControl pairingsControl = mainControl.getPairingsControl();
+			final PairingsControl pairingsControl = mainControl.getPairingsControl();
 			pairingsControl.init();
-			TabbedPaneView[] tabAnzeigeView2 = this.mainControl.getTabbedPaneViewArray();
+			final TabbedPaneView[] tabAnzeigeView2 = mainControl.getTabbedPaneViewArray();
 
 			for (int i = 0; i < gruppenAnzahl; i++) {
 				progressBar.iterate();
@@ -329,8 +332,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 			}
 			progressBar.iterate(gruppenAnzahl);
 
-			this.mainControl.getNaviView().getPairingsPanel().setVisible(true);
-			this.mainControl.getActionListenerPairingsMenuControl().setPairingIsActive(true);
+			mainControl.getNaviView().getPairingsPanel().setVisible(true);
+			mainControl.getActionListenerPairingsMenuControl().setPairingIsActive(true);
 			progressBar.iterate(gruppenAnzahl);
 
 		} else {
@@ -341,7 +344,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 
 	}
 
-	public void loadTurnier(int index) throws SQLException {
+	public void loadTurnier(final int index) throws SQLException {
 		int selectedTab = hauptPanel.getSelectedIndex();
 
 		mainControl.setNewTournamentPlayerInputControl(null);
@@ -369,8 +372,8 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 		tabbedPaneView2 = new TabbedPaneView[turnier.getAnzahlGruppen()];
 
 		mainControl.setTabbedPaneViewArray(tabbedPaneView2);
-		CrossTableControl turnierTabelleControl = new CrossTableControl(mainControl);
-		MeetingTableControl terminTabelleControl = new MeetingTableControl(mainControl);
+		final CrossTableControl turnierTabelleControl = new CrossTableControl(mainControl);
+		final MeetingTableControl terminTabelleControl = new MeetingTableControl(mainControl);
 
 		mainControl.setCrossTableControl(turnierTabelleControl);
 		mainControl.setMeetingTableControl(terminTabelleControl);
@@ -385,14 +388,14 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 			mainControl.getCrossTableControl().okAction(z);
 
 		}
-		PairingsControl rundenEingabeFormularControl = new PairingsControl(mainControl);
+		final PairingsControl rundenEingabeFormularControl = new PairingsControl(mainControl);
 		mainControl.setPairingsControl(rundenEingabeFormularControl);
 		mainControl.getTournament().setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
 		mainControl.getTournament().setNoFolgeDWZCalc(mainControl.getPropertiesControl().getNoFolgeDWZ());
 		mainControl.getNaviView().setTabellenname(
 				Messages.getString("TurnierListeLadenControl.5") + mainControl.getTournament().getTurnierName()); //$NON-NLS-1$
 		mainControl.getActionListenerPairingsMenuControl().setPairingIsActive(false);
-		this.mainControl.setNewTournament(false);
+		mainControl.setNewTournament(false);
 
 		hauptPanel.addTab(turnier.getTurnierName(), turnierIcon, tabbedPaneView);
 		buttonTabComponent = new ButtonTabComponent(hauptPanel, mainControl, turnierIcon, true);
@@ -424,22 +427,22 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 		}
 		if (turnierListe != null) {
 			anzahlTurniere = turnierListe.size();
-			if (this.turnierListeLadenView == null) {
-				this.turnierListeLadenView = new TournamentListView(anzahlTurniere,
+			if (turnierListeLadenView == null) {
+				turnierListeLadenView = new TournamentListView(anzahlTurniere,
 						mainControl.getPropertiesControl().getTurniereProTab());
 				hauptPanel.addTab(Messages.getString("TurnierListeLadenControl.9"), turnierListeIcon, //$NON-NLS-1$
 						turnierListeLadenView);
-				ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel, mainControl, turnierListeIcon,
+				final ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel, mainControl, turnierListeIcon,
 						false);
 				hauptPanel.setTabComponentAt(TournamentConstants.TAB_TOURNAMENTS_LIST, buttonComp);
 
 			} else {
-				this.turnierListeLadenView.removeAll();
-				this.turnierListeLadenView.makePanel(anzahlTurniere);
+				turnierListeLadenView.removeAll();
+				turnierListeLadenView.makePanel(anzahlTurniere);
 			}
 			turnierListeLadenView.getTitleView().setFlowLayoutLeft();
 			// Collections.sort(turnierListe, new SortTournamentList());
-			ListIterator<Tournament> li = turnierListe.listIterator();
+			final ListIterator<Tournament> li = turnierListe.listIterator();
 			while (li.hasNext()) {
 				temp = li.next();
 				turnierName = temp.getTurnierName();
@@ -448,12 +451,14 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 				turnierListeLadenView.makeTurnierZeile(turnierName, startDatum, endDatum);
 			}
 			for (int i = 0; i < anzahlTurniere; i++) {
-				turnierListeLadenView.getTurnierLadeButton()[i].addActionListener(this);
-				turnierListeLadenView.getTurnierBearbeitenButton()[i].addActionListener(this);
-				turnierListeLadenView.getTurnierLoeschenButton()[i].addActionListener(this);
+				turnierListeLadenView.getTournamentListItems().get(i).getTurnierLadeButton().addActionListener(this);
+				turnierListeLadenView.getTournamentListItems().get(i).getTurnierBearbeitenButton()
+						.addActionListener(this);
+				turnierListeLadenView.getTournamentListItems().get(i).getTurnierLoeschenButton()
+						.addActionListener(this);
 
 			}
-			this.turnierListeLadenView.updateUI();
+			turnierListeLadenView.updateUI();
 		} else {
 			JOptionPane.showMessageDialog(mainControl, "Falsche Datei gewählt. "); //$NON-NLS-1$
 		}
@@ -471,7 +476,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 		}
 	}
 
-	public void setLoadedTurnierID(int loadedTurnierID) {
+	public void setLoadedTurnierID(final int loadedTurnierID) {
 		this.loadedTurnierID = loadedTurnierID;
 	}
 

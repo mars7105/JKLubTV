@@ -16,48 +16,29 @@ package de.turnierverwaltung.view;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.Toolkit;
+import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
-import javax.swing.border.Border;
-import javax.swing.border.EtchedBorder;
 
 public class TournamentListView extends JPanel {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
-	// private JPanel contentPanel;
 	private JPanel centerPane;
-	private JPanel line;
-	// private JScrollPane scrollPane;
-	private JButton[] turnierLadeButton;
 	private int anzahlElemente;
-	private JButton[] turnierLoeschenButton;
-	private JButton[] turnierBearbeitenButton;
 
-	private ImageIcon turnierDelete = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-close-4.png"))); //$NON-NLS-1$
-	private ImageIcon turnierProperties = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-edit.png"))); //$NON-NLS-1$
-	private ImageIcon turnierLaden = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-preview.png"))); //$NON-NLS-1$
+	private ArrayList<TournamentListItemView> tournamentListItems;
+
 	private JTabbedPane turnierListe;
-	private int turnierTabAnzahl;
+	private final int turnierTabAnzahl;
 	private int anzahlTurniere;
 	private TitleLabelView titleView;
 
-	public TournamentListView(int anzahlTurniere, int turnierTabAnzahl) {
+	public TournamentListView(final int anzahlTurniere, final int turnierTabAnzahl) {
 		this.anzahlTurniere = anzahlTurniere;
 		this.turnierTabAnzahl = turnierTabAnzahl;
 		makePanel(anzahlTurniere);
@@ -67,96 +48,64 @@ public class TournamentListView extends JPanel {
 		return titleView;
 	}
 
-	public JButton[] getTurnierBearbeitenButton() {
-		return turnierBearbeitenButton;
+	public ArrayList<TournamentListItemView> getTournamentListItems() {
+		return tournamentListItems;
 	}
 
-	public JButton[] getTurnierLadeButton() {
-		return turnierLadeButton;
-	}
-
-	public JButton[] getTurnierLoeschenButton() {
-		return turnierLoeschenButton;
-	}
-
-	public void makePanel(int anzahlTurniere) {
+	public void makePanel(final int anzahlTurniere) {
 		this.anzahlTurniere = anzahlTurniere;
 		anzahlElemente = 0;
 		setLayout(new BorderLayout());
 		turnierListe = new JTabbedPane();
-		// contentPanel = new JPanel();
-		// contentPanel.setLayout(new BorderLayout());
-		// contentPanel.setBackground(new Color(249, 222, 112));
-		// scrollPane = new JScrollPane();
-		// scrollPane.setViewportView(contentPanel);
+
 		titleView = new TitleLabelView(Messages.getString("TurnierListeLadenView.3"));
 
-		JPanel northPanel = new JPanel();
+		final JPanel northPanel = new JPanel();
 		northPanel.setLayout(new BoxLayout(northPanel, BoxLayout.PAGE_AXIS));
 		northPanel.add(titleView);
 
 		centerPane = new JPanel();
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
-		// contentPanel.add(turnierListe, BorderLayout.NORTH);
-		turnierLadeButton = new JButton[anzahlTurniere];
-		turnierLoeschenButton = new JButton[anzahlTurniere];
-		turnierBearbeitenButton = new JButton[anzahlTurniere];
+
+		tournamentListItems = new ArrayList<TournamentListItemView>();
 		add(northPanel, BorderLayout.NORTH);
 		add(turnierListe, BorderLayout.CENTER);
 	}
 
-	public void makeTurnierZeile(String turnierName, String startDatum, String endDatum) {
-		Border raisedetched = BorderFactory.createEtchedBorder(EtchedBorder.RAISED);
+	public void makeTurnierZeile(final String turnierName, final String startDatum, final String endDatum) {
 
-		line = new JPanel();
-		line.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JPanel mainLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		mainLine.setBorder(raisedetched);
-		JPanel turnierLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
-		turnierLine.setPreferredSize(new Dimension(350, 50));
-		turnierLine.setBackground(Color.WHITE);
-		JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		// line = new JPanel();
+		// line.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-		turnierLadeButton[anzahlElemente] = new JButton(Messages.getString("TurnierListeLadenView.4"), turnierLaden); //$NON-NLS-1$
-		buttonLine.add(turnierLadeButton[anzahlElemente]);
-		turnierBearbeitenButton[anzahlElemente] = new JButton(Messages.getString("TurnierListeLadenView.5"), //$NON-NLS-1$
-				turnierProperties);
-		buttonLine.add(turnierBearbeitenButton[anzahlElemente]);
-
-		turnierLoeschenButton[anzahlElemente] = new JButton(Messages.getString("TurnierListeLadenView.6"), //$NON-NLS-1$
-				turnierDelete);
-		buttonLine.add(turnierLoeschenButton[anzahlElemente]);
-		JLabel tName = new JLabel(Messages.getString("TurnierListeLadenView.7") + turnierName); //$NON-NLS-1$
-		turnierLine.add(tName);
-		mainLine.add(turnierLine);
-		mainLine.add(buttonLine);
-		line.add(mainLine);
-		centerPane.add(line);
-		// centerPane.add(new JSeparator());
+		final TournamentListItemView tournamentListItemView = new TournamentListItemView(turnierName);
+		tournamentListItems.add(tournamentListItemView);
+		// line.add(tournamentListItemView);
+		centerPane.add(tournamentListItemView);
 		anzahlElemente++;
-		int anzahlItems = 0;
-		if (turnierTabAnzahl == 0) {
-			anzahlItems = 5;
-		}
-		if (turnierTabAnzahl == 1) {
-			anzahlItems = 10;
-		}
-		if (turnierTabAnzahl == 2) {
-			anzahlItems = 15;
-		}
-		if (turnierTabAnzahl == 3) {
-			anzahlItems = 20;
-		}
+		// int anzahlItems = 0;
+		// if (turnierTabAnzahl == 0) {
+		// anzahlItems = 5;
+		// }
+		// if (turnierTabAnzahl == 1) {
+		// anzahlItems = 10;
+		// }
+		// if (turnierTabAnzahl == 2) {
+		// anzahlItems = 15;
+		// }
+		// if (turnierTabAnzahl == 3) {
+		// anzahlItems = 20;
+		// }
+		final int anzahlItems = 5 + turnierTabAnzahl * 5;
 		if (anzahlElemente % anzahlItems == 0 || anzahlElemente == anzahlTurniere) {
-			int endIndex = anzahlElemente;
+			final int endIndex = anzahlElemente;
 			int startIndex = endIndex + 1 - centerPane.getComponentCount();
 			if (startIndex < 1) {
 				startIndex = 1;
 			}
-			JPanel panel = new JPanel();
+			final JPanel panel = new JPanel();
 			panel.setLayout(new BorderLayout());
 			panel.add(centerPane, BorderLayout.NORTH);
-			JScrollPane playerScrollPane = new JScrollPane();
+			final JScrollPane playerScrollPane = new JScrollPane();
 			playerScrollPane.setViewportView(panel);
 			playerScrollPane.setAlignmentY(TOP_ALIGNMENT);
 			turnierListe.addTab(startIndex + " " + Messages.getString("SpielerLadenView.7") + " " + endIndex,
@@ -166,20 +115,12 @@ public class TournamentListView extends JPanel {
 		}
 	}
 
-	public void setTitleView(TitleLabelView titleView) {
+	public void setTitleView(final TitleLabelView titleView) {
 		this.titleView = titleView;
 	}
 
-	public void setTurnierBearbeitenButton(JButton[] turnierBearbeitenButton) {
-		this.turnierBearbeitenButton = turnierBearbeitenButton;
-	}
-
-	public void setTurnierLadeButton(JButton[] turnierLadeButton) {
-		this.turnierLadeButton = turnierLadeButton;
-	}
-
-	public void setTurnierLoeschenButton(JButton[] turnierLoeschenButton) {
-		this.turnierLoeschenButton = turnierLoeschenButton;
+	public void setTournamentListItems(final ArrayList<TournamentListItemView> tournamentListItems) {
+		this.tournamentListItems = tournamentListItems;
 	}
 
 }

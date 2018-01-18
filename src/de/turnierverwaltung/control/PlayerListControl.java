@@ -33,9 +33,9 @@ import de.turnierverwaltung.view.EditPlayerView;
 import de.turnierverwaltung.view.PlayerListView;
 
 public class PlayerListControl implements ActionListener {
-	private MainControl mainControl;
+	private final MainControl mainControl;
 	// private TabAnzeigeView tabbedPaneView;
-	private JTabbedPane hauptPanel;
+	private final JTabbedPane hauptPanel;
 	private int spielerAnzahl;
 	private PlayerListView spielerLadenView;
 	private ArrayList<Player> spieler;
@@ -43,10 +43,10 @@ public class PlayerListControl implements ActionListener {
 	private EditPlayerView spielerEditierenView;
 	private int spielerIndex;
 
-	private ImageIcon spielerListeIcon = new ImageIcon(
+	private final ImageIcon spielerListeIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-group.png"))); //$NON-NLS-1$
 
-	public PlayerListControl(MainControl mainControl) {
+	public PlayerListControl(final MainControl mainControl) {
 		this.mainControl = mainControl;
 		hauptPanel = this.mainControl.getHauptPanel();
 		this.mainControl.getNaviView().getDateiPanel().setVisible(true);
@@ -55,46 +55,46 @@ public class PlayerListControl implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(final ActionEvent arg0) {
 
 		if (spielerEditierenView != null) {
 			if (arg0.getSource().equals(spielerEditierenView.getOkButton())) {
-				String foreName = spielerEditierenView.getTextFieldForename().getText();
-				String surName = spielerEditierenView.getTextFieldSurname().getText();
-				String name = surName + "," + foreName;
+				final String foreName = spielerEditierenView.getTextFieldForename().getText();
+				final String surName = spielerEditierenView.getTextFieldSurname().getText();
+				final String name = surName + "," + foreName;
 				try {
-					String kuerzel = spielerEditierenView.getTextFieldKuerzel().getText();
-					String dwz = spielerEditierenView.getTextFieldDwz().getText();
-					String dindex = spielerEditierenView.getTextFieldDwzIndex().getText();
-					String zps = spielerEditierenView.getTextFieldZPS().getText();
-					String mgl = spielerEditierenView.getTextFieldMGL().getText();
-					String fideid = spielerEditierenView.getTextFieldFideId().getText();
-					String elo = spielerEditierenView.getTextFieldELO().getText();
+					final String kuerzel = spielerEditierenView.getTextFieldKuerzel().getText();
+					final String dwz = spielerEditierenView.getTextFieldDwz().getText();
+					final String dindex = spielerEditierenView.getTextFieldDwzIndex().getText();
+					final String zps = spielerEditierenView.getTextFieldZPS().getText();
+					final String mgl = spielerEditierenView.getTextFieldMGL().getText();
+					final String fideid = spielerEditierenView.getTextFieldFideId().getText();
+					final String elo = spielerEditierenView.getTextFieldELO().getText();
 					int dwzindex = -1;
 					try {
 						dwzindex = Integer.parseInt(dindex);
-					} catch (NumberFormatException e) {
+					} catch (final NumberFormatException e) {
 						dwzindex = -1;
 					}
 					int dwzInt = 0;
 					try {
 						dwzInt = Integer.parseInt(dwz);
-					} catch (NumberFormatException e) {
+					} catch (final NumberFormatException e) {
 						dwzInt = 0;
 					}
 					int fideId = 0;
 					try {
 						fideId = Integer.parseInt(fideid);
-					} catch (NumberFormatException e) {
+					} catch (final NumberFormatException e) {
 						fideId = 0;
 					}
 					int rating = 0;
 					try {
 						rating = Integer.parseInt(elo);
-					} catch (NumberFormatException e) {
+					} catch (final NumberFormatException e) {
 						rating = 0;
 					}
-					int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
+					final int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
 
 					spieler.get(spielerIndex).setForename(foreName);
 					spieler.get(spielerIndex).setSurname(surName);
@@ -114,7 +114,7 @@ public class PlayerListControl implements ActionListener {
 					spieler.get(spielerIndex).setAge(age);
 					// spieler.get(spielerIndex).extractForenameAndSurenameToName();
 					spieler.get(spielerIndex).setName(name);
-					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+					final SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
 					stc.updateOneSpieler(spieler.get(spielerIndex));
 
@@ -124,9 +124,9 @@ public class PlayerListControl implements ActionListener {
 					spielerEditierenView.closeWindow();
 					mainControl.setEnabled(true);
 					updateSpielerListe();
-				} catch (SQLException e1) {
+				} catch (final SQLException e1) {
 					spielerEditierenView.closeWindow();
-					ExceptionHandler eh = new ExceptionHandler(mainControl);
+					final ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e1.getMessage());
 
 				}
@@ -144,7 +144,8 @@ public class PlayerListControl implements ActionListener {
 		if (spielerLadenView != null) {
 
 			for (int i = 0; i < spielerAnzahl; i++) {
-				if (arg0.getSource().equals(spielerLadenView.getSpielerBearbeitenButton()[i])) {
+				if (arg0.getSource()
+						.equals(spielerLadenView.getPlayerListItems().get(i).getSpielerBearbeitenButton())) {
 					mainControl.setEnabled(false);
 					if (mainControl.getNewTournament() == false) {
 						spielerIndex = i;
@@ -162,16 +163,16 @@ public class PlayerListControl implements ActionListener {
 			}
 
 			for (int i = 0; i < spielerAnzahl; i++) {
-				if (arg0.getSource().equals(spielerLadenView.getSpielerLoeschenButton()[i])) {
+				if (arg0.getSource().equals(spielerLadenView.getPlayerListItems().get(i).getSpielerLoeschenButton())) {
 					if (mainControl.getNewTournament() == false) {
 						try {
-							SQLPlayerControl stC = new SQLPlayerControl(mainControl);
+							final SQLPlayerControl stC = new SQLPlayerControl(mainControl);
 
 							stC.loescheSpieler(spieler.get(i));
 
 							updateSpielerListe();
-						} catch (SQLException e) {
-							ExceptionHandler eh = new ExceptionHandler(mainControl);
+						} catch (final SQLException e) {
+							final ExceptionHandler eh = new ExceptionHandler(mainControl);
 							eh.fileSQLError(e.getMessage());
 						}
 					} else {
@@ -188,59 +189,62 @@ public class PlayerListControl implements ActionListener {
 		return spieler;
 	}
 
-//	private void testPlayerListForDoubles() throws SQLException {
-//		Boolean loop = false;
-//		SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-//		do {
-//			loop = false;
-//			for (int i = 0; i < spieler.size(); i++) {
-//				int zName = 0;
-//				for (int y = 0; y < spieler.size(); y++) {
-//					if (i != y) {
-//						if (spieler.get(i).getName().equals(spieler.get(y).getName())) {
-//							zName++;
-//							spieler.get(y)
-//									.setSurname(spieler.get(y).getSurname() + "_" + new Integer(zName).toString());
-//							spieler.get(y).setName(spieler.get(y).getSurname() + "," + spieler.get(y).getForename());
-//							// spieler.get(y).extractForenameAndSurenameToName();
-//							stc.updateOneSpieler(spieler.get(y));
-//							loop = true;
-//						}
-//					}
-//
-//				}
-//			}
-//		} while (loop == true);
-//	}
+	// private void testPlayerListForDoubles() throws SQLException {
+	// Boolean loop = false;
+	// SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+	// do {
+	// loop = false;
+	// for (int i = 0; i < spieler.size(); i++) {
+	// int zName = 0;
+	// for (int y = 0; y < spieler.size(); y++) {
+	// if (i != y) {
+	// if (spieler.get(i).getName().equals(spieler.get(y).getName())) {
+	// zName++;
+	// spieler.get(y)
+	// .setSurname(spieler.get(y).getSurname() + "_" + new
+	// Integer(zName).toString());
+	// spieler.get(y).setName(spieler.get(y).getSurname() + "," +
+	// spieler.get(y).getForename());
+	// // spieler.get(y).extractForenameAndSurenameToName();
+	// stc.updateOneSpieler(spieler.get(y));
+	// loop = true;
+	// }
+	// }
+	//
+	// }
+	// }
+	// } while (loop == true);
+	// }
 
 	public PlayerListView getSpielerLadenView() {
 		return spielerLadenView;
 	}
 
-	public void setSpieler(ArrayList<Player> spieler) {
+	public void setSpieler(final ArrayList<Player> spieler) {
 		this.spieler = spieler;
 	}
 
-	public void setSpielerLadenView(PlayerListView spielerLadenView) {
+	public void setSpielerLadenView(final PlayerListView spielerLadenView) {
 		this.spielerLadenView = spielerLadenView;
 	}
 
 	public void updateSpielerListe() throws SQLException {
-		PropertiesControl prop = mainControl.getPropertiesControl();
-		int cutForename = Integer.parseInt(prop.getCutForename());
-		int cutSurname = Integer.parseInt(prop.getCutSurname());
+		final PropertiesControl prop = mainControl.getPropertiesControl();
+		final int cutForename = Integer.parseInt(prop.getCutForename());
+		final int cutSurname = Integer.parseInt(prop.getCutSurname());
 		Player.cutFname = cutForename;
 		Player.cutSname = cutSurname;
-		spielerTableControl = new SQLPlayerControl(this.mainControl);
+		spielerTableControl = new SQLPlayerControl(mainControl);
 		spieler = new ArrayList<Player>();
 		spieler = spielerTableControl.getAllSpieler();
-//		testPlayerListForDoubles();
+		// testPlayerListForDoubles();
 		spielerAnzahl = spieler.size();
 		int selectedTab = 0;
 		if (spielerLadenView == null) {
 			spielerLadenView = new PlayerListView(spielerAnzahl, mainControl.getPropertiesControl().getSpielerProTab());
 			hauptPanel.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, spielerLadenView);
-			ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel, mainControl, spielerListeIcon, false);
+			final ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel, mainControl, spielerListeIcon,
+					false);
 			hauptPanel.setTabComponentAt(TournamentConstants.TAB_PLAYER_LIST, buttonComp);
 
 		} else {
@@ -252,12 +256,11 @@ public class PlayerListControl implements ActionListener {
 		spielerLadenView.getTitleView().setFlowLayoutLeft();
 
 		int index = 0;
-		for (Player player : spieler) {
+		for (final Player player : spieler) {
 
-			
 			spielerLadenView.makeSpielerZeile(player, index);
-			spielerLadenView.getSpielerBearbeitenButton()[index].addActionListener(this);
-			spielerLadenView.getSpielerLoeschenButton()[index].addActionListener(this);
+			spielerLadenView.getPlayerListItems().get(index).getSpielerBearbeitenButton().addActionListener(this);
+			spielerLadenView.getPlayerListItems().get(index).getSpielerLoeschenButton().addActionListener(this);
 			index++;
 		}
 		if (selectedTab > 0 && spielerLadenView.getSpielerListe().getComponentCount() > selectedTab) {

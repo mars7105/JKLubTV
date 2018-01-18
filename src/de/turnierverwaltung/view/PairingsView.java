@@ -35,7 +35,7 @@ import de.turnierverwaltung.model.EventDate;
 public class PairingsView extends JPanel {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPanel;
@@ -47,20 +47,20 @@ public class PairingsView extends JPanel {
 	private JLabel[] weissSpieler;
 	private JLabel[] schwarzSpieler;
 	private DateChooserPanel[] datum;
-	private Properties property;
+	private final Properties property;
 	private JButton[] changeColor;
 	private int anzahlZeilen;
 	private int anzahlElemente;
-	private int ungerade;
-	private int gerade;
-	private int rundenanzahl;
-	private int partienanzahl;
+	private final int ungerade;
+	private final int gerade;
+	private final int rundenanzahl;
+	private final int partienanzahl;
 	private TitleLabelView statusLabel;
 
 	// private JButton reloadButton;
 
 	@SuppressWarnings("unchecked")
-	public PairingsView(int spielerAnzahl) {
+	public PairingsView(final int spielerAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
 		anzahlZeilen = this.spielerAnzahl * (this.spielerAnzahl - 1) / 2;
 		changeColor = new JButton[anzahlZeilen];
@@ -139,17 +139,17 @@ public class PairingsView extends JPanel {
 
 		add(contentPanel, BorderLayout.CENTER);
 
-		JPanel southPanel = new JPanel();
+		final JPanel southPanel = new JPanel();
 		southPanel.setLayout(new BorderLayout());
 
-		JPanel status = new JPanel();
+		final JPanel status = new JPanel();
 		status.setLayout(new FlowLayout(FlowLayout.LEFT));
 		status.add(new JLabel(Messages.getString("SimpleTerminTabelleView.15"))); //$NON-NLS-1$
 		statusLabel = new TitleLabelView("0");
 		statusLabel.setFlowLayoutLeft();
 		statusLabel.setOpaque(true);
 
-		JLabel changesLabel = new JLabel(Messages.getString("SimpleTerminTabelleView.16"));
+		final JLabel changesLabel = new JLabel(Messages.getString("SimpleTerminTabelleView.16"));
 		status.add(statusLabel);
 		status.add(changesLabel);
 		southPanel.add(status, BorderLayout.SOUTH);
@@ -158,15 +158,15 @@ public class PairingsView extends JPanel {
 		add(southPanel, BorderLayout.SOUTH);
 	}
 
-	public void makeZeilen(String[][] terminMatrix) {
-		String[] zeile = new String[5];
+	public void makeZeilen(final String[][] terminMatrix) {
+		final String[] zeile = new String[5];
 
 		tabbedPane = new JTabbedPane();
-		FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
+		final FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
 		flowLayout.setVgap(1);
 		int index = 1;
 		for (int r = 0; r < rundenanzahl + 0; r++) {
-			JPanel panel = new JPanel();
+			final JPanel panel = new JPanel();
 			panel.setLayout(new BorderLayout());
 			flowPane = new JPanel();
 			flowPane.setLayout(new BoxLayout(flowPane, BoxLayout.PAGE_AXIS));
@@ -185,22 +185,22 @@ public class PairingsView extends JPanel {
 				downPane.setLayout(flowLayout);
 				downPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				// downPane.setAlignmentY(Component.TOP_ALIGNMENT);
-				if (zeile[0] != Messages.getString("RundenEingabeFormularView.7")) { //$NON-NLS-1$
+				if (!zeile[0].equals(Messages.getString("RundenEingabeFormularView.7"))) { //$NON-NLS-1$
 
-					DateChooserPanel datePanel = new DateChooserPanel();
+					final DateChooserPanel datePanel = new DateChooserPanel();
 					datePanel.setLocale(Locale.getDefault());
 					// datePanel.setDateFormatString(zeile[4]);
 					// DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy",
 					// Locale.getDefault());
-					EventDate eventDate = new EventDate(zeile[4]);
-//					Date d = eventDate.getDate();
+					final EventDate eventDate = new EventDate(zeile[4]);
+					// Date d = eventDate.getDate();
 					if (Locale.getDefault().equals(Locale.US)) {
 						datePanel.setDateFormatString(eventDate.getEnglishFormat());
 					}
 					if (Locale.getDefault().equals(Locale.GERMANY)) {
 						datePanel.setDateFormatString(eventDate.getGermanFormat());
 					}
-//					datePanel.setDefaultLocale(Locale.getDefault());
+					// datePanel.setDefaultLocale(Locale.getDefault());
 					datePanel.setDate(eventDate.getDate());
 
 					// datePanel.setForeground(Color.WHITE);
@@ -215,7 +215,7 @@ public class PairingsView extends JPanel {
 					changeColor[anzahlElemente] = new JButton(Messages.getString("RundenEingabeFormularView.10")); //$NON-NLS-1$
 					downPane.add(changeColor[anzahlElemente]);
 					rundenNummer[anzahlElemente] = new JComboBox<String>();
-					for (int x = 1; x <= this.spielerAnzahl - ungerade; x++) {
+					for (int x = 1; x <= spielerAnzahl - ungerade; x++) {
 						rundenNummer[anzahlElemente].addItem(Integer.toString(x));
 					}
 					rundenNummer[anzahlElemente].setSelectedIndex(Integer.parseInt(zeile[0]) - 1);
@@ -243,7 +243,7 @@ public class PairingsView extends JPanel {
 			}
 
 			panel.add(flowPane, BorderLayout.NORTH);
-			JScrollPane scrollPane = new JScrollPane();
+			final JScrollPane scrollPane = new JScrollPane();
 			scrollPane.setViewportView(panel);
 			scrollPane.setAlignmentY(TOP_ALIGNMENT);
 			tabbedPane.add(Messages.getString("RundenEingabeFormularView.17") + (r + 1), scrollPane); //$NON-NLS-1$
@@ -252,29 +252,29 @@ public class PairingsView extends JPanel {
 		contentPanel.updateUI();
 	}
 
-	public void setAnzahlElemente(int anzahlElemente) {
+	public void setAnzahlElemente(final int anzahlElemente) {
 		this.anzahlElemente = anzahlElemente;
 	}
 
-	public void setChangeColor(JButton[] changeColor) {
+	public void setChangeColor(final JButton[] changeColor) {
 		this.changeColor = changeColor;
 	}
 
-	public void setDatum(DateChooserPanel[] datum) {
+	public void setDatum(final DateChooserPanel[] datum) {
 		this.datum = datum;
 	}
 
 	@SuppressWarnings("unchecked")
-	public void setRundenNummer(@SuppressWarnings("rawtypes") JComboBox[] rundenNummer) {
+	public void setRundenNummer(@SuppressWarnings("rawtypes") final JComboBox[] rundenNummer) {
 		this.rundenNummer = rundenNummer;
 	}
 
-	public void setSchwarzSpieler(JLabel[] schwarzSpieler) {
+	public void setSchwarzSpieler(final JLabel[] schwarzSpieler) {
 		this.schwarzSpieler = schwarzSpieler;
 	}
 
 	@SuppressWarnings("unchecked")
-	public void setSpielerAnzahl(int spielerAnzahl) {
+	public void setSpielerAnzahl(final int spielerAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
 		anzahlZeilen = this.spielerAnzahl * (this.spielerAnzahl - 1) / 2;
 		changeColor = new JButton[anzahlZeilen];
@@ -285,16 +285,16 @@ public class PairingsView extends JPanel {
 		datum = new DateChooserPanel[anzahlZeilen];
 	}
 
-	public void setStatusLabel(JLabel statusLabel) {
+	public void setStatusLabel(final JLabel statusLabel) {
 		this.statusLabel.setTitleLabel(statusLabel);
 
 	}
 
-	public void setTabbedPane(JTabbedPane tabbedPane) {
+	public void setTabbedPane(final JTabbedPane tabbedPane) {
 		this.tabbedPane = tabbedPane;
 	}
 
-	public void setWeissSpieler(JLabel[] weissSpieler) {
+	public void setWeissSpieler(final JLabel[] weissSpieler) {
 		this.weissSpieler = weissSpieler;
 	}
 
