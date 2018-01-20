@@ -12,15 +12,23 @@ public class EventDate {
 	private String englishFormat;
 	private String germanFormat;
 
-	public EventDate(Date date) {
+	public EventDate() {
+		super();
+		date = null;
+		englishFormat = "yyyy/MM/dd";
+		germanFormat = "dd.MM.yyyy";
+		englishdateFormatter = new SimpleDateFormat(englishFormat, Locale.ENGLISH);
+		germandateFormatter = new SimpleDateFormat(germanFormat, Locale.GERMAN);
+	}
+
+	public EventDate(final Date date) {
 		super();
 		this.date = date;
 		englishFormat = "yyyy/MM/dd";
 		germanFormat = "dd.MM.yyyy";
 		englishdateFormatter = new SimpleDateFormat(englishFormat, Locale.ENGLISH);
 		germandateFormatter = new SimpleDateFormat(germanFormat, Locale.GERMAN);
-		
-//		System.out.println(getDateString());
+
 	}
 
 	public EventDate(String dateString) {
@@ -34,21 +42,20 @@ public class EventDate {
 		germandateFormatter = new SimpleDateFormat(germanFormat);
 		if (dateString.contains("/")) {
 
-			
-				try {
-					date = englishdateFormatter.parse(dateString);
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					date = null;
-				}
-			
+			try {
+				date = englishdateFormatter.parse(dateString);
+			} catch (final ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				date = null;
+			}
+
 		}
 		if (dateString.contains(".")) {
 
 			try {
 				date = germandateFormatter.parse(dateString);
-			} catch (ParseException e) {
+			} catch (final ParseException e) {
 				e.printStackTrace();
 				date = null;
 			}
@@ -63,11 +70,11 @@ public class EventDate {
 	public String getDateString() {
 		if (date != null) {
 			if (Locale.getDefault().equals(Locale.US)) {
-				String englishFormat = englishdateFormatter.format(date);
+				final String englishFormat = englishdateFormatter.format(date);
 				return englishFormat;
 			}
 			if (Locale.getDefault().equals(Locale.GERMANY)) {
-				String germanFormat = germandateFormatter.format(date);
+				final String germanFormat = germandateFormatter.format(date);
 				return germanFormat;
 			}
 		}
@@ -91,22 +98,22 @@ public class EventDate {
 	}
 
 	public java.sql.Date getSQLDate() {
-		java.sql.Date sqlDate = new java.sql.Date(date.getTime());
+		final java.sql.Date sqlDate = new java.sql.Date(date.getTime());
 		return sqlDate;
 
 	}
 
-	public void setDate(Date date) {
+	public void setDate(final Date date) {
 		this.date = date;
 	}
 
-	public void setDate(String dateString) {
+	public void setDate(final String dateString) {
 		Boolean defaultLanguage = false;
 		if (dateString.contains("/")) {
 			try {
 				date = englishdateFormatter.parse(dateString);
 				defaultLanguage = true;
-			} catch (ParseException e) {
+			} catch (final ParseException e) {
 				defaultLanguage = false;
 				e.printStackTrace();
 			}
@@ -115,32 +122,32 @@ public class EventDate {
 			try {
 				date = germandateFormatter.parse(dateString);
 				defaultLanguage = true;
-			} catch (ParseException e) {
+			} catch (final ParseException e) {
 				defaultLanguage = false;
 				e.printStackTrace();
 			}
 		}
 		if (defaultLanguage == false) {
-			
-				date = null;
-			
+
+			date = null;
+
 		}
 
 	}
 
-	public void setEnglishdateFormatter(SimpleDateFormat englishdateFormatter) {
+	public void setEnglishdateFormatter(final SimpleDateFormat englishdateFormatter) {
 		this.englishdateFormatter = englishdateFormatter;
 	}
 
-	public void setEnglishFormat(String englishFormat) {
+	public void setEnglishFormat(final String englishFormat) {
 		this.englishFormat = englishFormat;
 	}
 
-	public void setGermandateFormatter(SimpleDateFormat germandateFormatter) {
+	public void setGermandateFormatter(final SimpleDateFormat germandateFormatter) {
 		this.germandateFormatter = germandateFormatter;
 	}
 
-	public void setGermanFormat(String germanFormat) {
+	public void setGermanFormat(final String germanFormat) {
 		this.germanFormat = germanFormat;
 	}
 }

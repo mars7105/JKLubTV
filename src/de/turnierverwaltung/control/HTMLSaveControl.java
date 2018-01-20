@@ -35,44 +35,45 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import de.turnierverwaltung.model.CrossTable;
 
 /**
- * 
+ *
  * @author mars
  *
  */
 public class HTMLSaveControl {
 
-	private MainControl mainControl;
+	private final MainControl mainControl;
 
 	/**
-	 * 
+	 *
 	 * @param mainControl
 	 */
-	public HTMLSaveControl(MainControl mainControl) {
+	public HTMLSaveControl(final MainControl mainControl) {
 		this.mainControl = mainControl;
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void saveHTMLFile() {
 		Boolean fileExist = false;
 
-		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
+		final Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
-			int anzahlGruppen = this.mainControl.getTournament().getAnzahlGruppen();
-			String filename = mainControl.getTournament().getTurnierName();
+			final int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
+			final String filename = mainControl.getTournament().getTurnierName();
 
-			File path = new File(mainControl.getPropertiesControl().getDefaultPath());
-			String webserverPath = mainControl.getPropertiesControl().getWebserverPath();
+			final File path = new File(mainControl.getPropertiesControl().getDefaultPath());
+			final String webserverPath = mainControl.getPropertiesControl().getWebserverPath();
 
-			JFileChooser savefile = new JFileChooser(path);
-			FileFilter filter = new FileNameExtensionFilter("HTML", "html"); //$NON-NLS-1$ //$NON-NLS-2$
+			final JFileChooser savefile = new JFileChooser(path);
+			final FileFilter filter = new FileNameExtensionFilter("HTML", "html"); //$NON-NLS-1$ //$NON-NLS-2$
 			savefile.addChoosableFileFilter(filter);
 			savefile.setFileFilter(filter);
-			savefile.setSelectedFile(new File(filename));
+			final File file = new File(filename);
+			savefile.setSelectedFile(file);
 			savefile.setDialogType(JFileChooser.SAVE_DIALOG);
 
-			int sf = savefile.showSaveDialog(null);
+			final int sf = savefile.showSaveDialog(null);
 			if (sf == JFileChooser.APPROVE_OPTION) {
 
 				for (int i = 0; i < anzahlGruppen; i++) {
@@ -80,126 +81,116 @@ public class HTMLSaveControl {
 					String wfn = mainControl.getTournament().getTurnierName();
 					wfn += Messages.getString("PDFSaveControler.2")
 							+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".pdf";
-					String webfilename1 = wfn.replaceAll(" ", "");
+					final String webfilename1 = wfn.replaceAll(" ", "");
 
 					String wfn2 = mainControl.getTournament().getTurnierName();
 					wfn2 += Messages.getString("PDFSaveControler.8")
 							+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".pdf";
-					String webfilename2 = wfn2.replaceAll(" ", "");
+					final String webfilename2 = wfn2.replaceAll(" ", "");
 
-					String ical = mainControl.getTournament().getTurnierName()
+					final String ical = mainControl.getTournament().getTurnierName()
 							+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".ics";
-					String webfilename3 = ical.replaceAll(" ", "");
+					final String webfilename3 = ical.replaceAll(" ", "");
 
-					if (this.mainControl.getCrossTable()[i] == null) {
-						this.mainControl.getCrossTableControl().makeSimpleTableView(i);
+					if (mainControl.getCrossTable()[i] == null) {
+						mainControl.getCrossTableControl().makeSimpleTableView(i);
 
-						this.mainControl.getMeetingTableControl().makeSimpleTableView(i);
+						mainControl.getMeetingTableControl().makeSimpleTableView(i);
 
 					}
 
-					CrossTable turnierTabelle = mainControl.getCrossTable()[i];
+					final CrossTable turnierTabelle = mainControl.getCrossTable()[i];
 
-					int spalte = this.mainControl.getCrossTableView()[i].getTable().getModel().getColumnCount();
-					int zeile = this.mainControl.getCrossTableView()[i].getTable().getModel().getRowCount();
+					final int spalte = mainControl.getCrossTableView()[i].getTable().getModel().getColumnCount();
+					final int zeile = mainControl.getCrossTableView()[i].getTable().getModel().getRowCount();
 					for (int x = 0; x < spalte; x++) {
 						for (int y = 0; y < zeile; y++) {
 
-							turnierTabelle.getTabellenMatrix()[x][y
-									+ 1] = (String) this.mainControl.getCrossTableView()[i].getTable().getValueAt(y,
-											x);
+							turnierTabelle.getTabellenMatrix()[x][y + 1] = (String) mainControl.getCrossTableView()[i]
+									.getTable().getValueAt(y, x);
 
 						}
 					}
-					if (filename != null) {
-						File filename1 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
-								+ filename + Messages.getString("HTMLSaveControler.5") //$NON-NLS-1$
-								+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".html"); //$NON-NLS-1$
-						File filename2 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
-								+ filename + Messages.getString("HTMLSaveControler.8") //$NON-NLS-1$
-								+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".html"); //$NON-NLS-1$
-						int n1 = 0;
-						if (filename1.exists() && fileExist == false) {
-							fileExist = true;
-							Object[] options = { Messages.getString("SaveDialog.2"),
-									Messages.getString("SaveDialog.3") };
-							n1 = JOptionPane.showOptionDialog(null,
-									Messages.getString("SaveDialog.0") + filename1.getAbsolutePath()
-											+ Messages.getString("SaveDialog.1"),
-									"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-									options, options[1]);
+					final File filename1 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
+							+ filename + Messages.getString("HTMLSaveControler.5") //$NON-NLS-1$
+							+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".html"); //$NON-NLS-1$
+					final File filename2 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
+							+ filename + Messages.getString("HTMLSaveControler.8") //$NON-NLS-1$
+							+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".html"); //$NON-NLS-1$
+					int n1 = 0;
+					if (filename1.exists() && fileExist == false) {
+						fileExist = true;
+						final Object[] options = { Messages.getString("SaveDialog.2"),
+								Messages.getString("SaveDialog.3") };
+						n1 = JOptionPane.showOptionDialog(null,
+								Messages.getString("SaveDialog.0") + filename1.getAbsolutePath()
+										+ Messages.getString("SaveDialog.1"),
+								"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+								options, options[1]);
 
+					}
+					int n2 = 0;
+					if (filename2.exists() && fileExist == false) {
+						fileExist = true;
+						final Object[] options = { Messages.getString("SaveDialog.2"),
+								Messages.getString("SaveDialog.3") };
+						n2 = JOptionPane.showOptionDialog(null,
+								Messages.getString("SaveDialog.0") + filename2.getAbsolutePath()
+										+ Messages.getString("SaveDialog.1"),
+								"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+								options, options[1]);
+
+					}
+					Writer writer1;
+					Writer writer2;
+					final Boolean ohneHeaderundFooter = mainControl.getPropertiesControl().getOnlyTables();
+					final Boolean showLink = mainControl.getPropertiesControl().getPDFLinks();
+
+					try {
+						if (n1 == 0) {
+							// Construct a writer for a specific encoding
+							writer1 = new OutputStreamWriter(new FileOutputStream(filename1), "UTF8"); //$NON-NLS-1$
+
+							writer1.write(mainControl.getCrossTable()[i].getHTMLTable(ohneHeaderundFooter,
+									webserverPath, webfilename1, showLink));
+							writer1.flush();
+							writer1.close();
 						}
-						int n2 = 0;
-						if (filename2.exists() && fileExist == false) {
-							fileExist = true;
-							Object[] options = { Messages.getString("SaveDialog.2"),
-									Messages.getString("SaveDialog.3") };
-							n2 = JOptionPane.showOptionDialog(null,
-									Messages.getString("SaveDialog.0") + filename2.getAbsolutePath()
-											+ Messages.getString("SaveDialog.1"),
-									"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-									options, options[1]);
-
+						if (n2 == 0) {
+							writer2 = new OutputStreamWriter(new FileOutputStream(filename2), "UTF8"); //$NON-NLS-1$
+							writer2.write(mainControl.getMeetingTableControl().getTerminTabelle()[i].getHTMLTable(
+									ohneHeaderundFooter, webserverPath, webfilename2, webfilename3, showLink));
+							writer2.flush();
+							writer2.close();
 						}
-						Writer writer1;
-						Writer writer2;
-						Boolean ohneHeaderundFooter = mainControl.getPropertiesControl().getOnlyTables();
-						Boolean showLink = mainControl.getPropertiesControl().getPDFLinks();
-
 						try {
-							if (n1 == 0) {
-								// Construct a writer for a specific encoding
-								writer1 = new OutputStreamWriter(new FileOutputStream(filename1), "UTF8"); //$NON-NLS-1$
+							final InputStreamReader isReader = new InputStreamReader(
+									this.getClass().getResourceAsStream("/files/style.css")); //$NON-NLS-1$
+							final BufferedReader br = new BufferedReader(isReader);
 
-								writer1.write(this.mainControl.getCrossTable()[i].getHTMLTable(ohneHeaderundFooter,
-										webserverPath, webfilename1, showLink));
-								writer1.flush();
-								writer1.close();
-							}
-							if (n2 == 0) {
-								writer2 = new OutputStreamWriter(new FileOutputStream(filename2), "UTF8"); //$NON-NLS-1$
-								writer2.write(this.mainControl.getMeetingTableControl().getTerminTabelle()[i]
-										.getHTMLTable(ohneHeaderundFooter, webserverPath, webfilename2, webfilename3,
-												showLink));
-								writer2.flush();
-								writer2.close();
-							}
-							try {
-								InputStreamReader isReader = new InputStreamReader(
-										this.getClass().getResourceAsStream("/files/style.css")); //$NON-NLS-1$
-								BufferedReader br = new BufferedReader(isReader);
+							final PrintWriter writer3 = new PrintWriter(
+									new File(savefile.getCurrentDirectory() + "/style.css")); //$NON-NLS-1$
 
-								PrintWriter writer3 = new PrintWriter(
-										new File(savefile.getCurrentDirectory() + "/style.css")); //$NON-NLS-1$
-
-								String Bs;
-								while ((Bs = br.readLine()) != null) {
-									writer3.println(Bs);
-								}
-
-								writer3.close();
-								br.close();
-
-							} catch (FileNotFoundException fnfe) {
-								JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.14")); //$NON-NLS-1$
-							} catch (IOException ioe) {
-								JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.15")); //$NON-NLS-1$
+							String Bs;
+							while ((Bs = br.readLine()) != null) {
+								writer3.println(Bs);
 							}
 
-						} catch (IOException e) {
-							JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.16")); //$NON-NLS-1$
+							writer3.close();
+							br.close();
+
+						} catch (final FileNotFoundException fnfe) {
+							JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.14")); //$NON-NLS-1$
+						} catch (final IOException ioe) {
+							JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.15")); //$NON-NLS-1$
 						}
 
-					} else if (sf == JFileChooser.CANCEL_OPTION) {
-						JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.17")); //$NON-NLS-1$
+					} catch (final IOException e) {
+						JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.16")); //$NON-NLS-1$
 					}
 
 				}
-//				JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.18")); //$NON-NLS-1$
-				// File file = savefile.getSelectedFile();
-				// first check if Desktop is supported by
-				// Platform or not
+
 				if (!Desktop.isDesktopSupported())
 
 				{
@@ -209,15 +200,17 @@ public class HTMLSaveControl {
 				} else
 
 				{
-					Desktop desktop = Desktop.getDesktop();
+					final Desktop desktop = Desktop.getDesktop();
 
 					try {
 						desktop.open(savefile.getCurrentDirectory());
-					} catch (IOException e) {
+					} catch (final IOException e) {
 						// TODO Auto-generated catch block
 
 					}
 				}
+			} else if (sf == JFileChooser.CANCEL_OPTION) {
+				JOptionPane.showMessageDialog(null, Messages.getString("HTMLSaveControler.17")); //$NON-NLS-1$
 			}
 
 		} else {

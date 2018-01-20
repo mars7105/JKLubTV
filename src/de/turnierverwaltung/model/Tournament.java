@@ -35,13 +35,19 @@ public class Tournament {
 	private EventDate eventendDate;
 
 	/**
-	 * 
+	 *
 	 * @param onlyTables
 	 * @param noDWZCalc
 	 * @param noFolgeDWZCalc
 	 */
-	public Tournament(Boolean onlyTables, Boolean noDWZCalc, Boolean noFolgeDWZCalc, Boolean noELOCalc,
-			Boolean noFolgeELOCalc) {
+	public Tournament(final Boolean onlyTables, final Boolean noDWZCalc, final Boolean noFolgeDWZCalc,
+			final Boolean noELOCalc, final Boolean noFolgeELOCalc) {
+		turnierName = "";
+
+		eventstartDate = new EventDate();
+		startDatum = "";
+		eventendDate = new EventDate();
+		endDatum = "";
 		turnierId = -1;
 		this.onlyTables = onlyTables;
 		this.noDWZCalc = noDWZCalc;
@@ -51,7 +57,7 @@ public class Tournament {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param turnierId
 	 * @param turnierName
 	 * @param startDatum
@@ -60,8 +66,9 @@ public class Tournament {
 	 * @param noDWZCalc
 	 * @param noFolgeDWZCalc
 	 */
-	public Tournament(int turnierId, String turnierName, String startDatum, String endDatum, Boolean onlyTables,
-			Boolean noDWZCalc, Boolean noFolgeDWZCalc, Boolean noELOCalc, Boolean noFolgeELOCalc) {
+	public Tournament(final int turnierId, final String turnierName, final String startDatum, final String endDatum,
+			final Boolean onlyTables, final Boolean noDWZCalc, final Boolean noFolgeDWZCalc, final Boolean noELOCalc,
+			final Boolean noFolgeELOCalc) {
 		super();
 		this.turnierName = turnierName;
 
@@ -69,7 +76,7 @@ public class Tournament {
 		this.startDatum = eventstartDate.getDateString();
 		eventendDate = new EventDate(endDatum);
 		this.endDatum = eventendDate.getDateString();
-		;
+
 		this.turnierId = turnierId;
 		this.onlyTables = onlyTables;
 		this.noDWZCalc = noDWZCalc;
@@ -88,7 +95,7 @@ public class Tournament {
 	}
 
 	public String getEndDatumTRF() {
-		
+
 		return eventendDate.getEnglishFormat();
 	}
 
@@ -121,7 +128,7 @@ public class Tournament {
 	}
 
 	public String getStartDatumTRF() {
-		
+
 		return eventstartDate.getEnglishFormat();
 	}
 
@@ -133,52 +140,52 @@ public class Tournament {
 		return turnierName;
 	}
 
-	public void setAnzahlGruppen(int anzahlGruppen) {
+	public void setAnzahlGruppen(final int anzahlGruppen) {
 		this.anzahlGruppen = anzahlGruppen;
 	}
 
-	public void setEndDatum(String endDatum) {
-		
+	public void setEndDatum(final String endDatum) {
+
 		eventendDate = new EventDate(endDatum);
 		this.endDatum = eventendDate.getDateString();
 	}
 
-	public void setGruppe(Group[] gruppe) {
+	public void setGruppe(final Group[] gruppe) {
 		this.gruppe = gruppe;
 	}
 
-	public void setNoDWZCalc(Boolean noDWZCalc) {
+	public void setNoDWZCalc(final Boolean noDWZCalc) {
 		this.noDWZCalc = noDWZCalc;
 	}
 
-	public void setNoELOCalc(Boolean noELO) {
-		this.noELOCalc = noELO;
+	public void setNoELOCalc(final Boolean noELO) {
+		noELOCalc = noELO;
 
 	}
 
-	public void setNoFolgeDWZCalc(Boolean noFolgeDWZCalc) {
+	public void setNoFolgeDWZCalc(final Boolean noFolgeDWZCalc) {
 		this.noFolgeDWZCalc = noFolgeDWZCalc;
 	}
 
-	public void setNoFolgeELOCalc(Boolean noELO) {
-		this.noFolgeELOCalc = noELO;
+	public void setNoFolgeELOCalc(final Boolean noELO) {
+		noFolgeELOCalc = noELO;
 	}
 
-	public void setOnlyTables(Boolean onlyTables) {
+	public void setOnlyTables(final Boolean onlyTables) {
 		this.onlyTables = onlyTables;
 	}
 
-	public void setStartDatum(String startDatum) {
+	public void setStartDatum(final String startDatum) {
 		eventstartDate = new EventDate(startDatum);
 		this.startDatum = eventstartDate.getDateString();
-		
+
 	}
 
-	public void setTurnierId(int turnierId) {
+	public void setTurnierId(final int turnierId) {
 		this.turnierId = turnierId;
 	}
 
-	public void setTurnierName(String turnierName) {
+	public void setTurnierName(final String turnierName) {
 		this.turnierName = turnierName;
 	}
 

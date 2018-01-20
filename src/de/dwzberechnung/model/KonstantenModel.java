@@ -16,16 +16,16 @@ package de.dwzberechnung.model;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 public class KonstantenModel {
-	public static int TABELLENSPALTEN = 4;
-	public static int TABELLENZEILEN = 50;
-	public static int DWZ_DIFFERENZ_VON = 0;
-	public static int DWZ_DIFFERENZ_BIS = 1;
-	public static int DWZ_IST_BESSER = 2;
-	public static int DWZ_IST_SCHLECHTER = 3;
-	public static int DWZ_DIFFERENZ_MAXIMUM = 735;
-	public static int ALTER_BIS_20_JAHRE = 5;
-	public static int ALTER_VON_21_BIS_25_JAHRE = 10;
-	public static int ALTER_UEBER_25_JAHRE = 15;
-	public static double EULERSCHE_ZAHL = 2.718281828;
+	public static final int TABELLENSPALTEN = 4;
+	public static final int TABELLENZEILEN = 50;
+	public static final int DWZ_DIFFERENZ_VON = 0;
+	public static final int DWZ_DIFFERENZ_BIS = 1;
+	public static final int DWZ_IST_BESSER = 2;
+	public static final int DWZ_IST_SCHLECHTER = 3;
+	public static final int DWZ_DIFFERENZ_MAXIMUM = 735;
+	public static final int ALTER_BIS_20_JAHRE = 5;
+	public static final int ALTER_VON_21_BIS_25_JAHRE = 10;
+	public static final int ALTER_UEBER_25_JAHRE = 15;
+	public static final double EULERSCHE_ZAHL = 2.718281828;
 
 }
