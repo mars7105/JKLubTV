@@ -3,7 +3,7 @@ package de.turnierverwaltung.mysql;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import de.turnierverwaltung.model.DWZData;
+import de.turnierverwaltung.model.rating.DWZData;
 
 public interface DWZDataDAO {
 	public void createDWZTable() throws SQLException;

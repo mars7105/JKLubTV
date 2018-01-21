@@ -3,8 +3,8 @@ package de.turnierverwaltung.mysql;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import de.turnierverwaltung.model.ELOData;
-import de.turnierverwaltung.model.ELOPlayer;
+import de.turnierverwaltung.model.rating.ELOData;
+import de.turnierverwaltung.model.rating.ELOPlayer;
 
 public interface ELODataDAO {
 	public void createELOTable() throws SQLException;

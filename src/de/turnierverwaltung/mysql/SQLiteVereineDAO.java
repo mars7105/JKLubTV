@@ -5,7 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import de.turnierverwaltung.model.DWZData;
+import de.turnierverwaltung.model.rating.DWZData;
 
 public class SQLiteVereineDAO implements DWZVereineDAO {
 	private Connection dbConnect;

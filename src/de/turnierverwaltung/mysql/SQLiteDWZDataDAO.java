@@ -8,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import de.turnierverwaltung.control.ExceptionHandler;
-import de.turnierverwaltung.model.DWZData;
+import de.turnierverwaltung.model.rating.DWZData;
 
 public class SQLiteDWZDataDAO implements DWZDataDAO {
 

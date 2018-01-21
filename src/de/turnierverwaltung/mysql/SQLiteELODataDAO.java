@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import de.turnierverwaltung.model.ELOData;
-import de.turnierverwaltung.model.ELOPlayer;
+import de.turnierverwaltung.model.rating.ELOData;
+import de.turnierverwaltung.model.rating.ELOPlayer;
 
 public class SQLiteELODataDAO implements ELODataDAO {
 	private Connection dbConnect;

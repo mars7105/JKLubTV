@@ -2,7 +2,7 @@ package de.turnierverwaltung.mysql;
 
 import java.sql.SQLException;
 
-import de.turnierverwaltung.model.DWZData;
+import de.turnierverwaltung.model.rating.DWZData;
 
 public interface DWZVereineDAO {
 	public void createVereineTable() throws SQLException;
