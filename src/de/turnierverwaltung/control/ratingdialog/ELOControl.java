@@ -3,6 +3,7 @@ package de.turnierverwaltung.control.ratingdialog;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.sql.SQLException;
 
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
@@ -39,7 +40,7 @@ import de.turnierverwaltung.view.ratingdialog.ELODialogView;
 import de.turnierverwaltung.view.ratingdialog.ELOPlayerView;
 
 public class ELOControl {
-	private MainControl mainControl;
+	private final MainControl mainControl;
 	private ELODialogView dialog;
 	private ELOPlayerView spielerDewisView;
 	private ArrayList<ELOPlayer> players;
@@ -56,18 +57,18 @@ public class ELOControl {
 	private String playerELOList;
 
 	/**
-	 * 
+	 *
 	 * @param mainControl
 	 * @throws IOException
 	 */
-	public ELOControl(MainControl mainControl) throws IOException {
+	public ELOControl(final MainControl mainControl) throws IOException {
 		super();
 		runOnce = false;
 		this.mainControl = mainControl;
 		eloFile = mainControl.getPropertiesControl().checkPathToELOXML();
 		if (eloFile == true) {
 			playerELOList = mainControl.getPropertiesControl().getPathToPlayersELO();
-			int positionEXT = playerELOList.lastIndexOf('.');
+			final int positionEXT = playerELOList.lastIndexOf('.');
 			String extender = ""; //$NON-NLS-1$
 			if (positionEXT > 0) {
 				extender = playerELOList.substring(positionEXT);
@@ -124,7 +125,7 @@ public class ELOControl {
 	}
 
 	/**
-	* 
+	*
 	*/
 	public void makeDialog() {
 		if (playerlist != null || sqlitePlayerlist != null) {
@@ -147,7 +148,7 @@ public class ELOControl {
 
 	public void makePlayerSearchList() {
 		if (playerlist != null || sqlitePlayerlist != null) {
-			eloDialogActionListenerControl = new ELOActionListenerControl(this.mainControl, this);
+			eloDialogActionListenerControl = new ELOActionListenerControl(mainControl, this);
 			dialog.getPlayerSearchView().getOkButton().addActionListener(eloDialogActionListenerControl);
 			dialog.getPlayerSearchView().getCancelButton().addActionListener(eloDialogActionListenerControl);
 
@@ -156,22 +157,22 @@ public class ELOControl {
 			spielerSearchTextField.addKeyListener(new KeyListener() {
 
 				@Override
-				public void keyPressed(KeyEvent e) {
+				public void keyPressed(final KeyEvent e) {
 
 				}
 
 				@Override
-				public void keyReleased(KeyEvent e) {
+				public void keyReleased(final KeyEvent e) {
 					spielerSearchPanelList = new ELOPlayerView();
 					dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
 					searchplayerlist = new ArrayList<Player>();
-					String eingabe = spielerSearchTextField.getText().toUpperCase();
+					final String eingabe = spielerSearchTextField.getText().toUpperCase();
 					if (playerlist != null) {
-						ListIterator<ELOPlayer> li = playerlist.listIterator();
+						final ListIterator<ELOPlayer> li = playerlist.listIterator();
 
 						int counter = 0;
 						while (li.hasNext() && counter < 20) {
-							Player tmp = li.next().getPlayer();
+							final Player tmp = li.next().getPlayer();
 							tmp.extractNameToForenameAndSurename();
 							String surname = "";
 							String forename = "";
@@ -201,17 +202,17 @@ public class ELOControl {
 					}
 					if (sqlitePlayerlist != null) {
 
-						ArrayList<ELOData> eloPlayer = sqlitePlayerlist.getPlayersByName(playerELOList, eingabe);
-						ListIterator<ELOData> li = eloPlayer.listIterator();
+						final ArrayList<ELOData> eloPlayer = sqlitePlayerlist.getPlayersByName(playerELOList, eingabe);
+						final ListIterator<ELOData> li = eloPlayer.listIterator();
 						while (li.hasNext()) {
-							ELOData tmp = li.next();
+							final ELOData tmp = li.next();
 
 							if (playerExist(tmp)) {
 								spielerSearchPanelList.makeSpielerZeile(tmp, 2);
 							} else {
 								spielerSearchPanelList.makeSpielerZeile(tmp, 0);
 							}
-							Player player = new Player();
+							final Player player = new Player();
 							player.setEloData(tmp);
 							searchplayerlist.add(player);
 
@@ -224,7 +225,7 @@ public class ELOControl {
 				}
 
 				@Override
-				public void keyTyped(KeyEvent e) {
+				public void keyTyped(final KeyEvent e) {
 
 				}
 			});
@@ -233,45 +234,53 @@ public class ELOControl {
 		}
 	}
 
-	private boolean playerExist(ELOData tmp) {
-		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
+	private boolean playerExist(final ELOData tmp) {
+		final SQLPlayerControl spielerTableControl = new SQLPlayerControl(mainControl);
 
 		Boolean playerExist = false;
-		playerExist = spielerTableControl.playerFideExist(tmp.getFideid());
+		try {
+			playerExist = spielerTableControl.playerFideExist(tmp.getFideid());
+		} catch (final SQLException e) {
+			playerExist = false;
+		}
 		return playerExist;
 	}
 
-	private boolean playerExist(Player neuerSpieler) {
-		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
+	private boolean playerExist(final Player neuerSpieler) {
+		final SQLPlayerControl spielerTableControl = new SQLPlayerControl(mainControl);
 		Boolean playerExist = false;
 
 		neuerSpieler.getDwzData().setCsvFIDE_ID(neuerSpieler.getEloData().getFideid());
-		playerExist = spielerTableControl.playerFideExist(neuerSpieler.getEloData().getFideid());
+		try {
+			playerExist = spielerTableControl.playerFideExist(neuerSpieler.getEloData().getFideid());
+		} catch (final SQLException e) {
+			playerExist = false;
+		}
 
 		return playerExist;
 	}
 
-	public void setDialog(ELODialogView dialog) {
+	public void setDialog(final ELODialogView dialog) {
 		this.dialog = dialog;
 	}
 
-	public void setPlayers(ArrayList<ELOPlayer> players) {
+	public void setPlayers(final ArrayList<ELOPlayer> players) {
 		this.players = players;
 	}
 
-	public void setSearchplayerlist(ArrayList<Player> searchplayerlist) {
+	public void setSearchplayerlist(final ArrayList<Player> searchplayerlist) {
 		this.searchplayerlist = searchplayerlist;
 	}
 
-	public void setSpielerDewisView(ELOPlayerView spielerDewisView) {
+	public void setSpielerDewisView(final ELOPlayerView spielerDewisView) {
 		this.spielerDewisView = spielerDewisView;
 	}
 
-	public void setSpielerSearchPanelList(ELOPlayerView spielerSearchPanelList) {
+	public void setSpielerSearchPanelList(final ELOPlayerView spielerSearchPanelList) {
 		this.spielerSearchPanelList = spielerSearchPanelList;
 	}
 
-	public void setZpsItems(ArrayList<CSVVereine> zpsItems) {
+	public void setZpsItems(final ArrayList<CSVVereine> zpsItems) {
 		this.zpsItems = zpsItems;
 	}
 

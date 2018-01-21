@@ -35,23 +35,23 @@ import de.turnierverwaltung.sqlite.Turnier_has_SpielerDAO;
 
 public class SQLPlayerControl {
 	private Tournament turnier;
-	private MainControl mainControl;
-	private DAOFactory daoFactory;
-	private SpielerDAO mySQLSpielerDAO;
-	private DWZDataDAO mySQLDWZDataDAO;
+	private final MainControl mainControl;
+	private final DAOFactory daoFactory;
+	private final SpielerDAO mySQLSpielerDAO;
+	private final DWZDataDAO mySQLDWZDataDAO;
 	private int spielerId[];
-	private PropertiesControl prop;
-	private ELODataDAO mySQLELODataDAO;
+	private final PropertiesControl prop;
+	private final ELODataDAO mySQLELODataDAO;
 
-	public SQLPlayerControl(MainControl mainControl) {
+	public SQLPlayerControl(final MainControl mainControl) {
 		this.mainControl = mainControl;
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		mySQLSpielerDAO = daoFactory.getSpielerDAO();
 		mySQLDWZDataDAO = daoFactory.getDWZDataDAO();
 		mySQLELODataDAO = daoFactory.getELODataDAO();
 		prop = mainControl.getPropertiesControl();
-		int cutForename = Integer.parseInt(prop.getCutForename());
-		int cutSurname = Integer.parseInt(prop.getCutSurname());
+		final int cutForename = Integer.parseInt(prop.getCutForename());
+		final int cutSurname = Integer.parseInt(prop.getCutSurname());
 		Player.cutFname = cutForename;
 		Player.cutSname = cutSurname;
 
@@ -76,35 +76,35 @@ public class SQLPlayerControl {
 	}
 
 	public void getSpieler() throws SQLException {
-		this.turnier = this.mainControl.getTournament();
+		turnier = mainControl.getTournament();
 
 		ArrayList<Player> spieler = new ArrayList<Player>();
-		for (int i = 0; i < this.turnier.getAnzahlGruppen(); i++) {
+		for (int i = 0; i < turnier.getAnzahlGruppen(); i++) {
 			spieler = mySQLSpielerDAO.selectAllSpieler(turnier.getGruppe()[i].getGruppeId());
 			if (spieler.size() % 2 == 1) {
-				Player spielfrei = new Player(TournamentConstants.SPIELFREI_ID,
+				final Player spielfrei = new Player(TournamentConstants.SPIELFREI_ID,
 						Messages.getString("SpielerTableControl.0"), Messages.getString("SpielerTableControl.1"), "0",
 						0, "", "", -1);
 				spieler.add(spielfrei);
 			}
 
-			Player[] gamers = new Player[spieler.size()];
+			final Player[] gamers = new Player[spieler.size()];
 			for (int y = 0; y < spieler.size(); y++) {
-				Player temp = spieler.get(y);
+				final Player temp = spieler.get(y);
 
 				temp.setDwzData(mySQLDWZDataDAO.getDWZData(temp.getSpielerId()));
 
 				gamers[y] = temp;
 			}
-			this.turnier.getGruppe()[i].setSpieler(gamers);
-			this.turnier.getGruppe()[i].setSpielerAnzahl(gamers.length);
+			turnier.getGruppe()[i].setSpieler(gamers);
+			turnier.getGruppe()[i].setSpielerAnzahl(gamers.length);
 
 		}
 
 	}
 
-	public int insertOneSpieler(Player spieler) throws SQLException {
-		this.turnier = mainControl.getTournament();
+	public int insertOneSpieler(final Player spieler) throws SQLException {
+		turnier = mainControl.getTournament();
 
 		int spielerId = -1;
 		spielerId = mySQLSpielerDAO.insertSpieler(spieler);
@@ -120,14 +120,14 @@ public class SQLPlayerControl {
 				int dwzNumber = 0;
 				try {
 					dwzNumber = Integer.parseInt(spieler.getDwz());
-					DWZData dwzData = new DWZData();
+					final DWZData dwzData = new DWZData();
 					dwzData.setSpielerId(spielerId);
 					dwzData.setCsvDWZ(dwzNumber);
 					dwzData.setAge(spieler.getAge());
 					dwzData.setCsvSpielername(spieler.getName());
 					spieler.setDwzData(dwzData);
 					mySQLDWZDataDAO.insertDWZ(dwzData);
-				} catch (NumberFormatException e) {
+				} catch (final NumberFormatException e) {
 					dwzNumber = 0;
 				}
 
@@ -148,16 +148,16 @@ public class SQLPlayerControl {
 		return spielerId;
 	}
 
-	public boolean insertSpieler(int gruppe) throws SQLException {
+	public boolean insertSpieler(final int gruppe) throws SQLException {
 		boolean eintragGespeichert = false;
-		this.turnier = mainControl.getTournament();
+		turnier = mainControl.getTournament();
 
 		turnier.getTurnierId();
-		int spielerAnzahl = turnier.getGruppe()[gruppe].getSpielerAnzahl();
+		final int spielerAnzahl = turnier.getGruppe()[gruppe].getSpielerAnzahl();
 		spielerId = new int[spielerAnzahl];
 		for (int y = 0; y < spielerAnzahl; y++) {
 			if (turnier.getGruppe()[gruppe].getSpieler()[y].getSpielerId() == -1) {
-				Player temp = turnier.getGruppe()[gruppe].getSpieler()[y];
+				final Player temp = turnier.getGruppe()[gruppe].getSpieler()[y];
 				spielerId[y] = mySQLSpielerDAO.insertSpieler(temp);
 				temp.setSpielerId(spielerId[y]);
 				if (!temp.getDwzData().getCsvZPS().equals("")) {
@@ -178,10 +178,10 @@ public class SQLPlayerControl {
 		return eintragGespeichert;
 	}
 
-	public boolean loescheSpieler(Player spieler) throws SQLException {
+	public boolean loescheSpieler(final Player spieler) throws SQLException {
 		boolean geloescht = false;
-		Turnier_has_SpielerDAO turnier_has_spielerDAO = daoFactory.getTurnier_has_SpielerDAO();
-		ArrayList<Integer> tId = turnier_has_spielerDAO.findSpielerisinTurnier_has_Spieler(spieler);
+		final Turnier_has_SpielerDAO turnier_has_spielerDAO = daoFactory.getTurnier_has_SpielerDAO();
+		final ArrayList<Integer> tId = turnier_has_spielerDAO.findSpielerisinTurnier_has_Spieler(spieler);
 		int abfrage = 0;
 		if (tId.size() > 0) {
 			JOptionPane.showMessageDialog(mainControl,
@@ -191,7 +191,7 @@ public class SQLPlayerControl {
 
 			abfrage = -1;
 		} else {
-			Object[] options = { Messages.getString("SpielerTableControl.9"), //$NON-NLS-1$
+			final Object[] options = { Messages.getString("SpielerTableControl.9"), //$NON-NLS-1$
 					Messages.getString("SpielerTableControl.10") }; //$NON-NLS-1$
 			abfrage = JOptionPane.showOptionDialog(mainControl,
 					Messages.getString("SpielerTableControl.11") + Messages.getString("SpielerTableControl.12") //$NON-NLS-1$ //$NON-NLS-2$
@@ -215,7 +215,7 @@ public class SQLPlayerControl {
 		return geloescht;
 	}
 
-	public boolean playerExist(DWZData tmp) {
+	public boolean playerExist(final DWZData tmp) throws SQLException {
 		boolean exist = false;
 
 		exist = mySQLDWZDataDAO.playerExist(tmp);
@@ -223,7 +223,7 @@ public class SQLPlayerControl {
 		return exist;
 	}
 
-	public Boolean playerExist(Player neuerSpieler) throws SQLException {
+	public Boolean playerExist(final Player neuerSpieler) throws SQLException {
 		boolean exist = false;
 
 		exist = mySQLDWZDataDAO.playerExist(neuerSpieler.getDwzData());
@@ -231,7 +231,7 @@ public class SQLPlayerControl {
 		return exist;
 	}
 
-	public Boolean playerFideExist(int fideId) {
+	public Boolean playerFideExist(final int fideId) throws SQLException {
 		Boolean exist = false;
 		exist = mySQLDWZDataDAO.playerFideExist(fideId);
 
@@ -241,7 +241,7 @@ public class SQLPlayerControl {
 		return exist;
 	}
 
-	public void updateOneSpieler(Player spieler) throws SQLException {
+	public void updateOneSpieler(final Player spieler) throws SQLException {
 
 		mySQLSpielerDAO.updateSpieler(spieler);
 		if (spieler.getDwzData().getCsvZPS().length() > 0) {
@@ -257,12 +257,12 @@ public class SQLPlayerControl {
 		}
 	}
 
-	public boolean updateSpieler(int gruppe) throws SQLException {
-		this.turnier = mainControl.getTournament();
+	public boolean updateSpieler(final int gruppe) throws SQLException {
+		turnier = mainControl.getTournament();
 
 		boolean saved = false;
 		for (int i = 0; i < turnier.getGruppe()[gruppe].getSpielerAnzahl(); i++) {
-			Player spieler = turnier.getGruppe()[gruppe].getSpieler()[i];
+			final Player spieler = turnier.getGruppe()[gruppe].getSpieler()[i];
 			saved = mySQLSpielerDAO.updateSpieler(spieler);
 			// mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
 			if (!spieler.getDwzData().getCsvZPS().equals("")) {

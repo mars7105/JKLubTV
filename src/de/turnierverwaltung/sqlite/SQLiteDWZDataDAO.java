@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
-import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.model.rating.DWZData;
 
 public class SQLiteDWZDataDAO implements DWZDataDAO {
@@ -15,14 +14,15 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 	private Connection dbConnect;
 
 	public SQLiteDWZDataDAO() {
-		this.dbConnect = null;
-		this.dbConnect = SQLiteDAOFactory.createConnection();
+		dbConnect = null;
+		dbConnect = SQLiteDAOFactory.createConnection();
 
 	}
 
 	@Override
 	public void createDWZTable() throws SQLException {
-		String sql = "CREATE TABLE 'dwz_spieler' (\n" + "  'ZPS'                varchar(5)   NOT NULL default '',\n"
+		final String sql = "CREATE TABLE 'dwz_spieler' (\n"
+				+ "  'ZPS'                varchar(5)   NOT NULL default '',\n"
 				+ "  'Mgl_Nr'             char(4)      NOT NULL default '',\n"
 				+ "  'Status'             char(1)               default NULL,\n"
 				+ "  'Spielername'        varchar(40)  NOT NULL default '',\n"
@@ -39,11 +39,11 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 				+ "  'idSpieler'            INTEGER NOT NULL,\n"
 				+ "  'idDWZData' INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL\n" + ");";
 		Statement stmt;
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
 			// create a database connection
 
-			stmt = this.dbConnect.createStatement();
+			stmt = dbConnect.createStatement();
 
 			stmt.setQueryTimeout(30); // set timeout to 30 sec.
 			stmt.executeUpdate(sql);
@@ -54,16 +54,16 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 	}
 
 	@Override
-	public void deleteDWZ(int spielerId) throws SQLException {
-		String sql = "delete from dwz_spieler where idSpieler=?" + ";";
-		if (this.dbConnect != null) {
+	public void deleteDWZ(final int spielerId) throws SQLException {
+		final String sql = "delete from dwz_spieler where idSpieler=?" + ";";
+		if (dbConnect != null) {
 
-			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+			final PreparedStatement preStm = dbConnect.prepareStatement(sql);
 			preStm.setInt(1, spielerId);
 			preStm.addBatch();
-			this.dbConnect.setAutoCommit(false);
+			dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
-			this.dbConnect.setAutoCommit(true);
+			dbConnect.setAutoCommit(true);
 			preStm.close();
 
 		}
@@ -71,16 +71,16 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 	}
 
 	@Override
-	public void flush(ArrayList<DWZData> csvDataArray) throws SQLException {
+	public void flush(final ArrayList<DWZData> csvDataArray) throws SQLException {
 		String sql;
 
 		sql = "Insert into dwz_spieler (ZPS, Mgl_Nr, Status, Spielername, Geschlecht, Spielberechtigung, Geburtsjahr, Letzte_Auswertung, DWZ, DWZ_Index, FIDE_Elo, FIDE_Titel, FIDE_ID, FIDE_Land, idSpieler) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 				+ ";";
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
-			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+			final PreparedStatement preStm = dbConnect.prepareStatement(sql);
 
-			for (DWZData dwzData : csvDataArray) {
+			for (final DWZData dwzData : csvDataArray) {
 				preStm.setString(1, dwzData.getCsvZPS());
 				preStm.setString(2, dwzData.getCsvMgl_Nr());
 				preStm.setString(3, dwzData.getCsvStatus());
@@ -99,24 +99,24 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 				preStm.addBatch();
 
 			}
-			this.dbConnect.setAutoCommit(false);
+			dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
-			this.dbConnect.setAutoCommit(true);
+			dbConnect.setAutoCommit(true);
 			preStm.close();
 		}
 
 	}
 
 	@Override
-	public DWZData getDWZData(int spielerId) throws SQLException {
-		String sql = "Select * from dwz_spieler WHERE idSpieler=" + spielerId + ";";
-		DWZData dwzData = new DWZData();
+	public DWZData getDWZData(final int spielerId) throws SQLException {
+		final String sql = "Select * from dwz_spieler WHERE idSpieler=" + spielerId + ";";
+		final DWZData dwzData = new DWZData();
 
 		Statement stmt;
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
-			stmt = this.dbConnect.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			stmt = dbConnect.createStatement();
+			final ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				dwzData.setSpielerId(spielerId);
 				dwzData.setCsvZPS(rs.getString("ZPS"));
@@ -143,23 +143,23 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 	}
 
 	@Override
-	public ArrayList<DWZData> getDWZDataByFideId(int eingabe) throws SQLException {
-		String sql = "Select * from dwz_spieler WHERE FIDE_ID LIKE '" + eingabe + "' LIMIT 20;";
-		DWZData dwzData = new DWZData();
-		ArrayList<DWZData> dwzDataArray = new ArrayList<DWZData>();
+	public ArrayList<DWZData> getDWZDataByFideId(final int eingabe) throws SQLException {
+		final String sql = "Select * from dwz_spieler WHERE FIDE_ID LIKE '" + eingabe + "' LIMIT 20;";
+		final DWZData dwzData = new DWZData();
+		final ArrayList<DWZData> dwzDataArray = new ArrayList<DWZData>();
 
 		Statement stmt;
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
-			stmt = this.dbConnect.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			stmt = dbConnect.createStatement();
+			final ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 
 				int sId = -1;
-				String spielerid = rs.getString("idSpieler");
+				final String spielerid = rs.getString("idSpieler");
 				try {
 					sId = Integer.parseInt(spielerid);
-				} catch (NumberFormatException e) {
+				} catch (final NumberFormatException e) {
 					sId = -1;
 				}
 				dwzData.setSpielerId(sId);
@@ -187,23 +187,23 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 	}
 
 	@Override
-	public ArrayList<DWZData> getDWZDataByName(String eingabe) throws SQLException {
-		String sql = "Select * from dwz_spieler WHERE Spielername LIKE '%" + eingabe + "%' LIMIT 40;";
+	public ArrayList<DWZData> getDWZDataByName(final String eingabe) throws SQLException {
+		final String sql = "Select * from dwz_spieler WHERE Spielername LIKE '%" + eingabe + "%' LIMIT 40;";
 
-		ArrayList<DWZData> dwzDataArray = new ArrayList<DWZData>();
+		final ArrayList<DWZData> dwzDataArray = new ArrayList<DWZData>();
 
 		Statement stmt;
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
-			stmt = this.dbConnect.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			stmt = dbConnect.createStatement();
+			final ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				DWZData dwzData = new DWZData();
+				final DWZData dwzData = new DWZData();
 				int sId = -1;
-				String spielerid = rs.getString("idSpieler");
+				final String spielerid = rs.getString("idSpieler");
 				try {
 					sId = Integer.parseInt(spielerid);
-				} catch (NumberFormatException e) {
+				} catch (final NumberFormatException e) {
 					sId = -1;
 				}
 				dwzData.setSpielerId(sId);
@@ -231,50 +231,46 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 	}
 
 	@Override
-	public ArrayList<DWZData> getPlayerOfVerein(String zps) {
-		String sql = "Select * from dwz_spieler WHERE ZPS LIKE '" + zps + "' ORDER BY Spielername ASC;";
+	public ArrayList<DWZData> getPlayerOfVerein(final String zps) throws SQLException {
+		final String sql = "Select * from dwz_spieler WHERE ZPS LIKE '" + zps + "' ORDER BY Spielername ASC;";
 
-		ArrayList<DWZData> dwzDataArray = new ArrayList<DWZData>();
+		final ArrayList<DWZData> dwzDataArray = new ArrayList<DWZData>();
 		Statement stmt;
 
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
-			try {
-				stmt = this.dbConnect.createStatement();
+			stmt = dbConnect.createStatement();
 
-				ResultSet rs = stmt.executeQuery(sql);
-				while (rs.next()) {
-					DWZData dwzData = new DWZData();
-					int sId = -1;
-					String spielerid = rs.getString("idSpieler");
-					try {
-						sId = Integer.parseInt(spielerid);
-					} catch (NumberFormatException e) {
-						sId = -1;
-					}
-					dwzData.setSpielerId(sId);
-					dwzData.setCsvZPS(rs.getString("ZPS"));
-					dwzData.setCsvMgl_Nr(rs.getString("Mgl_Nr"));
-					dwzData.setCsvStatus(rs.getString("Status"));
-					dwzData.setCsvSpielername(rs.getString("Spielername"));
-					dwzData.setCsvGeschlecht(rs.getString("Geschlecht"));
-					dwzData.setCsvSpielberechtigung(rs.getString("Spielberechtigung"));
-					dwzData.setCsvGeburtsjahr(rs.getInt("Geburtsjahr"));
-					dwzData.setCsvLetzte_Auswertung(rs.getInt("Letzte_Auswertung"));
-					dwzData.setCsvDWZ(rs.getInt("DWZ"));
-					dwzData.setCsvIndex(rs.getInt("DWZ_Index"));
-					dwzData.setCsvFIDE_Elo(rs.getInt("FIDE_Elo"));
-					dwzData.setCsvFIDE_Titel(rs.getString("FIDE_Titel"));
-					dwzData.setCsvFIDE_ID(rs.getInt("FIDE_ID"));
-					dwzData.setCsvFIDE_Land(rs.getString("FIDE_Land"));
-					dwzDataArray.add(dwzData);
-
+			final ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				final DWZData dwzData = new DWZData();
+				int sId = -1;
+				final String spielerid = rs.getString("idSpieler");
+				try {
+					sId = Integer.parseInt(spielerid);
+				} catch (final NumberFormatException e) {
+					sId = -1;
 				}
-				stmt.close();
-			} catch (SQLException e1) {
-				ExceptionHandler eh = new ExceptionHandler(null);
-				eh.fileSQLError(e1.getMessage());
+				dwzData.setSpielerId(sId);
+				dwzData.setCsvZPS(rs.getString("ZPS"));
+				dwzData.setCsvMgl_Nr(rs.getString("Mgl_Nr"));
+				dwzData.setCsvStatus(rs.getString("Status"));
+				dwzData.setCsvSpielername(rs.getString("Spielername"));
+				dwzData.setCsvGeschlecht(rs.getString("Geschlecht"));
+				dwzData.setCsvSpielberechtigung(rs.getString("Spielberechtigung"));
+				dwzData.setCsvGeburtsjahr(rs.getInt("Geburtsjahr"));
+				dwzData.setCsvLetzte_Auswertung(rs.getInt("Letzte_Auswertung"));
+				dwzData.setCsvDWZ(rs.getInt("DWZ"));
+				dwzData.setCsvIndex(rs.getInt("DWZ_Index"));
+				dwzData.setCsvFIDE_Elo(rs.getInt("FIDE_Elo"));
+				dwzData.setCsvFIDE_Titel(rs.getString("FIDE_Titel"));
+				dwzData.setCsvFIDE_ID(rs.getInt("FIDE_ID"));
+				dwzData.setCsvFIDE_Land(rs.getString("FIDE_Land"));
+				dwzDataArray.add(dwzData);
+
 			}
+			stmt.close();
+
 		}
 
 		return dwzDataArray;
@@ -282,15 +278,15 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 	}
 
 	@Override
-	public void insertDWZ(DWZData dwzData) throws SQLException {
+	public void insertDWZ(final DWZData dwzData) throws SQLException {
 		String sql;
 
 		sql = "Insert into dwz_spieler (ZPS, Mgl_Nr, Status, Spielername, Geschlecht, Spielberechtigung, Geburtsjahr, Letzte_Auswertung, DWZ, DWZ_Index, FIDE_Elo, FIDE_Titel, FIDE_ID, FIDE_Land, idSpieler) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
 				+ ";";
 
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
-			PreparedStatement preStm = this.dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			final PreparedStatement preStm = dbConnect.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
 			preStm.setString(1, dwzData.getCsvZPS());
 			preStm.setString(2, dwzData.getCsvMgl_Nr());
@@ -308,9 +304,9 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 			preStm.setString(14, dwzData.getCsvFIDE_Land());
 			preStm.setInt(15, dwzData.getSpielerId());
 			preStm.addBatch();
-			this.dbConnect.setAutoCommit(false);
+			dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
-			this.dbConnect.setAutoCommit(true);
+			dbConnect.setAutoCommit(true);
 			// ResultSet rs = preStm.getGeneratedKeys();
 
 			preStm.close();
@@ -320,26 +316,21 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 	}
 
 	@Override
-	public boolean playerExist(DWZData dwzData) {
-		String sql = "Select idSpieler from dwz_spieler where ZPS LIKE '" + dwzData.getCsvZPS() + "' AND Mgl_Nr LIKE '%"
-				+ dwzData.getCsvMgl_Nr() + "';";
+	public boolean playerExist(final DWZData dwzData) throws SQLException {
+		final String sql = "Select idSpieler from dwz_spieler where ZPS LIKE '" + dwzData.getCsvZPS()
+				+ "' AND Mgl_Nr LIKE '%" + dwzData.getCsvMgl_Nr() + "';";
 
 		int id = -1;
 		Statement stmt;
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
-			try {
-				stmt = this.dbConnect.createStatement();
-				ResultSet rs = stmt.executeQuery(sql);
-				while (rs.next()) {
-					id = rs.getInt("idSpieler");
-
-				}
-				stmt.close();
-			} catch (SQLException e) {
-				id = -1;
+			stmt = dbConnect.createStatement();
+			final ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				id = rs.getInt("idSpieler");
 
 			}
+			stmt.close();
 
 		}
 		Boolean returnStatement = false;
@@ -351,26 +342,22 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 	}
 
 	@Override
-	public boolean playerFideExist(int fideId) {
+	public boolean playerFideExist(final int fideId) throws SQLException {
 
-		String sql = "Select idSpieler from dwz_spieler where FIDE_ID LIKE '" + fideId + "';";
+		final String sql = "Select idSpieler from dwz_spieler where FIDE_ID LIKE '" + fideId + "';";
 
 		int id = -1;
 		Statement stmt;
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
-			try {
-				stmt = this.dbConnect.createStatement();
-				ResultSet rs = stmt.executeQuery(sql);
-				while (rs.next()) {
-					id = rs.getInt("idSpieler");
-
-				}
-				stmt.close();
-			} catch (SQLException e) {
-				id = -1;
+			stmt = dbConnect.createStatement();
+			final ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				id = rs.getInt("idSpieler");
 
 			}
+			stmt.close();
+
 		}
 		Boolean returnStatement = false;
 		if (id > 0) {
@@ -381,12 +368,12 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 	}
 
 	@Override
-	public void updateDWZ(DWZData dwzData) throws SQLException {
-		String sql = "update dwz_spieler set ZPS = ?, Mgl_Nr = ?, Status = ?, Spielername = ?, Geschlecht = ?, Spielberechtigung = ?, Geburtsjahr = ?, Letzte_Auswertung = ?, DWZ = ?, DWZ_Index = ?, FIDE_Elo = ?, FIDE_Titel = ?, FIDE_ID = ?, FIDE_Land = ? where idSpieler = "
+	public void updateDWZ(final DWZData dwzData) throws SQLException {
+		final String sql = "update dwz_spieler set ZPS = ?, Mgl_Nr = ?, Status = ?, Spielername = ?, Geschlecht = ?, Spielberechtigung = ?, Geburtsjahr = ?, Letzte_Auswertung = ?, DWZ = ?, DWZ_Index = ?, FIDE_Elo = ?, FIDE_Titel = ?, FIDE_ID = ?, FIDE_Land = ? where idSpieler = "
 				+ dwzData.getSpielerId() + ";";
 
-		if (this.dbConnect != null) {
-			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+		if (dbConnect != null) {
+			final PreparedStatement preStm = dbConnect.prepareStatement(sql);
 			preStm.setString(1, dwzData.getCsvZPS());
 			preStm.setString(2, dwzData.getCsvMgl_Nr());
 			preStm.setString(3, dwzData.getCsvStatus());
@@ -403,9 +390,9 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 			preStm.setString(14, dwzData.getCsvFIDE_Land());
 			// preStm.setInt(15, dwzData.getSpielerId());
 			preStm.addBatch();
-			this.dbConnect.setAutoCommit(false);
+			dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
-			this.dbConnect.setAutoCommit(true);
+			dbConnect.setAutoCommit(true);
 			preStm.close();
 		}
 

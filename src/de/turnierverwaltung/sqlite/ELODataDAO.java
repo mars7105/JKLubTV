@@ -21,7 +21,7 @@ public interface ELODataDAO {
 
 	public void insertELO(ELOData eloData) throws SQLException;
 
-	public boolean playerExist(int fideId);
+	public boolean playerExist(int fideId) throws SQLException;
 
 	public void updateELO(ELOData eloData) throws SQLException;
 }

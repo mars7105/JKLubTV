@@ -14,13 +14,13 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	private Connection dbConnect;
 
 	public SQLiteELODataDAO() {
-		this.dbConnect = null;
-		this.dbConnect = SQLiteDAOFactory.createConnection();
+		dbConnect = null;
+		dbConnect = SQLiteDAOFactory.createConnection();
 	}
 
 	@Override
 	public void createELOTable() throws SQLException {
-		String sql = "CREATE TABLE 'elo_data' (\n" + "  'Name'               varchar(57)  NOT NULL default '',\n"
+		final String sql = "CREATE TABLE 'elo_data' (\n" + "  'Name'               varchar(57)  NOT NULL default '',\n"
 				+ "  'Fed'                varchar(5)   NOT NULL default '',\n"
 				+ "  'Sex'                varchar(3)      NOT NULL default '',\n"
 				+ "  'Tit'                varchar(3)               default NULL,\n"
@@ -36,11 +36,11 @@ public class SQLiteELODataDAO implements ELODataDAO {
 				+ "  'ID_Number'          INTEGER PRIMARY KEY NOT NULL\n" + ");";
 
 		Statement stmt;
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
 			// create a database connection
 
-			stmt = this.dbConnect.createStatement();
+			stmt = dbConnect.createStatement();
 
 			stmt.setQueryTimeout(30); // set timeout to 30 sec.
 			stmt.executeUpdate(sql);
@@ -51,16 +51,16 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	}
 
 	@Override
-	public void deleteELO(int id) throws SQLException {
-		String sql = "delete from elo_data where idSpieler=?" + ";";
-		if (this.dbConnect != null) {
+	public void deleteELO(final int id) throws SQLException {
+		final String sql = "delete from elo_data where idSpieler=?" + ";";
+		if (dbConnect != null) {
 
-			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+			final PreparedStatement preStm = dbConnect.prepareStatement(sql);
 			preStm.setInt(1, id);
 			preStm.addBatch();
-			this.dbConnect.setAutoCommit(false);
+			dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
-			this.dbConnect.setAutoCommit(true);
+			dbConnect.setAutoCommit(true);
 			preStm.close();
 
 		}
@@ -68,15 +68,15 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	}
 
 	@Override
-	public void flush(ArrayList<ELOPlayer> eloDataArray) throws SQLException {
-		String sql = "Insert into elo_data (Name, Fed, Sex, Tit, WTit, OTit, FOA, Rating, Gms, K, Bday, Flag, idSpieler, ID_Number) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+	public void flush(final ArrayList<ELOPlayer> eloDataArray) throws SQLException {
+		final String sql = "Insert into elo_data (Name, Fed, Sex, Tit, WTit, OTit, FOA, Rating, Gms, K, Bday, Flag, idSpieler, ID_Number) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
-			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+			final PreparedStatement preStm = dbConnect.prepareStatement(sql);
 
-			for (ELOPlayer eloPlayer : eloDataArray) {
-				ELOData eloData = eloPlayer.getEloData();
+			for (final ELOPlayer eloPlayer : eloDataArray) {
+				final ELOData eloData = eloPlayer.getEloData();
 				preStm.setString(1, eloData.getName());
 				preStm.setString(2, eloData.getCountry());
 				preStm.setString(3, eloData.getSex());
@@ -94,24 +94,24 @@ public class SQLiteELODataDAO implements ELODataDAO {
 				preStm.addBatch();
 			}
 
-			this.dbConnect.setAutoCommit(false);
+			dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
-			this.dbConnect.setAutoCommit(true);
+			dbConnect.setAutoCommit(true);
 			preStm.close();
 		}
 
 	}
 
 	@Override
-	public ELOData getELOData(int id) throws SQLException {
-		String sql = "Select * from elo_data WHERE idSpieler=" + id + ";";
-		ELOData eloData = new ELOData();
+	public ELOData getELOData(final int id) throws SQLException {
+		final String sql = "Select * from elo_data WHERE idSpieler=" + id + ";";
+		final ELOData eloData = new ELOData();
 
 		Statement stmt;
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
-			stmt = this.dbConnect.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			stmt = dbConnect.createStatement();
+			final ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				eloData.setSpielerId(id);
 				eloData.setName(rs.getString("Name"));
@@ -137,15 +137,15 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	}
 
 	@Override
-	public ELOData getELODataByFideId(int id) throws SQLException {
-		String sql = "Select * from elo_data WHERE ID_Number=" + id + ";";
-		ELOData eloData = new ELOData();
+	public ELOData getELODataByFideId(final int id) throws SQLException {
+		final String sql = "Select * from elo_data WHERE ID_Number=" + id + ";";
+		final ELOData eloData = new ELOData();
 
 		Statement stmt;
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
-			stmt = this.dbConnect.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			stmt = dbConnect.createStatement();
+			final ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				eloData.setSpielerId(id);
 				eloData.setName(rs.getString("Name"));
@@ -171,23 +171,23 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	}
 
 	@Override
-	public ArrayList<ELOData> getELODataByName(String eingabe) throws SQLException {
-		String sql = "Select * from elo_data WHERE Name LIKE '%" + eingabe + "%' LIMIT 40;";
+	public ArrayList<ELOData> getELODataByName(final String eingabe) throws SQLException {
+		final String sql = "Select * from elo_data WHERE Name LIKE '%" + eingabe + "%' LIMIT 40;";
 
-		ArrayList<ELOData> eloDataArray = new ArrayList<ELOData>();
+		final ArrayList<ELOData> eloDataArray = new ArrayList<ELOData>();
 
 		Statement stmt;
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
-			stmt = this.dbConnect.createStatement();
-			ResultSet rs = stmt.executeQuery(sql);
+			stmt = dbConnect.createStatement();
+			final ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
-				ELOData eloData = new ELOData();
+				final ELOData eloData = new ELOData();
 				int sId = -1;
-				String spielerid = rs.getString("idSpieler");
+				final String spielerid = rs.getString("idSpieler");
 				try {
 					sId = Integer.parseInt(spielerid);
-				} catch (NumberFormatException e) {
+				} catch (final NumberFormatException e) {
 					sId = -1;
 				}
 				eloData.setSpielerId(sId);
@@ -214,14 +214,14 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	}
 
 	@Override
-	public void insertELO(ELOData eloData) throws SQLException {
+	public void insertELO(final ELOData eloData) throws SQLException {
 		String sql;
 
 		sql = "Insert into elo_data (Name, Fed, Sex, Tit, WTit, OTit, FOA, Rating, Gms, K, Bday, Flag, idSpieler, ID_Number) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
 
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
-			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+			final PreparedStatement preStm = dbConnect.prepareStatement(sql);
 			preStm.setString(1, eloData.getName());
 			preStm.setString(2, eloData.getCountry());
 			preStm.setString(3, eloData.getSex());
@@ -238,9 +238,9 @@ public class SQLiteELODataDAO implements ELODataDAO {
 			preStm.setInt(14, eloData.getFideid());
 
 			preStm.addBatch();
-			this.dbConnect.setAutoCommit(false);
+			dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
-			this.dbConnect.setAutoCommit(true);
+			dbConnect.setAutoCommit(true);
 			// ResultSet rs = preStm.getGeneratedKeys();
 
 			preStm.close();
@@ -249,24 +249,24 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	}
 
 	@Override
-	public boolean playerExist(int fideId) {
-		String sql = "Select idSpieler from elo_data where ID_Number LIKE '" + fideId + ";";
+	public boolean playerExist(final int fideId) throws SQLException {
+		final String sql = "Select idSpieler from elo_data where ID_Number LIKE '" + fideId + ";";
 
 		int id = -1;
 		Statement stmt;
-		if (this.dbConnect != null) {
+		if (dbConnect != null) {
 
 			try {
-				stmt = this.dbConnect.createStatement();
-				ResultSet rs = stmt.executeQuery(sql);
+				stmt = dbConnect.createStatement();
+				final ResultSet rs = stmt.executeQuery(sql);
 				while (rs.next()) {
 					id = rs.getInt("idSpieler");
 
 				}
 				stmt.close();
-			} catch (SQLException e) {
+			} catch (final SQLException e) {
 				id = -1;
-				
+
 			}
 		}
 		Boolean returnStatement = false;
@@ -278,12 +278,12 @@ public class SQLiteELODataDAO implements ELODataDAO {
 	}
 
 	@Override
-	public void updateELO(ELOData eloData) throws SQLException {
-		String sql = "update elo_data set Name = ?, Fed = ?, Sex = ?, Tit = ?, WTit = ?, OTit = ?, FOA = ?, Rating = ?, Gms = ?, K = ?, Bday = ?, Flag = ?, ID_Number = ? where idSpieler = "
+	public void updateELO(final ELOData eloData) throws SQLException {
+		final String sql = "update elo_data set Name = ?, Fed = ?, Sex = ?, Tit = ?, WTit = ?, OTit = ?, FOA = ?, Rating = ?, Gms = ?, K = ?, Bday = ?, Flag = ?, ID_Number = ? where idSpieler = "
 				+ eloData.getSpielerId() + ";";
 
-		if (this.dbConnect != null) {
-			PreparedStatement preStm = this.dbConnect.prepareStatement(sql);
+		if (dbConnect != null) {
+			final PreparedStatement preStm = dbConnect.prepareStatement(sql);
 			preStm.setString(1, eloData.getName());
 			preStm.setString(2, eloData.getCountry());
 			preStm.setString(3, eloData.getSex());
@@ -298,9 +298,9 @@ public class SQLiteELODataDAO implements ELODataDAO {
 			preStm.setString(12, eloData.getFlag());
 			preStm.setInt(13, eloData.getFideid());
 			preStm.addBatch();
-			this.dbConnect.setAutoCommit(false);
+			dbConnect.setAutoCommit(false);
 			preStm.executeBatch();
-			this.dbConnect.setAutoCommit(true);
+			dbConnect.setAutoCommit(true);
 			preStm.close();
 
 		}
