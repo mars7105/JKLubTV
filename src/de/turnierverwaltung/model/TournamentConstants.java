@@ -17,7 +17,7 @@ package de.turnierverwaltung.model;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.Toolkit;
 
-import de.turnierverwaltung.mysql.DAOFactory;
+import de.turnierverwaltung.sqlite.DAOFactory;
 
 /**
  * 

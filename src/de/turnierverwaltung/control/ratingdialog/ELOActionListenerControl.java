@@ -1,0 +1,169 @@
+package de.turnierverwaltung.control.ratingdialog;
+
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.ListIterator;
+
+import javax.swing.ImageIcon;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+
+import de.turnierverwaltung.control.ExceptionHandler;
+import de.turnierverwaltung.control.MainControl;
+import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
+import de.turnierverwaltung.model.Player;
+import de.turnierverwaltung.model.rating.DWZData;
+import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
+
+/**
+ *
+ * @author mars
+ *
+ */
+public class ELOActionListenerControl implements ListSelectionListener, ActionListener {
+	private final MainControl mainControl;
+	private final ELOControl eloDialogControl;
+	private final ImageIcon insertIcon3 = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user.png")));
+	private final ImageIcon insertIcon1 = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user-offline.png")));
+	private final ImageIcon insertIcon2 = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-ok-3.png")));
+	private final ArrayList<Integer> indices;
+
+	/**
+	 *
+	 * @param mainControl
+	 * @param dewisDialogControl
+	 */
+	public ELOActionListenerControl(final MainControl mainControl, final ELOControl dewisDialogControl) {
+		super();
+		this.mainControl = mainControl;
+		eloDialogControl = dewisDialogControl;
+		indices = new ArrayList<Integer>();
+	}
+
+	@Override
+	public void actionPerformed(final ActionEvent arg0) {
+
+		if (arg0.getSource().equals(eloDialogControl.getDialog().getPlayerSearchView().getCancelButton())) {
+			eloDialogControl.getDialog().closeWindow();
+		}
+		if (arg0.getSource().equals(eloDialogControl.getDialog().getPlayerSearchView().getOkButton())) {
+			try {
+				final ArrayList<Player> spieler = eloDialogControl.getSearchplayerlist();
+				if (spieler != null) {
+
+					final ListIterator<Integer> lit = indices.listIterator();
+
+					while (lit.hasNext()) {
+						final int temp = lit.next();
+						final Player neuerSpieler = spieler.get(temp);
+						neuerSpieler.copyELODataToPlayer();
+						if (playerExist(neuerSpieler) == false) {
+							final SQLitePlayerDWZList spdwzlist = new SQLitePlayerDWZList();
+							final String pathToPlayersCSV = mainControl.getPropertiesControl().getPathToPlayersCSV();
+							final ArrayList<DWZData> dwzDataList = spdwzlist.getPlayersByFideId(pathToPlayersCSV,
+									neuerSpieler.getEloData().getFideid());
+							if (dwzDataList != null) {
+								if (dwzDataList.size() == 1) {
+									neuerSpieler.setDwzData(dwzDataList.get(0));
+								}
+							}
+							final SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+
+							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+							mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
+							eloDialogControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
+									.setIcon(insertIcon3);
+
+						}
+						eloDialogControl.getSpielerSearchPanelList().getList().updateUI();
+
+					}
+
+				}
+
+				mainControl.getPlayerListControl().updateSpielerListe();
+			} catch (final SQLException e) {
+				final ExceptionHandler eh = new ExceptionHandler(mainControl);
+				eh.fileSQLError(e.getMessage());
+			}
+		}
+
+	}
+
+	private boolean playerExist(final Player neuerSpieler) {
+		final SQLPlayerControl spielerTableControl = new SQLPlayerControl(mainControl);
+		Boolean playerExist = false;
+
+		try {
+			playerExist = spielerTableControl.playerFideExist(neuerSpieler.getEloData().getFideid());
+
+			if (playerExist == false) {
+				playerExist = spielerTableControl.playerFideExist(neuerSpieler.getDwzData().getCsvFIDE_ID());
+			}
+		} catch (final SQLException e) {
+			try {
+				playerExist = spielerTableControl.playerFideExist(neuerSpieler.getDwzData().getCsvFIDE_ID());
+			} catch (final SQLException e1) {
+				playerExist = false;
+			}
+		}
+		return playerExist;
+	}
+
+	@Override
+	public void valueChanged(final ListSelectionEvent e) {
+		if (e.getValueIsAdjusting() == false) {
+			final int index = eloDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex();
+			final ArrayList<Player> spieler = eloDialogControl.getSearchplayerlist();
+			if (index > -1) {
+
+				final Player neuerSpieler = spieler.get(index);
+				final Boolean savedPlayer = playerExist(neuerSpieler);
+				if (savedPlayer == false) {
+					final ListIterator<Integer> lit = indices.listIterator();
+					int counter = 0;
+					Boolean notfound = false;
+					int nf = 0;
+
+					while (lit.hasNext()) {
+						final int temp = lit.next();
+
+						if (temp == index) {
+
+							notfound = true;
+							nf = counter;
+							break;
+
+						}
+						counter++;
+					}
+					if (notfound == true) {
+						indices.remove(nf);
+
+						eloDialogControl.getSpielerSearchPanelList().getList().getSelectedValue().setIcon(insertIcon1);
+					} else {
+						indices.add(eloDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex());
+
+						eloDialogControl.getSpielerSearchPanelList().getList().getSelectedValue().setIcon(insertIcon2);
+					}
+					if (indices.size() > 0) {
+						eloDialogControl.getDialog().getPlayerSearchView().getOkButton().setEnabled(true);
+
+					} else {
+						eloDialogControl.getDialog().getPlayerSearchView().getOkButton().setEnabled(false);
+					}
+				}
+
+				eloDialogControl.getSpielerSearchPanelList().getList().clearSelection();
+			}
+
+		}
+	}
+
+}

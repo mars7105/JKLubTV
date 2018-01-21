@@ -27,45 +27,66 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
-import de.turnierverwaltung.model.CrossTable;
-import de.turnierverwaltung.model.CrossTableModel;
+import de.turnierverwaltung.control.navigation.ActionListenerFileMenuControl;
+import de.turnierverwaltung.control.navigation.NaviControl;
+import de.turnierverwaltung.control.playerlist.ActionListenerPlayerListControl;
+import de.turnierverwaltung.control.playerlist.PlayerListControl;
+import de.turnierverwaltung.control.settingsdialog.SettingsControl;
+import de.turnierverwaltung.control.sqlite.SQLGamesControl;
+import de.turnierverwaltung.control.sqlite.SQLGroupsControl;
+import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
+import de.turnierverwaltung.control.sqlite.SQLTournamentControl;
+import de.turnierverwaltung.control.sqlite.SQLTournament_has_PlayerControl;
+import de.turnierverwaltung.control.sqlite.SaveTournamentControl;
+import de.turnierverwaltung.control.tournamentlist.ActionListenerTournamentEditControl;
+import de.turnierverwaltung.control.tournamentlist.ActionListenerTournamentItemsControl;
+import de.turnierverwaltung.control.tournamentlist.ActionListenerTournamentListControl;
+import de.turnierverwaltung.control.tournamentlist.NewTournamentControl;
+import de.turnierverwaltung.control.tournamentlist.NewTournamentGroupsControl;
+import de.turnierverwaltung.control.tournamentlist.NewTournamentPlayerInputControl;
+import de.turnierverwaltung.control.tournamenttable.ActionListenerPairingsMenuControl;
+import de.turnierverwaltung.control.tournamenttable.CrossTableControl;
+import de.turnierverwaltung.control.tournamenttable.MeetingTableControl;
+import de.turnierverwaltung.control.tournamenttable.PairingsControl;
 import de.turnierverwaltung.model.Game;
-import de.turnierverwaltung.model.MeetingTable;
-import de.turnierverwaltung.model.MeetingTableModel;
-import de.turnierverwaltung.model.PairingsTables;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
-import de.turnierverwaltung.mysql.SQLiteDAOFactory;
-import de.turnierverwaltung.view.ButtonTabComponent;
-import de.turnierverwaltung.view.CrossTableView;
-//import de.turnierverwaltung.view.FirstStartWizard;
-//import de.turnierverwaltung.view.MainView;
-import de.turnierverwaltung.view.MeetingTableView;
-import de.turnierverwaltung.view.NaviView;
-import de.turnierverwaltung.view.NewTournamentGroupsView;
-import de.turnierverwaltung.view.NewTournamentPlayerInputView;
-import de.turnierverwaltung.view.NewTournamentView;
-import de.turnierverwaltung.view.PairingsView;
+import de.turnierverwaltung.model.table.CrossTable;
+import de.turnierverwaltung.model.table.CrossTableModel;
+import de.turnierverwaltung.model.table.MeetingTable;
+import de.turnierverwaltung.model.table.MeetingTableModel;
+import de.turnierverwaltung.model.table.PairingsTables;
+import de.turnierverwaltung.sqlite.SQLiteDAOFactory;
 import de.turnierverwaltung.view.StandardView;
 import de.turnierverwaltung.view.TabbedPaneView;
 import de.turnierverwaltung.view.TitleLabelView;
-import de.turnierverwaltung.view.TournamentListView;
+import de.turnierverwaltung.view.navigation.NaviView;
+import de.turnierverwaltung.view.tournamentlist.NewTournamentGroupsView;
+import de.turnierverwaltung.view.tournamentlist.NewTournamentPlayerInputView;
+import de.turnierverwaltung.view.tournamentlist.NewTournamentView;
+import de.turnierverwaltung.view.tournamentlist.TournamentListView;
+import de.turnierverwaltung.view.tournamenttable.ButtonTabComponent;
+import de.turnierverwaltung.view.tournamenttable.CrossTableView;
+import de.turnierverwaltung.view.tournamenttable.MeetingTableView;
+import de.turnierverwaltung.view.tournamenttable.PairingsView;
 
 /**
- * 
+ *
  * @author mars
  *
  */
 public class MainControl extends JFrame {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
 	private int windowWidth;
 	private int windowHeight;
 
@@ -348,7 +369,7 @@ public class MainControl extends JFrame {
 		newTournament = false;
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
-		this.hauptPanel = new JTabbedPane();
+		hauptPanel = new JTabbedPane();
 		standardView = new StandardView();
 		titleLabelView = new TitleLabelView("JKlubTV");
 
@@ -364,11 +385,11 @@ public class MainControl extends JFrame {
 		mainPanel.updateUI();
 		setEnabled(true);
 		setVisible(true);
-		this.setInfoController(new InfoControl(this));
+		setInfoController(new InfoControl(this));
 
-		this.settingsControl = new SettingsControl(this);
+		settingsControl = new SettingsControl(this);
 		SQLiteDAOFactory.setDB_PATH("");
-		this.setTitle(Messages.getString("MainControl.8"));
+		setTitle(Messages.getString("MainControl.8"));
 	}
 
 	private void makeProperties() {
@@ -376,56 +397,56 @@ public class MainControl extends JFrame {
 
 		if (propertiesControl.checkPathToDatabase() == true) {
 			// datenbankMenueView(true);
-			String path = propertiesControl.getPathToDatabase();
+			final String path = propertiesControl.getPathToDatabase();
 			SQLiteDAOFactory.setDB_PATH(path);
-			this.setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
+			setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
 					+ SQLiteDAOFactory.getDB_PATH());
 
-			if (this.getPlayerListControl() != null) {
+			if (getPlayerListControl() != null) {
 				// mainControl.getSpielerEditierenControl().makePanel();
 			} else {
-				this.setPlayerListControl(new PlayerListControl(this));
+				setPlayerListControl(new PlayerListControl(this));
 				try {
-					this.getPlayerListControl().updateSpielerListe();
+					getPlayerListControl().updateSpielerListe();
 					int cutForename = 20;
 					int cutSurname = 20;
 					try {
 						cutForename = Integer.parseInt(propertiesControl.getCutForename());
 						cutSurname = Integer.parseInt(propertiesControl.getCutSurname());
-					} catch (NumberFormatException e) {
+					} catch (final NumberFormatException e) {
 						cutForename = 20;
 						cutSurname = 20;
 					}
 					Player.cutFname = cutForename;
 					Player.cutSname = cutSurname;
-				} catch (SQLException e) {
-					ExceptionHandler eh = new ExceptionHandler(this);
+				} catch (final SQLException e) {
+					final ExceptionHandler eh = new ExceptionHandler(this);
 					eh.fileSQLError(e.getMessage());
 				}
 			}
-			this.setNewTournament(false);
+			setNewTournament(false);
 			// this.getNaviView().getTabellenPanel().setVisible(false);
-			if (this.getSqlTournamentControl() == null) {
-				this.setSqlTournamentControl(new SQLTournamentControl(this));
+			if (getSqlTournamentControl() == null) {
+				setSqlTournamentControl(new SQLTournamentControl(this));
 				// this.getTurnierTableControl().loadTurnierListe();
-				this.setActionListenerTournamentItemsControl(new ActionListenerTournamentItemsControl(this));
+				setActionListenerTournamentItemsControl(new ActionListenerTournamentItemsControl(this));
 				try {
-					this.getActionListenerTournamentItemsControl().loadTurnierListe();
-				} catch (SQLException e) {
-					ExceptionHandler eh = new ExceptionHandler(this);
+					getActionListenerTournamentItemsControl().loadTurnierListe();
+				} catch (final SQLException e) {
+					final ExceptionHandler eh = new ExceptionHandler(this);
 					eh.fileSQLError(e.getMessage());
 				}
 				naviView.setPathToDatabase(new JLabel(path));
 
 			} else {
-				this.resetApp();
-				this.setSqlTournamentControl(new SQLTournamentControl(this));
+				resetApp();
+				setSqlTournamentControl(new SQLTournamentControl(this));
 				// this.getTurnierTableControl().loadTurnierListe();
-				this.setActionListenerTournamentItemsControl(new ActionListenerTournamentItemsControl(this));
+				setActionListenerTournamentItemsControl(new ActionListenerTournamentItemsControl(this));
 				try {
-					this.getActionListenerTournamentItemsControl().loadTurnierListe();
-				} catch (SQLException e) {
-					ExceptionHandler eh = new ExceptionHandler(this);
+					getActionListenerTournamentItemsControl().loadTurnierListe();
+				} catch (final SQLException e) {
+					final ExceptionHandler eh = new ExceptionHandler(this);
 					eh.fileSQLError(e.getMessage());
 				}
 				naviView.setPathToDatabase(new JLabel(path));
@@ -439,14 +460,14 @@ public class MainControl extends JFrame {
 				}
 			}
 		} else {
-			this.setTitle(Messages.getString("MainControl.10"));
-//			FirstStartWizard fsw = new FirstStartWizard();
+			setTitle(Messages.getString("MainControl.10"));
+			// FirstStartWizard fsw = new FirstStartWizard();
 
 		}
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void resetApp() {
 		windowWidth = 0;
@@ -485,212 +506,215 @@ public class MainControl extends JFrame {
 		actionListenerFileMenuControl = null;
 		actionListenerTournamentEditControl = null;
 		setNewTournament(false);
-		System.gc();
+		// System.gc();
 		init();
 
 	}
 
-	public void setActionListenerFileMenuControl(ActionListenerFileMenuControl actionListenerFileMenuControl) {
+	public void setActionListenerFileMenuControl(final ActionListenerFileMenuControl actionListenerFileMenuControl) {
 		this.actionListenerFileMenuControl = actionListenerFileMenuControl;
 	}
 
 	public void setActionListenerPairingsMenuControl(
-			ActionListenerPairingsMenuControl actionListenerPairingsMenuControl) {
+			final ActionListenerPairingsMenuControl actionListenerPairingsMenuControl) {
 		this.actionListenerPairingsMenuControl = actionListenerPairingsMenuControl;
 	}
 
-	public void setActionListenerPlayerListControl(ActionListenerPlayerListControl actionListenerPlayerListControl) {
+	public void setActionListenerPlayerListControl(
+			final ActionListenerPlayerListControl actionListenerPlayerListControl) {
 		this.actionListenerPlayerListControl = actionListenerPlayerListControl;
 	}
 
 	public void setActionListenerTournamentEditControl(
-			ActionListenerTournamentEditControl actionListenerTournamentEditControl) {
+			final ActionListenerTournamentEditControl actionListenerTournamentEditControl) {
 		this.actionListenerTournamentEditControl = actionListenerTournamentEditControl;
 	}
 
 	public void setActionListenerTournamentItemsControl(
-			ActionListenerTournamentItemsControl actionListenerTournamentItemsControl) {
+			final ActionListenerTournamentItemsControl actionListenerTournamentItemsControl) {
 		this.actionListenerTournamentItemsControl = actionListenerTournamentItemsControl;
 	}
 
 	public void setActionListenerTournamentListControl(
-			ActionListenerTournamentListControl actionListenerTournamentListControl) {
+			final ActionListenerTournamentListControl actionListenerTournamentListControl) {
 		this.actionListenerTournamentListControl = actionListenerTournamentListControl;
 	}
 
-	public void setButtonTabComponent(ButtonTabComponent buttonTabComponent) {
+	public void setButtonTabComponent(final ButtonTabComponent buttonTabComponent) {
 		this.buttonTabComponent = buttonTabComponent;
 	}
 
-	public void setChangedGames(ArrayList<Game> changedGames) {
+	public void setChangedGames(final ArrayList<Game> changedGames) {
 		this.changedGames = changedGames;
 	}
 
-	public void setCrossTable(CrossTable[] crossTable) {
+	public void setCrossTable(final CrossTable[] crossTable) {
 		this.crossTable = crossTable;
 	}
 
-	public void setCrossTableControl(CrossTableControl crossTableControl) {
+	public void setCrossTableControl(final CrossTableControl crossTableControl) {
 		this.crossTableControl = crossTableControl;
 	}
 
-	public void setCrossTableModel(CrossTableModel[] crossTableModel) {
+	public void setCrossTableModel(final CrossTableModel[] crossTableModel) {
 		this.crossTableModel = crossTableModel;
 	}
 
-	public void setCrossTableView(CrossTableView[] crossTableView) {
+	public void setCrossTableView(final CrossTableView[] crossTableView) {
 		this.crossTableView = crossTableView;
 	}
 
-	public void setHauptPanel(JTabbedPane hauptPanel) {
+	public void setHauptPanel(final JTabbedPane hauptPanel) {
 		this.hauptPanel = hauptPanel;
 	}
 
-	public void setInfoController(InfoControl infoController) {
+	public void setInfoController(final InfoControl infoController) {
 		this.infoController = infoController;
 	}
 
-	public void setLanguagePropertiesControl(LanguagePropertiesControl languagePropertiesControl) {
+	public void setLanguagePropertiesControl(final LanguagePropertiesControl languagePropertiesControl) {
 		this.languagePropertiesControl = languagePropertiesControl;
 	}
 
-	public void setMainPanel(JPanel mainPanel) {
+	public void setMainPanel(final JPanel mainPanel) {
 		this.mainPanel = mainPanel;
 	}
 
-	public void setMeetingTable(MeetingTable[] meetingTable) {
+	public void setMeetingTable(final MeetingTable[] meetingTable) {
 		this.meetingTable = meetingTable;
 	}
 
-	public void setMeetingTableControl(MeetingTableControl meetingTableControl) {
+	public void setMeetingTableControl(final MeetingTableControl meetingTableControl) {
 		this.meetingTableControl = meetingTableControl;
 	}
 
-	public void setMeetingTableModel(MeetingTableModel[] meetingTableModel) {
+	public void setMeetingTableModel(final MeetingTableModel[] meetingTableModel) {
 		this.meetingTableModel = meetingTableModel;
 	}
 
-	public void setMeetingTableView(MeetingTableView[] meetingTableView) {
+	public void setMeetingTableView(final MeetingTableView[] meetingTableView) {
 		this.meetingTableView = meetingTableView;
 	}
 
-	public void setNaviController(NaviControl naviController) {
+	public void setNaviController(final NaviControl naviController) {
 		this.naviController = naviController;
 	}
 
-	public void setNaviView(NaviView naviView) {
+	public void setNaviView(final NaviView naviView) {
 		this.naviView = naviView;
 	}
 
-	public void setNewTournament(Boolean neuesTurnier) {
-		this.newTournament = neuesTurnier;
+	public void setNewTournament(final Boolean neuesTurnier) {
+		newTournament = neuesTurnier;
 	}
 
-	public void setNewTournamentControl(NewTournamentControl newTournamentControl) {
+	public void setNewTournamentControl(final NewTournamentControl newTournamentControl) {
 		this.newTournamentControl = newTournamentControl;
 	}
 
-	public void setNewTournamentGroupsControl(NewTournamentGroupsControl newTournamentGroupsControl) {
+	public void setNewTournamentGroupsControl(final NewTournamentGroupsControl newTournamentGroupsControl) {
 		this.newTournamentGroupsControl = newTournamentGroupsControl;
 	}
 
-	public void setNewTournamentGroupsView(NewTournamentGroupsView newTournamentGroupsView) {
+	public void setNewTournamentGroupsView(final NewTournamentGroupsView newTournamentGroupsView) {
 		this.newTournamentGroupsView = newTournamentGroupsView;
 	}
 
-	public void setNewTournamentPlayerInputControl(NewTournamentPlayerInputControl newTournamentPlayerInputControl) {
+	public void setNewTournamentPlayerInputControl(
+			final NewTournamentPlayerInputControl newTournamentPlayerInputControl) {
 		this.newTournamentPlayerInputControl = newTournamentPlayerInputControl;
 	}
 
-	public void setNewTournamentPlayerInputView(NewTournamentPlayerInputView[] newTournamentPlayerInputView) {
+	public void setNewTournamentPlayerInputView(final NewTournamentPlayerInputView[] newTournamentPlayerInputView) {
 		this.newTournamentPlayerInputView = newTournamentPlayerInputView;
 	}
 
-	public void setNewTournamentView(NewTournamentView newTournamentView) {
+	public void setNewTournamentView(final NewTournamentView newTournamentView) {
 		this.newTournamentView = newTournamentView;
 	}
 
-	public void setPairingsControl(PairingsControl pairingsControl) {
+	public void setPairingsControl(final PairingsControl pairingsControl) {
 		this.pairingsControl = pairingsControl;
 	}
 
-	public void setPairingsTables(PairingsTables pairingsTables) {
+	public void setPairingsTables(final PairingsTables pairingsTables) {
 		this.pairingsTables = pairingsTables;
 	}
 
-	public void setPairingsView(PairingsView[] pairingsView) {
+	public void setPairingsView(final PairingsView[] pairingsView) {
 		this.pairingsView = pairingsView;
 	}
 
-	public void setPlayerListControl(PlayerListControl playerListControl) {
+	public void setPlayerListControl(final PlayerListControl playerListControl) {
 		this.playerListControl = playerListControl;
 	}
 
-	public void setPropertiesControl(PropertiesControl propertiesControl) {
+	public void setPropertiesControl(final PropertiesControl propertiesControl) {
 		this.propertiesControl = propertiesControl;
 	}
 
-	public void setSaveTournamentControl(SaveTournamentControl saveTournamentControl) {
+	public void setSaveTournamentControl(final SaveTournamentControl saveTournamentControl) {
 		this.saveTournamentControl = saveTournamentControl;
 	}
 
-	public void setSettingsControl(SettingsControl settingsControl) {
+	public void setSettingsControl(final SettingsControl settingsControl) {
 		this.settingsControl = settingsControl;
 	}
 
-	public void setSqlGamesControl(SQLGamesControl sqlGamesControl) {
+	public void setSqlGamesControl(final SQLGamesControl sqlGamesControl) {
 		this.sqlGamesControl = sqlGamesControl;
 	}
 
-	public void setSqlGroupsControl(SQLGroupsControl sqlGroupsControl) {
+	public void setSqlGroupsControl(final SQLGroupsControl sqlGroupsControl) {
 		this.sqlGroupsControl = sqlGroupsControl;
 	}
 
-	public void setSqlPlayerControl(SQLPlayerControl sqlPlayerControl) {
+	public void setSqlPlayerControl(final SQLPlayerControl sqlPlayerControl) {
 		this.sqlPlayerControl = sqlPlayerControl;
 	}
 
-	public void setSqlTournament_has_PlayerControl(SQLTournament_has_PlayerControl sqlTournament_has_PlayerControl) {
+	public void setSqlTournament_has_PlayerControl(
+			final SQLTournament_has_PlayerControl sqlTournament_has_PlayerControl) {
 		this.sqlTournament_has_PlayerControl = sqlTournament_has_PlayerControl;
 	}
 
-	public void setSqlTournamentControl(SQLTournamentControl sqlTournamentControl) {
+	public void setSqlTournamentControl(final SQLTournamentControl sqlTournamentControl) {
 		this.sqlTournamentControl = sqlTournamentControl;
 	}
 
-	public void setStandardView(StandardView standardView) {
+	public void setStandardView(final StandardView standardView) {
 		this.standardView = standardView;
 	}
 
-	public void setTabbedPaneView(TabbedPaneView tabbedPaneView) {
+	public void setTabbedPaneView(final TabbedPaneView tabbedPaneView) {
 		this.tabbedPaneView = tabbedPaneView;
 	}
 
-	public void setTabbedPaneViewArray(TabbedPaneView[] tabbedPaneViewArray) {
+	public void setTabbedPaneViewArray(final TabbedPaneView[] tabbedPaneViewArray) {
 		this.tabbedPaneViewArray = tabbedPaneViewArray;
 	}
 
-	public void setTabbedPaneViewControl(TabbedPaneViewControl tabbedPaneViewControl) {
+	public void setTabbedPaneViewControl(final TabbedPaneViewControl tabbedPaneViewControl) {
 		this.tabbedPaneViewControl = tabbedPaneViewControl;
 	}
 
-	public void setTitleLabelView(TitleLabelView titleLabelView) {
+	public void setTitleLabelView(final TitleLabelView titleLabelView) {
 		this.titleLabelView = titleLabelView;
 	}
 
-	public void setTournament(Tournament tournament) {
+	public void setTournament(final Tournament tournament) {
 		this.tournament = tournament;
 	}
 
-	public void setTournamentListView(TournamentListView tournamentListView) {
+	public void setTournamentListView(final TournamentListView tournamentListView) {
 		this.tournamentListView = tournamentListView;
 	}
 
-	public void setWindowHeight(int windowHeight) {
+	public void setWindowHeight(final int windowHeight) {
 		this.windowHeight = windowHeight;
 	}
 
-	public void setWindowWidth(int windowWidth) {
+	public void setWindowWidth(final int windowWidth) {
 		this.windowWidth = windowWidth;
 	}
 

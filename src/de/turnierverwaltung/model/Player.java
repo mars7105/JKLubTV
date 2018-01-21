@@ -1,5 +1,8 @@
 package de.turnierverwaltung.model;
 
+import de.turnierverwaltung.model.rating.DWZData;
+import de.turnierverwaltung.model.rating.ELOData;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //

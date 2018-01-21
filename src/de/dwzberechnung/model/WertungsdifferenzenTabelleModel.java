@@ -16,8 +16,8 @@ package de.dwzberechnung.model;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 public class WertungsdifferenzenTabelleModel {
-	public static int P = 0;
-	public static int D = 1;
+	public static final int P = 0;
+	public static final int D = 1;
 	private double[][] wertungsdifferenzenTabelle;
 
 	public WertungsdifferenzenTabelleModel() {
@@ -29,7 +29,7 @@ public class WertungsdifferenzenTabelleModel {
 		return wertungsdifferenzenTabelle;
 	}
 
-	public void setWertungsdifferenzenTabelle(double[][] wertungsdifferenzenTabelle) {
+	public void setWertungsdifferenzenTabelle(final double[][] wertungsdifferenzenTabelle) {
 		this.wertungsdifferenzenTabelle = wertungsdifferenzenTabelle;
 	}
 
