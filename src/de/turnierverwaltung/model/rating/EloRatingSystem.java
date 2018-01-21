@@ -1,37 +1,35 @@
 package de.turnierverwaltung.model.rating;
 
 /*
- * JOGRE (Java Online Gaming Real-time Engine) - API 
- * Copyright (C) 2004  Bob Marks (marksie531@yahoo.com) 
- * http://jogre.sourceforge.org 
- * 
- * This program is free software; you can redistribute it and/or 
- * modify it under the terms of the GNU General Public License 
- * as published by the Free Software Foundation; either version 2 
- * of the License, or (at your option) any later version. 
- * 
- * This program is distributed in the hope that it will be useful, 
- * but WITHOUT ANY WARRANTY; without even the implied warranty of 
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the 
- * GNU General Public License for more details. 
- * 
- * You should have received a copy of the GNU General Public License 
- * along with this program; if not, write to the Free Software 
- * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA. 
+ * JOGRE (Java Online Gaming Real-time Engine) - API
+ * Copyright (C) 2004  Bob Marks (marksie531@yahoo.com)
+ * http://jogre.sourceforge.org
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  */
-
-
 
 /**
  * JOGRE's implementation of the ELO rating system. The following is an example
- * of how to use the Elo Rating System. <code> 
- *   EloRatingSystem elo = new EloRatingSystem(); 
- *   int userRating = 1600; 
- *   int opponentRating = 1650;  
- *   int newUserRating = elo.getNewRating(userRating, opponentRating, WIN); 
- *   int newOpponentRating = elo.getNewRating(opponentRating, userRating, LOSS); 
+ * of how to use the Elo Rating System. <code>
+ *   EloRatingSystem elo = new EloRatingSystem();
+ *   int userRating = 1600;
+ *   int opponentRating = 1650;
+ *   int newUserRating = elo.getNewRating(userRating, opponentRating, WIN);
+ *   int newOpponentRating = elo.getNewRating(opponentRating, userRating, LOSS);
  * </code>
- * 
+ *
  * @author Garrett Lehman (gman)
  */
 public class EloRatingSystem {
@@ -65,17 +63,17 @@ public class EloRatingSystem {
 
 	/**
 	 * Constructor to the JOGRE ELO rating system.
-	 * 
+	 *
 	 * @param game
 	 *            Game to do the rating on as games may vary in their implementation
 	 *            of ELO.
 	 */
-	private EloRatingSystem(String game) {
+	private EloRatingSystem(final String game) {
 	}
 
 	/**
 	 * Return instance of an ELO rating system.
-	 * 
+	 *
 	 * @param game
 	 *            Game to key of.
 	 * @return ELO rating system for specified game.
@@ -100,7 +98,7 @@ public class EloRatingSystem {
 	/**
 	 * Convience overloaded version of getNewRating (int, int, double) which takes a
 	 * result type and
-	 * 
+	 *
 	 * @param rating
 	 * @param opponentRating
 	 * @param resultType
@@ -128,7 +126,7 @@ public class EloRatingSystem {
 	/**
 	 * Calculate the new rating based on the ELO standard formula. newRating =
 	 * oldRating + constant * (score - expectedScore)
-	 * 
+	 *
 	 * @param oldRating
 	 *            Old Rating
 	 * @param score
@@ -139,7 +137,8 @@ public class EloRatingSystem {
 	 *            Constant
 	 * @return the new rating of the player
 	 */
-	private int calculateNewRating(int oldRating, double score, double expectedScore, double kFactor) {
+	private int calculateNewRating(final int oldRating, final double score, final double expectedScore,
+			final double kFactor) {
 		return oldRating + (int) (kFactor * (score - expectedScore));
 	}
 
@@ -148,14 +147,14 @@ public class EloRatingSystem {
 	 * competing, then opponentRating will be the average of all other opponent's
 	 * ratings. If there is two teams against each other, rating and opponentRating
 	 * will be the average of those players.
-	 * 
+	 *
 	 * @param rating
 	 *            Rating
 	 * @param opponentRating
 	 *            Opponent(s) rating
 	 * @return the expected score
 	 */
-	private double getExpectedScore(int rating, int opponentRating) {
+	private double getExpectedScore(final int rating, final int opponentRating) {
 		return 1.0 / (1.0 + Math.pow(10.0, ((opponentRating - rating) / 400.0)));
 	}
 
@@ -164,19 +163,21 @@ public class EloRatingSystem {
 	 * different games. The higher the constant the faster the rating will grow.
 	 * That is why for this standard chess method, the constant is higher for weaker
 	 * players and lower for stronger players.
-	 * 
+	 *
 	 * @param rating
 	 *            Rating
 	 * @return Constant
 	 */
-	private double getKFactor(int rating, boolean isNewbie) {
+	private double getKFactor(final int rating, final boolean isNewbie) {
 
 		if (isNewbie) {
 			return ELO_K_FACTOR_NEWBIE;
 
-		} else if (rating < 2400) {
+		}
+		if (rating < 2400) {
 			return ELO_K_FACTOR_DOWN2400;
-		} else if (rating >= 2400) {
+		}
+		if (rating >= 2400) {
 			return ELO_K_FACTOR_UP2400;
 		}
 		return DEFAULT_ELO_K_FACTOR;
@@ -184,7 +185,7 @@ public class EloRatingSystem {
 
 	/**
 	 * Get new rating.
-	 * 
+	 *
 	 * @param rating
 	 *            Rating of either the current player or the average of the current
 	 *            team.
@@ -201,10 +202,10 @@ public class EloRatingSystem {
 	 *            with a total of at least 30 games. true if <=30, false if > 30
 	 * @return the new rating
 	 */
-	public int getNewRating(int rating, int opponentRating, double score, boolean isNewbie) {
-		double kFactor = getKFactor(rating, isNewbie);
-		double expectedScore = getExpectedScore(rating, opponentRating);
-		int newRating = calculateNewRating(rating, score, expectedScore, kFactor);
+	public int getNewRating(final int rating, final int opponentRating, final double score, final boolean isNewbie) {
+		final double kFactor = getKFactor(rating, isNewbie);
+		final double expectedScore = getExpectedScore(rating, opponentRating);
+		final int newRating = calculateNewRating(rating, score, expectedScore, kFactor);
 
 		return newRating;
 	}

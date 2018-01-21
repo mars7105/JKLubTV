@@ -54,7 +54,7 @@ import de.turnierverwaltung.view.tournamenttable.ButtonTabComponent;
 
 public class NewTournamentControl implements ActionListener {
 
-	private static int pruefeObZahlKleinerEinsIst(int zahl) throws ZahlKleinerAlsN, ZahlGroesserAlsN {
+	private static int pruefeObZahlKleinerEinsIst(final int zahl) throws ZahlKleinerAlsN, ZahlGroesserAlsN {
 		if (zahl <= 0) {
 			throw new ZahlKleinerAlsN();
 		}
@@ -63,23 +63,24 @@ public class NewTournamentControl implements ActionListener {
 		}
 		return zahl;
 	}
-	private int selectIndex;
-	private MainControl mainControl;
-	private NewTournamentView turnierView;
+
+	private final int selectIndex;
+	private final MainControl mainControl;
+	private final NewTournamentView turnierView;
 	private JButton turnierOkButton;
-	private JTabbedPane hauptPanel;
+	private final JTabbedPane hauptPanel;
 	private String turnierName;
 	private String startDatum;
 	private String endDatum;
 	private int gruppenAnzahl;
 
-	private ImageIcon turnierIcon = new ImageIcon(
+	private final ImageIcon turnierIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png"))); //$NON-NLS-1$
 	private Tournament turnier;
 
-	private ButtonTabComponent buttonTabComponent;
+	private final ButtonTabComponent buttonTabComponent;
 
-	public NewTournamentControl(MainControl mainControl) {
+	public NewTournamentControl(final MainControl mainControl) {
 		this.mainControl = mainControl;
 		this.mainControl.setNewTournamentGroupsControl(null);
 		// this.mainControl.setSpielerAnzahlControl(null);
@@ -88,8 +89,8 @@ public class NewTournamentControl implements ActionListener {
 		this.mainControl.setCrossTableControl(null);
 		hauptPanel = this.mainControl.getHauptPanel();
 		this.mainControl.setNewTournamentView(new NewTournamentView());
-		this.turnierView = this.mainControl.getNewTournamentView();
-		this.turnierView.setVisible(true);
+		turnierView = this.mainControl.getNewTournamentView();
+		turnierView.setVisible(true);
 		turnierOkButton = this.mainControl.getNewTournamentView().getOkButton();
 		turnierOkButton.addActionListener(this);
 		this.mainControl.setNewTournament(true);
@@ -102,30 +103,30 @@ public class NewTournamentControl implements ActionListener {
 
 		}
 
-		hauptPanel.addTab(Messages.getString("TurnierControl.1"), turnierIcon, this.turnierView); //$NON-NLS-1$ \
+		hauptPanel.addTab(Messages.getString("TurnierControl.1"), turnierIcon, turnierView); //$NON-NLS-1$ \
 		hauptPanel.setTabComponentAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, buttonTabComponent);
 		selectIndex = hauptPanel.getTabCount() - 1;
 		hauptPanel.setSelectedIndex(selectIndex);
 
-		Boolean onlyTables = this.mainControl.getPropertiesControl().getOnlyTables();
-		Boolean noDWZCalc = this.mainControl.getPropertiesControl().getNoDWZ();
+		final Boolean onlyTables = this.mainControl.getPropertiesControl().getOnlyTables();
+		final Boolean noDWZCalc = this.mainControl.getPropertiesControl().getNoDWZ();
 
-		Boolean noFolgeDWZCalc = mainControl.getPropertiesControl().getNoFolgeDWZ();
-		Boolean noELOCalc = this.mainControl.getPropertiesControl().getNoELO();
+		final Boolean noFolgeDWZCalc = mainControl.getPropertiesControl().getNoFolgeDWZ();
+		final Boolean noELOCalc = this.mainControl.getPropertiesControl().getNoELO();
 
-		Boolean noFolgeELOCalc = mainControl.getPropertiesControl().getNoFolgeELO();
-		turnier = new Tournament(onlyTables, noDWZCalc, noFolgeDWZCalc,noELOCalc,noFolgeELOCalc);
+		final Boolean noFolgeELOCalc = mainControl.getPropertiesControl().getNoFolgeELO();
+		turnier = new Tournament(onlyTables, noDWZCalc, noFolgeDWZCalc, noELOCalc, noFolgeELOCalc);
 		this.mainControl.setTournament(turnier);
 		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
 		this.mainControl.getNaviView().getPairingsPanel().setVisible(false);
 		this.mainControl.getActionListenerPairingsMenuControl().setPairingIsActive(false);
-		this.turnierView.getTurnierNameTextField().grabFocus();
+		turnierView.getTurnierNameTextField().grabFocus();
 
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource() .equals( turnierOkButton)) {
+	public void actionPerformed(final ActionEvent arg0) {
+		if (arg0.getSource().equals(turnierOkButton)) {
 			turnierOkButton();
 
 		}
@@ -162,31 +163,31 @@ public class NewTournamentControl implements ActionListener {
 		turnier.setStartDatum(startDatum);
 		turnier.setEndDatum(endDatum);
 		turnier.setAnzahlGruppen(gruppenAnzahl);
-		this.mainControl.setTournament(turnier);
+		mainControl.setTournament(turnier);
 		hauptPanel.setTitleAt(selectIndex, turnier.getTurnierName());
 	}
 
-	public void setEndDatum(String endDatum) {
+	public void setEndDatum(final String endDatum) {
 		this.endDatum = endDatum;
 	}
 
-	public void setGruppenAnzahl(int gruppenAnzahl) {
+	public void setGruppenAnzahl(final int gruppenAnzahl) {
 		this.gruppenAnzahl = gruppenAnzahl;
 	}
 
-	public void setStartDatum(String startDatum) {
+	public void setStartDatum(final String startDatum) {
 		this.startDatum = startDatum;
 	}
 
-	public void setTurnier(Tournament turnier) {
+	public void setTurnier(final Tournament turnier) {
 		this.turnier = turnier;
 	}
 
-	public void setTurnierName(String turnierName) {
+	public void setTurnierName(final String turnierName) {
 		this.turnierName = turnierName;
 	}
 
-	public void setTurnierOkButton(JButton turnierOkButton) {
+	public void setTurnierOkButton(final JButton turnierOkButton) {
 		this.turnierOkButton = turnierOkButton;
 	}
 
@@ -194,36 +195,37 @@ public class NewTournamentControl implements ActionListener {
 		gruppenAnzahl = 0;
 		turnierName = turnierView.getTurnierNameTextField().getText();
 
-		DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+		final DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
 
 		try {
 			startDatum = formatter.format(turnierView.getStartDatumTextField());
 			endDatum = formatter.format(turnierView.getEndDatumTextField());
-		} catch (NullPointerException e2) {
+		} catch (final NullPointerException e2) {
 			startDatum = "";
 			endDatum = "";
 		}
 
 		try {
 
-			gruppenAnzahl = pruefeObZahlKleinerEinsIst(new Integer(turnierView.getGruppenAnzahlTextField().getValue()));
+			gruppenAnzahl = pruefeObZahlKleinerEinsIst(
+					Integer.parseInt(turnierView.getGruppenAnzahlTextField().getValue()));
 
 			if (turnierName.length() > 0 && startDatum.length() > 0 && endDatum.length() > 0 && gruppenAnzahl > 0) {
 				makeTurnier();
 
-				this.mainControl.setNewTournamentGroupsControl(new NewTournamentGroupsControl(this.mainControl));
+				mainControl.setNewTournamentGroupsControl(new NewTournamentGroupsControl(mainControl));
 
 			}
 
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("TurnierControl.2")); //$NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().resetValue(); // $NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().grabFocus();
-		} catch (ZahlKleinerAlsN e) {
+		} catch (final ZahlKleinerAlsN e) {
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("TurnierControl.4")); //$NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().resetValue(); // $NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().grabFocus();
-		} catch (ZahlGroesserAlsN e) {
+		} catch (final ZahlGroesserAlsN e) {
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("TurnierControl.6")); //$NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().resetValue(); // $NON-NLS-1$
 			turnierView.getGruppenAnzahlTextField().grabFocus();
