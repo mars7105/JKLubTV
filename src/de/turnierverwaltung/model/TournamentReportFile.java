@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class TournamentReportFile {
 	private ArrayList<String> reportString;
-	private Group group;
-	private Tournament tournament;
+	private final Group group;
+	private final Tournament tournament;
 
-	public TournamentReportFile(Tournament tournament, Group group) {
+	public TournamentReportFile(final Tournament tournament, final Group group) {
 		this.tournament = tournament;
 		this.group = group;
 		reportString = new ArrayList<String>();
@@ -31,7 +31,7 @@ public class TournamentReportFile {
 		return reportString;
 	}
 
-	public void setReportString(ArrayList<String> reportString) {
+	public void setReportString(final ArrayList<String> reportString) {
 		this.reportString = reportString;
 	}
 
