@@ -167,7 +167,7 @@ public class PairingsView extends JPanel {
 		tabbedPane = new JTabbedPane();
 		final FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
 		flowLayout.setVgap(1);
-		int index = 1;
+		// int index = 1;
 		for (int r = 0; r < rundenanzahl + 0; r++) {
 			final JPanel panel = new JPanel();
 			panel.setLayout(new BorderLayout());
@@ -178,66 +178,66 @@ public class PairingsView extends JPanel {
 			// flowPane.setAlignmentY(Component.TOP_ALIGNMENT);
 
 			for (int i = 0; i < partienanzahl; i++) {
-				zeile[0] = terminMatrix[0][index];
-				zeile[1] = terminMatrix[1][index];
-				zeile[2] = terminMatrix[2][index];
-				zeile[3] = terminMatrix[3][index];
-				zeile[4] = terminMatrix[4][index];
+				zeile[0] = terminMatrix[0][i + 1];
+				zeile[1] = terminMatrix[1][i + 1];
+				zeile[2] = terminMatrix[2][i + 1];
+				zeile[3] = terminMatrix[3][i + 1];
+				zeile[4] = terminMatrix[4][i + 1];
 				downPane = new JPanel();
 
 				downPane.setLayout(flowLayout);
 				downPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				// downPane.setAlignmentY(Component.TOP_ALIGNMENT);
-				if (!zeile[0].equals(Messages.getString("RundenEingabeFormularView.7"))) { //$NON-NLS-1$
+				// if (!zeile[0].equals(Messages.getString("RundenEingabeFormularView.7"))) {
+				// //$NON-NLS-1$
 
-					final DateChooserPanel datePanel = new DateChooserPanel();
-					datePanel.setLocale(Locale.getDefault());
-					// datePanel.setDateFormatString(zeile[4]);
-					// DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy",
-					// Locale.getDefault());
-					final EventDate eventDate = new EventDate(zeile[4]);
-					// Date d = eventDate.getDate();
-					if (Locale.getDefault().equals(Locale.US)) {
-						datePanel.setDateFormatString(eventDate.getEnglishFormat());
-					}
-					if (Locale.getDefault().equals(Locale.GERMANY)) {
-						datePanel.setDateFormatString(eventDate.getGermanFormat());
-					}
-					// datePanel.setDefaultLocale(Locale.getDefault());
-					datePanel.setDate(eventDate.getDate());
-
-					// datePanel.setForeground(Color.WHITE);
-					datum[anzahlElemente] = datePanel;
-					// JFormattedTextField textField = datum[anzahlElemente].getComponent(n)
-					// Color preserveBackgroundColor = Color.gray;
-					// textField.setFont(new Font("Some-Font-Name", Font.BOLD, 12));
-					// textField.setBackground(preserveBackgroundColor );
-					downPane.add(new JLabel(Messages.getString("RundenEingabeFormularView.8"))); //$NON-NLS-1$
-					downPane.add(datum[anzahlElemente]);
-					downPane.add(new JLabel(" ")); //$NON-NLS-1$
-					changeColor[anzahlElemente] = new JButton(Messages.getString("RundenEingabeFormularView.10")); //$NON-NLS-1$
-					downPane.add(changeColor[anzahlElemente]);
-					rundenNummer[anzahlElemente] = new JComboBox<String>();
-					for (int x = 1; x <= spielerAnzahl - ungerade; x++) {
-						rundenNummer[anzahlElemente].addItem(Integer.toString(x));
-					}
-					rundenNummer[anzahlElemente].setSelectedIndex(Integer.parseInt(zeile[0]) - 1);
-					downPane.add(new JLabel(Messages.getString("RundenEingabeFormularView.11"))); //$NON-NLS-1$
-					downPane.add(rundenNummer[anzahlElemente]);
-					downPane.add(new JLabel(" = ")); //$NON-NLS-1$
-					weissSpieler[anzahlElemente] = new JLabel();
-					weissSpieler[anzahlElemente]
-							.setText(Messages.getString("RundenEingabeFormularView.13") + zeile[1] + " - "); //$NON-NLS-1$ //$NON-NLS-2$
-					schwarzSpieler[anzahlElemente] = new JLabel();
-					schwarzSpieler[anzahlElemente]
-							.setText(Messages.getString("RundenEingabeFormularView.15") + zeile[2] + " "); //$NON-NLS-1$ //$NON-NLS-2$
-					downPane.add(weissSpieler[anzahlElemente]);
-					downPane.add(schwarzSpieler[anzahlElemente]);
-
-					anzahlElemente++;
+				final DateChooserPanel datePanel = new DateChooserPanel();
+				datePanel.setLocale(Locale.getDefault());
+				// datePanel.setDateFormatString(zeile[4]);
+				// DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy",
+				// Locale.getDefault());
+				final EventDate eventDate = new EventDate(zeile[4]);
+				// Date d = eventDate.getDate();
+				if (Locale.getDefault().equals(Locale.US)) {
+					datePanel.setDateFormatString(eventDate.getEnglishFormat());
 				}
+				if (Locale.getDefault().equals(Locale.GERMANY)) {
+					datePanel.setDateFormatString(eventDate.getGermanFormat());
+				}
+				// datePanel.setDefaultLocale(Locale.getDefault());
+				datePanel.setDate(eventDate.getDate());
 
-				index++;
+				// datePanel.setForeground(Color.WHITE);
+				datum[anzahlElemente] = datePanel;
+				// JFormattedTextField textField = datum[anzahlElemente].getComponent(n)
+				// Color preserveBackgroundColor = Color.gray;
+				// textField.setFont(new Font("Some-Font-Name", Font.BOLD, 12));
+				// textField.setBackground(preserveBackgroundColor );
+				downPane.add(new JLabel(Messages.getString("RundenEingabeFormularView.8"))); //$NON-NLS-1$
+				downPane.add(datum[anzahlElemente]);
+				downPane.add(new JLabel(" ")); //$NON-NLS-1$
+				changeColor[anzahlElemente] = new JButton(Messages.getString("RundenEingabeFormularView.10")); //$NON-NLS-1$
+				downPane.add(changeColor[anzahlElemente]);
+				rundenNummer[anzahlElemente] = new JComboBox<String>();
+				for (int x = 1; x <= spielerAnzahl - ungerade; x++) {
+					rundenNummer[anzahlElemente].addItem(Integer.toString(x));
+				}
+				rundenNummer[anzahlElemente].setSelectedIndex(Integer.parseInt(zeile[0]) - 1);
+				downPane.add(new JLabel(Messages.getString("RundenEingabeFormularView.11"))); //$NON-NLS-1$
+				downPane.add(rundenNummer[anzahlElemente]);
+				downPane.add(new JLabel(" = ")); //$NON-NLS-1$
+				weissSpieler[anzahlElemente] = new JLabel();
+				weissSpieler[anzahlElemente]
+						.setText(Messages.getString("RundenEingabeFormularView.13") + zeile[1] + " - "); //$NON-NLS-1$ //$NON-NLS-2$
+				schwarzSpieler[anzahlElemente] = new JLabel();
+				schwarzSpieler[anzahlElemente]
+						.setText(Messages.getString("RundenEingabeFormularView.15") + zeile[2] + " "); //$NON-NLS-1$ //$NON-NLS-2$
+				downPane.add(weissSpieler[anzahlElemente]);
+				downPane.add(schwarzSpieler[anzahlElemente]);
+
+				anzahlElemente++;
+				// }
+
 				downPane.updateUI();
 
 				flowPane.add(downPane, BorderLayout.CENTER);
