@@ -22,8 +22,8 @@ import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
-import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.Turnier_has_SpielerDAO;
+import de.turnierverwaltung.sqlite.DAOFactory;
+import de.turnierverwaltung.sqlite.Turnier_has_SpielerDAO;
 
 public class SQLTournament_has_PlayerControl {
 	private MainControl mainControl;

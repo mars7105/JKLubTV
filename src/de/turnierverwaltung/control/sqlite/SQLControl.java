@@ -23,18 +23,18 @@ import de.turnierverwaltung.model.Info;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import de.turnierverwaltung.model.TournamentConstants;
-import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.DWZDataDAO;
-import de.turnierverwaltung.mysql.DWZVerbandDAO;
-import de.turnierverwaltung.mysql.DWZVereineDAO;
-import de.turnierverwaltung.mysql.DatumDAO;
-import de.turnierverwaltung.mysql.ELODataDAO;
-import de.turnierverwaltung.mysql.GruppenDAO;
-import de.turnierverwaltung.mysql.InfoDAO;
-import de.turnierverwaltung.mysql.PartienDAO;
-import de.turnierverwaltung.mysql.SpielerDAO;
-import de.turnierverwaltung.mysql.TurnierDAO;
-import de.turnierverwaltung.mysql.Turnier_has_SpielerDAO;
+import de.turnierverwaltung.sqlite.DAOFactory;
+import de.turnierverwaltung.sqlite.DWZDataDAO;
+import de.turnierverwaltung.sqlite.DWZVerbandDAO;
+import de.turnierverwaltung.sqlite.DWZVereineDAO;
+import de.turnierverwaltung.sqlite.DatumDAO;
+import de.turnierverwaltung.sqlite.ELODataDAO;
+import de.turnierverwaltung.sqlite.GruppenDAO;
+import de.turnierverwaltung.sqlite.InfoDAO;
+import de.turnierverwaltung.sqlite.PartienDAO;
+import de.turnierverwaltung.sqlite.SpielerDAO;
+import de.turnierverwaltung.sqlite.TurnierDAO;
+import de.turnierverwaltung.sqlite.Turnier_has_SpielerDAO;
 
 public class SQLControl {
 	public static final String INFONAME = Version.getString("version.0");

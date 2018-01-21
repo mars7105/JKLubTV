@@ -5,9 +5,9 @@ import java.util.ArrayList;
 
 import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.model.TournamentConstants;
-import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.DWZDataDAO;
-import de.turnierverwaltung.mysql.SQLiteDAOFactory;
+import de.turnierverwaltung.sqlite.DAOFactory;
+import de.turnierverwaltung.sqlite.DWZDataDAO;
+import de.turnierverwaltung.sqlite.SQLiteDAOFactory;
 
 public class SQLitePlayerDWZList {
 

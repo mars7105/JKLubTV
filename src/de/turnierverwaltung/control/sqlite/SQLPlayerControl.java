@@ -27,11 +27,11 @@ import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.model.rating.DWZData;
-import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.DWZDataDAO;
-import de.turnierverwaltung.mysql.ELODataDAO;
-import de.turnierverwaltung.mysql.SpielerDAO;
-import de.turnierverwaltung.mysql.Turnier_has_SpielerDAO;
+import de.turnierverwaltung.sqlite.DAOFactory;
+import de.turnierverwaltung.sqlite.DWZDataDAO;
+import de.turnierverwaltung.sqlite.ELODataDAO;
+import de.turnierverwaltung.sqlite.SpielerDAO;
+import de.turnierverwaltung.sqlite.Turnier_has_SpielerDAO;
 
 public class SQLPlayerControl {
 	private Tournament turnier;

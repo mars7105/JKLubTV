@@ -57,7 +57,7 @@ import de.turnierverwaltung.model.table.CrossTableModel;
 import de.turnierverwaltung.model.table.MeetingTable;
 import de.turnierverwaltung.model.table.MeetingTableModel;
 import de.turnierverwaltung.model.table.PairingsTables;
-import de.turnierverwaltung.mysql.SQLiteDAOFactory;
+import de.turnierverwaltung.sqlite.SQLiteDAOFactory;
 import de.turnierverwaltung.view.StandardView;
 import de.turnierverwaltung.view.TabbedPaneView;
 import de.turnierverwaltung.view.TitleLabelView;

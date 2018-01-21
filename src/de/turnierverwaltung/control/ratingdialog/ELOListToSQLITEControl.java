@@ -16,9 +16,9 @@ import de.turnierverwaltung.control.PropertiesControl;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.model.rating.ELOPlayer;
 import de.turnierverwaltung.model.rating.ELOPlayerList;
-import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.ELODataDAO;
-import de.turnierverwaltung.mysql.SQLiteDAOFactory;
+import de.turnierverwaltung.sqlite.DAOFactory;
+import de.turnierverwaltung.sqlite.ELODataDAO;
+import de.turnierverwaltung.sqlite.SQLiteDAOFactory;
 
 public class ELOListToSQLITEControl {
 	ELOPlayerList eloPlayerList;

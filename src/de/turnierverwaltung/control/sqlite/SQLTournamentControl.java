@@ -25,9 +25,9 @@ import de.turnierverwaltung.control.Messages;
 import de.turnierverwaltung.control.PropertiesControl;
 import de.turnierverwaltung.control.Version;
 import de.turnierverwaltung.model.Tournament;
-import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.DatumDAO;
-import de.turnierverwaltung.mysql.TurnierDAO;
+import de.turnierverwaltung.sqlite.DAOFactory;
+import de.turnierverwaltung.sqlite.DatumDAO;
+import de.turnierverwaltung.sqlite.TurnierDAO;
 
 public class SQLTournamentControl {
 	//	private InfoDAO infoDao;

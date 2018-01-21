@@ -41,8 +41,8 @@ import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.Messages;
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.TournamentConstants;
-import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.PartienDAO;
+import de.turnierverwaltung.sqlite.DAOFactory;
+import de.turnierverwaltung.sqlite.PartienDAO;
 import de.turnierverwaltung.view.ProgressBarView;
 
 public class SaveTournamentControl {

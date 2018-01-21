@@ -23,7 +23,7 @@ import de.turnierverwaltung.control.playerlist.PlayerListControl;
 import de.turnierverwaltung.control.sqlite.SQLControl;
 import de.turnierverwaltung.control.sqlite.SQLTournamentControl;
 import de.turnierverwaltung.control.tournamentlist.ActionListenerTournamentItemsControl;
-import de.turnierverwaltung.mysql.SQLiteDAOFactory;
+import de.turnierverwaltung.sqlite.SQLiteDAOFactory;
 import de.turnierverwaltung.view.navigation.NaviView;
 
 public class ActionListenerFileMenuControl implements ActionListener {

@@ -5,8 +5,8 @@ import java.util.ArrayList;
 
 import de.turnierverwaltung.model.Info;
 import de.turnierverwaltung.model.TournamentConstants;
-import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.InfoDAO;
+import de.turnierverwaltung.sqlite.DAOFactory;
+import de.turnierverwaltung.sqlite.InfoDAO;
 
 public class SQLInfoControl {
 	private DAOFactory daoFactory;

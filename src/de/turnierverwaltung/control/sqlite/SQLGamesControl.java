@@ -23,8 +23,8 @@ import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
-import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.PartienDAO;
+import de.turnierverwaltung.sqlite.DAOFactory;
+import de.turnierverwaltung.sqlite.PartienDAO;
 
 public class SQLGamesControl {
 	private Tournament turnier;

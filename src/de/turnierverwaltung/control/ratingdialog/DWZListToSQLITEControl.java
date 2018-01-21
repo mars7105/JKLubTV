@@ -16,9 +16,9 @@ import de.turnierverwaltung.control.PropertiesControl;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.model.rating.DWZData;
 import de.turnierverwaltung.model.rating.DWZDataArrayList;
-import de.turnierverwaltung.mysql.DAOFactory;
-import de.turnierverwaltung.mysql.DWZDataDAO;
-import de.turnierverwaltung.mysql.SQLiteDAOFactory;
+import de.turnierverwaltung.sqlite.DAOFactory;
+import de.turnierverwaltung.sqlite.DWZDataDAO;
+import de.turnierverwaltung.sqlite.SQLiteDAOFactory;
 
 public class DWZListToSQLITEControl {
 	private DWZDataArrayList csvPlayerList;
