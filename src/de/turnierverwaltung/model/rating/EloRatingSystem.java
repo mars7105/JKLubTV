@@ -68,7 +68,7 @@ public class EloRatingSystem {
 	 *            Game to do the rating on as games may vary in their implementation
 	 *            of ELO.
 	 */
-	private EloRatingSystem(final String game) {
+	public EloRatingSystem() {
 	}
 
 	/**

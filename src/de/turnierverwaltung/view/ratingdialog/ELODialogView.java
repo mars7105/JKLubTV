@@ -33,7 +33,7 @@ import de.turnierverwaltung.view.Messages;
 public class ELODialogView extends JDialog {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -41,10 +41,10 @@ public class ELODialogView extends JDialog {
 	private JPanel dsbPanel;
 	private JTextField vereinsSuche;
 	private JButton vereinsSucheButton;
-//	private JButton okButton;
-//	private JButton cancelButton;
-//
-//	private ButtonPanelView buttonPane;
+	// private JButton okButton;
+	// private JButton cancelButton;
+	//
+	// private ButtonPanelView buttonPane;
 	private JTextField vereinsName;
 
 	private JComboBox<String> vereinsAuswahl;
@@ -60,17 +60,17 @@ public class ELODialogView extends JDialog {
 	// Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-new-2.png")));
 	private PlayerSearchView playerSearchView;
 
-	private JLabel statusLabel;
+	private final JLabel statusLabel;
 
 	/**
 	 * Create the dialog.
-	 * 
+	 *
 	 * @throws URISyntaxException
 	 */
 	public ELODialogView() {
 
-		this.setAlwaysOnTop(true);
-		setTitle(Messages.getString("DEWISDialogView.0")); //$NON-NLS-1$
+		setAlwaysOnTop(true);
+		setTitle(Messages.getString("ELOPlayerView.1")); //$NON-NLS-1$
 
 		getContentPane().setLayout(new BorderLayout());
 
@@ -80,20 +80,20 @@ public class ELODialogView extends JDialog {
 
 		dsbPanel = new JPanel();
 		playerSearchView = new PlayerSearchView();
-//		buttonPane = new ButtonPanelView();
-//		buttonPane.makeAllButtons();
-//		okButton = buttonPane.getOkButton();
-//		cancelButton = buttonPane.getCancelButton();
-//		okButton.setText(Messages.getString("DEWISDialogView.6"));
-//		cancelButton.setText(Messages.getString("DEWISDialogView.7"));
+		// buttonPane = new ButtonPanelView();
+		// buttonPane.makeAllButtons();
+		// okButton = buttonPane.getOkButton();
+		// cancelButton = buttonPane.getCancelButton();
+		// okButton.setText(Messages.getString("DEWISDialogView.6"));
+		// cancelButton.setText(Messages.getString("DEWISDialogView.7"));
 
 		contentPanel.add(playerSearchView, BorderLayout.CENTER);
 
 		statusLabel = new JLabel("Test");
-		JPanel southPanel = new JPanel();
+		final JPanel southPanel = new JPanel();
 		southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
 		southPanel.add(statusLabel);
-//		southPanel.add(buttonPane);
+		// southPanel.add(buttonPane);
 		contentPanel.add(southPanel, BorderLayout.SOUTH);
 
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -105,7 +105,7 @@ public class ELODialogView extends JDialog {
 	}
 
 	public void closeWindow() {
-		this.dispose();
+		dispose();
 	}
 
 	public JPanel getContentPanel() {
@@ -121,29 +121,29 @@ public class ELODialogView extends JDialog {
 		return playerSearchView;
 	}
 
-//	public ButtonPanelView getButtonPanel() {
-//		return buttonPane;
-//	}
-//
-//	public void setButtonPanel(ButtonPanelView buttonPane) {
-//		this.buttonPane = buttonPane;
-//	}
-//
-//	public JButton getOkButton() {
-//		return okButton;
-//	}
-//
-//	public void setOkButton(JButton okButton) {
-//		this.okButton = okButton;
-//	}
-//
-//	public JButton getCancelButton() {
-//		return cancelButton;
-//	}
+	// public ButtonPanelView getButtonPanel() {
+	// return buttonPane;
+	// }
+	//
+	// public void setButtonPanel(ButtonPanelView buttonPane) {
+	// this.buttonPane = buttonPane;
+	// }
+	//
+	// public JButton getOkButton() {
+	// return okButton;
+	// }
+	//
+	// public void setOkButton(JButton okButton) {
+	// this.okButton = okButton;
+	// }
+	//
+	// public JButton getCancelButton() {
+	// return cancelButton;
+	// }
 
-//	public void setCancelButton(JButton cancelButton) {
-//		this.cancelButton = cancelButton;
-//	}
+	// public void setCancelButton(JButton cancelButton) {
+	// this.cancelButton = cancelButton;
+	// }
 
 	public JComboBox<String> getVereinsAuswahl() {
 		return vereinsAuswahl;
@@ -166,39 +166,39 @@ public class ELODialogView extends JDialog {
 	}
 
 	public void refresh() {
-//		getButtonPanel().updateUI();
+		// getButtonPanel().updateUI();
 		getContentPanel().updateUI();
 		pack();
 		setLocationRelativeTo(null);
 	}
 
-	public void setDsbPanel(JPanel dsbPanel) {
+	public void setDsbPanel(final JPanel dsbPanel) {
 		contentPanel.remove(this.dsbPanel);
 		this.dsbPanel = dsbPanel;
 		contentPanel.add(dsbPanel, BorderLayout.CENTER);
 	}
 
-	public void setPlayerSearchView(PlayerSearchView playerSearchView) {
+	public void setPlayerSearchView(final PlayerSearchView playerSearchView) {
 		this.playerSearchView = playerSearchView;
 	}
 
-	public void setVereinsAuswahl(JComboBox<String> vereinsAuswahl) {
+	public void setVereinsAuswahl(final JComboBox<String> vereinsAuswahl) {
 		this.vereinsAuswahl = vereinsAuswahl;
 	}
 
-	public void setVereinsAuswahlOkButton(JButton vereinsAuswahlOkButton) {
+	public void setVereinsAuswahlOkButton(final JButton vereinsAuswahlOkButton) {
 		this.vereinsAuswahlOkButton = vereinsAuswahlOkButton;
 	}
 
-	public void setVereinsName(JTextField vereinsName) {
+	public void setVereinsName(final JTextField vereinsName) {
 		this.vereinsName = vereinsName;
 	}
 
-	public void setVereinsSuche(JTextField vereinsSuche) {
+	public void setVereinsSuche(final JTextField vereinsSuche) {
 		this.vereinsSuche = vereinsSuche;
 	}
 
-	public void setVereinsSucheButton(JButton vereinsSucheButton) {
+	public void setVereinsSucheButton(final JButton vereinsSucheButton) {
 		this.vereinsSucheButton = vereinsSucheButton;
 	}
 

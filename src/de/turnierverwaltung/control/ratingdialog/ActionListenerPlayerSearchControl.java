@@ -17,59 +17,60 @@ import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
 import de.turnierverwaltung.model.Player;
 
 /**
- * 
+ *
  * @author mars
  *
  */
 public class ActionListenerPlayerSearchControl implements ListSelectionListener, ActionListener {
-	private MainControl mainControl;
-	private DSBDWZControl dewisDialogControl;
-	private ImageIcon insertIcon3 = new ImageIcon(
+	private final MainControl mainControl;
+	private final DSBDWZControl dewisDialogControl;
+	private final ImageIcon insertIcon3 = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user.png")));
-	private ImageIcon insertIcon1 = new ImageIcon(
+	private final ImageIcon insertIcon1 = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user-offline.png")));
-	private ImageIcon insertIcon2 = new ImageIcon(
+	private final ImageIcon insertIcon2 = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-ok-3.png")));
-	private ArrayList<Integer> indices;
+	private final ArrayList<Integer> indices;
 	private ELOControl eloControl;
 
 	/**
-	 * 
+	 *
 	 * @param mainControl
 	 * @param dewisDialogControl
 	 */
-	public ActionListenerPlayerSearchControl(MainControl mainControl, DSBDWZControl dewisDialogControl) {
+	public ActionListenerPlayerSearchControl(final MainControl mainControl, final DSBDWZControl dewisDialogControl) {
 		super();
 		this.mainControl = mainControl;
 		this.dewisDialogControl = dewisDialogControl;
 		indices = new ArrayList<Integer>();
 	}
 
-	public ActionListenerPlayerSearchControl(MainControl mainControl2, ELOControl eloControl) {
-		super();
-		this.mainControl = mainControl2;
-		this.eloControl = eloControl;
-		indices = new ArrayList<Integer>();
-	}
+	// public ActionListenerPlayerSearchControl(final MainControl mainControl2,
+	// final ELOControl eloControl) {
+	// super();
+	// mainControl = mainControl2;
+	// this.eloControl = eloControl;
+	// indices = new ArrayList<Integer>();
+	// }
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(final ActionEvent arg0) {
 		if (eloControl == null) {
 			if (arg0.getSource().equals(dewisDialogControl.getDialog().getPlayerSearchView().getCancelButton())) {
 				dewisDialogControl.getDialog().closeWindow();
 			}
 			if (arg0.getSource().equals(dewisDialogControl.getDialog().getPlayerSearchView().getOkButton())) {
 				try {
-					ArrayList<Player> spieler = dewisDialogControl.getSearchplayerlist();
+					final ArrayList<Player> spieler = dewisDialogControl.getSearchplayerlist();
 					if (spieler != null) {
 
-						ListIterator<Integer> lit = indices.listIterator();
+						final ListIterator<Integer> lit = indices.listIterator();
 
 						while (lit.hasNext()) {
-							int temp = lit.next();
-							Player neuerSpieler = spieler.get(temp);
+							final int temp = lit.next();
+							final Player neuerSpieler = spieler.get(temp);
 							if (playerExist(neuerSpieler) == false) {
-								SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+								final SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 								neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
 								mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
 								dewisDialogControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
@@ -83,8 +84,8 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 					}
 
 					mainControl.getPlayerListControl().updateSpielerListe();
-				} catch (SQLException e) {
-					ExceptionHandler eh = new ExceptionHandler(mainControl);
+				} catch (final SQLException e) {
+					final ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());
 				}
 			}
@@ -94,16 +95,16 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 			}
 			if (arg0.getSource().equals(eloControl.getDialog().getPlayerSearchView().getOkButton())) {
 				try {
-					ArrayList<Player> spieler = eloControl.getSearchplayerlist();
+					final ArrayList<Player> spieler = eloControl.getSearchplayerlist();
 					if (spieler != null) {
 
-						ListIterator<Integer> lit = indices.listIterator();
+						final ListIterator<Integer> lit = indices.listIterator();
 
 						while (lit.hasNext()) {
-							int temp = lit.next();
-							Player neuerSpieler = spieler.get(temp);
+							final int temp = lit.next();
+							final Player neuerSpieler = spieler.get(temp);
 							if (playerExist(neuerSpieler) == false) {
-								SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+								final SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 								neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
 								mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
 								eloControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
@@ -117,22 +118,22 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 					}
 
 					mainControl.getPlayerListControl().updateSpielerListe();
-				} catch (SQLException e) {
-					ExceptionHandler eh = new ExceptionHandler(mainControl);
+				} catch (final SQLException e) {
+					final ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());
 				}
 			}
 		}
 	}
 
-	private boolean playerExist(Player neuerSpieler) {
-		SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
+	private boolean playerExist(final Player neuerSpieler) {
+		final SQLPlayerControl spielerTableControl = new SQLPlayerControl(mainControl);
 		Boolean playerExist = false;
 		try {
 			playerExist = spielerTableControl.playerExist(neuerSpieler);
 
-		} catch (SQLException e) {
-			ExceptionHandler eh = new ExceptionHandler(mainControl);
+		} catch (final SQLException e) {
+			final ExceptionHandler eh = new ExceptionHandler(mainControl);
 			eh.fileSQLError(e.getMessage());
 		}
 
@@ -140,24 +141,24 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 	}
 
 	@Override
-	public void valueChanged(ListSelectionEvent e) {
+	public void valueChanged(final ListSelectionEvent e) {
 		if (e.getValueIsAdjusting() == false) {
 			if (eloControl == null) {
-				int index = dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex();
-				ArrayList<Player> spieler = dewisDialogControl.getSearchplayerlist();
+				final int index = dewisDialogControl.getSpielerSearchPanelList().getList().getSelectedIndex();
+				final ArrayList<Player> spieler = dewisDialogControl.getSearchplayerlist();
 				if (index == -1) {
 
 				} else {
 
-					Player neuerSpieler = spieler.get(index);
-					Boolean savedPlayer = playerExist(neuerSpieler);
-					ListIterator<Integer> lit = indices.listIterator();
+					final Player neuerSpieler = spieler.get(index);
+					final Boolean savedPlayer = playerExist(neuerSpieler);
+					final ListIterator<Integer> lit = indices.listIterator();
 					int counter = 0;
 					Boolean notfound = false;
 					int nf = 0;
 
 					while (lit.hasNext()) {
-						int temp = lit.next();
+						final int temp = lit.next();
 
 						if (temp == index && savedPlayer == false) {
 
@@ -186,21 +187,21 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 				}
 
 			} else {
-				int index = eloControl.getSpielerSearchPanelList().getList().getSelectedIndex();
-				ArrayList<Player> spieler = eloControl.getSearchplayerlist();
+				final int index = eloControl.getSpielerSearchPanelList().getList().getSelectedIndex();
+				final ArrayList<Player> spieler = eloControl.getSearchplayerlist();
 				if (index == -1) {
 
 				} else {
 
-					Player neuerSpieler = spieler.get(index);
-					Boolean savedPlayer = playerExist(neuerSpieler);
-					ListIterator<Integer> lit = indices.listIterator();
+					final Player neuerSpieler = spieler.get(index);
+					final Boolean savedPlayer = playerExist(neuerSpieler);
+					final ListIterator<Integer> lit = indices.listIterator();
 					int counter = 0;
 					Boolean notfound = false;
 					int nf = 0;
 
 					while (lit.hasNext()) {
-						int temp = lit.next();
+						final int temp = lit.next();
 
 						if (temp == index && savedPlayer == false) {
 
