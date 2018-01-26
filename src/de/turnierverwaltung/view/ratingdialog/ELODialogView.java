@@ -80,12 +80,6 @@ public class ELODialogView extends JDialog {
 
 		dsbPanel = new JPanel();
 		playerSearchView = new PlayerSearchView();
-		// buttonPane = new ButtonPanelView();
-		// buttonPane.makeAllButtons();
-		// okButton = buttonPane.getOkButton();
-		// cancelButton = buttonPane.getCancelButton();
-		// okButton.setText(Messages.getString("DEWISDialogView.6"));
-		// cancelButton.setText(Messages.getString("DEWISDialogView.7"));
 
 		contentPanel.add(playerSearchView, BorderLayout.CENTER);
 
