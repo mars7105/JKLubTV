@@ -87,66 +87,49 @@ public class ResultDWZControl {
 					final double gesamtpunkte = 0;
 					double ergebnis = 0;
 					for (int i = 0; i < partienanzahl; i++) {
-
-						if (partien[i].getSpielerWeiss().equals(player)
-								&& partien[i].getSpielerSchwarz().getSpielerId() != TournamentConstants.SPIELFREI_ID) {
+						final Player whitePlayer = partien[i].getSpielerWeiss();
+						final Player blackPlayer = partien[i].getSpielerSchwarz();
+						final String ergebnisWhite = partien[i].getErgebnisWeiss();
+						final String ergebnisBlack = partien[i].getErgebnisSchwarz();
+						if (whitePlayer.equals(player)
+								&& blackPlayer.getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 							ergebnis = 0;
-							if (partien[i].getErgebnisWeiss().equals(TournamentConstants.GEWINN)) {
+							if (ergebnisWhite.equals(TournamentConstants.GEWINN)) {
 								ergebnis = 1;
-								addOpponent(partien[i].getSpielerSchwarz(), ergebnis, gesamtpunkte);
+								addOpponent(blackPlayer, ergebnis, gesamtpunkte);
 							}
-							if (partien[i].getErgebnisWeiss().equals(TournamentConstants.VERLUST)) {
+							if (ergebnisWhite.equals(TournamentConstants.VERLUST)) {
 								ergebnis = 0;
-								addOpponent(partien[i].getSpielerSchwarz(), ergebnis, gesamtpunkte);
+								addOpponent(blackPlayer, ergebnis, gesamtpunkte);
 							}
-							if (partien[i].getErgebnisWeiss().equals(TournamentConstants.REMIS)) {
+							if (ergebnisWhite.equals(TournamentConstants.REMIS)) {
 								ergebnis = 0.5;
-								addOpponent(partien[i].getSpielerSchwarz(), ergebnis, gesamtpunkte);
+								addOpponent(blackPlayer, ergebnis, gesamtpunkte);
 							}
 
 						}
-						if (partien[i].getSpielerSchwarz().equals(player)
-								&& partien[i].getSpielerWeiss().getSpielerId() != TournamentConstants.SPIELFREI_ID) {
+						if (blackPlayer.equals(player)
+								&& whitePlayer.getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 							ergebnis = 0;
-							if (partien[i].getErgebnisSchwarz().equals(TournamentConstants.GEWINN)) {
+							if (ergebnisBlack.equals(TournamentConstants.GEWINN)) {
 								ergebnis = 1;
-								addOpponent(partien[i].getSpielerWeiss(), ergebnis, gesamtpunkte);
+								addOpponent(whitePlayer, ergebnis, gesamtpunkte);
 							}
-							if (partien[i].getErgebnisSchwarz().equals(TournamentConstants.VERLUST)) {
+							if (ergebnisBlack.equals(TournamentConstants.VERLUST)) {
 								ergebnis = 0;
-								addOpponent(partien[i].getSpielerWeiss(), ergebnis, gesamtpunkte);
+								addOpponent(whitePlayer, ergebnis, gesamtpunkte);
 							}
-							if (partien[i].getErgebnisSchwarz().equals(TournamentConstants.REMIS)) {
+							if (ergebnisBlack.equals(TournamentConstants.REMIS)) {
 								ergebnis = 0.5;
-								addOpponent(partien[i].getSpielerWeiss(), ergebnis, gesamtpunkte);
+								addOpponent(whitePlayer, ergebnis, gesamtpunkte);
 							}
 
 						}
 					}
 					// DWZ
-					if (opponents.size() > 0) {
-						final PlayerModel playerdwz = new PlayerModel(player.getAge(), player.getDWZ(),
-								opponents.size());
-						playerdwz.setPunkte(gesamtpunkte);
-						final MainModel mainModel = new MainModel(playerdwz, opponents);
-						mainModel.calculateDWZ();
-						player.setFolgeDWZ(playerdwz.getFolgeDWZ());
-					}
+					calcDWZ(player, gesamtpunkte);
 					// ELO
-					final EloRatingSystem eloSystem = new EloRatingSystem();
-					int eloRating = player.getEloData().getRating();
-					if (eloRating <= 0) {
-						eloRating = player.getDwzData().getCsvFIDE_Elo();
-					}
-					if (eloOpponents.size() > 0 && eloRating > 0) {
-						int rating = player.getEloData().getRating();
-						for (final EloOpponent opponent : eloOpponents) {
-							final int newElo = eloSystem.getNewRating(rating, opponent.getRating(), opponent.getScore(),
-									false);
-							rating = newElo;
-						}
-						player.setFolgeELO(rating);
-					}
+					calcELO(player, gesamtpunkte);
 				}
 			}
 		}
@@ -181,4 +164,31 @@ public class ResultDWZControl {
 		}
 	}
 
+	private void calcDWZ(final Player player, final double gesamtpunkte) {
+		// DWZ
+		if (opponents.size() > 0) {
+			final PlayerModel playerdwz = new PlayerModel(player.getAge(), player.getDWZ(), opponents.size());
+			playerdwz.setPunkte(gesamtpunkte);
+			final MainModel mainModel = new MainModel(playerdwz, opponents);
+			mainModel.calculateDWZ();
+			player.setFolgeDWZ(playerdwz.getFolgeDWZ());
+		}
+	}
+
+	private void calcELO(final Player player, final double gesamtpunkte) {
+
+		int eloRating = player.getEloData().getRating();
+		if (eloRating <= 0) {
+			eloRating = player.getDwzData().getCsvFIDE_Elo();
+		}
+		if (eloOpponents.size() > 0 && eloRating > 0) {
+			final EloRatingSystem eloSystem = new EloRatingSystem();
+			int rating = player.getEloData().getRating();
+			for (final EloOpponent opponent : eloOpponents) {
+				final int newElo = eloSystem.getNewRating(rating, opponent.getRating(), opponent.getScore(), false);
+				rating = newElo;
+			}
+			player.setFolgeELO(rating);
+		}
+	}
 }
