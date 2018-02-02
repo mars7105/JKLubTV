@@ -96,15 +96,18 @@ public class ResultDWZControl {
 							ergebnis = 0;
 							if (ergebnisWhite.equals(TournamentConstants.GEWINN)) {
 								ergebnis = 1;
-								addOpponent(blackPlayer, ergebnis, gesamtpunkte);
+								addDWZOpponent(blackPlayer, ergebnis, gesamtpunkte);
+								addELOOpponent(blackPlayer, ergebnis);
 							}
 							if (ergebnisWhite.equals(TournamentConstants.VERLUST)) {
 								ergebnis = 0;
-								addOpponent(blackPlayer, ergebnis, gesamtpunkte);
+								addDWZOpponent(blackPlayer, ergebnis, gesamtpunkte);
+								addELOOpponent(blackPlayer, ergebnis);
 							}
 							if (ergebnisWhite.equals(TournamentConstants.REMIS)) {
 								ergebnis = 0.5;
-								addOpponent(blackPlayer, ergebnis, gesamtpunkte);
+								addDWZOpponent(blackPlayer, ergebnis, gesamtpunkte);
+								addELOOpponent(blackPlayer, ergebnis);
 							}
 
 						}
@@ -113,15 +116,18 @@ public class ResultDWZControl {
 							ergebnis = 0;
 							if (ergebnisBlack.equals(TournamentConstants.GEWINN)) {
 								ergebnis = 1;
-								addOpponent(whitePlayer, ergebnis, gesamtpunkte);
+								addDWZOpponent(blackPlayer, ergebnis, gesamtpunkte);
+								addELOOpponent(blackPlayer, ergebnis);
 							}
 							if (ergebnisBlack.equals(TournamentConstants.VERLUST)) {
 								ergebnis = 0;
-								addOpponent(whitePlayer, ergebnis, gesamtpunkte);
+								addDWZOpponent(blackPlayer, ergebnis, gesamtpunkte);
+								addELOOpponent(blackPlayer, ergebnis);
 							}
 							if (ergebnisBlack.equals(TournamentConstants.REMIS)) {
 								ergebnis = 0.5;
-								addOpponent(whitePlayer, ergebnis, gesamtpunkte);
+								addDWZOpponent(blackPlayer, ergebnis, gesamtpunkte);
+								addELOOpponent(blackPlayer, ergebnis);
 							}
 
 						}
@@ -136,7 +142,7 @@ public class ResultDWZControl {
 
 	}
 
-	private void addOpponent(final Player player, final double ergebnis, double gesamtpunkte) {
+	private void addDWZOpponent(final Player player, final double ergebnis, double gesamtpunkte) {
 		// DWZ
 		if (turnier.getNoFolgeDWZCalc() == false) {
 			if (player.getDWZ() == 0) {
@@ -151,6 +157,11 @@ public class ResultDWZControl {
 				gesamtpunkte += ergebnis;
 			}
 		}
+
+	}
+
+	private void addELOOpponent(final Player player, final double ergebnis) {
+
 		// ELO
 		if (turnier.getNoFolgeELOCalc() == false) {
 			int eloRating = player.getEloData().getRating();
