@@ -62,6 +62,8 @@ public class ResultDWZControl {
 	private final int spielerAnzahl;
 	private final int partienanzahl;
 	private final Tournament turnier;
+	private ArrayList<OpponentModel> opponents;
+	private ArrayList<EloOpponent> eloOpponents;
 
 	public ResultDWZControl(final Tournament turnier, final Group gruppe) {
 		this.turnier = turnier;
@@ -72,118 +74,64 @@ public class ResultDWZControl {
 
 	}
 
-	public void caculateDWZ() {
+	public void caculateRatings() {
 
 		for (int loop = 0; loop < 10; loop++) {
 
 			for (int s = 0; s < spielerAnzahl; s++) {
 				if (gruppe.getSpieler()[s].getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 
-					final ArrayList<OpponentModel> opponents = new ArrayList<OpponentModel>();
-					final ArrayList<EloOpponent> eloOpponents = new ArrayList<EloOpponent>();
+					opponents = new ArrayList<OpponentModel>();
+					eloOpponents = new ArrayList<EloOpponent>();
 					final Player player = gruppe.getSpieler()[s];
-					double gesamtpunkte = 0;
+					final double gesamtpunkte = 0;
 					double ergebnis = 0;
-					Boolean check = false;
 					for (int i = 0; i < partienanzahl; i++) {
 
 						if (partien[i].getSpielerWeiss().equals(player)
 								&& partien[i].getSpielerSchwarz().getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 							ergebnis = 0;
-							check = false;
 							if (partien[i].getErgebnisWeiss().equals(TournamentConstants.GEWINN)) {
 								ergebnis = 1;
-								check = true;
+								addOpponent(partien[i].getSpielerSchwarz(), ergebnis, gesamtpunkte);
 							}
 							if (partien[i].getErgebnisWeiss().equals(TournamentConstants.VERLUST)) {
 								ergebnis = 0;
-								check = true;
+								addOpponent(partien[i].getSpielerSchwarz(), ergebnis, gesamtpunkte);
 							}
 							if (partien[i].getErgebnisWeiss().equals(TournamentConstants.REMIS)) {
 								ergebnis = 0.5;
-								check = true;
+								addOpponent(partien[i].getSpielerSchwarz(), ergebnis, gesamtpunkte);
 							}
 
-							if (check == true) {
-								if (turnier.getNoFolgeDWZCalc() == false) {
-									if (partien[i].getSpielerSchwarz().getDWZ() == 0) {
-										if (partien[i].getSpielerSchwarz().getFolgeDWZ() > 0) {
-											opponents.add(new OpponentModel(
-													partien[i].getSpielerSchwarz().getFolgeDWZ(), ergebnis));
-											gesamtpunkte += ergebnis;
-
-										}
-									} else {
-
-										opponents.add(
-												new OpponentModel(partien[i].getSpielerSchwarz().getDWZ(), ergebnis));
-										gesamtpunkte += ergebnis;
-									}
-								}
-								if (turnier.getNoFolgeELOCalc() == false) {
-									int eloRating = partien[i].getSpielerSchwarz().getEloData().getRating();
-									if (eloRating <= 0) {
-										eloRating = partien[i].getSpielerSchwarz().getDwzData().getCsvFIDE_Elo();
-									}
-									if (eloRating > 0) {
-										eloOpponents.add(new EloOpponent(eloRating, ergebnis));
-
-									}
-								}
-							}
 						}
 						if (partien[i].getSpielerSchwarz().equals(player)
 								&& partien[i].getSpielerWeiss().getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 							ergebnis = 0;
-							check = false;
 							if (partien[i].getErgebnisSchwarz().equals(TournamentConstants.GEWINN)) {
 								ergebnis = 1;
-								check = true;
+								addOpponent(partien[i].getSpielerWeiss(), ergebnis, gesamtpunkte);
 							}
 							if (partien[i].getErgebnisSchwarz().equals(TournamentConstants.VERLUST)) {
 								ergebnis = 0;
-								check = true;
+								addOpponent(partien[i].getSpielerWeiss(), ergebnis, gesamtpunkte);
 							}
 							if (partien[i].getErgebnisSchwarz().equals(TournamentConstants.REMIS)) {
 								ergebnis = 0.5;
-								check = true;
+								addOpponent(partien[i].getSpielerWeiss(), ergebnis, gesamtpunkte);
 							}
 
-							if (check == true) {
-								if (turnier.getNoFolgeDWZCalc() == false) {
-									if (partien[i].getSpielerWeiss().getDWZ() == 0) {
-										if (partien[i].getSpielerWeiss().getFolgeDWZ() > 0) {
-											opponents.add(new OpponentModel(partien[i].getSpielerWeiss().getFolgeDWZ(),
-													ergebnis));
-											gesamtpunkte += ergebnis;
-
-										}
-									} else {
-
-										opponents.add(
-												new OpponentModel(partien[i].getSpielerWeiss().getDWZ(), ergebnis));
-										gesamtpunkte += ergebnis;
-									}
-								}
-								if (turnier.getNoFolgeELOCalc() == false) {
-									int eloRating = partien[i].getSpielerWeiss().getEloData().getRating();
-									if (eloRating <= 0) {
-										eloRating = partien[i].getSpielerWeiss().getDwzData().getCsvFIDE_Elo();
-									}
-									if (eloRating > 0) {
-										eloOpponents.add(new EloOpponent(eloRating, ergebnis));
-
-									}
-								}
-							}
 						}
 					}
-
-					final PlayerModel playerdwz = new PlayerModel(player.getAge(), player.getDWZ(), opponents.size());
-					playerdwz.setPunkte(gesamtpunkte);
-					final MainModel mainModel = new MainModel(playerdwz, opponents);
-					mainModel.calculateDWZ();
-					player.setFolgeDWZ(playerdwz.getFolgeDWZ());
+					// DWZ
+					if (opponents.size() > 0) {
+						final PlayerModel playerdwz = new PlayerModel(player.getAge(), player.getDWZ(),
+								opponents.size());
+						playerdwz.setPunkte(gesamtpunkte);
+						final MainModel mainModel = new MainModel(playerdwz, opponents);
+						mainModel.calculateDWZ();
+						player.setFolgeDWZ(playerdwz.getFolgeDWZ());
+					}
 					// ELO
 					final EloRatingSystem eloSystem = new EloRatingSystem();
 					int eloRating = player.getEloData().getRating();
@@ -204,4 +152,33 @@ public class ResultDWZControl {
 		}
 
 	}
+
+	private void addOpponent(final Player player, final double ergebnis, double gesamtpunkte) {
+		// DWZ
+		if (turnier.getNoFolgeDWZCalc() == false) {
+			if (player.getDWZ() == 0) {
+				if (player.getFolgeDWZ() > 0) {
+					opponents.add(new OpponentModel(player.getFolgeDWZ(), ergebnis));
+					gesamtpunkte += ergebnis;
+
+				}
+			} else {
+
+				opponents.add(new OpponentModel(player.getDWZ(), ergebnis));
+				gesamtpunkte += ergebnis;
+			}
+		}
+		// ELO
+		if (turnier.getNoFolgeELOCalc() == false) {
+			int eloRating = player.getEloData().getRating();
+			if (eloRating <= 0) {
+				eloRating = player.getDwzData().getCsvFIDE_Elo();
+			}
+			if (eloRating > 0) {
+				eloOpponents.add(new EloOpponent(eloRating, ergebnis));
+
+			}
+		}
+	}
+
 }

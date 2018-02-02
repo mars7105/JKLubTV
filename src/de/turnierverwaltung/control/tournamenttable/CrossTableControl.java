@@ -235,7 +235,7 @@ public class CrossTableControl {
 		if (mainControl.getNewTournament() == false) {
 			ResultDWZControl folgeDWZ = new ResultDWZControl(mainControl.getTournament(),
 					mainControl.getTournament().getGruppe()[gruppenNummer]);
-			folgeDWZ.caculateDWZ();
+			folgeDWZ.caculateRatings();
 		}
 	}
 
