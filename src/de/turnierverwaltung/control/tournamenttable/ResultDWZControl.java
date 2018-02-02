@@ -116,18 +116,18 @@ public class ResultDWZControl {
 							ergebnis = 0;
 							if (ergebnisBlack.equals(TournamentConstants.GEWINN)) {
 								ergebnis = 1;
-								addDWZOpponent(blackPlayer, ergebnis, gesamtpunkte);
-								addELOOpponent(blackPlayer, ergebnis);
+								addDWZOpponent(whitePlayer, ergebnis, gesamtpunkte);
+								addELOOpponent(whitePlayer, ergebnis);
 							}
 							if (ergebnisBlack.equals(TournamentConstants.VERLUST)) {
 								ergebnis = 0;
-								addDWZOpponent(blackPlayer, ergebnis, gesamtpunkte);
-								addELOOpponent(blackPlayer, ergebnis);
+								addDWZOpponent(whitePlayer, ergebnis, gesamtpunkte);
+								addELOOpponent(whitePlayer, ergebnis);
 							}
 							if (ergebnisBlack.equals(TournamentConstants.REMIS)) {
 								ergebnis = 0.5;
-								addDWZOpponent(blackPlayer, ergebnis, gesamtpunkte);
-								addELOOpponent(blackPlayer, ergebnis);
+								addDWZOpponent(whitePlayer, ergebnis, gesamtpunkte);
+								addELOOpponent(whitePlayer, ergebnis);
 							}
 
 						}
@@ -135,7 +135,7 @@ public class ResultDWZControl {
 					// DWZ
 					calcDWZ(player, gesamtpunkte);
 					// ELO
-					calcELO(player, gesamtpunkte);
+					calcELO(player);
 				}
 			}
 		}
@@ -186,7 +186,7 @@ public class ResultDWZControl {
 		}
 	}
 
-	private void calcELO(final Player player, final double gesamtpunkte) {
+	private void calcELO(final Player player) {
 
 		int eloRating = player.getEloData().getRating();
 		if (eloRating <= 0) {
