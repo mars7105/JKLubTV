@@ -17,6 +17,7 @@ import de.turnierverwaltung.control.Messages;
 import de.turnierverwaltung.control.PropertiesControl;
 import de.turnierverwaltung.control.sqlite.SaveTournamentControl;
 import de.turnierverwaltung.model.Game;
+import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
@@ -26,43 +27,43 @@ import de.turnierverwaltung.view.TabbedPaneView;
 import de.turnierverwaltung.view.tournamenttable.CrossTableView;
 
 /**
- * 
+ *
  * @author mars
  *
  */
 public class CrossTableControl {
 
 	/**
-	 * 
+	 *
 	 * @author mars
 	 *
 	 */
 	class MyTableModelListener implements TableModelListener {
-		private int gruppenNummer;
+		private final int gruppenNummer;
 
 		/**
-		 * 
+		 *
 		 * @param gruppenNummer
 		 */
-		public MyTableModelListener(int gruppenNummer) {
+		public MyTableModelListener(final int gruppenNummer) {
 			this.gruppenNummer = gruppenNummer;
 		}
 
 		@Override
-		public void tableChanged(TableModelEvent e) {
+		public void tableChanged(final TableModelEvent e) {
 			abstand = mainControl.getPropertiesControl().getTabellenAbstand();
 
 			simpleTableView[gruppenNummer].getTable().getModel().removeTableModelListener(tml[gruppenNummer]);
 
-			int row = e.getFirstRow();
-			int col = e.getColumn();
+			final int row = e.getFirstRow();
+			final int col = e.getColumn();
 
-			int colCount = simpleTableView[gruppenNummer].getTable().getModel().getColumnCount();
-			int spielery = row;
-			int spielerx = col - abstand - 1;
-			int invertRow = spielerx;
-			int invertCol = spielery + abstand+1;
-			String ergebniss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, col);
+			final int colCount = simpleTableView[gruppenNummer].getTable().getModel().getColumnCount();
+			final int spielery = row;
+			final int spielerx = col - abstand - 1;
+			final int invertRow = spielerx;
+			final int invertCol = spielery + abstand + 1;
+			final String ergebniss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, col);
 
 			String invertErgebniss = " ";
 			int invertErgebnissInt = 0;
@@ -106,8 +107,8 @@ public class CrossTableControl {
 			}
 			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(invertErgebniss, invertRow, invertCol);
 			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(ergebniss, row, col);
-			Player spy = turnier.getGruppe()[gruppenNummer].getSpieler()[spielery];
-			Player spx = turnier.getGruppe()[gruppenNummer].getSpieler()[spielerx];
+			final Player spy = turnier.getGruppe()[gruppenNummer].getSpieler()[spielery];
+			final Player spx = turnier.getGruppe()[gruppenNummer].getSpieler()[spielerx];
 			if ((spielerx >= 0 && spielerx < turnier.getGruppe()[gruppenNummer].getSpielerAnzahl())
 					&& (spielery >= 0 && spielery < turnier.getGruppe()[gruppenNummer].getSpielerAnzahl())
 					&& (spielerx != spielery)) {
@@ -149,7 +150,7 @@ public class CrossTableControl {
 			updateStatus();
 		}
 
-		private void updatePlatzCol(int col) {
+		private void updatePlatzCol(final int col) {
 			for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
 				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
 						Integer.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getPlatz()), i, col);
@@ -157,41 +158,42 @@ public class CrossTableControl {
 			}
 		}
 
-		private void updatePunkteCol(int col) {
+		private void updatePunkteCol(final int col) {
 			for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
 				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
 						Double.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getPunkte()), i, col);
 			}
 		}
 
-		private void updateSoBergCol(int col) {
+		private void updateSoBergCol(final int col) {
 			for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
 				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
 						Double.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getSoberg()), i, col);
 			}
 		}
 	}
-	private MainControl mainControl;
+
+	private final MainControl mainControl;
 	private CrossTable[] turnierTabelle;
-	private CrossTableView[] simpleTableView;
-	private SaveTournamentControl saveTurnierControl;
-	private JTabbedPane hauptPanel;
-	private TabbedPaneView tabAnzeigeView;
-	private TabbedPaneView[] tabAnzeigeView2;
+	private final CrossTableView[] simpleTableView;
+	private final SaveTournamentControl saveTurnierControl;
+	private final JTabbedPane hauptPanel;
+	private final TabbedPaneView tabAnzeigeView;
+	private final TabbedPaneView[] tabAnzeigeView2;
 	private Tournament turnier;
 	private MyTableModelListener tml[];
-	private int[] spielerAnzahl;
+	private final int[] spielerAnzahl;
 	private ArrayList<Game> changedPartien;
-	private ImageIcon turniertabelleIcon = new ImageIcon(
+	private final ImageIcon turniertabelleIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/x-office-spreadsheet.png"))); //$NON-NLS-1$
 
 	private int abstand;
 
 	/**
-	 * 
+	 *
 	 * @param mainControl
 	 */
-	public CrossTableControl(MainControl mainControl) {
+	public CrossTableControl(final MainControl mainControl) {
 
 		this.mainControl = mainControl;
 		hauptPanel = this.mainControl.getHauptPanel();
@@ -203,7 +205,7 @@ public class CrossTableControl {
 		tabAnzeigeView = this.mainControl.getTabbedPaneView();
 
 		// tabAnzeigeView.setBackground(new Color(249, 222, 112));
-		int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
+		final int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
 		tabAnzeigeView2 = new TabbedPaneView[anzahlGruppen];
 		for (int i = 0; i < anzahlGruppen; i++) {
 			tabAnzeigeView2[i] = new TabbedPaneView(mainControl, Messages.getString("TurnierTabelleControl.8"));
@@ -213,9 +215,9 @@ public class CrossTableControl {
 		this.mainControl.setTabbedPaneViewArray(tabAnzeigeView2);
 		simpleTableView = new CrossTableView[anzahlGruppen];
 		tml = new MyTableModelListener[anzahlGruppen];
-		this.turnierTabelle = new CrossTable[anzahlGruppen];
+		turnierTabelle = new CrossTable[anzahlGruppen];
 		this.mainControl.setCrossTable(turnierTabelle);
-		this.saveTurnierControl = new SaveTournamentControl(this.mainControl);
+		saveTurnierControl = new SaveTournamentControl(this.mainControl);
 		this.mainControl.setSaveTournamentControl(saveTurnierControl);
 		spielerAnzahl = new int[anzahlGruppen];
 		if (mainControl.getNewTournament() == false) {
@@ -231,17 +233,19 @@ public class CrossTableControl {
 
 	}
 
-	public void berechneFolgeDWZ(int gruppenNummer) {
+	public void berechneFolgeRatings(final int gruppenNummer) {
+
 		if (mainControl.getNewTournament() == false) {
-			ResultDWZControl folgeDWZ = new ResultDWZControl(mainControl.getTournament(),
-					mainControl.getTournament().getGruppe()[gruppenNummer]);
-			folgeDWZ.caculateRatings();
+			final Group group = mainControl.getTournament().getGruppe()[gruppenNummer];
+			if (turnier.getNoFolgeDWZCalc() == false) {
+				final ResultDWZControl folgeDWZ = new ResultDWZControl(group);
+				folgeDWZ.caculateRatings();
+			}
+			if (turnier.getNoFolgeELOCalc() == false) {
+				final ResultELOControl folgeELO = new ResultELOControl(group);
+				folgeELO.caculateRatings();
+			}
 		}
-	}
-
-	public void berechneFolgeELO(int i) {
-		// TODO Auto-generated method stub
-
 	}
 
 	public MyTableModelListener[] getTml() {
@@ -253,10 +257,10 @@ public class CrossTableControl {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param gruppenNummer
 	 */
-	public void makeSimpleTableView(int gruppenNummer) {
+	public void makeSimpleTableView(final int gruppenNummer) {
 
 		turnier = mainControl.getTournament();
 		if (tml[gruppenNummer] == null) {
@@ -267,30 +271,29 @@ public class CrossTableControl {
 		if (turnier.getGruppe()[gruppenNummer].getSpieler()[spielerAnzahl[gruppenNummer] - 1].getSpielerId() == -2) {
 			spielerAnzahl[gruppenNummer]--;
 		}
-		this.turnierTabelle[gruppenNummer] = new CrossTable(turnier,
-				mainControl.getTournament().getGruppe()[gruppenNummer]);
-		PropertiesControl ppC = mainControl.getPropertiesControl();
-		String playerColumnName = ppC.getTableComumnPlayer();
-		String oldDWZColumnName = ppC.getTableComumnOldDWZ();
-		String newDWZColumnName = ppC.getTableComumnNewDWZ();
-		String oldELOColumnName = ppC.getTableComumnOldELO();
-		String newELOColumnName = ppC.getTableComumnNewELO();
-		String poinsColumnName = ppC.getTableComumnPoints();
-		String sbbColumnName = ppC.getTableComumnSonnebornBerger();
-		String rankingColumnName = ppC.getTableComumnRanking();
+		turnierTabelle[gruppenNummer] = new CrossTable(turnier, mainControl.getTournament().getGruppe()[gruppenNummer]);
+		final PropertiesControl ppC = mainControl.getPropertiesControl();
+		final String playerColumnName = ppC.getTableComumnPlayer();
+		final String oldDWZColumnName = ppC.getTableComumnOldDWZ();
+		final String newDWZColumnName = ppC.getTableComumnNewDWZ();
+		final String oldELOColumnName = ppC.getTableComumnOldELO();
+		final String newELOColumnName = ppC.getTableComumnNewELO();
+		final String poinsColumnName = ppC.getTableComumnPoints();
+		final String sbbColumnName = ppC.getTableComumnSonnebornBerger();
+		final String rankingColumnName = ppC.getTableComumnRanking();
 		turnierTabelle[gruppenNummer].createMatrix(playerColumnName, oldDWZColumnName, newDWZColumnName,
 				oldELOColumnName, newELOColumnName, poinsColumnName, sbbColumnName, rankingColumnName,
 				mainControl.getPropertiesControl().getNoDWZ(), mainControl.getPropertiesControl().getNoFolgeDWZ(),
 				mainControl.getPropertiesControl().getNoELO(), mainControl.getPropertiesControl().getNoFolgeELO());
 
 		abstand = mainControl.getPropertiesControl().getTabellenAbstand();
-		simpleTableView[gruppenNummer] = new CrossTableView(
-				new CrossTableModel(this.turnierTabelle[gruppenNummer], abstand), abstand);
+		simpleTableView[gruppenNummer] = new CrossTableView(new CrossTableModel(turnierTabelle[gruppenNummer], abstand),
+				abstand);
 		simpleTableView[gruppenNummer].getTable().setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 
-		updatePunkteCol(this.turnierTabelle[gruppenNummer].getSpalte() - 3, gruppenNummer);
-		updateSoBergCol(this.turnierTabelle[gruppenNummer].getSpalte() - 2, gruppenNummer);
-		updatePlatzCol(this.turnierTabelle[gruppenNummer].getSpalte() - 1, gruppenNummer);
+		updatePunkteCol(turnierTabelle[gruppenNummer].getSpalte() - 3, gruppenNummer);
+		updateSoBergCol(turnierTabelle[gruppenNummer].getSpalte() - 2, gruppenNummer);
+		updatePlatzCol(turnierTabelle[gruppenNummer].getSpalte() - 1, gruppenNummer);
 
 		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
 		if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() < 1) {
@@ -315,24 +318,26 @@ public class CrossTableControl {
 		hauptPanel.updateUI();
 		turnier.setNoDWZCalc(mainControl.getPropertiesControl().getNoDWZ());
 		turnier.setNoFolgeDWZCalc(mainControl.getPropertiesControl().getNoFolgeDWZ());
-		berechneFolgeDWZ(gruppenNummer);
+		turnier.setNoELOCalc(mainControl.getPropertiesControl().getNoELO());
+		turnier.setNoFolgeELOCalc(mainControl.getPropertiesControl().getNoFolgeELO());
+		berechneFolgeRatings(gruppenNummer);
 		simpleTableView[gruppenNummer].getTable().doLayout();
 		simpleTableView[gruppenNummer].getTable().updateUI();
 		simpleTableView[gruppenNummer].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
 	}
 
 	/**
-	 * 
+	 *
 	 * @param index
 	 */
-	public void okAction(int index) {
+	public void okAction(final int index) {
 
 		turnier.getGruppe()[index].berechnePunkte();
 		if (simpleTableView[index] == null) {
 			makeSimpleTableView(index);
 		}
-		int spalte = simpleTableView[index].getTable().getModel().getColumnCount();
-		int zeile = simpleTableView[index].getTable().getModel().getRowCount();
+		final int spalte = simpleTableView[index].getTable().getModel().getColumnCount();
+		final int zeile = simpleTableView[index].getTable().getModel().getRowCount();
 		for (int x = 0; x < spalte; x++) {
 			for (int y = 0; y < zeile; y++) {
 
@@ -345,25 +350,25 @@ public class CrossTableControl {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param tID
 	 * @throws SQLException
 	 */
-	public void readDataFromDatabase(int tID) throws SQLException {
+	public void readDataFromDatabase(final int tID) throws SQLException {
 		mainControl.getSqlTournamentControl().getTurnier(tID);
 		turnier = mainControl.getTournament();
 
 	}
 
-	public void setTml(MyTableModelListener[] tml) {
+	public void setTml(final MyTableModelListener[] tml) {
 		this.tml = tml;
 	}
 
-	public void setTurnierTabelle(CrossTable[] turnierTabelle) {
+	public void setTurnierTabelle(final CrossTable[] turnierTabelle) {
 		this.turnierTabelle = turnierTabelle;
 	}
 
-	private void updatePlatzCol(int col, int gruppenNummer) {
+	private void updatePlatzCol(final int col, final int gruppenNummer) {
 		for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
 			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
 					Integer.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getPlatz()), i, col);
@@ -371,7 +376,7 @@ public class CrossTableControl {
 		}
 	}
 
-	private void updatePunkteCol(int col, int gruppenNummer) {
+	private void updatePunkteCol(final int col, final int gruppenNummer) {
 		for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
 			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
 					Double.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getPunkte()), i, col);
@@ -379,7 +384,7 @@ public class CrossTableControl {
 		}
 	}
 
-	private void updateSoBergCol(int col, int gruppenNummer) {
+	private void updateSoBergCol(final int col, final int gruppenNummer) {
 		for (int i = 0; i < spielerAnzahl[gruppenNummer]; i++) {
 			simpleTableView[gruppenNummer].getTable().getModel().setValueAt(
 					Double.toString(turnier.getGruppe()[gruppenNummer].getSpieler()[i].getSoberg()), i, col);
@@ -388,7 +393,7 @@ public class CrossTableControl {
 	}
 
 	public void updateStatus() {
-		int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
+		final int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
 		for (int i = 0; i < anzahlGruppen; i++) {
 			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
 			simpleTableView[i].getStatusLabel().setBackground(Color.ORANGE);

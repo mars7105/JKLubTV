@@ -9,23 +9,23 @@ import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.view.settingsdialog.SettingsView;
 
 public class ItemListenerSettingsControl {
-	private MainControl mainControl;
-	private SettingsControl esControl;
-	private SettingsView eigenschaftenView;
+	private final MainControl mainControl;
+	private final SettingsControl esControl;
+	private final SettingsView eigenschaftenView;
 
-	public ItemListenerSettingsControl(MainControl mainControl, SettingsControl esControl) {
+	public ItemListenerSettingsControl(final MainControl mainControl, final SettingsControl esControl) {
 		super();
 		this.mainControl = mainControl;
 		this.esControl = esControl;
-		this.eigenschaftenView = this.esControl.getEigenschaftenView();
+		eigenschaftenView = this.esControl.getEigenschaftenView();
 	}
 
 	public void addItemListeners() {
 
 		eigenschaftenView.getCheckBoxHeaderFooter().addItemListener(new ItemListener() {
 			@Override
-			public void itemStateChanged(ItemEvent e) {
-				Boolean onlyTable = eigenschaftenView.getCheckBoxHeaderFooter().isSelected();
+			public void itemStateChanged(final ItemEvent e) {
+				final Boolean onlyTable = eigenschaftenView.getCheckBoxHeaderFooter().isSelected();
 
 				mainControl.getPropertiesControl().setOnlyTables(onlyTable);
 				if (mainControl.getTournament() != null) {
@@ -37,8 +37,8 @@ public class ItemListenerSettingsControl {
 		});
 		eigenschaftenView.getCheckBoxPDFLinks().addItemListener(new ItemListener() {
 			@Override
-			public void itemStateChanged(ItemEvent e) {
-				Boolean pdflink = eigenschaftenView.getCheckBoxPDFLinks().isSelected();
+			public void itemStateChanged(final ItemEvent e) {
+				final Boolean pdflink = eigenschaftenView.getCheckBoxPDFLinks().isSelected();
 				eigenschaftenView.getWebserverPathTextField().setEnabled(pdflink);
 
 				mainControl.getPropertiesControl().setPDFLinks(pdflink);
@@ -50,10 +50,10 @@ public class ItemListenerSettingsControl {
 		eigenschaftenView.getCheckBoxohneDWZ().addItemListener(new ItemListener() {
 
 			@Override
-			public void itemStateChanged(ItemEvent e) {
+			public void itemStateChanged(final ItemEvent e) {
 				eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(false);
 
-				Boolean noDWZ = eigenschaftenView.getCheckBoxohneDWZ().isSelected();
+				final Boolean noDWZ = eigenschaftenView.getCheckBoxohneDWZ().isSelected();
 				mainControl.getPropertiesControl().setNoFolgeDWZ(noDWZ);
 				mainControl.getPropertiesControl().setNoDWZ(noDWZ);
 				eigenschaftenView.getCheckBoxohneFolgeDWZ().setSelected(noDWZ);
@@ -69,15 +69,15 @@ public class ItemListenerSettingsControl {
 
 						for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
 
-							mainControl.getCrossTableControl().berechneFolgeDWZ(i);
+							mainControl.getCrossTableControl().berechneFolgeRatings(i);
 
 						}
 						eigenschaftenView.getCheckBoxohneFolgeDWZ().setEnabled(true);
 					}
 					try {
 						mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
-					} catch (SQLException e1) {
-						ExceptionHandler eh = new ExceptionHandler(mainControl);
+					} catch (final SQLException e1) {
+						final ExceptionHandler eh = new ExceptionHandler(mainControl);
 						eh.fileSQLError(e1.getMessage());
 					}
 
@@ -90,9 +90,9 @@ public class ItemListenerSettingsControl {
 		eigenschaftenView.getCheckBoxohneFolgeDWZ().addItemListener(new ItemListener() {
 
 			@Override
-			public void itemStateChanged(ItemEvent e) {
+			public void itemStateChanged(final ItemEvent e) {
 
-				Boolean noFolgeDWZ = eigenschaftenView.getCheckBoxohneFolgeDWZ().isSelected();
+				final Boolean noFolgeDWZ = eigenschaftenView.getCheckBoxohneFolgeDWZ().isSelected();
 
 				mainControl.getPropertiesControl().setNoFolgeDWZ(noFolgeDWZ);
 				if (mainControl.getTournament() != null) {
@@ -103,14 +103,14 @@ public class ItemListenerSettingsControl {
 
 						for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
 
-							mainControl.getCrossTableControl().berechneFolgeDWZ(i);
+							mainControl.getCrossTableControl().berechneFolgeRatings(i);
 
 						}
 					}
 					try {
 						mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
-					} catch (SQLException e1) {
-						ExceptionHandler eh = new ExceptionHandler(mainControl);
+					} catch (final SQLException e1) {
+						final ExceptionHandler eh = new ExceptionHandler(mainControl);
 						eh.fileSQLError(e1.getMessage());
 					}
 				}
@@ -121,10 +121,10 @@ public class ItemListenerSettingsControl {
 		eigenschaftenView.getCheckBoxohneELO().addItemListener(new ItemListener() {
 
 			@Override
-			public void itemStateChanged(ItemEvent e) {
+			public void itemStateChanged(final ItemEvent e) {
 				eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(false);
 
-				Boolean noELO = eigenschaftenView.getCheckBoxohneELO().isSelected();
+				final Boolean noELO = eigenschaftenView.getCheckBoxohneELO().isSelected();
 				mainControl.getPropertiesControl().setNoFolgeELO(noELO);
 				mainControl.getPropertiesControl().setNoELO(noELO);
 				eigenschaftenView.getCheckBoxohneFolgeELO().setSelected(noELO);
@@ -140,15 +140,15 @@ public class ItemListenerSettingsControl {
 
 						for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
 
-							mainControl.getCrossTableControl().berechneFolgeELO(i);
+							mainControl.getCrossTableControl().berechneFolgeRatings(i);
 
 						}
 						eigenschaftenView.getCheckBoxohneFolgeELO().setEnabled(true);
 					}
 					try {
 						mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
-					} catch (SQLException e1) {
-						ExceptionHandler eh = new ExceptionHandler(mainControl);
+					} catch (final SQLException e1) {
+						final ExceptionHandler eh = new ExceptionHandler(mainControl);
 						eh.fileSQLError(e1.getMessage());
 					}
 
@@ -161,9 +161,9 @@ public class ItemListenerSettingsControl {
 		eigenschaftenView.getCheckBoxohneFolgeELO().addItemListener(new ItemListener() {
 
 			@Override
-			public void itemStateChanged(ItemEvent e) {
+			public void itemStateChanged(final ItemEvent e) {
 
-				Boolean noFolgeELO = eigenschaftenView.getCheckBoxohneFolgeELO().isSelected();
+				final Boolean noFolgeELO = eigenschaftenView.getCheckBoxohneFolgeELO().isSelected();
 
 				mainControl.getPropertiesControl().setNoFolgeELO(noFolgeELO);
 				if (mainControl.getTournament() != null) {
@@ -171,8 +171,8 @@ public class ItemListenerSettingsControl {
 
 					try {
 						mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
-					} catch (SQLException e1) {
-						ExceptionHandler eh = new ExceptionHandler(mainControl);
+					} catch (final SQLException e1) {
+						final ExceptionHandler eh = new ExceptionHandler(mainControl);
 						eh.fileSQLError(e1.getMessage());
 					}
 				}
@@ -183,9 +183,9 @@ public class ItemListenerSettingsControl {
 		eigenschaftenView.getCheckBoxhtmlToClipboard().addItemListener(new ItemListener() {
 
 			@Override
-			public void itemStateChanged(ItemEvent e) {
+			public void itemStateChanged(final ItemEvent e) {
 
-				Boolean copy = eigenschaftenView.getCheckBoxhtmlToClipboard().isSelected();
+				final Boolean copy = eigenschaftenView.getCheckBoxhtmlToClipboard().isSelected();
 
 				mainControl.getPropertiesControl().sethtmlToClipboard(copy);
 				mainControl.getPropertiesControl().writeProperties();
