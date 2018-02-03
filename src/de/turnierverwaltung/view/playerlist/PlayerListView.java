@@ -16,6 +16,7 @@ package de.turnierverwaltung.view.playerlist;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
@@ -183,10 +184,14 @@ public class PlayerListView extends JPanel {
 			if (startIndex < 1) {
 				startIndex = 1;
 			}
+			final JPanel panelleft = new JPanel();
+			panelleft.setLayout(new FlowLayout(FlowLayout.LEFT));
+
+			panelleft.add(centerPane, BorderLayout.NORTH);
 			final JPanel panel = new JPanel();
 			panel.setLayout(new BorderLayout());
 
-			panel.add(centerPane, BorderLayout.NORTH);
+			panel.add(panelleft, BorderLayout.NORTH);
 			final JScrollPane playerScrollPane = new JScrollPane();
 
 			playerScrollPane.setViewportView(panel);

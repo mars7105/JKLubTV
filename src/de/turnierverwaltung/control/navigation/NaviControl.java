@@ -29,7 +29,7 @@ import de.turnierverwaltung.control.tournamenttable.ActionListenerPairingsMenuCo
 import de.turnierverwaltung.view.navigation.NaviView;
 
 /**
- * 
+ *
  * @author mars
  *
  */
@@ -42,15 +42,15 @@ public class NaviControl {
 
 	public static final int SORTIEREN = 2;
 
-	private MainControl mainControl;
+	private final MainControl mainControl;
 
-	private NaviView naviView;
+	private final NaviView naviView;
 
 	/**
-	 * 
+	 *
 	 * @param mainControl
 	 */
-	public NaviControl(MainControl mainControl) {
+	public NaviControl(final MainControl mainControl) {
 
 		this.mainControl = mainControl;
 
@@ -68,13 +68,13 @@ public class NaviControl {
 		this.mainControl
 				.setActionListenerTournamentEditControl(new ActionListenerTournamentEditControl(this.mainControl));
 
-		JPanel hauptPanel = this.mainControl.getMainPanel();
-		JScrollPane scrollPane = new JScrollPane();
+		final JPanel hauptPanel = this.mainControl.getMainPanel();
+		final JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(naviView);
 		hauptPanel.add(scrollPane, BorderLayout.WEST);
 
 		hauptPanel.updateUI();
-		
+
 	}
 
 }
