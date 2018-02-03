@@ -18,15 +18,13 @@ package de.turnierverwaltung.control.tournamenttable;
 
 import java.util.ArrayList;
 
-import de.dwzberechnung.model.MainModel;
 import de.dwzberechnung.model.OpponentModel;
-import de.dwzberechnung.model.PlayerModel;
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.TournamentConstants;
 
-public class ResultControl {
+public class ResultControl implements Ratingsmethods {
 
 	private final Group gruppe;
 	private final Game[] partien;
@@ -47,10 +45,11 @@ public class ResultControl {
 		for (int loop = 0; loop < 10; loop++) {
 
 			for (int s = 0; s < spielerAnzahl; s++) {
-				if (gruppe.getSpieler()[s].getSpielerId() != TournamentConstants.SPIELFREI_ID) {
+				final Player player = gruppe.getSpieler()[s];
+				if (player.getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 
 					opponents = new ArrayList<OpponentModel>();
-					final Player player = gruppe.getSpieler()[s];
+
 					final double gesamtpunkte = 0;
 					double ergebnis = 0;
 					for (int i = 0; i < partienanzahl; i++) {
@@ -93,7 +92,7 @@ public class ResultControl {
 
 						}
 					}
-					// DWZ
+
 					calcRating(player, gesamtpunkte);
 
 				}
@@ -102,32 +101,14 @@ public class ResultControl {
 
 	}
 
-	public void addOpponent(final Player player, final double ergebnis, double gesamtpunkte) {
-		// DWZ
-
-		if (player.getDWZ() == 0) {
-			if (player.getFolgeDWZ() > 0) {
-				opponents.add(new OpponentModel(player.getFolgeDWZ(), ergebnis));
-				gesamtpunkte += ergebnis;
-
-			}
-		} else {
-
-			opponents.add(new OpponentModel(player.getDWZ(), ergebnis));
-			gesamtpunkte += ergebnis;
-		}
+	@Override
+	public void addOpponent(final Player player, final double ergebnis, final double gesamtpunkte) {
 
 	}
 
+	@Override
 	public void calcRating(final Player player, final double gesamtpunkte) {
-		// DWZ
-		if (opponents.size() > 0) {
-			final PlayerModel playerdwz = new PlayerModel(player.getAge(), player.getDWZ(), opponents.size());
-			playerdwz.setPunkte(gesamtpunkte);
-			final MainModel mainModel = new MainModel(playerdwz, opponents);
-			mainModel.calculateDWZ();
-			player.setFolgeDWZ(playerdwz.getFolgeDWZ());
-		}
+
 	}
 
 	public ArrayList<OpponentModel> getOpponents() {
