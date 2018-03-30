@@ -30,10 +30,10 @@ public class ELOData {
 		this.w_title = "";
 		this.o_title = "";
 		this.foa_title = "";
-		this.rating = -1;
-		this.games = -1;
-		this.k = -1;
-		this.birthday = -1;
+		this.rating = 0;
+		this.games = 0;
+		this.k = 0;
+		this.birthday = 0;
 		this.flag = "";
 
 		spielerId = -1;
