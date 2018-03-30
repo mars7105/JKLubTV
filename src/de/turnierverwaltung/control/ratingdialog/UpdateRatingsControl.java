@@ -79,7 +79,6 @@ public class UpdateRatingsControl {
 			ArrayList<Player> spielerliste = null;
 			SQLitePlayerELOList elolist = null;
 			CSVPlayerList csvPlayerlist = null;
-			SQLitePlayerDWZList dwzsqlitelist = null;
 			if (elofileextender.equals(".sqlite")) {
 				elolist = new SQLitePlayerELOList();
 
