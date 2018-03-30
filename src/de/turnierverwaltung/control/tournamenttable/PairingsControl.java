@@ -162,12 +162,12 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 			// Locale.getDefault());
 			// datum = "";
 			// Date date
-//			if (Locale.getDefault().equals(Locale.US)) {
-//				pairingsView[index].getDatum()[nummer].setDateFormatString("yyyy/mm/dd");
-//			}
-//			if (Locale.getDefault().equals(Locale.GERMANY)) {
-//				pairingsView[index].getDatum()[nummer].setDateFormatString("dd.mm.yyyy");
-//			}
+			// if (Locale.getDefault().equals(Locale.US)) {
+			// pairingsView[index].getDatum()[nummer].setDateFormatString("yyyy/mm/dd");
+			// }
+			// if (Locale.getDefault().equals(Locale.GERMANY)) {
+			// pairingsView[index].getDatum()[nummer].setDateFormatString("dd.mm.yyyy");
+			// }
 			EventDate eventDate = new EventDate(pairingsView[index].getDatum()[nummer].getDate());
 
 			// datum = eventDate.getDateString();
@@ -194,12 +194,12 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 		int runde;
 		datum = "";
 		try {
-//			if (Locale.getDefault().equals(Locale.US)) {
-//				pairingsView[index].getDatum()[nummer].setDateFormatString("yyyy/mm/dd");
-//			}
-//			if (Locale.getDefault().equals(Locale.GERMANY)) {
-//				pairingsView[index].getDatum()[nummer].setDateFormatString("dd.mm.yyyy");
-//			}
+			// if (Locale.getDefault().equals(Locale.US)) {
+			// pairingsView[index].getDatum()[nummer].setDateFormatString("yyyy/mm/dd");
+			// }
+			// if (Locale.getDefault().equals(Locale.GERMANY)) {
+			// pairingsView[index].getDatum()[nummer].setDateFormatString("dd.mm.yyyy");
+			// }
 			EventDate eventDate = new EventDate(pairingsView[index].getDatum()[nummer].getDate());
 
 			datum = eventDate.getDateString();
@@ -214,6 +214,36 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 		} catch (ZahlKleinerAlsN e) {
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("RundenEingabeFormularControl.2")); //$NON-NLS-1$
+
+		}
+
+	}
+
+	public void changeDate(int index, int nummer) {
+
+		String datum;
+		games = groups[index].getPartien();
+		// int runde;
+		datum = "";
+		try {
+			// if (Locale.getDefault().equals(Locale.US)) {
+			// pairingsView[index].getDatum()[nummer].setDateFormatString("yyyy/mm/dd");
+			// }
+			// if (Locale.getDefault().equals(Locale.GERMANY)) {
+			// pairingsView[index].getDatum()[nummer].setDateFormatString("dd.mm.yyyy");
+			// }
+			EventDate eventDate = new EventDate(pairingsView[index].getDatum()[nummer].getDate());
+
+			datum = eventDate.getDateString();
+
+			// runde = pruefeObZahlKleinerEinsIst(
+			// Integer.parseInt((String)
+			// pairingsView[index].getRundenNummer()[nummer].getSelectedItem()));
+			games[nummer].setSpielDatum(datum);
+			// games[nummer].setRunde(runde);
+
+		} catch (NumberFormatException e) {
+			JOptionPane.showMessageDialog(mainControl, Messages.getString("RundenEingabeFormularControl.1")); //$NON-NLS-1$
 
 		}
 
@@ -420,7 +450,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 				for (int i = 0; i < anzahl; i++) {
 					if (arg0.getSource().equals(datePicker[index][i].getJDateChooser())) {
 
-						changeWerte(index, i);
+						changeDate(index, i);
 						changedGames.add(groups[index].getPartien()[i]);
 						changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
 						for (int y = i; y < (pairingsView[index].getTabbedPane().getSelectedIndex() + 1) * max

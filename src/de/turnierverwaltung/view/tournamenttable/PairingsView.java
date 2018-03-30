@@ -50,20 +50,20 @@ public class PairingsView extends JPanel {
 	private JLabel[] weissSpieler;
 	private JLabel[] schwarzSpieler;
 	private DateChooserPanel[] datum;
-	private final Properties property;
+	private Properties property;
 	private JButton[] changeColor;
 	private int anzahlZeilen;
 	private int anzahlElemente;
-	private final int ungerade;
-	private final int gerade;
-	private final int rundenanzahl;
-	private final int partienanzahl;
+	private int ungerade;
+	private int gerade;
+	private int rundenanzahl;
+	private int partienanzahl;
 	private TitleLabelView statusLabel;
 
 	// private JButton reloadButton;
 
 	@SuppressWarnings("unchecked")
-	public PairingsView(final int spielerAnzahl) {
+	public PairingsView(int spielerAnzahl) {
 		this.spielerAnzahl = spielerAnzahl;
 		anzahlZeilen = this.spielerAnzahl * (this.spielerAnzahl - 1) / 2;
 		changeColor = new JButton[anzahlZeilen];
@@ -161,15 +161,15 @@ public class PairingsView extends JPanel {
 		add(southPanel, BorderLayout.SOUTH);
 	}
 
-	public void makeZeilen(final String[][] terminMatrix) {
-		final String[] zeile = new String[5];
+	public void makeZeilen(String[][] terminMatrix) {
+		String[] zeile = new String[5];
 
 		tabbedPane = new JTabbedPane();
-		final FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
+		FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
 		flowLayout.setVgap(1);
 		// int index = 1;
-		for (int r = 0; r < rundenanzahl + 0; r++) {
-			final JPanel panel = new JPanel();
+		for (int r = 0; r < rundenanzahl; r++) {
+			JPanel panel = new JPanel();
 			panel.setLayout(new BorderLayout());
 			flowPane = new JPanel();
 			flowPane.setLayout(new BoxLayout(flowPane, BoxLayout.PAGE_AXIS));
@@ -178,25 +178,27 @@ public class PairingsView extends JPanel {
 			// flowPane.setAlignmentY(Component.TOP_ALIGNMENT);
 
 			for (int i = 0; i < partienanzahl; i++) {
-				zeile[0] = terminMatrix[0][i + 1];
-				zeile[1] = terminMatrix[1][i + 1];
-				zeile[2] = terminMatrix[2][i + 1];
-				zeile[3] = terminMatrix[3][i + 1];
-				zeile[4] = terminMatrix[4][i + 1];
+				zeile[0] = terminMatrix[0][i + 1 + (r * partienanzahl)];
+				zeile[1] = terminMatrix[1][i + 1 + (r * partienanzahl)];
+				zeile[2] = terminMatrix[2][i + 1 + (r * partienanzahl)];
+				zeile[3] = terminMatrix[3][i + 1 + (r * partienanzahl)];
+				zeile[4] = terminMatrix[4][i + 1 + (r * partienanzahl)];
 				downPane = new JPanel();
 
 				downPane.setLayout(flowLayout);
 				downPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 				// downPane.setAlignmentY(Component.TOP_ALIGNMENT);
-				// if (!zeile[0].equals(Messages.getString("RundenEingabeFormularView.7"))) {
+				// if
+				// (!zeile[0].equals(Messages.getString("RundenEingabeFormularView.7")))
+				// {
 				// //$NON-NLS-1$
 
-				final DateChooserPanel datePanel = new DateChooserPanel();
+				DateChooserPanel datePanel = new DateChooserPanel();
 				datePanel.setLocale(Locale.getDefault());
 				// datePanel.setDateFormatString(zeile[4]);
 				// DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy",
 				// Locale.getDefault());
-				final EventDate eventDate = new EventDate(zeile[4]);
+				EventDate eventDate = new EventDate(zeile[4]);
 				// Date d = eventDate.getDate();
 				if (Locale.getDefault().equals(Locale.US)) {
 					datePanel.setDateFormatString(eventDate.getEnglishFormat());
@@ -209,7 +211,8 @@ public class PairingsView extends JPanel {
 
 				// datePanel.setForeground(Color.WHITE);
 				datum[anzahlElemente] = datePanel;
-				// JFormattedTextField textField = datum[anzahlElemente].getComponent(n)
+				// JFormattedTextField textField =
+				// datum[anzahlElemente].getComponent(n)
 				// Color preserveBackgroundColor = Color.gray;
 				// textField.setFont(new Font("Some-Font-Name", Font.BOLD, 12));
 				// textField.setBackground(preserveBackgroundColor );
@@ -246,7 +249,7 @@ public class PairingsView extends JPanel {
 			}
 
 			panel.add(flowPane, BorderLayout.NORTH);
-			final JScrollPane scrollPane = new JScrollPane();
+			JScrollPane scrollPane = new JScrollPane();
 			scrollPane.setViewportView(panel);
 			scrollPane.setAlignmentY(TOP_ALIGNMENT);
 			tabbedPane.add(Messages.getString("RundenEingabeFormularView.17") + (r + 1), scrollPane); //$NON-NLS-1$
