@@ -42,6 +42,7 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 		super();
 		this.mainControl = mainControl;
 		this.dewisDialogControl = dewisDialogControl;
+
 		indices = new ArrayList<Integer>();
 	}
 
@@ -84,6 +85,7 @@ public class ActionListenerPlayerSearchControl implements ListSelectionListener,
 					}
 
 					mainControl.getPlayerListControl().updateSpielerListe();
+					dewisDialogControl.makePlayerSearchSelectedList();
 				} catch (final SQLException e) {
 					final ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());

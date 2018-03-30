@@ -16,6 +16,7 @@ package de.turnierverwaltung.view.ratingdialog;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
@@ -33,6 +34,7 @@ import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.model.rating.DWZData;
 import de.turnierverwaltung.view.Messages;
+import de.turnierverwaltung.view.TitleLabelView;
 import de.turnierverwaltung.view.tournamenttable.MyCellRenderer;
 
 public class DSBDWZPlayerView extends JPanel {
@@ -54,6 +56,10 @@ public class DSBDWZPlayerView extends JPanel {
 
 	private ImageIcon insertIcon3 = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user.png")));
+	private JList<ListItem> selectedList;
+	private DefaultListModel<ListItem> selectedListModel;
+	private JScrollPane selectedScrollPane;
+	private JPanel selectedContentPanel;
 
 	public DSBDWZPlayerView() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
@@ -78,13 +84,18 @@ public class DSBDWZPlayerView extends JPanel {
 
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new BorderLayout());
-
+		TitleLabelView listTitle = new TitleLabelView("Vereinsliste");
+		contentPanel.add(listTitle,BorderLayout.NORTH);
+		selectedContentPanel = new JPanel();
+		selectedContentPanel.setLayout(new BorderLayout());
 		listModel = new DefaultListModel<ListItem>();
-
+		selectedListModel = new DefaultListModel<ListItem>();
 		scrollPane = new JScrollPane();
 		scrollPane.setViewportView(contentPanel);
 		add(scrollPane, BorderLayout.CENTER);
-
+		selectedScrollPane = new JScrollPane();
+		selectedScrollPane.setViewportView(selectedContentPanel);
+		add(selectedScrollPane, BorderLayout.EAST);
 	}
 
 	public JPanel getContentPanel() {
@@ -106,12 +117,30 @@ public class DSBDWZPlayerView extends JPanel {
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setVisibleRowCount(-1);
 		list.setCellRenderer(new MyCellRenderer());
-		contentPanel.add(list);
+		contentPanel.add(list, BorderLayout.CENTER);
 		contentPanel.updateUI();
 	}
 
+	@SuppressWarnings("unchecked")
+	public void makeSelectedList() {
+		selectedListModel = new DefaultListModel<ListItem>();
+		selectedList = new JList<ListItem>(selectedListModel);
+		selectedList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+		selectedList.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		selectedList.setVisibleRowCount(-1);
+		selectedList.setCellRenderer(new MyCellRenderer());
+		selectedContentPanel = new JPanel();
+		TitleLabelView title = new TitleLabelView("Spielerliste");
+
+		selectedContentPanel.setLayout(new BorderLayout());
+		selectedContentPanel.add(title, BorderLayout.NORTH);
+		selectedContentPanel.add(selectedList, BorderLayout.CENTER);
+		selectedScrollPane.setViewportView(selectedContentPanel);
+		selectedContentPanel.updateUI();
+	}
+
 	public void makeSpielerZeile(DWZData dwzData, int iconnumber) {
-		
+
 		ListItem playerItem = null;
 		if (iconnumber == 0) {
 			playerItem = new ListItem(inserIcon,
@@ -149,6 +178,45 @@ public class DSBDWZPlayerView extends JPanel {
 
 	}
 
+	public void makeSelectedSpielerZeile(DWZData dwzData, int iconnumber) {
+
+		ListItem playerItem = null;
+		if (iconnumber == 0) {
+			playerItem = new ListItem(inserIcon,
+					dwzData.getCsvSpielername() + Messages.getString("SpielerDewisView.2") + dwzData.getCsvDWZ());
+		}
+		if (iconnumber == 1) {
+			playerItem = new ListItem(insertIcon2,
+					dwzData.getCsvSpielername() + Messages.getString("SpielerDewisView.2") + dwzData.getCsvDWZ());
+		}
+		if (iconnumber == 2) {
+			playerItem = new ListItem(insertIcon3,
+					dwzData.getCsvSpielername() + Messages.getString("SpielerDewisView.2") + dwzData.getCsvDWZ());
+
+		}
+		selectedListModel.addElement(playerItem);
+
+	}
+
+	public void makeSelectedSpielerZeile(Player spieler, int iconnumber) {
+		ListItem playerItem = null;
+		if (iconnumber == 0) {
+			playerItem = new ListItem(inserIcon,
+					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
+		}
+		if (iconnumber == 1) {
+			playerItem = new ListItem(insertIcon2,
+					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
+		}
+		if (iconnumber == 2) {
+			playerItem = new ListItem(insertIcon3,
+					spieler.getName() + Messages.getString("SpielerDewisView.2") + spieler.getDwz());
+
+		}
+		selectedListModel.addElement(playerItem);
+
+	}
+
 	public void setContentPanel(JPanel contentPanel) {
 		this.contentPanel = contentPanel;
 	}
@@ -159,6 +227,22 @@ public class DSBDWZPlayerView extends JPanel {
 
 	public void setListModel(DefaultListModel<ListItem> listModel) {
 		this.listModel = listModel;
+	}
+
+	public JList<ListItem> getSelectedList() {
+		return selectedList;
+	}
+
+	public void setSelectedList(JList<ListItem> selectedList) {
+		this.selectedList = selectedList;
+	}
+
+	public DefaultListModel<ListItem> getSelectedListModel() {
+		return selectedListModel;
+	}
+
+	public void setSelectedListModel(DefaultListModel<ListItem> selectedListModel) {
+		this.selectedListModel = selectedListModel;
 	}
 
 }

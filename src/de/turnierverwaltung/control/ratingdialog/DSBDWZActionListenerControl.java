@@ -99,7 +99,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 
 						}
 						dewisDialogControl.getSpielerDewisView().updateUI();
-
+						dewisDialogControl.makeSelectedList();
 					}
 
 				}
