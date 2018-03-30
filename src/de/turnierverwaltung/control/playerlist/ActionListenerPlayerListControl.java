@@ -154,6 +154,10 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 				ExceptionHandler eh = new ExceptionHandler(mainControl);
 				eh.fileSQLError(e.getMessage());
 			}
+			catch (NullPointerException e) {
+				ExceptionHandler eh = new ExceptionHandler(mainControl);
+				eh.fileSQLError(e.getMessage());
+			}
 		}
 	}
 

@@ -277,6 +277,53 @@ public class SQLiteDWZDataDAO implements DWZDataDAO {
 
 	}
 
+	public ArrayList<DWZData> getPlayerByZPSMGL(final String zps, final String mgl) throws SQLException {
+		final String sql = "Select * from dwz_spieler WHERE ZPS LIKE '" + zps + "' AND Mgl_Nr LIKE '" + mgl
+				+ "' ORDER BY Spielername ASC;";
+
+		final ArrayList<DWZData> dwzDataArray = new ArrayList<DWZData>();
+		Statement stmt;
+
+		if (dbConnect != null) {
+
+			stmt = dbConnect.createStatement();
+
+			final ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				final DWZData dwzData = new DWZData();
+				int sId = -1;
+				final String spielerid = rs.getString("idSpieler");
+				try {
+					sId = Integer.parseInt(spielerid);
+				} catch (final NumberFormatException e) {
+					sId = -1;
+				}
+				dwzData.setSpielerId(sId);
+				dwzData.setCsvZPS(rs.getString("ZPS"));
+				dwzData.setCsvMgl_Nr(rs.getString("Mgl_Nr"));
+				dwzData.setCsvStatus(rs.getString("Status"));
+				dwzData.setCsvSpielername(rs.getString("Spielername"));
+				dwzData.setCsvGeschlecht(rs.getString("Geschlecht"));
+				dwzData.setCsvSpielberechtigung(rs.getString("Spielberechtigung"));
+				dwzData.setCsvGeburtsjahr(rs.getInt("Geburtsjahr"));
+				dwzData.setCsvLetzte_Auswertung(rs.getInt("Letzte_Auswertung"));
+				dwzData.setCsvDWZ(rs.getInt("DWZ"));
+				dwzData.setCsvIndex(rs.getInt("DWZ_Index"));
+				dwzData.setCsvFIDE_Elo(rs.getInt("FIDE_Elo"));
+				dwzData.setCsvFIDE_Titel(rs.getString("FIDE_Titel"));
+				dwzData.setCsvFIDE_ID(rs.getInt("FIDE_ID"));
+				dwzData.setCsvFIDE_Land(rs.getString("FIDE_Land"));
+				dwzDataArray.add(dwzData);
+
+			}
+			stmt.close();
+
+		}
+
+		return dwzDataArray;
+
+	}
+
 	@Override
 	public void insertDWZ(final DWZData dwzData) throws SQLException {
 		String sql;

@@ -234,45 +234,49 @@ public class PlayerListControl implements ActionListener {
 	}
 
 	public void updateSpielerListe() throws SQLException {
-		final PropertiesControl prop = mainControl.getPropertiesControl();
-		final int cutForename = Integer.parseInt(prop.getCutForename());
-		final int cutSurname = Integer.parseInt(prop.getCutSurname());
-		Player.cutFname = cutForename;
-		Player.cutSname = cutSurname;
-		spielerTableControl = new SQLPlayerControl(mainControl);
-		spieler = new ArrayList<Player>();
-		spieler = spielerTableControl.getAllSpieler();
-		// testPlayerListForDoubles();
-		spielerAnzahl = spieler.size();
-		int selectedTab = 0;
-		if (spielerLadenView == null) {
-			spielerLadenView = new PlayerListView(spielerAnzahl, mainControl.getPropertiesControl().getSpielerProTab());
-			hauptPanel.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, spielerLadenView);
-			final ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel, mainControl, spielerListeIcon,
-					false);
-			hauptPanel.setTabComponentAt(TournamentConstants.TAB_PLAYER_LIST, buttonComp);
+		try {
+			final PropertiesControl prop = mainControl.getPropertiesControl();
+			final int cutForename = Integer.parseInt(prop.getCutForename());
+			final int cutSurname = Integer.parseInt(prop.getCutSurname());
+			Player.cutFname = cutForename;
+			Player.cutSname = cutSurname;
+			spielerTableControl = new SQLPlayerControl(mainControl);
+			spieler = new ArrayList<Player>();
+			spieler = spielerTableControl.getAllSpieler();
+			// testPlayerListForDoubles();
+			spielerAnzahl = spieler.size();
+			int selectedTab = 0;
+			if (spielerLadenView == null) {
+				spielerLadenView = new PlayerListView(spielerAnzahl,
+						mainControl.getPropertiesControl().getSpielerProTab());
+				hauptPanel.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, spielerLadenView);
+				final ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel, mainControl, spielerListeIcon,
+						false);
+				hauptPanel.setTabComponentAt(TournamentConstants.TAB_PLAYER_LIST, buttonComp);
 
-		} else {
-			selectedTab = spielerLadenView.getSpielerListe().getSelectedIndex();
-			spielerLadenView.removeAll();
-			spielerLadenView.init(spieler.size());
+			} else {
+				selectedTab = spielerLadenView.getSpielerListe().getSelectedIndex();
+				spielerLadenView.removeAll();
+				spielerLadenView.init(spieler.size());
+
+			}
+			spielerLadenView.getTitleView().setFlowLayoutLeft();
+
+			int index = 0;
+			for (final Player player : spieler) {
+
+				spielerLadenView.makeSpielerZeile(player, index);
+				spielerLadenView.getPlayerListItems().get(index).getSpielerBearbeitenButton().addActionListener(this);
+				spielerLadenView.getPlayerListItems().get(index).getSpielerLoeschenButton().addActionListener(this);
+				index++;
+			}
+			if (selectedTab > 0 && spielerLadenView.getSpielerListe().getComponentCount() > selectedTab) {
+				spielerLadenView.getSpielerListe().setSelectedIndex(selectedTab);
+			}
+			spielerLadenView.updateUI();
+		} catch (NullPointerException e) {
 
 		}
-		spielerLadenView.getTitleView().setFlowLayoutLeft();
-
-		int index = 0;
-		for (final Player player : spieler) {
-
-			spielerLadenView.makeSpielerZeile(player, index);
-			spielerLadenView.getPlayerListItems().get(index).getSpielerBearbeitenButton().addActionListener(this);
-			spielerLadenView.getPlayerListItems().get(index).getSpielerLoeschenButton().addActionListener(this);
-			index++;
-		}
-		if (selectedTab > 0 && spielerLadenView.getSpielerListe().getComponentCount() > selectedTab) {
-			spielerLadenView.getSpielerListe().setSelectedIndex(selectedTab);
-		}
-		spielerLadenView.updateUI();
-
 	}
 
 }

@@ -20,6 +20,8 @@ public interface DWZDataDAO {
 
 	public ArrayList<DWZData> getPlayerOfVerein(String zps) throws SQLException;
 
+	public ArrayList<DWZData> getPlayerByZPSMGL(final String zps, final String mgl) throws SQLException;
+
 	public void insertDWZ(DWZData dwzData) throws SQLException;
 
 	public boolean playerExist(DWZData dwzData) throws SQLException;
