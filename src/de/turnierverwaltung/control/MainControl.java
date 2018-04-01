@@ -18,6 +18,8 @@ package de.turnierverwaltung.control;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -26,7 +28,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-
 import de.turnierverwaltung.control.navigation.ActionListenerFileMenuControl;
 import de.turnierverwaltung.control.navigation.NaviControl;
 import de.turnierverwaltung.control.playerlist.ActionListenerPlayerListControl;
@@ -76,7 +77,7 @@ import de.turnierverwaltung.view.tournamenttable.PairingsView;
  * @author mars
  *
  */
-public class MainControl extends JFrame {
+public class MainControl extends JFrame implements WindowListener {
 
 	/**
 	 *
@@ -151,7 +152,8 @@ public class MainControl extends JFrame {
 		setMinimumSize(new Dimension(windowWidth / 2, windowHeight / 2));
 		// Make sure we have nice window decorations.
 		setDefaultLookAndFeelDecorated(true);
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addWindowListener(this);
+		// setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		propertiesControl = new PropertiesControl(this);
 		languagePropertiesControl = new LanguagePropertiesControl(this);
 		if (propertiesControl.readProperties() == false) {
@@ -393,14 +395,15 @@ public class MainControl extends JFrame {
 		settingsControl = new SettingsControl(this);
 		SQLiteDAOFactory.setDB_PATH("");
 		setTitle(Messages.getString("MainControl.8"));
-//		pack();
+		// pack();
 	}
 
 	private void makeProperties() {
 		// datenbankMenueView(false);
 
 		if (propertiesControl.checkPathToDatabase() == true) {
-			setBounds(propertiesControl.getFrameX(), propertiesControl.getFrameY(), propertiesControl.getFrameWidth(), propertiesControl.getFrameHeight());
+			setBounds(propertiesControl.getFrameX(), propertiesControl.getFrameY(), propertiesControl.getFrameWidth(),
+					propertiesControl.getFrameHeight());
 
 			final String path = propertiesControl.getPathToDatabase();
 			SQLiteDAOFactory.setDB_PATH(path);
@@ -721,6 +724,50 @@ public class MainControl extends JFrame {
 
 	public void setWindowWidth(final int windowWidth) {
 		this.windowWidth = windowWidth;
+	}
+
+	@Override
+	public void windowActivated(WindowEvent arg0) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+//		getPropertiesControl().writeProperties();
+//		System.exit(0);
+
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		getPropertiesControl().writeProperties();
+		System.exit(0);
+
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

@@ -201,6 +201,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 		if (arg0.getSource().equals(exitButton)) {
 			final int abfrage = beendenHinweis();
 			if (abfrage == 0) {
+				mainControl.getPropertiesControl().writeProperties();
 				System.exit(0);
 			}
 
