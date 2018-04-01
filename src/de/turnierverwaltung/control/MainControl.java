@@ -144,7 +144,10 @@ public class MainControl extends JFrame {
 	public MainControl() {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
 		windowHeight = TournamentConstants.WINDOW_HEIGHT;
-		setBounds(TournamentConstants.WINDOW_BOUNDS_X, TournamentConstants.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
+		// setBounds(TournamentConstants.WINDOW_BOUNDS_X,
+		// TournamentConstants.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
+		setSize(windowWidth, windowHeight);
+		setLocationRelativeTo(null);
 		setMinimumSize(new Dimension(windowWidth / 2, windowHeight / 2));
 		// Make sure we have nice window decorations.
 		setDefaultLookAndFeelDecorated(true);
@@ -390,13 +393,15 @@ public class MainControl extends JFrame {
 		settingsControl = new SettingsControl(this);
 		SQLiteDAOFactory.setDB_PATH("");
 		setTitle(Messages.getString("MainControl.8"));
+//		pack();
 	}
 
 	private void makeProperties() {
 		// datenbankMenueView(false);
 
 		if (propertiesControl.checkPathToDatabase() == true) {
-			// datenbankMenueView(true);
+			setBounds(propertiesControl.getFrameX(), propertiesControl.getFrameY(), propertiesControl.getFrameWidth(), propertiesControl.getFrameHeight());
+
 			final String path = propertiesControl.getPathToDatabase();
 			SQLiteDAOFactory.setDB_PATH(path);
 			setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$

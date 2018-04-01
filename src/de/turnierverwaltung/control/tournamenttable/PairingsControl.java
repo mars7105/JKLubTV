@@ -461,7 +461,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 							}
 						}
 						pairingsView[index].getStatusLabel().setText(new Integer(changedGames.size()).toString());
-						pairingsView[index].getStatusLabel().setBackground(Color.ORANGE);
+//						pairingsView[index].getStatusLabel().setBackground(Color.ORANGE);
 					}
 				}
 

@@ -3,6 +3,7 @@ package de.turnierverwaltung.view.playerlist;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.SystemColor;
 import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
@@ -39,7 +40,10 @@ public class PlayerListItemView extends JPanel {
 		final JPanel playerLine = new JPanel();
 		playerLine.setLayout(new BoxLayout(playerLine, BoxLayout.PAGE_AXIS));
 		playerLine.setPreferredSize(new Dimension(350, 50));
-		playerLine.setBackground(Color.WHITE);
+		Color titleColor = new Color((SystemColor.text).getRGB());
+		Color titleTextColor = new Color((SystemColor.textText).getRGB());
+		playerLine.setBackground(titleColor);
+		playerLine.setForeground(titleTextColor);
 
 		final JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		final String lineText0 = spieler.getName();

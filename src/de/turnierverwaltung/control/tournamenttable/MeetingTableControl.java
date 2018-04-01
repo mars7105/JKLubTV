@@ -236,7 +236,7 @@ public class MeetingTableControl {
 		int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
 		for (int i = 0; i < anzahlGruppen; i++) {
 			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
-			simpleTableView[i].getStatusLabel().setBackground(Color.ORANGE);
+//			simpleTableView[i].getStatusLabel().setBackground(Color.ORANGE);
 		}
 
 	}

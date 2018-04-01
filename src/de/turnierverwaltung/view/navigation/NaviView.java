@@ -19,6 +19,7 @@ package de.turnierverwaltung.view.navigation;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.SystemColor;
 import java.awt.Toolkit;
 
 import javax.swing.BoxLayout;
@@ -115,7 +116,10 @@ public class NaviView extends JToolBar {
 	private JButton spielerELOSearchButton;
 
 	public NaviView() {
-		this.setBackground(Color.LIGHT_GRAY);
+		Color titleColor = new Color((SystemColor.control).getRGB());
+		Color titleTextColor = new Color((SystemColor.controlText).getRGB());
+		setBackground(titleColor);
+		setForeground(titleTextColor);
 
 		this.setLayout(new BorderLayout());
 		this.setRollover(true);
@@ -171,7 +175,7 @@ public class NaviView extends JToolBar {
 		pairingsCancelButton.setHorizontalAlignment(SwingConstants.LEFT);
 
 		dateiPanel = new JPanel();
-		dateiPanel.setBackground(Color.LIGHT_GRAY);
+//		dateiPanel.setBackground(Color.LIGHT_GRAY);
 		BoxLayout dateiPanelLayout = new BoxLayout(dateiPanel, BoxLayout.PAGE_AXIS);
 		dateiPanel.setLayout(dateiPanelLayout);
 		// Turnierliste
@@ -179,7 +183,7 @@ public class NaviView extends JToolBar {
 		turnierAddButton.setPreferredSize(new Dimension(200, 40));
 		turnierAddButton.setHorizontalAlignment(SwingConstants.LEFT);
 		turnierListePanel = new JPanel();
-		turnierListePanel.setBackground(Color.LIGHT_GRAY);
+//		turnierListePanel.setBackground(Color.LIGHT_GRAY);
 		BoxLayout turnierListePanelLayout = new BoxLayout(turnierListePanel, BoxLayout.PAGE_AXIS);
 		turnierListePanel.setLayout(turnierListePanelLayout);
 		NaviPanelElementView panel3 = new NaviPanelElementView();
@@ -196,7 +200,7 @@ public class NaviView extends JToolBar {
 		spielerAddButton.setPreferredSize(new Dimension(200, 40));
 		spielerAddButton.setHorizontalAlignment(SwingConstants.LEFT);
 		spielerListePanel = new JPanel();
-		spielerListePanel.setBackground(Color.LIGHT_GRAY);
+//		spielerListePanel.setBackground(Color.LIGHT_GRAY);
 		BoxLayout spielerListePanelLayout = new BoxLayout(spielerListePanel, BoxLayout.PAGE_AXIS);
 		spielerListePanel.setLayout(spielerListePanelLayout);
 		panel3 = new NaviPanelElementView();
@@ -297,7 +301,7 @@ public class NaviView extends JToolBar {
 		NaviPanelElementView panel4i = new NaviPanelElementView();
 		panel4i.add(iCalendarSpeichernButton);
 		NaviPanelElementView panel4h = new NaviPanelElementView();
-		panel4h.setBackground(Color.LIGHT_GRAY);
+//		panel4h.setBackground(Color.LIGHT_GRAY);
 		panel4h.add(pairingsLoadButton);
 
 		NaviPanelElementView panel4k = new NaviPanelElementView();
@@ -318,7 +322,7 @@ public class NaviView extends JToolBar {
 		NaviPanelElementView datenbankPanelLabel = new NaviPanelElementView();
 
 		JLabel datenbankLabel = new JLabel(Messages.getString("NaviView.26")); //$NON-NLS-1$
-		datenbankLabel.setBackground(Color.LIGHT_GRAY);
+//		datenbankLabel.setBackground(Color.LIGHT_GRAY);
 		datenbankPanelLabel.add(datenbankLabel);
 
 		titleView = new NaviTitleLabelView(tabellenname);

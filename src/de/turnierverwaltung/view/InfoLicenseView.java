@@ -20,6 +20,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.FlowLayout;
+import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -120,7 +121,10 @@ public class InfoLicenseView {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		JPanel temp = new JPanel();
-		temp.setBackground(Color.WHITE);
+		Color titleColor = new Color((SystemColor.text).getRGB());
+		Color titleTextColor = new Color((SystemColor.textText).getRGB());
+		temp.setBackground(titleColor);
+		temp.setForeground(titleTextColor);
 		temp.setLayout(new BoxLayout(temp, BoxLayout.X_AXIS));
 		JTextArea lizenzLabel = new JTextArea(Messages.getString("InfoLizenzenView.2") //$NON-NLS-1$
 				+ Messages.getString("InfoLizenzenView.3") //$NON-NLS-1$

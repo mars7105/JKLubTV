@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -147,15 +148,17 @@ public class ButtonTabComponent extends JPanel {
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
+			Color windowBorder = new Color((SystemColor.controlText).getRGB());
+			Color hoover = new Color((SystemColor.controlLtHighlight).getRGB());
 			Graphics2D g2 = (Graphics2D) g.create();
 			// shift the image for pressed buttons
 			if (getModel().isPressed()) {
 				g2.translate(1, 1);
 			}
 			g2.setStroke(new BasicStroke(2));
-			g2.setColor(Color.BLACK);
+			g2.setColor(windowBorder);
 			if (getModel().isRollover()) {
-				g2.setColor(Color.MAGENTA);
+				g2.setColor(hoover);
 			}
 			int delta = 6;
 			g2.drawLine(delta, delta, getWidth() - delta - 1, getHeight() - delta - 1);

@@ -19,6 +19,7 @@ package de.turnierverwaltung.view.tournamenttable;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.SystemColor;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -65,7 +66,11 @@ public class CrossTableView extends JPanel {
 		comboBox.addItem(TournamentConstants.VERLUST_KAMPFLOS_BEIDE);
 
 		setColumnWidth(abstand);
-		this.setBackground(Color.white);
+		Color titleColor = new Color((SystemColor.text).getRGB());
+		Color titleTextColor = new Color((SystemColor.textText).getRGB());
+		setBackground(titleColor);
+		setForeground(titleTextColor);
+//		this.setBackground(Color.white);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		// table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table.setRowHeight(30);

@@ -4,6 +4,7 @@ package de.turnierverwaltung.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.SystemColor;
 
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -33,13 +34,14 @@ public class TitleLabelView extends JPanel {
 	private JLabel titleLabel;
 
 	public TitleLabelView(String title) {
-
+		Color titleColor = new Color((SystemColor.menu).getRGB());
+		Color titleTextColor = new Color((SystemColor.menuText).getRGB());
 		setLayout(new BorderLayout());
 		// setBackground(new Color(130, 165, 195));
 		titleLabel = new JLabel(title);
 		titlePanel = new JPanel();
-		titlePanel.setBackground(new Color(130, 165, 195));
-		titleLabel.setForeground(new Color(255, 255, 0));
+		titlePanel.setBackground(titleColor);
+		titleLabel.setForeground(titleTextColor);
 		titlePanel.setLayout(new FlowLayout(FlowLayout.CENTER));
 		titlePanel.add(titleLabel);
 		add(titlePanel, BorderLayout.NORTH);

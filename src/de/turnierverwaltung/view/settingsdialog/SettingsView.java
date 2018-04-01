@@ -21,6 +21,7 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -896,17 +897,18 @@ public class SettingsView extends JPanel {
 	private void tableLabel() {
 		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.21"));
 		titleView.setFlowLayoutLeft();
-
+		Color windowBorder = new Color((SystemColor.windowBorder).getRGB());
+		
 		htmlAll.add(titleView);
 		JPanel bothPanel = new JPanel();
 		bothPanel.setLayout(new BorderLayout());
 		JPanel leftPanel = new JPanel();
 		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
-		leftPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		leftPanel.setBorder(BorderFactory.createLineBorder(windowBorder));
 		JPanel rightPanel = new JPanel();
-		rightPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		rightPanel.setBorder(BorderFactory.createLineBorder(windowBorder));
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
-
+		
 		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		Dimension dimTextField = new Dimension(175, 30);

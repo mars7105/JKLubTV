@@ -3,6 +3,7 @@ package de.turnierverwaltung.view.tournamentlist;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.SystemColor;
 import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
@@ -39,7 +40,10 @@ public class TournamentListItemView extends JPanel {
 		mainLine.setBorder(raisedetched);
 		final JPanel turnierLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		turnierLine.setPreferredSize(new Dimension(350, 50));
-		turnierLine.setBackground(Color.WHITE);
+		Color titleColor = new Color((SystemColor.text).getRGB());
+		Color titleTextColor = new Color((SystemColor.textText).getRGB());
+		turnierLine.setBackground(titleColor);
+		turnierLine.setForeground(titleTextColor);
 		final JPanel buttonLine = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
 		turnierLadeButton = new JButton(Messages.getString("TurnierListeLadenView.4"), turnierLaden);

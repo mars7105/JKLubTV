@@ -19,6 +19,7 @@ package de.turnierverwaltung.view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.SystemColor;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
@@ -41,6 +42,9 @@ public class InfoHTMLView {
 	}
 
 	public JPanel getLizenzText() throws URISyntaxException {
+		
+//		setBackground(titleColor);
+//		setForeground(titleTextColor);
 		ContextMenuMouseListener cmmL = new ContextMenuMouseListener();
 		java.net.URL helpURL = getClass().getResource("/files/JKlubTV.html");
 		if (language.equals("german")) {
@@ -52,7 +56,10 @@ public class InfoHTMLView {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 		JPanel temp = new JPanel();
-		temp.setBackground(Color.WHITE);
+		Color titleColor = new Color((SystemColor.text).getRGB());
+		Color titleTextColor = new Color((SystemColor.textText).getRGB());
+		temp.setBackground(titleColor);
+		temp.setForeground(titleTextColor);
 		temp.setLayout(new BoxLayout(temp, BoxLayout.X_AXIS));
 		JEditorPane editorPane = new JEditorPane();
 		editorPane.setEditable(false);

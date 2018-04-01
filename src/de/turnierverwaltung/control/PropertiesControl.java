@@ -63,6 +63,10 @@ public class PropertiesControl {
 	public static final String PDFLINKS = "pdflinks";
 	public static final String WEBSERVER_PATH = "webserver-path";
 	public static final String HTMLTOCLIPBOARD = "htmltoclipboard";
+	public static final String FRAME_X = "frame-x";
+	public static final String FRAME_Y = "frame-y";
+	public static final String FRAME_WIDTH = "frame-width";
+	public static final String FRAME_HEIGHT = "frame-height";
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
@@ -106,6 +110,10 @@ public class PropertiesControl {
 		prop.setProperty(PDFLINKS, FALSE);
 		prop.setProperty(WEBSERVER_PATH, "");
 		prop.setProperty(HTMLTOCLIPBOARD, FALSE);
+		prop.setProperty(FRAME_X, Integer.toString(TournamentConstants.WINDOW_BOUNDS_X));
+		prop.setProperty(FRAME_Y, Integer.toString(TournamentConstants.WINDOW_BOUNDS_Y));
+		prop.setProperty(FRAME_WIDTH, Integer.toString(TournamentConstants.WINDOW_WIDTH));
+		prop.setProperty(FRAME_HEIGHT, Integer.toString(TournamentConstants.WINDOW_HEIGHT));
 	}
 
 	public void checkCrossTableColumnForDoubles() {
@@ -298,7 +306,7 @@ public class PropertiesControl {
 			prop.setProperty(SPIELERPROTAB, "1");
 			saveChanges = true;
 		}
-		
+
 		if (mainControl.getLanguagePropertiesControl().checkLanguage() == false) {
 			saveChanges = true;
 		}
@@ -371,9 +379,27 @@ public class PropertiesControl {
 			prop.setProperty(PDFLINKS, FALSE);
 			saveChanges = true;
 		}
-		
+
 		if (!(prop.getProperty(HTMLTOCLIPBOARD).equals(TRUE) || prop.getProperty(HTMLTOCLIPBOARD).equals(FALSE))) {
 			prop.setProperty(HTMLTOCLIPBOARD, FALSE);
+			saveChanges = true;
+		}
+
+		if (prop.getProperty(FRAME_X).equals("")) {
+			prop.setProperty(FRAME_X, Integer.toString(TournamentConstants.WINDOW_BOUNDS_X));
+			saveChanges = true;
+		}
+		if (prop.getProperty(FRAME_Y).equals("")) {
+			prop.setProperty(FRAME_Y, Integer.toString(TournamentConstants.WINDOW_BOUNDS_Y));
+			saveChanges = true;
+		}
+		if (prop.getProperty(FRAME_WIDTH).equals("")) {
+			prop.setProperty(FRAME_WIDTH, Integer.toString(TournamentConstants.WINDOW_WIDTH));
+			saveChanges = true;
+		}
+
+		if (prop.getProperty(FRAME_HEIGHT).equals("")) {
+			prop.setProperty(FRAME_HEIGHT, Integer.toString(TournamentConstants.WINDOW_HEIGHT));
 			saveChanges = true;
 		}
 		checkCrossTableColumnForDoubles();
@@ -383,12 +409,60 @@ public class PropertiesControl {
 		}
 	}
 
+	public int getFrameX() {
+		try {
+			return Integer.parseInt(prop.getProperty(FRAME_X));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_BOUNDS_X;
+		}
+	}
+
+	public int getFrameY() {
+		try {
+			return Integer.parseInt(prop.getProperty(FRAME_Y));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_BOUNDS_Y;
+		}
+	}
+
+	public int getFrameWidth() {
+		try {
+			return Integer.parseInt(prop.getProperty(FRAME_WIDTH));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_WIDTH;
+		}
+	}
+
+	public int getFrameHeight() {
+		try {
+			return Integer.parseInt(prop.getProperty(FRAME_HEIGHT));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_HEIGHT;
+		}
+	}
+
 	public String getCutForename() {
 		return prop.getProperty(CUT_FORENAME);
 	}
 
 	public String getCutSurname() {
 		return prop.getProperty(CUT_SURNAME);
+	}
+
+	public void setFrameX(int x) {
+		prop.setProperty(FRAME_X, Integer.toString(x));
+	}
+
+	public void setFrameY(int y) {
+		prop.setProperty(FRAME_Y, Integer.toString(y));
+	}
+
+	public void setFrameWidth(int width) {
+		prop.setProperty(FRAME_WIDTH, Integer.toString(width));
+	}
+
+	public void setFrameHeight(int height) {
+		prop.setProperty(FRAME_HEIGHT, Integer.toString(height));
 	}
 
 	public Boolean getDatabaseUpdated() {
@@ -610,6 +684,7 @@ public class PropertiesControl {
 		try {
 			prop.load(new StringReader(prefs.get("properties", null)));
 			checkProperties();
+			
 			ok = true;
 		} catch (IOException e) {
 
@@ -821,6 +896,10 @@ public class PropertiesControl {
 	public Boolean writeProperties() {
 		Boolean ok = true;
 
+		setFrameX(mainControl.getBounds().x);
+		setFrameY(mainControl.getBounds().y);
+		setFrameWidth(mainControl.getBounds().width);
+		setFrameHeight(mainControl.getBounds().height);
 		// speichern
 		StringWriter sw = new StringWriter();
 		try {
