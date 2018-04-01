@@ -35,7 +35,7 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 
 		abfrage = 1;
 		// Custom button text
-		Object[] options = { Messages.getString("NaviController.24"), Messages.getString("NaviController.25") }; //$NON-NLS-1$ //$NON-NLS-2$
+		Object[] options = { Messages.getString("NaviController.35"), Messages.getString("NaviController.36") }; //$NON-NLS-1$ //$NON-NLS-2$
 		abfrage = JOptionPane.showOptionDialog(mainControl, hinweisText, Messages.getString("NaviController.26"), //$NON-NLS-1$
 				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 
@@ -68,8 +68,7 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 			if (mainControl.getPairingsControl().getChangedPartien().size() > 0) {
 				int abfrage = abbrechenHinweis();
 				if (abfrage == 0) {
-					PairingsControl pairingsControl = mainControl.getPairingsControl();
-					pairingsControl.getChangedPartien().clear();
+					saveAndReloadTurnier();
 					try {
 						setTabsEnable(true);
 					} catch (SQLException e) {
@@ -85,6 +84,7 @@ public class ActionListenerPairingsMenuControl implements ActionListener {
 					ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());
 				}
+				pairingIsActive = false;
 			}
 		}
 	}

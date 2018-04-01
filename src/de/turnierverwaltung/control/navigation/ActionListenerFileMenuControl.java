@@ -22,7 +22,9 @@ import de.turnierverwaltung.control.PropertiesControl;
 import de.turnierverwaltung.control.playerlist.PlayerListControl;
 import de.turnierverwaltung.control.sqlite.SQLControl;
 import de.turnierverwaltung.control.sqlite.SQLTournamentControl;
+import de.turnierverwaltung.control.sqlite.SaveTournamentControl;
 import de.turnierverwaltung.control.tournamentlist.ActionListenerTournamentItemsControl;
+import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.sqlite.SQLiteDAOFactory;
 import de.turnierverwaltung.view.navigation.NaviView;
 
@@ -200,10 +202,24 @@ public class ActionListenerFileMenuControl implements ActionListener {
 
 		if (arg0.getSource().equals(exitButton)) {
 			final int abfrage = beendenHinweis();
-			if (abfrage == 0) {
-				mainControl.getPropertiesControl().writeProperties();
-				System.exit(0);
+			if (abfrage > 0) {
+
+				if (this.mainControl.getHauptPanel().getTabCount() == TournamentConstants.TAB_ACTIVE_TOURNAMENT + 1) {
+					if (this.mainControl.getChangedGames().isEmpty() == false) {
+						SaveTournamentControl saveTournament = new SaveTournamentControl(mainControl);
+						try {
+							saveTournament.saveChangedPartien();
+						} catch (SQLException e1) {
+							final ExceptionHandler eh = new ExceptionHandler(mainControl);
+							eh.fileSQLError(e1.getMessage());
+						}
+
+					}
+				}
 			}
+
+			this.mainControl.getPropertiesControl().writeProperties();
+			System.exit(0);
 
 		}
 
@@ -211,16 +227,22 @@ public class ActionListenerFileMenuControl implements ActionListener {
 
 	private int beendenHinweis() {
 		int abfrage = 0;
-		final String hinweisText = Messages.getString("NaviController.21") //$NON-NLS-1$
-				+ Messages.getString("NaviController.22") //$NON-NLS-1$
-				+ Messages.getString("NaviController.33"); //$NON-NLS-1$
+		if (this.mainControl.getHauptPanel().getTabCount() == TournamentConstants.TAB_ACTIVE_TOURNAMENT + 1) {
+			if (this.mainControl.getChangedGames().isEmpty() == false) {
 
-		abfrage = 1;
-		// Custom button text
-		final Object[] options = { Messages.getString("NaviController.24"), Messages.getString("NaviController.25") }; //$NON-NLS-1$ //$NON-NLS-2$
-		abfrage = JOptionPane.showOptionDialog(mainControl, hinweisText, Messages.getString("NaviController.26"), //$NON-NLS-1$
-				JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+				final String hinweisText = Messages.getString("NaviController.21") //$NON-NLS-1$
+						+ Messages.getString("NaviController.22") //$NON-NLS-1$
+						+ Messages.getString("NaviController.33"); //$NON-NLS-1$
 
+				abfrage = 1;
+				// Custom button text
+				final Object[] options = { Messages.getString("NaviController.24"), //$NON-NLS-1$
+						Messages.getString("NaviController.25") }; //$NON-NLS-1$
+				abfrage = JOptionPane.showOptionDialog(mainControl, hinweisText,
+						Messages.getString("NaviController.26"), //$NON-NLS-1$
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+			}
+		}
 		return abfrage;
 	}
 
