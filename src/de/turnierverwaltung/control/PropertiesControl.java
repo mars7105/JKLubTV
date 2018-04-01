@@ -1,5 +1,7 @@
 package de.turnierverwaltung.control;
 
+import java.awt.Toolkit;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -110,10 +112,11 @@ public class PropertiesControl {
 		prop.setProperty(PDFLINKS, FALSE);
 		prop.setProperty(WEBSERVER_PATH, "");
 		prop.setProperty(HTMLTOCLIPBOARD, FALSE);
-		prop.setProperty(FRAME_X, Integer.toString(TournamentConstants.WINDOW_BOUNDS_X));
-		prop.setProperty(FRAME_Y, Integer.toString(TournamentConstants.WINDOW_BOUNDS_Y));
-		prop.setProperty(FRAME_WIDTH, Integer.toString(TournamentConstants.WINDOW_WIDTH));
-		prop.setProperty(FRAME_HEIGHT, Integer.toString(TournamentConstants.WINDOW_HEIGHT));
+		prop.setProperty(FRAME_WIDTH, String.valueOf(setWidth()));
+		prop.setProperty(FRAME_HEIGHT, String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150));
+		prop.setProperty(FRAME_X, String.valueOf(setWidth() - 200));
+		prop.setProperty(FRAME_Y, String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
+
 	}
 
 	public void checkCrossTableColumnForDoubles() {
@@ -149,6 +152,18 @@ public class PropertiesControl {
 		prop.setProperty(TABLE_COLUMN_POINTS, tableColumns[5]);
 		prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER, tableColumns[6]);
 		prop.setProperty(TABLE_COLUMN_RANKING, tableColumns[7]);
+	}
+
+	private static int setWidth() {
+
+		int widthAllowed = Toolkit.getDefaultToolkit().getScreenSize().width;
+		int widthDreamSize = TournamentConstants.WINDOW_HEIGHT * 4 / 3;
+		if (widthDreamSize < widthAllowed) {
+			return widthDreamSize;
+		} else {
+			return widthAllowed;
+		}
+
 	}
 
 	private Boolean checkDefaultPath() {
@@ -384,24 +399,25 @@ public class PropertiesControl {
 			prop.setProperty(HTMLTOCLIPBOARD, FALSE);
 			saveChanges = true;
 		}
-
-		if (prop.getProperty(FRAME_X).equals("")) {
-			prop.setProperty(FRAME_X, Integer.toString(TournamentConstants.WINDOW_BOUNDS_X));
-			saveChanges = true;
-		}
-		if (prop.getProperty(FRAME_Y).equals("")) {
-			prop.setProperty(FRAME_Y, Integer.toString(TournamentConstants.WINDOW_BOUNDS_Y));
-			saveChanges = true;
-		}
 		if (prop.getProperty(FRAME_WIDTH).equals("")) {
-			prop.setProperty(FRAME_WIDTH, Integer.toString(TournamentConstants.WINDOW_WIDTH));
+			prop.setProperty(FRAME_WIDTH, String.valueOf(setWidth()));
 			saveChanges = true;
 		}
 
 		if (prop.getProperty(FRAME_HEIGHT).equals("")) {
-			prop.setProperty(FRAME_HEIGHT, Integer.toString(TournamentConstants.WINDOW_HEIGHT));
+			prop.setProperty(FRAME_HEIGHT, String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150));
 			saveChanges = true;
 		}
+		if (prop.getProperty(FRAME_X).equals("")) {
+			prop.setProperty(FRAME_X, String.valueOf(setWidth() - 200));
+			saveChanges = true;
+		}
+		if (prop.getProperty(FRAME_Y).equals("")) {
+			prop.setProperty(FRAME_Y, String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
+			saveChanges = true;
+
+		}
+
 		checkCrossTableColumnForDoubles();
 		checkMeetingTableColumnForDoubles();
 		if (saveChanges == true) {
@@ -412,6 +428,7 @@ public class PropertiesControl {
 	public int getFrameX() {
 		try {
 			return Integer.parseInt(prop.getProperty(FRAME_X));
+
 		} catch (NumberFormatException e) {
 			return TournamentConstants.WINDOW_BOUNDS_X;
 		}
@@ -684,7 +701,7 @@ public class PropertiesControl {
 		try {
 			prop.load(new StringReader(prefs.get("properties", null)));
 			checkProperties();
-			
+
 			ok = true;
 		} catch (IOException e) {
 
