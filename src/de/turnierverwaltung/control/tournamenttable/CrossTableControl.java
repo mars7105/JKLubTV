@@ -1,6 +1,5 @@
 package de.turnierverwaltung.control.tournamenttable;
 
-import java.awt.Color;
 import java.awt.Toolkit;
 import java.sql.SQLException;
 import java.util.ArrayList;
