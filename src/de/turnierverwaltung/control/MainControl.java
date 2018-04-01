@@ -147,8 +147,8 @@ public class MainControl extends JFrame implements WindowListener {
 		windowHeight = TournamentConstants.WINDOW_HEIGHT;
 		// setBounds(TournamentConstants.WINDOW_BOUNDS_X,
 		// TournamentConstants.WINDOW_BOUNDS_Y, windowWidth, windowHeight);
-		setSize(windowWidth, windowHeight);
-		setLocationRelativeTo(null);
+//		setSize(windowWidth, windowHeight);
+//		setLocationRelativeTo(null);
 		setMinimumSize(new Dimension(windowWidth / 2, windowHeight / 2));
 		// Make sure we have nice window decorations.
 		setDefaultLookAndFeelDecorated(true);
@@ -388,8 +388,7 @@ public class MainControl extends JFrame implements WindowListener {
 		hauptPanel.updateUI();
 		buttonTabComponent = new ButtonTabComponent(hauptPanel, this, null, false);
 		mainPanel.updateUI();
-		setEnabled(true);
-		setVisible(true);
+		
 		setInfoController(new InfoControl(this));
 
 		settingsControl = new SettingsControl(this);
@@ -400,11 +399,12 @@ public class MainControl extends JFrame implements WindowListener {
 
 	private void makeProperties() {
 		// datenbankMenueView(false);
-
+		setBounds(propertiesControl.getFrameX(), propertiesControl.getFrameY(), propertiesControl.getFrameWidth(),
+				propertiesControl.getFrameHeight());
+		setEnabled(true);
+		setVisible(true);
 		if (propertiesControl.checkPathToDatabase() == true) {
-			setBounds(propertiesControl.getFrameX(), propertiesControl.getFrameY(), propertiesControl.getFrameWidth(),
-					propertiesControl.getFrameHeight());
-
+			
 			final String path = propertiesControl.getPathToDatabase();
 			SQLiteDAOFactory.setDB_PATH(path);
 			setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
