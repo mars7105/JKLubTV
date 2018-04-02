@@ -144,6 +144,15 @@ public class ELOControl {
 		} else {
 			errorHandler();
 		}
+		dialog.setLocationRelativeTo(null);
+		dialog.pack();
+		dialog.setBounds(mainControl.getPropertiesControl().getELODialogX(),
+				mainControl.getPropertiesControl().getELODialogY(),
+				mainControl.getPropertiesControl().getELODialogWidth(),
+				mainControl.getPropertiesControl().getELODialogHeight());
+
+		dialog.setEnabled(true);
+		dialog.setVisible(true);
 	}
 
 	public void makePlayerSearchList() {

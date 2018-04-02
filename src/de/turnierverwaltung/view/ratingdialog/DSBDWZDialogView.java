@@ -198,11 +198,7 @@ public class DSBDWZDialogView extends JDialog {
 			tp.addTab(Messages.getString("DEWISDialogView.8"), tabIcon, playerSearchView);
 			getContentPane().add(tp, BorderLayout.CENTER);
 		}
-		pack();
-
-		setEnabled(true);
-		setVisible(true);
-		setLocationRelativeTo(null);
+		
 	}
 
 	public void closeWindow() {
@@ -257,7 +253,7 @@ public class DSBDWZDialogView extends JDialog {
 	public void refresh() {
 		getButtonPanel().updateUI();
 		getContentPanel().updateUI();
-		pack();
+//		pack();
 //		setLocationRelativeTo(null);
 	}
 

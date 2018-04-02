@@ -17,6 +17,7 @@ import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.rating.DWZData;
 import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
+import de.turnierverwaltung.view.ratingdialog.ELODialogView;
 
 /**
  *
@@ -50,7 +51,11 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 	public void actionPerformed(final ActionEvent arg0) {
 
 		if (arg0.getSource().equals(eloDialogControl.getDialog().getPlayerSearchView().getCancelButton())) {
-			eloDialogControl.getDialog().closeWindow();
+			ELODialogView dialog = eloDialogControl.getDialog();
+			mainControl.getPropertiesControl().writeELODialogProperties(dialog.getBounds().x, dialog.getBounds().y,
+					dialog.getBounds().width, dialog.getBounds().height);
+
+			dialog.closeWindow();
 		}
 		if (arg0.getSource().equals(eloDialogControl.getDialog().getPlayerSearchView().getOkButton())) {
 			try {

@@ -91,11 +91,11 @@ public class ELODialogView extends JDialog {
 		contentPanel.add(southPanel, BorderLayout.SOUTH);
 
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		pack();
+//		pack();
 
 		setEnabled(true);
 		setVisible(true);
-		setLocationRelativeTo(null);
+//		setLocationRelativeTo(null);
 	}
 
 	public void closeWindow() {
@@ -162,7 +162,7 @@ public class ELODialogView extends JDialog {
 	public void refresh() {
 		// getButtonPanel().updateUI();
 		getContentPanel().updateUI();
-		pack();
+//		pack();
 //		setLocationRelativeTo(null);
 	}
 

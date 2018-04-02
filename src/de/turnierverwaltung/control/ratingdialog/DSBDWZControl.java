@@ -155,6 +155,16 @@ public class DSBDWZControl {
 				e.printStackTrace();
 			}
 		}
+		dialog.setLocationRelativeTo(null);
+		dialog.pack();
+		dialog.setBounds(mainControl.getPropertiesControl().getDWZDialogX(),
+				mainControl.getPropertiesControl().getDWZDialogY(),
+				mainControl.getPropertiesControl().getDWZDialogWidth(),
+				mainControl.getPropertiesControl().getDWZDialogHeight());
+
+		dialog.setEnabled(true);
+		dialog.setVisible(true);
+
 		String zps = mainControl.getPropertiesControl().getZPS();
 
 		if (csvFiles == true) {
@@ -170,7 +180,7 @@ public class DSBDWZControl {
 		if (zps.equals("")) {
 			zps = standardZPS;
 		}
-//		System.out.println(zps);
+		// System.out.println(zps);
 		if (zps.length() > 0) {
 			dialog.getVereinsSuche().setText(zps);
 

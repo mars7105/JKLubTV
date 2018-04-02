@@ -68,17 +68,18 @@ public class InfoControl {
 			e.printStackTrace();
 		}
 		infoView = new InfoView(lizenzenPane);
+		makeInfoDialog();
 		infoView.getOkButton().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				propertiesControl.writeInfoDialogProperties(dialog.getBounds().x, dialog.getBounds().y,
+						dialog.getBounds().width, dialog.getBounds().height);
 				dialog.dispose();
 
 			}
 
 		});
-		
-		makeInfoDialog();
 
 	}
 
@@ -98,10 +99,12 @@ public class InfoControl {
 					dialog = new JDialog();
 				}
 				dialog.setAlwaysOnTop(true);
-				dialog.getContentPane().add(infoView);
-				dialog.setPreferredSize(mainControl.getPreferredSize());
-				dialog.pack();
 				dialog.setLocationRelativeTo(null);
+				dialog.getContentPane().add(infoView);
+				dialog.pack();
+				dialog.setBounds(propertiesControl.getInfoDialogX(), propertiesControl.getInfoDialogY(),
+						propertiesControl.getInfoDialogWidth(), propertiesControl.getInfoDialogHeight());
+
 				dialog.setEnabled(true);
 				dialog.setVisible(true);
 			}

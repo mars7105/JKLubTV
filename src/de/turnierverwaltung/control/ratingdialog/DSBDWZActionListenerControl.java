@@ -21,6 +21,7 @@ import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.rating.CSVVereine;
 import de.turnierverwaltung.model.rating.ELOData;
 import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
+import de.turnierverwaltung.view.ratingdialog.DSBDWZDialogView;
 
 /**
  * 
@@ -53,19 +54,6 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-//		if (arg0.getSource().equals(dewisDialogControl.getDialog().getVereinsAuswahlOkButton())) {
-//			if (dewisDialogControl.getDialog().getVereinsAuswahl().getItemCount() > 0) {
-//				ArrayList<CSVVereine> items = dewisDialogControl.getZpsItems();
-//				int index = dewisDialogControl.getDialog().getVereinsAuswahl().getSelectedIndex();
-//				String zps = items.get(index).getCsvZPS();
-//
-//				dewisDialogControl.makeDWZListe(zps);
-//				mainControl.getPropertiesControl().setZPS(zps);
-//				mainControl.getPropertiesControl().writeProperties();
-//
-//			}
-//
-//		}
 
 		if (arg0.getSource().equals(dewisDialogControl.getDialog().getVereinsSucheButton())) {
 			String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
@@ -73,7 +61,11 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 
 		}
 		if (arg0.getSource().equals(dewisDialogControl.getDialog().getCancelButton())) {
-			dewisDialogControl.getDialog().closeWindow();
+			DSBDWZDialogView dialog = dewisDialogControl.getDialog();
+			mainControl.getPropertiesControl().writeDWZDialogProperties(dialog.getBounds().x, dialog.getBounds().y,
+					dialog.getBounds().width, dialog.getBounds().height);
+
+			dialog.closeWindow();
 		}
 		if (arg0.getSource().equals(dewisDialogControl.getDialog().getOkButton())) {
 			try {
@@ -192,7 +184,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 
 	@Override
 	public void itemStateChanged(ItemEvent arg0) {
-		
+
 		ArrayList<CSVVereine> items = dewisDialogControl.getZpsItems();
 		int index = dewisDialogControl.getDialog().getVereinsAuswahl().getSelectedIndex();
 		String zps = items.get(index).getCsvZPS();

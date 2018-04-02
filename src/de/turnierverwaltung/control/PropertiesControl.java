@@ -69,6 +69,26 @@ public class PropertiesControl {
 	public static final String FRAME_Y = "frame-y";
 	public static final String FRAME_WIDTH = "frame-width";
 	public static final String FRAME_HEIGHT = "frame-height";
+
+	public static final String DWZ_DIALOG_X = "dwz-dialog-x";
+	public static final String DWZ_DIALOG_Y = "dwz-dialog-y";
+	public static final String DWZ_DIALOG_WIDTH = "dwz-dialog-width";
+	public static final String DWZ_DIALOG_HEIGHT = "dwz-dialog-height";
+
+	public static final String ELO_DIALOG_X = "elo-dialog-x";
+	public static final String ELO_DIALOG_Y = "elo-dialog-y";
+	public static final String ELO_DIALOG_WIDTH = "elo-dialog-width";
+	public static final String ELO_DIALOG_HEIGHT = "elo-dialog-height";
+
+	public static final String INFO_DIALOG_X = "info-dialog-x";
+	public static final String INFO_DIALOG_Y = "info-dialog-y";
+	public static final String INFO_DIALOG_WIDTH = "info-dialog-width";
+	public static final String INFO_DIALOG_HEIGHT = "info-dialog-height";
+
+	public static final String SETTINGS_DIALOG_X = "settings-dialog-x";
+	public static final String SETTINGS_DIALOG_Y = "settings-dialog-y";
+	public static final String SETTINGS_DIALOG_WIDTH = "settings-dialog-width";
+	public static final String SETTINGS_DIALOG_HEIGHT = "settings-dialog-height";
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
@@ -116,6 +136,24 @@ public class PropertiesControl {
 		prop.setProperty(FRAME_HEIGHT, String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150));
 		prop.setProperty(FRAME_X, String.valueOf(setWidth() - 200));
 		prop.setProperty(FRAME_Y, String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
+		prop.setProperty(DWZ_DIALOG_WIDTH, String.valueOf(setWidth()));
+		prop.setProperty(DWZ_DIALOG_HEIGHT, String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150));
+		prop.setProperty(DWZ_DIALOG_X, String.valueOf(setWidth() - 200));
+		prop.setProperty(DWZ_DIALOG_Y, String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
+		prop.setProperty(ELO_DIALOG_WIDTH, String.valueOf(setWidth()));
+		prop.setProperty(ELO_DIALOG_HEIGHT, String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150));
+		prop.setProperty(ELO_DIALOG_X, String.valueOf(setWidth() - 200));
+		prop.setProperty(ELO_DIALOG_Y, String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
+		prop.setProperty(INFO_DIALOG_WIDTH, String.valueOf(setWidth()));
+		prop.setProperty(INFO_DIALOG_HEIGHT, String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150));
+		prop.setProperty(INFO_DIALOG_X, String.valueOf(setWidth() - 200));
+		prop.setProperty(INFO_DIALOG_Y, String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
+		prop.setProperty(SETTINGS_DIALOG_WIDTH, String.valueOf(setWidth()));
+		prop.setProperty(SETTINGS_DIALOG_HEIGHT,
+				String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150));
+		prop.setProperty(SETTINGS_DIALOG_X, String.valueOf(setWidth() - 200));
+		prop.setProperty(SETTINGS_DIALOG_Y,
+				String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
 
 	}
 
@@ -417,7 +455,86 @@ public class PropertiesControl {
 			saveChanges = true;
 
 		}
+		if (prop.getProperty(DWZ_DIALOG_WIDTH).equals("")) {
+			prop.setProperty(DWZ_DIALOG_WIDTH, String.valueOf(setWidth()));
+			saveChanges = true;
+		}
 
+		if (prop.getProperty(DWZ_DIALOG_HEIGHT).equals("")) {
+			prop.setProperty(DWZ_DIALOG_HEIGHT,
+					String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150));
+			saveChanges = true;
+		}
+		if (prop.getProperty(DWZ_DIALOG_X).equals("")) {
+			prop.setProperty(DWZ_DIALOG_X, String.valueOf(setWidth() - 200));
+			saveChanges = true;
+		}
+		if (prop.getProperty(DWZ_DIALOG_Y).equals("")) {
+			prop.setProperty(DWZ_DIALOG_Y,
+					String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
+			saveChanges = true;
+
+		}
+		if (prop.getProperty(ELO_DIALOG_WIDTH).equals("")) {
+			prop.setProperty(ELO_DIALOG_WIDTH, String.valueOf(setWidth()));
+			saveChanges = true;
+		}
+
+		if (prop.getProperty(ELO_DIALOG_HEIGHT).equals("")) {
+			prop.setProperty(ELO_DIALOG_HEIGHT,
+					String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150));
+			saveChanges = true;
+		}
+		if (prop.getProperty(ELO_DIALOG_X).equals("")) {
+			prop.setProperty(ELO_DIALOG_X, String.valueOf(setWidth() - 200));
+			saveChanges = true;
+		}
+		if (prop.getProperty(ELO_DIALOG_Y).equals("")) {
+			prop.setProperty(ELO_DIALOG_Y,
+					String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
+			saveChanges = true;
+
+		}
+		if (prop.getProperty(INFO_DIALOG_WIDTH).equals("")) {
+			prop.setProperty(INFO_DIALOG_WIDTH, String.valueOf(setWidth()));
+			saveChanges = true;
+		}
+
+		if (prop.getProperty(INFO_DIALOG_HEIGHT).equals("")) {
+			prop.setProperty(INFO_DIALOG_HEIGHT,
+					String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150));
+			saveChanges = true;
+		}
+		if (prop.getProperty(INFO_DIALOG_X).equals("")) {
+			prop.setProperty(INFO_DIALOG_X, String.valueOf(setWidth() - 200));
+			saveChanges = true;
+		}
+		if (prop.getProperty(INFO_DIALOG_Y).equals("")) {
+			prop.setProperty(INFO_DIALOG_Y,
+					String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
+			saveChanges = true;
+
+		}
+		if (prop.getProperty(SETTINGS_DIALOG_WIDTH).equals("")) {
+			prop.setProperty(SETTINGS_DIALOG_WIDTH, String.valueOf(setWidth()));
+			saveChanges = true;
+		}
+
+		if (prop.getProperty(SETTINGS_DIALOG_HEIGHT).equals("")) {
+			prop.setProperty(SETTINGS_DIALOG_HEIGHT,
+					String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150));
+			saveChanges = true;
+		}
+		if (prop.getProperty(SETTINGS_DIALOG_X).equals("")) {
+			prop.setProperty(SETTINGS_DIALOG_X, String.valueOf(setWidth() - 200));
+			saveChanges = true;
+		}
+		if (prop.getProperty(SETTINGS_DIALOG_Y).equals("")) {
+			prop.setProperty(SETTINGS_DIALOG_Y,
+					String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
+			saveChanges = true;
+
+		}
 		checkCrossTableColumnForDoubles();
 		checkMeetingTableColumnForDoubles();
 		if (saveChanges == true) {
@@ -453,6 +570,138 @@ public class PropertiesControl {
 	public int getFrameHeight() {
 		try {
 			return Integer.parseInt(prop.getProperty(FRAME_HEIGHT));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_HEIGHT;
+		}
+	}
+
+	public int getDWZDialogX() {
+		try {
+			return Integer.parseInt(prop.getProperty(DWZ_DIALOG_X));
+
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_BOUNDS_X;
+		}
+	}
+
+	public int getDWZDialogY() {
+		try {
+			return Integer.parseInt(prop.getProperty(DWZ_DIALOG_Y));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_BOUNDS_Y;
+		}
+	}
+
+	public int getDWZDialogWidth() {
+		try {
+			return Integer.parseInt(prop.getProperty(DWZ_DIALOG_WIDTH));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_WIDTH;
+		}
+	}
+
+	public int getDWZDialogHeight() {
+		try {
+			return Integer.parseInt(prop.getProperty(DWZ_DIALOG_HEIGHT));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_HEIGHT;
+		}
+	}
+
+	public int getELODialogX() {
+		try {
+			return Integer.parseInt(prop.getProperty(ELO_DIALOG_X));
+
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_BOUNDS_X;
+		}
+	}
+
+	public int getELODialogY() {
+		try {
+			return Integer.parseInt(prop.getProperty(ELO_DIALOG_Y));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_BOUNDS_Y;
+		}
+	}
+
+	public int getELODialogWidth() {
+		try {
+			return Integer.parseInt(prop.getProperty(ELO_DIALOG_WIDTH));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_WIDTH;
+		}
+	}
+
+	public int getELODialogHeight() {
+		try {
+			return Integer.parseInt(prop.getProperty(ELO_DIALOG_HEIGHT));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_HEIGHT;
+		}
+	}
+
+	public int getInfoDialogX() {
+		try {
+			return Integer.parseInt(prop.getProperty(INFO_DIALOG_X));
+
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_BOUNDS_X;
+		}
+	}
+
+	public int getInfoDialogY() {
+		try {
+			return Integer.parseInt(prop.getProperty(INFO_DIALOG_Y));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_BOUNDS_Y;
+		}
+	}
+
+	public int getInfoDialogWidth() {
+		try {
+			return Integer.parseInt(prop.getProperty(INFO_DIALOG_WIDTH));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_WIDTH;
+		}
+	}
+
+	public int getInfoDialogHeight() {
+		try {
+			return Integer.parseInt(prop.getProperty(INFO_DIALOG_HEIGHT));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_HEIGHT;
+		}
+	}
+
+	public int getSettingsDialogX() {
+		try {
+			return Integer.parseInt(prop.getProperty(SETTINGS_DIALOG_X));
+
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_BOUNDS_X;
+		}
+	}
+
+	public int getSettingsDialogY() {
+		try {
+			return Integer.parseInt(prop.getProperty(SETTINGS_DIALOG_Y));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_BOUNDS_Y;
+		}
+	}
+
+	public int getSettingsDialogWidth() {
+		try {
+			return Integer.parseInt(prop.getProperty(SETTINGS_DIALOG_WIDTH));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_WIDTH;
+		}
+	}
+
+	public int getSettingsDialogHeight() {
+		try {
+			return Integer.parseInt(prop.getProperty(SETTINGS_DIALOG_HEIGHT));
 		} catch (NumberFormatException e) {
 			return TournamentConstants.WINDOW_HEIGHT;
 		}
@@ -933,4 +1182,68 @@ public class PropertiesControl {
 		return ok;
 	}
 
+	public Boolean writeDWZDialogProperties(int x, int y, int width, int height) {
+		Boolean ok = true;
+
+		String dwzx = String.valueOf(x);
+		String dwzy = String.valueOf(y);
+		String dwzwidth = String.valueOf(width);
+		String dwzheight = String.valueOf(height);
+		prop.setProperty(DWZ_DIALOG_X, dwzx);
+		prop.setProperty(DWZ_DIALOG_Y, dwzy);
+		prop.setProperty(DWZ_DIALOG_WIDTH, dwzwidth);
+		prop.setProperty(DWZ_DIALOG_HEIGHT, dwzheight);
+		ok = writeProperties();
+
+		return ok;
+
+	}
+	public Boolean writeELODialogProperties(int x, int y, int width, int height) {
+		Boolean ok = true;
+
+		String dwzx = String.valueOf(x);
+		String dwzy = String.valueOf(y);
+		String dwzwidth = String.valueOf(width);
+		String dwzheight = String.valueOf(height);
+		prop.setProperty(ELO_DIALOG_X, dwzx);
+		prop.setProperty(ELO_DIALOG_Y, dwzy);
+		prop.setProperty(ELO_DIALOG_WIDTH, dwzwidth);
+		prop.setProperty(ELO_DIALOG_HEIGHT, dwzheight);
+		ok = writeProperties();
+
+		return ok;
+
+	}
+	public Boolean writeInfoDialogProperties(int x, int y, int width, int height) {
+		Boolean ok = true;
+
+		String dwzx = String.valueOf(x);
+		String dwzy = String.valueOf(y);
+		String dwzwidth = String.valueOf(width);
+		String dwzheight = String.valueOf(height);
+		prop.setProperty(INFO_DIALOG_X, dwzx);
+		prop.setProperty(INFO_DIALOG_Y, dwzy);
+		prop.setProperty(INFO_DIALOG_WIDTH, dwzwidth);
+		prop.setProperty(INFO_DIALOG_HEIGHT, dwzheight);
+		ok = writeProperties();
+
+		return ok;
+
+	}
+	public Boolean writeSettingsDialogProperties(int x, int y, int width, int height) {
+		Boolean ok = true;
+
+		String dwzx = String.valueOf(x);
+		String dwzy = String.valueOf(y);
+		String dwzwidth = String.valueOf(width);
+		String dwzheight = String.valueOf(height);
+		prop.setProperty(SETTINGS_DIALOG_X, dwzx);
+		prop.setProperty(SETTINGS_DIALOG_Y, dwzy);
+		prop.setProperty(SETTINGS_DIALOG_WIDTH, dwzwidth);
+		prop.setProperty(SETTINGS_DIALOG_HEIGHT, dwzheight);
+		ok = writeProperties();
+
+		return ok;
+
+	}
 }

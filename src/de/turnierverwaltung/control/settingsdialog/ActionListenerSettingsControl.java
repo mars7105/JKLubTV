@@ -32,6 +32,8 @@ public class ActionListenerSettingsControl {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
+				mainControl.getPropertiesControl().writeSettingsDialogProperties(dialog.getBounds().x,
+						dialog.getBounds().y, dialog.getBounds().width, dialog.getBounds().height);
 				dialog.dispose();
 				PropertiesControl ppC = mainControl.getPropertiesControl();
 				SettingsView settingsView = esControl.getEigenschaftenView();
@@ -302,6 +304,10 @@ public class ActionListenerSettingsControl {
 				dialog.getContentPane().add(eigenschaftenView);
 				dialog.pack();
 				dialog.setLocationRelativeTo(null);
+				dialog.setBounds(mainControl.getPropertiesControl().getSettingsDialogX(),
+						mainControl.getPropertiesControl().getSettingsDialogY(),
+						mainControl.getPropertiesControl().getSettingsDialogWidth(),
+						mainControl.getPropertiesControl().getSettingsDialogHeight());
 				dialog.setEnabled(true);
 				dialog.setVisible(true);
 				if (mainControl.getPropertiesControl() == null) {
