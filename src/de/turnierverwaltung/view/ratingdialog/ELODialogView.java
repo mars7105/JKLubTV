@@ -163,7 +163,7 @@ public class ELODialogView extends JDialog {
 		// getButtonPanel().updateUI();
 		getContentPanel().updateUI();
 		pack();
-		setLocationRelativeTo(null);
+//		setLocationRelativeTo(null);
 	}
 
 	public void setDsbPanel(final JPanel dsbPanel) {

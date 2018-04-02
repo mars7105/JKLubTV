@@ -258,7 +258,7 @@ public class DSBDWZDialogView extends JDialog {
 		getButtonPanel().updateUI();
 		getContentPanel().updateUI();
 		pack();
-		setLocationRelativeTo(null);
+//		setLocationRelativeTo(null);
 	}
 
 	public void setButtonPanel(ButtonPanelView buttonPane) {
