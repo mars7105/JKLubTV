@@ -115,6 +115,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 			try {
 				dewisDialogControl.makeDialog();
 				dewisDialogControl.makePlayerSearchList();
+//				dewisDialogControl.getDialog.getVereinsAuswahl().addItemListener(dewisDialogActionListenerControl);
 			} catch (ArrayIndexOutOfBoundsException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -153,8 +154,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 			} catch (SQLException e) {
 				ExceptionHandler eh = new ExceptionHandler(mainControl);
 				eh.fileSQLError(e.getMessage());
-			}
-			catch (NullPointerException e) {
+			} catch (NullPointerException e) {
 				ExceptionHandler eh = new ExceptionHandler(mainControl);
 				eh.fileSQLError(e.getMessage());
 			}

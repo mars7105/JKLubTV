@@ -79,7 +79,7 @@ public class ELODialogView extends JDialog {
 		vereinsSuche = new JTextField(25);
 
 		dsbPanel = new JPanel();
-		playerSearchView = new PlayerSearchView();
+		playerSearchView = new PlayerSearchView(Messages.getString("ELOPlayerView.1"));
 
 		contentPanel.add(playerSearchView, BorderLayout.CENTER);
 

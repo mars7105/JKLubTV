@@ -60,7 +60,11 @@ public class DSBDWZPlayerView extends JPanel {
 	private JScrollPane selectedScrollPane;
 	private JPanel selectedContentPanel;
 
-	public DSBDWZPlayerView() {
+	public DSBDWZPlayerView(String title) {
+		init(title);
+	}
+
+	private void init(String title) {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
 		windowHeight = TournamentConstants.WINDOW_HEIGHT;
 
@@ -83,8 +87,8 @@ public class DSBDWZPlayerView extends JPanel {
 
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new BorderLayout());
-		TitleLabelView listTitle = new TitleLabelView("Vereinsliste");
-		contentPanel.add(listTitle,BorderLayout.NORTH);
+		TitleLabelView listTitle = new TitleLabelView(title);
+		contentPanel.add(listTitle, BorderLayout.NORTH);
 		selectedContentPanel = new JPanel();
 		selectedContentPanel.setLayout(new BorderLayout());
 		listModel = new DefaultListModel<ListItem>();
@@ -95,6 +99,7 @@ public class DSBDWZPlayerView extends JPanel {
 		selectedScrollPane = new JScrollPane();
 		selectedScrollPane.setViewportView(selectedContentPanel);
 		add(selectedScrollPane, BorderLayout.EAST);
+
 	}
 
 	public JPanel getContentPanel() {

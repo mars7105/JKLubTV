@@ -65,6 +65,7 @@ public class DSBDWZControl {
 	private ArrayList<Player> searchplayerlist;
 	private ArrayList<DWZData> dwzDataArray;
 	private SQLitePlayerDWZList sqlitePlayerlist;
+	private String standardZPS;
 
 	/**
 	 *
@@ -73,12 +74,13 @@ public class DSBDWZControl {
 	public DSBDWZControl(final MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
+		standardZPS = "";
 		csvFiles = mainControl.getPropertiesControl().checkPathToVereineCSV()
 				&& mainControl.getPropertiesControl().checkPathToSpielerCSV();
 		dewisDialogActionListenerControl = new DSBDWZActionListenerControl(this.mainControl, this);
-		spielerSearchPanelList = new DSBDWZPlayerView();
+		spielerSearchPanelList = new DSBDWZPlayerView(Messages.getString("DewisDialogControl.11"));
 		makePlayerSearchSelectedList();
-//		dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
+
 	}
 
 	private void errorHandler() {
@@ -153,9 +155,10 @@ public class DSBDWZControl {
 				e.printStackTrace();
 			}
 		}
-		final String zps = mainControl.getPropertiesControl().getZPS();
+		String zps = mainControl.getPropertiesControl().getZPS();
+
 		if (csvFiles == true) {
-			dialog.getVereinsAuswahlOkButton().addActionListener(dewisDialogActionListenerControl);
+			// dialog.getVereinsAuswahlOkButton().addActionListener(dewisDialogActionListenerControl);
 			makeVereinsListe(zps);
 		} else {
 			dialog.getVereinsSucheButton().addActionListener(dewisDialogActionListenerControl);
@@ -164,13 +167,16 @@ public class DSBDWZControl {
 		dialog.getOkButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getCancelButton().addActionListener(dewisDialogActionListenerControl);
 		dialog.getOkButton().setEnabled(false);
-
+		if (zps.equals("")) {
+			zps = standardZPS;
+		}
+//		System.out.println(zps);
 		if (zps.length() > 0) {
 			dialog.getVereinsSuche().setText(zps);
 
 			makeDWZListe(zps);
 		}
-
+		dialog.getVereinsAuswahl().addItemListener(dewisDialogActionListenerControl);
 	}
 
 	/**
@@ -183,7 +189,7 @@ public class DSBDWZControl {
 	public void makeDWZListe(final String zps) {
 
 		try {
-			spielerDewisView = new DSBDWZPlayerView();
+			spielerDewisView = new DSBDWZPlayerView(Messages.getString("DewisDialogControl.10"));
 			DSBDWZClub verein = null;
 			players = null;
 			dwzDataArray = null;
@@ -343,7 +349,6 @@ public class DSBDWZControl {
 						@Override
 						public void keyReleased(final KeyEvent e) {
 
-							
 							searchplayerlist = new ArrayList<Player>();
 							final String eingabe = spielerSearchTextField.getText().toUpperCase();
 							final ListIterator<CSVPlayer> li = playerlist.listIterator();
@@ -423,7 +428,7 @@ public class DSBDWZControl {
 						@Override
 						public void keyReleased(final KeyEvent e) {
 							final SQLPlayerControl sqlpc = new SQLPlayerControl(mainControl);
-							spielerSearchPanelList = new DSBDWZPlayerView();
+							spielerSearchPanelList = new DSBDWZPlayerView(Messages.getString("DewisDialogControl.11"));
 							makePlayerSearchSelectedList();
 							dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
 							searchplayerlist = new ArrayList<Player>();
@@ -491,8 +496,9 @@ public class DSBDWZControl {
 			spielerDewisView.makeSelectedSpielerZeile(tmp, 2);
 
 		}
-//		spielerDewisView.makeSelectedList();
+		// spielerDewisView.makeSelectedList();
 	}
+
 	/**
 	 *
 	 */
@@ -513,8 +519,9 @@ public class DSBDWZControl {
 			spielerSearchPanelList.makeSelectedSpielerZeile(tmp, 2);
 
 		}
-//		spielerDewisView.makeSelectedList();
+		// spielerDewisView.makeSelectedList();
 	}
+
 	/**
 	 *
 	 */
@@ -529,11 +536,14 @@ public class DSBDWZControl {
 			Collections.sort(zpsItems, new SortCSVVereine());
 
 			dialog.getVereinsAuswahl().removeAllItems();
-			final Iterator<CSVVereine> it = vereine.getCsvvereine().iterator();
+			final Iterator<CSVVereine> it = zpsItems.iterator();
 			int counter = 0;
 			int selectIndex = 0;
 			while (it.hasNext()) {
 				final CSVVereine temp = it.next();
+				if (counter == 0) {
+					standardZPS = temp.getCsvZPS();
+				}
 				// System.out.println(temp.getCsvZPS() + " " + zps);
 				if (temp.getCsvZPS().equals(zps)) {
 					selectIndex = counter;
@@ -542,6 +552,7 @@ public class DSBDWZControl {
 				dialog.getVereinsAuswahl().addItem(temp.getCsvVereinname());
 				counter++;
 			}
+
 			dialog.getVereinsAuswahl().setSelectedIndex(selectIndex);
 
 		} catch (final IOException e) {

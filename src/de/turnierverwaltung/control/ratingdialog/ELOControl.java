@@ -163,7 +163,7 @@ public class ELOControl {
 
 				@Override
 				public void keyReleased(final KeyEvent e) {
-					spielerSearchPanelList = new ELOPlayerView();
+					spielerSearchPanelList = new ELOPlayerView(Messages.getString("DewisDialogControl.12"));
 					dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
 					searchplayerlist = new ArrayList<Player>();
 					final String eingabe = spielerSearchTextField.getText().toUpperCase();

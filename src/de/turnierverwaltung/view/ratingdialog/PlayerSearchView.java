@@ -22,7 +22,7 @@ public class PlayerSearchView extends JPanel {
 	private JButton okButton;
 	private JButton cancelButton;
 
-	public PlayerSearchView() {
+	public PlayerSearchView(String title) {
 		searchField = new JTextField(20);
 		JLabel searchFieldLabel = new JLabel(Messages.getString("PlayerSearchView.0"));
 		setLayout(new BorderLayout());
@@ -31,7 +31,7 @@ public class PlayerSearchView extends JPanel {
 		searchPanel.add(searchFieldLabel);
 		searchPanel.add(searchField);
 		add(searchPanel, BorderLayout.NORTH);
-		this.dsbPanel = new DSBDWZPlayerView();
+		this.dsbPanel = new DSBDWZPlayerView(title);
 		add(this.dsbPanel, BorderLayout.CENTER);
 		buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();

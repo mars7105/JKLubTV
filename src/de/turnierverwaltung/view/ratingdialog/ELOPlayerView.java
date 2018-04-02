@@ -55,7 +55,7 @@ public class ELOPlayerView extends JPanel {
 	private ImageIcon insertIcon3 = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/im-user.png")));
 
-	public ELOPlayerView() {
+	public ELOPlayerView(String title) {
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
 		windowHeight = TournamentConstants.WINDOW_HEIGHT;
 
@@ -63,7 +63,7 @@ public class ELOPlayerView extends JPanel {
 		setMinimumSize(new Dimension(windowWidth / 4, windowHeight / 4));
 		setLayout(new BorderLayout());
 
-		JLabel titleLabel = new JLabel(Messages.getString("ELOPlayerView.1"));
+		JLabel titleLabel = new JLabel(title);
 		JLabel hilfeLabel = new JLabel(Messages.getString("SpielerDewisView.1"));
 		JPanel titlepanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		titlepanel.add(titleLabel);

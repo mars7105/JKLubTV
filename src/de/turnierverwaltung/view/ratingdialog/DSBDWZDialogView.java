@@ -82,7 +82,7 @@ public class DSBDWZDialogView extends JDialog {
 	private JTextField vereinsName;
 
 	private JComboBox<String> vereinsAuswahl;
-	private JButton vereinsAuswahlOkButton;
+//	private JButton vereinsAuswahlOkButton;
 	// private JButton infoButton;
 	private ImageIcon infoIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png")));
@@ -156,19 +156,19 @@ public class DSBDWZDialogView extends JDialog {
 			suchePanel.add(zeilenPanel);
 
 			vereinsAuswahl = new JComboBox<String>();
-			vereinsAuswahlOkButton = new JButton("Ok");
+//			vereinsAuswahlOkButton = new JButton("Ok");
 
 			zeilenPanel = new JPanel();
 			zeilenPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			zeilenPanel.add(vereinsAuswahl);
-			zeilenPanel.add(vereinsAuswahlOkButton);
+//			zeilenPanel.add(vereinsAuswahlOkButton);
 
 			suchePanel.add(zeilenPanel);
 
 		}
 		contentPanel.add(suchePanel, BorderLayout.NORTH);
 		dsbPanel = new JPanel();
-		playerSearchView = new PlayerSearchView();
+		playerSearchView = new PlayerSearchView(Messages.getString("PlayerSearchView.1"));
 		buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();
 		okButton = buttonPane.getOkButton();
@@ -238,9 +238,9 @@ public class DSBDWZDialogView extends JDialog {
 		return vereinsAuswahl;
 	}
 
-	public JButton getVereinsAuswahlOkButton() {
-		return vereinsAuswahlOkButton;
-	}
+//	public JButton getVereinsAuswahlOkButton() {
+//		return vereinsAuswahlOkButton;
+//	}
 
 	public JTextField getVereinsName() {
 		return vereinsName;
@@ -287,9 +287,9 @@ public class DSBDWZDialogView extends JDialog {
 		this.vereinsAuswahl = vereinsAuswahl;
 	}
 
-	public void setVereinsAuswahlOkButton(JButton vereinsAuswahlOkButton) {
-		this.vereinsAuswahlOkButton = vereinsAuswahlOkButton;
-	}
+//	public void setVereinsAuswahlOkButton(JButton vereinsAuswahlOkButton) {
+//		this.vereinsAuswahlOkButton = vereinsAuswahlOkButton;
+//	}
 
 	public void setVereinsName(JTextField vereinsName) {
 		this.vereinsName = vereinsName;

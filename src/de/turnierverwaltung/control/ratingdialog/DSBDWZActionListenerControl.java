@@ -3,6 +3,8 @@ package de.turnierverwaltung.control.ratingdialog;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,7 +27,7 @@ import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
  * @author mars
  *
  */
-public class DSBDWZActionListenerControl implements ListSelectionListener, ActionListener {
+public class DSBDWZActionListenerControl implements ListSelectionListener, ActionListener, ItemListener {
 	private MainControl mainControl;
 	private DSBDWZControl dewisDialogControl;
 	private ImageIcon insertIcon3 = new ImageIcon(
@@ -46,23 +48,24 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 		this.mainControl = mainControl;
 		this.dewisDialogControl = dewisDialogControl;
 		indices = new ArrayList<Integer>();
+
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		if (arg0.getSource().equals(dewisDialogControl.getDialog().getVereinsAuswahlOkButton())) {
-			if (dewisDialogControl.getDialog().getVereinsAuswahl().getItemCount() > 0) {
-				ArrayList<CSVVereine> items = dewisDialogControl.getZpsItems();
-				int index = dewisDialogControl.getDialog().getVereinsAuswahl().getSelectedIndex();
-				String zps = items.get(index).getCsvZPS();
-
-				dewisDialogControl.makeDWZListe(zps);
-				mainControl.getPropertiesControl().setZPS(zps);
-				mainControl.getPropertiesControl().writeProperties();
-
-			}
-
-		}
+//		if (arg0.getSource().equals(dewisDialogControl.getDialog().getVereinsAuswahlOkButton())) {
+//			if (dewisDialogControl.getDialog().getVereinsAuswahl().getItemCount() > 0) {
+//				ArrayList<CSVVereine> items = dewisDialogControl.getZpsItems();
+//				int index = dewisDialogControl.getDialog().getVereinsAuswahl().getSelectedIndex();
+//				String zps = items.get(index).getCsvZPS();
+//
+//				dewisDialogControl.makeDWZListe(zps);
+//				mainControl.getPropertiesControl().setZPS(zps);
+//				mainControl.getPropertiesControl().writeProperties();
+//
+//			}
+//
+//		}
 
 		if (arg0.getSource().equals(dewisDialogControl.getDialog().getVereinsSucheButton())) {
 			String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
@@ -117,6 +120,7 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 		if (dewisDialogControl.getDialog().getVereinsName().isEnabled()) {
 			String zps = mainControl.getPropertiesControl().getZPS();
 			dewisDialogControl.makeVereinsListe(zps);
+
 		} else if (dewisDialogControl.getDialog().getVereinsSuche().getText().length() > 0) {
 			String zps = dewisDialogControl.getDialog().getVereinsSuche().getText();
 			dewisDialogControl.makeDWZListe(zps);
@@ -184,5 +188,18 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 			}
 
 		}
+	}
+
+	@Override
+	public void itemStateChanged(ItemEvent arg0) {
+		
+		ArrayList<CSVVereine> items = dewisDialogControl.getZpsItems();
+		int index = dewisDialogControl.getDialog().getVereinsAuswahl().getSelectedIndex();
+		String zps = items.get(index).getCsvZPS();
+
+		dewisDialogControl.makeDWZListe(zps);
+		mainControl.getPropertiesControl().setZPS(zps);
+		mainControl.getPropertiesControl().writeProperties();
+
 	}
 }
