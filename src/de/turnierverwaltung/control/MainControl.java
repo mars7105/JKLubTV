@@ -478,9 +478,8 @@ public class MainControl extends JFrame implements WindowListener {
 		} else {
 			setTitle(Messages.getString("MainControl.10"));
 			startpageControl = new StartpageControl(this);
-			hauptPanel.addTab("Startpage", startpageControl.getStartpage());
-			final ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel, this, null,
-					true);
+			hauptPanel.addTab("Einrichtungsassistent", startpageControl.getStartpage());
+			final ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel, this, null, true);
 			hauptPanel.setTabComponentAt(0, buttonComp);
 			naviView.getTurnierListePanel().setVisible(false);
 			naviView.getSpielerListePanel().setVisible(false);
