@@ -59,6 +59,7 @@ import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.sqlite.SaveTournamentControl;
 import de.turnierverwaltung.model.Game;
+import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.Messages;
 
 /**
@@ -95,7 +96,7 @@ public class ButtonTabComponent extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			int i = pane.indexOfTabComponent(ButtonTabComponent.this);
-			if (i != -1) {
+			if (i == TournamentConstants.TAB_ACTIVE_TOURNAMENT) {
 
 				int abfrage = checkForChangedGames();
 				if (abfrage == 0 || abfrage == 1) {
@@ -105,6 +106,9 @@ public class ButtonTabComponent extends JPanel {
 
 				}
 
+			}
+			if (i==0) {
+				pane.remove(i);
 			}
 		}
 
@@ -171,6 +175,7 @@ public class ButtonTabComponent extends JPanel {
 		public void updateUI() {
 		}
 	}
+
 	/**
 	 * 
 	 */

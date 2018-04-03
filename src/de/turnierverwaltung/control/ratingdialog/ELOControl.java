@@ -141,18 +141,19 @@ public class ELOControl {
 			}
 
 			dialog.getPlayerSearchView().getOkButton().setEnabled(false);
+			dialog.setLocationRelativeTo(null);
+			dialog.pack();
+			dialog.setBounds(mainControl.getPropertiesControl().getELODialogX(),
+					mainControl.getPropertiesControl().getELODialogY(),
+					mainControl.getPropertiesControl().getELODialogWidth(),
+					mainControl.getPropertiesControl().getELODialogHeight());
+
+			dialog.setEnabled(true);
+			dialog.setVisible(true);
 		} else {
 			errorHandler();
 		}
-		dialog.setLocationRelativeTo(null);
-		dialog.pack();
-		dialog.setBounds(mainControl.getPropertiesControl().getELODialogX(),
-				mainControl.getPropertiesControl().getELODialogY(),
-				mainControl.getPropertiesControl().getELODialogWidth(),
-				mainControl.getPropertiesControl().getELODialogHeight());
-
-		dialog.setEnabled(true);
-		dialog.setVisible(true);
+		
 	}
 
 	public void makePlayerSearchList() {

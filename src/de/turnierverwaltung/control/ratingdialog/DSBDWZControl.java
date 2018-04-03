@@ -185,8 +185,9 @@ public class DSBDWZControl {
 			dialog.getVereinsSuche().setText(zps);
 
 			makeDWZListe(zps);
+			dialog.getVereinsAuswahl().addItemListener(dewisDialogActionListenerControl);
 		}
-		dialog.getVereinsAuswahl().addItemListener(dewisDialogActionListenerControl);
+		
 	}
 
 	/**
@@ -536,7 +537,7 @@ public class DSBDWZControl {
 	 *
 	 */
 	public void makeVereinsListe(final String zps) {
-
+		standardZPS = "";
 		try {
 			final CSVVereineList vereine = new CSVVereineList();
 
