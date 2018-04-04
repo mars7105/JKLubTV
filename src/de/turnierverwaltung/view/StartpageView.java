@@ -78,4 +78,44 @@ public class StartpageView extends JScrollPane {
 
 	}
 
+	public JButton getDatabaseButton() {
+		return databaseButton;
+	}
+
+	public void setDatabaseButton(JButton databaseButton) {
+		this.databaseButton = databaseButton;
+	}
+
+	public JButton getDwzButton() {
+		return dwzButton;
+	}
+
+	public void setDwzButton(JButton dwzButton) {
+		this.dwzButton = dwzButton;
+	}
+
+	public JButton getEloButton() {
+		return eloButton;
+	}
+
+	public void setEloButton(JButton eloButton) {
+		this.eloButton = eloButton;
+	}
+
+	public JButton getTournamentButton() {
+		return tournamentButton;
+	}
+
+	public void setTournamentButton(JButton tournamentButton) {
+		this.tournamentButton = tournamentButton;
+	}
+
+	public JButton getPlayerButton() {
+		return playerButton;
+	}
+
+	public void setPlayerButton(JButton playerButton) {
+		this.playerButton = playerButton;
+	}
+
 }

@@ -53,6 +53,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicButtonUI;
 
 import de.turnierverwaltung.control.ExceptionHandler;
@@ -76,6 +77,7 @@ public class ButtonTabComponent extends JPanel {
 		public TabButton() {
 			int size = 22;
 			setPreferredSize(new Dimension(size, size));
+
 			setToolTipText("close this tab");
 			// Make the button looks the same for all Laf's
 			setUI(new BasicButtonUI());
@@ -83,8 +85,11 @@ public class ButtonTabComponent extends JPanel {
 			setContentAreaFilled(false);
 			// No need to be focusable
 			setFocusable(false);
-			setBorder(BorderFactory.createEtchedBorder());
+			// setBorder(BorderFactory.createEtchedBorder());
+			Border blackline = BorderFactory.createLineBorder(Color.black);
+			setBorder(blackline);
 			setBorderPainted(false);
+
 			// Making nice rollover effect
 			// we use the same listener for all buttons
 			addMouseListener(buttonMouseListener);
@@ -107,7 +112,7 @@ public class ButtonTabComponent extends JPanel {
 				}
 
 			}
-			if (i==0) {
+			if (i == 0) {
 				pane.remove(i);
 			}
 		}
@@ -161,6 +166,7 @@ public class ButtonTabComponent extends JPanel {
 			}
 			g2.setStroke(new BasicStroke(2));
 			g2.setColor(windowBorder);
+			
 			if (getModel().isRollover()) {
 				g2.setColor(hoover);
 			}
