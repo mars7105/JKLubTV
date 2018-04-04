@@ -1,6 +1,7 @@
 package de.turnierverwaltung.view;
 
 import java.awt.BorderLayout;
+import java.awt.Window;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -18,9 +19,21 @@ public class StartpageDialog extends JDialog {
 
 	public StartpageDialog(JPanel mainPanel) {
 		super();
-		this.setAlwaysOnTop(true);
+
 		getContentPane().setLayout(new BorderLayout());
 		this.mainPanel = mainPanel;
+		buttonPanel = new ButtonPanelView();
+		buttonPanel.makeAllButtons();
+		JScrollPane jsPane = new JScrollPane();
+		jsPane.setViewportView(mainPanel);
+		getContentPane().add(jsPane, BorderLayout.CENTER);
+		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+	}
+
+	public StartpageDialog(Window arg0, String arg1, ModalityType arg2) {
+		super(arg0, arg1, arg2);
+		getContentPane().setLayout(new BorderLayout());
+//		this.mainPanel = mainPanel;
 		buttonPanel = new ButtonPanelView();
 		buttonPanel.makeAllButtons();
 		JScrollPane jsPane = new JScrollPane();

@@ -1,7 +1,10 @@
 package de.turnierverwaltung.control;
 
+import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.JPanel;
 
@@ -18,16 +21,16 @@ public class StartpageControl {
 		startpage = new StartpageView();
 		DialogListener dwzListener = new DialogListener(new JPanel());
 		startpage.getDwzButton().addActionListener(dwzListener);
-		
+
 		DialogListener eloListener = new DialogListener(new JPanel());
 		startpage.getEloButton().addActionListener(eloListener);
-		
+
 		DialogListener dbListener = new DialogListener(new JPanel());
 		startpage.getDatabaseButton().addActionListener(dbListener);
-		
+
 		DialogListener playerListener = new DialogListener(new JPanel());
 		startpage.getPlayerButton().addActionListener(playerListener);
-		
+
 		DialogListener tournamentListener = new DialogListener(new JPanel());
 		startpage.getTournamentButton().addActionListener(tournamentListener);
 	}
@@ -41,7 +44,7 @@ public class StartpageControl {
 	}
 
 	class DialogListener implements ActionListener {
-		JPanel panel;
+		private JPanel panel;
 
 		public DialogListener(JPanel panel) {
 			super();
@@ -50,16 +53,19 @@ public class StartpageControl {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			mainControl.setEnabled(false);
-			StartpageDialog dialog = new StartpageDialog(panel);
+//			mainControl.setEnabled(false);
+			StartpageDialog dialog = new StartpageDialog(mainControl, "", Dialog.ModalityType.APPLICATION_MODAL);
+			dialog.setMainPanel(panel);
 			dialog.setBounds(100, 100, 500, 400);
-			dialog.enableDialog();
+			
+			DialogWindowListener wlistener = new DialogWindowListener(dialog);
+			dialog.addWindowListener(wlistener);
 			dialog.getOkButton().addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					dialog.dispose();
-					mainControl.setEnabled(true);
+//					mainControl.setEnabled(true);
 				}
 			});
 			dialog.getCancelButton().addActionListener(new ActionListener() {
@@ -67,9 +73,63 @@ public class StartpageControl {
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
 					dialog.dispose();
-					mainControl.setEnabled(true);
+//					mainControl.setEnabled(true);
 				}
 			});
+			dialog.enableDialog();
 		}
+	}
+
+	class DialogWindowListener implements WindowListener {
+		private StartpageDialog dialog;
+
+		public DialogWindowListener(StartpageDialog dialog) {
+			super();
+			this.dialog = dialog;
+		}
+
+		@Override
+		public void windowActivated(WindowEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void windowClosed(WindowEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void windowClosing(WindowEvent arg0) {
+			dialog.dispose();
+//			mainControl.setEnabled(true);
+
+		}
+
+		@Override
+		public void windowDeactivated(WindowEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void windowDeiconified(WindowEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void windowIconified(WindowEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
+		@Override
+		public void windowOpened(WindowEvent arg0) {
+			// TODO Auto-generated method stub
+
+		}
+
 	}
 }
