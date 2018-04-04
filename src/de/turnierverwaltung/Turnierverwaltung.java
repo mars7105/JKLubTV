@@ -127,6 +127,7 @@ public class Turnierverwaltung {
 				initLookAndFeel();
 
 				try {
+					
 					new MainControl();
 
 				} catch (Exception e) {

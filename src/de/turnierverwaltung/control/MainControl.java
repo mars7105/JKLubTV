@@ -18,16 +18,22 @@ package de.turnierverwaltung.control;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Enumeration;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.UIManager;
+
 import de.turnierverwaltung.control.navigation.ActionListenerFileMenuControl;
 import de.turnierverwaltung.control.navigation.NaviControl;
 import de.turnierverwaltung.control.playerlist.ActionListenerPlayerListControl;
@@ -144,6 +150,19 @@ public class MainControl extends JFrame implements WindowListener {
 	private StartpageControl startpageControl;
 
 	public MainControl() {
+
+		Font font;
+		try {
+			font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/msttcorefonts/Arial.ttf"))
+					.deriveFont(Font.PLAIN, 18);
+			setUIFont(font);
+		} catch (FontFormatException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		
+
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
 		windowHeight = TournamentConstants.WINDOW_HEIGHT;
 		// setBounds(TournamentConstants.WINDOW_BOUNDS_X,
@@ -170,8 +189,19 @@ public class MainControl extends JFrame implements WindowListener {
 		makeProperties();
 		setBounds(propertiesControl.getFrameX(), propertiesControl.getFrameY(), propertiesControl.getFrameWidth(),
 				propertiesControl.getFrameHeight());
+
 		setEnabled(true);
 		setVisible(true);
+	}
+
+	public static void setUIFont(java.awt.Font f) {
+		Enumeration<Object> keys = UIManager.getDefaults().keys();
+		while (keys.hasMoreElements()) {
+			Object key = keys.nextElement();
+			Object value = UIManager.get(key);
+			if (value != null && value instanceof java.awt.Font)
+				UIManager.put(key, f);
+		}
 	}
 
 	public StartpageControl getStartpageControl() {

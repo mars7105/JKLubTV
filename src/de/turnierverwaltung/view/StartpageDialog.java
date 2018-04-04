@@ -5,7 +5,6 @@ import java.awt.Window;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 public class StartpageDialog extends JDialog {
@@ -14,10 +13,11 @@ public class StartpageDialog extends JDialog {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private JPanel mainPanel;
+	private StartpagePanelView mainPanel;
 	private ButtonPanelView buttonPanel;
+	private JScrollPane jsPane;
 
-	public StartpageDialog(JPanel mainPanel) {
+	public StartpageDialog(StartpagePanelView mainPanel) {
 		super();
 
 		getContentPane().setLayout(new BorderLayout());
@@ -25,7 +25,7 @@ public class StartpageDialog extends JDialog {
 		buttonPanel = new ButtonPanelView();
 		buttonPanel.makeAllButtons();
 		JScrollPane jsPane = new JScrollPane();
-		jsPane.setViewportView(mainPanel);
+		jsPane.setViewportView(this.mainPanel);
 		getContentPane().add(jsPane, BorderLayout.CENTER);
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 	}
@@ -36,18 +36,19 @@ public class StartpageDialog extends JDialog {
 //		this.mainPanel = mainPanel;
 		buttonPanel = new ButtonPanelView();
 		buttonPanel.makeAllButtons();
-		JScrollPane jsPane = new JScrollPane();
+		 jsPane = new JScrollPane();
 		jsPane.setViewportView(mainPanel);
 		getContentPane().add(jsPane, BorderLayout.CENTER);
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
 	}
 
-	public JPanel getMainPanel() {
+	public StartpagePanelView getMainPanel() {
 		return mainPanel;
 	}
 
-	public void setMainPanel(JPanel mainPanel) {
+	public void setMainPanel(StartpagePanelView mainPanel) {
 		this.mainPanel = mainPanel;
+		jsPane.setViewportView(this.mainPanel);
 	}
 
 	public ButtonPanelView getButtonPanel() {
@@ -66,7 +67,7 @@ public class StartpageDialog extends JDialog {
 		return buttonPanel.getCancelButton();
 	}
 
-	public void enableDialog() {
+	public void showDialog() {
 //		this.setLocationRelativeTo(null);
 		// this.pack();
 		this.setEnabled(true);

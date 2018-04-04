@@ -6,9 +6,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
-import javax.swing.JPanel;
-
+import de.turnierverwaltung.view.StartpageDBPanelView;
+import de.turnierverwaltung.view.StartpageDWZPanelView;
 import de.turnierverwaltung.view.StartpageDialog;
+import de.turnierverwaltung.view.StartpageELOPanelView;
+import de.turnierverwaltung.view.StartpagePanelView;
+import de.turnierverwaltung.view.StartpagePayerPanelView;
+import de.turnierverwaltung.view.StartpageTounamentPanelView;
 import de.turnierverwaltung.view.StartpageView;
 
 public class StartpageControl {
@@ -19,19 +23,19 @@ public class StartpageControl {
 		super();
 		this.mainControl = mainControl;
 		startpage = new StartpageView();
-		DialogListener dwzListener = new DialogListener(new JPanel());
+		DialogListener dwzListener = new DialogListener(new StartpageDWZPanelView());
 		startpage.getDwzButton().addActionListener(dwzListener);
 
-		DialogListener eloListener = new DialogListener(new JPanel());
+		DialogListener eloListener = new DialogListener(new StartpageELOPanelView());
 		startpage.getEloButton().addActionListener(eloListener);
 
-		DialogListener dbListener = new DialogListener(new JPanel());
+		DialogListener dbListener = new DialogListener(new StartpageDBPanelView());
 		startpage.getDatabaseButton().addActionListener(dbListener);
 
-		DialogListener playerListener = new DialogListener(new JPanel());
+		DialogListener playerListener = new DialogListener(new StartpagePayerPanelView());
 		startpage.getPlayerButton().addActionListener(playerListener);
 
-		DialogListener tournamentListener = new DialogListener(new JPanel());
+		DialogListener tournamentListener = new DialogListener(new StartpageTounamentPanelView());
 		startpage.getTournamentButton().addActionListener(tournamentListener);
 	}
 
@@ -44,9 +48,9 @@ public class StartpageControl {
 	}
 
 	class DialogListener implements ActionListener {
-		private JPanel panel;
+		private StartpagePanelView panel;
 
-		public DialogListener(JPanel panel) {
+		public DialogListener(StartpagePanelView panel) {
 			super();
 			this.panel = panel;
 		}
@@ -62,7 +66,6 @@ public class StartpageControl {
 					mainControl.getPropertiesControl().getStartpageDialogY(),
 					mainControl.getPropertiesControl().getStartpageDialogWidth(),
 					mainControl.getPropertiesControl().getStartpageDialogHeight());
-
 
 			DialogWindowListener wlistener = new DialogWindowListener(dialog);
 			dialog.addWindowListener(wlistener);
@@ -84,7 +87,7 @@ public class StartpageControl {
 					dialog.dispose();
 				}
 			});
-			dialog.enableDialog();
+			dialog.showDialog();
 		}
 	}
 
