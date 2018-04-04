@@ -89,6 +89,12 @@ public class PropertiesControl {
 	public static final String SETTINGS_DIALOG_Y = "settings-dialog-y";
 	public static final String SETTINGS_DIALOG_WIDTH = "settings-dialog-width";
 	public static final String SETTINGS_DIALOG_HEIGHT = "settings-dialog-height";
+
+	public static final String STARTPAGE_DIALOG_X = "startpage-dialog-x";
+	public static final String STARTPAGE_DIALOG_Y = "startpage-dialog-y";
+	public static final String STARTPAGE_DIALOG_WIDTH = "startpage-dialog-width";
+	public static final String STARTPAGE_DIALOG_HEIGHT = "startpage-dialog-height";
+
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private Preferences prefs;
@@ -154,7 +160,12 @@ public class PropertiesControl {
 		prop.setProperty(SETTINGS_DIALOG_X, String.valueOf(setWidth() - 200));
 		prop.setProperty(SETTINGS_DIALOG_Y,
 				String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
-
+		prop.setProperty(STARTPAGE_DIALOG_WIDTH, String.valueOf(setWidth()));
+		prop.setProperty(STARTPAGE_DIALOG_HEIGHT,
+				String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150));
+		prop.setProperty(STARTPAGE_DIALOG_X, String.valueOf(setWidth() - 200));
+		prop.setProperty(STARTPAGE_DIALOG_Y,
+				String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
 	}
 
 	public void checkCrossTableColumnForDoubles() {
@@ -535,6 +546,26 @@ public class PropertiesControl {
 			saveChanges = true;
 
 		}
+		if (prop.getProperty(STARTPAGE_DIALOG_WIDTH).equals("")) {
+			prop.setProperty(STARTPAGE_DIALOG_WIDTH, String.valueOf(setWidth()));
+			saveChanges = true;
+		}
+
+		if (prop.getProperty(STARTPAGE_DIALOG_HEIGHT).equals("")) {
+			prop.setProperty(STARTPAGE_DIALOG_HEIGHT,
+					String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150));
+			saveChanges = true;
+		}
+		if (prop.getProperty(STARTPAGE_DIALOG_X).equals("")) {
+			prop.setProperty(STARTPAGE_DIALOG_X, String.valueOf(setWidth() - 200));
+			saveChanges = true;
+		}
+		if (prop.getProperty(STARTPAGE_DIALOG_Y).equals("")) {
+			prop.setProperty(STARTPAGE_DIALOG_Y,
+					String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
+			saveChanges = true;
+
+		}
 		checkCrossTableColumnForDoubles();
 		checkMeetingTableColumnForDoubles();
 		if (saveChanges == true) {
@@ -702,6 +733,39 @@ public class PropertiesControl {
 	public int getSettingsDialogHeight() {
 		try {
 			return Integer.parseInt(prop.getProperty(SETTINGS_DIALOG_HEIGHT));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_HEIGHT;
+		}
+	}
+
+	public int getStartpageDialogX() {
+		try {
+			return Integer.parseInt(prop.getProperty(STARTPAGE_DIALOG_X));
+
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_BOUNDS_X;
+		}
+	}
+
+	public int getStartpageDialogY() {
+		try {
+			return Integer.parseInt(prop.getProperty(STARTPAGE_DIALOG_Y));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_BOUNDS_Y;
+		}
+	}
+
+	public int getStartpageDialogWidth() {
+		try {
+			return Integer.parseInt(prop.getProperty(STARTPAGE_DIALOG_WIDTH));
+		} catch (NumberFormatException e) {
+			return TournamentConstants.WINDOW_WIDTH;
+		}
+	}
+
+	public int getStartpageDialogHeight() {
+		try {
+			return Integer.parseInt(prop.getProperty(STARTPAGE_DIALOG_HEIGHT));
 		} catch (NumberFormatException e) {
 			return TournamentConstants.WINDOW_HEIGHT;
 		}
@@ -1198,6 +1262,7 @@ public class PropertiesControl {
 		return ok;
 
 	}
+
 	public Boolean writeELODialogProperties(int x, int y, int width, int height) {
 		Boolean ok = true;
 
@@ -1214,6 +1279,7 @@ public class PropertiesControl {
 		return ok;
 
 	}
+
 	public Boolean writeInfoDialogProperties(int x, int y, int width, int height) {
 		Boolean ok = true;
 
@@ -1230,6 +1296,7 @@ public class PropertiesControl {
 		return ok;
 
 	}
+
 	public Boolean writeSettingsDialogProperties(int x, int y, int width, int height) {
 		Boolean ok = true;
 
@@ -1241,6 +1308,23 @@ public class PropertiesControl {
 		prop.setProperty(SETTINGS_DIALOG_Y, dwzy);
 		prop.setProperty(SETTINGS_DIALOG_WIDTH, dwzwidth);
 		prop.setProperty(SETTINGS_DIALOG_HEIGHT, dwzheight);
+		ok = writeProperties();
+
+		return ok;
+
+	}
+
+	public Boolean writeStartpageDialogProperties(int x, int y, int width, int height) {
+		Boolean ok = true;
+
+		String startpagex = String.valueOf(x);
+		String startpagey = String.valueOf(y);
+		String startpagewidth = String.valueOf(width);
+		String startpageheight = String.valueOf(height);
+		prop.setProperty(STARTPAGE_DIALOG_X, startpagex);
+		prop.setProperty(STARTPAGE_DIALOG_Y, startpagey);
+		prop.setProperty(STARTPAGE_DIALOG_WIDTH, startpagewidth);
+		prop.setProperty(STARTPAGE_DIALOG_HEIGHT, startpageheight);
 		ok = writeProperties();
 
 		return ok;

@@ -53,27 +53,35 @@ public class StartpageControl {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-//			mainControl.setEnabled(false);
+			// mainControl.setEnabled(false);
 			StartpageDialog dialog = new StartpageDialog(mainControl, "", Dialog.ModalityType.APPLICATION_MODAL);
 			dialog.setMainPanel(panel);
-			dialog.setBounds(100, 100, 500, 400);
-			
+			dialog.setLocationRelativeTo(null);
+			dialog.pack();
+			dialog.setBounds(mainControl.getPropertiesControl().getStartpageDialogX(),
+					mainControl.getPropertiesControl().getStartpageDialogY(),
+					mainControl.getPropertiesControl().getStartpageDialogWidth(),
+					mainControl.getPropertiesControl().getStartpageDialogHeight());
+
+
 			DialogWindowListener wlistener = new DialogWindowListener(dialog);
 			dialog.addWindowListener(wlistener);
 			dialog.getOkButton().addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
+					mainControl.getPropertiesControl().writeStartpageDialogProperties(dialog.getBounds().x,
+							dialog.getBounds().y, dialog.getBounds().width, dialog.getBounds().height);
 					dialog.dispose();
-//					mainControl.setEnabled(true);
 				}
 			});
 			dialog.getCancelButton().addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
+					mainControl.getPropertiesControl().writeStartpageDialogProperties(dialog.getBounds().x,
+							dialog.getBounds().y, dialog.getBounds().width, dialog.getBounds().height);
 					dialog.dispose();
-//					mainControl.setEnabled(true);
 				}
 			});
 			dialog.enableDialog();
@@ -102,8 +110,10 @@ public class StartpageControl {
 
 		@Override
 		public void windowClosing(WindowEvent arg0) {
+			mainControl.getPropertiesControl().writeStartpageDialogProperties(dialog.getBounds().x,
+					dialog.getBounds().y, dialog.getBounds().width, dialog.getBounds().height);
 			dialog.dispose();
-//			mainControl.setEnabled(true);
+			// mainControl.setEnabled(true);
 
 		}
 

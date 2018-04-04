@@ -67,7 +67,7 @@ public class StartpageDialog extends JDialog {
 	}
 
 	public void enableDialog() {
-		this.setLocationRelativeTo(null);
+//		this.setLocationRelativeTo(null);
 		// this.pack();
 		this.setEnabled(true);
 		this.setVisible(true);
