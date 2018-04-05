@@ -1,7 +1,11 @@
 package de.turnierverwaltung.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.SystemColor;
+
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,8 +36,17 @@ public class StartpageView extends JScrollPane {
 		StartpageItemView panel = new StartpageItemView();
 
 		panel.add(dwzButton);
+		JPanel labelPanel = new JPanel();
+		Color titleColor = new Color((SystemColor.text).getRGB());
+		Color titleTextColor = new Color((SystemColor.textText).getRGB());
+		labelPanel.setBackground(titleColor);
+		labelPanel.setForeground(titleTextColor);
+		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.PAGE_AXIS));
 		JLabel dwzLabel = new JLabel("1. Schritt: DWZ Liste vom Deutschen Schachbund downloaden und einrichten.");
-		panel.add(dwzLabel);
+		JLabel dwzLabel2 = new JLabel("(Optional)");
+		labelPanel.add(dwzLabel);
+		labelPanel.add(dwzLabel2);
+		panel.add(labelPanel);
 		mainPanel.add(panel);
 		eloButton = new StartpageButtonView("2. ELO Liste einrichten");
 
@@ -42,7 +55,16 @@ public class StartpageView extends JScrollPane {
 		panel.add(eloButton);
 		JLabel eloLabel = new JLabel(
 				"2. Schritt: ELO Liste vom World Chess Federation (FIDE) downloaden und einrichten.");
-		panel.add(eloLabel);
+		JLabel eloLabel2 = new JLabel("(Optional)");
+		labelPanel = new JPanel();
+
+		labelPanel.setBackground(titleColor);
+		labelPanel.setForeground(titleTextColor);
+		labelPanel.setLayout(new BoxLayout(labelPanel, BoxLayout.PAGE_AXIS));
+
+		labelPanel.add(eloLabel);
+		labelPanel.add(eloLabel2);
+		panel.add(labelPanel);
 		mainPanel.add(panel);
 		databaseButton = new StartpageButtonView("3. Datenbank erstellen");
 

@@ -50,8 +50,13 @@ public class ExceptionHandler {
 		File errorFile = null;
 		int errornumber = 0;
 		while (fexist) {
+			if (propertiesControl.getDefaultPath().length() == 0) {
+				errorFile = new File("error-" + errornumber + ".log");
 
-			errorFile = new File(propertiesControl.getDefaultPath() + "/error-" + errornumber + ".log");
+			} else {
+				errorFile = new File(propertiesControl.getDefaultPath() + "/error-" + errornumber + ".log");
+			}
+
 			if (errorFile.exists()) {
 				errornumber++;
 			} else {

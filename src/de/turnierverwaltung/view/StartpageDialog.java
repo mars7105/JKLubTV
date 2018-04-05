@@ -35,7 +35,7 @@ public class StartpageDialog extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 //		this.mainPanel = mainPanel;
 		buttonPanel = new ButtonPanelView();
-		buttonPanel.makeAllButtons();
+		buttonPanel.makeOKButton();
 		 jsPane = new JScrollPane();
 		jsPane.setViewportView(mainPanel);
 		getContentPane().add(jsPane, BorderLayout.CENTER);

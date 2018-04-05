@@ -153,8 +153,8 @@ public class MainControl extends JFrame implements WindowListener {
 
 		Font font;
 		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/msttcorefonts/Arial.ttf"))
-					.deriveFont(Font.PLAIN, 18);
+			font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/msttcorefonts/Arial_Bold.ttf"))
+					.deriveFont(Font.PLAIN, 14);
 			setUIFont(font);
 		} catch (FontFormatException | IOException e) {
 			// TODO Auto-generated catch block

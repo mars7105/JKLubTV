@@ -18,25 +18,39 @@ import de.turnierverwaltung.view.StartpageView;
 public class StartpageControl {
 	MainControl mainControl;
 	StartpageView startpage;
+	private StartpageDWZPanelView startpageDWZPanel;
+	private StartpageELOPanelView startpageELOPanel;
+	private StartpageDBPanelView startpageDBPanel;
+	private StartpageDBPanelView startpagePlayerPanel;
+	private StartpageTounamentPanelView startpageTounamentPanel;
 
 	public StartpageControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
 		startpage = new StartpageView();
-		DialogListener dwzListener = new DialogListener(new StartpageDWZPanelView());
+
+		startpageDWZPanel = new StartpageDWZPanelView();
+		DialogListener dwzListener = new DialogListener(startpageDWZPanel);
 		startpage.getDwzButton().addActionListener(dwzListener);
 
-		DialogListener eloListener = new DialogListener(new StartpageELOPanelView());
+		startpageELOPanel = new StartpageELOPanelView();
+		DialogListener eloListener = new DialogListener(startpageELOPanel);
 		startpage.getEloButton().addActionListener(eloListener);
 
-		DialogListener dbListener = new DialogListener(new StartpageDBPanelView());
+		startpageDBPanel = new StartpageDBPanelView();
+		DialogListener dbListener = new DialogListener(startpageDBPanel);
 		startpage.getDatabaseButton().addActionListener(dbListener);
 
-		DialogListener playerListener = new DialogListener(new StartpagePayerPanelView());
+		startpagePlayerPanel = new StartpageDBPanelView();
+		DialogListener playerListener = new DialogListener(startpagePlayerPanel);
 		startpage.getPlayerButton().addActionListener(playerListener);
 
-		DialogListener tournamentListener = new DialogListener(new StartpageTounamentPanelView());
+		startpageTounamentPanel = new StartpageTounamentPanelView();
+		DialogListener tournamentListener = new DialogListener(startpageTounamentPanel);
 		startpage.getTournamentButton().addActionListener(tournamentListener);
+
+		StartpageActionListener actionListener = new StartpageActionListener(mainControl, this);
+		actionListener.addActionListener();
 	}
 
 	public StartpageView getStartpage() {
@@ -45,6 +59,46 @@ public class StartpageControl {
 
 	public void setStartpage(StartpageView startpage) {
 		this.startpage = startpage;
+	}
+
+	public StartpageDWZPanelView getStartpageDWZPanel() {
+		return startpageDWZPanel;
+	}
+
+	public void setStartpageDWZPanel(StartpageDWZPanelView startpageDWZPanel) {
+		this.startpageDWZPanel = startpageDWZPanel;
+	}
+
+	public StartpageELOPanelView getStartpageELOPanel() {
+		return startpageELOPanel;
+	}
+
+	public void setStartpageELOPanel(StartpageELOPanelView startpageELOPanel) {
+		this.startpageELOPanel = startpageELOPanel;
+	}
+
+	public StartpageDBPanelView getStartpageDBPanel() {
+		return startpageDBPanel;
+	}
+
+	public void setStartpageDBPanel(StartpageDBPanelView startpageDBPanel) {
+		this.startpageDBPanel = startpageDBPanel;
+	}
+
+	public StartpageDBPanelView getStartpagePlayerPanel() {
+		return startpagePlayerPanel;
+	}
+
+	public void setStartpagePlayerPanel(StartpageDBPanelView startpagePlayerPanel) {
+		this.startpagePlayerPanel = startpagePlayerPanel;
+	}
+
+	public StartpageTounamentPanelView getStartpageTounamentPanel() {
+		return startpageTounamentPanel;
+	}
+
+	public void setStartpageTounamentPanel(StartpageTounamentPanelView startpageTounamentPanel) {
+		this.startpageTounamentPanel = startpageTounamentPanel;
 	}
 
 	class DialogListener implements ActionListener {
@@ -78,15 +132,7 @@ public class StartpageControl {
 					dialog.dispose();
 				}
 			});
-			dialog.getCancelButton().addActionListener(new ActionListener() {
 
-				@Override
-				public void actionPerformed(ActionEvent arg0) {
-					mainControl.getPropertiesControl().writeStartpageDialogProperties(dialog.getBounds().x,
-							dialog.getBounds().y, dialog.getBounds().width, dialog.getBounds().height);
-					dialog.dispose();
-				}
-			});
 			dialog.showDialog();
 		}
 	}
