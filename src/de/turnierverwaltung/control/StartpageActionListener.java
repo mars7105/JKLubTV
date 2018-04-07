@@ -22,6 +22,44 @@ public class StartpageActionListener {
 	}
 
 	public void addActionListener() {
+		startpageControl.getStartpageDWZPanel().getOpenVereineCSVLabel()
+				.setText(mainControl.getPropertiesControl().getPathToVereineCVS());
+
+		startpageControl.getStartpageDWZPanel().getOpenPlayersCSVLabel()
+				.setText(mainControl.getPropertiesControl().getPathToPlayersCSV());
+
+		startpageControl.getStartpageELOPanel().getOpenPlayersELOLabel()
+				.setText(mainControl.getPropertiesControl().getPathToPlayersELO());
+		String filename = mainControl.getPropertiesControl().getPathToPlayersELO();
+		int positionEXT = filename.lastIndexOf('.');
+
+		if (positionEXT > 0) {
+			String newFile = filename.substring(positionEXT);
+			if (newFile.equals(".sqlite")) {
+				startpageControl.getStartpageELOPanel().getConvertELOToSQLITEButton().setEnabled(false);
+			} else {
+				startpageControl.getStartpageELOPanel().getConvertELOToSQLITEButton().setEnabled(true);
+
+			}
+		} else {
+			startpageControl.getStartpageELOPanel().getConvertELOToSQLITEButton().setEnabled(false);
+
+		}
+
+		filename = mainControl.getPropertiesControl().getPathToPlayersCSV();
+		positionEXT = filename.lastIndexOf('.');
+		if (positionEXT > 0) {
+			String newFile = filename.substring(positionEXT);
+			if (newFile.equals(".sqlite")) {
+				startpageControl.getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
+			} else {
+				startpageControl.getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(true);
+
+			}
+		} else {
+			startpageControl.getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
+
+		}
 		startpageControl.getStartpageDWZPanel().getOpenVereineCSVButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -42,7 +80,7 @@ public class StartpageActionListener {
 					mainControl.getPropertiesControl().writeProperties();
 					startpageControl.getStartpageDWZPanel().getOpenVereineCSVLabel()
 							.setText(mainControl.getPropertiesControl().getPathToVereineCVS());
-					;
+					
 				}
 
 			}
@@ -55,7 +93,7 @@ public class StartpageActionListener {
 				dwzL.convertDWZListToSQLITE();
 				startpageControl.getStartpageDWZPanel().getOpenPlayersCSVLabel()
 						.setText(mainControl.getPropertiesControl().getPathToPlayersCSV());
-				;
+				
 				startpageControl.getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
 			}
 		});
