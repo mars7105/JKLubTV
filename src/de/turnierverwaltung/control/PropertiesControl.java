@@ -1,5 +1,6 @@
 package de.turnierverwaltung.control;
 
+import java.awt.Font;
 import java.awt.Toolkit;
 
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
@@ -24,6 +25,8 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Properties;
 import java.util.prefs.Preferences;
+
+import javax.swing.JLabel;
 
 import de.turnierverwaltung.model.TournamentConstants;
 
@@ -94,6 +97,10 @@ public class PropertiesControl {
 	public static final String STARTPAGE_DIALOG_Y = "startpage-dialog-y";
 	public static final String STARTPAGE_DIALOG_WIDTH = "startpage-dialog-width";
 	public static final String STARTPAGE_DIALOG_HEIGHT = "startpage-dialog-height";
+
+	public static final String FONT_NAME = "font-name";
+	public static final String FONT_STYLE = "font-style";
+	public static final String FONT_SIZE = "font-size";
 
 	private Properties prop;
 	private Boolean NoWritableProperties;
@@ -166,6 +173,9 @@ public class PropertiesControl {
 		prop.setProperty(STARTPAGE_DIALOG_X, String.valueOf(setWidth() - 200));
 		prop.setProperty(STARTPAGE_DIALOG_Y,
 				String.valueOf(Toolkit.getDefaultToolkit().getScreenSize().height - 150 - 200));
+		prop.setProperty(FONT_NAME, "");
+		prop.setProperty(FONT_STYLE, "");
+		prop.setProperty(FONT_SIZE, "");
 	}
 
 	public void checkCrossTableColumnForDoubles() {
@@ -566,11 +576,75 @@ public class PropertiesControl {
 			saveChanges = true;
 
 		}
+		final Font font = new JLabel().getFont();
+		if (prop.getProperty(FONT_NAME).equals("")) {
+			prop.setProperty(FONT_NAME, font.getFontName());
+			saveChanges = true;
+		}
+
+		if (prop.getProperty(FONT_STYLE).equals("")) {
+			prop.setProperty(FONT_STYLE, String.valueOf(font.getStyle()));
+			saveChanges = true;
+		}
+		if (prop.getProperty(FONT_SIZE).equals("")) {
+			prop.setProperty(FONT_SIZE, String.valueOf(font.getSize()));
+			saveChanges = true;
+		}
 		checkCrossTableColumnForDoubles();
 		checkMeetingTableColumnForDoubles();
 		if (saveChanges == true) {
 			writeProperties();
 		}
+	}
+
+	private String getFontName() {
+
+		return prop.getProperty(FONT_NAME);
+
+	}
+
+	private int getFontStyle() {
+		try {
+			return Integer.parseInt(prop.getProperty(FONT_STYLE));
+		} catch (NumberFormatException e) {
+			return Font.BOLD;
+		}
+	}
+
+	private int getFontSize() {
+		try {
+			return Integer.parseInt(prop.getProperty(FONT_SIZE));
+		} catch (NumberFormatException e) {
+			return 14;
+		}
+	}
+
+	private void setFontName(String fontName) {
+
+		prop.setProperty(FONT_NAME, fontName);
+
+	}
+
+	private void setFontStyle(int style) {
+
+		prop.setProperty(FONT_STYLE, String.valueOf(style));
+	}
+
+	private void setFontSize(int size) {
+
+		prop.setProperty(FONT_SIZE, String.valueOf(size));
+
+	}
+
+	public void setFont(Font font) {
+		setFontName(font.getFontName());
+		setFontStyle(font.getStyle());
+		setFontSize(font.getSize());
+	}
+
+	public Font getFont() {
+		Font font = new Font(getFontName(), getFontStyle(), getFontSize());
+		return font;
 	}
 
 	public int getFrameX() {

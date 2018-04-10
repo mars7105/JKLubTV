@@ -632,12 +632,12 @@ public class SettingsView extends JPanel {
 		htmlAll.add(new JSeparator());
 		fontChooser = new JFontChooser();
 
-		fontChooserButton = new JButton("Select Font");
+		fontChooserButton = new JButton(Messages.getString("EigenschaftenView.67"));
 		
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(fontChooserButton);
-		htmlPanel.add(new JLabel("Font"));
+		
 
 		htmlAll.add(htmlPanel);
 

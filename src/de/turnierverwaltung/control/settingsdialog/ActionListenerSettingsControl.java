@@ -33,12 +33,14 @@ public class ActionListenerSettingsControl {
 
 			public void actionPerformed(ActionEvent e) {
 				JFontChooser fontChooser = esControl.getEigenschaftenView().getFontChooser();
+				fontChooser.setSelectedFont(mainControl.getPropertiesControl().getFont());
 				int result = fontChooser.showDialog(esControl.getEigenschaftenView());
 				if (result == JFontChooser.OK_OPTION) {
 					Font selectedFont = fontChooser.getSelectedFont();
-					
-					
+
 					MainControl.setUIFont(selectedFont);
+					mainControl.getPropertiesControl().setFont(selectedFont);
+					mainControl.getPropertiesControl().writeProperties();
 
 				}
 			}

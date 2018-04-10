@@ -30,7 +30,7 @@ public class HTMLCopyToClipboardControl {
 
 			String webserverPath = mainControl.getPropertiesControl().getWebserverPath();
 
-			HTMLToClipBoardDialogView htmlToClipboardDialog = new HTMLToClipBoardDialogView();
+			final HTMLToClipBoardDialogView htmlToClipboardDialog = new HTMLToClipBoardDialogView();
 
 			ArrayList<HTMLToClipBoardView> htmlToClipboardArray = new ArrayList<HTMLToClipBoardView>();
 
@@ -50,13 +50,13 @@ public class HTMLCopyToClipboardControl {
 						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".ics";
 				String webfilename3 = ical.replaceAll(" ", "");
 
-				String crossLabel = mainControl.getTournament().getTurnierName() + " "
+				final String crossLabel = mainControl.getTournament().getTurnierName() + " "
 						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + " "
 						+ Messages.getString("PDFSaveControler.22");
-				String meetingLabel = mainControl.getTournament().getTurnierName() + " "
+				final String meetingLabel = mainControl.getTournament().getTurnierName() + " "
 						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + " "
 						+ Messages.getString("PDFSaveControler.23");
-				String allLabel = mainControl.getTournament().getTurnierName() + " "
+				final String allLabel = mainControl.getTournament().getTurnierName() + " "
 						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + " "
 						+ Messages.getString("PDFSaveControler.21");
 				if (this.mainControl.getCrossTable()[i] == null) {
@@ -84,7 +84,7 @@ public class HTMLCopyToClipboardControl {
 
 				HTMLToClipBoardView crosshtmlToClipboard = new HTMLToClipBoardView();
 				crosshtmlToClipboard.getLabel().setText(crossLabel);
-				String crosstable = this.mainControl.getCrossTable()[i].getHTMLTable(ohneHeaderundFooter,
+				final String crosstable = this.mainControl.getCrossTable()[i].getHTMLTable(ohneHeaderundFooter,
 						webserverPath, webfilename1, showLink);
 				crosshtmlToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {
 
@@ -102,7 +102,7 @@ public class HTMLCopyToClipboardControl {
 				HTMLToClipBoardView meetinghtmlToClipboard = new HTMLToClipBoardView();
 				meetinghtmlToClipboard.getLabel().setText(meetingLabel);
 
-				String meetingtable = this.mainControl.getMeetingTableControl().getTerminTabelle()[i]
+				final String meetingtable = this.mainControl.getMeetingTableControl().getTerminTabelle()[i]
 						.getHTMLTable(ohneHeaderundFooter, webserverPath, webfilename2, webfilename3, showLink);
 				meetinghtmlToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {
 
@@ -118,9 +118,9 @@ public class HTMLCopyToClipboardControl {
 				htmlToClipboardArray.add(meetinghtmlToClipboard);
 				HTMLToClipBoardView allToClipboard = new HTMLToClipBoardView();
 				allToClipboard.getLabel().setText(allLabel);
-				String crosstableall = this.mainControl.getCrossTable()[i]
+				final String crosstableall = this.mainControl.getCrossTable()[i]
 						.getHTMLTableOnlyWithHeader(ohneHeaderundFooter, webserverPath, webfilename1, showLink);
-				String meetingtableall = this.mainControl.getMeetingTableControl().getTerminTabelle()[i]
+				final String meetingtableall = this.mainControl.getMeetingTableControl().getTerminTabelle()[i]
 						.getHTMLTableOnlyWithFooter(ohneHeaderundFooter, webserverPath, webfilename2, webfilename3,
 								showLink);
 				allToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {

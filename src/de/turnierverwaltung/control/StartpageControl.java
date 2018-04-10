@@ -111,7 +111,7 @@ public class StartpageControl {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// mainControl.setEnabled(false);
-			StartpageDialog dialog = new StartpageDialog(mainControl, "", Dialog.ModalityType.APPLICATION_MODAL);
+			final StartpageDialog dialog = new StartpageDialog(mainControl, "", Dialog.ModalityType.APPLICATION_MODAL);
 			dialog.setMainPanel(panel);
 			dialog.setLocationRelativeTo(null);
 			dialog.pack();

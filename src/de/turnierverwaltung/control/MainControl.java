@@ -18,6 +18,7 @@ package de.turnierverwaltung.control;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.sql.SQLException;
@@ -148,18 +149,6 @@ public class MainControl extends JFrame implements WindowListener {
 
 	public MainControl() {
 
-//		Font font;
-//		try {
-//			font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/msttcorefonts/Arial_Bold.ttf"))
-//					.deriveFont(Font.PLAIN, 14);
-//			setUIFont(font);
-//		} catch (FontFormatException | IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-
-		
-
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
 		windowHeight = TournamentConstants.WINDOW_HEIGHT;
 		// setBounds(TournamentConstants.WINDOW_BOUNDS_X,
@@ -184,6 +173,7 @@ public class MainControl extends JFrame implements WindowListener {
 
 		init();
 		makeProperties();
+		
 		setBounds(propertiesControl.getFrameX(), propertiesControl.getFrameY(), propertiesControl.getFrameWidth(),
 				propertiesControl.getFrameHeight());
 
@@ -439,7 +429,9 @@ public class MainControl extends JFrame implements WindowListener {
 	private void makeProperties() {
 
 		if (propertiesControl.checkPathToDatabase() == true) {
-
+			Font font;
+			font = propertiesControl.getFont();
+			setUIFont(font);
 			final String path = propertiesControl.getPathToDatabase();
 			SQLiteDAOFactory.setDB_PATH(path);
 			setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
@@ -503,6 +495,9 @@ public class MainControl extends JFrame implements WindowListener {
 				}
 			}
 		} else {
+			Font font;
+			font = propertiesControl.getFont();
+			setUIFont(font);
 			setTitle(Messages.getString("MainControl.10"));
 			startpageControl = new StartpageControl(this);
 			hauptPanel.addTab("Einrichtungsassistent", startpageControl.getStartpage());
