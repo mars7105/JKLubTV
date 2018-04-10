@@ -21,6 +21,7 @@ import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -49,6 +50,7 @@ import de.turnierverwaltung.view.ButtonPanelView;
 import de.turnierverwaltung.view.Messages;
 import de.turnierverwaltung.view.SpinnerView;
 import de.turnierverwaltung.view.TitleLabelView;
+import say.swing.JFontChooser;
 
 public class SettingsView extends JPanel {
 
@@ -65,10 +67,12 @@ public class SettingsView extends JPanel {
 		}
 
 	}
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+
 	private static void open(URI uri) {
 		if (Desktop.isDesktopSupported()) {
 			try {
@@ -128,10 +132,13 @@ public class SettingsView extends JPanel {
 	private JTextField newELOTextField;
 	private JButton convertELOToSQLITEButton;
 	private JLabel convertELOToSQLITELabel;
+	private Font selectedFont;
 
 	private JButton convertDWZToSQLITEButton;
 
 	private JLabel convertDWZToSQLITELabel;
+	private JButton fontChooserButton;
+	private JFontChooser fontChooser;
 
 	/**
 	 * Create the panel.
@@ -623,6 +630,16 @@ public class SettingsView extends JPanel {
 		htmlAll.add(htmlPanel);
 
 		htmlAll.add(new JSeparator());
+		fontChooser = new JFontChooser();
+
+		fontChooserButton = new JButton("Select Font");
+		
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(fontChooserButton);
+		htmlPanel.add(new JLabel("Font"));
+
+		htmlAll.add(htmlPanel);
 
 	}
 
@@ -729,6 +746,14 @@ public class SettingsView extends JPanel {
 
 		htmlAll.add(new JSeparator());
 
+	}
+
+	public JButton getFontChooserButton() {
+		return fontChooserButton;
+	}
+
+	public void setFontChooserButton(JButton fontChooserButton) {
+		this.fontChooserButton = fontChooserButton;
 	}
 
 	public void setBlackTextField(JTextField blackTextField) {
@@ -894,11 +919,27 @@ public class SettingsView extends JPanel {
 		this.whiteTextField = whiteTextField;
 	}
 
+	public JFontChooser getFontChooser() {
+		return fontChooser;
+	}
+
+	public void setFontChooser(JFontChooser fontChooser) {
+		this.fontChooser = fontChooser;
+	}
+
+	public Font getSelectedFont() {
+		return selectedFont;
+	}
+
+	public void setSelectedFont(Font selectedFont) {
+		this.selectedFont = selectedFont;
+	}
+
 	private void tableLabel() {
 		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.21"));
 		titleView.setFlowLayoutLeft();
 		Color windowBorder = new Color((SystemColor.windowBorder).getRGB());
-		
+
 		htmlAll.add(titleView);
 		JPanel bothPanel = new JPanel();
 		bothPanel.setLayout(new BorderLayout());
@@ -908,7 +949,7 @@ public class SettingsView extends JPanel {
 		JPanel rightPanel = new JPanel();
 		rightPanel.setBorder(BorderFactory.createLineBorder(windowBorder));
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
-		
+
 		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		Dimension dimTextField = new Dimension(175, 30);

@@ -1,8 +1,11 @@
 package de.turnierverwaltung.control.settingsdialog;
 
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -14,6 +17,7 @@ import de.turnierverwaltung.control.PropertiesControl;
 import de.turnierverwaltung.control.ratingdialog.DWZListToSQLITEControl;
 import de.turnierverwaltung.control.ratingdialog.ELOListToSQLITEControl;
 import de.turnierverwaltung.view.settingsdialog.SettingsView;
+import say.swing.JFontChooser;
 
 public class ActionListenerSettingsControl {
 	private MainControl mainControl;
@@ -28,6 +32,20 @@ public class ActionListenerSettingsControl {
 	}
 
 	public void addActionListeners() {
+		esControl.getEigenschaftenView().getFontChooserButton().addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				JFontChooser fontChooser = esControl.getEigenschaftenView().getFontChooser();
+				int result = fontChooser.showDialog(esControl.getEigenschaftenView());
+				if (result == JFontChooser.OK_OPTION) {
+					Font selectedFont = fontChooser.getSelectedFont();
+					
+					
+					MainControl.setUIFont(selectedFont);
+
+				}
+			}
+		});
 		esControl.getEigenschaftenView().getOkButton().addActionListener(new ActionListener() {
 
 			@Override

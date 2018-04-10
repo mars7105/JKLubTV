@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="lib/vinnie-2.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/opencsv-3.7.jar"/>
 	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.20.0.jar"/>
+	<classpathentry kind="lib" path="lib/jfontchooser-1.0.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

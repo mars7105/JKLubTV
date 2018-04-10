@@ -151,15 +151,15 @@ public class MainControl extends JFrame implements WindowListener {
 
 	public MainControl() {
 
-		Font font;
-		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/msttcorefonts/Arial_Bold.ttf"))
-					.deriveFont(Font.PLAIN, 14);
-			setUIFont(font);
-		} catch (FontFormatException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		Font font;
+//		try {
+//			font = Font.createFont(Font.TRUETYPE_FONT, this.getClass().getResourceAsStream("/msttcorefonts/Arial_Bold.ttf"))
+//					.deriveFont(Font.PLAIN, 14);
+//			setUIFont(font);
+//		} catch (FontFormatException | IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 
 		
 
