@@ -11,7 +11,6 @@ import de.turnierverwaltung.view.StartpageDWZPanelView;
 import de.turnierverwaltung.view.StartpageDialog;
 import de.turnierverwaltung.view.StartpageELOPanelView;
 import de.turnierverwaltung.view.StartpagePanelView;
-import de.turnierverwaltung.view.StartpagePayerPanelView;
 import de.turnierverwaltung.view.StartpageTounamentPanelView;
 import de.turnierverwaltung.view.StartpageView;
 
