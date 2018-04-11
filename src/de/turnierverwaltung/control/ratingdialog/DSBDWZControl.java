@@ -46,7 +46,6 @@ import de.turnierverwaltung.model.rating.CSVVereineList;
 import de.turnierverwaltung.model.rating.DSBDWZClub;
 import de.turnierverwaltung.model.rating.DWZData;
 import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
-import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
 import de.turnierverwaltung.model.rating.SortCSVVereine;
 import de.turnierverwaltung.view.ratingdialog.DSBDWZDialogView;
 import de.turnierverwaltung.view.ratingdialog.DSBDWZPlayerView;

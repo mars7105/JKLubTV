@@ -35,7 +35,6 @@ import de.turnierverwaltung.model.rating.CSVVereine;
 import de.turnierverwaltung.model.rating.ELOData;
 import de.turnierverwaltung.model.rating.ELOPlayer;
 import de.turnierverwaltung.model.rating.ELOPlayerList;
-import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
 import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
 import de.turnierverwaltung.view.ratingdialog.ELODialogView;
 import de.turnierverwaltung.view.ratingdialog.ELOPlayerView;
@@ -78,7 +77,6 @@ public class ELOControl {
 				if (extender.equals(".sqlite")) {
 
 					sqlitePlayerlist = new SQLitePlayerELOList();
-					final String pathToPlayersCSV = mainControl.getPropertiesControl().getPathToPlayersCSV();
 					dbChecked = sqlitePlayerlist.checkDatabase(playerELOList);
 
 				} else {

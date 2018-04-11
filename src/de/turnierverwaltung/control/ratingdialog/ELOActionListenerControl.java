@@ -17,7 +17,6 @@ import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.rating.DWZData;
 import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
-import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
 import de.turnierverwaltung.view.ratingdialog.ELODialogView;
 
 /**
