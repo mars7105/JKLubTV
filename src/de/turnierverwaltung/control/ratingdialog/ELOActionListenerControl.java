@@ -71,20 +71,23 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 						if (playerExist(neuerSpieler) == false) {
 							final SQLitePlayerDWZList spdwzlist = new SQLitePlayerDWZList();
 							final String pathToPlayersCSV = mainControl.getPropertiesControl().getPathToPlayersCSV();
-							final ArrayList<DWZData> dwzDataList = spdwzlist.getPlayersByFideId(pathToPlayersCSV,
-									neuerSpieler.getEloData().getFideid());
-							if (dwzDataList != null) {
-								if (dwzDataList.size() == 1) {
-									neuerSpieler.setDwzData(dwzDataList.get(0));
+							if (spdwzlist.checkDatabase(pathToPlayersCSV) == true) {
+								final ArrayList<DWZData> dwzDataList = spdwzlist.getPlayersByFideId(pathToPlayersCSV,
+										neuerSpieler.getEloData().getFideid());
+								if (dwzDataList != null) {
+									if (dwzDataList.size() == 1) {
+										neuerSpieler.setDwzData(dwzDataList.get(0));
+									}
 								}
+								final SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+
+								neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+								mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
+								eloDialogControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
+										.setIcon(insertIcon3);
+
 							}
-							final SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-
-							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-							mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
-							eloDialogControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
-									.setIcon(insertIcon3);
-
+							
 						}
 						eloDialogControl.getSpielerSearchPanelList().getList().updateUI();
 

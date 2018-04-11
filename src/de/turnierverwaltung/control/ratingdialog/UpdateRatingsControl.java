@@ -128,7 +128,8 @@ public class UpdateRatingsControl {
 						}
 
 						// Elo Update -standard_rating_list.sqlite
-						if (elolist != null) {
+						if (elolist.checkDatabase(elofilename) == true) {
+
 							int dwzfideid = player.getDwzData().getCsvFIDE_ID();
 							int elofideid = player.getEloData().getFideid();
 							Player temp = new Player();
@@ -186,15 +187,16 @@ public class UpdateRatingsControl {
 							Player sqlitePlayer;
 							if (dwzfileextender.equals(".sqlite")) {
 								dwzlist = new SQLitePlayerDWZList();
-								sqlitePlayer = dwzlist.getPlayer(dwzfilename, player.getDwzData().getCsvZPS(),
-										player.getDwzData().getCsvMgl_Nr());
-								if (sqlitePlayer.getDwzData().getCsvDWZ() != player.getDwzData().getCsvDWZ()) {
-									player.setDwzData(sqlitePlayer.getDwzData());
+								if (dwzlist.checkDatabase(dwzfilename) == true) {
+									sqlitePlayer = dwzlist.getPlayer(dwzfilename, player.getDwzData().getCsvZPS(),
+											player.getDwzData().getCsvMgl_Nr());
+									if (sqlitePlayer.getDwzData().getCsvDWZ() != player.getDwzData().getCsvDWZ()) {
+										player.setDwzData(sqlitePlayer.getDwzData());
 
-									spielerTableControl.updateOneSpieler(player);
+										spielerTableControl.updateOneSpieler(player);
 
+									}
 								}
-
 							} else {
 								// DWZ Update -.sqlite
 								csvPlayerlist = new CSVPlayerList();

@@ -210,7 +210,8 @@ public class ELOControl {
 
 						}
 					}
-					if (sqlitePlayerlist != null) {
+					// if (sqlitePlayerlist != null) {
+						if (sqlitePlayerlist.checkDatabase(playerELOList) == true) {
 
 						final ArrayList<ELOData> eloPlayer = sqlitePlayerlist.getPlayersByName(playerELOList, eingabe);
 						final ListIterator<ELOData> li = eloPlayer.listIterator();

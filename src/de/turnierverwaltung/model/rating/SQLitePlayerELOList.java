@@ -64,4 +64,17 @@ public class SQLitePlayerELOList {
 		return eloPlayers;
 	}
 
+	public Boolean checkDatabase(String pathToPlayersCSV) {
+		ArrayList<ELOData> dwzPlayers = null;
+		dwzPlayers = getPlayersByName(pathToPlayersCSV, "Schm");
+		if (dwzPlayers == null) {
+			return false;
+		} else {
+			if (dwzPlayers.size() > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
 }

@@ -128,4 +128,18 @@ public class SQLitePlayerDWZList {
 		return player;
 
 	}
+
+	public Boolean checkDatabase(String pathToPlayersCSV) {
+		ArrayList<DWZData> dwzPlayers = null;
+		dwzPlayers = getPlayersByName(pathToPlayersCSV, "Schm");
+		if (dwzPlayers == null) {
+			return false;
+		} else {
+			if (dwzPlayers.size() > 0) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	}
 }

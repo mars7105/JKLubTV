@@ -187,7 +187,7 @@ public class DSBDWZControl {
 			makeDWZListe(zps);
 			dialog.getVereinsAuswahl().addItemListener(dewisDialogActionListenerControl);
 		}
-		
+
 	}
 
 	/**
@@ -212,7 +212,9 @@ public class DSBDWZControl {
 					extender = filename.substring(positionEXT);
 					if (extender.equals(".sqlite")) {
 						sqlitePlayerlist = new SQLitePlayerDWZList();
-						dwzDataArray = sqlitePlayerlist.getPlayerOfVerein(filename, zps);
+						if (sqlitePlayerlist.checkDatabase(filename) == true) {
+							dwzDataArray = sqlitePlayerlist.getPlayerOfVerein(filename, zps);
+						}
 					} else {
 						final CSVPlayerList csvplayerlist = new CSVPlayerList();
 						csvplayerlist.loadPlayerCSVList(filename);
@@ -444,27 +446,30 @@ public class DSBDWZControl {
 							dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
 							searchplayerlist = new ArrayList<Player>();
 							final String eingabe = spielerSearchTextField.getText().toUpperCase();
-							final ArrayList<DWZData> dwzPlayer = sqlitePlayerlist.getPlayersByName(
-									mainControl.getPropertiesControl().getPathToPlayersCSV(), eingabe);
-							final ListIterator<DWZData> li = dwzPlayer.listIterator();
-							while (li.hasNext()) {
-								final DWZData tmp = li.next();
+							if (sqlitePlayerlist
+									.checkDatabase(mainControl.getPropertiesControl().getPathToPlayersCSV()) == true) {
+								final ArrayList<DWZData> dwzPlayer = sqlitePlayerlist.getPlayersByName(
+										mainControl.getPropertiesControl().getPathToPlayersCSV(), eingabe);
+								final ListIterator<DWZData> li = dwzPlayer.listIterator();
+								while (li.hasNext()) {
+									final DWZData tmp = li.next();
 
-								try {
-									if (sqlpc.playerExist(tmp)) {
-										spielerSearchPanelList.makeSpielerZeile(tmp, 2);
+									try {
+										if (sqlpc.playerExist(tmp)) {
+											spielerSearchPanelList.makeSpielerZeile(tmp, 2);
 
-									} else {
+										} else {
+											spielerSearchPanelList.makeSpielerZeile(tmp, 0);
+										}
+									} catch (final SQLException e1) {
 										spielerSearchPanelList.makeSpielerZeile(tmp, 0);
 									}
-								} catch (final SQLException e1) {
-									spielerSearchPanelList.makeSpielerZeile(tmp, 0);
-								}
-								final Player player = new Player();
-								player.setDwzData(tmp);
-								player.copyDWZDataToPlayer();
-								searchplayerlist.add(player);
+									final Player player = new Player();
+									player.setDwzData(tmp);
+									player.copyDWZDataToPlayer();
+									searchplayerlist.add(player);
 
+								}
 							}
 							spielerSearchPanelList.makeList();
 							makePlayerSearchSelectedList();

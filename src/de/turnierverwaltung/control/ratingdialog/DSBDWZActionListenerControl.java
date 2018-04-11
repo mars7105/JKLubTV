@@ -80,18 +80,20 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 						if (playerExist(neuerSpieler) == false) {
 							SQLitePlayerELOList spelolist = new SQLitePlayerELOList();
 							String pathToPlayersELO = mainControl.getPropertiesControl().getPathToPlayersELO();
-							ELOData eloDataList = spelolist.getPlayer(pathToPlayersELO,
-									neuerSpieler.getDwzData().getCsvFIDE_ID());
-							if (eloDataList != null) {
-								neuerSpieler.setEloData(eloDataList);
-							}
-							SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-							neuerSpieler.setName(neuerSpieler.getDwzData().getCsvSpielername());
-							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-							mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
-							dewisDialogControl.getSpielerDewisView().getListModel().getElementAt(temp)
-									.setIcon(insertIcon3);
+							if (spelolist.checkDatabase(pathToPlayersELO) == true) {
 
+								ELOData eloDataList = spelolist.getPlayer(pathToPlayersELO,
+										neuerSpieler.getDwzData().getCsvFIDE_ID());
+								if (eloDataList != null) {
+									neuerSpieler.setEloData(eloDataList);
+								}
+								SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+								neuerSpieler.setName(neuerSpieler.getDwzData().getCsvSpielername());
+								neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+								mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
+								dewisDialogControl.getSpielerDewisView().getListModel().getElementAt(temp)
+										.setIcon(insertIcon3);
+							}
 						}
 						dewisDialogControl.getSpielerDewisView().updateUI();
 						dewisDialogControl.makeSelectedList();

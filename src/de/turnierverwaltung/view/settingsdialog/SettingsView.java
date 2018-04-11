@@ -178,11 +178,11 @@ public class SettingsView extends JPanel {
 		setPreferredSize(new Dimension(800, 600));
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
-		languageSupport();
+		settingsPanel();
 		JPanel wrapper = new JPanel();
 		wrapper.setLayout(new BorderLayout());
 		wrapper.add(htmlAll, BorderLayout.NORTH);
-		tabbedPane.addTab("Language", wrapper);
+		tabbedPane.addTab(Messages.getString("EigenschaftenView.69"), wrapper);
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		makeHTMLEigenschaften();
@@ -201,35 +201,12 @@ public class SettingsView extends JPanel {
 
 		htmlAll = new JPanel();
 		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
-		anzahlElemente();
-		wrapper = new JPanel();
-		wrapper.setLayout(new BorderLayout());
-		wrapper.add(htmlAll, BorderLayout.NORTH);
-		tabbedPane.addTab(Messages.getString("EigenschaftenView.26"), wrapper);
-
-		htmlAll = new JPanel();
-		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
-		defaultPath();
-		wrapper = new JPanel();
-		wrapper.setLayout(new BorderLayout());
-		wrapper.add(htmlAll, BorderLayout.NORTH);
-		tabbedPane.addTab(Messages.getString("EigenschaftenView.20"), wrapper);
-
-		htmlAll = new JPanel();
-		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		downloadDWZListe();
-		wrapper = new JPanel();
-		wrapper.setLayout(new BorderLayout());
-		wrapper.add(htmlAll, BorderLayout.NORTH);
-		tabbedPane.addTab(Messages.getString("EigenschaftenView.5"), wrapper);
-
-		htmlAll = new JPanel();
-		htmlAll.setLayout(new BoxLayout(htmlAll, BoxLayout.PAGE_AXIS));
 		downloadELOListe();
 		wrapper = new JPanel();
 		wrapper.setLayout(new BorderLayout());
 		wrapper.add(htmlAll, BorderLayout.NORTH);
-		tabbedPane.addTab(Messages.getString("EigenschaftenView.51"), wrapper);
+		tabbedPane.addTab(Messages.getString("EigenschaftenView.5"), wrapper);
 
 		centerPane.add(tabbedPane, BorderLayout.CENTER);
 		ButtonPanelView buttonPane = new ButtonPanelView();
@@ -243,45 +220,6 @@ public class SettingsView extends JPanel {
 		add(buttonPane, BorderLayout.SOUTH);
 	}
 
-	private void anzahlElemente() {
-		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.26"));
-		titleView.setFlowLayoutLeft();
-
-		htmlAll.add(titleView);
-
-		JPanel htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(spielerListeAuswahlBox);
-		htmlPanel.add(new JLabel(Messages.getString("EigenschaftenView.24"))); //$NON-NLS-1$
-
-		htmlAll.add(htmlPanel);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(turnierListeAuswahlBox);
-		htmlPanel.add(new JLabel(Messages.getString("EigenschaftenView.25"))); //$NON-NLS-1$
-
-		htmlAll.add(htmlPanel);
-
-		htmlAll.add(new JSeparator());
-	}
-
-	private void defaultPath() {
-		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.20"));
-		titleView.setFlowLayoutLeft();
-
-		htmlAll.add(titleView);
-
-		openDefaultPathButton = new JButton(Messages.getString("EigenschaftenView.19")); //$NON-NLS-1$
-		JPanel htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(openDefaultPathButton);
-		openDefaultPathLabel = new JLabel();
-		htmlPanel.add(openDefaultPathLabel);
-		htmlAll.add(htmlPanel);
-
-		htmlAll.add(new JSeparator());
-	}
-
 	private void downloadDWZListe() {
 		// ohne Header und Footer
 		try {
@@ -290,7 +228,7 @@ public class SettingsView extends JPanel {
 			e.printStackTrace();
 		}
 
-		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.5"));
+		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.70"));
 		titleView.setFlowLayoutLeft();
 
 		htmlAll.add(titleView);
@@ -426,6 +364,402 @@ public class SettingsView extends JPanel {
 		htmlPanel.add(convertELOToSQLITELabel);
 		htmlAll.add(htmlPanel);
 
+		htmlAll.add(new JSeparator());
+	}
+
+	private void settingsPanel() {
+		ButtonGroup group = new ButtonGroup();
+		// deutsch
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JLabel labelHeader = new JLabel("Deutsch (erst nach Neustart sichtbar)"); //$NON-NLS-1$
+		JLabel germanFlagLabel = new JLabel(germanFlag);
+		TitleLabelView titleView = new TitleLabelView("Language / Sprache");
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+		// JPanel title = new JPanel();
+		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// title.add(new JLabel("Sprache / Language")); //$NON-NLS-1$
+		// htmlAll.add(title);
+		germanLanguageCheckBox = new JRadioButton();
+		germanLanguageCheckBox.setSelected(true);
+		group.add(germanLanguageCheckBox);
+		htmlPanel.add(germanLanguageCheckBox);
+		htmlPanel.add(germanFlagLabel);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		// englisch
+		labelHeader = new JLabel("English (visible after restart)"); //$NON-NLS-1$
+		JLabel englishFlagLabel = new JLabel(englishFlag);
+
+		englishLanguageCheckBox = new JRadioButton();
+		group.add(englishLanguageCheckBox);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(englishLanguageCheckBox);
+		htmlPanel.add(englishFlagLabel);
+
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		htmlAll.add(new JSeparator());
+		fontChooser = new JFontChooser();
+
+		fontChooserButton = new JButton(Messages.getString("EigenschaftenView.67"));
+		titleView = new TitleLabelView(Messages.getString("EigenschaftenView.68"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(fontChooserButton);
+
+		htmlAll.add(htmlPanel);
+		htmlAll.add(new JSeparator());
+		titleView = new TitleLabelView(Messages.getString("EigenschaftenView.20"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+
+		openDefaultPathButton = new JButton(Messages.getString("EigenschaftenView.19")); //$NON-NLS-1$
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(openDefaultPathButton);
+		openDefaultPathLabel = new JLabel();
+		htmlPanel.add(openDefaultPathLabel);
+		htmlAll.add(htmlPanel);
+
+		htmlAll.add(new JSeparator());
+		titleView = new TitleLabelView(Messages.getString("EigenschaftenView.26"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(spielerListeAuswahlBox);
+		htmlPanel.add(new JLabel(Messages.getString("EigenschaftenView.24"))); //$NON-NLS-1$
+
+		htmlAll.add(htmlPanel);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(turnierListeAuswahlBox);
+		htmlPanel.add(new JLabel(Messages.getString("EigenschaftenView.25"))); //$NON-NLS-1$
+
+		htmlAll.add(htmlPanel);
+
+		htmlAll.add(new JSeparator());
+	}
+
+	private void makeHTMLEigenschaften() {
+		// ohne Header und Footer
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JLabel labelHeader = new JLabel(Messages.getString("EigenschaftenView.1")); //$NON-NLS-1$
+
+		checkBoxHeaderFooter = new JCheckBox();
+		htmlPanel.add(checkBoxHeaderFooter);
+		htmlPanel.add(labelHeader);
+		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.2"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+
+		htmlAll.add(htmlPanel);
+
+		// ohne DWZ
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.3")); //$NON-NLS-1$
+		checkBoxohneDWZ = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxohneDWZ);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		// ohne Folge DWZ
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.4")); //$NON-NLS-1$
+		checkBoxohneFolgeDWZ = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxohneFolgeDWZ);
+		htmlPanel.add(labelHeader);
+		htmlAll.add(htmlPanel);
+		// ohne ELO
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.61"));
+		checkBoxohneELO = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxohneELO);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		// ohne Folge ELO
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.62"));
+		checkBoxohneFolgeELO = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxohneFolgeELO);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+		// HTML Tabellen in die Zwischenablage kopieren
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.60")); //$NON-NLS-1$
+		checkBoxhtmlToClipboard = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxhtmlToClipboard);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		// PDF Links in HTML Tabellen einbinden
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.42")); //$NON-NLS-1$
+		checkBoxPDFLinks = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxPDFLinks);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		// Webserver Path
+		Dimension dimTextField = new Dimension(225, 30);
+
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.41")); //$NON-NLS-1$
+		webserverPathTextField = new JTextField(22);
+		webserverPathTextField.setPreferredSize(dimTextField);
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(webserverPathTextField);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+		// buchstaben anzahl
+		String[] listString = new String[20];
+		for (int i = 0; i < 20; i++) {
+			listString[i] = new Integer(i + 1).toString();
+
+		}
+		// forename length
+		forenameLengthBox = new SpinnerView(listString, listString.length - 1,
+				Messages.getString("EigenschaftenView.39"));
+		htmlAll.add(forenameLengthBox);
+
+		// surname length
+		surnameLengthBox = new SpinnerView(listString, listString.length - 1,
+				Messages.getString("EigenschaftenView.40"));
+		htmlAll.add(surnameLengthBox);
+
+		htmlAll.add(new JSeparator());
+
+	}
+
+	private void tableLabel() {
+		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.21"));
+		titleView.setFlowLayoutLeft();
+		Color windowBorder = new Color((SystemColor.windowBorder).getRGB());
+
+		htmlAll.add(titleView);
+		JPanel bothPanel = new JPanel();
+		bothPanel.setLayout(new BorderLayout());
+		JPanel leftPanel = new JPanel();
+		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
+		leftPanel.setBorder(BorderFactory.createLineBorder(windowBorder));
+		JPanel rightPanel = new JPanel();
+		rightPanel.setBorder(BorderFactory.createLineBorder(windowBorder));
+		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
+
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		Dimension dimTextField = new Dimension(175, 30);
+		int textFieldColumns = 9;
+		oldDWZTextField = new JTextField(TournamentConstants.TABLE_COLUMN_OLD_DWZ, textFieldColumns);
+		oldDWZTextField.setPreferredSize(dimTextField);
+
+		newDWZTextField = new JTextField(TournamentConstants.TABLE_COLUMN_NEW_DWZ, textFieldColumns);
+		newDWZTextField.setPreferredSize(dimTextField);
+		oldELOTextField = new JTextField(TournamentConstants.TABLE_COLUMN_OLD_ELO, textFieldColumns);
+		oldELOTextField.setPreferredSize(dimTextField);
+
+		newELOTextField = new JTextField(TournamentConstants.TABLE_COLUMN_NEW_ELO, textFieldColumns);
+		newELOTextField.setPreferredSize(dimTextField);
+
+		pointsTextField = new JTextField(TournamentConstants.TABLE_COLUMN_POINTS, textFieldColumns);
+		pointsTextField.setPreferredSize(dimTextField);
+
+		sbbTextField = new JTextField(TournamentConstants.TABLE_COLUMN_SONNEBORNBERGER, textFieldColumns);
+		sbbTextField.setPreferredSize(dimTextField);
+
+		rankingTextField = new JTextField(TournamentConstants.TABLE_COLUMN_RANKING, textFieldColumns);
+		rankingTextField.setPreferredSize(dimTextField);
+
+		roundTextField = new JTextField(TournamentConstants.TABLE_COLUMN_ROUND, textFieldColumns);
+		roundTextField.setPreferredSize(dimTextField);
+
+		whiteTextField = new JTextField(TournamentConstants.TABLE_COLUMN_WHITE, textFieldColumns);
+		whiteTextField.setPreferredSize(dimTextField);
+
+		blackTextField = new JTextField(TournamentConstants.TABLE_COLUMN_BLACK, textFieldColumns);
+		blackTextField.setPreferredSize(dimTextField);
+
+		resultTextField = new JTextField(TournamentConstants.TABLE_COLUMN_RESULT, textFieldColumns);
+		resultTextField.setPreferredSize(dimTextField);
+
+		meetingTextField = new JTextField(TournamentConstants.TABLE_COLUMN_MEETING, textFieldColumns);
+		meetingTextField.setPreferredSize(dimTextField);
+
+		playerTextField = new JTextField(TournamentConstants.TABLE_COLUMN_PLAYER, textFieldColumns);
+		playerTextField.setPreferredSize(dimTextField);
+
+		roundTextField = new JTextField(TournamentConstants.TABLE_COLUMN_ROUND, textFieldColumns);
+		roundTextField.setPreferredSize(dimTextField);
+
+		Dimension dim = new Dimension(175, 30);
+		JLabel oldDWZTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.22") + ":");
+		oldDWZTextFieldLabel.setPreferredSize(dim);
+		JLabel newDWZTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.23") + ":");
+		newDWZTextFieldLabel.setPreferredSize(dim);
+
+		JLabel oldELOTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.63") + ":");
+		oldELOTextFieldLabel.setPreferredSize(dim);
+		JLabel newELOTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.64") + ":");
+		newELOTextFieldLabel.setPreferredSize(dim);
+
+		JLabel pointDWZTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.32") + ":");
+		pointDWZTextFieldLabel.setPreferredSize(dim);
+
+		JLabel sbbTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.33") + ":");
+		sbbTextFieldLabel.setPreferredSize(dim);
+
+		JLabel rankingTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.34") + ":");
+		rankingTextFieldLabel.setPreferredSize(dim);
+
+		JLabel whiteTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.27") + ":");
+		whiteTextFieldLabel.setPreferredSize(dim);
+
+		JLabel blackTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.28") + ":");
+		blackTextFieldLabel.setPreferredSize(dim);
+
+		JLabel resultTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.29") + ":");
+		resultTextFieldLabel.setPreferredSize(dim);
+
+		JLabel meetingTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.30") + ":");
+		meetingTextFieldLabel.setPreferredSize(dim);
+
+		JLabel playerTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.31") + ":");
+		playerTextFieldLabel.setPreferredSize(dim);
+
+		JLabel roundTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.36") + ":");
+		roundTextFieldLabel.setPreferredSize(dim);
+		titleView = new TitleLabelView(Messages.getString("EigenschaftenView.37"));
+		titleView.setFlowLayoutLeft();
+//		JLabel leftTitleLabel = new JLabel(Messages.getString("EigenschaftenView.37"));
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(titleView);
+		leftPanel.add(htmlPanel);
+		titleView = new TitleLabelView(Messages.getString("EigenschaftenView.38"));
+		titleView.setFlowLayoutLeft();
+//		JLabel rightTitleLabel = new JLabel(Messages.getString("EigenschaftenView.38"));
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(titleView);
+		rightPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(playerTextFieldLabel);
+		htmlPanel.add(playerTextField);
+		leftPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.add(oldDWZTextFieldLabel);
+		htmlPanel.add(oldDWZTextField);
+		leftPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(newDWZTextFieldLabel);
+		htmlPanel.add(newDWZTextField);
+		leftPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.add(oldELOTextFieldLabel);
+		htmlPanel.add(oldELOTextField);
+		leftPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(newELOTextFieldLabel);
+		htmlPanel.add(newELOTextField);
+		leftPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(pointDWZTextFieldLabel);
+		htmlPanel.add(pointsTextField);
+		leftPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(sbbTextFieldLabel);
+		htmlPanel.add(sbbTextField);
+		leftPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(rankingTextFieldLabel);
+		htmlPanel.add(rankingTextField);
+		leftPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(roundTextFieldLabel);
+		htmlPanel.add(roundTextField);
+		rightPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(whiteTextFieldLabel);
+		htmlPanel.add(whiteTextField);
+		rightPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(blackTextFieldLabel);
+		htmlPanel.add(blackTextField);
+		rightPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(resultTextFieldLabel);
+		htmlPanel.add(resultTextField);
+		rightPanel.add(htmlPanel);
+
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(meetingTextFieldLabel);
+		htmlPanel.add(meetingTextField);
+		rightPanel.add(htmlPanel);
+
+		JPanel leftP = new JPanel();
+		leftP.setLayout(new BorderLayout());
+		leftP.add(leftPanel, BorderLayout.NORTH);
+
+		JPanel rightP = new JPanel();
+		rightP.setLayout(new BorderLayout());
+		rightP.add(rightPanel, BorderLayout.NORTH);
+
+		bothPanel.add(leftP, BorderLayout.WEST);
+		bothPanel.add(rightP, BorderLayout.CENTER);
+		htmlAll.add(bothPanel);
 		htmlAll.add(new JSeparator());
 	}
 
@@ -587,165 +921,6 @@ public class SettingsView extends JPanel {
 
 	public JTextField getWhiteTextField() {
 		return whiteTextField;
-	}
-
-	private void languageSupport() {
-		ButtonGroup group = new ButtonGroup();
-		// deutsch
-		JPanel htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel labelHeader = new JLabel("Deutsch (erst nach Neustart sichtbar)"); //$NON-NLS-1$
-		JLabel germanFlagLabel = new JLabel(germanFlag);
-		TitleLabelView titleView = new TitleLabelView("Sprache / Language");
-		titleView.setFlowLayoutLeft();
-
-		htmlAll.add(titleView);
-		// JPanel title = new JPanel();
-		// title.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// title.add(new JLabel("Sprache / Language")); //$NON-NLS-1$
-		// htmlAll.add(title);
-		germanLanguageCheckBox = new JRadioButton();
-		germanLanguageCheckBox.setSelected(true);
-		group.add(germanLanguageCheckBox);
-		htmlPanel.add(germanLanguageCheckBox);
-		htmlPanel.add(germanFlagLabel);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
-		// englisch
-		labelHeader = new JLabel("English (visible after restart)"); //$NON-NLS-1$
-		JLabel englishFlagLabel = new JLabel(englishFlag);
-
-		englishLanguageCheckBox = new JRadioButton();
-		group.add(englishLanguageCheckBox);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(englishLanguageCheckBox);
-		htmlPanel.add(englishFlagLabel);
-
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
-		htmlAll.add(new JSeparator());
-		fontChooser = new JFontChooser();
-
-		fontChooserButton = new JButton(Messages.getString("EigenschaftenView.67"));
-		
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(fontChooserButton);
-		
-
-		htmlAll.add(htmlPanel);
-
-	}
-
-	private void makeHTMLEigenschaften() {
-		// ohne Header und Footer
-		JPanel htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		JLabel labelHeader = new JLabel(Messages.getString("EigenschaftenView.1")); //$NON-NLS-1$
-
-		checkBoxHeaderFooter = new JCheckBox();
-		htmlPanel.add(checkBoxHeaderFooter);
-		htmlPanel.add(labelHeader);
-		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.2"));
-		titleView.setFlowLayoutLeft();
-
-		htmlAll.add(titleView);
-
-		htmlAll.add(htmlPanel);
-
-		// ohne DWZ
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.3")); //$NON-NLS-1$
-		checkBoxohneDWZ = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxohneDWZ);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
-		// ohne Folge DWZ
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.4")); //$NON-NLS-1$
-		checkBoxohneFolgeDWZ = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxohneFolgeDWZ);
-		htmlPanel.add(labelHeader);
-		htmlAll.add(htmlPanel);
-		// ohne ELO
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.61"));
-		checkBoxohneELO = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxohneELO);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
-		// ohne Folge ELO
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.62"));
-		checkBoxohneFolgeELO = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxohneFolgeELO);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-		// HTML Tabellen in die Zwischenablage kopieren
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.60")); //$NON-NLS-1$
-		checkBoxhtmlToClipboard = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxhtmlToClipboard);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
-		// PDF Links in HTML Tabellen einbinden
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.42")); //$NON-NLS-1$
-		checkBoxPDFLinks = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxPDFLinks);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
-		// Webserver Path
-		Dimension dimTextField = new Dimension(225, 30);
-
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.41")); //$NON-NLS-1$
-		webserverPathTextField = new JTextField(22);
-		webserverPathTextField.setPreferredSize(dimTextField);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(webserverPathTextField);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-		// buchstaben anzahl
-		String[] listString = new String[20];
-		for (int i = 0; i < 20; i++) {
-			listString[i] = new Integer(i + 1).toString();
-
-		}
-		// forename length
-		forenameLengthBox = new SpinnerView(listString, listString.length - 1,
-				Messages.getString("EigenschaftenView.39"));
-		htmlAll.add(forenameLengthBox);
-
-		// surname length
-		surnameLengthBox = new SpinnerView(listString, listString.length - 1,
-				Messages.getString("EigenschaftenView.40"));
-		htmlAll.add(surnameLengthBox);
-
-		htmlAll.add(new JSeparator());
-
 	}
 
 	public JButton getFontChooserButton() {
@@ -933,226 +1108,6 @@ public class SettingsView extends JPanel {
 
 	public void setSelectedFont(Font selectedFont) {
 		this.selectedFont = selectedFont;
-	}
-
-	private void tableLabel() {
-		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.21"));
-		titleView.setFlowLayoutLeft();
-		Color windowBorder = new Color((SystemColor.windowBorder).getRGB());
-
-		htmlAll.add(titleView);
-		JPanel bothPanel = new JPanel();
-		bothPanel.setLayout(new BorderLayout());
-		JPanel leftPanel = new JPanel();
-		leftPanel.setLayout(new BoxLayout(leftPanel, BoxLayout.PAGE_AXIS));
-		leftPanel.setBorder(BorderFactory.createLineBorder(windowBorder));
-		JPanel rightPanel = new JPanel();
-		rightPanel.setBorder(BorderFactory.createLineBorder(windowBorder));
-		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.PAGE_AXIS));
-
-		JPanel htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		Dimension dimTextField = new Dimension(175, 30);
-		int textFieldColumns = 9;
-		oldDWZTextField = new JTextField(TournamentConstants.TABLE_COLUMN_OLD_DWZ, textFieldColumns);
-		oldDWZTextField.setPreferredSize(dimTextField);
-
-		newDWZTextField = new JTextField(TournamentConstants.TABLE_COLUMN_NEW_DWZ, textFieldColumns);
-		newDWZTextField.setPreferredSize(dimTextField);
-		oldELOTextField = new JTextField(TournamentConstants.TABLE_COLUMN_OLD_ELO, textFieldColumns);
-		oldELOTextField.setPreferredSize(dimTextField);
-
-		newELOTextField = new JTextField(TournamentConstants.TABLE_COLUMN_NEW_ELO, textFieldColumns);
-		newELOTextField.setPreferredSize(dimTextField);
-
-		pointsTextField = new JTextField(TournamentConstants.TABLE_COLUMN_POINTS, textFieldColumns);
-		pointsTextField.setPreferredSize(dimTextField);
-
-		sbbTextField = new JTextField(TournamentConstants.TABLE_COLUMN_SONNEBORNBERGER, textFieldColumns);
-		sbbTextField.setPreferredSize(dimTextField);
-
-		rankingTextField = new JTextField(TournamentConstants.TABLE_COLUMN_RANKING, textFieldColumns);
-		rankingTextField.setPreferredSize(dimTextField);
-
-		roundTextField = new JTextField(TournamentConstants.TABLE_COLUMN_ROUND, textFieldColumns);
-		roundTextField.setPreferredSize(dimTextField);
-
-		whiteTextField = new JTextField(TournamentConstants.TABLE_COLUMN_WHITE, textFieldColumns);
-		whiteTextField.setPreferredSize(dimTextField);
-
-		blackTextField = new JTextField(TournamentConstants.TABLE_COLUMN_BLACK, textFieldColumns);
-		blackTextField.setPreferredSize(dimTextField);
-
-		resultTextField = new JTextField(TournamentConstants.TABLE_COLUMN_RESULT, textFieldColumns);
-		resultTextField.setPreferredSize(dimTextField);
-
-		meetingTextField = new JTextField(TournamentConstants.TABLE_COLUMN_MEETING, textFieldColumns);
-		meetingTextField.setPreferredSize(dimTextField);
-
-		playerTextField = new JTextField(TournamentConstants.TABLE_COLUMN_PLAYER, textFieldColumns);
-		playerTextField.setPreferredSize(dimTextField);
-
-		roundTextField = new JTextField(TournamentConstants.TABLE_COLUMN_ROUND, textFieldColumns);
-		roundTextField.setPreferredSize(dimTextField);
-
-		Dimension dim = new Dimension(175, 30);
-		JLabel oldDWZTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.22") + ":");
-		oldDWZTextFieldLabel.setPreferredSize(dim);
-		JLabel newDWZTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.23") + ":");
-		newDWZTextFieldLabel.setPreferredSize(dim);
-
-		JLabel oldELOTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.63") + ":");
-		oldELOTextFieldLabel.setPreferredSize(dim);
-		JLabel newELOTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.64") + ":");
-		newELOTextFieldLabel.setPreferredSize(dim);
-
-		JLabel pointDWZTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.32") + ":");
-		pointDWZTextFieldLabel.setPreferredSize(dim);
-
-		JLabel sbbTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.33") + ":");
-		sbbTextFieldLabel.setPreferredSize(dim);
-
-		JLabel rankingTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.34") + ":");
-		rankingTextFieldLabel.setPreferredSize(dim);
-
-		JLabel whiteTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.27") + ":");
-		whiteTextFieldLabel.setPreferredSize(dim);
-
-		JLabel blackTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.28") + ":");
-		blackTextFieldLabel.setPreferredSize(dim);
-
-		JLabel resultTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.29") + ":");
-		resultTextFieldLabel.setPreferredSize(dim);
-
-		JLabel meetingTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.30") + ":");
-		meetingTextFieldLabel.setPreferredSize(dim);
-
-		JLabel playerTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.31") + ":");
-		playerTextFieldLabel.setPreferredSize(dim);
-
-		JLabel roundTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.36") + ":");
-		roundTextFieldLabel.setPreferredSize(dim);
-
-		JLabel leftTitleLabel = new JLabel(Messages.getString("EigenschaftenView.37"));
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(leftTitleLabel);
-		leftPanel.add(htmlPanel);
-
-		JLabel rightTitleLabel = new JLabel(Messages.getString("EigenschaftenView.38"));
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(rightTitleLabel);
-		rightPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(playerTextFieldLabel);
-		htmlPanel.add(playerTextField);
-		leftPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.add(oldDWZTextFieldLabel);
-		htmlPanel.add(oldDWZTextField);
-		leftPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(newDWZTextFieldLabel);
-		htmlPanel.add(newDWZTextField);
-		leftPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.add(oldELOTextFieldLabel);
-		htmlPanel.add(oldELOTextField);
-		leftPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(newELOTextFieldLabel);
-		htmlPanel.add(newELOTextField);
-		leftPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(pointDWZTextFieldLabel);
-		htmlPanel.add(pointsTextField);
-		leftPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(sbbTextFieldLabel);
-		htmlPanel.add(sbbTextField);
-		leftPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(rankingTextFieldLabel);
-		htmlPanel.add(rankingTextField);
-		leftPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(roundTextFieldLabel);
-		htmlPanel.add(roundTextField);
-		rightPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(whiteTextFieldLabel);
-		htmlPanel.add(whiteTextField);
-		rightPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(blackTextFieldLabel);
-		htmlPanel.add(blackTextField);
-		rightPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(resultTextFieldLabel);
-		htmlPanel.add(resultTextField);
-		rightPanel.add(htmlPanel);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(meetingTextFieldLabel);
-		htmlPanel.add(meetingTextField);
-		rightPanel.add(htmlPanel);
-
-		// JPanel leerPanel = new JPanel();
-		// leerPanel.setPreferredSize(dim);
-		// htmlPanel = new JPanel();
-		// htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// htmlPanel.add(leerPanel);
-		// rightPanel.add(htmlPanel);
-
-		// leerPanel = new JPanel();
-		// leerPanel.setPreferredSize(dim);
-		// htmlPanel = new JPanel();
-		// htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// htmlPanel.add(leerPanel);
-		// rightPanel.add(htmlPanel);
-		//
-		// leerPanel.setPreferredSize(dim);
-		// htmlPanel = new JPanel();
-		// htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// htmlPanel.add(leerPanel);
-		// rightPanel.add(htmlPanel);
-
-		JPanel leftP = new JPanel();
-		leftP.setLayout(new BorderLayout());
-		leftP.add(leftPanel, BorderLayout.NORTH);
-
-		JPanel rightP = new JPanel();
-		rightP.setLayout(new BorderLayout());
-		rightP.add(rightPanel, BorderLayout.NORTH);
-
-		bothPanel.add(leftP, BorderLayout.WEST);
-		bothPanel.add(rightP, BorderLayout.CENTER);
-		htmlAll.add(bothPanel);
-		htmlAll.add(new JSeparator());
 	}
 
 }
