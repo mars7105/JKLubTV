@@ -46,6 +46,7 @@ import de.turnierverwaltung.model.rating.CSVVereineList;
 import de.turnierverwaltung.model.rating.DSBDWZClub;
 import de.turnierverwaltung.model.rating.DWZData;
 import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
+import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
 import de.turnierverwaltung.model.rating.SortCSVVereine;
 import de.turnierverwaltung.view.ratingdialog.DSBDWZDialogView;
 import de.turnierverwaltung.view.ratingdialog.DSBDWZPlayerView;
@@ -66,6 +67,7 @@ public class DSBDWZControl {
 	private ArrayList<DWZData> dwzDataArray;
 	private SQLitePlayerDWZList sqlitePlayerlist;
 	private String standardZPS;
+	private Boolean dbChecked;
 
 	/**
 	 *
@@ -74,6 +76,10 @@ public class DSBDWZControl {
 	public DSBDWZControl(final MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
+		sqlitePlayerlist = new SQLitePlayerDWZList();
+		final String filename = mainControl.getPropertiesControl().getPathToPlayersCSV();
+		dbChecked = sqlitePlayerlist.checkDatabase(filename);
+
 		standardZPS = "";
 		csvFiles = mainControl.getPropertiesControl().checkPathToVereineCSV()
 				&& mainControl.getPropertiesControl().checkPathToSpielerCSV();
@@ -211,8 +217,8 @@ public class DSBDWZControl {
 				if (positionEXT > 0) {
 					extender = filename.substring(positionEXT);
 					if (extender.equals(".sqlite")) {
-						sqlitePlayerlist = new SQLitePlayerDWZList();
-						if (sqlitePlayerlist.checkDatabase(filename) == true) {
+						// sqlitePlayerlist = new SQLitePlayerDWZList();
+						if (dbChecked == true) {
 							dwzDataArray = sqlitePlayerlist.getPlayerOfVerein(filename, zps);
 						}
 					} else {
@@ -446,8 +452,7 @@ public class DSBDWZControl {
 							dialog.getPlayerSearchView().setDsbPanel(spielerSearchPanelList);
 							searchplayerlist = new ArrayList<Player>();
 							final String eingabe = spielerSearchTextField.getText().toUpperCase();
-							if (sqlitePlayerlist
-									.checkDatabase(mainControl.getPropertiesControl().getPathToPlayersCSV()) == true) {
+							if (dbChecked == true) {
 								final ArrayList<DWZData> dwzPlayer = sqlitePlayerlist.getPlayersByName(
 										mainControl.getPropertiesControl().getPathToPlayersCSV(), eingabe);
 								final ListIterator<DWZData> li = dwzPlayer.listIterator();

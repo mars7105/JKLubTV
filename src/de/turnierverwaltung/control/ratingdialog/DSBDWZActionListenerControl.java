@@ -38,6 +38,8 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 	private ImageIcon insertIcon2 = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-ok-3.png")));
 	private ArrayList<Integer> indices;
+	private SQLitePlayerELOList spelolist;
+	private boolean dbChecked;
 
 	/**
 	 * 
@@ -49,6 +51,9 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 		this.mainControl = mainControl;
 		this.dewisDialogControl = dewisDialogControl;
 		indices = new ArrayList<Integer>();
+		spelolist = new SQLitePlayerELOList();
+		String pathToPlayersELO = mainControl.getPropertiesControl().getPathToPlayersELO();
+		dbChecked = spelolist.checkDatabase(pathToPlayersELO);
 
 	}
 
@@ -78,9 +83,9 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 						int temp = lit.next();
 						Player neuerSpieler = spieler.get(temp);
 						if (playerExist(neuerSpieler) == false) {
-							SQLitePlayerELOList spelolist = new SQLitePlayerELOList();
+//							SQLitePlayerELOList spelolist = new SQLitePlayerELOList();
 							String pathToPlayersELO = mainControl.getPropertiesControl().getPathToPlayersELO();
-							if (spelolist.checkDatabase(pathToPlayersELO) == true) {
+							if (dbChecked == true) {
 
 								ELOData eloDataList = spelolist.getPlayer(pathToPlayersELO,
 										neuerSpieler.getDwzData().getCsvFIDE_ID());

@@ -17,6 +17,7 @@ import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.rating.DWZData;
 import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
+import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
 import de.turnierverwaltung.view.ratingdialog.ELODialogView;
 
 /**
@@ -34,6 +35,8 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 	private final ImageIcon insertIcon2 = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-ok-3.png")));
 	private final ArrayList<Integer> indices;
+	private SQLitePlayerDWZList spdwzlist;
+	private Boolean dbChecked;
 
 	/**
 	 *
@@ -45,6 +48,10 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 		this.mainControl = mainControl;
 		eloDialogControl = dewisDialogControl;
 		indices = new ArrayList<Integer>();
+		 spdwzlist = new SQLitePlayerDWZList();		
+			final String pathToPlayersCSV = mainControl.getPropertiesControl().getPathToPlayersCSV();
+		dbChecked = spdwzlist.checkDatabase(pathToPlayersCSV);
+
 	}
 
 	@Override
@@ -69,9 +76,9 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 						final Player neuerSpieler = spieler.get(temp);
 						neuerSpieler.copyELODataToPlayer();
 						if (playerExist(neuerSpieler) == false) {
-							final SQLitePlayerDWZList spdwzlist = new SQLitePlayerDWZList();
+							
 							final String pathToPlayersCSV = mainControl.getPropertiesControl().getPathToPlayersCSV();
-							if (spdwzlist.checkDatabase(pathToPlayersCSV) == true) {
+							if (dbChecked == true) {
 								final ArrayList<DWZData> dwzDataList = spdwzlist.getPlayersByFideId(pathToPlayersCSV,
 										neuerSpieler.getEloData().getFideid());
 								if (dwzDataList != null) {

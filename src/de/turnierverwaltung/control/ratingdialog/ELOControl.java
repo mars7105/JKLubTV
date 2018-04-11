@@ -35,6 +35,7 @@ import de.turnierverwaltung.model.rating.CSVVereine;
 import de.turnierverwaltung.model.rating.ELOData;
 import de.turnierverwaltung.model.rating.ELOPlayer;
 import de.turnierverwaltung.model.rating.ELOPlayerList;
+import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
 import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
 import de.turnierverwaltung.view.ratingdialog.ELODialogView;
 import de.turnierverwaltung.view.ratingdialog.ELOPlayerView;
@@ -55,6 +56,7 @@ public class ELOControl {
 	private Boolean runOnce;
 	private SQLitePlayerELOList sqlitePlayerlist;
 	private String playerELOList;
+	private Boolean dbChecked;
 
 	/**
 	 *
@@ -66,6 +68,7 @@ public class ELOControl {
 		runOnce = false;
 		this.mainControl = mainControl;
 		eloFile = mainControl.getPropertiesControl().checkPathToELOXML();
+		dbChecked = false;
 		if (eloFile == true) {
 			playerELOList = mainControl.getPropertiesControl().getPathToPlayersELO();
 			final int positionEXT = playerELOList.lastIndexOf('.');
@@ -75,6 +78,9 @@ public class ELOControl {
 				if (extender.equals(".sqlite")) {
 
 					sqlitePlayerlist = new SQLitePlayerELOList();
+					final String pathToPlayersCSV = mainControl.getPropertiesControl().getPathToPlayersCSV();
+					dbChecked = sqlitePlayerlist.checkDatabase(playerELOList);
+
 				} else {
 					csvplayerlist = new ELOPlayerList();
 
@@ -153,7 +159,7 @@ public class ELOControl {
 		} else {
 			errorHandler();
 		}
-		
+
 	}
 
 	public void makePlayerSearchList() {
@@ -211,7 +217,7 @@ public class ELOControl {
 						}
 					}
 					// if (sqlitePlayerlist != null) {
-						if (sqlitePlayerlist.checkDatabase(playerELOList) == true) {
+					if (dbChecked == true) {
 
 						final ArrayList<ELOData> eloPlayer = sqlitePlayerlist.getPlayersByName(playerELOList, eingabe);
 						final ListIterator<ELOData> li = eloPlayer.listIterator();
