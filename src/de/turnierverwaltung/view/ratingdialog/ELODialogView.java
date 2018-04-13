@@ -83,7 +83,7 @@ public class ELODialogView extends JDialog {
 
 		contentPanel.add(playerSearchView, BorderLayout.CENTER);
 
-		statusLabel = new JLabel("Test");
+		statusLabel = new JLabel("");
 		final JPanel southPanel = new JPanel();
 		southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
 		southPanel.add(statusLabel);

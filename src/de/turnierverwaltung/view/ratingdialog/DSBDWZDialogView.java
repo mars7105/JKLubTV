@@ -178,7 +178,7 @@ public class DSBDWZDialogView extends JDialog {
 
 		contentPanel.add(dsbPanel, BorderLayout.CENTER);
 
-		statusLabel = new JLabel("Test");
+		statusLabel = new JLabel("");
 		JPanel southPanel = new JPanel();
 		southPanel.setLayout(new BoxLayout(southPanel, BoxLayout.Y_AXIS));
 		southPanel.add(statusLabel);
