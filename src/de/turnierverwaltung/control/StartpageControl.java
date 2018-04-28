@@ -6,6 +6,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
+import javax.swing.JDialog;
+
+import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
+import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
 import de.turnierverwaltung.view.StartpageDBPanelView;
 import de.turnierverwaltung.view.StartpageDWZPanelView;
 import de.turnierverwaltung.view.StartpageDialog;
@@ -15,17 +19,22 @@ import de.turnierverwaltung.view.StartpageTounamentPanelView;
 import de.turnierverwaltung.view.StartpageView;
 
 public class StartpageControl {
-	MainControl mainControl;
-	StartpageView startpage;
+	private MainControl mainControl;
+	private StartpageView startpage;
 	private StartpageDWZPanelView startpageDWZPanel;
 	private StartpageELOPanelView startpageELOPanel;
 	private StartpageDBPanelView startpageDBPanel;
 	private StartpageDBPanelView startpagePlayerPanel;
 	private StartpageTounamentPanelView startpageTounamentPanel;
+	private JDialog dialog;
 
 	public StartpageControl(MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
+
+	}
+
+	public void showStartDialog() {
 		startpage = new StartpageView();
 
 		startpageDWZPanel = new StartpageDWZPanelView();
@@ -50,6 +59,15 @@ public class StartpageControl {
 
 		StartpageActionListener actionListener = new StartpageActionListener(mainControl, this);
 		actionListener.addActionListener();
+		dialog = new JDialog();
+
+		dialog.setTitle("Einrichtungsassistent");
+		dialog.add(startpage);
+
+		dialog.pack();
+		dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		dialog.setLocationRelativeTo(null);
+		dialog.setVisible(true);
 	}
 
 	public StartpageView getStartpage() {
@@ -100,6 +118,14 @@ public class StartpageControl {
 		this.startpageTounamentPanel = startpageTounamentPanel;
 	}
 
+	public JDialog getDialog() {
+		return dialog;
+	}
+
+	public void setDialog(JDialog dialog) {
+		this.dialog = dialog;
+	}
+
 	class DialogListener implements ActionListener {
 		private StartpagePanelView panel;
 
@@ -129,6 +155,27 @@ public class StartpageControl {
 					mainControl.getPropertiesControl().writeStartpageDialogProperties(dialog.getBounds().x,
 							dialog.getBounds().y, dialog.getBounds().width, dialog.getBounds().height);
 					dialog.dispose();
+					SQLitePlayerDWZList spdwzlist = new SQLitePlayerDWZList();
+					Boolean checkDB = spdwzlist.checkDatabase(mainControl.getPropertiesControl().getPathToPlayersCSV());
+					if (checkDB == true) {
+						getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
+						getStartpage().getDwzPanel().addCheckItem();
+						getStartpage().getDwzPanel().updateUI();
+					} else {
+						getStartpage().getDwzPanel().removeCheckItem();
+						getStartpage().getDwzPanel().updateUI();
+					}
+					SQLitePlayerELOList spelolist = new SQLitePlayerELOList();
+					checkDB = spelolist.checkDatabase(mainControl.getPropertiesControl().getPathToPlayersELO());
+					if (checkDB == true) {
+						getStartpageELOPanel().getConvertELOToSQLITEButton().setEnabled(false);
+						getStartpage().getEloPanel().addCheckItem();
+						getStartpage().getEloPanel().updateUI();
+
+					} else {
+						getStartpage().getEloPanel().removeCheckItem();
+						getStartpage().getEloPanel().updateUI();
+					}
 				}
 			});
 

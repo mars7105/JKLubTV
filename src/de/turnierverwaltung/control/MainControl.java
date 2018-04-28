@@ -17,6 +17,7 @@ package de.turnierverwaltung.control;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.WindowEvent;
@@ -25,6 +26,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -173,12 +175,7 @@ public class MainControl extends JFrame implements WindowListener {
 
 		init();
 		makeProperties();
-		
-		setBounds(propertiesControl.getFrameX(), propertiesControl.getFrameY(), propertiesControl.getFrameWidth(),
-				propertiesControl.getFrameHeight());
 
-		setEnabled(true);
-		setVisible(true);
 	}
 
 	public static void setUIFont(java.awt.Font f) {
@@ -494,17 +491,30 @@ public class MainControl extends JFrame implements WindowListener {
 					hauptPanel.setSelectedIndex(i);
 				}
 			}
+			setBounds(propertiesControl.getFrameX(), propertiesControl.getFrameY(), propertiesControl.getFrameWidth(),
+					propertiesControl.getFrameHeight());
+
+			setEnabled(true);
+			setVisible(true);
 		} else {
 			Font font;
 			font = propertiesControl.getFont();
 			setUIFont(font);
 			setTitle(Messages.getString("MainControl.10"));
+			setBounds(propertiesControl.getFrameX(), propertiesControl.getFrameY(), propertiesControl.getFrameWidth(),
+					propertiesControl.getFrameHeight());
+
+			setEnabled(true);
+			setVisible(true);
 			startpageControl = new StartpageControl(this);
-			hauptPanel.addTab("Einrichtungsassistent", startpageControl.getStartpage());
-			final ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel, this, null, true);
-			hauptPanel.setTabComponentAt(0, buttonComp);
-			naviView.getTurnierListePanel().setVisible(false);
-			naviView.getSpielerListePanel().setVisible(false);
+			startpageControl.showStartDialog();
+
+			// hauptPanel.addTab("Einrichtungsassistent", startpageControl.getStartpage());
+			// final ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel,
+			// this, null, true);
+			// hauptPanel.setTabComponentAt(0, buttonComp);
+			// naviView.getTurnierListePanel().setVisible(false);
+			// naviView.getSpielerListePanel().setVisible(false);
 		}
 	}
 

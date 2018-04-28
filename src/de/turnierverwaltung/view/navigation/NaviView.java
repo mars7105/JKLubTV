@@ -70,11 +70,13 @@ public class NaviView extends JToolBar {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/application-exit-5.png")));
 	private ImageIcon pairingsCancelIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-cancel-3.png")));
+	private ImageIcon launcherIcon = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/launcher.png")));
 	private JButton spielerImport;
 	private JButton spielerExport;
 	private JButton spielerDEWISSearchButton;
 	private JButton spielerAddButton;
-
+	private JButton wizardButton;
 	private JButton newDatabseButton;
 	private JButton loadDatabaseButton;
 	private JButton propertiesButton;
@@ -123,6 +125,9 @@ public class NaviView extends JToolBar {
 
 		this.setLayout(new BorderLayout());
 		this.setRollover(true);
+		wizardButton = new JButton(Messages.getString("NaviView.35"), launcherIcon);
+		wizardButton.setPreferredSize(new Dimension(200, 40));
+		wizardButton.setHorizontalAlignment(SwingConstants.LEFT);
 		newDatabseButton = new JButton(Messages.getString("NaviView.11"), dbNewIcon); //$NON-NLS-1$
 		newDatabseButton.setPreferredSize(new Dimension(200, 40));
 		newDatabseButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -175,7 +180,7 @@ public class NaviView extends JToolBar {
 		pairingsCancelButton.setHorizontalAlignment(SwingConstants.LEFT);
 
 		dateiPanel = new JPanel();
-//		dateiPanel.setBackground(Color.LIGHT_GRAY);
+		// dateiPanel.setBackground(Color.LIGHT_GRAY);
 		BoxLayout dateiPanelLayout = new BoxLayout(dateiPanel, BoxLayout.PAGE_AXIS);
 		dateiPanel.setLayout(dateiPanelLayout);
 		// Turnierliste
@@ -183,7 +188,7 @@ public class NaviView extends JToolBar {
 		turnierAddButton.setPreferredSize(new Dimension(200, 40));
 		turnierAddButton.setHorizontalAlignment(SwingConstants.LEFT);
 		turnierListePanel = new JPanel();
-//		turnierListePanel.setBackground(Color.LIGHT_GRAY);
+		// turnierListePanel.setBackground(Color.LIGHT_GRAY);
 		BoxLayout turnierListePanelLayout = new BoxLayout(turnierListePanel, BoxLayout.PAGE_AXIS);
 		turnierListePanel.setLayout(turnierListePanelLayout);
 		NaviPanelElementView panel3 = new NaviPanelElementView();
@@ -200,7 +205,7 @@ public class NaviView extends JToolBar {
 		spielerAddButton.setPreferredSize(new Dimension(200, 40));
 		spielerAddButton.setHorizontalAlignment(SwingConstants.LEFT);
 		spielerListePanel = new JPanel();
-//		spielerListePanel.setBackground(Color.LIGHT_GRAY);
+		// spielerListePanel.setBackground(Color.LIGHT_GRAY);
 		BoxLayout spielerListePanelLayout = new BoxLayout(spielerListePanel, BoxLayout.PAGE_AXIS);
 		spielerListePanel.setLayout(spielerListePanelLayout);
 		panel3 = new NaviPanelElementView();
@@ -271,6 +276,8 @@ public class NaviView extends JToolBar {
 		panel.add(newDatabseButton);
 		NaviPanelElementView panel2 = new NaviPanelElementView();
 		panel2.add(loadDatabaseButton);
+		NaviPanelElementView panel2e = new NaviPanelElementView();
+		panel2e.add(wizardButton);
 
 		NaviPanelElementView panel2a = new NaviPanelElementView();
 		// panel2a.getFlowLayout().setVgap(1);
@@ -301,7 +308,7 @@ public class NaviView extends JToolBar {
 		NaviPanelElementView panel4i = new NaviPanelElementView();
 		panel4i.add(iCalendarSpeichernButton);
 		NaviPanelElementView panel4h = new NaviPanelElementView();
-//		panel4h.setBackground(Color.LIGHT_GRAY);
+		// panel4h.setBackground(Color.LIGHT_GRAY);
 		panel4h.add(pairingsLoadButton);
 
 		NaviPanelElementView panel4k = new NaviPanelElementView();
@@ -314,15 +321,17 @@ public class NaviView extends JToolBar {
 		dateiPanel.add(titleView);
 		dateiPanel.add(panel);
 		dateiPanel.add(panel2);
+		dateiPanel.add(panel2e);
 		dateiPanel.add(panel2a);
 		dateiPanel.add(panel2b);
 		dateiPanel.add(panel2c);
+
 		dateiPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		NaviPanelElementView datenbankPanelLabel = new NaviPanelElementView();
 
 		JLabel datenbankLabel = new JLabel(Messages.getString("NaviView.26")); //$NON-NLS-1$
-//		datenbankLabel.setBackground(Color.LIGHT_GRAY);
+		// datenbankLabel.setBackground(Color.LIGHT_GRAY);
 		datenbankPanelLabel.add(datenbankLabel);
 
 		titleView = new NaviTitleLabelView(tabellenname);
@@ -617,6 +626,14 @@ public class NaviView extends JToolBar {
 
 	public void setUpdateButton(JButton updateButton) {
 		this.updateButton = updateButton;
+	}
+
+	public JButton getWizardButton() {
+		return wizardButton;
+	}
+
+	public void setWizardButton(JButton wizardButton) {
+		this.wizardButton = wizardButton;
 	}
 
 }

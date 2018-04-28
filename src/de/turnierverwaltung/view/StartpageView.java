@@ -4,8 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.SystemColor;
+import java.awt.Toolkit;
 
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,11 +19,19 @@ public class StartpageView extends JScrollPane {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JButton databaseButton;
+	private JButton databaseButton;
 	private JButton dwzButton;
 	private JButton eloButton;
 	private JButton tournamentButton;
 	private JButton playerButton;
+	private ImageIcon checkImg = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/check.png")));
+	private StartpageItemView dwzPanel;
+	private StartpageItemView eloPanel;
+	private StartpageItemView databasePanel;
+	private StartpageItemView playerPanel;
+	private StartpageItemView tournamentPanel;
+	private ButtonPanelView buttonPane;
 
 	public StartpageView() {
 		super();
@@ -33,9 +43,9 @@ public class StartpageView extends JScrollPane {
 		mainPanel.setBorder(new EmptyBorder(25, 25, 25, 25));
 		mainPanel.setLayout(new GridLayout(0, 1, 20, 20));
 		dwzButton = new StartpageButtonView("1. DWZ Liste einrichten");
-		StartpageItemView panel = new StartpageItemView();
+		dwzPanel = new StartpageItemView();
 
-		panel.add(dwzButton);
+		dwzPanel.add(dwzButton);
 		JPanel labelPanel = new JPanel();
 		Color titleColor = new Color((SystemColor.text).getRGB());
 		Color titleTextColor = new Color((SystemColor.textText).getRGB());
@@ -46,13 +56,13 @@ public class StartpageView extends JScrollPane {
 		JLabel dwzLabel2 = new JLabel("(Optional)");
 		labelPanel.add(dwzLabel);
 		labelPanel.add(dwzLabel2);
-		panel.add(labelPanel);
-		mainPanel.add(panel);
+		dwzPanel.add(labelPanel);
+		mainPanel.add(dwzPanel);
 		eloButton = new StartpageButtonView("2. ELO Liste einrichten");
 
-		panel = new StartpageItemView();
+		eloPanel = new StartpageItemView();
 
-		panel.add(eloButton);
+		eloPanel.add(eloButton);
 		JLabel eloLabel = new JLabel(
 				"2. Schritt: ELO Liste vom World Chess Federation (FIDE) downloaden und einrichten.");
 		JLabel eloLabel2 = new JLabel("(Optional)");
@@ -64,32 +74,35 @@ public class StartpageView extends JScrollPane {
 
 		labelPanel.add(eloLabel);
 		labelPanel.add(eloLabel2);
-		panel.add(labelPanel);
-		mainPanel.add(panel);
+		eloPanel.add(labelPanel);
+		mainPanel.add(eloPanel);
 		databaseButton = new StartpageButtonView("3. Datenbank erstellen");
 
-		panel = new StartpageItemView();
+		databasePanel = new StartpageItemView();
 
-		panel.add(databaseButton);
+		databasePanel.add(databaseButton);
 		JLabel databaseLabel = new JLabel("3. Schritt: Datenbank erstellen.");
-		panel.add(databaseLabel);
-		mainPanel.add(panel);
+		databasePanel.add(databaseLabel);
+		mainPanel.add(databasePanel);
 		playerButton = new StartpageButtonView("4. Spielerliste erstellen");
 
-		panel = new StartpageItemView();
+		playerPanel = new StartpageItemView();
 
-		panel.add(playerButton);
+		playerPanel.add(playerButton);
 		JLabel playerLabel = new JLabel("4. Schritt: Spielerliste für die Turniere erstellen.");
-		panel.add(playerLabel);
-		mainPanel.add(panel);
+		playerPanel.add(playerLabel);
+		mainPanel.add(playerPanel);
 		tournamentButton = new StartpageButtonView("5. Turnier erstellen");
 
-		panel = new StartpageItemView();
+		tournamentPanel = new StartpageItemView();
 
-		panel.add(tournamentButton);
+		tournamentPanel.add(tournamentButton);
 		JLabel tournamentLabel = new JLabel("5. Schritt: Turnier(e) erstellen.");
-		panel.add(tournamentLabel);
-		mainPanel.add(panel);
+		tournamentPanel.add(tournamentLabel);
+		buttonPane = new ButtonPanelView();
+		buttonPane.makeOKButton();
+		hauptPanel.add(buttonPane, BorderLayout.SOUTH);
+		mainPanel.add(tournamentPanel);
 		hauptPanel.add(mainPanel, BorderLayout.NORTH);
 		this.setViewportView(hauptPanel);
 
@@ -133,6 +146,54 @@ public class StartpageView extends JScrollPane {
 
 	public void setPlayerButton(JButton playerButton) {
 		this.playerButton = playerButton;
+	}
+
+	public StartpageItemView getDwzPanel() {
+		return dwzPanel;
+	}
+
+	public void setDwzPanel(StartpageItemView dwzPanel) {
+		this.dwzPanel = dwzPanel;
+	}
+
+	public StartpageItemView getEloPanel() {
+		return eloPanel;
+	}
+
+	public void setEloPanel(StartpageItemView eloPanel) {
+		this.eloPanel = eloPanel;
+	}
+
+	public StartpageItemView getDatabasePanel() {
+		return databasePanel;
+	}
+
+	public void setDatabasePanel(StartpageItemView databasePanel) {
+		this.databasePanel = databasePanel;
+	}
+
+	public StartpageItemView getPlayerPanel() {
+		return playerPanel;
+	}
+
+	public void setPlayerPanel(StartpageItemView playerPanel) {
+		this.playerPanel = playerPanel;
+	}
+
+	public StartpageItemView getTournamentPanel() {
+		return tournamentPanel;
+	}
+
+	public void setTournamentPanel(StartpageItemView tournamentPanel) {
+		this.tournamentPanel = tournamentPanel;
+	}
+
+	public ButtonPanelView getButtonPane() {
+		return buttonPane;
+	}
+
+	public void setButtonPane(ButtonPanelView buttonPane) {
+		this.buttonPane = buttonPane;
 	}
 
 }

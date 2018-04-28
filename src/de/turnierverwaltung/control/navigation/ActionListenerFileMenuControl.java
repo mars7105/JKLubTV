@@ -19,6 +19,7 @@ import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.Messages;
 import de.turnierverwaltung.control.PropertiesControl;
+import de.turnierverwaltung.control.StartpageControl;
 import de.turnierverwaltung.control.playerlist.PlayerListControl;
 import de.turnierverwaltung.control.sqlite.SQLControl;
 import de.turnierverwaltung.control.sqlite.SQLTournamentControl;
@@ -33,6 +34,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 	private JButton newdbButton;
 	private JButton loaddbButton;
 	private JButton exitButton;
+	private JButton wizardButton;
 	private final NaviView naviView;
 	private ChangeListenerTabControl turnierAnsicht;
 
@@ -42,6 +44,8 @@ public class ActionListenerFileMenuControl implements ActionListener {
 		naviView = mainControl.getNaviView();
 		newdbButton = naviView.getNewDatabseButton();
 		loaddbButton = naviView.getLoadDatabaseButton();
+		wizardButton = naviView.getWizardButton();
+		wizardButton.addActionListener(this);
 		exitButton = naviView.getExitButton();
 		this.mainControl.getActionListenerPairingsMenuControl().getPairingIsActive();
 		newdbButton = naviView.getNewDatabseButton();
@@ -200,6 +204,10 @@ public class ActionListenerFileMenuControl implements ActionListener {
 
 		}
 
+		if (arg0.getSource().equals(wizardButton)) {
+			StartpageControl startpageControl = new StartpageControl(mainControl);
+			startpageControl.showStartDialog();
+		}
 		if (arg0.getSource().equals(exitButton)) {
 			final int abfrage = beendenHinweis();
 			if (abfrage > 0) {

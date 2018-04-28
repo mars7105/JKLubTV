@@ -46,35 +46,37 @@ public class ExceptionHandler {
 	}
 
 	private void writeErrorLog(String error) {
-		Boolean fexist = true;
-		File errorFile = null;
-		int errornumber = 0;
-		while (fexist) {
-			if (propertiesControl.getDefaultPath().length() == 0) {
-				errorFile = new File("error-" + errornumber + ".log");
+		if (error != null) {
+			Boolean fexist = true;
+			File errorFile = null;
+			int errornumber = 0;
+			while (fexist) {
+				if (propertiesControl.getDefaultPath().length() == 0) {
+					errorFile = new File("error-" + errornumber + ".log");
 
-			} else {
-				errorFile = new File(propertiesControl.getDefaultPath() + "/error-" + errornumber + ".log");
+				} else {
+					errorFile = new File(propertiesControl.getDefaultPath() + "/error-" + errornumber + ".log");
+				}
+
+				if (errorFile.exists()) {
+					errornumber++;
+				} else {
+					fexist = false;
+				}
 			}
 
-			if (errorFile.exists()) {
-				errornumber++;
-			} else {
-				fexist = false;
+			Writer writer;
+			try {
+				writer = new OutputStreamWriter(new FileOutputStream(errorFile), "UTF8");
+				writer.write(error);
+				writer.flush();
+				writer.close();
+			} catch (UnsupportedEncodingException | FileNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
-		}
 
-		Writer writer;
-		try {
-			writer = new OutputStreamWriter(new FileOutputStream(errorFile), "UTF8");
-			writer.write(error);
-			writer.flush();
-			writer.close();
-		} catch (UnsupportedEncodingException | FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
 		}
-
 	}
 }
