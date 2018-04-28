@@ -1,7 +1,0 @@
-digraph "Grafische Darstellung der Klassenhierarchie"
-{
-  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
-  node [fontname="Helvetica",fontsize="10",shape=record];
-  rankdir="LR";
-  Node1 [label="de.dwzberechnung.model.Calculate\lWahrscheinlichkeitModel",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classde_1_1dwzberechnung_1_1model_1_1_calculate_wahrscheinlichkeit_model.html"];
-}

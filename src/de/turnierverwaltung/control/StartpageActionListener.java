@@ -10,7 +10,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.turnierverwaltung.control.ratingdialog.DWZListToSQLITEControl;
 import de.turnierverwaltung.control.ratingdialog.ELOListToSQLITEControl;
-import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
 import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
 
 public class StartpageActionListener {
@@ -118,19 +117,16 @@ public class StartpageActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				SQLitePlayerDWZList spdwzlist = new SQLitePlayerDWZList();
-				Boolean checkDB = spdwzlist.checkDatabase(mainControl.getPropertiesControl().getPathToPlayersCSV());
-				if (checkDB == true) {
-					DWZListToSQLITEControl dwzL = new DWZListToSQLITEControl(mainControl);
-					dwzL.convertDWZListToSQLITE();
 
-					startpageControl.getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
-					startpageControl.getStartpage().getDwzPanel().addCheckItem();
-					startpageControl.getStartpageDWZPanel().getOpenPlayersCSVLabel()
-							.setText(mainControl.getPropertiesControl().getPathToPlayersCSV());
+				DWZListToSQLITEControl dwzL = new DWZListToSQLITEControl(mainControl);
+				dwzL.convertDWZListToSQLITE();
 
-					startpageControl.getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
-				}
+				startpageControl.getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
+				startpageControl.getStartpage().getDwzPanel().addCheckItem();
+				startpageControl.getStartpageDWZPanel().getOpenPlayersCSVLabel()
+						.setText(mainControl.getPropertiesControl().getPathToPlayersCSV());
+
+
 			}
 		});
 		startpageControl.getStartpageDWZPanel().getOpenPlayersCSVButton().addActionListener(new ActionListener() {

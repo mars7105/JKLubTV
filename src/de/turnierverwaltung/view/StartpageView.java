@@ -4,10 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.SystemColor;
-import java.awt.Toolkit;
-
 import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,8 +21,8 @@ public class StartpageView extends JScrollPane {
 	private JButton eloButton;
 	private JButton tournamentButton;
 	private JButton playerButton;
-	private ImageIcon checkImg = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/check.png")));
+//	private ImageIcon checkImg = new ImageIcon(
+//			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/check.png")));
 	private StartpageItemView dwzPanel;
 	private StartpageItemView eloPanel;
 	private StartpageItemView databasePanel;
