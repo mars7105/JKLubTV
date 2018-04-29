@@ -34,7 +34,7 @@ public class StartpageControl {
 
 	}
 
-	private void init() {
+	private void createDialog() {
 		getStartpageDWZPanel().getOpenVereineCSVLabel()
 				.setText(mainControl.getPropertiesControl().getPathToVereineCVS());
 
@@ -84,9 +84,20 @@ public class StartpageControl {
 			getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
 
 		}
+		StartpageActionListener actionListener = new StartpageActionListener(mainControl, this);
+		actionListener.addActionListener();
+		dialog = new JDialog();
+
+		dialog.setTitle("Einrichtungsassistent");
+		dialog.add(startpage);
+
+		dialog.pack();
+		dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		dialog.setLocationRelativeTo(null);
+		dialog.setVisible(true);
 	}
 
-	public void showStartDialog() {
+	public void createStartPanels() {
 		startpage = new StartpageView();
 
 		startpageDWZPanel = new StartpageDWZPanelView();
@@ -108,19 +119,9 @@ public class StartpageControl {
 		startpageTounamentPanel = new StartpageTounamentPanelView();
 		DialogListener tournamentListener = new DialogListener(startpageTounamentPanel);
 		startpage.getTournamentButton().addActionListener(tournamentListener);
-
-		StartpageActionListener actionListener = new StartpageActionListener(mainControl, this);
-		actionListener.addActionListener();
-		dialog = new JDialog();
-
-		dialog.setTitle("Einrichtungsassistent");
-		dialog.add(startpage);
-
-		dialog.pack();
-		dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
-		dialog.setLocationRelativeTo(null);
-		dialog.setVisible(true);
-		init();
+		createDialog();
+		
+		
 	}
 
 	public StartpageView getStartpage() {

@@ -505,7 +505,7 @@ public class MainControl extends JFrame implements WindowListener {
 			setEnabled(true);
 			setVisible(true);
 			startpageControl = new StartpageControl(this);
-			startpageControl.showStartDialog();
+			startpageControl.createStartPanels();
 
 			// hauptPanel.addTab("Einrichtungsassistent", startpageControl.getStartpage());
 			// final ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel,

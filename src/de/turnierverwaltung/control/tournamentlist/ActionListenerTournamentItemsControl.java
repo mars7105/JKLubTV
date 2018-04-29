@@ -1,6 +1,6 @@
 package de.turnierverwaltung.control.tournamentlist;
 
-import java.awt.Dialog;
+
 
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net

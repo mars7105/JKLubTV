@@ -1,8 +1,10 @@
 package de.turnierverwaltung.view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.FlowLayout;
+import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -26,6 +28,10 @@ public class StartpageDWZPanelView extends StartpagePanelView {
 
 	public StartpageDWZPanelView() {
 		super();
+		Color titleColor = new Color((SystemColor.text).getRGB());
+		Color titleTextColor = new Color((SystemColor.textText).getRGB());
+//		setBackground(titleColor);
+//		setForeground(titleTextColor);
 		setBorder(new EmptyBorder(25, 25, 25, 25));
 		getTextfeld().setText("DWZ Test!");
 		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.5"));
@@ -50,10 +56,13 @@ public class StartpageDWZPanelView extends StartpagePanelView {
 		downloadDWZListe();
 		JPanel wrapper = new JPanel();
 		wrapper.setLayout(new BorderLayout());
+//		htmlAll.setBackground(titleColor);
+//		htmlAll.setForeground(titleTextColor);
 		wrapper.add(htmlAll, BorderLayout.NORTH);
 
 		centerPane.add(wrapper, BorderLayout.NORTH);
-
+//		centerPane.setBackground(titleColor);
+//		centerPane.setForeground(titleTextColor);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(centerPane);
 		add(scrollPane, BorderLayout.CENTER);

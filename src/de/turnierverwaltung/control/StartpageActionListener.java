@@ -10,7 +10,6 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.turnierverwaltung.control.ratingdialog.DWZListToSQLITEControl;
 import de.turnierverwaltung.control.ratingdialog.ELOListToSQLITEControl;
-import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
 
 public class StartpageActionListener {
 	MainControl mainControl;

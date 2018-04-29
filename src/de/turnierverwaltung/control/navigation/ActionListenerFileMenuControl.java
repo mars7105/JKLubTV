@@ -206,7 +206,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 
 		if (arg0.getSource().equals(wizardButton)) {
 			StartpageControl startpageControl = new StartpageControl(mainControl);
-			startpageControl.showStartDialog();
+			startpageControl.createStartPanels();
 		}
 		if (arg0.getSource().equals(exitButton)) {
 			final int abfrage = beendenHinweis();
