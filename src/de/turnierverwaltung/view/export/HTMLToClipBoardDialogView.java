@@ -1,6 +1,7 @@
 package de.turnierverwaltung.view.export;
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -65,12 +66,10 @@ public class HTMLToClipBoardDialogView extends JDialog {
 			main.add(list.next());
 		}
 
-		
 		JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		add(titleview, BorderLayout.NORTH);
 
-		
 		mainPanel.add(main, BorderLayout.NORTH);
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setViewportView(mainPanel);
@@ -83,14 +82,20 @@ public class HTMLToClipBoardDialogView extends JDialog {
 		southPanel.add(buttonPanel);
 
 		add(southPanel, BorderLayout.SOUTH);
-
-		pack();
 		statusLabel.setFlowLayoutLeft();
-		setEnabled(true);
-		setVisible(true);
-		setLocationRelativeTo(null);
-	}
+		
 
+	}
+	public void showDialog() {
+		pack();
+
+		setLocationRelativeTo(null);
+		setEnabled(true);
+		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		setVisible(true);
+		
+
+	}
 	public void setButtonPanel(ButtonPanelView buttonPanel) {
 		this.buttonPanel = buttonPanel;
 	}

@@ -1,5 +1,7 @@
 package de.turnierverwaltung.control.tournamentlist;
 
+import java.awt.Dialog;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -93,9 +95,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 		anzahlTurniere = 0;
 		loadedTurnierID = -1;
 		this.mainControl = mainControl;
-		// turnierListeLadenView = new TournamentListView(anzahlTurniere,
-		// anzahlTurniere);
-		// this.mainControl.setTournamentListView(turnierListeLadenView);
+		
 		turnierTableControl = mainControl.getSqlTournamentControl();
 
 		this.mainControl.setTabbedPaneViewControl(new TabbedPaneViewControl(this.mainControl, "X"));
@@ -146,14 +146,14 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 					gtC.updateGruppen(turnierEdit);
 
 					turnierEditierenView.dispose();
-					mainControl.setEnabled(true);
+//					mainControl.setEnabled(true);
 					loadTurnierListe();
 					if (turnierEdit.getTurnierId() == loadedTurnierID) {
 						reloadTurnier();
 					}
 				} catch (final SQLException e) {
 					turnierEditierenView.dispose();
-					mainControl.setEnabled(true);
+//					mainControl.setEnabled(true);
 					final ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());
 				}
@@ -162,7 +162,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 			if (arg0.getSource().equals(turnierEditierenView.getCancelButton())) {
 
 				turnierEditierenView.dispose();
-				mainControl.setEnabled(true);
+//				mainControl.setEnabled(true);
 			}
 		}
 
@@ -262,18 +262,18 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 				turnierEdit = turnierListe.get(i);
 				final SQLGroupsControl gTC = new SQLGroupsControl(mainControl);
 				try {
-					mainControl.setEnabled(false);
+//					mainControl.setEnabled(false);
 					turnierEdit = gTC.getGruppe(turnierEdit);
 
 					turnierEditierenView = new EditTournamentView(turnierEdit);
 					turnierEditierenView.getOkButton().addActionListener(this);
 					turnierEditierenView.getCancelButton().addActionListener(this);
-
+					turnierEditierenView.showDialog() ;
 				} catch (final SQLException e) {
 					turnierEditierenView.dispose();
 					final ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());
-					mainControl.setEnabled(true);
+//					mainControl.setEnabled(true);
 				}
 			}
 

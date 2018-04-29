@@ -77,7 +77,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 
 			}
 			if (arg0.getSource().equals(spielerHinzufuegenView.getCancelButton())) {
-				mainControl.setEnabled(true);
+//				mainControl.setEnabled(true);
 				try {
 					this.mainControl.getPlayerListControl().updateSpielerListe();
 				} catch (SQLException e) {
@@ -143,7 +143,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 			spielerHinzufuegenView.getOkButton().addActionListener(this);
 			spielerHinzufuegenView.getCancelButton().addActionListener(this);
 			spielerHinzufuegenView.getTextFieldKuerzel().addFocusListener(this);
-			mainControl.setEnabled(false);
+			spielerHinzufuegenView.showDialog();
 		}
 		if (arg0.getSource().equals(naviView.getUpdateButton())) {
 			try {
@@ -190,7 +190,7 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 
 		spielerHinzufuegenView.getOkButton().addActionListener(this);
 		spielerHinzufuegenView.getCancelButton().addActionListener(this);
-		mainControl.setEnabled(false);
+//		mainControl.setEnabled(false);
 	}
 
 }

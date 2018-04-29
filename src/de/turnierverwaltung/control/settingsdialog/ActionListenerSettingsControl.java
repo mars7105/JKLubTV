@@ -1,5 +1,6 @@
 package de.turnierverwaltung.control.settingsdialog;
 
+import java.awt.Dialog;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -317,7 +318,7 @@ public class ActionListenerSettingsControl {
 					dialog.dispose();
 					dialog = new JDialog();
 				}
-				dialog.setAlwaysOnTop(true);
+				// dialog.setAlwaysOnTop(true);
 				dialog.getContentPane().add(eigenschaftenView);
 				dialog.pack();
 				dialog.setLocationRelativeTo(null);
@@ -326,7 +327,7 @@ public class ActionListenerSettingsControl {
 						mainControl.getPropertiesControl().getSettingsDialogWidth(),
 						mainControl.getPropertiesControl().getSettingsDialogHeight());
 				dialog.setEnabled(true);
-				dialog.setVisible(true);
+
 				if (mainControl.getPropertiesControl() == null) {
 
 					mainControl.setPropertiesControl(new PropertiesControl(mainControl));
@@ -373,7 +374,8 @@ public class ActionListenerSettingsControl {
 				esControl.setTableColumns();
 				addActionListeners();
 				esControl.getItemListenerControl().addItemListeners();
-
+				dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+				dialog.setVisible(true);
 			}
 
 		});

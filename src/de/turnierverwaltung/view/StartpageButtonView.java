@@ -14,7 +14,7 @@ public class StartpageButtonView extends JButton {
 
 	public StartpageButtonView(String text) {
 		super();
-		Dimension buttonDim = new Dimension(250, 50);
+		Dimension buttonDim = new Dimension(300, 50);
 
 		this.setText(text);
 		setPreferredSize(buttonDim);

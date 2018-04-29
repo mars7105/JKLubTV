@@ -1,5 +1,6 @@
 package de.turnierverwaltung.view.tournamentlist;
 
+import java.awt.Dialog;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -83,7 +84,6 @@ public class EditTournamentView extends JDialog {
 	private JTextField[] textFieldGruppenName;
 
 	public EditTournamentView(Tournament turnier) {
-		// this.rundenEditierenButton = new JButton("Paarungen bearbeiten");
 		this.textFieldGruppenName = new JTextField[turnier.getAnzahlGruppen()];
 		property = new Properties();
 		property.put("text.today", Messages.getString("TurnierEditierenView.3")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -96,11 +96,9 @@ public class EditTournamentView extends JDialog {
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		JPanel contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-		// contentPanel.setBackground(new Color(249, 222, 112));
 
 		JPanel centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// centerPane.setBackground(new Color(249, 222, 112));
 		textFieldTurnierName.setText(turnier.getTurnierName());
 		JLabel label = new JLabel();
 		label.setPreferredSize(new Dimension(120, 10));
@@ -108,13 +106,7 @@ public class EditTournamentView extends JDialog {
 		centerPane.add(label);
 		centerPane.add(textFieldTurnierName);
 		contentPanel.add(centerPane);
-		// int[] datumsIntStartdatum = dateStringToInt(turnier.getStartDatum());
-		// UtilDateModel um1 = new UtilDateModel();
-		// um1.setDate(datumsIntStartdatum[2], datumsIntStartdatum[1],
-		// datumsIntStartdatum[0]);
-		// um1.setSelected(true);
-		// startDatumTextField = new JDatePickerImpl(new JDatePanelImpl(um1,
-		// property), new DateLabelFormatter());
+		
 		startDatumTextField = new DateChooserPanel();
 		startDatumTextField.setLocale(Locale.getDefault());
 		EventDate evstart = new EventDate(turnier.getStartDatum());
@@ -128,7 +120,6 @@ public class EditTournamentView extends JDialog {
 		startDatumTextField.setDate(dstart);
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// centerPane.setBackground(new Color(249, 222, 112));
 		label = new JLabel();
 		label.setPreferredSize(new Dimension(120, 10));
 		label.setText(Messages.getString("TurnierEditierenView.12")); //$NON-NLS-1$
@@ -151,7 +142,6 @@ public class EditTournamentView extends JDialog {
 
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		// centerPane.setBackground(new Color(249, 222, 112));
 		label = new JLabel();
 		label.setPreferredSize(new Dimension(120, 10));
 		label.setText(Messages.getString("TurnierEditierenView.13")); //$NON-NLS-1$
@@ -179,50 +169,19 @@ public class EditTournamentView extends JDialog {
 		contentPanel.add(buttonPane);
 		add(contentPanel);
 		contentPanel.updateUI();
+		
+	}
+
+	public void showDialog() {
 		pack();
 
 		setLocationRelativeTo(null);
 		setEnabled(true);
+		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		setVisible(true);
+
 	}
 
-	// private int[] getDatefromString(String zeile) {
-	// String[] splitDate = null;
-	// String[] dateItems = null;
-	// if (zeile.contains(".")) {
-	// splitDate = zeile.split("\\.");
-	// }
-	// if (zeile.contains("-")) {
-	// splitDate = zeile.split("-");
-	// dateItems = new String[splitDate.length];
-	// int increment = splitDate.length;
-	// for (int i = 0; i < splitDate.length; i++) {
-	// increment--;
-	// dateItems[increment] = splitDate[i];
-	// }
-	// splitDate = dateItems;
-	// }
-	//
-	// int[] dateInt = new int[splitDate.length];
-	//
-	// for (int i = 0; i < splitDate.length; i++) {
-	// if (zeile.length() > 0) {
-	// dateInt[i] = Integer.parseInt(splitDate[i]);
-	// } else {
-	// dateInt[i] = 0;
-	// }
-	// }
-	//
-	// return dateInt;
-	// }
-
-	// private int[] dateStringToInt(String datum) {
-	// int[] dateInt = getDatefromString(datum);
-	//
-	// dateInt[1] = dateInt[1] - 1;
-	// return dateInt;
-	//
-	// }
 
 	public JButton getCancelButton() {
 		return cancelButton;

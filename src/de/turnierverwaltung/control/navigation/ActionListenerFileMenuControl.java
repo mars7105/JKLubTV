@@ -268,13 +268,21 @@ public class ActionListenerFileMenuControl implements ActionListener {
 				+ Messages.getString("NaviController.22") //$NON-NLS-1$
 				+ Messages.getString("NaviController.23"); //$NON-NLS-1$
 		if (mainControl.getNaviView().getTabellenPanel().isVisible() == true) {
-			abfrage = 1;
-			// Custom button text
-			final Object[] options = { Messages.getString("NaviController.24"), //$NON-NLS-1$
-					Messages.getString("NaviController.25") }; //$NON-NLS-1$
-			abfrage = JOptionPane.showOptionDialog(mainControl, hinweisText, Messages.getString("NaviController.26"), //$NON-NLS-1$
-					JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
-
+			if (mainControl.getChangedGames().size() > 0) {
+				abfrage = 1;
+				// Custom button text
+				final Object[] options = { Messages.getString("NaviController.37"), //$NON-NLS-1$
+						Messages.getString("NaviController.1") }; //$NON-NLS-1$
+				abfrage = JOptionPane.showOptionDialog(mainControl, hinweisText,
+						Messages.getString("NaviController.26"), //$NON-NLS-1$
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+				try {
+					mainControl.getSaveTournamentControl().saveChangedPartien();
+				} catch (SQLException e) {
+					final ExceptionHandler eh = new ExceptionHandler(mainControl);
+					eh.fileSQLError(e.getMessage());
+				}
+			}
 		}
 		if (abfrage == 0) {
 			mainControl.setNewTournament(false);

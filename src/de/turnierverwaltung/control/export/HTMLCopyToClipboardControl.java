@@ -1,5 +1,6 @@
 package de.turnierverwaltung.control.export;
 
+import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -148,7 +149,7 @@ public class HTMLCopyToClipboardControl {
 				}
 
 			});
-
+			htmlToClipboardDialog.showDialog();
 		} else {
 			JOptionPane.showMessageDialog(null,
 					Messages.getString("HTMLSaveControler.21") + Messages.getString("HTMLSaveControler.22")); //$NON-NLS-1$ //$NON-NLS-2$

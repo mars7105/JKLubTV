@@ -2,6 +2,7 @@ package de.turnierverwaltung.view.playerlist;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.awt.Dimension;
 
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
@@ -61,7 +62,7 @@ public class NewPlayerView extends JDialog {
 		this.cancelButton = buttonPane.getCancelButton();
 
 		setTitle(Messages.getString("SpielerHinzufuegenView.2")); //$NON-NLS-1$
-		this.setAlwaysOnTop(true);
+//		this.setAlwaysOnTop(true);
 		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setLayout(new BorderLayout());
 		contentPanel = new JPanel();
@@ -79,6 +80,16 @@ public class NewPlayerView extends JDialog {
 		add(jsP, BorderLayout.CENTER);
 		add(buttonPane, BorderLayout.SOUTH);
 		spielerPanel();
+		
+	}
+	public void showDialog() {
+		pack();
+
+		setLocationRelativeTo(null);
+		setEnabled(true);
+		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		setVisible(true);
+		
 
 	}
 
@@ -193,11 +204,7 @@ public class NewPlayerView extends JDialog {
 		// contentPanel.add(buttonPane);
 
 		contentPanel.updateUI();
-		pack();
-		setLocationRelativeTo(null);
-
-		setEnabled(true);
-		setVisible(true);
+		
 
 	}
 }

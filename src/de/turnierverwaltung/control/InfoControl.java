@@ -1,5 +1,7 @@
 package de.turnierverwaltung.control;
 
+import java.awt.Dialog;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -98,7 +100,7 @@ public class InfoControl {
 					dialog.dispose();
 					dialog = new JDialog();
 				}
-				dialog.setAlwaysOnTop(true);
+				
 				dialog.setLocationRelativeTo(null);
 				dialog.getContentPane().add(infoView);
 				dialog.pack();
@@ -106,6 +108,7 @@ public class InfoControl {
 						propertiesControl.getInfoDialogWidth(), propertiesControl.getInfoDialogHeight());
 
 				dialog.setEnabled(true);
+				dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 				dialog.setVisible(true);
 			}
 

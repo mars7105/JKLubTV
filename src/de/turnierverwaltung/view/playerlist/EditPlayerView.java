@@ -1,6 +1,8 @@
 package de.turnierverwaltung.view.playerlist;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 
+import java.awt.Dialog;
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -54,7 +56,7 @@ public class EditPlayerView extends JDialog {
 	private JTextField textFieldELO;
 
 	public EditPlayerView(Player spieler) {
-		this.setAlwaysOnTop(true);
+		// this.setAlwaysOnTop(true);
 		this.buttonPane = new ButtonPanelView();
 		this.buttonPane.makeAllButtons();
 		this.okButton = buttonPane.getOkButton();
@@ -77,7 +79,6 @@ public class EditPlayerView extends JDialog {
 
 		JPanel centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		
 
 		textFieldForename.setText(spieler.getForename());
 		JLabel label = new JLabel();
@@ -205,12 +206,18 @@ public class EditPlayerView extends JDialog {
 		contentPanel.add(buttonPane);
 		add(contentPanel);
 		contentPanel.updateUI();
+
+	}
+
+	public void showDialog() {
 		pack();
 
 		setLocationRelativeTo(null);
-
 		setEnabled(true);
+		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		setVisible(true);
+		
+
 	}
 
 	public void closeWindow() {
