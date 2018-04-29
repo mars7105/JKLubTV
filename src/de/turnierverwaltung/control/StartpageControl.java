@@ -34,6 +34,58 @@ public class StartpageControl {
 
 	}
 
+	private void init() {
+		getStartpageDWZPanel().getOpenVereineCSVLabel()
+				.setText(mainControl.getPropertiesControl().getPathToVereineCVS());
+
+		getStartpageDWZPanel().getOpenPlayersCSVLabel()
+				.setText(mainControl.getPropertiesControl().getPathToPlayersCSV());
+
+		getStartpageELOPanel().getOpenPlayersELOLabel()
+				.setText(mainControl.getPropertiesControl().getPathToPlayersELO());
+		String filename = mainControl.getPropertiesControl().getPathToPlayersELO();
+		int positionEXT = filename.lastIndexOf('.');
+
+		if (positionEXT > 0) {
+			String newFile = filename.substring(positionEXT);
+			if (newFile.equals(".sqlite")) {
+				SQLitePlayerELOList spelolist = new SQLitePlayerELOList();
+				Boolean checkDB = spelolist.checkDatabase(filename);
+				if (checkDB == true) {
+					getStartpageELOPanel().getConvertELOToSQLITEButton().setEnabled(false);
+					getStartpage().getEloPanel().addCheckItem();
+
+				} else {
+					mainControl.getPropertiesControl().setPathToPlayersELO("");
+				}
+
+			} else {
+				getStartpageELOPanel().getConvertELOToSQLITEButton().setEnabled(true);
+
+			}
+		} else {
+			getStartpageELOPanel().getConvertELOToSQLITEButton().setEnabled(false);
+
+		}
+
+		filename = mainControl.getPropertiesControl().getPathToPlayersCSV();
+		positionEXT = filename.lastIndexOf('.');
+		if (positionEXT > 0) {
+			String newFile = filename.substring(positionEXT);
+			if (newFile.equals(".sqlite")) {
+
+				getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
+				getStartpage().getDwzPanel().addCheckItem();
+			} else {
+				getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(true);
+
+			}
+		} else {
+			getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
+
+		}
+	}
+
 	public void showStartDialog() {
 		startpage = new StartpageView();
 
@@ -68,6 +120,7 @@ public class StartpageControl {
 		dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		dialog.setLocationRelativeTo(null);
 		dialog.setVisible(true);
+		init();
 	}
 
 	public StartpageView getStartpage() {

@@ -20,67 +20,13 @@ public class StartpageActionListener {
 		super();
 		this.mainControl = mainControl;
 		this.startpageControl = startpageControl;
+		
 	}
 
+
+
 	public void addActionListener() {
-		startpageControl.getStartpageDWZPanel().getOpenVereineCSVLabel()
-				.setText(mainControl.getPropertiesControl().getPathToVereineCVS());
 
-		startpageControl.getStartpageDWZPanel().getOpenPlayersCSVLabel()
-				.setText(mainControl.getPropertiesControl().getPathToPlayersCSV());
-
-		startpageControl.getStartpageELOPanel().getOpenPlayersELOLabel()
-				.setText(mainControl.getPropertiesControl().getPathToPlayersELO());
-		String filename = mainControl.getPropertiesControl().getPathToPlayersELO();
-		int positionEXT = filename.lastIndexOf('.');
-
-		if (positionEXT > 0) {
-			String newFile = filename.substring(positionEXT);
-			if (newFile.equals(".sqlite")) {
-				SQLitePlayerELOList spelolist = new SQLitePlayerELOList();
-				Boolean checkDB = spelolist.checkDatabase(filename);
-				if (checkDB == true) {
-					startpageControl.getStartpageELOPanel().getConvertELOToSQLITEButton().setEnabled(false);
-					startpageControl.getStartpage().getEloPanel().addCheckItem();
-
-				} else {
-					mainControl.getPropertiesControl().setPathToPlayersELO("");
-					// mainControl.getPropertiesControl().writeProperties();
-				}
-
-			} else {
-				startpageControl.getStartpageELOPanel().getConvertELOToSQLITEButton().setEnabled(true);
-
-			}
-		} else {
-			startpageControl.getStartpageELOPanel().getConvertELOToSQLITEButton().setEnabled(false);
-
-		}
-
-		filename = mainControl.getPropertiesControl().getPathToPlayersCSV();
-		positionEXT = filename.lastIndexOf('.');
-		if (positionEXT > 0) {
-			String newFile = filename.substring(positionEXT);
-			if (newFile.equals(".sqlite")) {
-				// SQLitePlayerDWZList spdwzlist = new SQLitePlayerDWZList();
-				// Boolean checkDB = spdwzlist.checkDatabase(filename);
-				// if (checkDB == true) {
-				// startpageControl.getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
-				// startpageControl.getStartpage().getDwzPanel().checkItem();
-				// } else {
-				// mainControl.getPropertiesControl().setPathToPlayersCSV("");
-				//// mainControl.getPropertiesControl().writeProperties();
-				// }
-				startpageControl.getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
-				startpageControl.getStartpage().getDwzPanel().addCheckItem();
-			} else {
-				startpageControl.getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(true);
-
-			}
-		} else {
-			startpageControl.getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
-
-		}
 		startpageControl.getStartpage().getButtonPane().getOkButton().addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -126,7 +72,6 @@ public class StartpageActionListener {
 				startpageControl.getStartpageDWZPanel().getOpenPlayersCSVLabel()
 						.setText(mainControl.getPropertiesControl().getPathToPlayersCSV());
 
-
 			}
 		});
 		startpageControl.getStartpageDWZPanel().getOpenPlayersCSVButton().addActionListener(new ActionListener() {
@@ -157,15 +102,7 @@ public class StartpageActionListener {
 					if (positionEXT > 0) {
 						String newFile = filename.substring(positionEXT);
 						if (newFile.equals(".sqlite")) {
-							// SQLitePlayerDWZList spdwzlist = new SQLitePlayerDWZList();
-							// Boolean checkDB = spdwzlist.checkDatabase(filename);
-							// if (checkDB == true) {
-							// startpageControl.getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
-							// startpageControl.getStartpage().getDwzPanel().checkItem();
-							// } else {
-							// mainControl.getPropertiesControl().setPathToPlayersCSV("");
-							// mainControl.getPropertiesControl().writeProperties();
-							// }
+
 							startpageControl.getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
 							startpageControl.getStartpage().getDwzPanel().addCheckItem();
 						} else {
@@ -219,15 +156,7 @@ public class StartpageActionListener {
 					if (positionEXT > 0) {
 						String newFile = filename.substring(positionEXT);
 						if (newFile.equals(".sqlite")) {
-							// SQLitePlayerELOList spelolist = new SQLitePlayerELOList();
-							// Boolean checkDB = spelolist.checkDatabase(filename);
-							// if (checkDB == true) {
-							// startpageControl.getStartpageELOPanel().getConvertELOToSQLITEButton().setEnabled(false);
-							// startpageControl.getStartpage().getEloPanel().checkItem();
-							//
-							// } else {
-							// mainControl.getPropertiesControl().setPathToPlayersELO("");
-							// }
+
 							startpageControl.getStartpageELOPanel().getConvertELOToSQLITEButton().setEnabled(false);
 							startpageControl.getStartpage().getEloPanel().addCheckItem();
 						} else {
