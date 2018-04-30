@@ -1,10 +1,8 @@
 package de.turnierverwaltung.view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.FlowLayout;
-import java.awt.SystemColor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -35,8 +33,8 @@ public class StartpageELOPanelView extends StartpagePanelView {
 
 	public StartpageELOPanelView() {
 		super();
-		Color titleColor = new Color((SystemColor.text).getRGB());
-		Color titleTextColor = new Color((SystemColor.textText).getRGB());
+//		Color titleColor = new Color((SystemColor.text).getRGB());
+//		Color titleTextColor = new Color((SystemColor.textText).getRGB());
 		
 		setBorder(new EmptyBorder(25, 25, 25, 25));
 

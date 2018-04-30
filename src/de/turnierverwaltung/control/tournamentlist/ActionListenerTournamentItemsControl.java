@@ -492,4 +492,12 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 		this.loadedTurnierID = loadedTurnierID;
 	}
 
+	public int getAnzahlTurniere() {
+		return anzahlTurniere;
+	}
+
+	public void setAnzahlTurniere(int anzahlTurniere) {
+		this.anzahlTurniere = anzahlTurniere;
+	}
+
 }

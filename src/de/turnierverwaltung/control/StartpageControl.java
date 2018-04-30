@@ -8,6 +8,8 @@ import java.awt.event.WindowListener;
 
 import javax.swing.JDialog;
 
+import de.turnierverwaltung.control.playerlist.PlayerListControl;
+import de.turnierverwaltung.control.tournamentlist.ActionListenerTournamentItemsControl;
 import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
 import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
 import de.turnierverwaltung.view.StartpageDBPanelView;
@@ -35,6 +37,25 @@ public class StartpageControl {
 	}
 
 	private void createDialog() {
+		if (mainControl.getPropertiesControl().getPathToDatabase().length() > 0) {
+			startpage.getDatabasePanel().addCheckItem();
+			startpage.getDatabaseButton().setEnabled(false);
+		}
+		PlayerListControl playerListControl = mainControl.getPlayerListControl();
+		if (playerListControl != null) {
+			if (playerListControl.getSpieler().size() > 0) {
+				startpage.getPlayerPanel().addCheckItem();
+				startpage.getPlayerButton().setEnabled(false);
+			}
+		}
+		ActionListenerTournamentItemsControl actionListenerTournamentItemsControl = mainControl
+				.getActionListenerTournamentItemsControl();
+		if (actionListenerTournamentItemsControl != null) {
+			if (actionListenerTournamentItemsControl.getAnzahlTurniere() > 0) {
+				startpage.getTournamentPanel().addCheckItem();
+				startpage.getTournamentButton().setEnabled(false);
+			}
+		}
 		getStartpageDWZPanel().getOpenVereineCSVLabel()
 				.setText(mainControl.getPropertiesControl().getPathToVereineCVS());
 
@@ -54,7 +75,7 @@ public class StartpageControl {
 				if (checkDB == true) {
 					getStartpageELOPanel().getConvertELOToSQLITEButton().setEnabled(false);
 					getStartpage().getEloPanel().addCheckItem();
-
+					startpage.getEloButton().setEnabled(false);
 				} else {
 					mainControl.getPropertiesControl().setPathToPlayersELO("");
 				}
@@ -76,6 +97,7 @@ public class StartpageControl {
 
 				getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
 				getStartpage().getDwzPanel().addCheckItem();
+				startpage.getDwzButton().setEnabled(false);
 			} else {
 				getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(true);
 
@@ -120,8 +142,7 @@ public class StartpageControl {
 		DialogListener tournamentListener = new DialogListener(startpageTounamentPanel);
 		startpage.getTournamentButton().addActionListener(tournamentListener);
 		createDialog();
-		
-		
+
 	}
 
 	public StartpageView getStartpage() {
