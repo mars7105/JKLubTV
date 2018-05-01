@@ -1,6 +1,5 @@
 package de.turnierverwaltung.control;
 
-import java.awt.Dialog;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -17,7 +16,8 @@ import de.turnierverwaltung.view.StartpageDWZPanelView;
 import de.turnierverwaltung.view.StartpageDialog;
 import de.turnierverwaltung.view.StartpageELOPanelView;
 import de.turnierverwaltung.view.StartpagePanelView;
-import de.turnierverwaltung.view.StartpageTounamentPanelView;
+import de.turnierverwaltung.view.StartpagePlayerPanelView;
+import de.turnierverwaltung.view.StartpageTournamentPanelView;
 import de.turnierverwaltung.view.StartpageView;
 
 public class StartpageControl {
@@ -26,8 +26,8 @@ public class StartpageControl {
 	private StartpageDWZPanelView startpageDWZPanel;
 	private StartpageELOPanelView startpageELOPanel;
 	private StartpageDBPanelView startpageDBPanel;
-	private StartpageDBPanelView startpagePlayerPanel;
-	private StartpageTounamentPanelView startpageTounamentPanel;
+	private StartpagePlayerPanelView startpagePlayerPanel;
+	private StartpageTournamentPanelView startpageTounamentPanel;
 	private JDialog dialog;
 
 	public StartpageControl(MainControl mainControl) {
@@ -39,13 +39,13 @@ public class StartpageControl {
 	private void createDialog() {
 		if (mainControl.getPropertiesControl().getPathToDatabase().length() > 0) {
 			startpage.getDatabasePanel().addCheckItem();
-			startpage.getDatabaseButton().setEnabled(false);
+//			startpage.getDatabaseButton().setEnabled(false);
 		}
 		PlayerListControl playerListControl = mainControl.getPlayerListControl();
 		if (playerListControl != null) {
 			if (playerListControl.getSpieler().size() > 0) {
 				startpage.getPlayerPanel().addCheckItem();
-				startpage.getPlayerButton().setEnabled(false);
+//				startpage.getPlayerButton().setEnabled(false);
 			}
 		}
 		ActionListenerTournamentItemsControl actionListenerTournamentItemsControl = mainControl
@@ -53,7 +53,7 @@ public class StartpageControl {
 		if (actionListenerTournamentItemsControl != null) {
 			if (actionListenerTournamentItemsControl.getAnzahlTurniere() > 0) {
 				startpage.getTournamentPanel().addCheckItem();
-				startpage.getTournamentButton().setEnabled(false);
+//				startpage.getTournamentButton().setEnabled(false);
 			}
 		}
 		getStartpageDWZPanel().getOpenVereineCSVLabel()
@@ -75,7 +75,7 @@ public class StartpageControl {
 				if (checkDB == true) {
 					getStartpageELOPanel().getConvertELOToSQLITEButton().setEnabled(false);
 					getStartpage().getEloPanel().addCheckItem();
-					startpage.getEloButton().setEnabled(false);
+//					startpage.getEloButton().setEnabled(false);
 				} else {
 					mainControl.getPropertiesControl().setPathToPlayersELO("");
 				}
@@ -97,7 +97,7 @@ public class StartpageControl {
 
 				getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(false);
 				getStartpage().getDwzPanel().addCheckItem();
-				startpage.getDwzButton().setEnabled(false);
+//				startpage.getDwzButton().setEnabled(false);
 			} else {
 				getStartpageDWZPanel().getConvertDWZToSQLITEButton().setEnabled(true);
 
@@ -114,7 +114,7 @@ public class StartpageControl {
 		dialog.add(startpage);
 
 		dialog.pack();
-		dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+//		dialog.setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		dialog.setLocationRelativeTo(null);
 		dialog.setVisible(true);
 	}
@@ -134,11 +134,11 @@ public class StartpageControl {
 		DialogListener dbListener = new DialogListener(startpageDBPanel);
 		startpage.getDatabaseButton().addActionListener(dbListener);
 
-		startpagePlayerPanel = new StartpageDBPanelView();
+		startpagePlayerPanel = new StartpagePlayerPanelView();
 		DialogListener playerListener = new DialogListener(startpagePlayerPanel);
 		startpage.getPlayerButton().addActionListener(playerListener);
 
-		startpageTounamentPanel = new StartpageTounamentPanelView();
+		startpageTounamentPanel = new StartpageTournamentPanelView();
 		DialogListener tournamentListener = new DialogListener(startpageTounamentPanel);
 		startpage.getTournamentButton().addActionListener(tournamentListener);
 		createDialog();
@@ -177,19 +177,19 @@ public class StartpageControl {
 		this.startpageDBPanel = startpageDBPanel;
 	}
 
-	public StartpageDBPanelView getStartpagePlayerPanel() {
+	public StartpagePlayerPanelView getStartpagePlayerPanel() {
 		return startpagePlayerPanel;
 	}
 
-	public void setStartpagePlayerPanel(StartpageDBPanelView startpagePlayerPanel) {
+	public void setStartpagePlayerPanel(StartpagePlayerPanelView startpagePlayerPanel) {
 		this.startpagePlayerPanel = startpagePlayerPanel;
 	}
 
-	public StartpageTounamentPanelView getStartpageTounamentPanel() {
+	public StartpageTournamentPanelView getStartpageTounamentPanel() {
 		return startpageTounamentPanel;
 	}
 
-	public void setStartpageTounamentPanel(StartpageTounamentPanelView startpageTounamentPanel) {
+	public void setStartpageTounamentPanel(StartpageTournamentPanelView startpageTounamentPanel) {
 		this.startpageTounamentPanel = startpageTounamentPanel;
 	}
 
@@ -212,7 +212,9 @@ public class StartpageControl {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// mainControl.setEnabled(false);
-			final StartpageDialog dialog = new StartpageDialog(mainControl, "", Dialog.ModalityType.APPLICATION_MODAL);
+//			final StartpageDialog dialog = new StartpageDialog(mainControl, "", Dialog.ModalityType.APPLICATION_MODAL);
+			final StartpageDialog dialog = new StartpageDialog();
+
 			dialog.setMainPanel(panel);
 			dialog.setLocationRelativeTo(null);
 			dialog.pack();

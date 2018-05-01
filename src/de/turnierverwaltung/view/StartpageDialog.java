@@ -33,10 +33,22 @@ public class StartpageDialog extends JDialog {
 	public StartpageDialog(Window arg0, String arg1, ModalityType arg2) {
 		super(arg0, arg1, arg2);
 		getContentPane().setLayout(new BorderLayout());
-//		this.mainPanel = mainPanel;
+		// this.mainPanel = mainPanel;
 		buttonPanel = new ButtonPanelView();
 		buttonPanel.makeOKButton();
-		 jsPane = new JScrollPane();
+		jsPane = new JScrollPane();
+		jsPane.setViewportView(mainPanel);
+		getContentPane().add(jsPane, BorderLayout.CENTER);
+		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
+	}
+
+	public StartpageDialog() {
+		super();
+		getContentPane().setLayout(new BorderLayout());
+		// this.mainPanel = mainPanel;
+		buttonPanel = new ButtonPanelView();
+		buttonPanel.makeOKButton();
+		jsPane = new JScrollPane();
 		jsPane.setViewportView(mainPanel);
 		getContentPane().add(jsPane, BorderLayout.CENTER);
 		getContentPane().add(buttonPanel, BorderLayout.SOUTH);
@@ -68,7 +80,7 @@ public class StartpageDialog extends JDialog {
 	}
 
 	public void showDialog() {
-//		this.setLocationRelativeTo(null);
+		// this.setLocationRelativeTo(null);
 		// this.pack();
 		this.setEnabled(true);
 		this.setVisible(true);

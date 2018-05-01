@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 
-public class StartpageDBPanelView extends StartpagePanelView {
+public class StartpageTournamentPanelView extends StartpagePanelView {
 
 	/**
 	 * 
@@ -16,11 +16,11 @@ public class StartpageDBPanelView extends StartpagePanelView {
 //			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/db_add.png")));
 //	private JButton newDatabseButton;
 
-	public StartpageDBPanelView() {
+	public StartpageTournamentPanelView() {
 		super();
 		setLayout(new BorderLayout());
-//		Color titleColor = new Color((SystemColor.text).getRGB());
-//		Color titleTextColor = new Color((SystemColor.textText).getRGB());
+		// Color titleColor = new Color((SystemColor.text).getRGB());
+		// Color titleTextColor = new Color((SystemColor.textText).getRGB());
 
 		setBorder(new EmptyBorder(25, 25, 25, 25));
 		this.setLayout(new BorderLayout());
@@ -34,9 +34,9 @@ public class StartpageDBPanelView extends StartpagePanelView {
 		JPanel panel = new JPanel();
 
 		panel.setLayout(new BorderLayout());
-		StartpageDBHTMLView startPage = new StartpageDBHTMLView();
+		StartpageTournamentHTMLView startPage = new StartpageTournamentHTMLView();
 		JScrollPane scrollPane = new JScrollPane(startPage);
-		
+
 		panel.add(scrollPane, BorderLayout.CENTER);
 //		panel.add(dbPanel, BorderLayout.CENTER);
 		add(panel);
