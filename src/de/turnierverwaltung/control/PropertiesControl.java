@@ -1,7 +1,5 @@
 package de.turnierverwaltung.control;
 
-import java.awt.Font;
-import java.awt.Toolkit;
 
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
@@ -18,6 +16,8 @@ import java.awt.Toolkit;
 //
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
+import java.awt.Font;
+import java.awt.Toolkit;
 
 import java.io.File;
 import java.io.IOException;
