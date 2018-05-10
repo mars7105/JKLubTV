@@ -7,10 +7,12 @@ import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import de.turnierverwaltung.control.MainControl;
+import de.turnierverwaltung.control.Messages;
 import de.turnierverwaltung.control.PropertiesControl;
 import de.turnierverwaltung.control.ratingdialog.DWZListToSQLITEControl;
 import de.turnierverwaltung.control.ratingdialog.ELOListToSQLITEControl;
@@ -298,7 +300,21 @@ public class ActionListenerSettingsControl {
 			esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().setEnabled(false);
 
 		}
+		esControl.getEigenschaftenView().getResetPropertiesButton().addActionListener(new ActionListener() {
 
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String lang = mainControl.getPropertiesControl().getLanguage();
+				mainControl.getPropertiesControl().resetProperties();
+				mainControl.setPropertiesControl(new PropertiesControl(mainControl));
+				mainControl.getPropertiesControl().setLanguage(lang);
+
+				mainControl.getPropertiesControl().writeProperties();
+				JOptionPane.showMessageDialog(null, Messages.getString("EigenschaftenControl.29"),
+						Messages.getString("EigenschaftenControl.28"), JOptionPane.INFORMATION_MESSAGE);
+				System.exit(0);
+			}
+		});
 	}
 
 	private void addPropertiesActionListener() {

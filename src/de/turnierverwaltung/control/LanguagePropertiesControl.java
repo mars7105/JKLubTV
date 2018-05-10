@@ -62,6 +62,10 @@ public class LanguagePropertiesControl {
 	public Boolean checkLanguage() {
 		Boolean ok = false;
 		String language = propertiesControl.getLanguage();
+		if (language == null) {
+			setLanguageToDefault();
+			ok = true;
+		}
 		if (language.equals(GERMAN)) {
 			setLanguageToGerman();
 			ok = true;

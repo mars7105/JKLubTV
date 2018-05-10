@@ -139,6 +139,7 @@ public class SettingsView extends JPanel {
 	private JLabel convertDWZToSQLITELabel;
 	private JButton fontChooserButton;
 	private JFontChooser fontChooser;
+	private JButton resetPropertiesButton;
 
 	/**
 	 * Create the panel.
@@ -454,6 +455,18 @@ public class SettingsView extends JPanel {
 		htmlAll.add(htmlPanel);
 
 		htmlAll.add(new JSeparator());
+		titleView = new TitleLabelView(Messages.getString("EigenschaftenView.71"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
+
+		resetPropertiesButton = new JButton(Messages.getString("EigenschaftenView.71")); //$NON-NLS-1$
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(resetPropertiesButton);
+		htmlAll.add(htmlPanel);
+
+		htmlAll.add(new JSeparator());
 	}
 
 	private void makeHTMLEigenschaften() {
@@ -660,14 +673,16 @@ public class SettingsView extends JPanel {
 		roundTextFieldLabel.setPreferredSize(dim);
 		titleView = new TitleLabelView(Messages.getString("EigenschaftenView.37"));
 		titleView.setFlowLayoutLeft();
-//		JLabel leftTitleLabel = new JLabel(Messages.getString("EigenschaftenView.37"));
+		// JLabel leftTitleLabel = new
+		// JLabel(Messages.getString("EigenschaftenView.37"));
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(titleView);
 		leftPanel.add(htmlPanel);
 		titleView = new TitleLabelView(Messages.getString("EigenschaftenView.38"));
 		titleView.setFlowLayoutLeft();
-//		JLabel rightTitleLabel = new JLabel(Messages.getString("EigenschaftenView.38"));
+		// JLabel rightTitleLabel = new
+		// JLabel(Messages.getString("EigenschaftenView.38"));
 		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(titleView);
@@ -1108,6 +1123,14 @@ public class SettingsView extends JPanel {
 
 	public void setSelectedFont(Font selectedFont) {
 		this.selectedFont = selectedFont;
+	}
+
+	public JButton getResetPropertiesButton() {
+		return resetPropertiesButton;
+	}
+
+	public void setResetPropertiesButton(JButton resetPropertiesButton) {
+		this.resetPropertiesButton = resetPropertiesButton;
 	}
 
 }

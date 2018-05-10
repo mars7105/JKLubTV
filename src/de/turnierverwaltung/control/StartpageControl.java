@@ -20,6 +20,7 @@ import de.turnierverwaltung.view.StartpagePlayerPanelView;
 import de.turnierverwaltung.view.StartpageTournamentPanelView;
 import de.turnierverwaltung.view.StartpageView;
 
+
 public class StartpageControl {
 	private MainControl mainControl;
 	private StartpageView startpage;

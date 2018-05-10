@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
 import de.turnierverwaltung.model.Player;
@@ -17,7 +16,6 @@ import de.turnierverwaltung.model.rating.ELOPlayer;
 import de.turnierverwaltung.model.rating.ReadTXTFile;
 import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
 import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
-import de.turnierverwaltung.sqlite.SQLiteDAOFactory;
 import de.turnierverwaltung.view.ratingdialog.ProgressBarDWZUpdateView;
 
 public class UpdateRatingsControl {
@@ -47,7 +45,6 @@ public class UpdateRatingsControl {
 	 * 
 	 */
 	public void updateSpieler() {
-		String oldPath = SQLiteDAOFactory.getDB_PATH();
 		int abfrage = 1;
 		String elofilename = mainControl.getPropertiesControl().getPathToPlayersELO();
 
@@ -93,146 +90,146 @@ public class UpdateRatingsControl {
 
 			try {
 				spielerliste = spielerTableControl.getAllSpielerOrderByZPS();
-				// Sorting
-				Collections.sort(spielerliste, new Comparator<Player>() {
-					@Override
-					public int compare(Player player2, Player player1) {
+			} catch (SQLException e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+			// Sorting
+			Collections.sort(spielerliste, new Comparator<Player>() {
+				@Override
+				public int compare(Player player2, Player player1) {
 
-						return player1.getDwzData().getCsvZPS().compareTo(player2.getDwzData().getCsvZPS());
+					return player1.getDwzData().getCsvZPS().compareTo(player2.getDwzData().getCsvZPS());
+				}
+			});
+			createAndShowGUI(spielerliste.size());
+
+			for (Player player : spielerliste) {
+				try {
+					// Elo Update - standard_rating_list.txt
+					if (elospieler != null) {
+						for (ELOPlayer eloplayer : elospieler) {
+							if (player.getDwzData() != null) {
+								if (eloplayer.getEloData().getFideid() == player.getDwzData().getCsvFIDE_ID()) {
+									player.setEloData(eloplayer.getEloData());
+									player.getEloData().setSpielerId(player.getSpielerId());
+									spielerTableControl.updateOneSpieler(player);
+
+								}
+							}
+							if (player.getEloData() != null) {
+								if (eloplayer.getEloData().getFideid() == player.getEloData().getFideid()) {
+									player.setEloData(eloplayer.getEloData());
+									player.getEloData().setSpielerId(player.getSpielerId());
+									spielerTableControl.updateOneSpieler(player);
+
+								}
+							}
+
+						}
+
 					}
-				});
-				createAndShowGUI(spielerliste.size());
 
-				for (Player player : spielerliste) {
-					try {
-						// Elo Update - standard_rating_list.txt
-						if (elospieler != null) {
-							for (ELOPlayer eloplayer : elospieler) {
-								if (player.getDwzData() != null) {
-									if (eloplayer.getEloData().getFideid() == player.getDwzData().getCsvFIDE_ID()) {
-										player.setEloData(eloplayer.getEloData());
-										player.getEloData().setSpielerId(player.getSpielerId());
-										spielerTableControl.updateOneSpieler(player);
-
-									}
-								}
-								if (player.getEloData() != null) {
-									if (eloplayer.getEloData().getFideid() == player.getEloData().getFideid()) {
-										player.setEloData(eloplayer.getEloData());
-										player.getEloData().setSpielerId(player.getSpielerId());
-										spielerTableControl.updateOneSpieler(player);
-
-									}
-								}
-
-							}
-
+					// Elo Update -standard_rating_list.sqlite
+					if (dbCheckedELO == true) {
+						int dwzfideid = player.getDwzData().getCsvFIDE_ID();
+						int elofideid = player.getEloData().getFideid();
+						Player temp = new Player();
+						if (dwzfideid > 0) {
+							temp.setEloData(elolist.getPlayer(elofilename, dwzfideid));
 						}
-
-						// Elo Update -standard_rating_list.sqlite
-						if (dbCheckedELO == true) {
-							int dwzfideid = player.getDwzData().getCsvFIDE_ID();
-							int elofideid = player.getEloData().getFideid();
-							Player temp = new Player();
-							if (dwzfideid > 0) {
-								temp.setEloData(elolist.getPlayer(elofilename, dwzfideid));
-							}
-							if (elofideid > 0) {
-								temp.setEloData(elolist.getPlayer(elofilename, elofideid));
-							}
-							player.setEloData(temp.getEloData());
-
-							player.copyELODataToPlayer();
-							player.getEloData().setSpielerId(player.getSpielerId());
-							spielerTableControl.updateOneSpieler(player);
-
+						if (elofideid > 0) {
+							temp.setEloData(elolist.getPlayer(elofilename, elofideid));
 						}
-						// Online DWZ Update
-						if (abfrage == 0) {
-							String zps = player.getDwzData().getCsvZPS();
-							if (verein != null) {
-								if (verein.getZps().equals(zps) == false) {
-									verein = new DSBDWZClub(zps);
-									spieler = verein.getSpieler();
-								}
-							} else {
+						player.setEloData(temp.getEloData());
+
+						player.copyELODataToPlayer();
+						player.getEloData().setSpielerId(player.getSpielerId());
+						spielerTableControl.updateOneSpieler(player);
+
+					}
+					// Online DWZ Update
+					if (abfrage == 0) {
+						String zps = player.getDwzData().getCsvZPS();
+						if (verein != null) {
+							if (verein.getZps().equals(zps) == false) {
 								verein = new DSBDWZClub(zps);
 								spieler = verein.getSpieler();
 							}
-							if (spieler != null) {
-								for (Player temp : spieler) {
-									try {
-										String tempMGL = temp.getDwzData().getCsvMgl_Nr();
-										String playerMGL = player.getDwzData().getCsvMgl_Nr();
-										if (tempMGL.equals(playerMGL)) {
-											if (player.getDWZ() != temp.getDWZ() || player.getDwzData()
-													.getCsvIndex() != temp.getDwzData().getCsvIndex()) {
-												player.setDwz(temp.getDWZ());
-												player.getDwzData().setCsvIndex(temp.getDwzData().getCsvIndex());
-
-												spielerTableControl.updateOneSpieler(player);
-
-											}
-										}
-									} catch (NumberFormatException e) {
-
-									}
-
-								}
-							}
+						} else {
+							verein = new DSBDWZClub(zps);
+							spieler = verein.getSpieler();
 						}
-						// Offline DWZ Update
-						if (abfrage == 1) {
-							CSVPlayer csvPlayer;
-							Player sqlitePlayer;
-							if (dbCheckedDWZ == true) {
-								// dwzlist = new SQLitePlayerDWZList();
-								sqlitePlayer = dwzlist.getPlayer(dwzfilename, player.getDwzData().getCsvZPS(),
-										player.getDwzData().getCsvMgl_Nr());
-								if (sqlitePlayer.getDwzData().getCsvDWZ() != player.getDwzData().getCsvDWZ()) {
-									player.setDwzData(sqlitePlayer.getDwzData());
-
-									spielerTableControl.updateOneSpieler(player);
-
-								}
-
-							} else {
-								// DWZ Update -.sqlite
-								csvPlayerlist = new CSVPlayerList();
-
+						if (spieler != null) {
+							for (Player temp : spieler) {
 								try {
-									csvPlayerlist.loadPlayerCSVList(
-											mainControl.getPropertiesControl().getPathToPlayersCSV());
-								} catch (ArrayIndexOutOfBoundsException | IOException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
+									String tempMGL = temp.getDwzData().getCsvMgl_Nr();
+									String playerMGL = player.getDwzData().getCsvMgl_Nr();
+									if (tempMGL.equals(playerMGL)) {
+										if (player.getDWZ() != temp.getDWZ() || player.getDwzData()
+												.getCsvIndex() != temp.getDwzData().getCsvIndex()) {
+											player.setDwz(temp.getDWZ());
+											player.getDwzData().setCsvIndex(temp.getDwzData().getCsvIndex());
+
+											spielerTableControl.updateOneSpieler(player);
+
+										}
+									}
+								} catch (NumberFormatException e) {
+
 								}
-								csvPlayer = csvPlayerlist.getPlayer(player.getDwzData().getCsvZPS(),
-										player.getDwzData().getCsvMgl_Nr());
-								// DWZ Update - .csv
 
-								if (csvPlayer.getPlayer().getDwzData().getCsvDWZ() != player.getDwzData().getCsvDWZ()) {
-									player.setDwzData(csvPlayer.getPlayer().getDwzData());
+							}
+						}
+					}
+					// Offline DWZ Update
+					if (abfrage == 1) {
+						CSVPlayer csvPlayer;
+						Player sqlitePlayer;
+						if (dbCheckedDWZ == true) {
+							// dwzlist = new SQLitePlayerDWZList();
+							sqlitePlayer = dwzlist.getPlayer(dwzfilename, player.getDwzData().getCsvZPS(),
+									player.getDwzData().getCsvMgl_Nr());
+							if (sqlitePlayer.getDwzData().getCsvDWZ() != player.getDwzData().getCsvDWZ()) {
+								player.setDwzData(sqlitePlayer.getDwzData());
 
-									spielerTableControl.updateOneSpieler(player);
+								spielerTableControl.updateOneSpieler(player);
 
-								}
 							}
 
+						} else {
+							// DWZ Update -.sqlite
+							csvPlayerlist = new CSVPlayerList();
+
+							try {
+								csvPlayerlist
+										.loadPlayerCSVList(mainControl.getPropertiesControl().getPathToPlayersCSV());
+							} catch (ArrayIndexOutOfBoundsException | IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+							csvPlayer = csvPlayerlist.getPlayer(player.getDwzData().getCsvZPS(),
+									player.getDwzData().getCsvMgl_Nr());
+							// DWZ Update - .csv
+
+							if (csvPlayer.getPlayer().getDwzData().getCsvDWZ() != player.getDwzData().getCsvDWZ()) {
+								player.setDwzData(csvPlayer.getPlayer().getDwzData());
+
+								spielerTableControl.updateOneSpieler(player);
+
+							}
 						}
-						ladebalkenView.iterate();
-					} catch (NullPointerException e) {
 
 					}
-				}
-			} catch (
+					ladebalkenView.iterate();
+				} catch (NullPointerException e) {
+					System.out.println(e.getMessage());
 
-			SQLException e1) {
-				spielerliste = null;
-				ExceptionHandler eh = new ExceptionHandler(mainControl);
-				eh.fileSQLError(e1.getMessage());
-			} finally {
-				SQLiteDAOFactory.setDB_PATH(oldPath);
+				} catch (SQLException e1) {
+					System.out.println(e1.getMessage());
+				} finally {
+					// SQLiteDAOFactory.setDB_PATH(oldPath);
+				}
 			}
 		}
 	}

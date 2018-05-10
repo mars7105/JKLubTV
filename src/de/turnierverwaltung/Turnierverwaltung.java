@@ -116,7 +116,7 @@ public class Turnierverwaltung {
 	 * 
 	 * @param args
 	 */
-	public static void main(String args[]) {
+	public static void main(final String args[]) {
 		EventQueue.invokeLater(new Runnable() {
 			@Override
 			public void run() {
@@ -127,8 +127,8 @@ public class Turnierverwaltung {
 				initLookAndFeel();
 
 				try {
-					
-					new MainControl();
+
+					new MainControl(args);
 
 				} catch (Exception e) {
 					e.printStackTrace();

@@ -1,6 +1,5 @@
 package de.turnierverwaltung.control;
 
-
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -265,6 +264,11 @@ public class PropertiesControl {
 		prop.setProperty(TABLE_COLUMN_BLACK, tableColumns[2]);
 		prop.setProperty(TABLE_COLUMN_RESULT, tableColumns[3]);
 		prop.setProperty(TABLE_COLUMN_MEETING, tableColumns[4]);
+	}
+
+	public void resetProperties() {
+		prop.clear();
+		writeProperties();
 	}
 
 	private Boolean checkPath(String path) {
@@ -1297,13 +1301,16 @@ public class PropertiesControl {
 
 	}
 
-	public Boolean writeProperties() {
-		Boolean ok = true;
-
+	public void setBounds() {
 		setFrameX(mainControl.getBounds().x);
 		setFrameY(mainControl.getBounds().y);
 		setFrameWidth(mainControl.getBounds().width);
 		setFrameHeight(mainControl.getBounds().height);
+	}
+
+	public Boolean writeProperties() {
+		Boolean ok = true;
+
 		// speichern
 		StringWriter sw = new StringWriter();
 		try {

@@ -225,7 +225,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 					}
 				}
 			}
-
+			this.mainControl.getPropertiesControl().setBounds();
 			this.mainControl.getPropertiesControl().writeProperties();
 			System.exit(0);
 

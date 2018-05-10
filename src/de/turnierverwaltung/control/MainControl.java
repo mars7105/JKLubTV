@@ -54,6 +54,7 @@ import de.turnierverwaltung.control.tournamenttable.CrossTableControl;
 import de.turnierverwaltung.control.tournamenttable.MeetingTableControl;
 import de.turnierverwaltung.control.tournamenttable.PairingsControl;
 import de.turnierverwaltung.model.Game;
+import de.turnierverwaltung.model.Parameter;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
@@ -146,9 +147,10 @@ public class MainControl extends JFrame implements WindowListener {
 
 	private ActionListenerTournamentEditControl actionListenerTournamentEditControl;
 	private StartpageControl startpageControl;
+	private Parameter parameter;
 
-	public MainControl() {
-
+	public MainControl(String[] args) {
+		parameter = new Parameter(args);
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
 		windowHeight = TournamentConstants.WINDOW_HEIGHT;
 		// setBounds(TournamentConstants.WINDOW_BOUNDS_X,
@@ -395,6 +397,9 @@ public class MainControl extends JFrame implements WindowListener {
 	}
 
 	private void init() {
+		Font font;
+		font = propertiesControl.getFont();
+		setUIFont(font);
 		newTournament = false;
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -422,82 +427,49 @@ public class MainControl extends JFrame implements WindowListener {
 	}
 
 	private void makeProperties() {
+		final String wrongFilename = "file not found.";
+		final String parameterPath = parameter.getTournamentPath();
+		final String propertiesPath = propertiesControl.getPathToDatabase();
+		if (parameter.getHelp() == true) {
+			String helpString1 = "-f <filename> : filename of database to load.";
+			String helpString2 = "--reset : reset properties.";
+			String helpString3 = "--help : help.";
+			System.out.println(helpString1 + "\n" + helpString2 + "\n" + helpString3 + "\n");
+			System.exit(0);
+		}
+		if (parameter.resetProperties() == true) {
+			propertiesControl.resetProperties();
+			String helpString = "All Properties are deleted!";
+			System.out.println(helpString);
+			System.exit(0);
+		}
+		if (parameterPath.length() > 0) {
+			if (!parameterPath.equals("nf")) {
+				propertiesControl.setPathToDatabase(parameterPath);
+				if (propertiesControl.checkPathToDatabase() == true) {
+					loadDatabase(parameterPath);
+				} else {
 
-		if (propertiesControl.checkPathToDatabase() == true) {
-			Font font;
-			font = propertiesControl.getFont();
-			setUIFont(font);
-			final String path = propertiesControl.getPathToDatabase();
-			SQLiteDAOFactory.setDB_PATH(path);
-			setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
-					+ SQLiteDAOFactory.getDB_PATH());
-
-			if (getPlayerListControl() != null) {
-				// mainControl.getSpielerEditierenControl().makePanel();
+					System.out.println(wrongFilename);
+					System.exit(0);
+				}
 			} else {
-				setPlayerListControl(new PlayerListControl(this));
-				try {
-					getPlayerListControl().updateSpielerListe();
-					int cutForename = 20;
-					int cutSurname = 20;
-					try {
-						cutForename = Integer.parseInt(propertiesControl.getCutForename());
-						cutSurname = Integer.parseInt(propertiesControl.getCutSurname());
-					} catch (final NumberFormatException e) {
-						cutForename = 20;
-						cutSurname = 20;
-					}
-					Player.cutFname = cutForename;
-					Player.cutSname = cutSurname;
-				} catch (final SQLException e) {
-					final ExceptionHandler eh = new ExceptionHandler(this);
-					eh.fileSQLError(e.getMessage());
-				}
+				System.out.println(wrongFilename);
+				System.exit(0);
 			}
-			setNewTournament(false);
-			// this.getNaviView().getTabellenPanel().setVisible(false);
-			if (getSqlTournamentControl() == null) {
-				setSqlTournamentControl(new SQLTournamentControl(this));
-				// this.getTurnierTableControl().loadTurnierListe();
-				setActionListenerTournamentItemsControl(new ActionListenerTournamentItemsControl(this));
-				try {
-					getActionListenerTournamentItemsControl().loadTurnierListe();
-				} catch (final SQLException e) {
-					final ExceptionHandler eh = new ExceptionHandler(this);
-					eh.fileSQLError(e.getMessage());
-				}
-				naviView.setPathToDatabase(new JLabel(path));
-
+		} else if (propertiesPath.length() > 0) {
+			propertiesControl.setPathToDatabase(propertiesPath);
+			if (propertiesControl.checkPathToDatabase() == true) {
+				loadDatabase(propertiesPath);
 			} else {
-				resetApp();
-				setSqlTournamentControl(new SQLTournamentControl(this));
-				// this.getTurnierTableControl().loadTurnierListe();
-				setActionListenerTournamentItemsControl(new ActionListenerTournamentItemsControl(this));
-				try {
-					getActionListenerTournamentItemsControl().loadTurnierListe();
-				} catch (final SQLException e) {
-					final ExceptionHandler eh = new ExceptionHandler(this);
-					eh.fileSQLError(e.getMessage());
-				}
-				naviView.setPathToDatabase(new JLabel(path));
+				System.out.println(wrongFilename);
+				System.exit(0);
 			}
-			naviView.getTurnierListePanel().setVisible(false);
-			naviView.getSpielerListePanel().setVisible(false);
-			hauptPanel.addChangeListener(actionListenerFileMenuControl.getTurnierAnsicht());
-			for (int i = 0; i < hauptPanel.getTabCount(); i++) {
-				if (hauptPanel.getTitleAt(i).equals(Messages.getString("MainControl.9"))) { //$NON-NLS-1$
-					hauptPanel.setSelectedIndex(i);
-				}
-			}
-			setBounds(propertiesControl.getFrameX(), propertiesControl.getFrameY(), propertiesControl.getFrameWidth(),
-					propertiesControl.getFrameHeight());
-
-			setEnabled(true);
-			setVisible(true);
 		} else {
-			Font font;
-			font = propertiesControl.getFont();
-			setUIFont(font);
+			if (parameterPath.equals("nf")) {
+				System.out.println(wrongFilename);
+				System.exit(0);
+			}
 			setTitle(Messages.getString("MainControl.10"));
 			setBounds(propertiesControl.getFrameX(), propertiesControl.getFrameY(), propertiesControl.getFrameWidth(),
 					propertiesControl.getFrameHeight());
@@ -506,14 +478,77 @@ public class MainControl extends JFrame implements WindowListener {
 			setVisible(true);
 			startpageControl = new StartpageControl(this);
 			startpageControl.createStartPanels();
-
-			// hauptPanel.addTab("Einrichtungsassistent", startpageControl.getStartpage());
-			// final ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel,
-			// this, null, true);
-			// hauptPanel.setTabComponentAt(0, buttonComp);
-			// naviView.getTurnierListePanel().setVisible(false);
-			// naviView.getSpielerListePanel().setVisible(false);
 		}
+
+	}
+
+	private void loadDatabase(String path) {
+
+		SQLiteDAOFactory.setDB_PATH(path);
+		setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
+				+ SQLiteDAOFactory.getDB_PATH());
+
+		if (getPlayerListControl() == null) {
+
+			setPlayerListControl(new PlayerListControl(this));
+			try {
+				getPlayerListControl().updateSpielerListe();
+				int cutForename = 20;
+				int cutSurname = 20;
+				try {
+					cutForename = Integer.parseInt(propertiesControl.getCutForename());
+					cutSurname = Integer.parseInt(propertiesControl.getCutSurname());
+				} catch (final NumberFormatException e) {
+					cutForename = 20;
+					cutSurname = 20;
+				}
+				Player.cutFname = cutForename;
+				Player.cutSname = cutSurname;
+			} catch (final SQLException e) {
+				final ExceptionHandler eh = new ExceptionHandler(this);
+				eh.fileSQLError(e.getMessage());
+			}
+		}
+		setNewTournament(false);
+		// this.getNaviView().getTabellenPanel().setVisible(false);
+		if (getSqlTournamentControl() == null) {
+			setSqlTournamentControl(new SQLTournamentControl(this));
+			// this.getTurnierTableControl().loadTurnierListe();
+			setActionListenerTournamentItemsControl(new ActionListenerTournamentItemsControl(this));
+			try {
+				getActionListenerTournamentItemsControl().loadTurnierListe();
+			} catch (final SQLException e) {
+				final ExceptionHandler eh = new ExceptionHandler(this);
+				eh.fileSQLError(e.getMessage());
+			}
+			naviView.setPathToDatabase(new JLabel(path));
+
+		} else {
+			resetApp();
+			setSqlTournamentControl(new SQLTournamentControl(this));
+			// this.getTurnierTableControl().loadTurnierListe();
+			setActionListenerTournamentItemsControl(new ActionListenerTournamentItemsControl(this));
+			try {
+				getActionListenerTournamentItemsControl().loadTurnierListe();
+			} catch (final SQLException e) {
+				final ExceptionHandler eh = new ExceptionHandler(this);
+				eh.fileSQLError(e.getMessage());
+			}
+			naviView.setPathToDatabase(new JLabel(path));
+		}
+		naviView.getTurnierListePanel().setVisible(false);
+		naviView.getSpielerListePanel().setVisible(false);
+		hauptPanel.addChangeListener(actionListenerFileMenuControl.getTurnierAnsicht());
+		for (int i = 0; i < hauptPanel.getTabCount(); i++) {
+			if (hauptPanel.getTitleAt(i).equals(Messages.getString("MainControl.9"))) { //$NON-NLS-1$
+				hauptPanel.setSelectedIndex(i);
+			}
+		}
+		setBounds(propertiesControl.getFrameX(), propertiesControl.getFrameY(), propertiesControl.getFrameWidth(),
+				propertiesControl.getFrameHeight());
+
+		setEnabled(true);
+		setVisible(true);
 	}
 
 	/**
@@ -800,7 +835,7 @@ public class MainControl extends JFrame implements WindowListener {
 				}
 			}
 		}
-
+		getPropertiesControl().setBounds();
 		getPropertiesControl().writeProperties();
 		System.exit(0);
 	}
