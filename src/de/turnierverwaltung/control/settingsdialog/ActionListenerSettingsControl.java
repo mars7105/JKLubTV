@@ -5,17 +5,22 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.SQLException;
+
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.Messages;
 import de.turnierverwaltung.control.PropertiesControl;
 import de.turnierverwaltung.control.ratingdialog.DWZListToSQLITEControl;
 import de.turnierverwaltung.control.ratingdialog.ELOListToSQLITEControl;
+import de.turnierverwaltung.control.sqlite.SaveTournamentControl;
+import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.settingsdialog.SettingsView;
 import say.swing.JFontChooser;
 
@@ -304,10 +309,24 @@ public class ActionListenerSettingsControl {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String lang = mainControl.getPropertiesControl().getLanguage();
+				final int abfrage = beendenHinweis();
+				if (abfrage > 0) {
+
+					if (mainControl.getHauptPanel().getTabCount() == TournamentConstants.TAB_ACTIVE_TOURNAMENT + 1) {
+						if (mainControl.getChangedGames().isEmpty() == false) {
+							SaveTournamentControl saveTournament = new SaveTournamentControl(mainControl);
+							try {
+								saveTournament.saveChangedPartien();
+							} catch (SQLException e1) {
+								final ExceptionHandler eh = new ExceptionHandler(mainControl);
+								eh.fileSQLError(e1.getMessage());
+							}
+
+						}
+					}
+				}
+
 				mainControl.getPropertiesControl().resetProperties();
-				mainControl.setPropertiesControl(new PropertiesControl(mainControl));
-				mainControl.getPropertiesControl().setLanguage(lang);
 
 				mainControl.getPropertiesControl().writeProperties();
 				JOptionPane.showMessageDialog(null, Messages.getString("EigenschaftenControl.29"),
@@ -395,6 +414,27 @@ public class ActionListenerSettingsControl {
 			}
 
 		});
+	}
+
+	private int beendenHinweis() {
+		int abfrage = 0;
+		if (this.mainControl.getHauptPanel().getTabCount() == TournamentConstants.TAB_ACTIVE_TOURNAMENT + 1) {
+			if (this.mainControl.getChangedGames().isEmpty() == false) {
+
+				final String hinweisText = Messages.getString("NaviController.21") //$NON-NLS-1$
+						+ Messages.getString("NaviController.22") //$NON-NLS-1$
+						+ Messages.getString("NaviController.33"); //$NON-NLS-1$
+
+				abfrage = 1;
+				// Custom button text
+				final Object[] options = { Messages.getString("NaviController.24"), //$NON-NLS-1$
+						Messages.getString("NaviController.25") }; //$NON-NLS-1$
+				abfrage = JOptionPane.showOptionDialog(mainControl, hinweisText,
+						Messages.getString("NaviController.26"), //$NON-NLS-1$
+						JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[1]);
+			}
+		}
+		return abfrage;
 	}
 
 }
