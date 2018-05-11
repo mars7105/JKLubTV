@@ -72,6 +72,8 @@ public class NaviView extends JToolBar {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-cancel-3.png")));
 	private ImageIcon launcherIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/launcher.png")));
+	private ImageIcon logoImg = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/jklubtv-logo.png")));
 	private JButton spielerImport;
 	private JButton spielerExport;
 	private JButton spielerDEWISSearchButton;
@@ -122,6 +124,7 @@ public class NaviView extends JToolBar {
 		Color titleTextColor = new Color((SystemColor.controlText).getRGB());
 		setBackground(titleColor);
 		setForeground(titleTextColor);
+		JLabel logoLabel = new JLabel(logoImg);
 
 		this.setLayout(new BorderLayout());
 		this.setRollover(true);
@@ -378,14 +381,15 @@ public class NaviView extends JToolBar {
 		NaviPanelElementView panel5 = new NaviPanelElementView();
 		BoxLayout boxLayout = new BoxLayout(panel5, BoxLayout.Y_AXIS);
 		panel5.setLayout(boxLayout);
+
 		panel5.add(dateiPanel);
 		panel5.add(tabellenPanel);
 		panel5.add(pairingsPanel);
 		panel5.add(turnierListePanel);
 		panel5.add(spielerListePanel);
-
+		
 		this.add(panel5, BorderLayout.NORTH);
-
+		this.add(logoLabel, BorderLayout.SOUTH);
 	}
 
 	public JPanel getDateiPanel() {

@@ -98,7 +98,7 @@ public class InfoLicenseView {
 	private URI dewisUri;
 	private JButton buttondewisUri;
 	private ImageIcon logoImg = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/Logo.png"))); //$NON-NLS-1$
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/jklubtv-logo.png"))); //$NON-NLS-1$
 	private URI jgoodiesUri;
 	private JButton buttonjgoodies;
 	private URI opencsvUri;
