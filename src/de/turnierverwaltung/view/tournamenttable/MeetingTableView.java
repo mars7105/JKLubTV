@@ -19,7 +19,6 @@ package de.turnierverwaltung.view.tournamenttable;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.text.DateFormat;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -40,7 +39,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.DefaultCellEditor;
@@ -51,18 +49,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDateChooserCellEditor;
 
-import de.turnierverwaltung.model.EventDate;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.model.table.MeetingTableModel;
-import de.turnierverwaltung.view.DateChooserPanel;
 import de.turnierverwaltung.view.Messages;
 import de.turnierverwaltung.view.TitleLabelView;
 
@@ -203,7 +197,7 @@ public class MeetingTableView extends JPanel {
 	private void setColumnWidth() {
 
 		int columnCount = table.getColumnCount();
-		int rowCount = table.getRowCount();
+//		int rowCount = table.getRowCount();
 		for (int i = 0; i < columnCount; i++) {
 			TableColumn c = table.getColumnModel().getColumn(i);
 			if (i == 3) {
