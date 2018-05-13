@@ -1,7 +1,5 @@
 package de.turnierverwaltung.control.tournamenttable;
 
-
-
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -98,7 +96,7 @@ public class MeetingTableControl {
 							if (simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getValueAt(y, 0)
 									.equals(spielerSchwarz)) {
 								simpleTurnierTabelleView[gruppenNummer].getTable().getModel().setValueAt(ergebnissSet,
-										i, y + abstand+1);
+										i, y + abstand + 1);
 							}
 						}
 
@@ -107,9 +105,11 @@ public class MeetingTableControl {
 				mainControl.getCrossTableControl().updateStatus();
 				updateStatus();
 			}
+			
 		}
 
 	}
+
 	private MainControl mainControl;
 	private MeetingTable[] terminTabelle;
 	private TabbedPaneView[] tabAnzeigeView2;
@@ -163,8 +163,8 @@ public class MeetingTableControl {
 		String resultColumnName = ppC.getTableComumnResult();
 		String meetingColumnName = ppC.getTableComumnMeeting();
 		this.terminTabelle[gruppenNummer] = new MeetingTable(turnier,
-				mainControl.getTournament().getGruppe()[gruppenNummer], roundColumnName, whiteColumnName, blackColumnName,
-				resultColumnName, meetingColumnName);
+				mainControl.getTournament().getGruppe()[gruppenNummer], roundColumnName, whiteColumnName,
+				blackColumnName, resultColumnName, meetingColumnName);
 		this.mainControl.setMeetingTable(terminTabelle);
 		simpleTableView[gruppenNummer] = new MeetingTableView(new MeetingTableModel(this.terminTabelle[gruppenNummer]));
 		simpleTurnierTabelleView = mainControl.getCrossTableView();
@@ -197,9 +197,9 @@ public class MeetingTableControl {
 		int ergebniss = game.getErgebnis();
 		String spielerWeiss = game.getSpielerWeiss().getName();
 		String spielerSchwarz = game.getSpielerSchwarz().getName();
+		String date = game.getSpielDatum();
 
 		String ergebnissSet = TournamentConstants.KEIN_ERGEBNIS;
-
 		if (ergebniss == TournamentConstants.MYSQL_KEIN_ERGEBNIS) {
 			ergebnissSet = TournamentConstants.KEIN_ERGEBNIS;
 		}
@@ -226,7 +226,7 @@ public class MeetingTableControl {
 					&& simpleTableView[gruppenNummer].getTable().getModel().getValueAt(i, 2).equals(spielerSchwarz)) {
 
 				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(ergebnissSet, i, 3);
-
+				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(date, i, 4);
 			}
 		}
 
@@ -236,11 +236,9 @@ public class MeetingTableControl {
 		int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
 		for (int i = 0; i < anzahlGruppen; i++) {
 			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
-//			simpleTableView[i].getStatusLabel().setBackground(Color.ORANGE);
+			// simpleTableView[i].getStatusLabel().setBackground(Color.ORANGE);
 		}
 
 	}
-
-	
 
 }

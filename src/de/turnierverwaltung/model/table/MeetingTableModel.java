@@ -77,12 +77,14 @@ public class MeetingTableModel extends DefaultTableModel {
 
 		boolean icE = false;
 		// if (columnIndex == 4 || columnIndex == 3) {
-		if (columnIndex == 3) {
+		if (columnIndex == 3 || columnIndex == 4) {
 			icE = true;
 
 		}
 		if (this.getValueAt(rowIndex, 1).equals("Spielfrei") || this.getValueAt(rowIndex, 2).equals("Spielfrei")) {
-			icE = false;
+			if (columnIndex <= 3) {
+				icE = false;
+			}
 		}
 
 		return icE;

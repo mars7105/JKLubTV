@@ -17,7 +17,9 @@ package de.turnierverwaltung.view.tournamenttable;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.FlowLayout;
+import java.text.DateFormat;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -37,6 +39,8 @@ import java.awt.FlowLayout;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.DefaultCellEditor;
@@ -47,10 +51,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import com.toedter.calendar.JDateChooser;
+import com.toedter.calendar.JDateChooserCellEditor;
+
+import de.turnierverwaltung.model.EventDate;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.model.table.MeetingTableModel;
+import de.turnierverwaltung.view.DateChooserPanel;
 import de.turnierverwaltung.view.Messages;
 import de.turnierverwaltung.view.TitleLabelView;
 
@@ -191,14 +203,24 @@ public class MeetingTableView extends JPanel {
 	private void setColumnWidth() {
 
 		int columnCount = table.getColumnCount();
+		int rowCount = table.getRowCount();
 		for (int i = 0; i < columnCount; i++) {
 			TableColumn c = table.getColumnModel().getColumn(i);
 			if (i == 3) {
 				c.setCellEditor(new DefaultCellEditor(comboBox));
 			}
+			if (i == 4) {
+				// JDateChooser dateChooser = new JDateChooser();
+				// JDateChooserRenderer datePanel = new JDateChooserRenderer(dateChooser);
+				// datePanel.setLocale(Locale.getDefault());
+				// JDateChooserCellEditor cellEditor = new JDateChooserCellEditor();
+
+				c.setCellRenderer(new JDateChooserRenderer(new JDateChooser()));
+				c.setCellEditor(new JDateChooserCellEditor());
+			}
 
 		}
-
+		this.updateUI();
 	}
 
 	public void setHtmlButton(JButton htmlButton) {
@@ -220,5 +242,36 @@ public class MeetingTableView extends JPanel {
 
 	public void setTable(JTable table) {
 		this.table = table;
+	}
+
+	class JDateChooserRenderer extends JDateChooser implements TableCellRenderer {
+
+		/**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		public JDateChooserRenderer(JDateChooser dateChooser) {
+			if (dateChooser != null) {
+				this.setDate(dateChooser.getDate());
+			}
+		}
+
+		public boolean isCellEditable(int rowIndex, int columnIndex) {
+			return false;
+		}
+
+		@Override
+		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+				int row, int column) {
+
+			if (value instanceof Date) {
+				this.setDate((Date) value);
+			} else if (value instanceof String) {
+			}
+
+			return this;
+		}
+
 	}
 }

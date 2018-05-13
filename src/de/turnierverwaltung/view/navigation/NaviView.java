@@ -31,6 +31,7 @@ import javax.swing.JToolBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+import de.turnierverwaltung.control.Version;
 import de.turnierverwaltung.view.Messages;
 
 public class NaviView extends JToolBar {
@@ -125,7 +126,7 @@ public class NaviView extends JToolBar {
 		setBackground(titleColor);
 		setForeground(titleTextColor);
 		JLabel logoLabel = new JLabel(logoImg);
-
+		JLabel logoText = new JLabel("Version: " + Version.getString("version.1"));
 		this.setLayout(new BorderLayout());
 		this.setRollover(true);
 		wizardButton = new JButton(Messages.getString("NaviView.35"), launcherIcon);
@@ -387,9 +388,21 @@ public class NaviView extends JToolBar {
 		panel5.add(pairingsPanel);
 		panel5.add(turnierListePanel);
 		panel5.add(spielerListePanel);
-		
+
 		this.add(panel5, BorderLayout.NORTH);
-		this.add(logoLabel, BorderLayout.SOUTH);
+		JPanel logoPanel = new JPanel();
+		logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.Y_AXIS));
+		logoPanel.add(logoLabel);
+		logoPanel.add(logoText);
+		JPanel logoCenterPanel = new JPanel();
+		logoCenterPanel.setLayout(new BorderLayout());
+		logoPanel.setBackground(titleColor);
+		logoPanel.setForeground(titleTextColor);
+		logoCenterPanel.setBackground(titleColor);
+		logoCenterPanel.setForeground(titleTextColor);
+		logoCenterPanel.add(logoPanel, BorderLayout.CENTER);
+		this.add(logoCenterPanel, BorderLayout.SOUTH);
+
 	}
 
 	public JPanel getDateiPanel() {
