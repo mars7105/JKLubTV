@@ -1,5 +1,8 @@
 package de.turnierverwaltung.control.tournamenttable;
 
+import java.awt.Component;
+import java.awt.Container;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -17,16 +20,23 @@ package de.turnierverwaltung.control.tournamenttable;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.Toolkit;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+
+import com.toedter.calendar.JDateChooser;
 
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.Messages;
 import de.turnierverwaltung.control.PropertiesControl;
+import de.turnierverwaltung.model.EventDate;
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
@@ -54,17 +64,14 @@ public class MeetingTableControl {
 
 		@Override
 		public void tableChanged(TableModelEvent e) {
-			// mainControl.getRundenEingabeFormularControl().getChangedGroups()[gruppenNummer][NaviController.TERMINTABELLE]
-			// = NaviController.STANDARD;
 
-			int row = e.getFirstRow();
-			int col = e.getColumn();
+			row = e.getFirstRow();
+			col = e.getColumn();
 			if (col == 3) {
 				String ergebniss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, col);
 				String spielerWeiss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 1);
 				String spielerSchwarz = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row,
 						2);
-
 				String ergebnissSet = TournamentConstants.KEIN_ERGEBNIS;
 
 				if (ergebniss.equals(TournamentConstants.KEIN_ERGEBNIS)) {
@@ -97,19 +104,52 @@ public class MeetingTableControl {
 									.equals(spielerSchwarz)) {
 								simpleTurnierTabelleView[gruppenNummer].getTable().getModel().setValueAt(ergebnissSet,
 										i, y + abstand + 1);
+
 							}
 						}
 
 					}
 				}
+
 				mainControl.getCrossTableControl().updateStatus();
 				updateStatus();
 			}
-			
+			if (col == 4) {
+
+				String spielerWeiss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 1);
+				String spielerSchwarz = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row,
+						2);
+
+				Date datum = (Date) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 4);
+				EventDate event = new EventDate();
+				event.setDate(datum);
+				// System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
+				for (int i = 0; i < turnier.getGruppe()[gruppenNummer].getPartienAnzahl(); i++) {
+					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss().getName()
+							.equals(spielerWeiss)
+							&& turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerSchwarz().getName()
+									.equals(spielerSchwarz)) {
+						turnier.getGruppe()[gruppenNummer].getPartien()[i].setSpielDatum(event.getDateString());
+						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
+
+					}
+
+				}
+
+				if (changedPartien.size() > 0) {
+					mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(true);
+				}
+
+				updateStatus();
+
+			}
+
 		}
 
 	}
 
+	private int row;
+	private int col;
 	private MainControl mainControl;
 	private MeetingTable[] terminTabelle;
 	private TabbedPaneView[] tabAnzeigeView2;
@@ -155,7 +195,7 @@ public class MeetingTableControl {
 	 * 
 	 * @param gruppenNummer
 	 */
-	public void makeSimpleTableView(int gruppenNummer) {
+	public void makeSimpleTableView(final int gruppenNummer) {
 		PropertiesControl ppC = mainControl.getPropertiesControl();
 		String roundColumnName = ppC.getTableComumnRound();
 		String whiteColumnName = ppC.getTableComumnWhite();
@@ -172,10 +212,64 @@ public class MeetingTableControl {
 		if (tml[gruppenNummer] == null) {
 			int abstand = mainControl.getPropertiesControl().getTabellenAbstand();
 			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer, abstand);
+
 		}
-
-		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
-
+		 simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
+		// ((TableModel) simpleTableView[gruppenNummer].getTable().getModel())
+		// .addPropertyChangeListener(new PropertyChangeListener() {
+		//
+		// @Override
+		// public void propertyChange(PropertyChangeEvent e) {
+		//
+		// JTable table = simpleTableView[gruppenNummer].getTable();
+		//
+		// for (int i = 0; i < turnier.getGruppe()[gruppenNummer].getPartienAnzahl();
+		// i++) {
+		// if (table.getModel().getValueAt(i, 4) == e.getNewValue()) {
+		// Date datum = (Date) table.getModel().getValueAt(row, 4);
+		// EventDate event = new EventDate();
+		// event.setDate(datum);
+		// turnier.getGruppe()[gruppenNummer].getPartien()[i].setSpielDatum(event.getDateString());
+		// changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
+		// System.out.println("ok2");
+		//
+		// }
+		//
+		// }
+		//
+		// if (changedPartien.size() > 0) {
+		// mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(true);
+		// }
+		//
+		// }
+		//
+		// });
+//		simpleTableView[gruppenNummer].getDateChooser().addPropertyChangeListener(new PropertyChangeListener() {
+//
+//			@Override
+//			public void propertyChange(PropertyChangeEvent e) {
+//				JTable table = simpleTableView[gruppenNummer].getTable();
+//
+//				for (int i = 0; i < turnier.getGruppe()[gruppenNummer].getPartienAnzahl(); i++) {
+//					if (table.getModel().getValueAt(i, 4) == e.getNewValue()) {
+//						Date datum = (Date) table.getModel().getValueAt(row, 4);
+//						EventDate event = new EventDate();
+//						event.setDate(datum);
+//						turnier.getGruppe()[gruppenNummer].getPartien()[i].setSpielDatum(event.getDateString());
+//						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
+//						System.out.println("ok2");
+//
+//					}
+//
+//				}
+//
+//				if (changedPartien.size() > 0) {
+//					mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(true);
+//				}
+//
+//			}
+//
+//		});
 		if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() == 1) {
 			tabAnzeigeView2[gruppenNummer].getTabbedPane().insertTab(Messages.getString("TerminTabelleControl.1"), //$NON-NLS-1$
 					terminTabelleIcon, simpleTableView[gruppenNummer], null, 1);
@@ -197,8 +291,8 @@ public class MeetingTableControl {
 		int ergebniss = game.getErgebnis();
 		String spielerWeiss = game.getSpielerWeiss().getName();
 		String spielerSchwarz = game.getSpielerSchwarz().getName();
-		String date = game.getSpielDatum();
-
+		// String date = game.getSpielDatum();
+		// EventDate event = new EventDate(date);
 		String ergebnissSet = TournamentConstants.KEIN_ERGEBNIS;
 		if (ergebniss == TournamentConstants.MYSQL_KEIN_ERGEBNIS) {
 			ergebnissSet = TournamentConstants.KEIN_ERGEBNIS;
@@ -224,9 +318,10 @@ public class MeetingTableControl {
 		for (int i = 0; i < simpleTableView[gruppenNummer].getTable().getModel().getRowCount(); i++) {
 			if (simpleTableView[gruppenNummer].getTable().getModel().getValueAt(i, 1).equals(spielerWeiss)
 					&& simpleTableView[gruppenNummer].getTable().getModel().getValueAt(i, 2).equals(spielerSchwarz)) {
+				// simpleTableView[gruppenNummer].getTable().getModel().setValueAt(event.getDate(),
+				// i, 4);
 
 				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(ergebnissSet, i, 3);
-				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(date, i, 4);
 			}
 		}
 

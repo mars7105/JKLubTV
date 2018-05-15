@@ -39,6 +39,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 import java.util.Properties;
 
 import javax.swing.DefaultCellEditor;
@@ -49,8 +51,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.RowFilter;
+import javax.swing.RowSorter;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+import javax.swing.text.TableView.TableRow;
 
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDateChooserCellEditor;
@@ -60,7 +67,7 @@ import de.turnierverwaltung.model.table.MeetingTableModel;
 import de.turnierverwaltung.view.Messages;
 import de.turnierverwaltung.view.TitleLabelView;
 
-public class MeetingTableView extends JPanel {
+public class MeetingTableView<M> extends JPanel {
 	public class DateLabelFormatter extends AbstractFormatter {
 
 		/**
@@ -99,14 +106,16 @@ public class MeetingTableView extends JPanel {
 	private MeetingTableModel simpleTerminTabelle;
 	private Properties property;
 	private TitleLabelView statusLabel;
+	private JDateChooser dateChooser;
 
 	public MeetingTableView(MeetingTableModel simpleTerminTabelle) {
 
 		this.simpleTerminTabelle = simpleTerminTabelle;
-		// setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setLayout(new BorderLayout());
-		table = new JTable(this.simpleTerminTabelle);
-		// table.setMinimumSize(new Dimension(500,500));
+
+		table = new JTable();
+		table.setModel(this.simpleTerminTabelle);
+		// table.getModel().re // table.setMinimumSize(new Dimension(500,500));
 		// Font fnt = new Font("Arial", Font.PLAIN, 16);
 		// table.setFont(fnt);
 		comboBox = new JComboBox<String>();
@@ -123,7 +132,7 @@ public class MeetingTableView extends JPanel {
 		property.put("text.year", Messages.getString("SimpleTerminTabelleView.12")); //$NON-NLS-1$ //$NON-NLS-2$
 
 		setColumnWidth();
-		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 		table.setRowHeight(30);
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
@@ -197,23 +206,27 @@ public class MeetingTableView extends JPanel {
 	private void setColumnWidth() {
 
 		int columnCount = table.getColumnCount();
-//		int rowCount = table.getRowCount();
+		 dateChooser = new JDateChooser();
+		JDateChooserRenderer datePanel = new JDateChooserRenderer(dateChooser);
+		datePanel.setLocale(Locale.getDefault());
+		JDateChooserCellEditor cellEditor = new JDateChooserCellEditor();
 		for (int i = 0; i < columnCount; i++) {
 			TableColumn c = table.getColumnModel().getColumn(i);
 			if (i == 3) {
 				c.setCellEditor(new DefaultCellEditor(comboBox));
 			}
 			if (i == 4) {
-				// JDateChooser dateChooser = new JDateChooser();
-				// JDateChooserRenderer datePanel = new JDateChooserRenderer(dateChooser);
-				// datePanel.setLocale(Locale.getDefault());
-				// JDateChooserCellEditor cellEditor = new JDateChooserCellEditor();
 
-				c.setCellRenderer(new JDateChooserRenderer(new JDateChooser()));
-				c.setCellEditor(new JDateChooserCellEditor());
+				c.setCellRenderer(datePanel);
+				c.setCellEditor(cellEditor);
 			}
 
 		}
+		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
+		sorter.setRowFilter(RowFilter.regexFilter("\\d", 0));
+
+		table.setRowSorter(sorter);
+
 		this.updateUI();
 	}
 
@@ -236,6 +249,14 @@ public class MeetingTableView extends JPanel {
 
 	public void setTable(JTable table) {
 		this.table = table;
+	}
+
+	public JDateChooser getDateChooser() {
+		return dateChooser;
+	}
+
+	public void setDateChooser(JDateChooser dateChooser) {
+		this.dateChooser = dateChooser;
 	}
 
 	class JDateChooserRenderer extends JDateChooser implements TableCellRenderer {

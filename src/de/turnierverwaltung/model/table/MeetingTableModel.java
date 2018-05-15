@@ -1,5 +1,8 @@
 package de.turnierverwaltung.model.table;
 
+import java.beans.PropertyChangeListener;
+import java.util.Date;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -16,6 +19,8 @@ package de.turnierverwaltung.model.table;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import javax.swing.table.DefaultTableModel;
+
+import de.turnierverwaltung.model.EventDate;
 
 public class MeetingTableModel extends DefaultTableModel {
 	/**
@@ -39,6 +44,7 @@ public class MeetingTableModel extends DefaultTableModel {
 		this.spalte = this.terminTabelle.getSpaltenAnzahl();
 		rowData = new Object[this.spalte];
 		tabellenMatrix = this.terminTabelle.getTabellenMatrix();
+		
 		initModelData();
 	}
 
@@ -58,18 +64,18 @@ public class MeetingTableModel extends DefaultTableModel {
 	 * 
 	 */
 	private void initModelData() {
-
 		for (int i = 0; i < spalte; i++) {
 			this.addColumn(tabellenMatrix[i][0]);
-		}
 
-		for (int j = 1; j < zeile; j++) {
+		}
+		
+		for (int j = 0; j < zeile; j++) {
 			for (int i = 0; i < spalte; i++) {
 				rowData[i] = tabellenMatrix[i][j];
 			}
 			this.addRow(rowData);
 		}
-
+		
 	}
 
 	@Override
@@ -94,12 +100,49 @@ public class MeetingTableModel extends DefaultTableModel {
 		this.spalte = spalte;
 	}
 
-	public void setTabellenMatrix(String[][] tabellenMatrix) {
-		this.tabellenMatrix = tabellenMatrix;
-	}
+	// public void setTabellenMatrix(String[][] tabellenMatrix) {
+	// this.tabellenMatrix = tabellenMatrix;
+	// }
 
 	public void setZeile(int zeile) {
 		this.zeile = zeile;
 	}
 
+	public Object getValueAt(int row, int col) {
+		// row++;
+		if (col == 4) {
+
+			EventDate event = new EventDate(tabellenMatrix[col][row]);
+			return event.getDate();
+
+		} else {
+			return tabellenMatrix[col][row];
+		}
+	}
+
+	public Class<?> getColumnClass(int columnIndex) {
+		return Object.class;
+	}
+
+	/*
+	 * Don't need to implement this method unless your table's data can change.
+	 */
+	public void setValueAt(Object value, int row, int col) {
+		// row++;
+		if (col == 4) {
+			if (value instanceof Date) {
+				EventDate event = new EventDate((Date) value);
+				tabellenMatrix[col][row] = event.getDateString();
+			}
+			if (value instanceof String) {
+
+				tabellenMatrix[col][row] = (String) value;
+			}
+		} else {
+			tabellenMatrix[col][row] = (String) value;
+		}
+		fireTableCellUpdated(row, col);
+	}
+
+	
 }

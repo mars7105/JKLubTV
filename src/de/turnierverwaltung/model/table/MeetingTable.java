@@ -107,6 +107,7 @@ public class MeetingTable {
 				tabellenMatrix[2][index + 1] = partien[index].getSpielerSchwarz().getName();
 				tabellenMatrix[3][index + 1] = getErgebnisToString(partien[index].getErgebnis());
 				tabellenMatrix[4][index + 1] = partien[index].getSpielDatum();
+//				System.out.println(tabellenMatrix[0][index + 1]);
 
 				event = tabellenMatrix[0][index + 1] + ". Runde ";
 				event += tabellenMatrix[1][index + 1] + " - ";
@@ -234,9 +235,9 @@ public class MeetingTable {
 		this.spaltenAnzahl = spaltenAnzahl;
 	}
 
-	public void setTabellenMatrix(String[][] tabellenMatrix) {
-		this.tabellenMatrix = tabellenMatrix;
-	}
+//	public void setTabellenMatrix(String[][] tabellenMatrix) {
+//		this.tabellenMatrix = tabellenMatrix;
+//	}
 
 	public void setTerminTabelleToHTML(MeetingTableToHTML terminTabelleToHTML) {
 		this.terminTabelleToHTML = terminTabelleToHTML;
