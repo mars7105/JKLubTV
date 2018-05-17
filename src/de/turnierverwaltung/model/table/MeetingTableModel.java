@@ -1,6 +1,5 @@
 package de.turnierverwaltung.model.table;
 
-import java.beans.PropertyChangeListener;
 import java.util.Date;
 
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
@@ -44,7 +43,7 @@ public class MeetingTableModel extends DefaultTableModel {
 		this.spalte = this.terminTabelle.getSpaltenAnzahl();
 		rowData = new Object[this.spalte];
 		tabellenMatrix = this.terminTabelle.getTabellenMatrix();
-		
+
 		initModelData();
 	}
 
@@ -68,14 +67,14 @@ public class MeetingTableModel extends DefaultTableModel {
 			this.addColumn(tabellenMatrix[i][0]);
 
 		}
-		
+
 		for (int j = 0; j < zeile; j++) {
 			for (int i = 0; i < spalte; i++) {
 				rowData[i] = tabellenMatrix[i][j];
 			}
 			this.addRow(rowData);
 		}
-		
+
 	}
 
 	@Override
@@ -129,7 +128,7 @@ public class MeetingTableModel extends DefaultTableModel {
 	 */
 	public void setValueAt(Object value, int row, int col) {
 		// row++;
-		if (col == 4) {
+//		if (col == 4) {
 			if (value instanceof Date) {
 				EventDate event = new EventDate((Date) value);
 				tabellenMatrix[col][row] = event.getDateString();
@@ -138,11 +137,10 @@ public class MeetingTableModel extends DefaultTableModel {
 
 				tabellenMatrix[col][row] = (String) value;
 			}
-		} else {
-			tabellenMatrix[col][row] = (String) value;
-		}
+//		} else {
+//			tabellenMatrix[col][row] = (String) value;
+//		}
 		fireTableCellUpdated(row, col);
 	}
 
-	
 }

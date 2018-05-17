@@ -124,6 +124,7 @@ public class MainControl extends JFrame implements WindowListener {
 	private PairingsControl pairingsControl;
 	private PairingsView[] pairingsView;
 	private MeetingTableModel[] meetingTableModel;
+	@SuppressWarnings("rawtypes")
 	private MeetingTableView[] meetingTableView;
 	private ActionListenerTournamentItemsControl actionListenerTournamentItemsControl;
 	private TournamentListView tournamentListView;
@@ -272,6 +273,7 @@ public class MainControl extends JFrame implements WindowListener {
 		return meetingTableModel;
 	}
 
+	@SuppressWarnings("rawtypes")
 	public MeetingTableView[] getMeetingTableView() {
 		return meetingTableView;
 	}
@@ -677,7 +679,7 @@ public class MainControl extends JFrame implements WindowListener {
 		this.meetingTableModel = meetingTableModel;
 	}
 
-	public void setMeetingTableView(final MeetingTableView[] meetingTableView) {
+	public void setMeetingTableView(@SuppressWarnings("rawtypes") final MeetingTableView[] meetingTableView) {
 		this.meetingTableView = meetingTableView;
 	}
 

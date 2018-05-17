@@ -131,6 +131,8 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 
 			} else {
 				try {
+//					((AbstractTableModel) this.mainControl.getMeetingTableControl().simpleTableView[i].getTable().getModel()).fireTableCellUpdated(1, 2);
+
 					ok = this.mainControl.getSaveTournamentControl().saveChangedPartien();
 				} catch (SQLException e) {
 					ExceptionHandler eh = new ExceptionHandler(mainControl);

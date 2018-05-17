@@ -39,7 +39,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 import java.util.Properties;
 
@@ -52,12 +51,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
-import javax.swing.RowSorter;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-import javax.swing.text.TableView.TableRow;
 
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDateChooserCellEditor;
@@ -206,9 +203,33 @@ public class MeetingTableView<M> extends JPanel {
 	private void setColumnWidth() {
 
 		int columnCount = table.getColumnCount();
-		 dateChooser = new JDateChooser();
+		dateChooser = new JDateChooser();
 		JDateChooserRenderer datePanel = new JDateChooserRenderer(dateChooser);
 		datePanel.setLocale(Locale.getDefault());
+//		datePanel.addPropertyChangeListener(new PropertyChangeListener() {
+//
+//			@Override
+//			public void propertyChange(PropertyChangeEvent arg0) {
+				// try {
+				// Robot robot = new Robot();
+				// robot.setAutoDelay(40);
+				//// robot.setAutoWaitForIdle(true);
+				// robot.delay(400);
+				//// robot.mouseMove(table.getX(), table.getY());
+				//// robot.mousePress(InputEvent.BUTTON1_MASK);
+				//
+				// robot.keyPress(KeyEvent.VK_RIGHT);
+				// robot.keyRelease(KeyEvent.VK_RIGHT);
+				//
+				// } catch (AWTException e1) {
+				// // TODO Auto-generated catch block
+				// e1.printStackTrace();
+				// }
+//				((AbstractTableModel) table.getModel()).fireTableCellUpdated(1, 2);
+
+//			}
+//
+//		});
 		JDateChooserCellEditor cellEditor = new JDateChooserCellEditor();
 		for (int i = 0; i < columnCount; i++) {
 			TableColumn c = table.getColumnModel().getColumn(i);
@@ -282,6 +303,7 @@ public class MeetingTableView<M> extends JPanel {
 
 			if (value instanceof Date) {
 				this.setDate((Date) value);
+
 			} else if (value instanceof String) {
 			}
 

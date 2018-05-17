@@ -1,8 +1,5 @@
 package de.turnierverwaltung.control.tournamenttable;
 
-import java.awt.Component;
-import java.awt.Container;
-
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -20,18 +17,14 @@ import java.awt.Container;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.Toolkit;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
-import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-
-import com.toedter.calendar.JDateChooser;
+import javax.swing.table.AbstractTableModel;
 
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.Messages;
@@ -65,8 +58,8 @@ public class MeetingTableControl {
 		@Override
 		public void tableChanged(TableModelEvent e) {
 
-			row = e.getFirstRow();
-			col = e.getColumn();
+			int row = e.getFirstRow();
+			int col = e.getColumn();
 			if (col == 3) {
 				String ergebniss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, col);
 				String spielerWeiss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 1);
@@ -123,7 +116,7 @@ public class MeetingTableControl {
 				Date datum = (Date) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 4);
 				EventDate event = new EventDate();
 				event.setDate(datum);
-				// System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
+//				System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
 				for (int i = 0; i < turnier.getGruppe()[gruppenNummer].getPartienAnzahl(); i++) {
 					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss().getName()
 							.equals(spielerWeiss)
@@ -131,7 +124,6 @@ public class MeetingTableControl {
 									.equals(spielerSchwarz)) {
 						turnier.getGruppe()[gruppenNummer].getPartien()[i].setSpielDatum(event.getDateString());
 						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
-
 					}
 
 				}
@@ -148,11 +140,12 @@ public class MeetingTableControl {
 
 	}
 
-	private int row;
-	private int col;
+	// private int row;
+	// private int col;
 	private MainControl mainControl;
 	private MeetingTable[] terminTabelle;
 	private TabbedPaneView[] tabAnzeigeView2;
+	@SuppressWarnings("rawtypes")
 	private MeetingTableView[] simpleTableView;
 	private CrossTableView[] simpleTurnierTabelleView;
 	private JTabbedPane hauptPanel;
@@ -162,7 +155,6 @@ public class MeetingTableControl {
 
 	private ImageIcon terminTabelleIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
-
 	/**
 	 * 
 	 * @param mainControl
@@ -195,6 +187,7 @@ public class MeetingTableControl {
 	 * 
 	 * @param gruppenNummer
 	 */
+	@SuppressWarnings("rawtypes")
 	public void makeSimpleTableView(final int gruppenNummer) {
 		PropertiesControl ppC = mainControl.getPropertiesControl();
 		String roundColumnName = ppC.getTableComumnRound();
@@ -214,62 +207,29 @@ public class MeetingTableControl {
 			tml[gruppenNummer] = new MyTableModelListener(gruppenNummer, abstand);
 
 		}
-		 simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
-		// ((TableModel) simpleTableView[gruppenNummer].getTable().getModel())
-		// .addPropertyChangeListener(new PropertyChangeListener() {
+		simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
+		// simpleTableView[gruppenNummer].getTable().addPropertyChangeListener(new
+		// PropertyChangeListener() {
 		//
 		// @Override
 		// public void propertyChange(PropertyChangeEvent e) {
 		//
-		// JTable table = simpleTableView[gruppenNummer].getTable();
-		//
-		// for (int i = 0; i < turnier.getGruppe()[gruppenNummer].getPartienAnzahl();
-		// i++) {
-		// if (table.getModel().getValueAt(i, 4) == e.getNewValue()) {
-		// Date datum = (Date) table.getModel().getValueAt(row, 4);
-		// EventDate event = new EventDate();
-		// event.setDate(datum);
-		// turnier.getGruppe()[gruppenNummer].getPartien()[i].setSpielDatum(event.getDateString());
-		// changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
-		// System.out.println("ok2");
-		//
-		// }
-		//
-		// }
-		//
-		// if (changedPartien.size() > 0) {
-		// mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(true);
+		// try {
+		// Robot robot = new Robot();
+		// robot.keyPress(KeyEvent.VK_RIGHT);
+		//// Thread.sleep(500);
+		//// robot.waitForIdle();
+		// robot.keyRelease(KeyEvent.VK_RIGHT);
+		// // robot.waitForIdle();
+		// } catch (AWTException e1) {
+		// // TODO Auto-generated catch block
+		// e1.printStackTrace();
 		// }
 		//
 		// }
 		//
 		// });
-//		simpleTableView[gruppenNummer].getDateChooser().addPropertyChangeListener(new PropertyChangeListener() {
-//
-//			@Override
-//			public void propertyChange(PropertyChangeEvent e) {
-//				JTable table = simpleTableView[gruppenNummer].getTable();
-//
-//				for (int i = 0; i < turnier.getGruppe()[gruppenNummer].getPartienAnzahl(); i++) {
-//					if (table.getModel().getValueAt(i, 4) == e.getNewValue()) {
-//						Date datum = (Date) table.getModel().getValueAt(row, 4);
-//						EventDate event = new EventDate();
-//						event.setDate(datum);
-//						turnier.getGruppe()[gruppenNummer].getPartien()[i].setSpielDatum(event.getDateString());
-//						changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
-//						System.out.println("ok2");
-//
-//					}
-//
-//				}
-//
-//				if (changedPartien.size() > 0) {
-//					mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(true);
-//				}
-//
-//			}
-//
-//		});
+		// simpleTableView[gruppenNummer].getTable().addKeyListener(l);
 		if (tabAnzeigeView2[gruppenNummer].getTabbedPane().getTabCount() == 1) {
 			tabAnzeigeView2[gruppenNummer].getTabbedPane().insertTab(Messages.getString("TerminTabelleControl.1"), //$NON-NLS-1$
 					terminTabelleIcon, simpleTableView[gruppenNummer], null, 1);
@@ -330,8 +290,9 @@ public class MeetingTableControl {
 	public void updateStatus() {
 		int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
 		for (int i = 0; i < anzahlGruppen; i++) {
+			((AbstractTableModel) simpleTableView[i].getTable().getModel()).fireTableCellUpdated(1, 2);
+
 			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
-			// simpleTableView[i].getStatusLabel().setBackground(Color.ORANGE);
 		}
 
 	}
