@@ -191,7 +191,7 @@ public class ActionListenerFileMenuControl implements ActionListener {
 						}
 
 						naviView.updateUI();
-
+						mainControl.getHauptPanel().updateUI();
 					} else {
 						JOptionPane.showMessageDialog(null, Messages.getString("NaviController.18")); //$NON-NLS-1$
 					}

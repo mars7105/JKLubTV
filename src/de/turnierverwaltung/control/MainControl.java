@@ -163,21 +163,11 @@ public class MainControl extends JFrame implements WindowListener {
 		setDefaultLookAndFeelDecorated(true);
 		addWindowListener(this);
 		// setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		propertiesControl = new PropertiesControl(this);
-		languagePropertiesControl = new LanguagePropertiesControl(this);
-		if (propertiesControl.readProperties() == false) {
-			if (propertiesControl.writeProperties() == false) {
-				JOptionPane.showMessageDialog(this, Messages.getString("MainControl.7")); //$NON-NLS-1$
-			}
-		}
-		languagePropertiesControl.checkLanguage();
-
-		setTitle(Messages.getString("MainControl.0")); //$NON-NLS-1$
 
 		init();
-		
+
 		makeProperties();
-		
+
 	}
 
 	public static void setUIFont(java.awt.Font f) {
@@ -400,6 +390,16 @@ public class MainControl extends JFrame implements WindowListener {
 	}
 
 	private void init() {
+		propertiesControl = new PropertiesControl(this);
+		languagePropertiesControl = new LanguagePropertiesControl(this);
+		if (propertiesControl.readProperties() == false) {
+			if (propertiesControl.writeProperties() == false) {
+				JOptionPane.showMessageDialog(this, Messages.getString("MainControl.7")); //$NON-NLS-1$
+			}
+		}
+		languagePropertiesControl.checkLanguage();
+
+		setTitle(Messages.getString("MainControl.0")); //$NON-NLS-1$
 		Font font;
 		font = propertiesControl.getFont();
 		setUIFont(font);
@@ -426,7 +426,7 @@ public class MainControl extends JFrame implements WindowListener {
 		settingsControl = new SettingsControl(this);
 		SQLiteDAOFactory.setDB_PATH("");
 		setTitle(Messages.getString("MainControl.8"));
-		getContentPane().add(mainPanel);
+		setContentPane(mainPanel);
 	}
 
 	private void makeProperties() {
