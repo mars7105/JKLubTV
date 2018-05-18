@@ -25,7 +25,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.AbstractTableModel;
 
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.Messages;
