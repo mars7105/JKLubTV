@@ -109,6 +109,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 		{
 			Boolean ok = mainControl.getPairingsControl().checkNewTurnier();
 			if (ok) {
+
 				makeNewTables();
 
 			} else {
@@ -123,6 +124,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 			Boolean ok = false;
 			if (mainControl.getNewTournament()) {
 				try {
+
 					ok = this.mainControl.getSaveTournamentControl().saveChangedPartien();
 				} catch (SQLException e) {
 					ExceptionHandler eh = new ExceptionHandler(mainControl);
@@ -131,7 +133,7 @@ public class ActionListenerTournamentEditControl implements ActionListener {
 
 			} else {
 				try {
-//					((AbstractTableModel) this.mainControl.getMeetingTableControl().simpleTableView[i].getTable().getModel()).fireTableCellUpdated(1, 2);
+					
 
 					ok = this.mainControl.getSaveTournamentControl().saveChangedPartien();
 				} catch (SQLException e) {

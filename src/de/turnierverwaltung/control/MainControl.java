@@ -175,8 +175,9 @@ public class MainControl extends JFrame implements WindowListener {
 		setTitle(Messages.getString("MainControl.0")); //$NON-NLS-1$
 
 		init();
+		
 		makeProperties();
-
+		
 	}
 
 	public static void setUIFont(java.awt.Font f) {
@@ -411,7 +412,7 @@ public class MainControl extends JFrame implements WindowListener {
 
 		naviController = new NaviControl(this);
 
-		setContentPane(mainPanel);
+		// setContentPane(mainPanel);
 
 		standardView.add(titleLabelView, BorderLayout.NORTH);
 		mainPanel.add(standardView, BorderLayout.NORTH);
@@ -425,7 +426,7 @@ public class MainControl extends JFrame implements WindowListener {
 		settingsControl = new SettingsControl(this);
 		SQLiteDAOFactory.setDB_PATH("");
 		setTitle(Messages.getString("MainControl.8"));
-		// pack();
+		getContentPane().add(mainPanel);
 	}
 
 	private void makeProperties() {

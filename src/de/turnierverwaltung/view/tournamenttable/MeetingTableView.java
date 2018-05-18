@@ -1,6 +1,8 @@
 package de.turnierverwaltung.view.tournamenttable;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 
+import java.awt.AWTException;
+
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
 //This program is free software: you can redistribute it and/or modify
@@ -19,6 +21,8 @@ package de.turnierverwaltung.view.tournamenttable;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -59,6 +63,7 @@ import javax.swing.table.TableRowSorter;
 import com.toedter.calendar.JDateChooser;
 import com.toedter.calendar.JDateChooserCellEditor;
 
+import de.turnierverwaltung.model.EventDate;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.model.table.MeetingTableModel;
 import de.turnierverwaltung.view.Messages;
@@ -111,6 +116,7 @@ public class MeetingTableView<M> extends JPanel {
 		setLayout(new BorderLayout());
 
 		table = new JTable();
+
 		table.setModel(this.simpleTerminTabelle);
 		// table.getModel().re // table.setMinimumSize(new Dimension(500,500));
 		// Font fnt = new Font("Arial", Font.PLAIN, 16);
@@ -160,6 +166,7 @@ public class MeetingTableView<M> extends JPanel {
 		add(southPanel, BorderLayout.SOUTH);
 
 		this.setVisible(true);
+		// System.out.println(table.getX());
 
 	}
 
@@ -200,37 +207,39 @@ public class MeetingTableView<M> extends JPanel {
 		return table;
 	}
 
-	private void setColumnWidth() {
+	public void setColumnWidth() {
 
 		int columnCount = table.getColumnCount();
 		dateChooser = new JDateChooser();
+		// dateChooser.getCalendarButton().addActionListener(new ActionListener() {
+
+		// });
 		JDateChooserRenderer datePanel = new JDateChooserRenderer(dateChooser);
 		datePanel.setLocale(Locale.getDefault());
-//		datePanel.addPropertyChangeListener(new PropertyChangeListener() {
-//
-//			@Override
-//			public void propertyChange(PropertyChangeEvent arg0) {
-				// try {
-				// Robot robot = new Robot();
-				// robot.setAutoDelay(40);
-				//// robot.setAutoWaitForIdle(true);
-				// robot.delay(400);
-				//// robot.mouseMove(table.getX(), table.getY());
-				//// robot.mousePress(InputEvent.BUTTON1_MASK);
-				//
-				// robot.keyPress(KeyEvent.VK_RIGHT);
-				// robot.keyRelease(KeyEvent.VK_RIGHT);
-				//
-				// } catch (AWTException e1) {
-				// // TODO Auto-generated catch block
-				// e1.printStackTrace();
-				// }
-//				((AbstractTableModel) table.getModel()).fireTableCellUpdated(1, 2);
 
-//			}
-//
-//		});
 		JDateChooserCellEditor cellEditor = new JDateChooserCellEditor();
+		// table.setDefaultEditor(Date.class, cellEditor);
+		// comboBox.addKeyListener(new KeyListener() {
+		//
+		// @Override
+		// public void keyPressed(KeyEvent arg0) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		//
+		// @Override
+		// public void keyReleased(KeyEvent arg0) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		//
+		// @Override
+		// public void keyTyped(KeyEvent arg0) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		//
+		// });
 		for (int i = 0; i < columnCount; i++) {
 			TableColumn c = table.getColumnModel().getColumn(i);
 			if (i == 3) {
@@ -240,9 +249,37 @@ public class MeetingTableView<M> extends JPanel {
 
 				c.setCellRenderer(datePanel);
 				c.setCellEditor(cellEditor);
+
 			}
 
 		}
+		// cellEditor.addCellEditorListener(new CellEditorListener() {
+		//
+		// @Override
+		// public void editingCanceled(ChangeEvent arg0) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		//
+		// @Override
+		// public void editingStopped(ChangeEvent arg0) {
+		// // TODO Auto-generated method stub
+		//
+		// }
+		//
+		// });
+
+		// dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
+		// @Override
+		// public void propertyChange(PropertyChangeEvent evt) {
+		// if (evt.getPropertyName().equals("date")) {
+		// TableCellEditor ed = table.getCellEditor();
+		// if (ed != null)
+		// ed.stopCellEditing();
+		//
+		// }
+		// }
+		// });
 		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
 		sorter.setRowFilter(RowFilter.regexFilter("\\d", 0));
 
@@ -283,9 +320,10 @@ public class MeetingTableView<M> extends JPanel {
 	class JDateChooserRenderer extends JDateChooser implements TableCellRenderer {
 
 		/**
-		 * 
-		 */
+		*
+		*/
 		private static final long serialVersionUID = 1L;
+		// private MeetingTableView<M>.KeyThread keyThread;
 
 		public JDateChooserRenderer(JDateChooser dateChooser) {
 			if (dateChooser != null) {
@@ -294,7 +332,7 @@ public class MeetingTableView<M> extends JPanel {
 		}
 
 		public boolean isCellEditable(int rowIndex, int columnIndex) {
-			return false;
+			return true;
 		}
 
 		@Override
@@ -302,13 +340,49 @@ public class MeetingTableView<M> extends JPanel {
 				int row, int column) {
 
 			if (value instanceof Date) {
-				this.setDate((Date) value);
+				if (this.getDate() == null) {
+					this.setDate((Date) value);
+				}
+				if (!this.getDate().equals((Date) value)) {
 
+					// EventDate event = new EventDate();
+					// event.setDate((Date) value);
+					if (row >= 0 && column == 4) {
+						this.setDate((Date) value);
+//						final AbstractTableModel model = (AbstractTableModel) table.getModel();
+						try {
+							Robot robot = new Robot();
+							// robot.mousePress(dateChooser.getCalendarButton());
+							// robot.setAutoWaitForIdle(true);
+							robot.keyPress(KeyEvent.VK_F2);
+							robot.keyRelease(KeyEvent.VK_F2);
+//							robot.waitForIdle();
+						} catch (AWTException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+						// TableModelEvent e = new TableModelEvent(model, row, row, column);
+						// model.fireTableChanged(e);
+
+					}
+				}
 			} else if (value instanceof String) {
+				EventDate event = new EventDate();
+				event.setDate((String) value);
+				this.setDate((Date) event.getDate());
+				// if (row >= 0 && column == 4) {
+				// final AbstractTableModel model = (AbstractTableModel) table.getModel();
+				//
+				// TableModelEvent e = new TableModelEvent(model, row, row, column);
+				// model.fireTableChanged(e);
+				// System.out.println("value instanceof String " + row + " " + column + " " +
+				// event.getDateString());
+				// }
 			}
 
 			return this;
 		}
 
 	}
+
 }

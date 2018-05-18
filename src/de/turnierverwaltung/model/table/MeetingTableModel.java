@@ -113,6 +113,7 @@ public class MeetingTableModel extends DefaultTableModel {
 
 			EventDate event = new EventDate(tabellenMatrix[col][row]);
 			return event.getDate();
+	        
 
 		} else {
 			return tabellenMatrix[col][row];
@@ -128,18 +129,18 @@ public class MeetingTableModel extends DefaultTableModel {
 	 */
 	public void setValueAt(Object value, int row, int col) {
 		// row++;
-//		if (col == 4) {
-			if (value instanceof Date) {
-				EventDate event = new EventDate((Date) value);
-				tabellenMatrix[col][row] = event.getDateString();
-			}
-			if (value instanceof String) {
+		// if (col == 4) {
+		if (value instanceof Date) {
+			EventDate event = new EventDate((Date) value);
+			tabellenMatrix[col][row] = event.getDateString();
+		}
+		if (value instanceof String) {
 
-				tabellenMatrix[col][row] = (String) value;
-			}
-//		} else {
-//			tabellenMatrix[col][row] = (String) value;
-//		}
+			tabellenMatrix[col][row] = (String) value;
+		}
+		// } else {
+		// tabellenMatrix[col][row] = (String) value;
+		// }
 		fireTableCellUpdated(row, col);
 	}
 

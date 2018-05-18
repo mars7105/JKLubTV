@@ -10,12 +10,12 @@
 	<classpathentry kind="lib" path="lib/backport-util-concurrent-3.1.jar"/>
 	<classpathentry kind="lib" path="lib/groovy-all-2.1.7.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.6.jar"/>
-	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/biweekly-0.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-core-2.6.1.jar"/>
 	<classpathentry kind="lib" path="lib/vinnie-2.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/opencsv-3.7.jar"/>
 	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.20.0.jar"/>
 	<classpathentry kind="lib" path="lib/jfontchooser-1.0.5.jar"/>
+	<classpathentry kind="lib" path="/home/martin/git/JKLubTV/lib/jcalendar-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
