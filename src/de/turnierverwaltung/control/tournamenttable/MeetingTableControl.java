@@ -59,13 +59,12 @@ public class MeetingTableControl {
 
 		@Override
 		public void tableChanged(TableModelEvent e) {
-
-			row = e.getFirstRow();
-			col = e.getColumn();
-			// System.out.println(row + "--" + col);
+			int row = e.getFirstRow();
+			int col = e.getColumn();
+//			System.out.println(row + "--" + col);
 			if (col == 3) {
+
 				String ergebniss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, col);
-				int ergInt = 0;
 				String spielerWeiss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 1);
 				String spielerSchwarz = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row,
 						2);
@@ -73,31 +72,31 @@ public class MeetingTableControl {
 
 				if (ergebniss.equals(TournamentConstants.KEIN_ERGEBNIS)) {
 					ergebnissSet = TournamentConstants.KEIN_ERGEBNIS;
-					ergInt = TournamentConstants.MYSQL_KEIN_ERGEBNIS;
+//					ergInt = TournamentConstants.MYSQL_KEIN_ERGEBNIS;
 				}
 				if (ergebniss.equals(TournamentConstants.PARTIE_GEWINN_SCHWARZ)) {
 					ergebnissSet = TournamentConstants.VERLUST;
-					ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_SCHWARZ;
+//					ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_SCHWARZ;
 				}
 				if (ergebniss.equals(TournamentConstants.PARTIE_REMIS)) {
 					ergebnissSet = TournamentConstants.REMIS;
-					ergInt = TournamentConstants.MYSQL_PARTIE_REMIS;
+//					ergInt = TournamentConstants.MYSQL_PARTIE_REMIS;
 				}
 				if (ergebniss.equals(TournamentConstants.PARTIE_GEWINN_WEISS)) {
 					ergebnissSet = TournamentConstants.GEWINN;
-					ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_WEISS;
+//					ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_WEISS;
 				}
 				if (ergebniss.equals(TournamentConstants.PARTIE_GEWINN_KAMPFLOS_SCHWARZ)) {
 					ergebnissSet = TournamentConstants.VERLUST_KAMPFLOS;
-					ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ;
+//					ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ;
 				}
 				if (ergebniss.equals(TournamentConstants.PARTIE_GEWINN_KAMPFLOS_WEISS)) {
 					ergebnissSet = TournamentConstants.GEWINN_KAMPFLOS;
-					ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS;
+//					ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS;
 				}
 				if (ergebniss.equals(TournamentConstants.PARTIE_VERLUST_KAMPFLOS_BEIDE)) {
 					ergebnissSet = TournamentConstants.VERLUST_KAMPFLOS_BEIDE;
-					ergInt = TournamentConstants.MYSQL_PARTIE_VERLUST_KAMPFLOS_BEIDE;
+//					ergInt = TournamentConstants.MYSQL_PARTIE_VERLUST_KAMPFLOS_BEIDE;
 				}
 				for (int i = 0; i < simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getRowCount(); i++) {
 					if (simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getValueAt(i, 0)
@@ -106,11 +105,9 @@ public class MeetingTableControl {
 								.getRowCount(); y++) {
 							if (simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getValueAt(y, 0)
 									.equals(spielerSchwarz)) {
-								if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getErgebnis() != ergInt) {
-									simpleTurnierTabelleView[gruppenNummer].getTable().getModel()
-											.setValueAt(ergebnissSet, i, y + abstand + 1);
+								simpleTurnierTabelleView[gruppenNummer].getTable().getModel().setValueAt(ergebnissSet,
+										i, y + abstand + 1);
 
-								}
 							}
 						}
 
@@ -143,21 +140,18 @@ public class MeetingTableControl {
 					}
 
 				}
-
 				if (changedPartien.size() > 0) {
 					mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(true);
 				}
+				mainControl.getCrossTableControl().updateStatus();
 
 				updateStatus();
 
 			}
-
 		}
 
 	}
 
-	private int row;
-	private int col;
 	private MainControl mainControl;
 	private MeetingTable[] terminTabelle;
 	private TabbedPaneView[] tabAnzeigeView2;
@@ -242,7 +236,6 @@ public class MeetingTableControl {
 	}
 
 	public void updateSimpleTableView(Game game, int gruppenNummer) {
-
 		int ergebniss = game.getErgebnis();
 		String spielerWeiss = game.getSpielerWeiss().getName();
 		String spielerSchwarz = game.getSpielerSchwarz().getName();
@@ -272,8 +265,11 @@ public class MeetingTableControl {
 		for (int i = 0; i < simpleTableView[gruppenNummer].getTable().getModel().getRowCount(); i++) {
 			if (simpleTableView[gruppenNummer].getTable().getModel().getValueAt(i, 1).equals(spielerWeiss)
 					&& simpleTableView[gruppenNummer].getTable().getModel().getValueAt(i, 2).equals(spielerSchwarz)) {
+				simpleTableView[gruppenNummer].getTable().getModel().removeTableModelListener(tml[gruppenNummer]);
 
 				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(ergebnissSet, i, 3);
+				simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
+
 			}
 		}
 
@@ -282,7 +278,8 @@ public class MeetingTableControl {
 	public void updateStatus() {
 		int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
 		for (int i = 0; i < anzahlGruppen; i++) {
-			((AbstractTableModel) simpleTableView[i].getTable().getModel()).fireTableCellUpdated(1, 2);
+			// ((AbstractTableModel)
+			// simpleTableView[i].getTable().getModel()).fireTableCellUpdated(1, 2);
 
 			simpleTableView[i].getStatusLabel().setText(new Integer(changedPartien.size()).toString());
 		}

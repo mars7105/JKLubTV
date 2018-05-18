@@ -55,6 +55,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
+import javax.swing.event.TableModelEvent;
+import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
@@ -211,35 +213,12 @@ public class MeetingTableView<M> extends JPanel {
 
 		int columnCount = table.getColumnCount();
 		dateChooser = new JDateChooser();
-		// dateChooser.getCalendarButton().addActionListener(new ActionListener() {
 
-		// });
 		JDateChooserRenderer datePanel = new JDateChooserRenderer(dateChooser);
 		datePanel.setLocale(Locale.getDefault());
 
 		JDateChooserCellEditor cellEditor = new JDateChooserCellEditor();
-		// table.setDefaultEditor(Date.class, cellEditor);
-		// comboBox.addKeyListener(new KeyListener() {
-		//
-		// @Override
-		// public void keyPressed(KeyEvent arg0) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		//
-		// @Override
-		// public void keyReleased(KeyEvent arg0) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		//
-		// @Override
-		// public void keyTyped(KeyEvent arg0) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		//
-		// });
+
 		for (int i = 0; i < columnCount; i++) {
 			TableColumn c = table.getColumnModel().getColumn(i);
 			if (i == 3) {
@@ -253,33 +232,7 @@ public class MeetingTableView<M> extends JPanel {
 			}
 
 		}
-		// cellEditor.addCellEditorListener(new CellEditorListener() {
-		//
-		// @Override
-		// public void editingCanceled(ChangeEvent arg0) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		//
-		// @Override
-		// public void editingStopped(ChangeEvent arg0) {
-		// // TODO Auto-generated method stub
-		//
-		// }
-		//
-		// });
 
-		// dateChooser.addPropertyChangeListener(new PropertyChangeListener() {
-		// @Override
-		// public void propertyChange(PropertyChangeEvent evt) {
-		// if (evt.getPropertyName().equals("date")) {
-		// TableCellEditor ed = table.getCellEditor();
-		// if (ed != null)
-		// ed.stopCellEditing();
-		//
-		// }
-		// }
-		// });
 		TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
 		sorter.setRowFilter(RowFilter.regexFilter("\\d", 0));
 
@@ -340,36 +293,42 @@ public class MeetingTableView<M> extends JPanel {
 				int row, int column) {
 
 			if (value instanceof Date) {
+				EventDate event = new EventDate();
+				event.setDate((Date) value);
 				if (this.getDate() == null) {
 					this.setDate((Date) value);
 				}
-				if (!this.getDate().equals((Date) value)) {
+				EventDate eventDate = new EventDate();
+				eventDate.setDate(this.getDate());
+				if (!eventDate.getDateString().equals(event.getDateString())) {
 
-					// EventDate event = new EventDate();
-					// event.setDate((Date) value);
 					if (row >= 0 && column == 4) {
 						this.setDate((Date) value);
-//						final AbstractTableModel model = (AbstractTableModel) table.getModel();
-						try {
-							Robot robot = new Robot();
-							// robot.mousePress(dateChooser.getCalendarButton());
-							// robot.setAutoWaitForIdle(true);
-							robot.keyPress(KeyEvent.VK_F2);
-							robot.keyRelease(KeyEvent.VK_F2);
-//							robot.waitForIdle();
-						} catch (AWTException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						// final AbstractTableModel model = (AbstractTableModel) table.getModel();
 						// TableModelEvent e = new TableModelEvent(model, row, row, column);
 						// model.fireTableChanged(e);
+						if (table.getSelectedRow() >= 0 && table.getSelectedColumn() == 4) {
+							try {
+								Robot robot = new Robot();
+								// robot.mousePress(dateChooser.getCalendarButton());
+								// robot.setAutoWaitForIdle(true);
+								robot.keyPress(KeyEvent.VK_F2);
+								robot.keyRelease(KeyEvent.VK_F2);
+								// robot.waitForIdle();
+//								System.out.println("Robot " + row + " " + column + " " + event.getDateString());
+							} catch (AWTException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+						}
 
+						// model.fireTableRowsUpdated(row, row);
 					}
 				}
 			} else if (value instanceof String) {
-				EventDate event = new EventDate();
-				event.setDate((String) value);
-				this.setDate((Date) event.getDate());
+				// EventDate event = new EventDate();
+				// event.setDate((String) value);
+				// this.setDate((Date) event.getDate());
 				// if (row >= 0 && column == 4) {
 				// final AbstractTableModel model = (AbstractTableModel) table.getModel();
 				//
