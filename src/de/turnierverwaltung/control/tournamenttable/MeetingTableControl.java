@@ -131,11 +131,11 @@ public class MeetingTableControl {
 							.equals(spielerWeiss)
 							&& turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerSchwarz().getName()
 									.equals(spielerSchwarz)) {
-						if (!turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielDatum()
-								.equals(event.getDateString())) {
+//						if (!turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielDatum()
+//								.equals(event.getDateString())) {
 							turnier.getGruppe()[gruppenNummer].getPartien()[i].setSpielDatum(event.getDateString());
 							changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
-						}
+//						}
 					}
 
 				}
