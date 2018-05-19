@@ -64,7 +64,7 @@ public class MeetingTable {
 		this.iCalendar = new ICal();
 		calcRunden();
 		calcAnzahlSpaltenZeilen();
-		tabellenMatrix = new String[5][zeilenAnzahl];
+		tabellenMatrix = new String[spaltenAnzahl][zeilenAnzahl];
 		createTerminTabelle();
 
 	}

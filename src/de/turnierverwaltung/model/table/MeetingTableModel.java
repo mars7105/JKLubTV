@@ -128,7 +128,7 @@ public class MeetingTableModel extends DefaultTableModel {
 	 */
 	public void setValueAt(Object value, int row, int col) {
 
-		if (col == 4) {
+//		if (col == 4) {
 			if (value instanceof Date) {
 
 				EventDate event = new EventDate((Date) value);
@@ -143,12 +143,12 @@ public class MeetingTableModel extends DefaultTableModel {
 					fireTableCellUpdated(row, col);
 				}
 			}
-		} else {
-			if (!tabellenMatrix[col][row].equals((String) value)) {
-				tabellenMatrix[col][row] = (String) value;
-				fireTableCellUpdated(row, col);
-			}
-		}
+//		} else {
+		// if (!tabellenMatrix[col][row].equals((String) value)) {
+		// tabellenMatrix[col][row] = (String) value;
+		// fireTableCellUpdated(row, col);
+		// }
+//		}
 	}
 
 }

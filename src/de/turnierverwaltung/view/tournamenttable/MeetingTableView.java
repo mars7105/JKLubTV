@@ -302,39 +302,24 @@ public class MeetingTableView<M> extends JPanel {
 
 					if (row >= 0 && column == 4) {
 						this.setDate((Date) value);
-						// final AbstractTableModel model = (AbstractTableModel) table.getModel();
-						// TableModelEvent e = new TableModelEvent(model, row, row, column);
-						// model.fireTableChanged(e);
+						
 						if (table.getSelectedRow() >= 0 && table.getSelectedColumn() == 4) {
 							try {
 								Robot robot = new Robot();
-								// robot.mousePress(dateChooser.getCalendarButton());
-								// robot.setAutoWaitForIdle(true);
+								
 								robot.keyPress(KeyEvent.VK_F2);
 								robot.keyRelease(KeyEvent.VK_F2);
-								// robot.waitForIdle();
-//								System.out.println("Robot " + row + " " + column + " " + event.getDateString());
+								
 							} catch (AWTException e1) {
 								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						}
 
-						// model.fireTableRowsUpdated(row, row);
 					}
 				}
 			} else if (value instanceof String) {
-				// EventDate event = new EventDate();
-				// event.setDate((String) value);
-				// this.setDate((Date) event.getDate());
-				// if (row >= 0 && column == 4) {
-				// final AbstractTableModel model = (AbstractTableModel) table.getModel();
-				//
-				// TableModelEvent e = new TableModelEvent(model, row, row, column);
-				// model.fireTableChanged(e);
-				// System.out.println("value instanceof String " + row + " " + column + " " +
-				// event.getDateString());
-				// }
+				
 			}
 
 			return this;

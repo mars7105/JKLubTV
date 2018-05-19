@@ -125,7 +125,7 @@ public class MeetingTableControl {
 
 				EventDate event = new EventDate();
 				event.setDate(datum);
-				// System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
+				 System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
 				for (int i = 0; i < turnier.getGruppe()[gruppenNummer].getPartienAnzahl(); i++) {
 					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss().getName()
 							.equals(spielerWeiss)
@@ -136,6 +136,8 @@ public class MeetingTableControl {
 							turnier.getGruppe()[gruppenNummer].getPartien()[i].setSpielDatum(event.getDateString());
 							changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
 //						}
+							 System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
+
 					}
 
 				}
