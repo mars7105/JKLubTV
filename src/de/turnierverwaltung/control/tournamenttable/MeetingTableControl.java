@@ -60,7 +60,9 @@ public class MeetingTableControl {
 		public void tableChanged(TableModelEvent e) {
 			int row = e.getFirstRow();
 			int col = e.getColumn();
-//			System.out.println(row + "--" + col);
+			String sw = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 1);
+			String ss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 2);
+			System.out.println(sw + " " + ss);
 			if (col == 3) {
 
 				String ergebniss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, col);
@@ -71,31 +73,31 @@ public class MeetingTableControl {
 
 				if (ergebniss.equals(TournamentConstants.KEIN_ERGEBNIS)) {
 					ergebnissSet = TournamentConstants.KEIN_ERGEBNIS;
-//					ergInt = TournamentConstants.MYSQL_KEIN_ERGEBNIS;
+					// ergInt = TournamentConstants.MYSQL_KEIN_ERGEBNIS;
 				}
 				if (ergebniss.equals(TournamentConstants.PARTIE_GEWINN_SCHWARZ)) {
 					ergebnissSet = TournamentConstants.VERLUST;
-//					ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_SCHWARZ;
+					// ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_SCHWARZ;
 				}
 				if (ergebniss.equals(TournamentConstants.PARTIE_REMIS)) {
 					ergebnissSet = TournamentConstants.REMIS;
-//					ergInt = TournamentConstants.MYSQL_PARTIE_REMIS;
+					// ergInt = TournamentConstants.MYSQL_PARTIE_REMIS;
 				}
 				if (ergebniss.equals(TournamentConstants.PARTIE_GEWINN_WEISS)) {
 					ergebnissSet = TournamentConstants.GEWINN;
-//					ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_WEISS;
+					// ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_WEISS;
 				}
 				if (ergebniss.equals(TournamentConstants.PARTIE_GEWINN_KAMPFLOS_SCHWARZ)) {
 					ergebnissSet = TournamentConstants.VERLUST_KAMPFLOS;
-//					ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ;
+					// ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ;
 				}
 				if (ergebniss.equals(TournamentConstants.PARTIE_GEWINN_KAMPFLOS_WEISS)) {
 					ergebnissSet = TournamentConstants.GEWINN_KAMPFLOS;
-//					ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS;
+					// ergInt = TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS;
 				}
 				if (ergebniss.equals(TournamentConstants.PARTIE_VERLUST_KAMPFLOS_BEIDE)) {
 					ergebnissSet = TournamentConstants.VERLUST_KAMPFLOS_BEIDE;
-//					ergInt = TournamentConstants.MYSQL_PARTIE_VERLUST_KAMPFLOS_BEIDE;
+					// ergInt = TournamentConstants.MYSQL_PARTIE_VERLUST_KAMPFLOS_BEIDE;
 				}
 				for (int i = 0; i < simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getRowCount(); i++) {
 					if (simpleTurnierTabelleView[gruppenNummer].getTable().getModel().getValueAt(i, 0)
@@ -125,18 +127,18 @@ public class MeetingTableControl {
 
 				EventDate event = new EventDate();
 				event.setDate(datum);
-				 System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
+				// System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
 				for (int i = 0; i < turnier.getGruppe()[gruppenNummer].getPartienAnzahl(); i++) {
 					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss().getName()
 							.equals(spielerWeiss)
 							&& turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerSchwarz().getName()
 									.equals(spielerSchwarz)) {
-//						if (!turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielDatum()
-//								.equals(event.getDateString())) {
+						if (!turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielDatum()
+								.equals(event.getDateString())) {
 							turnier.getGruppe()[gruppenNummer].getPartien()[i].setSpielDatum(event.getDateString());
 							changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
-//						}
-							 System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
+						}
+						// System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
 
 					}
 

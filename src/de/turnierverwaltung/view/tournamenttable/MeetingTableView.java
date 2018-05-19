@@ -18,11 +18,7 @@ import java.awt.AWTException;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.FlowLayout;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -45,7 +41,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
-
+import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -91,7 +91,7 @@ public class MeetingTableView<M> extends JPanel {
 				return dateFormatter.format(cal.getTime());
 			}
 
-			return ""; //$NON-NLS-1$
+			return "";
 		}
 
 	}
@@ -118,9 +118,7 @@ public class MeetingTableView<M> extends JPanel {
 		table = new JTable();
 
 		table.setModel(this.simpleTerminTabelle);
-		// table.getModel().re // table.setMinimumSize(new Dimension(500,500));
-		// Font fnt = new Font("Arial", Font.PLAIN, 16);
-		// table.setFont(fnt);
+
 		comboBox = new JComboBox<String>();
 		comboBox.addItem(TournamentConstants.KEIN_ERGEBNIS);
 		comboBox.addItem(TournamentConstants.PARTIE_GEWINN_OPPONENT);
@@ -166,7 +164,6 @@ public class MeetingTableView<M> extends JPanel {
 		add(southPanel, BorderLayout.SOUTH);
 
 		this.setVisible(true);
-		// System.out.println(table.getX());
 
 	}
 
@@ -274,7 +271,6 @@ public class MeetingTableView<M> extends JPanel {
 		*
 		*/
 		private static final long serialVersionUID = 1L;
-		// private MeetingTableView<M>.KeyThread keyThread;
 
 		public JDateChooserRenderer(JDateChooser dateChooser) {
 			if (dateChooser != null) {
@@ -298,28 +294,27 @@ public class MeetingTableView<M> extends JPanel {
 				}
 				EventDate eventDate = new EventDate();
 				eventDate.setDate(this.getDate());
-				if (!eventDate.getDateString().equals(event.getDateString())) {
+//				if (!eventDate.getDateString().equals(event.getDateString())) {
 
 					if (row >= 0 && column == 4) {
 						this.setDate((Date) value);
-						
+
 						if (table.getSelectedRow() >= 0 && table.getSelectedColumn() == 4) {
 							try {
 								Robot robot = new Robot();
-								
+
 								robot.keyPress(KeyEvent.VK_F2);
 								robot.keyRelease(KeyEvent.VK_F2);
-								
+
 							} catch (AWTException e1) {
-								// TODO Auto-generated catch block
 								e1.printStackTrace();
 							}
 						}
 
 					}
-				}
+//				}
 			} else if (value instanceof String) {
-				
+
 			}
 
 			return this;
