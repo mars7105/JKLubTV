@@ -18,7 +18,6 @@ import java.awt.AWTException;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -147,7 +146,8 @@ public class MeetingTableView<M> extends JPanel {
 				+ Messages.getString("SimpleTerminTabelleView.14"))); //$NON-NLS-1$
 
 		southPanel.add(hinweis, BorderLayout.CENTER);
-
+//		JTextField tf = new JTextField();
+//		tf.setVisible(false);
 		JPanel status = new JPanel();
 		status.setLayout(new FlowLayout(FlowLayout.LEFT));
 		status.add(new JLabel(Messages.getString("SimpleTerminTabelleView.15"))); //$NON-NLS-1$
@@ -156,6 +156,7 @@ public class MeetingTableView<M> extends JPanel {
 		statusLabel.setOpaque(true);
 
 		JLabel changesLabel = new JLabel(Messages.getString("SimpleTerminTabelleView.16"));
+//		status.add(tf);
 		status.add(statusLabel);
 		status.add(changesLabel);
 		southPanel.add(status, BorderLayout.SOUTH);
@@ -279,13 +280,31 @@ public class MeetingTableView<M> extends JPanel {
 		}
 
 		public boolean isCellEditable(int rowIndex, int columnIndex) {
-			return true;
+			return false;
 		}
 
 		@Override
 		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 				int row, int column) {
-
+//			JTable.DropLocation dropLocation = table.getDropLocation();
+//		     if (dropLocation != null
+//		             && !dropLocation.isInsertRow()
+//		             && !dropLocation.isInsertColumn()
+//		             && dropLocation.getRow() == row
+//		             && dropLocation.getColumn() == column) {
+//
+//		    	 Robot robot;
+//				try {
+//					robot = new Robot();
+//				
+//
+//					robot.keyPress(KeyEvent.VK_F2);
+//					robot.keyRelease(KeyEvent.VK_F2);
+//				} catch (AWTException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//		     }
 			if (value instanceof Date) {
 				EventDate event = new EventDate();
 				event.setDate((Date) value);
@@ -294,25 +313,26 @@ public class MeetingTableView<M> extends JPanel {
 				}
 				EventDate eventDate = new EventDate();
 				eventDate.setDate(this.getDate());
-//				if (!eventDate.getDateString().equals(event.getDateString())) {
+				// if (!eventDate.getDateString().equals(event.getDateString())) {
 
-					if (row >= 0 && column == 4) {
-						this.setDate((Date) value);
+				if (row >= 0 && column == 4) {
+					this.setDate((Date) value);
 
-						if (table.getSelectedRow() >= 0 && table.getSelectedColumn() == 4) {
-							try {
-								Robot robot = new Robot();
+					if (table.getSelectedRow() >= 0 && table.getSelectedColumn() == 4) {
+						try {
+							Robot robot = new Robot();
 
-								robot.keyPress(KeyEvent.VK_F2);
-								robot.keyRelease(KeyEvent.VK_F2);
-
-							} catch (AWTException e1) {
-								e1.printStackTrace();
-							}
+							robot.keyPress(KeyEvent.VK_F2);
+							robot.keyRelease(KeyEvent.VK_F2);
+							// robot.keyPress(KeyEvent.VK_TAB);
+							// robot.keyRelease(KeyEvent.VK_TAB);
+						} catch (AWTException e1) {
+							e1.printStackTrace();
 						}
-
 					}
-//				}
+
+				}
+				// }
 			} else if (value instanceof String) {
 
 			}

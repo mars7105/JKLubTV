@@ -60,9 +60,9 @@ public class MeetingTableControl {
 		public void tableChanged(TableModelEvent e) {
 			int row = e.getFirstRow();
 			int col = e.getColumn();
-			String sw = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 1);
-			String ss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 2);
-			System.out.println(sw + " " + ss);
+//			String sw = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 1);
+//			String ss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 2);
+//			System.out.println(sw + " " + ss);
 			if (col == 3) {
 
 				String ergebniss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, col);

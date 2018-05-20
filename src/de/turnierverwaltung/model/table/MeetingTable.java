@@ -75,9 +75,9 @@ public class MeetingTable {
 	}
 
 	private void calcRunden() {
-		if (spielerAnzahl % 2 == 0) {
-		} else {
-		}
+//		if (spielerAnzahl % 2 == 0) {
+//		} else {
+//		}
 		partienAnzahl = (spielerAnzahl * (spielerAnzahl - 1) / 2);
 
 	}
