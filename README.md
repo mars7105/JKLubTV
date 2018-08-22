@@ -4,7 +4,7 @@ Diese Applikation speichert die zum Rundenurnier gehörenden Daten in einer SQLi
 
 Die Software ist kostenlos (Opensource).
 
-tested with OpenJDK 8
+tested with OpenJDK 8 and Java SE 7/8
 
 benötigte Java Librarys:
 JDatePicker 1.3.4.jar http://jdatepicker.org/
