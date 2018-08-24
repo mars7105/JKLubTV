@@ -1,7 +1,5 @@
 package de.turnierverwaltung.control.playerlist;
 
-
-
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -106,6 +104,7 @@ public class PlayerListControl implements ActionListener {
 					spieler.get(spielerIndex).setForename(foreName);
 					spieler.get(spielerIndex).setSurname(surName);
 					spieler.get(spielerIndex).setKuerzel(kuerzel);
+					spieler.get(spielerIndex).setDwz(dwz);
 					spieler.get(spielerIndex).getDwzData().setCsvDWZ(dwzInt);
 					spieler.get(spielerIndex).getDwzData().setCsvZPS(zps);
 					spieler.get(spielerIndex).getDwzData().setCsvMgl_Nr(mgl);
@@ -129,7 +128,7 @@ public class PlayerListControl implements ActionListener {
 						mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
 					}
 					spielerEditierenView.closeWindow();
-//					mainControl.setEnabled(true);
+					// mainControl.setEnabled(true);
 					updateSpielerListe();
 				} catch (final SQLException e1) {
 					spielerEditierenView.closeWindow();
@@ -141,7 +140,7 @@ public class PlayerListControl implements ActionListener {
 			}
 
 			if (arg0.getSource().equals(spielerEditierenView.getCancelButton())) {
-//				mainControl.setEnabled(true);
+				// mainControl.setEnabled(true);
 				spielerEditierenView.closeWindow();
 
 			}
@@ -153,16 +152,17 @@ public class PlayerListControl implements ActionListener {
 			for (int i = 0; i < spielerAnzahl; i++) {
 				if (arg0.getSource()
 						.equals(spielerLadenView.getPlayerListItems().get(i).getSpielerBearbeitenButton())) {
-//					mainControl.setEnabled(false);
+					// mainControl.setEnabled(false);
 					if (mainControl.getNewTournament() == false) {
 						spielerIndex = i;
-
-						spieler.get(i).setName(spieler.get(i).getDwzData().getCsvSpielername());
-						spieler.get(i).extractNameToForenameAndSurename();
+						if (spieler.get(i).getDwzData().getCsvSpielername().length() > 0) {
+							spieler.get(i).setName(spieler.get(i).getDwzData().getCsvSpielername());
+							spieler.get(i).extractNameToForenameAndSurename();
+						}
 						spielerEditierenView = new EditPlayerView(spieler.get(i));
 						spielerEditierenView.getOkButton().addActionListener(this);
 						spielerEditierenView.getCancelButton().addActionListener(this);
-						spielerEditierenView.showDialog() ;
+						spielerEditierenView.showDialog();
 					} else {
 						JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerLadenControl.2"));
 					}
@@ -196,7 +196,6 @@ public class PlayerListControl implements ActionListener {
 		return spieler;
 	}
 
-	
 	public PlayerListView getSpielerLadenView() {
 		return spielerLadenView;
 	}
@@ -250,7 +249,7 @@ public class PlayerListControl implements ActionListener {
 				spielerLadenView.getSpielerListe().setSelectedIndex(selectedTab);
 			}
 			spielerLadenView.updateUI();
-		} catch (NullPointerException e) {
+		} catch (final NullPointerException e) {
 
 		}
 	}
