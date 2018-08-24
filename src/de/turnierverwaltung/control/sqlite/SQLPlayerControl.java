@@ -201,7 +201,7 @@ public class SQLPlayerControl {
 			// geloescht =
 			// turnier_has_spielerDAO.deleteTurnier_has_Spieler(tId);
 			geloescht = mySQLSpielerDAO.deleteSpieler(spieler.getSpielerId());
-			if (!spieler.getDwzData().getCsvZPS().equals("")) {
+			if (spieler.getDwzData().getSpielerId() > 0) {
 				mySQLDWZDataDAO.deleteDWZ(spieler.getSpielerId());
 			}
 			if (spieler.getEloData().getFideid() > 0) {
