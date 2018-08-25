@@ -116,18 +116,16 @@ public class SQLPlayerControl {
 				spieler.setName(spieler.getDwzData().getCsvSpielername());
 				mySQLDWZDataDAO.insertDWZ(spieler.getDwzData());
 			} else {
-
-				int dwzNumber = 0;
-
-				dwzNumber = spieler.getDWZ();
-				final DWZData dwzData = new DWZData();
-				dwzData.setSpielerId(spielerId);
-				dwzData.setCsvDWZ(dwzNumber);
-				dwzData.setAge(spieler.getAge());
-				dwzData.setCsvSpielername(spieler.getName());
-				spieler.setDwzData(dwzData);
-				mySQLDWZDataDAO.insertDWZ(dwzData);
-
+				if (spieler.getDwzData().getCsvDWZ() > 0) {
+					final int dwzNumber = spieler.getDWZ();
+					final DWZData dwzData = new DWZData();
+					dwzData.setSpielerId(spielerId);
+					dwzData.setCsvDWZ(dwzNumber);
+					dwzData.setAge(spieler.getAge());
+					dwzData.setCsvSpielername(spieler.getName());
+					spieler.setDwzData(dwzData);
+					mySQLDWZDataDAO.insertDWZ(dwzData);
+				}
 			}
 			if (spieler.getEloData().getFideid() > 0) {
 				spieler.setName(spieler.getEloData().getName());
@@ -243,8 +241,18 @@ public class SQLPlayerControl {
 		mySQLSpielerDAO.updateSpieler(spieler);
 		// if (spieler.getDwzData().getCsvZPS().length() > 0) {
 		if (spieler.getDwzData().getCsvDWZ() > 0) {
-			mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
-
+			if (playerExist(spieler.getDwzData())) {
+				mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
+			} else {
+				final int dwzNumber = spieler.getDWZ();
+				final DWZData dwzData = new DWZData();
+				dwzData.setSpielerId(spieler.getSpielerId());
+				dwzData.setCsvDWZ(dwzNumber);
+				dwzData.setAge(spieler.getAge());
+				dwzData.setCsvSpielername(spieler.getName());
+				spieler.setDwzData(dwzData);
+				mySQLDWZDataDAO.insertDWZ(dwzData);
+			}
 		}
 		if (spieler.getEloData().getFideid() > 0) {
 			mySQLELODataDAO.updateELO(spieler.getEloData());
