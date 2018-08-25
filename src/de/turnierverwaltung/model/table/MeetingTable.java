@@ -23,14 +23,14 @@ import de.turnierverwaltung.model.TournamentConstants;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 public class MeetingTable {
 
-	private Tournament turnier;
-	private Group gruppe;
-	private Game[] partien;
-	private int spielerAnzahl;
+	private final Tournament turnier;
+	private final Group gruppe;
+	private final Game[] partien;
+	private final int spielerAnzahl;
 	private int partienAnzahl;
 	private int spaltenAnzahl;
 	private int zeilenAnzahl;
-	private String tabellenMatrix[][];
+	private final String tabellenMatrix[][];
 	private MeetingTableToHTML terminTabelleToHTML;
 	private String roundColumnName;
 	private String whiteColumnName;
@@ -40,7 +40,7 @@ public class MeetingTable {
 	private ICal iCalendar;
 
 	/**
-	 * 
+	 *
 	 * @param turnier
 	 * @param gruppe
 	 * @param roundColumnName
@@ -49,8 +49,9 @@ public class MeetingTable {
 	 * @param resultColumnName
 	 * @param meetingColumnName
 	 */
-	public MeetingTable(Tournament turnier, Group gruppe, String roundColumnName, String whiteColumnName,
-			String blackColumnName, String resultColumnName, String meetingColumnName) {
+	public MeetingTable(final Tournament turnier, final Group gruppe, final String roundColumnName,
+			final String whiteColumnName, final String blackColumnName, final String resultColumnName,
+			final String meetingColumnName) {
 		this.roundColumnName = roundColumnName;
 		this.whiteColumnName = whiteColumnName;
 		this.blackColumnName = blackColumnName;
@@ -59,9 +60,9 @@ public class MeetingTable {
 		this.turnier = turnier;
 		this.gruppe = gruppe;
 		this.gruppe.getSpieler();
-		this.spielerAnzahl = this.gruppe.getSpielerAnzahl();
-		this.partien = gruppe.getPartien();
-		this.iCalendar = new ICal();
+		spielerAnzahl = this.gruppe.getSpielerAnzahl();
+		partien = gruppe.getPartien();
+		iCalendar = new ICal();
 		calcRunden();
 		calcAnzahlSpaltenZeilen();
 		tabellenMatrix = new String[spaltenAnzahl][zeilenAnzahl];
@@ -75,15 +76,15 @@ public class MeetingTable {
 	}
 
 	private void calcRunden() {
-//		if (spielerAnzahl % 2 == 0) {
-//		} else {
-//		}
+		// if (spielerAnzahl % 2 == 0) {
+		// } else {
+		// }
 		partienAnzahl = (spielerAnzahl * (spielerAnzahl - 1) / 2);
 
 	}
 
 	/**
-	 * 
+	 *
 	 * @param roundColumnName
 	 * @param whiteColumnName
 	 * @param blackColumnName
@@ -107,7 +108,7 @@ public class MeetingTable {
 				tabellenMatrix[2][index + 1] = partien[index].getSpielerSchwarz().getName();
 				tabellenMatrix[3][index + 1] = getErgebnisToString(partien[index].getErgebnis());
 				tabellenMatrix[4][index + 1] = partien[index].getSpielDatum();
-//				System.out.println(tabellenMatrix[0][index + 1]);
+				// System.out.println(tabellenMatrix[0][index + 1]);
 
 				event = tabellenMatrix[0][index + 1] + ". Runde ";
 				event += tabellenMatrix[1][index + 1] + " - ";
@@ -118,8 +119,8 @@ public class MeetingTable {
 				if (tabellenMatrix[4][index + 1] == null) {
 					tabellenMatrix[4][index + 1] = ""; //$NON-NLS-1$
 				}
-				String datum = tabellenMatrix[4][index + 1];
-				this.iCalendar.addEvent(datum, event);
+				final String datum = tabellenMatrix[4][index + 1];
+				iCalendar.addEvent(datum, event);
 				index++;
 			}
 		}
@@ -129,7 +130,7 @@ public class MeetingTable {
 		return blackColumnName;
 	}
 
-	private String getErgebnisToString(int ergebnis) {
+	private String getErgebnisToString(final int ergebnis) {
 		String ergebnisString = TournamentConstants.KEIN_ERGEBNIS;
 		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_WEISS) {
 			ergebnisString = TournamentConstants.PARTIE_GEWINN_WEISS;
@@ -156,22 +157,22 @@ public class MeetingTable {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param ohneHeaderundFooter
 	 * @return
 	 */
-	public String getHTMLTable(Boolean ohneHeaderundFooter, String path, String filename, String icsfilename,
-			Boolean showLink) {
+	public String getHTMLTable(final Boolean ohneHeaderundFooter, final String path, final String filename,
+			final String icsfilename, final Boolean showLink, final String cssTableClass) {
 		terminTabelleToHTML = new MeetingTableToHTML(tabellenMatrix, turnier, gruppe, path, filename, icsfilename,
-				showLink);
+				showLink, cssTableClass);
 		return terminTabelleToHTML.getHTMLTable(ohneHeaderundFooter);
 	}
 
-	public String getHTMLTableOnlyWithFooter(Boolean ohneHeaderundFooter, String path, String filename,
-			String icsfilename, Boolean showLink) {
+	public String getHTMLTableOnlyWithFooter(final Boolean ohneHeaderundFooter, final String path,
+			final String filename, final String icsfilename, final Boolean showLink, final String cssTableClass) {
 
 		terminTabelleToHTML = new MeetingTableToHTML(tabellenMatrix, turnier, gruppe, path, filename, icsfilename,
-				showLink);
+				showLink, cssTableClass);
 		return terminTabelleToHTML.getHTMLTableOnlyWithFooter(ohneHeaderundFooter);
 	}
 
@@ -211,43 +212,43 @@ public class MeetingTable {
 		return zeilenAnzahl;
 	}
 
-	public void setBlackColumnName(String blackColumnName) {
+	public void setBlackColumnName(final String blackColumnName) {
 		this.blackColumnName = blackColumnName;
 	}
 
-	public void setiCalendar(ICal iCalendar) {
+	public void setiCalendar(final ICal iCalendar) {
 		this.iCalendar = iCalendar;
 	}
 
-	public void setMeetingColumnName(String meetingColumnName) {
+	public void setMeetingColumnName(final String meetingColumnName) {
 		this.meetingColumnName = meetingColumnName;
 	}
 
-	public void setResultColumnName(String resultColumnName) {
+	public void setResultColumnName(final String resultColumnName) {
 		this.resultColumnName = resultColumnName;
 	}
 
-	public void setRoundColumnName(String roundColumnName) {
+	public void setRoundColumnName(final String roundColumnName) {
 		this.roundColumnName = roundColumnName;
 	}
 
-	public void setSpaltenAnzahl(int spaltenAnzahl) {
+	public void setSpaltenAnzahl(final int spaltenAnzahl) {
 		this.spaltenAnzahl = spaltenAnzahl;
 	}
 
-//	public void setTabellenMatrix(String[][] tabellenMatrix) {
-//		this.tabellenMatrix = tabellenMatrix;
-//	}
+	// public void setTabellenMatrix(String[][] tabellenMatrix) {
+	// this.tabellenMatrix = tabellenMatrix;
+	// }
 
-	public void setTerminTabelleToHTML(MeetingTableToHTML terminTabelleToHTML) {
+	public void setTerminTabelleToHTML(final MeetingTableToHTML terminTabelleToHTML) {
 		this.terminTabelleToHTML = terminTabelleToHTML;
 	}
 
-	public void setWhiteColumnName(String whiteColumnName) {
+	public void setWhiteColumnName(final String whiteColumnName) {
 		this.whiteColumnName = whiteColumnName;
 	}
 
-	public void setZeilenAnzahl(int zeilenAnzahl) {
+	public void setZeilenAnzahl(final int zeilenAnzahl) {
 		this.zeilenAnzahl = zeilenAnzahl;
 	}
 

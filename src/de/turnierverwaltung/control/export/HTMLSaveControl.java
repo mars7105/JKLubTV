@@ -147,6 +147,7 @@ public class HTMLSaveControl {
 					Writer writer2;
 					final Boolean ohneHeaderundFooter = mainControl.getPropertiesControl().getOnlyTables();
 					final Boolean showLink = mainControl.getPropertiesControl().getPDFLinks();
+					final String cssTable = mainControl.getPropertiesControl().getCSSTable();
 
 					try {
 						if (n1 == 0) {
@@ -154,14 +155,15 @@ public class HTMLSaveControl {
 							writer1 = new OutputStreamWriter(new FileOutputStream(filename1), "UTF8"); //$NON-NLS-1$
 
 							writer1.write(mainControl.getCrossTable()[i].getHTMLTable(ohneHeaderundFooter,
-									webserverPath, webfilename1, showLink));
+									webserverPath, webfilename1, showLink, cssTable));
 							writer1.flush();
 							writer1.close();
 						}
 						if (n2 == 0) {
 							writer2 = new OutputStreamWriter(new FileOutputStream(filename2), "UTF8"); //$NON-NLS-1$
 							writer2.write(mainControl.getMeetingTableControl().getTerminTabelle()[i].getHTMLTable(
-									ohneHeaderundFooter, webserverPath, webfilename2, webfilename3, showLink));
+									ohneHeaderundFooter, webserverPath, webfilename2, webfilename3, showLink,
+									cssTable));
 							writer2.flush();
 							writer2.close();
 						}

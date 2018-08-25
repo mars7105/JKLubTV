@@ -22,64 +22,71 @@ import de.turnierverwaltung.model.WebserverFileLink;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 public class CrossTableToHTML {
-	private Boolean colorMatrix[][];
-	private String[][] tabellenMatrix;
-	private String turnierName;
-	private String startDatum;
-	private String endDatum;
-	private String gruppenName;
+	private final Boolean colorMatrix[][];
+	private final String[][] tabellenMatrix;
+	private final String turnierName;
+	private final String startDatum;
+	private final String endDatum;
+	private final String gruppenName;
 	private String htmlString;
-	private String infoString;
+	private final String infoString;
 	private int[] reihenfolge;
-	private String webServerPath;
-	private String filename;
-	private WebserverFileLink fileLink;
-	private String icsfilename;
+	private final String webServerPath;
+	private final String filename;
+	private final WebserverFileLink fileLink;
+	private final String icsfilename;
+	private final String cssTableClass;
 
-	public CrossTableToHTML(String[][] tabellenMatrix2, Tournament turnier2, String gruppenName2, String infoString2,
-			String path, String filename2, Boolean showLink, Boolean colorMatrix[][]) {
-		this.tabellenMatrix = tabellenMatrix2;
-		this.turnierName = turnier2.getTurnierName();
-		this.startDatum = turnier2.getStartDatum();
-		this.endDatum = turnier2.getEndDatum();
-		this.gruppenName = gruppenName2;
-		this.infoString = infoString2;
-		this.webServerPath = path;
-		this.filename = filename2;
-		this.icsfilename = "";
-		this.fileLink = new WebserverFileLink(this.webServerPath, this.filename, showLink);
+	public CrossTableToHTML(final String[][] tabellenMatrix2, final Tournament turnier2, final String gruppenName2,
+			final String infoString2, final String path, final String filename2, final Boolean showLink,
+			final Boolean colorMatrix[][], final String cssTableClass) {
+		super();
+		this.cssTableClass = cssTableClass;
+		tabellenMatrix = tabellenMatrix2;
+		turnierName = turnier2.getTurnierName();
+		startDatum = turnier2.getStartDatum();
+		endDatum = turnier2.getEndDatum();
+		gruppenName = gruppenName2;
+		infoString = infoString2;
+		webServerPath = path;
+		filename = filename2;
+		icsfilename = "";
+		fileLink = new WebserverFileLink(webServerPath, filename, showLink);
 		this.colorMatrix = colorMatrix;
 	}
 
 	/**
-	 * 
+	 *
 	 * @param tabellenMatrix
 	 * @param turnier
 	 * @param gruppenName
 	 * @param infoString
 	 */
-	public CrossTableToHTML(String[][] tabellenMatrix, Tournament turnier, String gruppenName, String infoString,
-			String webServerPath, String filename, String icsfilename, Boolean showLink, Boolean colorMatrix[][]) {
+	public CrossTableToHTML(final String[][] tabellenMatrix, final Tournament turnier, final String gruppenName,
+			final String infoString, final String webServerPath, final String filename, final String icsfilename,
+			final Boolean showLink, final Boolean colorMatrix[][], final String cssTableClass) {
+		super();
+		this.cssTableClass = cssTableClass;
 		this.tabellenMatrix = tabellenMatrix;
-		this.turnierName = turnier.getTurnierName();
-		this.startDatum = turnier.getStartDatum();
-		this.endDatum = turnier.getEndDatum();
+		turnierName = turnier.getTurnierName();
+		startDatum = turnier.getStartDatum();
+		endDatum = turnier.getEndDatum();
 		this.gruppenName = gruppenName;
 		this.infoString = infoString;
 		this.webServerPath = webServerPath;
 		this.filename = filename;
 		this.icsfilename = icsfilename;
-		this.fileLink = new WebserverFileLink(this.webServerPath, this.filename, this.icsfilename, showLink);
+		fileLink = new WebserverFileLink(this.webServerPath, this.filename, this.icsfilename, showLink);
 		this.colorMatrix = colorMatrix;
 	}
 
 	private String getHTMLFooter() {
-		String footerString = "</body>\n</html>\n"; //$NON-NLS-1$
+		final String footerString = "</body>\n</html>\n"; //$NON-NLS-1$
 		return footerString;
 	}
 
 	private String getHTMLHeader() {
-		String headerString = "<!DOCTYPE html>\n" //$NON-NLS-1$
+		final String headerString = "<!DOCTYPE html>\n" //$NON-NLS-1$
 				+ "<html lang='de'>\n" //$NON-NLS-1$
 				+ "<head>\n" //$NON-NLS-1$
 				+ "  <meta charset='utf-8'>\n" //$NON-NLS-1$
@@ -92,12 +99,12 @@ public class CrossTableToHTML {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param ohneHeaderundFooter
 	 * @return
 	 */
-	public String getHTMLTable(Boolean ohneHeaderundFooter) {
-		int col = this.tabellenMatrix.length;
+	public String getHTMLTable(final Boolean ohneHeaderundFooter) {
+		final int col = tabellenMatrix.length;
 		reihenfolge = new int[col];
 
 		reihenfolge[0] = col - 1;
@@ -113,12 +120,12 @@ public class CrossTableToHTML {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param ohneHeaderundFooter
 	 * @return
 	 */
-	public String getHTMLTableOnlyWithHeader(Boolean ohneHeaderundFooter) {
-		int col = this.tabellenMatrix.length;
+	public String getHTMLTableOnlyWithHeader(final Boolean ohneHeaderundFooter) {
+		final int col = tabellenMatrix.length;
 		reihenfolge = new int[col];
 
 		reihenfolge[0] = col - 1;
@@ -138,21 +145,21 @@ public class CrossTableToHTML {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param ohneHeaderundFooter
 	 * @return
 	 */
-	private String makeTurnierTabelle(Boolean ohneHeaderundFooter) {
+	private String makeTurnierTabelle(final Boolean ohneHeaderundFooter) {
 
-		int col = this.tabellenMatrix.length;
-		int row = this.tabellenMatrix[0].length;
+		final int col = tabellenMatrix.length;
+		final int row = tabellenMatrix[0].length;
 
 		if (ohneHeaderundFooter == false) {
 			htmlString = getHTMLHeader();
 		} else {
 			htmlString = "";
 		}
-		htmlString += "  <table>\n"; //$NON-NLS-1$
+		htmlString += "  <table class='" + cssTableClass + "'>\n"; //$NON-NLS-1$
 		for (int y = 0; y < row; y++) {
 			if (y == 0) {
 				htmlString += "    <thead>\n"; //$NON-NLS-1$
@@ -165,9 +172,9 @@ public class CrossTableToHTML {
 
 			for (int x = 0; x < col; x++) {
 
-				String ausgabeWert = this.tabellenMatrix[reihenfolge[x]][y];
+				String ausgabeWert = tabellenMatrix[reihenfolge[x]][y];
 
-				Boolean color = colorMatrix[reihenfolge[x]][y];
+				final Boolean color = colorMatrix[reihenfolge[x]][y];
 				String cell = "        <td>";
 				if (color != null) {
 					if (color == true) {

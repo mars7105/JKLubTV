@@ -25,11 +25,11 @@ import de.turnierverwaltung.view.settingsdialog.SettingsView;
 import say.swing.JFontChooser;
 
 public class ActionListenerSettingsControl {
-	private MainControl mainControl;
-	private SettingsControl esControl;
+	private final MainControl mainControl;
+	private final SettingsControl esControl;
 	private JDialog dialog;
 
-	public ActionListenerSettingsControl(MainControl mainControl, SettingsControl esControl) {
+	public ActionListenerSettingsControl(final MainControl mainControl, final SettingsControl esControl) {
 		super();
 		this.mainControl = mainControl;
 		this.esControl = esControl;
@@ -39,12 +39,13 @@ public class ActionListenerSettingsControl {
 	public void addActionListeners() {
 		esControl.getEigenschaftenView().getFontChooserButton().addActionListener(new ActionListener() {
 
-			public void actionPerformed(ActionEvent e) {
-				JFontChooser fontChooser = esControl.getEigenschaftenView().getFontChooser();
+			@Override
+			public void actionPerformed(final ActionEvent e) {
+				final JFontChooser fontChooser = esControl.getEigenschaftenView().getFontChooser();
 				fontChooser.setSelectedFont(mainControl.getPropertiesControl().getFont());
-				int result = fontChooser.showDialog(esControl.getEigenschaftenView());
+				final int result = fontChooser.showDialog(esControl.getEigenschaftenView());
 				if (result == JFontChooser.OK_OPTION) {
-					Font selectedFont = fontChooser.getSelectedFont();
+					final Font selectedFont = fontChooser.getSelectedFont();
 
 					MainControl.setUIFont(selectedFont);
 					mainControl.getPropertiesControl().setFont(selectedFont);
@@ -56,12 +57,12 @@ public class ActionListenerSettingsControl {
 		esControl.getEigenschaftenView().getOkButton().addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(final ActionEvent arg0) {
 				mainControl.getPropertiesControl().writeSettingsDialogProperties(dialog.getBounds().x,
 						dialog.getBounds().y, dialog.getBounds().width, dialog.getBounds().height);
 				dialog.dispose();
-				PropertiesControl ppC = mainControl.getPropertiesControl();
-				SettingsView settingsView = esControl.getEigenschaftenView();
+				final PropertiesControl ppC = mainControl.getPropertiesControl();
+				final SettingsView settingsView = esControl.getEigenschaftenView();
 				ppC.setTableComumnBlack(settingsView.getBlackTextField().getText());
 				ppC.setTableComumnWhite(settingsView.getWhiteTextField().getText());
 				ppC.setTableComumnMeeting(settingsView.getMeetingTextField().getText());
@@ -80,6 +81,7 @@ public class ActionListenerSettingsControl {
 				ppC.setWebserverPath(settingsView.getWebserverPathTextField().getText());
 				ppC.checkCrossTableColumnForDoubles();
 				ppC.checkMeetingTableColumnForDoubles();
+				ppC.setCSSTable(settingsView.getTableCSSTextField().getText());
 
 				ppC.writeProperties();
 				esControl.setTableColumns();
@@ -89,18 +91,18 @@ public class ActionListenerSettingsControl {
 		});
 		esControl.getEigenschaftenView().getOpenVereineCSVButton().addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				// vereine.csv
-				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
+				final File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 				final JFileChooser fc = new JFileChooser(path);
-				FileFilter filter = new FileNameExtensionFilter("CSV file", "csv", "CSV");
+				final FileFilter filter = new FileNameExtensionFilter("CSV file", "csv", "CSV");
 
 				fc.setFileFilter(filter);
-				int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
+				final int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = fc.getSelectedFile();
+					final File file = fc.getSelectedFile();
 					// This is where a real application would open the
 					// file.
 					mainControl.getPropertiesControl().setPathToVereineCVS(file.getAbsolutePath());
@@ -114,8 +116,8 @@ public class ActionListenerSettingsControl {
 		esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				DWZListToSQLITEControl dwzL = new DWZListToSQLITEControl(mainControl);
+			public void actionPerformed(final ActionEvent arg0) {
+				final DWZListToSQLITEControl dwzL = new DWZListToSQLITEControl(mainControl);
 				dwzL.convertDWZListToSQLITE();
 				esControl.getEigenschaftenView()
 						.setOpenPlayersCSVLabel(mainControl.getPropertiesControl().getPathToPlayersCSV());
@@ -124,18 +126,19 @@ public class ActionListenerSettingsControl {
 		});
 		esControl.getEigenschaftenView().getOpenPlayersCSVButton().addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				// spieler.csv
-				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
+				final File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 				final JFileChooser fc = new JFileChooser(path);
-				FileFilter filter = new FileNameExtensionFilter("CSV or SQLite file", "csv", "CSV", "sqlite", "SQLite");
+				final FileFilter filter = new FileNameExtensionFilter("CSV or SQLite file", "csv", "CSV", "sqlite",
+						"SQLite");
 
 				fc.setFileFilter(filter);
-				int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
+				final int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = fc.getSelectedFile();
+					final File file = fc.getSelectedFile();
 					// This is where a real application would open the
 					// file.
 
@@ -144,11 +147,11 @@ public class ActionListenerSettingsControl {
 					esControl.getEigenschaftenView()
 							.setOpenPlayersCSVLabel(mainControl.getPropertiesControl().getPathToPlayersCSV());
 
-					String filename = file.getName();
-					int positionEXT = filename.lastIndexOf('.');
+					final String filename = file.getName();
+					final int positionEXT = filename.lastIndexOf('.');
 
 					if (positionEXT > 0) {
-						String newFile = filename.substring(positionEXT);
+						final String newFile = filename.substring(positionEXT);
 						if (newFile.equals(".sqlite")) {
 							esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().setEnabled(false);
 						} else {
@@ -164,8 +167,8 @@ public class ActionListenerSettingsControl {
 		esControl.getEigenschaftenView().getConvertELOToSQLITEButton().addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				ELOListToSQLITEControl eloL = new ELOListToSQLITEControl(mainControl);
+			public void actionPerformed(final ActionEvent arg0) {
+				final ELOListToSQLITEControl eloL = new ELOListToSQLITEControl(mainControl);
 				eloL.convertELOListToSQLITE();
 				esControl.getEigenschaftenView()
 						.setOpenPlayersELOLabel(mainControl.getPropertiesControl().getPathToPlayersELO());
@@ -174,29 +177,30 @@ public class ActionListenerSettingsControl {
 		});
 		esControl.getEigenschaftenView().getOpenPlayersELOButton().addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				// spieler.csv
-				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
+				final File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 
 				final JFileChooser fc = new JFileChooser(path);
-				FileFilter filter = new FileNameExtensionFilter("TXT or SQLite file", "txt", "TXT", "sqlite", "SQLite");
+				final FileFilter filter = new FileNameExtensionFilter("TXT or SQLite file", "txt", "TXT", "sqlite",
+						"SQLite");
 
 				fc.setFileFilter(filter);
-				int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
+				final int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = fc.getSelectedFile();
+					final File file = fc.getSelectedFile();
 					// This is where a real application would open the
 					// file.
 					mainControl.getPropertiesControl().setPathToPlayersELO(file.getAbsolutePath());
 					mainControl.getPropertiesControl().writeProperties();
 					esControl.getEigenschaftenView()
 							.setOpenPlayersELOLabel(mainControl.getPropertiesControl().getPathToPlayersELO());
-					String filename = file.getName();
-					int positionEXT = filename.lastIndexOf('.');
+					final String filename = file.getName();
+					final int positionEXT = filename.lastIndexOf('.');
 
 					if (positionEXT > 0) {
-						String newFile = filename.substring(positionEXT);
+						final String newFile = filename.substring(positionEXT);
 						if (newFile.equals(".sqlite")) {
 							esControl.getEigenschaftenView().getConvertELOToSQLITEButton().setEnabled(false);
 						} else {
@@ -211,16 +215,16 @@ public class ActionListenerSettingsControl {
 
 		esControl.getEigenschaftenView().getOpenDefaultPathButton().addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				File path = new File(mainControl.getPropertiesControl().getDefaultPath());
+			public void actionPerformed(final ActionEvent e) {
+				final File path = new File(mainControl.getPropertiesControl().getDefaultPath());
 				final JFileChooser fc = new JFileChooser(path);
 				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				fc.setMultiSelectionEnabled(false);
 
-				int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
+				final int returnVal = fc.showOpenDialog(esControl.getEigenschaftenView());
 
 				if (returnVal == JFileChooser.APPROVE_OPTION) {
-					File file = fc.getSelectedFile();
+					final File file = fc.getSelectedFile();
 					// This is where a real application would open the
 					// file.
 					mainControl.getPropertiesControl().setDefaultPath(file.getAbsolutePath());
@@ -239,7 +243,7 @@ public class ActionListenerSettingsControl {
 				.setOpenPlayersELOLabel(mainControl.getPropertiesControl().getPathToPlayersELO());
 		esControl.getEigenschaftenView().getGermanLanguageCheckBox().addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				mainControl.getLanguagePropertiesControl().setLanguageToGerman();
 
 				mainControl.getPropertiesControl().writeProperties();
@@ -248,7 +252,7 @@ public class ActionListenerSettingsControl {
 		});
 		esControl.getEigenschaftenView().getEnglishLanguageCheckBox().addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				mainControl.getLanguagePropertiesControl().setLanguageToEnglish();
 				mainControl.getPropertiesControl().writeProperties();
 
@@ -257,8 +261,9 @@ public class ActionListenerSettingsControl {
 		esControl.getEigenschaftenView().getSpielerListeAuswahlBox().addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				int anzahlProTab = esControl.getEigenschaftenView().getSpielerListeAuswahlBox().getSelectedIndex();
+			public void actionPerformed(final ActionEvent e) {
+				final int anzahlProTab = esControl.getEigenschaftenView().getSpielerListeAuswahlBox()
+						.getSelectedIndex();
 				mainControl.getPropertiesControl().setSpielerProTab(anzahlProTab);
 				mainControl.getPropertiesControl().writeProperties();
 
@@ -267,8 +272,9 @@ public class ActionListenerSettingsControl {
 		esControl.getEigenschaftenView().getTurnierListeAuswahlBox().addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				int anzahlProTab = esControl.getEigenschaftenView().getTurnierListeAuswahlBox().getSelectedIndex();
+			public void actionPerformed(final ActionEvent arg0) {
+				final int anzahlProTab = esControl.getEigenschaftenView().getTurnierListeAuswahlBox()
+						.getSelectedIndex();
 				mainControl.getPropertiesControl().setTurniereProTab(anzahlProTab);
 				mainControl.getPropertiesControl().writeProperties();
 
@@ -279,7 +285,7 @@ public class ActionListenerSettingsControl {
 		int positionEXT = filename.lastIndexOf('.');
 
 		if (positionEXT > 0) {
-			String newFile = filename.substring(positionEXT);
+			final String newFile = filename.substring(positionEXT);
 			if (newFile.equals(".sqlite")) {
 				esControl.getEigenschaftenView().getConvertELOToSQLITEButton().setEnabled(false);
 			} else {
@@ -294,7 +300,7 @@ public class ActionListenerSettingsControl {
 		filename = mainControl.getPropertiesControl().getPathToPlayersCSV();
 		positionEXT = filename.lastIndexOf('.');
 		if (positionEXT > 0) {
-			String newFile = filename.substring(positionEXT);
+			final String newFile = filename.substring(positionEXT);
 			if (newFile.equals(".sqlite")) {
 				esControl.getEigenschaftenView().getConvertDWZToSQLITEButton().setEnabled(false);
 			} else {
@@ -308,16 +314,16 @@ public class ActionListenerSettingsControl {
 		esControl.getEigenschaftenView().getResetPropertiesButton().addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(final ActionEvent e) {
 				final int abfrage = beendenHinweis();
 				if (abfrage > 0) {
 
 					if (mainControl.getHauptPanel().getTabCount() == TournamentConstants.TAB_ACTIVE_TOURNAMENT + 1) {
 						if (mainControl.getChangedGames().isEmpty() == false) {
-							SaveTournamentControl saveTournament = new SaveTournamentControl(mainControl);
+							final SaveTournamentControl saveTournament = new SaveTournamentControl(mainControl);
 							try {
 								saveTournament.saveChangedPartien();
-							} catch (SQLException e1) {
+							} catch (final SQLException e1) {
 								final ExceptionHandler eh = new ExceptionHandler(mainControl);
 								eh.fileSQLError(e1.getMessage());
 							}
@@ -340,10 +346,10 @@ public class ActionListenerSettingsControl {
 		mainControl.getNaviView().getPropertiesButton().addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(final ActionEvent arg0) {
 
 				mainControl.getSettingsControl().setEigenschaftenView(new SettingsView());
-				SettingsView eigenschaftenView = mainControl.getSettingsControl().getEigenschaftenView();
+				final SettingsView eigenschaftenView = mainControl.getSettingsControl().getEigenschaftenView();
 				mainControl.getSettingsControl().setItemListenerControl(
 						new ItemListenerSettingsControl(mainControl, mainControl.getSettingsControl()));
 				mainControl.getSettingsControl().getItemListenerControl().addItemListeners();
@@ -368,7 +374,7 @@ public class ActionListenerSettingsControl {
 					mainControl.setPropertiesControl(new PropertiesControl(mainControl));
 
 				}
-				PropertiesControl ppC = mainControl.getPropertiesControl();
+				final PropertiesControl ppC = mainControl.getPropertiesControl();
 				ppC.readProperties();
 				eigenschaftenView.getCheckBoxHeaderFooter().setSelected(ppC.getOnlyTables());
 				eigenschaftenView.getCheckBoxohneDWZ().setSelected(ppC.getNoDWZ());
@@ -405,7 +411,7 @@ public class ActionListenerSettingsControl {
 					mainControl.getLanguagePropertiesControl().setLanguageToEnglish();
 				}
 				eigenschaftenView.setOpenDefaultPathLabel(ppC.getDefaultPath());
-
+				eigenschaftenView.getTableCSSTextField().setText(ppC.getCSSTable());
 				esControl.setTableColumns();
 				addActionListeners();
 				esControl.getItemListenerControl().addItemListeners();
@@ -418,8 +424,8 @@ public class ActionListenerSettingsControl {
 
 	private int beendenHinweis() {
 		int abfrage = 0;
-		if (this.mainControl.getHauptPanel().getTabCount() == TournamentConstants.TAB_ACTIVE_TOURNAMENT + 1) {
-			if (this.mainControl.getChangedGames().isEmpty() == false) {
+		if (mainControl.getHauptPanel().getTabCount() == TournamentConstants.TAB_ACTIVE_TOURNAMENT + 1) {
+			if (mainControl.getChangedGames().isEmpty() == false) {
 
 				final String hinweisText = Messages.getString("NaviController.21") //$NON-NLS-1$
 						+ Messages.getString("NaviController.22") //$NON-NLS-1$

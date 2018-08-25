@@ -17,7 +17,6 @@ package de.turnierverwaltung.control;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.Font;
 import java.awt.Toolkit;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
@@ -101,12 +100,14 @@ public class PropertiesControl {
 	public static final String FONT_STYLE = "font-style";
 	public static final String FONT_SIZE = "font-size";
 
+	public static final String CSSTABLE = "css-table";
+
 	private Properties prop;
 	private Boolean NoWritableProperties;
-	private Preferences prefs;
-	private MainControl mainControl;
+	private final Preferences prefs;
+	private final MainControl mainControl;
 
-	public PropertiesControl(MainControl mainControl) {
+	public PropertiesControl(final MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
 		prefs = Preferences.userRoot().node(PACKAGE);
@@ -175,10 +176,12 @@ public class PropertiesControl {
 		prop.setProperty(FONT_NAME, "");
 		prop.setProperty(FONT_STYLE, "");
 		prop.setProperty(FONT_SIZE, "");
+
+		prop.setProperty(CSSTABLE, "");
 	}
 
 	public void checkCrossTableColumnForDoubles() {
-		String[] tableColumns = new String[8];
+		final String[] tableColumns = new String[8];
 		tableColumns[0] = prop.getProperty(TABLE_COLUMN_PLAYER);
 		tableColumns[1] = prop.getProperty(TABLE_COLUMN_OLD_DWZ);
 		tableColumns[2] = prop.getProperty(TABLE_COLUMN_NEW_DWZ);
@@ -214,8 +217,8 @@ public class PropertiesControl {
 
 	private static int setWidth() {
 
-		int widthAllowed = Toolkit.getDefaultToolkit().getScreenSize().width;
-		int widthDreamSize = TournamentConstants.WINDOW_HEIGHT * 4 / 3;
+		final int widthAllowed = Toolkit.getDefaultToolkit().getScreenSize().width;
+		final int widthDreamSize = TournamentConstants.WINDOW_HEIGHT * 4 / 3;
 		if (widthDreamSize < widthAllowed) {
 			return widthDreamSize;
 		} else {
@@ -225,9 +228,9 @@ public class PropertiesControl {
 	}
 
 	private Boolean checkDefaultPath() {
-		String path = prop.getProperty(DEFAULTPATH);
+		final String path = prop.getProperty(DEFAULTPATH);
 
-		File f = new File(path);
+		final File f = new File(path);
 
 		if (f.isDirectory()) {
 			return true;
@@ -238,7 +241,7 @@ public class PropertiesControl {
 	}
 
 	public void checkMeetingTableColumnForDoubles() {
-		String[] tableColumns = new String[6];
+		final String[] tableColumns = new String[6];
 		tableColumns[0] = prop.getProperty(TABLE_COLUMN_ROUND);
 		tableColumns[1] = prop.getProperty(TABLE_COLUMN_WHITE);
 		tableColumns[2] = prop.getProperty(TABLE_COLUMN_BLACK);
@@ -271,9 +274,9 @@ public class PropertiesControl {
 		writeProperties();
 	}
 
-	private Boolean checkPath(String path) {
+	private Boolean checkPath(final String path) {
 
-		File f = new File(path);
+		final File f = new File(path);
 
 		if (f.exists() && !f.isDirectory()) {
 			return true;
@@ -284,35 +287,35 @@ public class PropertiesControl {
 	}
 
 	public Boolean checkPathToDatabase() {
-		String path = prop.getProperty(PATHTODATABASE);
+		final String path = prop.getProperty(PATHTODATABASE);
 		return checkPath(path);
 	}
 
 	public Boolean checkPathToELOXML() {
-		String path = prop.getProperty(PATHTOPLAYERSELO);
+		final String path = prop.getProperty(PATHTOPLAYERSELO);
 		return checkPath(path);
 
 	}
 
 	private boolean checkPathToPlayersCSV() {
-		String path = prop.getProperty(PATHTOPLAYERSCSV);
+		final String path = prop.getProperty(PATHTOPLAYERSCSV);
 		return checkPath(path);
 
 	}
 
 	private boolean checkPathToPlayersELO() {
-		String path = prop.getProperty(PATHTOPLAYERSELO);
+		final String path = prop.getProperty(PATHTOPLAYERSELO);
 		return checkPath(path);
 	}
 
 	public Boolean checkPathToSpielerCSV() {
-		String path = prop.getProperty(PATHTOPLAYERSCSV);
+		final String path = prop.getProperty(PATHTOPLAYERSCSV);
 		return checkPath(path);
 
 	}
 
 	public Boolean checkPathToVereineCSV() {
-		String path = prop.getProperty(PATHTOVEREINECSV);
+		final String path = prop.getProperty(PATHTOVEREINECSV);
 		return checkPath(path);
 
 	}
@@ -323,7 +326,7 @@ public class PropertiesControl {
 		int spielerProTab = 0;
 		try {
 			turniereProTab = Integer.parseInt(prop.getProperty(TURNIEREPROTAB));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			prop.setProperty(TURNIEREPROTAB, "1");
 			turniereProTab = 1;
 			saveChanges = true;
@@ -331,7 +334,7 @@ public class PropertiesControl {
 
 		try {
 			spielerProTab = Integer.parseInt(prop.getProperty(SPIELERPROTAB));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			prop.setProperty(SPIELERPROTAB, "1");
 			spielerProTab = 1;
 			saveChanges = true;
@@ -594,6 +597,10 @@ public class PropertiesControl {
 			prop.setProperty(FONT_SIZE, String.valueOf(font.getSize()));
 			saveChanges = true;
 		}
+		if (prop.getProperty(CSSTABLE).equals("")) {
+			prop.setProperty(CSSTABLE, "table");
+			saveChanges = true;
+		}
 		checkCrossTableColumnForDoubles();
 		checkMeetingTableColumnForDoubles();
 		if (saveChanges == true) {
@@ -610,7 +617,7 @@ public class PropertiesControl {
 	private int getFontStyle() {
 		try {
 			return Integer.parseInt(prop.getProperty(FONT_STYLE));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return Font.BOLD;
 		}
 	}
@@ -618,44 +625,56 @@ public class PropertiesControl {
 	private int getFontSize() {
 		try {
 			return Integer.parseInt(prop.getProperty(FONT_SIZE));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return 14;
 		}
 	}
 
-	private void setFontName(String fontName) {
+	private void setFontName(final String fontName) {
 
 		prop.setProperty(FONT_NAME, fontName);
 
 	}
 
-	private void setFontStyle(int style) {
+	private void setFontStyle(final int style) {
 
 		prop.setProperty(FONT_STYLE, String.valueOf(style));
 	}
 
-	private void setFontSize(int size) {
+	private void setFontSize(final int size) {
 
 		prop.setProperty(FONT_SIZE, String.valueOf(size));
 
 	}
 
-	public void setFont(Font font) {
+	public void setFont(final Font font) {
 		setFontName(font.getFontName());
 		setFontStyle(font.getStyle());
 		setFontSize(font.getSize());
 	}
 
 	public Font getFont() {
-		Font font = new Font(getFontName(), getFontStyle(), getFontSize());
+		final Font font = new Font(getFontName(), getFontStyle(), getFontSize());
 		return font;
+	}
+
+	public String getCSSTable() {
+
+		return prop.getProperty(CSSTABLE);
+
+	}
+
+	public void setCSSTable(final String css) {
+
+		prop.setProperty(CSSTABLE, css);
+
 	}
 
 	public int getFrameX() {
 		try {
 			return Integer.parseInt(prop.getProperty(FRAME_X));
 
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_BOUNDS_X;
 		}
 	}
@@ -663,7 +682,7 @@ public class PropertiesControl {
 	public int getFrameY() {
 		try {
 			return Integer.parseInt(prop.getProperty(FRAME_Y));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_BOUNDS_Y;
 		}
 	}
@@ -671,7 +690,7 @@ public class PropertiesControl {
 	public int getFrameWidth() {
 		try {
 			return Integer.parseInt(prop.getProperty(FRAME_WIDTH));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_WIDTH;
 		}
 	}
@@ -679,7 +698,7 @@ public class PropertiesControl {
 	public int getFrameHeight() {
 		try {
 			return Integer.parseInt(prop.getProperty(FRAME_HEIGHT));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_HEIGHT;
 		}
 	}
@@ -688,7 +707,7 @@ public class PropertiesControl {
 		try {
 			return Integer.parseInt(prop.getProperty(DWZ_DIALOG_X));
 
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_BOUNDS_X;
 		}
 	}
@@ -696,7 +715,7 @@ public class PropertiesControl {
 	public int getDWZDialogY() {
 		try {
 			return Integer.parseInt(prop.getProperty(DWZ_DIALOG_Y));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_BOUNDS_Y;
 		}
 	}
@@ -704,7 +723,7 @@ public class PropertiesControl {
 	public int getDWZDialogWidth() {
 		try {
 			return Integer.parseInt(prop.getProperty(DWZ_DIALOG_WIDTH));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_WIDTH;
 		}
 	}
@@ -712,7 +731,7 @@ public class PropertiesControl {
 	public int getDWZDialogHeight() {
 		try {
 			return Integer.parseInt(prop.getProperty(DWZ_DIALOG_HEIGHT));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_HEIGHT;
 		}
 	}
@@ -721,7 +740,7 @@ public class PropertiesControl {
 		try {
 			return Integer.parseInt(prop.getProperty(ELO_DIALOG_X));
 
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_BOUNDS_X;
 		}
 	}
@@ -729,7 +748,7 @@ public class PropertiesControl {
 	public int getELODialogY() {
 		try {
 			return Integer.parseInt(prop.getProperty(ELO_DIALOG_Y));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_BOUNDS_Y;
 		}
 	}
@@ -737,7 +756,7 @@ public class PropertiesControl {
 	public int getELODialogWidth() {
 		try {
 			return Integer.parseInt(prop.getProperty(ELO_DIALOG_WIDTH));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_WIDTH;
 		}
 	}
@@ -745,7 +764,7 @@ public class PropertiesControl {
 	public int getELODialogHeight() {
 		try {
 			return Integer.parseInt(prop.getProperty(ELO_DIALOG_HEIGHT));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_HEIGHT;
 		}
 	}
@@ -754,7 +773,7 @@ public class PropertiesControl {
 		try {
 			return Integer.parseInt(prop.getProperty(INFO_DIALOG_X));
 
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_BOUNDS_X;
 		}
 	}
@@ -762,7 +781,7 @@ public class PropertiesControl {
 	public int getInfoDialogY() {
 		try {
 			return Integer.parseInt(prop.getProperty(INFO_DIALOG_Y));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_BOUNDS_Y;
 		}
 	}
@@ -770,7 +789,7 @@ public class PropertiesControl {
 	public int getInfoDialogWidth() {
 		try {
 			return Integer.parseInt(prop.getProperty(INFO_DIALOG_WIDTH));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_WIDTH;
 		}
 	}
@@ -778,7 +797,7 @@ public class PropertiesControl {
 	public int getInfoDialogHeight() {
 		try {
 			return Integer.parseInt(prop.getProperty(INFO_DIALOG_HEIGHT));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_HEIGHT;
 		}
 	}
@@ -787,7 +806,7 @@ public class PropertiesControl {
 		try {
 			return Integer.parseInt(prop.getProperty(SETTINGS_DIALOG_X));
 
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_BOUNDS_X;
 		}
 	}
@@ -795,7 +814,7 @@ public class PropertiesControl {
 	public int getSettingsDialogY() {
 		try {
 			return Integer.parseInt(prop.getProperty(SETTINGS_DIALOG_Y));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_BOUNDS_Y;
 		}
 	}
@@ -803,7 +822,7 @@ public class PropertiesControl {
 	public int getSettingsDialogWidth() {
 		try {
 			return Integer.parseInt(prop.getProperty(SETTINGS_DIALOG_WIDTH));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_WIDTH;
 		}
 	}
@@ -811,7 +830,7 @@ public class PropertiesControl {
 	public int getSettingsDialogHeight() {
 		try {
 			return Integer.parseInt(prop.getProperty(SETTINGS_DIALOG_HEIGHT));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_HEIGHT;
 		}
 	}
@@ -820,7 +839,7 @@ public class PropertiesControl {
 		try {
 			return Integer.parseInt(prop.getProperty(STARTPAGE_DIALOG_X));
 
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_BOUNDS_X;
 		}
 	}
@@ -828,7 +847,7 @@ public class PropertiesControl {
 	public int getStartpageDialogY() {
 		try {
 			return Integer.parseInt(prop.getProperty(STARTPAGE_DIALOG_Y));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_BOUNDS_Y;
 		}
 	}
@@ -836,7 +855,7 @@ public class PropertiesControl {
 	public int getStartpageDialogWidth() {
 		try {
 			return Integer.parseInt(prop.getProperty(STARTPAGE_DIALOG_WIDTH));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_WIDTH;
 		}
 	}
@@ -844,7 +863,7 @@ public class PropertiesControl {
 	public int getStartpageDialogHeight() {
 		try {
 			return Integer.parseInt(prop.getProperty(STARTPAGE_DIALOG_HEIGHT));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return TournamentConstants.WINDOW_HEIGHT;
 		}
 	}
@@ -857,19 +876,19 @@ public class PropertiesControl {
 		return prop.getProperty(CUT_SURNAME);
 	}
 
-	public void setFrameX(int x) {
+	public void setFrameX(final int x) {
 		prop.setProperty(FRAME_X, Integer.toString(x));
 	}
 
-	public void setFrameY(int y) {
+	public void setFrameY(final int y) {
 		prop.setProperty(FRAME_Y, Integer.toString(y));
 	}
 
-	public void setFrameWidth(int width) {
+	public void setFrameWidth(final int width) {
 		prop.setProperty(FRAME_WIDTH, Integer.toString(width));
 	}
 
-	public void setFrameHeight(int height) {
+	public void setFrameHeight(final int height) {
 		prop.setProperty(FRAME_HEIGHT, Integer.toString(height));
 	}
 
@@ -976,7 +995,7 @@ public class PropertiesControl {
 	public int getSpielerProTab() {
 		try {
 			return Integer.parseInt(prop.getProperty(SPIELERPROTAB));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return 1;
 		}
 	}
@@ -1000,7 +1019,7 @@ public class PropertiesControl {
 			eloabstand++;
 			// ohneFolgeELOString = "";
 		}
-		int gesamtabstand = dwzabstand + eloabstand;
+		final int gesamtabstand = dwzabstand + eloabstand;
 
 		return gesamtabstand;
 	}
@@ -1072,7 +1091,7 @@ public class PropertiesControl {
 	public int getTurniereProTab() {
 		try {
 			return Integer.parseInt(prop.getProperty(TURNIEREPROTAB));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			return 1;
 		}
 	}
@@ -1094,10 +1113,10 @@ public class PropertiesControl {
 			checkProperties();
 
 			ok = true;
-		} catch (IOException e) {
+		} catch (final IOException e) {
 
 			ok = false;
-		} catch (NullPointerException e) {
+		} catch (final NullPointerException e) {
 			checkProperties();
 			writeProperties();
 			ok = true;
@@ -1105,15 +1124,15 @@ public class PropertiesControl {
 		return ok;
 	}
 
-	public void setCutForename(String namecut) {
+	public void setCutForename(final String namecut) {
 		prop.setProperty(CUT_FORENAME, namecut);
 	}
 
-	public void setCutSurname(String namecut) {
+	public void setCutSurname(final String namecut) {
 		prop.setProperty(CUT_SURNAME, namecut);
 	}
 
-	public void setDatabaseUpdated(boolean b) {
+	public void setDatabaseUpdated(final boolean b) {
 		if (b == true) {
 			prop.setProperty(DATABASE_UPDATED, TRUE);
 		} else {
@@ -1122,11 +1141,11 @@ public class PropertiesControl {
 
 	}
 
-	public void setDefaultPath(String absolutePath) {
+	public void setDefaultPath(final String absolutePath) {
 		prop.setProperty(DEFAULTPATH, absolutePath);
 	}
 
-	public void sethtmlToClipboard(Boolean htmlToClipboard) {
+	public void sethtmlToClipboard(final Boolean htmlToClipboard) {
 		if (htmlToClipboard == true) {
 			prop.setProperty(HTMLTOCLIPBOARD, TRUE);
 		} else {
@@ -1134,11 +1153,11 @@ public class PropertiesControl {
 		}
 	}
 
-	public void setLanguage(String language) {
+	public void setLanguage(final String language) {
 		prop.setProperty(LANGUAGE, language);
 	}
 
-	public void setNoDWZ(Boolean noDWZWert) {
+	public void setNoDWZ(final Boolean noDWZWert) {
 		if (noDWZWert == true) {
 			prop.setProperty(NODWZ, TRUE);
 		} else {
@@ -1146,7 +1165,7 @@ public class PropertiesControl {
 		}
 	}
 
-	public void setNoELO(Boolean noELO) {
+	public void setNoELO(final Boolean noELO) {
 		if (noELO == true) {
 			prop.setProperty(NOELO, TRUE);
 		} else {
@@ -1155,7 +1174,7 @@ public class PropertiesControl {
 
 	}
 
-	public void setNoFolgeDWZ(Boolean noDWZWert) {
+	public void setNoFolgeDWZ(final Boolean noDWZWert) {
 		if (noDWZWert == true) {
 			prop.setProperty(NOFOLGEDWZ, TRUE);
 		} else {
@@ -1163,7 +1182,7 @@ public class PropertiesControl {
 		}
 	}
 
-	public void setNoFolgeELO(boolean noFolgeELO) {
+	public void setNoFolgeELO(final boolean noFolgeELO) {
 		if (noFolgeELO == true) {
 			prop.setProperty(NOFOLGEELO, TRUE);
 		} else {
@@ -1171,11 +1190,11 @@ public class PropertiesControl {
 		}
 	}
 
-	public void setNoWritableProperties(Boolean noWritableProperties) {
+	public void setNoWritableProperties(final Boolean noWritableProperties) {
 		NoWritableProperties = noWritableProperties;
 	}
 
-	public void setOnlyTables(boolean b) {
+	public void setOnlyTables(final boolean b) {
 		if (b == true) {
 			prop.setProperty(ONLYTABLES, TRUE);
 		} else {
@@ -1184,28 +1203,28 @@ public class PropertiesControl {
 
 	}
 
-	public void setPathToDatabase(String db_PATH) {
+	public void setPathToDatabase(final String db_PATH) {
 		prop.setProperty(PATHTODATABASE, db_PATH);
 	}
 
-	public void setPathToPlayersCSV(String csv_PATH) {
+	public void setPathToPlayersCSV(final String csv_PATH) {
 		prop.setProperty(PATHTOPLAYERSCSV, csv_PATH);
 	}
 
-	public void setPathToPlayersELO(String absolutePath) {
+	public void setPathToPlayersELO(final String absolutePath) {
 		prop.setProperty(PATHTOPLAYERSELO, absolutePath);
 
 	}
 
-	public void setPathToVereineCSV(String vereinecsv_PATH) {
+	public void setPathToVereineCSV(final String vereinecsv_PATH) {
 		prop.setProperty(PATHTOVEREINECSV, vereinecsv_PATH);
 	}
 
-	public void setPathToVereineCVS(String absolutePath) {
+	public void setPathToVereineCVS(final String absolutePath) {
 		prop.setProperty(PATHTOVEREINECSV, absolutePath);
 	}
 
-	public void setPDFLinks(Boolean pdfLinks) {
+	public void setPDFLinks(final Boolean pdfLinks) {
 		if (pdfLinks == true) {
 			prop.setProperty(PDFLINKS, TRUE);
 		} else {
@@ -1213,90 +1232,90 @@ public class PropertiesControl {
 		}
 	}
 
-	public void setProp(Properties prop) {
+	public void setProp(final Properties prop) {
 		this.prop = prop;
 	}
 
-	public void setSpielerProTab(int anzahlprotab) {
+	public void setSpielerProTab(final int anzahlprotab) {
 
 		prop.setProperty(SPIELERPROTAB, new Integer(anzahlprotab).toString());
 
 	}
 
-	public void setTableComumnBlack(String tableString) {
+	public void setTableComumnBlack(final String tableString) {
 		prop.setProperty(TABLE_COLUMN_BLACK, tableString);
 
 	}
 
-	public void setTableComumnMeeting(String tableString) {
+	public void setTableComumnMeeting(final String tableString) {
 		prop.setProperty(TABLE_COLUMN_MEETING, tableString);
 
 	}
 
-	public void setTableComumnNewDWZ(String tableString) {
+	public void setTableComumnNewDWZ(final String tableString) {
 		prop.setProperty(TABLE_COLUMN_NEW_DWZ, tableString);
 
 	}
 
-	public void setTableComumnNewELO(String tableString) {
+	public void setTableComumnNewELO(final String tableString) {
 		prop.setProperty(TABLE_COLUMN_NEW_ELO, tableString);
 
 	}
 
-	public void setTableComumnOldDWZ(String tableString) {
+	public void setTableComumnOldDWZ(final String tableString) {
 		prop.setProperty(TABLE_COLUMN_OLD_DWZ, tableString);
 
 	}
 
-	public void setTableComumnOldELO(String tableString) {
+	public void setTableComumnOldELO(final String tableString) {
 		prop.setProperty(TABLE_COLUMN_OLD_ELO, tableString);
 
 	}
 
-	public void setTableComumnPlayer(String tableString) {
+	public void setTableComumnPlayer(final String tableString) {
 		prop.setProperty(TABLE_COLUMN_PLAYER, tableString);
 
 	}
 
-	public void setTableComumnPoints(String tableString) {
+	public void setTableComumnPoints(final String tableString) {
 		prop.setProperty(TABLE_COLUMN_POINTS, tableString);
 
 	}
 
-	public void setTableComumnRanking(String tableString) {
+	public void setTableComumnRanking(final String tableString) {
 		prop.setProperty(TABLE_COLUMN_RANKING, tableString);
 
 	}
 
-	public void setTableComumnResult(String tableString) {
+	public void setTableComumnResult(final String tableString) {
 		prop.setProperty(TABLE_COLUMN_RESULT, tableString);
 
 	}
 
-	public void setTableComumnRound(String tableString) {
+	public void setTableComumnRound(final String tableString) {
 		prop.setProperty(TABLE_COLUMN_ROUND, tableString);
 
 	}
 
-	public void setTableComumnSonnebornBerger(String tableString) {
+	public void setTableComumnSonnebornBerger(final String tableString) {
 		prop.setProperty(TABLE_COLUMN_SONNEBORNBERGER, tableString);
 
 	}
 
-	public void setTableComumnWhite(String tableString) {
+	public void setTableComumnWhite(final String tableString) {
 		prop.setProperty(TABLE_COLUMN_WHITE, tableString);
 
 	}
 
-	public void setTurniereProTab(int anzahlprotab) {
+	public void setTurniereProTab(final int anzahlprotab) {
 		prop.setProperty(TURNIEREPROTAB, new Integer(anzahlprotab).toString());
 	}
 
-	public void setWebserverPath(String path) {
+	public void setWebserverPath(final String path) {
 		prop.setProperty(WEBSERVER_PATH, path);
 	}
 
-	public void setZPS(String zps) {
+	public void setZPS(final String zps) {
 		prop.setProperty(ZPS, zps);
 
 	}
@@ -1312,13 +1331,13 @@ public class PropertiesControl {
 		Boolean ok = true;
 
 		// speichern
-		StringWriter sw = new StringWriter();
+		final StringWriter sw = new StringWriter();
 		try {
 			prop.store(sw, null);
 			prefs.put("properties", sw.toString());
 			ok = true;
 			NoWritableProperties = false;
-		} catch (IOException e) {
+		} catch (final IOException e) {
 			e.printStackTrace();
 			ok = false;
 			NoWritableProperties = true;
@@ -1327,13 +1346,13 @@ public class PropertiesControl {
 		return ok;
 	}
 
-	public Boolean writeDWZDialogProperties(int x, int y, int width, int height) {
+	public Boolean writeDWZDialogProperties(final int x, final int y, final int width, final int height) {
 		Boolean ok = true;
 
-		String dwzx = String.valueOf(x);
-		String dwzy = String.valueOf(y);
-		String dwzwidth = String.valueOf(width);
-		String dwzheight = String.valueOf(height);
+		final String dwzx = String.valueOf(x);
+		final String dwzy = String.valueOf(y);
+		final String dwzwidth = String.valueOf(width);
+		final String dwzheight = String.valueOf(height);
 		prop.setProperty(DWZ_DIALOG_X, dwzx);
 		prop.setProperty(DWZ_DIALOG_Y, dwzy);
 		prop.setProperty(DWZ_DIALOG_WIDTH, dwzwidth);
@@ -1344,13 +1363,13 @@ public class PropertiesControl {
 
 	}
 
-	public Boolean writeELODialogProperties(int x, int y, int width, int height) {
+	public Boolean writeELODialogProperties(final int x, final int y, final int width, final int height) {
 		Boolean ok = true;
 
-		String dwzx = String.valueOf(x);
-		String dwzy = String.valueOf(y);
-		String dwzwidth = String.valueOf(width);
-		String dwzheight = String.valueOf(height);
+		final String dwzx = String.valueOf(x);
+		final String dwzy = String.valueOf(y);
+		final String dwzwidth = String.valueOf(width);
+		final String dwzheight = String.valueOf(height);
 		prop.setProperty(ELO_DIALOG_X, dwzx);
 		prop.setProperty(ELO_DIALOG_Y, dwzy);
 		prop.setProperty(ELO_DIALOG_WIDTH, dwzwidth);
@@ -1361,13 +1380,13 @@ public class PropertiesControl {
 
 	}
 
-	public Boolean writeInfoDialogProperties(int x, int y, int width, int height) {
+	public Boolean writeInfoDialogProperties(final int x, final int y, final int width, final int height) {
 		Boolean ok = true;
 
-		String dwzx = String.valueOf(x);
-		String dwzy = String.valueOf(y);
-		String dwzwidth = String.valueOf(width);
-		String dwzheight = String.valueOf(height);
+		final String dwzx = String.valueOf(x);
+		final String dwzy = String.valueOf(y);
+		final String dwzwidth = String.valueOf(width);
+		final String dwzheight = String.valueOf(height);
 		prop.setProperty(INFO_DIALOG_X, dwzx);
 		prop.setProperty(INFO_DIALOG_Y, dwzy);
 		prop.setProperty(INFO_DIALOG_WIDTH, dwzwidth);
@@ -1378,13 +1397,13 @@ public class PropertiesControl {
 
 	}
 
-	public Boolean writeSettingsDialogProperties(int x, int y, int width, int height) {
+	public Boolean writeSettingsDialogProperties(final int x, final int y, final int width, final int height) {
 		Boolean ok = true;
 
-		String dwzx = String.valueOf(x);
-		String dwzy = String.valueOf(y);
-		String dwzwidth = String.valueOf(width);
-		String dwzheight = String.valueOf(height);
+		final String dwzx = String.valueOf(x);
+		final String dwzy = String.valueOf(y);
+		final String dwzwidth = String.valueOf(width);
+		final String dwzheight = String.valueOf(height);
 		prop.setProperty(SETTINGS_DIALOG_X, dwzx);
 		prop.setProperty(SETTINGS_DIALOG_Y, dwzy);
 		prop.setProperty(SETTINGS_DIALOG_WIDTH, dwzwidth);
@@ -1395,13 +1414,13 @@ public class PropertiesControl {
 
 	}
 
-	public Boolean writeStartpageDialogProperties(int x, int y, int width, int height) {
+	public Boolean writeStartpageDialogProperties(final int x, final int y, final int width, final int height) {
 		Boolean ok = true;
 
-		String startpagex = String.valueOf(x);
-		String startpagey = String.valueOf(y);
-		String startpagewidth = String.valueOf(width);
-		String startpageheight = String.valueOf(height);
+		final String startpagex = String.valueOf(x);
+		final String startpagey = String.valueOf(y);
+		final String startpagewidth = String.valueOf(width);
+		final String startpageheight = String.valueOf(height);
 		prop.setProperty(STARTPAGE_DIALOG_X, startpagex);
 		prop.setProperty(STARTPAGE_DIALOG_Y, startpagey);
 		prop.setProperty(STARTPAGE_DIALOG_WIDTH, startpagewidth);

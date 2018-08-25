@@ -15,40 +15,40 @@ import de.turnierverwaltung.view.export.HTMLToClipBoardView;
 
 public class HTMLCopyToClipboardControl {
 
-	private MainControl mainControl;
+	private final MainControl mainControl;
 
-	public HTMLCopyToClipboardControl(MainControl mainControl) {
+	public HTMLCopyToClipboardControl(final MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
 
 	}
 
 	public void copyToClipboard() {
-		Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
+		final Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
-			int anzahlGruppen = this.mainControl.getTournament().getAnzahlGruppen();
+			final int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
+			final String cssTable = mainControl.getPropertiesControl().getCSSTable();
 
-			String webserverPath = mainControl.getPropertiesControl().getWebserverPath();
-
+			final String webserverPath = mainControl.getPropertiesControl().getWebserverPath();
 			final HTMLToClipBoardDialogView htmlToClipboardDialog = new HTMLToClipBoardDialogView();
 
-			ArrayList<HTMLToClipBoardView> htmlToClipboardArray = new ArrayList<HTMLToClipBoardView>();
+			final ArrayList<HTMLToClipBoardView> htmlToClipboardArray = new ArrayList<HTMLToClipBoardView>();
 
 			for (int i = 0; i < anzahlGruppen; i++) {
 
 				String wfn = mainControl.getTournament().getTurnierName();
 				wfn += Messages.getString("PDFSaveControler.2")
 						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".pdf";
-				String webfilename1 = wfn.replaceAll(" ", "");
+				final String webfilename1 = wfn.replaceAll(" ", "");
 
 				String wfn2 = mainControl.getTournament().getTurnierName();
 				wfn2 += Messages.getString("PDFSaveControler.8")
 						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".pdf";
-				String webfilename2 = wfn2.replaceAll(" ", "");
+				final String webfilename2 = wfn2.replaceAll(" ", "");
 
-				String ical = mainControl.getTournament().getTurnierName()
+				final String ical = mainControl.getTournament().getTurnierName()
 						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".ics";
-				String webfilename3 = ical.replaceAll(" ", "");
+				final String webfilename3 = ical.replaceAll(" ", "");
 
 				final String crossLabel = mainControl.getTournament().getTurnierName() + " "
 						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + " "
@@ -59,38 +59,38 @@ public class HTMLCopyToClipboardControl {
 				final String allLabel = mainControl.getTournament().getTurnierName() + " "
 						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + " "
 						+ Messages.getString("PDFSaveControler.21");
-				if (this.mainControl.getCrossTable()[i] == null) {
-					this.mainControl.getCrossTableControl().makeSimpleTableView(i);
+				if (mainControl.getCrossTable()[i] == null) {
+					mainControl.getCrossTableControl().makeSimpleTableView(i);
 
-					this.mainControl.getMeetingTableControl().makeSimpleTableView(i);
+					mainControl.getMeetingTableControl().makeSimpleTableView(i);
 
 				}
 
-				CrossTable turnierTabelle = mainControl.getCrossTable()[i];
+				final CrossTable turnierTabelle = mainControl.getCrossTable()[i];
 
-				int spalte = this.mainControl.getCrossTableView()[i].getTable().getModel().getColumnCount();
-				int zeile = this.mainControl.getCrossTableView()[i].getTable().getModel().getRowCount();
+				final int spalte = mainControl.getCrossTableView()[i].getTable().getModel().getColumnCount();
+				final int zeile = mainControl.getCrossTableView()[i].getTable().getModel().getRowCount();
 				for (int x = 0; x < spalte; x++) {
 					for (int y = 0; y < zeile; y++) {
 
-						turnierTabelle.getTabellenMatrix()[x][y + 1] = (String) this.mainControl.getCrossTableView()[i]
+						turnierTabelle.getTabellenMatrix()[x][y + 1] = (String) mainControl.getCrossTableView()[i]
 								.getTable().getValueAt(y, x);
 
 					}
 				}
 
-				Boolean ohneHeaderundFooter = mainControl.getPropertiesControl().getOnlyTables();
-				Boolean showLink = mainControl.getPropertiesControl().getPDFLinks();
+				final Boolean ohneHeaderundFooter = mainControl.getPropertiesControl().getOnlyTables();
+				final Boolean showLink = mainControl.getPropertiesControl().getPDFLinks();
 
-				HTMLToClipBoardView crosshtmlToClipboard = new HTMLToClipBoardView();
+				final HTMLToClipBoardView crosshtmlToClipboard = new HTMLToClipBoardView();
 				crosshtmlToClipboard.getLabel().setText(crossLabel);
-				final String crosstable = this.mainControl.getCrossTable()[i].getHTMLTable(ohneHeaderundFooter,
-						webserverPath, webfilename1, showLink);
+				final String crosstable = mainControl.getCrossTable()[i].getHTMLTable(ohneHeaderundFooter,
+						webserverPath, webfilename1, showLink, cssTable);
 				crosshtmlToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {
 
 					@Override
-					public void actionPerformed(ActionEvent e) {
-						CopyToClipboard clipBoardcopy = new CopyToClipboard();
+					public void actionPerformed(final ActionEvent e) {
+						final CopyToClipboard clipBoardcopy = new CopyToClipboard();
 						clipBoardcopy.copy(crosstable);
 						htmlToClipboardDialog.getStatusLabel().getTitleLabel().setText("Clipboard: " + crossLabel);
 					}
@@ -99,16 +99,16 @@ public class HTMLCopyToClipboardControl {
 
 				htmlToClipboardArray.add(crosshtmlToClipboard);
 
-				HTMLToClipBoardView meetinghtmlToClipboard = new HTMLToClipBoardView();
+				final HTMLToClipBoardView meetinghtmlToClipboard = new HTMLToClipBoardView();
 				meetinghtmlToClipboard.getLabel().setText(meetingLabel);
 
-				final String meetingtable = this.mainControl.getMeetingTableControl().getTerminTabelle()[i]
-						.getHTMLTable(ohneHeaderundFooter, webserverPath, webfilename2, webfilename3, showLink);
+				final String meetingtable = mainControl.getMeetingTableControl().getTerminTabelle()[i].getHTMLTable(
+						ohneHeaderundFooter, webserverPath, webfilename2, webfilename3, showLink, cssTable);
 				meetinghtmlToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {
 
 					@Override
-					public void actionPerformed(ActionEvent e) {
-						CopyToClipboard clipBoardcopy = new CopyToClipboard();
+					public void actionPerformed(final ActionEvent e) {
+						final CopyToClipboard clipBoardcopy = new CopyToClipboard();
 						clipBoardcopy.copy(meetingtable);
 						htmlToClipboardDialog.getStatusLabel().getTitleLabel().setText("Clipboard: " + meetingLabel);
 					}
@@ -116,19 +116,19 @@ public class HTMLCopyToClipboardControl {
 				});
 
 				htmlToClipboardArray.add(meetinghtmlToClipboard);
-				HTMLToClipBoardView allToClipboard = new HTMLToClipBoardView();
+				final HTMLToClipBoardView allToClipboard = new HTMLToClipBoardView();
 				allToClipboard.getLabel().setText(allLabel);
-				final String crosstableall = this.mainControl.getCrossTable()[i]
-						.getHTMLTableOnlyWithHeader(ohneHeaderundFooter, webserverPath, webfilename1, showLink);
-				final String meetingtableall = this.mainControl.getMeetingTableControl().getTerminTabelle()[i]
+				final String crosstableall = mainControl.getCrossTable()[i].getHTMLTableOnlyWithHeader(
+						ohneHeaderundFooter, webserverPath, webfilename1, showLink, cssTable);
+				final String meetingtableall = mainControl.getMeetingTableControl().getTerminTabelle()[i]
 						.getHTMLTableOnlyWithFooter(ohneHeaderundFooter, webserverPath, webfilename2, webfilename3,
-								showLink);
+								showLink, cssTable);
 				allToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {
 
 					@Override
-					public void actionPerformed(ActionEvent e) {
+					public void actionPerformed(final ActionEvent e) {
 
-						CopyToClipboard clipBoardcopy = new CopyToClipboard();
+						final CopyToClipboard clipBoardcopy = new CopyToClipboard();
 						clipBoardcopy.copy(crosstableall + "\n" + meetingtableall);
 						htmlToClipboardDialog.getStatusLabel().getTitleLabel().setText("Clipboard: " + allLabel);
 					}
@@ -142,7 +142,7 @@ public class HTMLCopyToClipboardControl {
 			htmlToClipboardDialog.getButtonPanel().getOkButton().addActionListener(new ActionListener() {
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
+				public void actionPerformed(final ActionEvent e) {
 					htmlToClipboardDialog.dispose();
 
 				}

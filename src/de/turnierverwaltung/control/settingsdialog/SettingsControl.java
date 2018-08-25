@@ -5,7 +5,7 @@ import de.turnierverwaltung.control.PropertiesControl;
 import de.turnierverwaltung.view.settingsdialog.SettingsView;
 
 public class SettingsControl {
-	private MainControl mainControl;
+	private final MainControl mainControl;
 	private SettingsView eigenschaftenView;
 
 	private ActionListenerSettingsControl actionListenerControl;
@@ -14,7 +14,7 @@ public class SettingsControl {
 	/**
 	 * @param mainControl
 	 */
-	public SettingsControl(MainControl mainControl) {
+	public SettingsControl(final MainControl mainControl) {
 		this.mainControl = mainControl;
 		eigenschaftenView = new SettingsView();
 		actionListenerControl = new ActionListenerSettingsControl(this.mainControl, this);
@@ -34,20 +34,20 @@ public class SettingsControl {
 		return itemListenerControl;
 	}
 
-	public void setActionListenerControl(ActionListenerSettingsControl actionListenerControl) {
+	public void setActionListenerControl(final ActionListenerSettingsControl actionListenerControl) {
 		this.actionListenerControl = actionListenerControl;
 	}
 
-	public void setEigenschaftenView(SettingsView eigenschaftenView) {
+	public void setEigenschaftenView(final SettingsView eigenschaftenView) {
 		this.eigenschaftenView = eigenschaftenView;
 	}
 
-	public void setItemListenerControl(ItemListenerSettingsControl itemListenerControl) {
+	public void setItemListenerControl(final ItemListenerSettingsControl itemListenerControl) {
 		this.itemListenerControl = itemListenerControl;
 	}
 
 	public void setTableColumns() {
-		PropertiesControl ppC = mainControl.getPropertiesControl();
+		final PropertiesControl ppC = mainControl.getPropertiesControl();
 		eigenschaftenView.getWhiteTextField().setText(ppC.getTableComumnWhite());
 		eigenschaftenView.getBlackTextField().setText(ppC.getTableComumnBlack());
 		eigenschaftenView.getMeetingTextField().setText(ppC.getTableComumnMeeting());
@@ -63,6 +63,7 @@ public class SettingsControl {
 		eigenschaftenView.getRoundTextField().setText(ppC.getTableComumnRound());
 		eigenschaftenView.getForenameLengthBox().setValue(ppC.getCutForename());
 		eigenschaftenView.getSurnameLengthBox().setValue(ppC.getCutSurname());
+
 	}
 
 }

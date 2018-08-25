@@ -242,7 +242,6 @@ public class SQLPlayerControl {
 		final DWZData dbData = mySQLDWZDataDAO.getDWZData(spieler.getSpielerId());
 		if (spieler.getDWZ() > 0) {
 			if (dbData.getSpielerId() == spieler.getSpielerId()) {
-				System.out.println("1");
 				mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
 			} else {
 				spieler.setDwzData(new DWZData());
