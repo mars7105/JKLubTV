@@ -104,7 +104,7 @@ public class PlayerListControl implements ActionListener {
 					spieler.get(spielerIndex).setForename(foreName);
 					spieler.get(spielerIndex).setSurname(surName);
 					spieler.get(spielerIndex).setKuerzel(kuerzel);
-					spieler.get(spielerIndex).setDwz(dwz);
+					spieler.get(spielerIndex).setDwz(dwzInt);
 					spieler.get(spielerIndex).getDwzData().setCsvDWZ(dwzInt);
 					spieler.get(spielerIndex).getDwzData().setCsvZPS(zps);
 					spieler.get(spielerIndex).getDwzData().setCsvMgl_Nr(mgl);

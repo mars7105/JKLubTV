@@ -20,9 +20,9 @@ import de.turnierverwaltung.view.ratingdialog.ProgressBarDWZUpdateView;
 
 public class UpdateRatingsControl {
 	private ProgressBarDWZUpdateView ladebalkenView;
-	private MainControl mainControl;
+	private final MainControl mainControl;
 
-	public UpdateRatingsControl(MainControl mainControl) {
+	public UpdateRatingsControl(final MainControl mainControl) {
 		super();
 		this.mainControl = mainControl;
 
@@ -32,7 +32,7 @@ public class UpdateRatingsControl {
 	 * Create the GUI and show it. As with all GUI code, this must run on the
 	 * event-dispatching thread.
 	 */
-	private void createAndShowGUI(int anzahl) {
+	private void createAndShowGUI(final int anzahl) {
 
 		ladebalkenView = new ProgressBarDWZUpdateView(anzahl);
 
@@ -42,11 +42,11 @@ public class UpdateRatingsControl {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	public void updateSpieler() {
-		int abfrage = 1;
-		String elofilename = mainControl.getPropertiesControl().getPathToPlayersELO();
+		final int abfrage = 1;
+		final String elofilename = mainControl.getPropertiesControl().getPathToPlayersELO();
 
 		Boolean dbCheckedELO = false;
 
@@ -56,8 +56,8 @@ public class UpdateRatingsControl {
 		if (positionEXT > 0) {
 			elofileextender = elofilename.substring(positionEXT);
 		}
-		SQLitePlayerDWZList dwzlist = new SQLitePlayerDWZList();
-		String dwzfilename = mainControl.getPropertiesControl().getPathToPlayersCSV();
+		final SQLitePlayerDWZList dwzlist = new SQLitePlayerDWZList();
+		final String dwzfilename = mainControl.getPropertiesControl().getPathToPlayersCSV();
 		positionEXT = dwzfilename.lastIndexOf('.');
 		String dwzfileextender = "";
 		if (positionEXT > 0) {
@@ -70,9 +70,9 @@ public class UpdateRatingsControl {
 		if (abfrage >= 0 && abfrage <= 1) {
 
 			ArrayList<ELOPlayer> elospieler = null;
-			DSBDWZClub verein = null;
-			ArrayList<Player> spieler = null;
-			SQLPlayerControl spielerTableControl = new SQLPlayerControl(this.mainControl);
+			final DSBDWZClub verein = null;
+			final ArrayList<Player> spieler = null;
+			final SQLPlayerControl spielerTableControl = new SQLPlayerControl(mainControl);
 			ArrayList<Player> spielerliste = null;
 			SQLitePlayerELOList elolist = null;
 			CSVPlayerList csvPlayerlist = null;
@@ -82,7 +82,7 @@ public class UpdateRatingsControl {
 				dbCheckedELO = elolist.checkDatabase(elofilename);
 
 			} else {
-				ReadTXTFile rtf = new ReadTXTFile();
+				final ReadTXTFile rtf = new ReadTXTFile();
 
 				elospieler = rtf.readFile(elofilename);
 
@@ -90,25 +90,25 @@ public class UpdateRatingsControl {
 
 			try {
 				spielerliste = spielerTableControl.getAllSpielerOrderByZPS();
-			} catch (SQLException e2) {
+			} catch (final SQLException e2) {
 				// TODO Auto-generated catch block
 				e2.printStackTrace();
 			}
 			// Sorting
 			Collections.sort(spielerliste, new Comparator<Player>() {
 				@Override
-				public int compare(Player player2, Player player1) {
+				public int compare(final Player player2, final Player player1) {
 
 					return player1.getDwzData().getCsvZPS().compareTo(player2.getDwzData().getCsvZPS());
 				}
 			});
 			createAndShowGUI(spielerliste.size());
 
-			for (Player player : spielerliste) {
+			for (final Player player : spielerliste) {
 				try {
 					// Elo Update - standard_rating_list.txt
 					if (elospieler != null) {
-						for (ELOPlayer eloplayer : elospieler) {
+						for (final ELOPlayer eloplayer : elospieler) {
 							if (player.getDwzData() != null) {
 								if (eloplayer.getEloData().getFideid() == player.getDwzData().getCsvFIDE_ID()) {
 									player.setEloData(eloplayer.getEloData());
@@ -131,10 +131,10 @@ public class UpdateRatingsControl {
 					}
 
 					// Elo Update -standard_rating_list.sqlite
-					if (dbCheckedELO == true) {
-						int dwzfideid = player.getDwzData().getCsvFIDE_ID();
-						int elofideid = player.getEloData().getFideid();
-						Player temp = new Player();
+					if (dbCheckedELO == true && player.getEloData().getFideid() > 0) {
+						final int dwzfideid = player.getDwzData().getCsvFIDE_ID();
+						final int elofideid = player.getEloData().getFideid();
+						final Player temp = new Player();
 						if (dwzfideid > 0) {
 							temp.setEloData(elolist.getPlayer(elofilename, dwzfideid));
 						}
@@ -149,41 +149,42 @@ public class UpdateRatingsControl {
 
 					}
 					// Online DWZ Update
-					if (abfrage == 0) {
-						String zps = player.getDwzData().getCsvZPS();
-						if (verein != null) {
-							if (verein.getZps().equals(zps) == false) {
-								verein = new DSBDWZClub(zps);
-								spieler = verein.getSpieler();
-							}
-						} else {
-							verein = new DSBDWZClub(zps);
-							spieler = verein.getSpieler();
-						}
-						if (spieler != null) {
-							for (Player temp : spieler) {
-								try {
-									String tempMGL = temp.getDwzData().getCsvMgl_Nr();
-									String playerMGL = player.getDwzData().getCsvMgl_Nr();
-									if (tempMGL.equals(playerMGL)) {
-										if (player.getDWZ() != temp.getDWZ() || player.getDwzData()
-												.getCsvIndex() != temp.getDwzData().getCsvIndex()) {
-											player.setDwz(temp.getDWZ());
-											player.getDwzData().setCsvIndex(temp.getDwzData().getCsvIndex());
-
-											spielerTableControl.updateOneSpieler(player);
-
-										}
-									}
-								} catch (NumberFormatException e) {
-
-								}
-
-							}
-						}
-					}
+					// if (abfrage == 0) {
+					// final String zps = player.getDwzData().getCsvZPS();
+					// if (verein != null) {
+					// if (verein.getZps().equals(zps) == false) {
+					// verein = new DSBDWZClub(zps);
+					// spieler = verein.getSpieler();
+					// }
+					// } else {
+					// verein = new DSBDWZClub(zps);
+					// spieler = verein.getSpieler();
+					// }
+					// if (spieler != null) {
+					// for (final Player temp : spieler) {
+					// try {
+					// final String tempMGL = temp.getDwzData().getCsvMgl_Nr();
+					// final String playerMGL = player.getDwzData().getCsvMgl_Nr();
+					// if (tempMGL.equals(playerMGL)) {
+					// if (player.getDWZ() != temp.getDWZ() || player.getDwzData()
+					// .getCsvIndex() != temp.getDwzData().getCsvIndex()) {
+					// player.setDwz(temp.getDWZ());
+					// player.getDwzData().setCsvIndex(temp.getDwzData().getCsvIndex());
+					//
+					// spielerTableControl.updateOneSpieler(player);
+					//
+					// }
+					// }
+					// } catch (final NumberFormatException e) {
+					//
+					// }
+					//
+					// }
+					// }
+					// }
 					// Offline DWZ Update
-					if (abfrage == 1) {
+					// if (abfrage == 1) {
+					if (player.getDwzData().getCsvZPS().length() > 0) {
 						CSVPlayer csvPlayer;
 						Player sqlitePlayer;
 						if (dbCheckedDWZ == true) {
@@ -222,10 +223,10 @@ public class UpdateRatingsControl {
 
 					}
 					ladebalkenView.iterate();
-				} catch (NullPointerException e) {
+				} catch (final NullPointerException e) {
 					System.out.println(e.getMessage());
 
-				} catch (SQLException e1) {
+				} catch (final SQLException e1) {
 					System.out.println(e1.getMessage());
 				} finally {
 					// SQLiteDAOFactory.setDB_PATH(oldPath);
