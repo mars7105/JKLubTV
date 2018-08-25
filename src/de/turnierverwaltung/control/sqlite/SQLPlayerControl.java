@@ -253,6 +253,10 @@ public class SQLPlayerControl {
 				spieler.setDwzData(dwzData);
 				mySQLDWZDataDAO.insertDWZ(dwzData);
 			}
+		} else {
+			if (playerExist(spieler.getDwzData())) {
+				mySQLDWZDataDAO.deleteDWZ(spieler.getSpielerId());
+			}
 		}
 		if (spieler.getEloData().getFideid() > 0) {
 			mySQLELODataDAO.updateELO(spieler.getEloData());
