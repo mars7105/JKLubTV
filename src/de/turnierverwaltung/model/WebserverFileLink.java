@@ -1,22 +1,23 @@
 package de.turnierverwaltung.model;
 
 public class WebserverFileLink {
-	private String webserverPath;
-	private String filename;
+	private final String webserverPath;
+	private final String filename;
 	private String pathToFile;
-	private Boolean showLink;
+	private final Boolean showLink;
 	private String icsfilename;
 
-	public WebserverFileLink(String webServerPath2, String filename2, Boolean showLink2) {
+	public WebserverFileLink(final String webServerPath2, final String filename2, final Boolean showLink2) {
 		super();
-		this.webserverPath = webServerPath2;
-		this.filename = filename2.replaceAll(" ", "");
-		this.showLink = showLink2;
+		webserverPath = webServerPath2;
+		filename = filename2.replaceAll(" ", "");
+		showLink = showLink2;
 
 		pathToFile = "";
 	}
 
-	public WebserverFileLink(String webserverPath, String filename, String icsfilename, Boolean showLink) {
+	public WebserverFileLink(final String webserverPath, final String filename, final String icsfilename,
+			final Boolean showLink) {
 		super();
 		this.webserverPath = webserverPath;
 		this.filename = filename.replaceAll(" ", "");
@@ -29,9 +30,8 @@ public class WebserverFileLink {
 
 	public String getPathToEXCEL() {
 		if (showLink) {
-			pathToFile = "&nbsp;&nbsp;&nbsp;<a href='" + this.webserverPath + this.filename
-					+ "' target='_blank'><img src='" + this.webserverPath + "excel-1.png' alt='"
-					+ Messages.getString("WebserverFileLink.1") + "' />&nbsp;"
+			pathToFile = "&nbsp;&nbsp;&nbsp;<a href='" + webserverPath + filename + "' target='_blank'><img src='"
+					+ webserverPath + "excel-1.png' alt='" + Messages.getString("WebserverFileLink.1") + "' />&nbsp;"
 					+ Messages.getString("WebserverFileLink.1") + "</a>";
 		}
 		return pathToFile;
@@ -39,25 +39,25 @@ public class WebserverFileLink {
 
 	public String getPathToICS() {
 		if (showLink) {
-			pathToFile = "<a href='" + this.webserverPath + icsfilename + "' target='_blank'><img src='"
-					+ this.webserverPath + "accessories-date.png' alt='" + Messages.getString("WebserverFileLink.2")
-					+ "' />&nbsp;" + Messages.getString("WebserverFileLink.2") + "</a>";
+			pathToFile = "<a href='" + webserverPath + icsfilename + "' target='_blank'><img src='" + webserverPath
+					+ "accessories-date.png' alt='" + Messages.getString("WebserverFileLink.2") + "' />&nbsp;"
+					+ Messages.getString("WebserverFileLink.2") + "</a>";
 		}
 		return pathToFile;
 	}
 
 	public String getPathToPDF() {
 		if (showLink) {
-			pathToFile = "<a href='" + this.webserverPath + this.filename + "' target='_blank'><img src='"
-					+ this.webserverPath + "acroread-2.png' alt='" + Messages.getString("WebserverFileLink.0")
-					+ "' />&nbsp;" + Messages.getString("WebserverFileLink.0") + "</a>";
+			pathToFile = "<a href='" + webserverPath + filename + "' target='_blank'><img src='" + webserverPath
+					+ "acroread-2.png' alt='" + Messages.getString("WebserverFileLink.0") + "' />&nbsp;"
+					+ Messages.getString("WebserverFileLink.0") + "</a>";
 		}
 		return pathToFile;
 	}
 
 	public String getPathToUserImageBlack() {
 		if (showLink) {
-			pathToFile = "<img src='" + this.webserverPath + "im-user-black.png' alt='black' />&nbsp;";
+			pathToFile = "<img src='" + webserverPath + "im-user-black.png' alt='black' />&nbsp;";
 
 		}
 		return pathToFile;
@@ -65,7 +65,7 @@ public class WebserverFileLink {
 
 	public String getPathToUserImageBlackWhite() {
 		if (showLink) {
-			pathToFile = "style='background-image: url(" + this.webserverPath
+			pathToFile = "style='background-image: url(" + webserverPath
 					+ "im-user-black-small.png); background-repeat: no-repeat;background-position: right bottom;'";
 
 		}
@@ -74,7 +74,7 @@ public class WebserverFileLink {
 
 	public String getPathToUserImageWhite() {
 		if (showLink) {
-			pathToFile = "<img src='" + this.webserverPath + "im-user-white.png' alt='white' />&nbsp;";
+			pathToFile = "<img src='" + webserverPath + "im-user-white.png' alt='white' />&nbsp;";
 
 		}
 		return pathToFile;
@@ -82,9 +82,16 @@ public class WebserverFileLink {
 
 	public String getPathToUserImageWhiteBlack() {
 		if (showLink) {
-			pathToFile = "style='background-image: url(" + this.webserverPath
+			pathToFile = "style='background-image: url(" + webserverPath
 					+ "im-user-white-small.png); background-repeat: no-repeat;background-position: right bottom;'";
 
+		}
+		return pathToFile;
+	}
+
+	public String getPathsForMeetingtable() {
+		if (showLink) {
+			pathToFile = "<br />" + getPathToPDF() + "&nbsp;&nbsp;&nbsp;" + getPathToICS();
 		}
 		return pathToFile;
 	}

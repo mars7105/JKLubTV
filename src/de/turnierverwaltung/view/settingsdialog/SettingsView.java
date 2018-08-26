@@ -44,6 +44,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.ButtonPanelView;
@@ -471,21 +472,90 @@ public class SettingsView extends JPanel {
 	}
 
 	private void makeHTMLEigenschaften() {
+		final Color titleColor = new Color((SystemColor.menu).getRGB());
+		final Border blackline = BorderFactory.createLineBorder(titleColor);
+
 		// ohne Header und Footer
 		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		JLabel labelHeader = new JLabel(Messages.getString("EigenschaftenView.1")); //$NON-NLS-1$
+		final Dimension dimTextField = new Dimension(500, 40);
 
 		checkBoxHeaderFooter = new JCheckBox();
 		htmlPanel.add(checkBoxHeaderFooter);
 		htmlPanel.add(labelHeader);
-		final TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.2"));
+		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.73"));
 		titleView.setFlowLayoutLeft();
 
 		htmlAll.add(titleView);
 
 		htmlAll.add(htmlPanel);
+		// Table style
 
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.72")); //$NON-NLS-1$
+		tableCSSTextField = new JTextField(40);
+		tableCSSTextField.setPreferredSize(dimTextField);
+
+		JPanel htmlPanelLabel = new JPanel();
+		htmlPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		JPanel htmlPanelInput = new JPanel();
+		htmlPanelInput.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanelLabel.add(labelHeader);
+
+		htmlPanelInput.add(tableCSSTextField);
+		JSeparator separator = new JSeparator();
+		separator.setBorder(blackline);
+		htmlAll.add(separator);
+
+		htmlAll.add(htmlPanelLabel);
+		htmlAll.add(htmlPanelInput);
+		separator = new JSeparator();
+		separator.setBorder(blackline);
+		htmlAll.add(separator);
+
+		// HTML Tabellen in die Zwischenablage kopieren
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.60")); //$NON-NLS-1$
+		checkBoxhtmlToClipboard = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxhtmlToClipboard);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		// PDF Links in HTML Tabellen einbinden
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.42")); //$NON-NLS-1$
+		checkBoxPDFLinks = new JCheckBox();
+		htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(checkBoxPDFLinks);
+		htmlPanel.add(labelHeader);
+
+		htmlAll.add(htmlPanel);
+
+		// Webserver Path
+
+		labelHeader = new JLabel(Messages.getString("EigenschaftenView.41")); //$NON-NLS-1$
+		webserverPathTextField = new JTextField(40);
+		webserverPathTextField.setPreferredSize(dimTextField);
+		htmlPanelLabel = new JPanel();
+		htmlPanelLabel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanelInput = new JPanel();
+		htmlPanelInput.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanelLabel.add(labelHeader);
+
+		htmlPanelInput.add(webserverPathTextField);
+		separator = new JSeparator();
+		separator.setBorder(blackline);
+		htmlAll.add(separator);
+
+		htmlAll.add(htmlPanelLabel);
+		htmlAll.add(htmlPanelInput);
+
+		titleView = new TitleLabelView(Messages.getString("EigenschaftenView.74"));
+		titleView.setFlowLayoutLeft();
+
+		htmlAll.add(titleView);
 		// ohne DWZ
 		labelHeader = new JLabel(Messages.getString("EigenschaftenView.3")); //$NON-NLS-1$
 		checkBoxohneDWZ = new JCheckBox();
@@ -523,48 +593,10 @@ public class SettingsView extends JPanel {
 		htmlPanel.add(labelHeader);
 
 		htmlAll.add(htmlPanel);
-		// HTML Tabellen in die Zwischenablage kopieren
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.60")); //$NON-NLS-1$
-		checkBoxhtmlToClipboard = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxhtmlToClipboard);
-		htmlPanel.add(labelHeader);
+		titleView = new TitleLabelView(Messages.getString("EigenschaftenView.75"));
+		titleView.setFlowLayoutLeft();
 
-		htmlAll.add(htmlPanel);
-
-		// PDF Links in HTML Tabellen einbinden
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.42")); //$NON-NLS-1$
-		checkBoxPDFLinks = new JCheckBox();
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(checkBoxPDFLinks);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
-
-		// Webserver Path
-		final Dimension dimTextField = new Dimension(225, 30);
-
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.41")); //$NON-NLS-1$
-		webserverPathTextField = new JTextField(22);
-		webserverPathTextField.setPreferredSize(dimTextField);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(webserverPathTextField);
-		htmlPanel.add(labelHeader);
-		htmlAll.add(htmlPanel);
-		// Table style
-
-		labelHeader = new JLabel(Messages.getString("EigenschaftenView.72")); //$NON-NLS-1$
-		tableCSSTextField = new JTextField(22);
-		tableCSSTextField.setPreferredSize(dimTextField);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(tableCSSTextField);
-		htmlPanel.add(labelHeader);
-
-		htmlAll.add(htmlPanel);
+		htmlAll.add(titleView);
 		// buchstaben anzahl
 		final String[] listString = new String[20];
 		for (int i = 0; i < 20; i++) {
@@ -581,15 +613,13 @@ public class SettingsView extends JPanel {
 				Messages.getString("EigenschaftenView.40"));
 		htmlAll.add(surnameLengthBox);
 
-		htmlAll.add(new JSeparator());
-
 	}
 
 	private void tableLabel() {
 		TitleLabelView titleView = new TitleLabelView(Messages.getString("EigenschaftenView.21"));
 		titleView.setFlowLayoutLeft();
-		final Color windowBorder = new Color((SystemColor.windowBorder).getRGB());
-
+		// final Color windowBorder = new Color((SystemColor.windowBorder).getRGB());
+		final Color windowBorder = new Color((SystemColor.menu).getRGB());
 		htmlAll.add(titleView);
 		final JPanel bothPanel = new JPanel();
 		bothPanel.setLayout(new BorderLayout());
@@ -602,7 +632,7 @@ public class SettingsView extends JPanel {
 
 		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		final Dimension dimTextField = new Dimension(175, 30);
+		final Dimension dimTextField = new Dimension(175, 40);
 		final int textFieldColumns = 9;
 		oldDWZTextField = new JTextField(TournamentConstants.TABLE_COLUMN_OLD_DWZ, textFieldColumns);
 		oldDWZTextField.setPreferredSize(dimTextField);

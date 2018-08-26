@@ -148,8 +148,8 @@ public class MeetingTableToHTML {
 			if (y == 0) {
 				beginString1 = "    <thead>\n    <tr><th colspan='" + col + "'>"
 						+ Messages.getString("TurnierTabelleToHTML.11") + " - " + gruppenName + " "
-						+ tabellenMatrix[0][0] + " " + tabellenMatrix[y][1] + "<br />" + fileLink.getPathToPDF()
-						+ "&nbsp;&nbsp;&nbsp;" + fileLink.getPathToICS() + "</th></tr>\n</thead>\n<tbody>\n<tr>\n";
+						+ tabellenMatrix[0][0] + " " + tabellenMatrix[y][1] + fileLink.getPathsForMeetingtable()
+						+ "</th></tr>\n</thead>\n<tbody>\n<tr>\n";
 				htmlString += beginString1 + beginString2;
 			} else {
 
@@ -185,8 +185,8 @@ public class MeetingTableToHTML {
 					htmlString += "<table class='" + cssTableClass + "'>\n";
 					beginString1 = "    <thead>\n    <tr><th colspan='" + col + "'>"
 							+ Messages.getString("TurnierTabelleToHTML.11") + " - " + gruppenName + " "
-							+ tabellenMatrix[0][0] + " " + tabellenMatrix[0][y + 1] + "<br />" + fileLink.getPathToPDF()
-							+ "&nbsp;&nbsp;&nbsp;" + fileLink.getPathToICS() + "</th></tr>\n</thead>\n<tbody>\n<tr>\n";
+							+ tabellenMatrix[0][0] + " " + tabellenMatrix[0][y + 1] + fileLink.getPathsForMeetingtable()
+							+ "</th></tr>\n</thead>\n<tbody>\n<tr>\n";
 					htmlString += beginString1 + beginString2;
 
 				}
