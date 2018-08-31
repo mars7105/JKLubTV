@@ -31,7 +31,6 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
-import javax.swing.WindowConstants;
 
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.ButtonPanelView;
@@ -39,16 +38,16 @@ import de.turnierverwaltung.view.Messages;
 
 public class NewPlayerView extends JDialog {
 	/**
-		 * 
+		 *
 		 */
 	private static final long serialVersionUID = -5642277833139693453L;
 	private JButton okButton;
 	private JButton cancelButton;
 	private JTextField textFieldKuerzel;
 	private JTextField textFieldDwz;
-	private ButtonPanelView buttonPane;
+	private final ButtonPanelView buttonPane;
 	private JPanel centerPane;
-	private JPanel contentPanel;
+	private final JPanel contentPanel;
 	private JComboBox<String> textComboBoxAge;
 	private JTextField textFieldForeName;
 	private JTextField textFieldSurName;
@@ -58,12 +57,12 @@ public class NewPlayerView extends JDialog {
 		buttonPane.makeAllButtons();
 		buttonPane.getOkButton().setText(Messages.getString("SpielerHinzufuegenView.10"));
 		buttonPane.getCancelButton().setText(Messages.getString("SpielerHinzufuegenView.11"));
-		this.okButton = buttonPane.getOkButton();
-		this.cancelButton = buttonPane.getCancelButton();
+		okButton = buttonPane.getOkButton();
+		cancelButton = buttonPane.getCancelButton();
 
 		setTitle(Messages.getString("SpielerHinzufuegenView.2")); //$NON-NLS-1$
-//		this.setAlwaysOnTop(true);
-		setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
+		// this.setAlwaysOnTop(true);
+		// setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		setLayout(new BorderLayout());
 		contentPanel = new JPanel();
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
@@ -71,17 +70,18 @@ public class NewPlayerView extends JDialog {
 
 		// contentPanel.setBackground(new Color(249, 222, 112));
 
-		JPanel mainPanel = new JPanel();
+		final JPanel mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.add(contentPanel, BorderLayout.NORTH);
-		JScrollPane jsP = new JScrollPane(mainPanel);
+		final JScrollPane jsP = new JScrollPane(mainPanel);
 		jsP.setViewportView(mainPanel);
 		buttonPane.setLayout(new FlowLayout());
 		add(jsP, BorderLayout.CENTER);
 		add(buttonPane, BorderLayout.SOUTH);
 		spielerPanel();
-		
+
 	}
+
 	public void showDialog() {
 		pack();
 
@@ -89,12 +89,11 @@ public class NewPlayerView extends JDialog {
 		setEnabled(true);
 		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
 		setVisible(true);
-		
 
 	}
 
 	public void closeWindow() {
-		this.dispose();
+		dispose();
 	}
 
 	public JButton getCancelButton() {
@@ -125,45 +124,45 @@ public class NewPlayerView extends JDialog {
 		return textFieldSurName;
 	}
 
-	public void setCancelButton(JButton cancelButton) {
+	public void setCancelButton(final JButton cancelButton) {
 		this.cancelButton = cancelButton;
 	}
 
-	public void setOkButton(JButton okButton) {
+	public void setOkButton(final JButton okButton) {
 		this.okButton = okButton;
 	}
 
-	public void setTextComboBoxAge(JComboBox<String> textComboBoxAge) {
+	public void setTextComboBoxAge(final JComboBox<String> textComboBoxAge) {
 		this.textComboBoxAge = textComboBoxAge;
 	}
 
-	public void setTextFieldDwz(JTextField textFieldDwz) {
+	public void setTextFieldDwz(final JTextField textFieldDwz) {
 		this.textFieldDwz = textFieldDwz;
 	}
 
-	public void setTextFieldForeName(JTextField textFieldForeName) {
+	public void setTextFieldForeName(final JTextField textFieldForeName) {
 		this.textFieldForeName = textFieldForeName;
 	}
 
-	public void setTextFieldKuerzel(JTextField textFieldKuerzel) {
+	public void setTextFieldKuerzel(final JTextField textFieldKuerzel) {
 		this.textFieldKuerzel = textFieldKuerzel;
 	}
 
-	public void setTextFieldSurName(JTextField textFieldSurName) {
+	public void setTextFieldSurName(final JTextField textFieldSurName) {
 		this.textFieldSurName = textFieldSurName;
 	}
 
 	public void spielerPanel() {
-		JPanel all = new JPanel();
+		final JPanel all = new JPanel();
 		all.setLayout(new BoxLayout(all, BoxLayout.Y_AXIS));
 		centerPane = new JPanel();
-		this.textFieldForeName = new JTextField(15);
-		this.textFieldSurName = new JTextField(15);
-		this.textFieldKuerzel = new JTextField(15);
-		this.textFieldDwz = new JTextField(15);
+		textFieldForeName = new JTextField(15);
+		textFieldSurName = new JTextField(15);
+		textFieldKuerzel = new JTextField(15);
+		textFieldDwz = new JTextField(15);
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		// centerPane.setBackground(new Color(249, 222, 112));
-		Dimension dim = new Dimension(90, 30);
+		final Dimension dim = new Dimension(90, 30);
 		JLabel label = new JLabel();
 		label.setPreferredSize(dim);
 		label.setText(Messages.getString("SpielerHinzufuegenView.12"));
@@ -187,9 +186,9 @@ public class NewPlayerView extends JDialog {
 		label.setText(Messages.getString("SpielerHinzufuegenView.5"));
 		centerPane.add(label); // $NON-NLS-1$
 		centerPane.add(textFieldDwz);
-		String[] ageStrings = { Messages.getString("SpielerHinzufuegenView.6"), //$NON-NLS-1$
+		final String[] ageStrings = { Messages.getString("SpielerHinzufuegenView.6"), //$NON-NLS-1$
 				Messages.getString("SpielerHinzufuegenView.7"), Messages.getString("SpielerHinzufuegenView.8") }; //$NON-NLS-1$ //$NON-NLS-2$
-		this.textComboBoxAge = new JComboBox<String>(ageStrings);
+		textComboBoxAge = new JComboBox<String>(ageStrings);
 		label = new JLabel();
 		label.setPreferredSize(dim);
 		label.setText(Messages.getString("SpielerHinzufuegenView.9"));
@@ -197,14 +196,13 @@ public class NewPlayerView extends JDialog {
 		centerPane.add(textComboBoxAge);
 		all.add(centerPane);
 		all.add(new JSeparator());
-		JPanel allall = new JPanel();
+		final JPanel allall = new JPanel();
 		allall.setLayout(new BorderLayout());
 		allall.add(all, BorderLayout.NORTH);
 		contentPanel.add(allall);
 		// contentPanel.add(buttonPane);
 
 		contentPanel.updateUI();
-		
 
 	}
 }
