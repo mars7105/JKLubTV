@@ -101,7 +101,8 @@ public class PropertiesControl {
 	public static final String FONT_SIZE = "font-size";
 
 	public static final String CSSTABLE = "css-table";
-
+	public static final String TEXTFIELD_WIDTH = "textfield-width";
+	public static final String TEXTFIELD_HEIGHT = "textfield-height";
 	private Properties prop;
 	private Boolean NoWritableProperties;
 	private final Preferences prefs;
@@ -178,6 +179,10 @@ public class PropertiesControl {
 		prop.setProperty(FONT_SIZE, "");
 
 		prop.setProperty(CSSTABLE, "");
+		prop.setProperty(TEXTFIELD_WIDTH, "150");
+		prop.setProperty(TEXTFIELD_HEIGHT, "40");
+		TournamentConstants.setTextField(getTextFieldWidth(), getTextFieldHeight());
+
 	}
 
 	public void checkCrossTableColumnForDoubles() {
@@ -601,6 +606,16 @@ public class PropertiesControl {
 			prop.setProperty(CSSTABLE, "table");
 			saveChanges = true;
 		}
+		if (prop.getProperty(TEXTFIELD_WIDTH).equals("")) {
+			prop.setProperty(TEXTFIELD_WIDTH, "150");
+			saveChanges = true;
+		}
+		if (prop.getProperty(TEXTFIELD_HEIGHT).equals("")) {
+			prop.setProperty(TEXTFIELD_HEIGHT, "40");
+			saveChanges = true;
+		}
+		TournamentConstants.setTextField(getTextFieldWidth(), getTextFieldHeight());
+
 		checkCrossTableColumnForDoubles();
 		checkMeetingTableColumnForDoubles();
 		if (saveChanges == true) {
@@ -656,6 +671,37 @@ public class PropertiesControl {
 	public Font getFont() {
 		final Font font = new Font(getFontName(), getFontStyle(), getFontSize());
 		return font;
+	}
+
+	public int getTextFieldWidth() {
+		try {
+			return Integer.parseInt(prop.getProperty(TEXTFIELD_WIDTH));
+		} catch (final NumberFormatException e) {
+			return 150;
+		}
+
+	}
+
+	public void setTextFieldWidth(final int width) {
+
+		prop.setProperty(TEXTFIELD_WIDTH, Integer.toString(width));
+		TournamentConstants.setTextField(getTextFieldWidth(), getTextFieldHeight());
+	}
+
+	public int getTextFieldHeight() {
+
+		try {
+			return Integer.parseInt(prop.getProperty(TEXTFIELD_HEIGHT));
+		} catch (final NumberFormatException e) {
+			return 150;
+		}
+	}
+
+	public void setTextFieldHeight(final int height) {
+
+		prop.setProperty(TEXTFIELD_HEIGHT, Integer.toString(height));
+		TournamentConstants.setTextField(getTextFieldWidth(), getTextFieldHeight());
+
 	}
 
 	public String getCSSTable() {

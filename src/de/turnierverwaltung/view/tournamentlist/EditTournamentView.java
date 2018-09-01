@@ -1,23 +1,6 @@
 package de.turnierverwaltung.view.tournamentlist;
 
 import java.awt.Dialog;
-//JKlubTV - Ein Programm zum verwalten von Schach Turnieren
-//Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
-//
-//This program is free software: you can redistribute it and/or modify
-//it under the terms of the GNU General Public License as published by
-//the Free Software Foundation, either version 3 of the License, or
-//(at your option) any later version.
-//
-//This program is distributed in the hope that it will be useful,
-//but WITHOUT ANY WARRANTY; without even the implied warranty of
-//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//GNU General Public License for more details.
-//
-//You should have received a copy of the GNU General Public License
-//along with this program.  If not, see <http://www.gnu.org/licenses/>.
-//import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.text.ParseException;
@@ -32,7 +15,6 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFormattedTextField.AbstractFormatter;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -41,6 +23,7 @@ import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.view.ButtonPanelView;
 import de.turnierverwaltung.view.DateChooserPanel;
 import de.turnierverwaltung.view.Messages;
+import de.turnierverwaltung.view.OwnLabel;
 
 public class EditTournamentView extends JDialog {
 	public class DateLabelFormatter extends AbstractFormatter {
@@ -114,9 +97,7 @@ public class EditTournamentView extends JDialog {
 		JPanel centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 		textFieldTurnierName.setText(turnier.getTurnierName());
-		JLabel label = new JLabel();
-		final Dimension dim = new Dimension(150, 40);
-		label.setPreferredSize(dim);
+		OwnLabel label = new OwnLabel();
 		label.setText(Messages.getString("TurnierEditierenView.11")); //$NON-NLS-1$
 		centerPane.add(label);
 		centerPane.add(textFieldTurnierName);
@@ -135,8 +116,7 @@ public class EditTournamentView extends JDialog {
 		startDatumTextField.setDate(dstart);
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		label = new JLabel();
-		label.setPreferredSize(dim);
+		label = new OwnLabel();
 		label.setText(Messages.getString("TurnierEditierenView.12")); //$NON-NLS-1$
 		centerPane.add(label);
 		centerPane.add(startDatumTextField);
@@ -157,8 +137,7 @@ public class EditTournamentView extends JDialog {
 
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		label = new JLabel();
-		label.setPreferredSize(dim);
+		label = new OwnLabel();
 		label.setText(Messages.getString("TurnierEditierenView.13")); //$NON-NLS-1$
 		centerPane.add(label);
 		centerPane.add(endDatumTextField);
@@ -174,8 +153,7 @@ public class EditTournamentView extends JDialog {
 			textFieldGruppenName[i] = new JTextField(15);
 			textFieldGruppenName[i].setText(turnier.getGruppe()[i].getGruppenName());
 			playerOfGroupButtons[i] = new JButton(Messages.getString("TurnierEditierenView.15"), playerIcon);
-			label = new JLabel();
-			label.setPreferredSize(dim);
+			label = new OwnLabel();
 			label.setText(Messages.getString("TurnierEditierenView.14") + (i + 1));
 			deleteButtons[i] = new JButton(Messages.getString("TurnierEditierenView.16"), deleteIcon);
 

@@ -2,23 +2,6 @@ package de.turnierverwaltung.view.playerlist;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 
 import java.awt.Dialog;
-
-//Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
-//
-//This program is free software: you can redistribute it and/or modify
-//it under the terms of the GNU General Public License as published by
-//the Free Software Foundation, either version 3 of the License, or
-//(at your option) any later version.
-//
-//This program is distributed in the hope that it will be useful,
-//but WITHOUT ANY WARRANTY; without even the implied warranty of
-//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//GNU General Public License for more details.
-//
-//You should have received a copy of the GNU General Public License
-//along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 
@@ -27,13 +10,13 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.view.ButtonPanelView;
 import de.turnierverwaltung.view.Messages;
+import de.turnierverwaltung.view.OwnLabel;
 
 public class EditPlayerView extends JDialog {
 	/**
@@ -60,7 +43,7 @@ public class EditPlayerView extends JDialog {
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/games-highscores.png"))); //$NON-NLS-1$
 
 	public EditPlayerView(final Player spieler) {
-		final Dimension dim = new Dimension(150, 40);
+		// final Dimension dim = new Dimension(150, 40);
 		buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();
 		okButton = buttonPane.getOkButton();
@@ -86,8 +69,8 @@ public class EditPlayerView extends JDialog {
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 
 		textFieldForename.setText(spieler.getForename());
-		JLabel label = new JLabel();
-		label.setPreferredSize(dim);
+		OwnLabel label = new OwnLabel();
+		// label.setPreferredSize(dim);
 		label.setText(Messages.getString("SpielerEditierenView.10")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -96,8 +79,7 @@ public class EditPlayerView extends JDialog {
 		contentPanel.add(centerPane);
 
 		textFieldSurname.setText(spieler.getSurname());
-		label = new JLabel();
-		label.setPreferredSize(dim);
+		label = new OwnLabel();
 		label.setText(Messages.getString("SpielerEditierenView.11")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -106,8 +88,8 @@ public class EditPlayerView extends JDialog {
 		contentPanel.add(centerPane);
 
 		textFieldKuerzel.setText(spieler.getKuerzel());
-		label = new JLabel();
-		label.setPreferredSize(dim);
+		label = new OwnLabel();
+
 		label.setText(Messages.getString("SpielerEditierenView.4")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -116,8 +98,8 @@ public class EditPlayerView extends JDialog {
 		contentPanel.add(centerPane);
 
 		textFieldDwz.setText(spieler.getDwz());
-		label = new JLabel();
-		label.setPreferredSize(dim);
+		label = new OwnLabel();
+
 		label.setText(Messages.getString("SpielerEditierenView.5")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -126,8 +108,8 @@ public class EditPlayerView extends JDialog {
 		contentPanel.add(centerPane);
 
 		textFieldDwzIndex.setText(Integer.toString(spieler.getDwzData().getCsvIndex()));
-		label = new JLabel();
-		label.setPreferredSize(dim);
+		label = new OwnLabel();
+
 		label.setText(Messages.getString("SpielerEditierenView.14")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -139,8 +121,8 @@ public class EditPlayerView extends JDialog {
 				Messages.getString("SpielerEditierenView.7"), Messages.getString("SpielerEditierenView.8") }; //$NON-NLS-1$ //$NON-NLS-2$
 		textComboBoxAge = new JComboBox<String>(ageStrings);
 		textComboBoxAge.setSelectedIndex(spieler.getAge());
-		label = new JLabel();
-		label.setPreferredSize(dim);
+		label = new OwnLabel();
+
 		label.setText(Messages.getString("SpielerEditierenView.9")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -149,8 +131,8 @@ public class EditPlayerView extends JDialog {
 		contentPanel.add(centerPane);
 
 		textFieldZPS.setText(spieler.getDwzData().getCsvZPS());
-		label = new JLabel();
-		label.setPreferredSize(dim);
+		label = new OwnLabel();
+
 		label.setText(Messages.getString("SpielerEditierenView.12")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -159,8 +141,8 @@ public class EditPlayerView extends JDialog {
 		contentPanel.add(centerPane);
 
 		textFieldMGL.setText(spieler.getDwzData().getCsvMgl_Nr());
-		label = new JLabel();
-		label.setPreferredSize(dim);
+		label = new OwnLabel();
+
 		label.setText(Messages.getString("SpielerEditierenView.13")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -178,8 +160,8 @@ public class EditPlayerView extends JDialog {
 		if (fideId > 0) {
 			textFieldFideId.setText(Integer.toString(fideId));
 		}
-		label = new JLabel();
-		label.setPreferredSize(dim);
+		label = new OwnLabel();
+
 		label.setText(Messages.getString("SpielerEditierenView.15")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -198,8 +180,8 @@ public class EditPlayerView extends JDialog {
 		if (elo > 0) {
 			textFieldELO.setText(Integer.toString(elo));
 		}
-		label = new JLabel();
-		label.setPreferredSize(dim);
+		label = new OwnLabel();
+
 		label.setText(Messages.getString("SpielerEditierenView.16")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -207,8 +189,8 @@ public class EditPlayerView extends JDialog {
 		centerPane.add(textFieldELO);
 		contentPanel.add(centerPane);
 
-		label = new JLabel();
-		label.setPreferredSize(dim);
+		label = new OwnLabel();
+
 		label.setText(Messages.getString("SpielerEditierenView.18")); //$NON-NLS-1$
 		centerPane = new JPanel();
 		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));

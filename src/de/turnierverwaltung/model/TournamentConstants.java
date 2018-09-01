@@ -20,7 +20,7 @@ import java.awt.Toolkit;
 import de.turnierverwaltung.sqlite.DAOFactory;
 
 /**
- * 
+ *
  * @author mars
  *
  */
@@ -84,6 +84,8 @@ public class TournamentConstants {
 	public static String TABLE_COLUMN_BLACK = Messages.getString("TurnierKonstanten.8");
 	public static String TABLE_COLUMN_RESULT = Messages.getString("TurnierKonstanten.9");
 	public static String TABLE_COLUMN_MEETING = Messages.getString("TurnierKonstanten.10");
+	public static int TEXTFIELD_WIDTH = 150;
+	public static int TEXTFIELD_HEIGHT = 40;
 
 	public static void setConstantLanguage() {
 		TABLE_COLUMN_PLAYER = Messages.getString("TurnierKonstanten.0");
@@ -103,13 +105,19 @@ public class TournamentConstants {
 
 	private static int setWidth() {
 
-		int widthAllowed = Toolkit.getDefaultToolkit().getScreenSize().width;
-		int widthDreamSize = TournamentConstants.WINDOW_HEIGHT * 4 / 3;
+		final int widthAllowed = Toolkit.getDefaultToolkit().getScreenSize().width;
+		final int widthDreamSize = TournamentConstants.WINDOW_HEIGHT * 4 / 3;
 		if (widthDreamSize < widthAllowed) {
 			return widthDreamSize;
 		} else {
 			return widthAllowed;
 		}
+
+	}
+
+	public static void setTextField(final int width, final int height) {
+		TournamentConstants.TEXTFIELD_WIDTH = width;
+		TournamentConstants.TEXTFIELD_HEIGHT = height;
 
 	}
 }
