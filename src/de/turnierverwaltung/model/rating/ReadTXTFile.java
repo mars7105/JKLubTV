@@ -5,20 +5,24 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import de.turnierverwaltung.model.TournamentConstants;
+
 public final class ReadTXTFile {
+	private String date;
 
 	public ReadTXTFile() {
 
 	}
 
-	public ArrayList<ELOPlayer> readFile(String filename) {
+	public ArrayList<ELOPlayer> readFile(final String filename) {
 		ArrayList<ELOPlayer> playerList = null;
+		date = "";
 		try {
 			ELOPlayer eloPlayer = null;
 			playerList = new ArrayList<ELOPlayer>();
-			String[] row = new String[13];
+			final String[] row = new String[13];
 
-			BufferedReader reader = new BufferedReader(new FileReader(filename));
+			final BufferedReader reader = new BufferedReader(new FileReader(filename));
 			String line;
 			for (int i = 0; (line = reader.readLine()) != null; i++) {
 				row[0] = line.substring(0, 14).trim();
@@ -34,53 +38,55 @@ public final class ReadTXTFile {
 				row[10] = line.substring(123, 125).trim();
 				row[11] = line.substring(126, 130).trim();
 				row[12] = line.substring(132, 135).trim();
-
+				if (i == 0) {
+					date = row[8];
+				}
 				if (i > 0) {
 					int fideid = -1;
 					try {
 						fideid = Integer.parseInt(row[0]);
-					} catch (NumberFormatException e) {
+					} catch (final NumberFormatException e) {
 						fideid = -1;
 					}
 
-					String name = row[1];
-//					String[] nameString = row[1].split("\\s",2);
-//					if (nameString.length >= 1) {
-//						name = (nameString[1] + " " + nameString[0]).replaceAll(",", "").trim();
-//					}
+					final String name = row[1];
+					// String[] nameString = row[1].split("\\s",2);
+					// if (nameString.length >= 1) {
+					// name = (nameString[1] + " " + nameString[0]).replaceAll(",", "").trim();
+					// }
 
-					String country = row[2];
-					String sex = row[3];
-					String title = row[4];
-					String w_title = row[5];
-					String o_title = row[6];
-					String foa_title = row[7];
+					final String country = row[2];
+					final String sex = row[3];
+					final String title = row[4];
+					final String w_title = row[5];
+					final String o_title = row[6];
+					final String foa_title = row[7];
 					int rating = -1;
 					try {
 						rating = Integer.parseInt(row[8]);
-					} catch (NumberFormatException e) {
+					} catch (final NumberFormatException e) {
 						rating = -1;
 					}
 					int games = -1;
 					try {
 						games = Integer.parseInt(row[9]);
-					} catch (NumberFormatException e) {
+					} catch (final NumberFormatException e) {
 						games = -1;
 					}
 					int k = -1;
 					try {
 						k = Integer.parseInt(row[10]);
-					} catch (NumberFormatException e) {
+					} catch (final NumberFormatException e) {
 						k = -1;
 					}
 					int birthday = -1;
 					try {
 						birthday = Integer.parseInt(row[11]);
-					} catch (NumberFormatException e) {
+					} catch (final NumberFormatException e) {
 						birthday = -1;
 					}
 
-					String flag = row[12];
+					final String flag = row[12];
 
 					eloPlayer = new ELOPlayer(fideid, name, country, sex, title, w_title, o_title, foa_title, rating,
 							games, k, birthday, flag);
@@ -90,12 +96,12 @@ public final class ReadTXTFile {
 
 			}
 			reader.close();
-		} catch (StringIndexOutOfBoundsException e1) {
+		} catch (final StringIndexOutOfBoundsException e1) {
 			playerList = null;
-		} catch (IOException e2) {
+		} catch (final IOException e2) {
 			playerList = null;
 		}
-
+		TournamentConstants.STANDARD_RATING_LIST_DATE = date;
 		return playerList;
 	}
 }

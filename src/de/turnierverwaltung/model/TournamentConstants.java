@@ -86,6 +86,7 @@ public class TournamentConstants {
 	public static String TABLE_COLUMN_MEETING = Messages.getString("TurnierKonstanten.10");
 	public static int TEXTFIELD_WIDTH = 150;
 	public static int TEXTFIELD_HEIGHT = 40;
+	public static String STANDARD_RATING_LIST_DATE = "";
 
 	public static void setConstantLanguage() {
 		TABLE_COLUMN_PLAYER = Messages.getString("TurnierKonstanten.0");
