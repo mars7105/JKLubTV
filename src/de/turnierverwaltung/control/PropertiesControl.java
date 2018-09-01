@@ -16,6 +16,7 @@ package de.turnierverwaltung.control;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
@@ -588,7 +589,19 @@ public class PropertiesControl {
 			saveChanges = true;
 
 		}
-		final Font font = new JLabel().getFont();
+		Font font;
+		try {
+			final Font genericFont = Font.createFont(Font.TRUETYPE_FONT,
+					this.getClass().getResourceAsStream("/Fonts/Vollkorn-Regular.ttf"));
+			font = genericFont.deriveFont(Font.TRUETYPE_FONT, 14);
+		} catch (final FontFormatException e) {
+			font = new JLabel().getFont();
+			e.printStackTrace();
+		} catch (final IOException e) {
+			font = new JLabel().getFont();
+			e.printStackTrace();
+		}
+
 		if (prop.getProperty(FONT_NAME).equals("")) {
 			prop.setProperty(FONT_NAME, font.getFontName());
 			saveChanges = true;

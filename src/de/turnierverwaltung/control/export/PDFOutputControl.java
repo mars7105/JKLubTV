@@ -38,25 +38,25 @@ import de.turnierverwaltung.control.Messages;
 import de.turnierverwaltung.model.Tournament;
 
 public class PDFOutputControl {
-	public static PdfPTable createTerminTabelle(String[][] stringTable) throws DocumentException {
-		int spalten = stringTable[0].length;
-		int zeilen = stringTable.length;
+	public static PdfPTable createTerminTabelle(final String[][] stringTable) throws DocumentException {
+
+		final Font font = new Font(FontFamily.TIMES_ROMAN, 14);
+		final int spalten = stringTable[0].length;
+		final int zeilen = stringTable.length;
 		for (int i = 0; i < zeilen; i++) {
-			String replacedStr = stringTable[i][0].replaceAll("<br />", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			final String replacedStr = stringTable[i][0].replaceAll("<br />", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			stringTable[i][0] = replacedStr;
 		}
 
-		PdfPTable table = new PdfPTable(zeilen);
-
-		Font font = new Font(FontFamily.HELVETICA, 8);
+		final PdfPTable table = new PdfPTable(zeilen);
 
 		for (int x = 0; x < spalten; x++) {
 
 			for (int y = 0; y < zeilen; y++) {
 
-				Phrase ph = new Phrase(stringTable[y][x]);
+				final Phrase ph = new Phrase(stringTable[y][x]);
 				ph.setFont(font);
-				PdfPCell cell = new PdfPCell(ph);
+				final PdfPCell cell = new PdfPCell(ph);
 
 				table.addCell(cell);
 
@@ -68,16 +68,17 @@ public class PDFOutputControl {
 
 	}
 
-	public static PdfPTable createTurnierTabelle(Tournament turnier, String[][] stringTable) throws DocumentException {
-		int spalten = stringTable[0].length;
-		int zeilen = stringTable.length;
+	public static PdfPTable createTurnierTabelle(final Tournament turnier, final String[][] stringTable)
+			throws DocumentException {
+		final int spalten = stringTable[0].length;
+		final int zeilen = stringTable.length;
 		for (int i = 0; i < zeilen; i++) {
-			String replacedStr = stringTable[i][0].replaceAll("<br />", ""); //$NON-NLS-1$ //$NON-NLS-2$
+			final String replacedStr = stringTable[i][0].replaceAll("<br />", ""); //$NON-NLS-1$ //$NON-NLS-2$
 			stringTable[i][0] = replacedStr;
 		}
 
-		PdfPTable table = new PdfPTable(zeilen);
-		float[] fl = new float[zeilen];
+		final PdfPTable table = new PdfPTable(zeilen);
+		final float[] fl = new float[zeilen];
 		fl[0] = 5;
 		int count = 0;
 		if (turnier.getNoDWZCalc() == true) {
@@ -114,15 +115,15 @@ public class PDFOutputControl {
 				fl[i - 1] = 2;
 			}
 		}
-		Font font = new Font(FontFamily.HELVETICA, 8);
+		final Font font = new Font(FontFamily.TIMES_ROMAN, 14);
 
 		for (int x = 0; x < spalten; x++) {
 
 			for (int y = 0; y < zeilen; y++) {
 
-				Phrase ph = new Phrase(stringTable[y][x]);
+				final Phrase ph = new Phrase(stringTable[y][x]);
 				ph.setFont(font);
-				PdfPCell cell = new PdfPCell(ph);
+				final PdfPCell cell = new PdfPCell(ph);
 
 				table.addCell(cell);
 
@@ -142,13 +143,13 @@ public class PDFOutputControl {
 
 	}
 
-	public void createTerminPdf(String titel, String absolutePath, String[][] tabellenMatrix) {
+	public void createTerminPdf(final String titel, final String absolutePath, final String[][] tabellenMatrix) {
 		int n = 0;
 
-		File file = new File(absolutePath);
+		final File file = new File(absolutePath);
 		if (file.exists() && fileExist == false) {
 			fileExist = true;
-			Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
+			final Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
 			n = JOptionPane.showOptionDialog(null,
 					Messages.getString("SaveDialog.0") + file.getAbsolutePath() + Messages.getString("SaveDialog.1"),
 					"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
@@ -156,7 +157,7 @@ public class PDFOutputControl {
 		}
 		if (n == 0) {
 			// step 1
-			Document document = new Document();
+			final Document document = new Document();
 			// step 2
 			try {
 				PdfWriter.getInstance(document, new FileOutputStream(file));
@@ -171,7 +172,7 @@ public class PDFOutputControl {
 				document.add(new Paragraph(titel));
 				document.add(new Paragraph(" ")); //$NON-NLS-1$
 				document.add(createTerminTabelle(tabellenMatrix));
-			} catch (DocumentException e) {
+			} catch (final DocumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -182,21 +183,22 @@ public class PDFOutputControl {
 
 	/**
 	 * Creates a PDF with information about the movies
-	 * 
+	 *
 	 * @param turnier
-	 * 
+	 *
 	 * @param filename
-	 *            the name of the PDF file that will be created.
+	 *                     the name of the PDF file that will be created.
 	 * @throws DocumentException
 	 * @throws IOException
 	 */
-	public void createTurnierPdf(Tournament turnier, String titel, String absolutePath, String[][] tabellenMatrix) {
+	public void createTurnierPdf(final Tournament turnier, final String titel, final String absolutePath,
+			final String[][] tabellenMatrix) {
 		int n = 0;
 
-		File file = new File(absolutePath);
+		final File file = new File(absolutePath);
 		if (file.exists() && fileExist == false) {
 			fileExist = true;
-			Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
+			final Object[] options = { Messages.getString("SaveDialog.2"), Messages.getString("SaveDialog.3") };
 			n = JOptionPane.showOptionDialog(null,
 					Messages.getString("SaveDialog.0") + file.getAbsolutePath() + Messages.getString("SaveDialog.1"),
 					"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options,
@@ -204,14 +206,14 @@ public class PDFOutputControl {
 		}
 		if (n == 0) {
 			// step 1
-			Document document = new Document();
+			final Document document = new Document();
 			// step 2
 			try {
 				PdfWriter.getInstance(document, new FileOutputStream(file));
-			} catch (FileNotFoundException e) {
+			} catch (final FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (DocumentException e) {
+			} catch (final DocumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
@@ -222,7 +224,7 @@ public class PDFOutputControl {
 				document.add(new Paragraph(titel));
 				document.add(new Paragraph(" ")); //$NON-NLS-1$
 				document.add(createTurnierTabelle(turnier, tabellenMatrix));
-			} catch (DocumentException e) {
+			} catch (final DocumentException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}

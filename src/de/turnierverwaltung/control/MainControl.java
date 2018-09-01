@@ -148,9 +148,13 @@ public class MainControl extends JFrame implements WindowListener {
 
 	private ActionListenerTournamentEditControl actionListenerTournamentEditControl;
 	private StartpageControl startpageControl;
-	private Parameter parameter;
+	private final Parameter parameter;
 
-	public MainControl(String[] args) {
+	public MainControl(final String[] args) {
+		propertiesControl = new PropertiesControl(this);
+		Font font;
+		font = propertiesControl.getFont();
+		setUIFont(font);
 		parameter = new Parameter(args);
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
 		windowHeight = TournamentConstants.WINDOW_HEIGHT;
@@ -170,13 +174,14 @@ public class MainControl extends JFrame implements WindowListener {
 
 	}
 
-	public static void setUIFont(java.awt.Font f) {
-		Enumeration<Object> keys = UIManager.getDefaults().keys();
+	public static void setUIFont(final java.awt.Font f) {
+		final Enumeration<Object> keys = UIManager.getDefaults().keys();
 		while (keys.hasMoreElements()) {
-			Object key = keys.nextElement();
-			Object value = UIManager.get(key);
-			if (value != null && value instanceof java.awt.Font)
+			final Object key = keys.nextElement();
+			final Object value = UIManager.get(key);
+			if (value != null && value instanceof java.awt.Font) {
 				UIManager.put(key, f);
+			}
 		}
 	}
 
@@ -184,7 +189,7 @@ public class MainControl extends JFrame implements WindowListener {
 		return startpageControl;
 	}
 
-	public void setStartpageControl(StartpageControl startpageControl) {
+	public void setStartpageControl(final StartpageControl startpageControl) {
 		this.startpageControl = startpageControl;
 	}
 
@@ -390,7 +395,7 @@ public class MainControl extends JFrame implements WindowListener {
 	}
 
 	private void init() {
-		propertiesControl = new PropertiesControl(this);
+
 		languagePropertiesControl = new LanguagePropertiesControl(this);
 		if (propertiesControl.readProperties() == false) {
 			if (propertiesControl.writeProperties() == false) {
@@ -400,9 +405,7 @@ public class MainControl extends JFrame implements WindowListener {
 		languagePropertiesControl.checkLanguage();
 
 		setTitle(Messages.getString("MainControl.0")); //$NON-NLS-1$
-		Font font;
-		font = propertiesControl.getFont();
-		setUIFont(font);
+
 		newTournament = false;
 		mainPanel = new JPanel();
 		mainPanel.setLayout(new BorderLayout());
@@ -434,15 +437,15 @@ public class MainControl extends JFrame implements WindowListener {
 		final String parameterPath = parameter.getTournamentPath();
 		final String propertiesPath = propertiesControl.getPathToDatabase();
 		if (parameter.getHelp() == true) {
-			String helpString1 = "-f <filename> : filename of database to load.";
-			String helpString2 = "--reset : reset properties.";
-			String helpString3 = "--help : help.";
+			final String helpString1 = "-f <filename> : filename of database to load.";
+			final String helpString2 = "--reset : reset properties.";
+			final String helpString3 = "--help : help.";
 			System.out.println(helpString1 + "\n" + helpString2 + "\n" + helpString3 + "\n");
 			System.exit(0);
 		}
 		if (parameter.resetProperties() == true) {
 			propertiesControl.resetProperties();
-			String helpString = "All Properties are deleted!";
+			final String helpString = "All Properties are deleted!";
 			System.out.println(helpString);
 			System.exit(0);
 		}
@@ -485,7 +488,7 @@ public class MainControl extends JFrame implements WindowListener {
 
 	}
 
-	private void loadDatabase(String path) {
+	private void loadDatabase(final String path) {
 
 		SQLiteDAOFactory.setDB_PATH(path);
 		setTitle(Messages.getString("MainControl.8") //$NON-NLS-1$
@@ -807,30 +810,30 @@ public class MainControl extends JFrame implements WindowListener {
 	}
 
 	@Override
-	public void windowActivated(WindowEvent arg0) {
+	public void windowActivated(final WindowEvent arg0) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void windowClosed(WindowEvent e) {
+	public void windowClosed(final WindowEvent e) {
 		// getPropertiesControl().writeProperties();
 		// System.exit(0);
 
 	}
 
 	@Override
-	public void windowClosing(WindowEvent e) {
+	public void windowClosing(final WindowEvent e) {
 
 		final int abfrage = beendenHinweis();
 		if (abfrage > 0) {
 
-			if (this.getHauptPanel().getTabCount() == TournamentConstants.TAB_ACTIVE_TOURNAMENT + 1) {
-				if (this.getChangedGames().isEmpty() == false) {
-					SaveTournamentControl saveTournament = new SaveTournamentControl(this);
+			if (getHauptPanel().getTabCount() == TournamentConstants.TAB_ACTIVE_TOURNAMENT + 1) {
+				if (getChangedGames().isEmpty() == false) {
+					final SaveTournamentControl saveTournament = new SaveTournamentControl(this);
 					try {
 						saveTournament.saveChangedPartien();
-					} catch (SQLException e1) {
+					} catch (final SQLException e1) {
 						final ExceptionHandler eh = new ExceptionHandler(this);
 						eh.fileSQLError(e1.getMessage());
 					}
@@ -844,33 +847,33 @@ public class MainControl extends JFrame implements WindowListener {
 	}
 
 	@Override
-	public void windowDeactivated(WindowEvent e) {
+	public void windowDeactivated(final WindowEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void windowDeiconified(WindowEvent e) {
+	public void windowDeiconified(final WindowEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void windowIconified(WindowEvent e) {
+	public void windowIconified(final WindowEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void windowOpened(WindowEvent e) {
+	public void windowOpened(final WindowEvent e) {
 		// TODO Auto-generated method stub
 
 	}
 
 	private int beendenHinweis() {
 		int abfrage = 0;
-		if (this.getHauptPanel().getTabCount() == TournamentConstants.TAB_ACTIVE_TOURNAMENT + 1) {
-			if (this.getChangedGames().isEmpty() == false) {
+		if (getHauptPanel().getTabCount() == TournamentConstants.TAB_ACTIVE_TOURNAMENT + 1) {
+			if (getChangedGames().isEmpty() == false) {
 
 				final String hinweisText = Messages.getString("NaviController.21") //$NON-NLS-1$
 						+ Messages.getString("NaviController.22") //$NON-NLS-1$
