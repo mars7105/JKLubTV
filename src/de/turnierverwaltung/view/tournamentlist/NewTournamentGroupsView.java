@@ -41,7 +41,7 @@ import de.turnierverwaltung.view.SpinnerView;
 public class NewTournamentGroupsView extends JPanel {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
@@ -79,7 +79,7 @@ public class NewTournamentGroupsView extends JPanel {
 
 	public String[] getGruppenName() {
 		for (int i = 0; i < gruppenAnzahl; i++) {
-			gruppenName[i] = this.gruppenNameTextField[i].getText();
+			gruppenName[i] = gruppenNameTextField[i].getText();
 		}
 		return gruppenName;
 	}
@@ -92,7 +92,7 @@ public class NewTournamentGroupsView extends JPanel {
 		return okButton;
 	}
 
-	public void runView(int gruppenAnzahl) {
+	public void runView(final int gruppenAnzahl) {
 		this.gruppenAnzahl = gruppenAnzahl;
 		gruppenName = new String[this.gruppenAnzahl];
 
@@ -103,36 +103,36 @@ public class NewTournamentGroupsView extends JPanel {
 		 */
 		// JLabel doppelteRundenLabel;
 		// doppelteRundenCheckBox = new JCheckBox[this.gruppenAnzahl];
-		setLayout(new FlowLayout());
+		setLayout(new BorderLayout());
 		// setBackground(new Color(249, 222, 112));
 
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		// contentPanel.setBackground(new Color(249, 222, 112));
 		contentPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 
-		ButtonPanelView buttonPane = new ButtonPanelView();
+		final ButtonPanelView buttonPane = new ButtonPanelView();
 		buttonPane.makeAllButtons();
 
-		JPanel centerPane = new JPanel();
+		final JPanel centerPane = new JPanel();
 		// centerPane.setBackground(new Color(249, 222, 112));
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
 
 		for (int i = 0; i < this.gruppenAnzahl; i++) {
 
-			JPanel groupBox = new JPanel();
+			final JPanel groupBox = new JPanel();
 			groupBox.setLayout(new FlowLayout(FlowLayout.LEFT));
 			gruppenNameTextField[i] = new JTextField();
 			gruppenNameTextField[i].setColumns(10);
-			JPanel gruppenLabelPanel = new JPanel();
+			final JPanel gruppenLabelPanel = new JPanel();
 			gruppenLabelPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 			gruppenLabelPanel.add(new JLabel(String.valueOf(i + 1) + Messages.getString("GruppenView.0"))); //$NON-NLS-1$
 			groupBox.add(gruppenNameTextField[i]);
 			groupBox.add(gruppenLabelPanel);
 
-			JPanel countBox = new JPanel();
+			final JPanel countBox = new JPanel();
 			countBox.setLayout(new FlowLayout(FlowLayout.LEFT));
-			int maxPlayers = TournamentConstants.MAX_PLAYERS - 2;
-			String[] listString = new String[maxPlayers];
+			final int maxPlayers = TournamentConstants.MAX_PLAYERS - 2;
+			final String[] listString = new String[maxPlayers];
 			for (int x = 0; x < maxPlayers; x++) {
 				listString[x] = new Integer(x + 3).toString();
 
@@ -159,7 +159,7 @@ public class NewTournamentGroupsView extends JPanel {
 
 			// groupBox.add(doppelRundigPanel);
 
-			JPanel itemPanel = new JPanel();
+			final JPanel itemPanel = new JPanel();
 			itemPanel.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.RAISED));
 			itemPanel.setLayout(new BoxLayout(itemPanel, BoxLayout.Y_AXIS));
 
@@ -171,7 +171,7 @@ public class NewTournamentGroupsView extends JPanel {
 
 		cancelButton = buttonPane.getCancelButton();
 		centerPane.add(buttonPane);
-		JPanel allGroupBoxes = new JPanel();
+		final JPanel allGroupBoxes = new JPanel();
 		allGroupBoxes.setLayout(new BorderLayout());
 		allGroupBoxes.add(centerPane, BorderLayout.NORTH);
 
@@ -180,33 +180,33 @@ public class NewTournamentGroupsView extends JPanel {
 		scrollPane = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(contentPanel);
-		add(scrollPane);
+		add(scrollPane, BorderLayout.CENTER);
 
 		setVisible(true);
 
 	}
 
-	public void setAnzahlSpielerSpinner(SpinnerView[] anzahlSpielerSpinner) {
+	public void setAnzahlSpielerSpinner(final SpinnerView[] anzahlSpielerSpinner) {
 		this.anzahlSpielerSpinner = anzahlSpielerSpinner;
 	}
 
-	public void setCancelButton(JButton cancelButton) {
+	public void setCancelButton(final JButton cancelButton) {
 		this.cancelButton = cancelButton;
 	}
 
-	public void setGruppenAnzahl(int gruppenAnzahl) {
+	public void setGruppenAnzahl(final int gruppenAnzahl) {
 		this.gruppenAnzahl = gruppenAnzahl;
 	}
 
-	public void setGruppenName(String[] gruppenName) {
+	public void setGruppenName(final String[] gruppenName) {
 		this.gruppenName = gruppenName;
 	}
 
-	public void setGruppenNameTextField(JTextField[] gruppenNameTextField) {
+	public void setGruppenNameTextField(final JTextField[] gruppenNameTextField) {
 		this.gruppenNameTextField = gruppenNameTextField;
 	}
 
-	public void setOkButton(JButton okButton) {
+	public void setOkButton(final JButton okButton) {
 		this.okButton = okButton;
 	}
 

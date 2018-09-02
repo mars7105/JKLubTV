@@ -27,6 +27,7 @@ import de.turnierverwaltung.sqlite.DAOFactory;
 
 public class TournamentConstants {
 	public static final int MAX_PLAYERS = 32;
+	public static final int MAX_GROUPS = 15;
 	public static final String KEIN_ERGEBNIS = " ";
 	public static final String GEWINN = "1";
 	public static final String VERLUST = "0";

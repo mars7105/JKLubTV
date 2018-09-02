@@ -208,6 +208,14 @@ public class PlayerListControl implements ActionListener {
 		this.spielerLadenView = spielerLadenView;
 	}
 
+	public EditPlayerView getSpielerEditierenView() {
+		return spielerEditierenView;
+	}
+
+	public void setSpielerEditierenView(final EditPlayerView spielerEditierenView) {
+		this.spielerEditierenView = spielerEditierenView;
+	}
+
 	public void updateSpielerListe() throws SQLException {
 		try {
 			final PropertiesControl prop = mainControl.getPropertiesControl();

@@ -36,9 +36,10 @@ import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.tournamentlist.NewTournamentGroupsView;
+import de.turnierverwaltung.view.tournamenttable.ButtonTabComponent;
 
 public class NewTournamentGroupsControl implements ActionListener {
-	private static int pruefeObZahlKleinerDreiIst(int zahl) throws ZahlKleinerAlsN, ZahlGroesserAlsN {
+	private static int pruefeObZahlKleinerDreiIst(final int zahl) throws ZahlKleinerAlsN, ZahlGroesserAlsN {
 		if (zahl < 3) {
 			throw new ZahlKleinerAlsN();
 		}
@@ -47,7 +48,8 @@ public class NewTournamentGroupsControl implements ActionListener {
 		}
 		return zahl;
 	}
-	private MainControl mainControl;
+
+	private final MainControl mainControl;
 	private NewTournamentGroupsView gruppenView;
 	private JButton gruppenOKButton;
 	private JButton gruppenCancelButton;
@@ -55,20 +57,20 @@ public class NewTournamentGroupsControl implements ActionListener {
 	private int gruppenAnzahl;
 	private Tournament turnier;
 	private Group[] gruppe;
-	private ImageIcon gruppenIcon = new ImageIcon(
+	private final ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
 	private Player[][] spieler;
 
 	private int spielerAnzahl[];
 
-	public NewTournamentGroupsControl(MainControl mainControl) {
+	public NewTournamentGroupsControl(final MainControl mainControl) {
 
 		this.mainControl = mainControl;
 		init();
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(final ActionEvent arg0) {
 
 		if (arg0.getSource().equals(gruppenOKButton)) {
 			makeGruppe();
@@ -78,7 +80,7 @@ public class NewTournamentGroupsControl implements ActionListener {
 			runPlayerInput();
 		}
 		if (arg0.getSource().equals(gruppenCancelButton)) {
-			this.mainControl.setNewTournamentControl(new NewTournamentControl(this.mainControl));
+			mainControl.setNewTournamentControl(new NewTournamentControl(mainControl));
 		}
 
 	}
@@ -87,7 +89,7 @@ public class NewTournamentGroupsControl implements ActionListener {
 		return gruppenAnzahl;
 	}
 
-	public int getSpielerAnzahl(int indexI) throws ZahlKleinerAlsN, NumberFormatException, ZahlGroesserAlsN {
+	public int getSpielerAnzahl(final int indexI) throws ZahlKleinerAlsN, NumberFormatException, ZahlGroesserAlsN {
 
 		spielerAnzahl[indexI] = pruefeObZahlKleinerDreiIst(
 				Integer.parseInt(gruppenView.getAnzahlSpielerSpinner()[indexI].getValue()));
@@ -96,23 +98,27 @@ public class NewTournamentGroupsControl implements ActionListener {
 	}
 
 	public void init() {
-		turnier = this.mainControl.getTournament();
-		hauptPanel = this.mainControl.getHauptPanel();
+		turnier = mainControl.getTournament();
+		hauptPanel = mainControl.getHauptPanel();
 		gruppenAnzahl = turnier.getAnzahlGruppen();
-		this.mainControl.setNewTournamentGroupsView(new NewTournamentGroupsView());
-		this.gruppenView = this.mainControl.getNewTournamentGroupsView();
+		mainControl.setNewTournamentGroupsView(new NewTournamentGroupsView());
+		gruppenView = mainControl.getNewTournamentGroupsView();
 		gruppenView.runView(gruppenAnzahl);
-		gruppenOKButton = this.gruppenView.getOkButton();
+		gruppenOKButton = gruppenView.getOkButton();
 		gruppenOKButton.addActionListener(this);
-		gruppenCancelButton = this.gruppenView.getCancelButton();
+		gruppenCancelButton = gruppenView.getCancelButton();
 		gruppenCancelButton.addActionListener(this);
 		gruppenView.getGruppenNameTextField()[0].grabFocus();
 		hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
-		hauptPanel.add(this.gruppenView, TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		hauptPanel.add(gruppenView, TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		final ButtonTabComponent buttonTabComponent = mainControl.getButtonTabComponent();
+
+		hauptPanel.setTabComponentAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, buttonTabComponent);
+
 		hauptPanel.setTitleAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, turnier.getTurnierName());
 		hauptPanel.setIconAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, gruppenIcon);
 		hauptPanel.setSelectedIndex(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
-		this.mainControl.getNaviView().getTabellenPanel().setVisible(false);
+		mainControl.getNaviView().getTabellenPanel().setVisible(false);
 	}
 
 	private void makeGruppe() {
@@ -134,7 +140,7 @@ public class NewTournamentGroupsControl implements ActionListener {
 	}
 
 	private void runPlayerInput() {
-		int fehlerIndex = 0;
+		final int fehlerIndex = 0;
 		try {
 			NewTournamentPlayerInputControl spielerEingabeControl;
 			if (mainControl.getNewTournamentPlayerInputControl() == null) {
@@ -152,19 +158,19 @@ public class NewTournamentGroupsControl implements ActionListener {
 				spielerEingabeControl.makeTabbedPane(i);
 
 			}
-		} catch (SQLException e) {
-			ExceptionHandler eh = new ExceptionHandler(mainControl);
+		} catch (final SQLException e) {
+			final ExceptionHandler eh = new ExceptionHandler(mainControl);
 			eh.fileSQLError(e.getMessage());
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			spielerAnzahl[fehlerIndex] = 0;
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.1")); //$NON-NLS-1$
 			// spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
-		} catch (ZahlKleinerAlsN e) {
+		} catch (final ZahlKleinerAlsN e) {
 			spielerAnzahl[fehlerIndex] = 0;
 
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.3")); //$NON-NLS-1$
 			// spielerAnzahlTextfield[fehlerIndex].setText(""); //$NON-NLS-1$
-		} catch (ZahlGroesserAlsN e) {
+		} catch (final ZahlGroesserAlsN e) {
 			spielerAnzahl[fehlerIndex] = 0;
 
 			JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerAnzahlControl.5")); //$NON-NLS-1$
@@ -173,7 +179,7 @@ public class NewTournamentGroupsControl implements ActionListener {
 
 	}
 
-	public void setGruppenAnzahl(int gruppenAnzahl) {
+	public void setGruppenAnzahl(final int gruppenAnzahl) {
 		this.gruppenAnzahl = gruppenAnzahl;
 	}
 }

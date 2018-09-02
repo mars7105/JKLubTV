@@ -45,32 +45,33 @@ import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.TabbedPaneView;
 import de.turnierverwaltung.view.tournamentlist.NewTournamentPlayerInputView;
+import de.turnierverwaltung.view.tournamenttable.ButtonTabComponent;
 
 public class NewTournamentPlayerInputControl implements ActionListener, KeyListener {
 
-	private MainControl mainControl;
-	private NewTournamentPlayerInputView[] spielerEingabeView;
+	private final MainControl mainControl;
+	private final NewTournamentPlayerInputView[] spielerEingabeView;
 	// private NewTournamentPlayerCountlView[] spielerAnzahlView;
-	private JButton[] okButton;
-	private JButton[] cancelButton;
-	private int[] spielerAnzahl;
-	private int gruppenAnzahl;
-	private TabbedPaneView tabAnzeigeView;
-	private Tournament turnier;
-	private Group[] gruppe;
+	private final JButton[] okButton;
+	private final JButton[] cancelButton;
+	private final int[] spielerAnzahl;
+	private final int gruppenAnzahl;
+	private final TabbedPaneView tabAnzeigeView;
+	private final Tournament turnier;
+	private final Group[] gruppe;
 	private Player[] spieler;
-	private PairingsControl rundenEingabeFormularControl;
-	private ArrayList<Player> alleSpieler;
+	private final PairingsControl rundenEingabeFormularControl;
+	private final ArrayList<Player> alleSpieler;
 	private Boolean[] readyToSave;
-	private ImageIcon gruppenIcon = new ImageIcon(
+	private final ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png"))); //$NON-NLS-1$
-	private JTabbedPane hauptPanel;
+	private final JTabbedPane hauptPanel;
 
-	public NewTournamentPlayerInputControl(MainControl mainControl) throws SQLException {
-		int windowWidth = TournamentConstants.WINDOW_WIDTH - 25;
-		int windowHeight = TournamentConstants.WINDOW_HEIGHT - 75;
+	public NewTournamentPlayerInputControl(final MainControl mainControl) throws SQLException {
+		final int windowWidth = TournamentConstants.WINDOW_WIDTH - 25;
+		final int windowHeight = TournamentConstants.WINDOW_HEIGHT - 75;
 		this.mainControl = mainControl;
-		SQLPlayerControl spielerTableControl = new SQLPlayerControl(mainControl);
+		final SQLPlayerControl spielerTableControl = new SQLPlayerControl(mainControl);
 		alleSpieler = spielerTableControl.getAllSpieler();
 		turnier = this.mainControl.getTournament();
 		gruppe = turnier.getGruppe();
@@ -85,6 +86,10 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		hauptPanel.setTitleAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, turnier.getTurnierName());
 		hauptPanel.setIconAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, gruppenIcon);
 		hauptPanel.setSelectedIndex(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		final ButtonTabComponent buttonTabComponent = mainControl.getButtonTabComponent();
+
+		hauptPanel.setTabComponentAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, buttonTabComponent);
+
 		gruppenAnzahl = this.mainControl.getTournament().getAnzahlGruppen();
 		spielerAnzahl = new int[gruppenAnzahl];
 
@@ -106,14 +111,14 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		try {
 			Player.cutFname = Integer.parseInt(this.mainControl.getPropertiesControl().getCutForename());
 			Player.cutSname = Integer.parseInt(this.mainControl.getPropertiesControl().getCutSurname());
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			Player.cutFname = 20;
 			Player.cutSname = 20;
 		}
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0) {
+	public void actionPerformed(final ActionEvent arg0) {
 		String foreName = ""; //$NON-NLS-1$
 		String surName = "";
 		String kuerzel = ""; //$NON-NLS-1$
@@ -125,7 +130,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		for (int i = 0; i < gruppenAnzahl; i++) {
 			if (arg0.getSource().equals(okButton[i])) {
 				try {
-					SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+					final SQLPlayerControl stc = new SQLPlayerControl(mainControl);
 
 					sAnzahl = gruppe[i].getSpielerAnzahl();
 					gruppe[i].setRundenAnzahl(sAnzahl + ((sAnzahl % 2) - 1));
@@ -147,7 +152,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 									Player temp = null;
 
-									ListIterator<Player> li = alleSpieler.listIterator();
+									final ListIterator<Player> li = alleSpieler.listIterator();
 									while (li.hasNext()) {
 										temp = li.next();
 										if (spielerID == temp.getSpielerId()) {
@@ -181,30 +186,30 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 					} else {
 						JOptionPane.showMessageDialog(null, Messages.getString("SpielerEingabeControl.9")); //$NON-NLS-1$
 					}
-				} catch (SQLException e) {
-					ExceptionHandler eh = new ExceptionHandler(mainControl);
+				} catch (final SQLException e) {
+					final ExceptionHandler eh = new ExceptionHandler(mainControl);
 					eh.fileSQLError(e.getMessage());
 				}
 			}
 			if (arg0.getSource().equals(cancelButton[i])) {
 				// Custom button text
-				Object[] options = { Messages.getString("SpielerEingabeControl.4"), //$NON-NLS-1$
+				final Object[] options = { Messages.getString("SpielerEingabeControl.4"), //$NON-NLS-1$
 						Messages.getString("SpielerEingabeControl.5") }; //$NON-NLS-1$
-				int abfrage = JOptionPane.showOptionDialog(mainControl,
+				final int abfrage = JOptionPane.showOptionDialog(mainControl,
 						Messages.getString("SpielerEingabeControl.6") + Messages.getString("SpielerEingabeControl.7"), //$NON-NLS-1$ //$NON-NLS-2$
 						Messages.getString("SpielerEingabeControl.8"), JOptionPane.YES_NO_CANCEL_OPTION, //$NON-NLS-1$
 						JOptionPane.WARNING_MESSAGE, null, options, options[1]);
 				if (abfrage == 0) {
-					this.mainControl.setNewTournamentControl(new NewTournamentControl(this.mainControl));
+					mainControl.setNewTournamentControl(new NewTournamentControl(mainControl));
 				}
 			}
 			for (int s = 0; s < spielerAnzahl[i]; s++) {
 				if (arg0.getSource().equals(spielerEingabeView[i].getSpielerSuche()[s])) {
 
 					@SuppressWarnings("unchecked")
-					JComboBox<String> box = spielerEingabeView[i].getSpielerSuche()[s];
+					final JComboBox<String> box = spielerEingabeView[i].getSpielerSuche()[s];
 					if (box.getSelectedIndex() > 0) {
-						Player player = alleSpieler.get(box.getSelectedIndex() - 1);
+						final Player player = alleSpieler.get(box.getSelectedIndex() - 1);
 
 						foreName = player.getForename();
 						surName = player.getSurname();
@@ -233,9 +238,9 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(final KeyEvent e) {
 		for (int i = 0; i < gruppenAnzahl; i++) {
-			for (int s = 0; s < spielerAnzahl[i]; s++)
+			for (int s = 0; s < spielerAnzahl[i]; s++) {
 				if (e.getSource() == spielerEingabeView[i].getSurnameTextfield()[s]) {
 					spielerEingabeView[i].getSpielerSuche()[s].removeActionListener(this);
 					spielerEingabeView[i].getSurnameTextfield()[s].removeKeyListener(this);
@@ -244,7 +249,7 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 					Player temp = null;
 
-					ListIterator<Player> li = alleSpieler.listIterator();
+					final ListIterator<Player> li = alleSpieler.listIterator();
 
 					String textField = ""; //$NON-NLS-1$
 					String labels = ""; //$NON-NLS-1$
@@ -266,21 +271,22 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 					}
 
 				}
+			}
 		}
 	}
 
 	@Override
-	public void keyReleased(KeyEvent e) {
+	public void keyReleased(final KeyEvent e) {
 
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
+	public void keyTyped(final KeyEvent e) {
 
 	}
 
-	public void makeTabbedPane(int index) throws NumberFormatException, ZahlKleinerAlsN, ZahlGroesserAlsN {
-		this.mainControl.getHauptPanel();
+	public void makeTabbedPane(final int index) throws NumberFormatException, ZahlKleinerAlsN, ZahlGroesserAlsN {
+		mainControl.getHauptPanel();
 		tabAnzeigeView.getTabbedPane().addTab(null, spielerEingabeView[index]);
 
 		spielerEingabeView[index] = new NewTournamentPlayerInputView(spielerAnzahl[index]);
@@ -296,16 +302,16 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 
 	}
 
-	public void setReadyToSave(Boolean[] readyToSave) {
+	public void setReadyToSave(final Boolean[] readyToSave) {
 		this.readyToSave = readyToSave;
 	}
 
 	@SuppressWarnings("unchecked")
-	private void suchAnzeige(int index) {
+	private void suchAnzeige(final int index) {
 		for (int i = 0; i < spielerAnzahl[index]; i++) {
 
 			Player temp = null;
-			ListIterator<Player> li = alleSpieler.listIterator();
+			final ListIterator<Player> li = alleSpieler.listIterator();
 			String labelName = "";
 			while (li.hasNext()) {
 				temp = li.next();
@@ -320,12 +326,12 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 	}
 
 	@SuppressWarnings("unchecked")
-	private void suchAnzeige2(int index) {
+	private void suchAnzeige2(final int index) {
 		for (int i = 0; i < spielerAnzahl[index]; i++) {
 			spielerEingabeView[index].getSpielerSuche()[i].removeActionListener(this);
 			spielerEingabeView[index].getSurnameTextfield()[i].removeKeyListener(this);
 			Player temp = null;
-			ListIterator<Player> li = alleSpieler.listIterator();
+			final ListIterator<Player> li = alleSpieler.listIterator();
 			String labelName = "";
 			while (li.hasNext()) {
 				temp = li.next();
@@ -338,15 +344,15 @@ public class NewTournamentPlayerInputControl implements ActionListener, KeyListe
 		}
 	}
 
-	private boolean testForDoubles(int index) {
-		int sAnzahl = gruppe[index].getSpielerAnzahl();
+	private boolean testForDoubles(final int index) {
+		final int sAnzahl = gruppe[index].getSpielerAnzahl();
 		Boolean testOK = true;
 		for (int y = 0; y < sAnzahl - 1; y++) {
 
-			int spielerYID = spielerEingabeView[index].getSpielerID()[y];
+			final int spielerYID = spielerEingabeView[index].getSpielerID()[y];
 
 			for (int x = y + 1; x < sAnzahl; x++) {
-				int spielerXID = spielerEingabeView[index].getSpielerID()[x];
+				final int spielerXID = spielerEingabeView[index].getSpielerID()[x];
 				if (spielerYID == spielerXID && spielerYID >= 0) {
 					testOK = false;
 				}

@@ -58,7 +58,7 @@ public class NewTournamentControl implements ActionListener {
 		if (zahl <= 0) {
 			throw new ZahlKleinerAlsN();
 		}
-		if (zahl > 15) {
+		if (zahl > maxGroups) {
 			throw new ZahlGroesserAlsN();
 		}
 		return zahl;
@@ -73,6 +73,7 @@ public class NewTournamentControl implements ActionListener {
 	private String startDatum;
 	private String endDatum;
 	private int gruppenAnzahl;
+	private final static int maxGroups = TournamentConstants.MAX_GROUPS;
 
 	private final ImageIcon turnierIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png"))); //$NON-NLS-1$

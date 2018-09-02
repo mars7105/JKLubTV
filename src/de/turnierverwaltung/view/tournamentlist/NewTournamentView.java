@@ -40,6 +40,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 
 import de.turnierverwaltung.model.Tournament;
+import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.view.ButtonPanelView;
 import de.turnierverwaltung.view.DateChooserPanel;
 import de.turnierverwaltung.view.Messages;
@@ -49,24 +50,24 @@ public class NewTournamentView extends JPanel {
 	public class DateLabelFormatter extends AbstractFormatter {
 
 		/**
-		 * 
+		 *
 		 */
 		private static final long serialVersionUID = 1L;
-		private String datePattern = Messages.getString("TurnierView.15"); //$NON-NLS-1$
-		private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern, Locale.getDefault());
+		private final String datePattern = Messages.getString("TurnierView.15"); //$NON-NLS-1$
+		private final SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern, Locale.getDefault());
 
 		public DateLabelFormatter() {
 		}
 
 		@Override
-		public Object stringToValue(String text) throws ParseException {
+		public Object stringToValue(final String text) throws ParseException {
 			return dateFormatter.parseObject(text);
 		}
 
 		@Override
-		public String valueToString(Object value) throws ParseException {
+		public String valueToString(final Object value) throws ParseException {
 			if (value != null) {
-				Calendar cal = (Calendar) value;
+				final Calendar cal = (Calendar) value;
 				return dateFormatter.format(cal.getTime());
 			}
 
@@ -74,8 +75,9 @@ public class NewTournamentView extends JPanel {
 		}
 
 	}
+
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel hauptPanel;
@@ -89,8 +91,9 @@ public class NewTournamentView extends JPanel {
 	private String startDatum;
 	private String endDatum;
 	private int gruppenAnzahl;
+	private final int maxGroups = TournamentConstants.MAX_GROUPS;
 
-	private Properties property;
+	private final Properties property;
 
 	/**
 	 * Create the dialog.
@@ -101,8 +104,8 @@ public class NewTournamentView extends JPanel {
 		property.put("text.month", Messages.getString("TurnierView.5")); //$NON-NLS-1$ //$NON-NLS-2$
 		property.put("text.year", Messages.getString("TurnierView.7")); //$NON-NLS-1$ //$NON-NLS-2$
 		gruppenAnzahl = 0;
-		int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
-		int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
+		final int windowWidth = Toolkit.getDefaultToolkit().getScreenSize().width;
+		final int windowHeight = Toolkit.getDefaultToolkit().getScreenSize().height;
 		setBounds(0, 0, windowWidth, windowHeight);
 
 		setLayout(new FlowLayout());
@@ -113,26 +116,26 @@ public class NewTournamentView extends JPanel {
 		hauptPanel.setVisible(true);
 		// add(hauptPanel);
 
-		JPanel panel1 = new JPanel();
+		final JPanel panel1 = new JPanel();
 		panel1.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		panel1.setComponentOrientation(ComponentOrientation.LEFT_TO_RIGHT);
 		// panel1.setBackground(new Color(249, 222, 112));
 
 		panel1.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-		JLabel lblTurniername = new JLabel(Messages.getString("TurnierView.8")); //$NON-NLS-1$
+		final JLabel lblTurniername = new JLabel(Messages.getString("TurnierView.8")); //$NON-NLS-1$
 
 		turnierNameTextField = new JTextField();
 		turnierNameTextField.setColumns(20);
 		panel1.add(turnierNameTextField);
 		panel1.add(lblTurniername);
 		hauptPanel.add(panel1);
-		JPanel panel2 = new JPanel();
+		final JPanel panel2 = new JPanel();
 		// panel2.setBackground(new Color(249, 222, 112));
 
 		panel2.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-		JLabel label = new JLabel(Messages.getString("TurnierView.9")); //$NON-NLS-1$
+		final JLabel label = new JLabel(Messages.getString("TurnierView.9")); //$NON-NLS-1$
 
 		startDatumTextField = new DateChooserPanel();
 		startDatumTextField.setLocale(Locale.getDefault());
@@ -145,11 +148,11 @@ public class NewTournamentView extends JPanel {
 		panel2.add(startDatumTextField);
 		panel2.add(label);
 		hauptPanel.add(panel2);
-		JPanel panel3 = new JPanel();
+		final JPanel panel3 = new JPanel();
 		// panel3.setBackground(new Color(249, 222, 112));
 		panel3.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-		JLabel lblEndDatum = new JLabel(Messages.getString("TurnierView.10")); //$NON-NLS-1$
+		final JLabel lblEndDatum = new JLabel(Messages.getString("TurnierView.10")); //$NON-NLS-1$
 
 		hauptPanel.add(panel3);
 		endDatumeTextField = new DateChooserPanel();
@@ -162,7 +165,7 @@ public class NewTournamentView extends JPanel {
 		}
 		panel3.add(endDatumeTextField);
 		panel3.add(lblEndDatum);
-		JPanel panel4 = new JPanel();
+		final JPanel panel4 = new JPanel();
 		// panel4.setBackground(new Color(249, 222, 112));
 		panel4.setLayout(new BoxLayout(panel4, BoxLayout.Y_AXIS));
 		hauptPanel.add(panel4);
@@ -171,8 +174,8 @@ public class NewTournamentView extends JPanel {
 		// //$NON-NLS-1$
 		// panel4.add(lblAnzahlGruppen);
 		// buchstaben anzahl
-		String[] listString = new String[15];
-		for (int i = 0; i < 15; i++) {
+		final String[] listString = new String[15];
+		for (int i = 0; i < maxGroups; i++) {
 			listString[i] = new Integer(i + 1).toString();
 
 		}
@@ -181,19 +184,19 @@ public class NewTournamentView extends JPanel {
 		// gruppenAnzahlTextField.setColumns(10);
 		panel4.add(gruppenAnzahlTextField);
 
-		ButtonPanelView buttonPane = new ButtonPanelView();
+		final ButtonPanelView buttonPane = new ButtonPanelView();
 		buttonPane.makeOKButton();
 		hauptPanel.add(buttonPane);
 		okButton = buttonPane.getOkButton();
 
-		String help = Messages.getString("TurnierView.14"); //$NON-NLS-1$
-		JPanel helpPanel = new JPanel();
-		JTextArea helpText = new JTextArea();
+		final String help = Messages.getString("TurnierView.14"); //$NON-NLS-1$
+		final JPanel helpPanel = new JPanel();
+		final JTextArea helpText = new JTextArea();
 		helpText.setText(help);
 		helpText.setEditable(false);
 		helpPanel.add(helpText);
 		hauptPanel.add(helpPanel);
-		JScrollPane scrollPane = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
+		final JScrollPane scrollPane = new JScrollPane(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED,
 				ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		scrollPane.setViewportView(hauptPanel);
 		add(scrollPane, BorderLayout.CENTER);
@@ -245,47 +248,47 @@ public class NewTournamentView extends JPanel {
 		return turnierNameTextField;
 	}
 
-	public void setEndDatum(String endDatum) {
+	public void setEndDatum(final String endDatum) {
 		this.endDatum = endDatum;
 	}
 
-	public void setEndDatumeTextField(DateChooserPanel endDatumeTextField) {
+	public void setEndDatumeTextField(final DateChooserPanel endDatumeTextField) {
 		this.endDatumeTextField = endDatumeTextField;
 	}
 
-	public void setGruppenAnzahl(int gruppenAnzahl) {
+	public void setGruppenAnzahl(final int gruppenAnzahl) {
 		this.gruppenAnzahl = gruppenAnzahl;
 	}
 
-	public void setGruppenAnzahlTextField(SpinnerView gruppenAnzahlTextField) {
+	public void setGruppenAnzahlTextField(final SpinnerView gruppenAnzahlTextField) {
 		this.gruppenAnzahlTextField = gruppenAnzahlTextField;
 	}
 
-	public void setHauptPanel(JPanel hauptPanel) {
+	public void setHauptPanel(final JPanel hauptPanel) {
 		this.hauptPanel = hauptPanel;
 	}
 
-	public void setOkButton(JButton okButton) {
+	public void setOkButton(final JButton okButton) {
 		this.okButton = okButton;
 	}
 
-	public void setStartDatum(String startDatum) {
+	public void setStartDatum(final String startDatum) {
 		this.startDatum = startDatum;
 	}
 
-	public void setStartDatumTextField(DateChooserPanel startDatumTextField) {
+	public void setStartDatumTextField(final DateChooserPanel startDatumTextField) {
 		this.startDatumTextField = startDatumTextField;
 	}
 
-	public void setTurnier(Tournament turnier) {
+	public void setTurnier(final Tournament turnier) {
 		this.turnier = turnier;
 	}
 
-	public void setTurnierName(String turnierName) {
+	public void setTurnierName(final String turnierName) {
 		this.turnierName = turnierName;
 	}
 
-	public void setTurnierNameTextField(JTextField turnierNameTextField) {
+	public void setTurnierNameTextField(final JTextField turnierNameTextField) {
 		this.turnierNameTextField = turnierNameTextField;
 	}
 

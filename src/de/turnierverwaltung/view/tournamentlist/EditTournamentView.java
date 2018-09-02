@@ -246,4 +246,5 @@ public class EditTournamentView extends JDialog {
 	public void setTextFieldTurnierName(final JTextField textFieldTurnierName) {
 		this.textFieldTurnierName = textFieldTurnierName;
 	}
+
 }
