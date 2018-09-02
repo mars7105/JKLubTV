@@ -268,10 +268,13 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 					turnierEditierenView.getCancelButton().addActionListener(this);
 					final ActionListenerPlayerGroupAddControl playerGroupAdd = new ActionListenerPlayerGroupAddControl(
 							mainControl);
+					playerGroupAdd.init();
 					final ActionListenerPlayerGroupDeleteControl playerGroupDelete = new ActionListenerPlayerGroupDeleteControl(
 							mainControl);
+					playerGroupDelete.init();
 					final ActionListenerPlayerTournamentEditControl playerTournamentEdit = new ActionListenerPlayerTournamentEditControl(
 							mainControl);
+					playerTournamentEdit.init();
 					turnierEditierenView.showDialog();
 				} catch (final SQLException e) {
 					turnierEditierenView.dispose();

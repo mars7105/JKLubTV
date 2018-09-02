@@ -21,6 +21,10 @@ public class ActionListenerPlayerGroupDeleteControl implements ActionListener {
 		this.mainControl = mainControl;
 		editTournamentView = mainControl.getActionListenerTournamentItemsControl().getTurnierEditierenView();
 		deleteGroupButtons = editTournamentView.getDeleteButtons();
+
+	}
+
+	public void init() {
 		for (final JButton button : deleteGroupButtons) {
 			button.addActionListener(this);
 		}

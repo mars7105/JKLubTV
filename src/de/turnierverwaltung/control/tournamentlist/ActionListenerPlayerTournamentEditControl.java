@@ -21,6 +21,11 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 		this.mainControl = mainControl;
 		editTournamentView = mainControl.getActionListenerTournamentItemsControl().getTurnierEditierenView();
 		playerOfGroupButtons = editTournamentView.getPlayerOfGroupButtons();
+
+	}
+
+	public void init() {
+
 		for (final JButton button : playerOfGroupButtons) {
 			button.addActionListener(this);
 		}
