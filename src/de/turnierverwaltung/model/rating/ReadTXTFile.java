@@ -3,8 +3,11 @@ package de.turnierverwaltung.model.rating;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import de.turnierverwaltung.control.sqlite.SQLInfoControl;
+import de.turnierverwaltung.model.Info;
 import de.turnierverwaltung.model.TournamentConstants;
 
 public final class ReadTXTFile {
@@ -33,13 +36,21 @@ public final class ReadTXTFile {
 				row[5] = line.substring(89, 92).trim();
 				row[6] = line.substring(94, 98).trim();
 				row[7] = line.substring(109, 112).trim();
-				row[8] = line.substring(113, 117).trim();
+				row[8] = line.substring(113, 118).trim();
 				row[9] = line.substring(119, 122).trim();
 				row[10] = line.substring(123, 125).trim();
 				row[11] = line.substring(126, 130).trim();
 				row[12] = line.substring(132, 135).trim();
 				if (i == 0) {
 					date = row[8];
+					final Info info = new Info("ELO", "1.0", "Update date", date, 0);
+					final SQLInfoControl infCtrl = new SQLInfoControl();
+					try {
+						infCtrl.insertOneInfo(info);
+					} catch (final SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 				if (i > 0) {
 					int fideid = -1;

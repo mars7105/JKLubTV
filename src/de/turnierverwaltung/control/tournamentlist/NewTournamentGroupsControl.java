@@ -109,8 +109,11 @@ public class NewTournamentGroupsControl implements ActionListener {
 		gruppenCancelButton = gruppenView.getCancelButton();
 		gruppenCancelButton.addActionListener(this);
 		gruppenView.getGruppenNameTextField()[0].grabFocus();
-		hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		if (hauptPanel.getTabCount() > TournamentConstants.TAB_ACTIVE_TOURNAMENT) {
+			hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+		}
 		hauptPanel.add(gruppenView, TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+
 		final ButtonTabComponent buttonTabComponent = mainControl.getButtonTabComponent();
 
 		hauptPanel.setTabComponentAt(TournamentConstants.TAB_ACTIVE_TOURNAMENT, buttonTabComponent);

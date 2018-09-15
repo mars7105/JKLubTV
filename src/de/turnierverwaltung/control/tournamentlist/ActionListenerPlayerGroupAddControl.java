@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.Messages;
@@ -18,6 +19,9 @@ public class ActionListenerPlayerGroupAddControl implements ActionListener {
 	private final JButton addGroupButton;
 	private final Tournament tournament;
 	private final int maxGroups = TournamentConstants.MAX_GROUPS;
+	// private final ImageIcon turnierIcon = new ImageIcon(
+	// Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
+	// //$NON-NLS-1$
 
 	public ActionListenerPlayerGroupAddControl(final MainControl mainControl) {
 		super();
@@ -42,6 +46,27 @@ public class ActionListenerPlayerGroupAddControl implements ActionListener {
 
 		} else {
 			System.out.println(groupCount);
+			mainControl.setTournament(tournament);
+			mainControl.setNewTournament(true);
+			mainControl.getNaviView().getTabellenPanel().setVisible(false);
+			mainControl.getNaviView().getPairingsPanel().setVisible(false);
+			mainControl.getActionListenerPairingsMenuControl().setPairingIsActive(false);
+			final JTabbedPane hauptPanel = mainControl.getHauptPanel();
+			tournament.setAnzahlGruppen(tournament.getAnzahlGruppen() + 1);
+			// final ButtonTabComponent buttonTabComponent =
+			// mainControl.getButtonTabComponent();
+			if (mainControl.getTournament() != null) {
+				if (hauptPanel.getTabCount() - 1 == TournamentConstants.TAB_ACTIVE_TOURNAMENT) {
+					hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);
+
+				}
+
+			}
+			mainControl.setNewTournamentGroupsControl(new NewTournamentGroupsControl(mainControl));
+
+			final int selectIndex = hauptPanel.getTabCount() - 1;
+			hauptPanel.setSelectedIndex(selectIndex);
+
 		}
 	}
 

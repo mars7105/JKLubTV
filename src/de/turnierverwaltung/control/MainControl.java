@@ -151,10 +151,7 @@ public class MainControl extends JFrame implements WindowListener {
 	private final Parameter parameter;
 
 	public MainControl(final String[] args) {
-		propertiesControl = new PropertiesControl(this);
-		Font font;
-		font = propertiesControl.getFont();
-		setUIFont(font);
+
 		parameter = new Parameter(args);
 		windowWidth = TournamentConstants.WINDOW_WIDTH;
 		windowHeight = TournamentConstants.WINDOW_HEIGHT;
@@ -395,7 +392,10 @@ public class MainControl extends JFrame implements WindowListener {
 	}
 
 	private void init() {
-
+		propertiesControl = new PropertiesControl(this);
+		Font font;
+		font = propertiesControl.getFont();
+		setUIFont(font);
 		languagePropertiesControl = new LanguagePropertiesControl(this);
 		if (propertiesControl.readProperties() == false) {
 			if (propertiesControl.writeProperties() == false) {
