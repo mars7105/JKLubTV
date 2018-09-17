@@ -142,6 +142,7 @@ public class SettingsView extends JPanel {
 	private JFontChooser fontChooser;
 	private JButton resetPropertiesButton;
 	private JTextField tableCSSTextField;
+	private JLabel createDateLabel;
 
 	/**
 	 * Create the panel.
@@ -313,6 +314,11 @@ public class SettingsView extends JPanel {
 		titleView.setFlowLayoutLeft();
 
 		htmlAll.add(titleView);
+		createDateLabel = new JLabel();
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(createDateLabel);
+		htmlAll.add(htmlPanel);
 		fideHomepageButton = new JButton();
 		fideHomepageButton
 				.setText("<HTML><FONT color=\"#000099\"><U>https://ratings.fide.com/download.phtml</U></FONT></HTML>"); //$NON-NLS-1$
@@ -320,7 +326,7 @@ public class SettingsView extends JPanel {
 		fideHomepageButton.setOpaque(false);
 		fideHomepageButton.setToolTipText(fideHomepage.toString());
 		fideHomepageButton.addActionListener(new OpenUrlAction());
-		JPanel htmlPanel = new JPanel();
+		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(fideHomepageButton);
 		htmlAll.add(htmlPanel);
@@ -1180,6 +1186,14 @@ public class SettingsView extends JPanel {
 
 	public void setTableCSSTextField(final JTextField tableCSSTextField) {
 		this.tableCSSTextField = tableCSSTextField;
+	}
+
+	public JLabel getCreateDateLabel() {
+		return createDateLabel;
+	}
+
+	public void setCreateDateLabel(final JLabel createDateLabel) {
+		this.createDateLabel = createDateLabel;
 	}
 
 }

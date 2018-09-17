@@ -43,7 +43,7 @@ public final class ReadTXTFile {
 				row[12] = line.substring(132, 135).trim();
 				if (i == 0) {
 					date = row[8];
-					final Info info = new Info("ELO", "1.0", "Update date", date, 0);
+					final Info info = new Info("ELO", "1.0", "date", date, 0);
 					final SQLInfoControl infCtrl = new SQLInfoControl();
 					try {
 						infCtrl.insertOneInfo(info);

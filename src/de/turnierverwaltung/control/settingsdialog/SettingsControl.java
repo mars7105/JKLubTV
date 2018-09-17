@@ -2,6 +2,7 @@ package de.turnierverwaltung.control.settingsdialog;
 
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.PropertiesControl;
+import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
 import de.turnierverwaltung.view.settingsdialog.SettingsView;
 
 public class SettingsControl {
@@ -10,6 +11,7 @@ public class SettingsControl {
 
 	private ActionListenerSettingsControl actionListenerControl;
 	private ItemListenerSettingsControl itemListenerControl;
+	private final SQLitePlayerELOList sqlitePlayerEloList;
 
 	/**
 	 * @param mainControl
@@ -19,6 +21,7 @@ public class SettingsControl {
 		eigenschaftenView = new SettingsView();
 		actionListenerControl = new ActionListenerSettingsControl(this.mainControl, this);
 		itemListenerControl = new ItemListenerSettingsControl(this.mainControl, this);
+		sqlitePlayerEloList = new SQLitePlayerELOList();
 
 	}
 
@@ -53,6 +56,7 @@ public class SettingsControl {
 		eigenschaftenView.getMeetingTextField().setText(ppC.getTableComumnMeeting());
 		eigenschaftenView.getOldDWZTextField().setText(ppC.getTableComumnOldDWZ());
 		eigenschaftenView.getNewDWZTextField().setText(ppC.getTableComumnNewDWZ());
+
 		eigenschaftenView.getOldELOTextField().setText(ppC.getTableComumnOldELO());
 		eigenschaftenView.getNewELOTextField().setText(ppC.getTableComumnNewELO());
 		eigenschaftenView.getPlayerTextField().setText(ppC.getTableComumnPlayer());
@@ -63,7 +67,8 @@ public class SettingsControl {
 		eigenschaftenView.getRoundTextField().setText(ppC.getTableComumnRound());
 		eigenschaftenView.getForenameLengthBox().setValue(ppC.getCutForename());
 		eigenschaftenView.getSurnameLengthBox().setValue(ppC.getCutSurname());
-
+		final String eloDate = "Ratinglist from:" + sqlitePlayerEloList.getELODate(ppC.getPathToPlayersELO());
+		eigenschaftenView.getCreateDateLabel().setText(eloDate);
 	}
 
 }
