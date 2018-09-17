@@ -2,6 +2,7 @@ package de.turnierverwaltung.control.settingsdialog;
 
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.PropertiesControl;
+import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
 import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
 import de.turnierverwaltung.view.settingsdialog.SettingsView;
 
@@ -12,6 +13,7 @@ public class SettingsControl {
 	private ActionListenerSettingsControl actionListenerControl;
 	private ItemListenerSettingsControl itemListenerControl;
 	private final SQLitePlayerELOList sqlitePlayerEloList;
+	private final SQLitePlayerDWZList sqlitePlayerDWZList;
 
 	/**
 	 * @param mainControl
@@ -22,7 +24,7 @@ public class SettingsControl {
 		actionListenerControl = new ActionListenerSettingsControl(this.mainControl, this);
 		itemListenerControl = new ItemListenerSettingsControl(this.mainControl, this);
 		sqlitePlayerEloList = new SQLitePlayerELOList();
-
+		sqlitePlayerDWZList = new SQLitePlayerDWZList();
 	}
 
 	public ActionListenerSettingsControl getActionListenerControl() {
@@ -68,7 +70,9 @@ public class SettingsControl {
 		eigenschaftenView.getForenameLengthBox().setValue(ppC.getCutForename());
 		eigenschaftenView.getSurnameLengthBox().setValue(ppC.getCutSurname());
 		final String eloDate = "Ratinglist from:" + sqlitePlayerEloList.getELODate(ppC.getPathToPlayersELO());
-		eigenschaftenView.getCreateDateLabel().setText(eloDate);
+		eigenschaftenView.getCreateELODateLabel().setText(eloDate);
+		final String dwzDate = "Ratinglist from:" + sqlitePlayerDWZList.getDWZDate(ppC.getPathToPlayersCSV());
+		eigenschaftenView.getCreateDWZDateLabel().setText(dwzDate);
 	}
 
 }

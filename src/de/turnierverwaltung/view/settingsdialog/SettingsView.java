@@ -142,7 +142,8 @@ public class SettingsView extends JPanel {
 	private JFontChooser fontChooser;
 	private JButton resetPropertiesButton;
 	private JTextField tableCSSTextField;
-	private JLabel createDateLabel;
+	private JLabel createELODateLabel;
+	private JLabel createDWZDateLabel;
 
 	/**
 	 * Create the panel.
@@ -236,7 +237,11 @@ public class SettingsView extends JPanel {
 		titleView.setFlowLayoutLeft();
 
 		htmlAll.add(titleView);
-
+		createDWZDateLabel = new JLabel();
+		JPanel htmlPanel = new JPanel();
+		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		htmlPanel.add(createDWZDateLabel);
+		htmlAll.add(htmlPanel);
 		dsbHomepageButton = new JButton();
 		dsbHomepageButton
 				.setText("<HTML><FONT color=\"#000099\"><U>http://www.schachbund.de/download.html</U></FONT></HTML>"); //$NON-NLS-1$
@@ -244,7 +249,7 @@ public class SettingsView extends JPanel {
 		dsbHomepageButton.setOpaque(false);
 		dsbHomepageButton.setToolTipText(dsbHomepage.toString());
 		dsbHomepageButton.addActionListener(new OpenUrlAction());
-		JPanel htmlPanel = new JPanel();
+		htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
 		htmlPanel.add(dsbHomepageButton);
 		htmlAll.add(htmlPanel);
@@ -314,10 +319,10 @@ public class SettingsView extends JPanel {
 		titleView.setFlowLayoutLeft();
 
 		htmlAll.add(titleView);
-		createDateLabel = new JLabel();
+		createELODateLabel = new JLabel();
 		JPanel htmlPanel = new JPanel();
 		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(createDateLabel);
+		htmlPanel.add(createELODateLabel);
 		htmlAll.add(htmlPanel);
 		fideHomepageButton = new JButton();
 		fideHomepageButton
@@ -1188,12 +1193,20 @@ public class SettingsView extends JPanel {
 		this.tableCSSTextField = tableCSSTextField;
 	}
 
-	public JLabel getCreateDateLabel() {
-		return createDateLabel;
+	public JLabel getCreateELODateLabel() {
+		return createELODateLabel;
 	}
 
-	public void setCreateDateLabel(final JLabel createDateLabel) {
-		this.createDateLabel = createDateLabel;
+	public void setCreateELODateLabel(final JLabel createDateLabel) {
+		createELODateLabel = createDateLabel;
+	}
+
+	public JLabel getCreateDWZDateLabel() {
+		return createDWZDateLabel;
+	}
+
+	public void setCreateDWZDateLabel(final JLabel createDWZDateLabel) {
+		this.createDWZDateLabel = createDWZDateLabel;
 	}
 
 }
