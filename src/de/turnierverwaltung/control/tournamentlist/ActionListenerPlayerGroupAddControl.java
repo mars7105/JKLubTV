@@ -19,9 +19,6 @@ public class ActionListenerPlayerGroupAddControl implements ActionListener {
 	private final JButton addGroupButton;
 	private final Tournament tournament;
 	private final int maxGroups = TournamentConstants.MAX_GROUPS;
-	// private final ImageIcon turnierIcon = new ImageIcon(
-	// Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
-	// //$NON-NLS-1$
 
 	public ActionListenerPlayerGroupAddControl(final MainControl mainControl, final Tournament turnierEdit) {
 		super();
