@@ -23,7 +23,7 @@ public class ActionListenerPlayerGroupAddControl implements ActionListener {
 	// Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-remove-3.png")));
 	// //$NON-NLS-1$
 
-	public ActionListenerPlayerGroupAddControl(final MainControl mainControl) {
+	public ActionListenerPlayerGroupAddControl(final MainControl mainControl, final Tournament turnierEdit) {
 		super();
 		this.mainControl = mainControl;
 		editTournamentView = this.mainControl.getActionListenerTournamentItemsControl().getTurnierEditierenView();
