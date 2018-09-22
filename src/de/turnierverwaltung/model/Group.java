@@ -192,6 +192,7 @@ public class Group {
 	}
 
 	public int getSpielerAnzahl() {
+		// spielerAnzahl = spieler.length;
 		return spielerAnzahl;
 	}
 

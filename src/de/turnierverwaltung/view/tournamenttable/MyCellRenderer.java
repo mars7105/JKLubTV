@@ -16,7 +16,7 @@ import de.turnierverwaltung.view.ratingdialog.ListItem;
 @SuppressWarnings("rawtypes")
 public class MyCellRenderer extends JPanel implements ListCellRenderer {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = -9184411188243605427L;
 	private JLabel label = null;
@@ -39,11 +39,11 @@ public class MyCellRenderer extends JPanel implements ListCellRenderer {
 	}
 
 	@Override
-	public Component getListCellRendererComponent(JList list, // JList Objekt
-			Object value, // anzuzeigende Komponente
-			int index, // Zellenindex
-			boolean iss, // Ist selektiert?
-			boolean chf) // Hat den Fokus?
+	public Component getListCellRendererComponent(final JList list, // JList Objekt
+			final Object value, // anzuzeigende Komponente
+			final int index, // Zellenindex
+			final boolean iss, // Ist selektiert?
+			final boolean chf) // Hat den Fokus?
 	{
 		// JLabel das Icon aus unserem MyListItem zuweisen
 		label.setIcon(((ListItem) value).getIcon());
@@ -54,14 +54,13 @@ public class MyCellRenderer extends JPanel implements ListCellRenderer {
 		// Hintergrundfarbe des JPanels bei Fokuswechseln definieren
 		if (iss) {
 			setBackground(list.getBackground()); // Hat den Fokus
-		}
-		else {
+		} else {
 			setBackground(list.getBackground()); // Hat den Fokus nicht
 		}
 		return this;
 	}
 
-	public void setLabel(JLabel label) {
+	public void setLabel(final JLabel label) {
 		this.label = label;
 	}
 
