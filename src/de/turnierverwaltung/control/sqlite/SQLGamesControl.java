@@ -111,12 +111,12 @@ public class SQLGamesControl {
 		return saved;
 	}
 
-	public boolean deletePartien(final int spielerId, final int gruppeId) {
+	public boolean deletePartien(final int groupId) throws SQLException {
 		final boolean deleted = false;
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		final PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
 		final Turnier_has_SpielerDAO turnierhasspielerDAO = daoFactory.getTurnier_has_SpielerDAO();
-		mySQLPartienDAO.deletePartien(id);
+		mySQLPartienDAO.deletePartien(groupId);
 		return deleted;
 	}
 }
