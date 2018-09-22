@@ -16,7 +16,10 @@ public class PlayerListTableModel extends DefaultTableModel {
 	@Override
 	public boolean isCellEditable(final int rowIndex, final int columnIndex) {
 
-		final boolean icE = false;
+		boolean icE = false;
+		if (columnIndex == 3) {
+			icE = true;
+		}
 
 		return icE;
 	}

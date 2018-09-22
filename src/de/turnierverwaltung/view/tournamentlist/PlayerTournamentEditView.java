@@ -56,7 +56,7 @@ public class PlayerTournamentEditView extends JDialog {
 				final JTable table = (JTable) e.getSource();
 				final int modelRow = Integer.valueOf(e.getActionCommand());
 				((DefaultTableModel) table.getModel()).removeRow(modelRow);
-
+				System.out.println("row:" + modelRow);
 			}
 
 		};
