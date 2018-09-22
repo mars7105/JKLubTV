@@ -25,27 +25,28 @@ import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.sqlite.DAOFactory;
 import de.turnierverwaltung.sqlite.PartienDAO;
+import de.turnierverwaltung.sqlite.Turnier_has_SpielerDAO;
 
 public class SQLGamesControl {
 	private Tournament turnier;
-	private MainControl mainControl;
+	private final MainControl mainControl;
 	private DAOFactory daoFactory;
 	int turnierId;
 	int partienId[];
 
-	public SQLGamesControl(MainControl mainControl) {
+	public SQLGamesControl(final MainControl mainControl) {
 		this.mainControl = mainControl;
 		turnier = this.mainControl.getTournament();
 	}
 
-	public void getPartien(int gruppenID) throws SQLException {
+	public void getPartien(final int gruppenID) throws SQLException {
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
-		PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
-		this.turnier = this.mainControl.getTournament();
+		final PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
+		turnier = mainControl.getTournament();
 		ArrayList<Game> partie = new ArrayList<Game>();
 
 		partie = mySQLPartienDAO.selectAllPartien(turnier.getGruppe()[gruppenID].getGruppeId());
-		Game[] p = new Game[partie.size()];
+		final Game[] p = new Game[partie.size()];
 		turnier.getGruppe()[gruppenID].setPartienAnzahl(partie.size());
 		Player spielerWeiss;
 		Player spielerSchwarz;
@@ -69,20 +70,20 @@ public class SQLGamesControl {
 
 	}
 
-	public boolean insertPartien(int gruppe) throws SQLException {
+	public boolean insertPartien(final int gruppe) throws SQLException {
 		boolean eintragGespeichert = false;
 		turnierId = turnier.getTurnierId();
-		int idGruppe = turnier.getGruppe()[gruppe].getGruppeId();
-		int anzahlPartien = turnier.getGruppe()[gruppe].getPartienAnzahl();
+		final int idGruppe = turnier.getGruppe()[gruppe].getGruppeId();
+		final int anzahlPartien = turnier.getGruppe()[gruppe].getPartienAnzahl();
 		partienId = new int[anzahlPartien];
-		String[] spielDatum = new String[anzahlPartien];
-		int[] runde = new int[anzahlPartien];
-		int[] ergebnis = new int[anzahlPartien];
+		final String[] spielDatum = new String[anzahlPartien];
+		final int[] runde = new int[anzahlPartien];
+		final int[] ergebnis = new int[anzahlPartien];
 		int spielerIdweiss;
 		int spielerIdschwarz;
 
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
-		PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
+		final PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
 		for (int i = 0; i < anzahlPartien; i++) {
 			if (turnier.getGruppe()[gruppe].getPartien()[i].getPartieId() == -1) {
 				spielerIdweiss = turnier.getGruppe()[gruppe].getPartien()[i].getSpielerWeiss().getSpielerId();
@@ -99,14 +100,23 @@ public class SQLGamesControl {
 		return eintragGespeichert;
 	}
 
-	public boolean updatePartien(int gruppe) throws SQLException {
+	public boolean updatePartien(final int gruppe) throws SQLException {
 		boolean saved = false;
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
-		PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
+		final PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
 		// for (int i = 0; i < turnier.getGruppe()[gruppe].getPartienAnzahl();
 		// i++) {
 		saved = mySQLPartienDAO.updatePartien(turnier.getGruppe()[gruppe].getPartien());
 		// }
 		return saved;
+	}
+
+	public boolean deletePartien(final int spielerId, final int gruppeId) {
+		final boolean deleted = false;
+		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
+		final PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
+		final Turnier_has_SpielerDAO turnierhasspielerDAO = daoFactory.getTurnier_has_SpielerDAO();
+		mySQLPartienDAO.deletePartien(id);
+		return deleted;
 	}
 }

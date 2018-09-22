@@ -24,7 +24,7 @@ import de.turnierverwaltung.model.Tournament;
 public interface Turnier_has_SpielerDAO {
 	public void createTurnier_has_SpielerTable() throws SQLException;
 
-	public boolean deleteTurnier_has_Spieler(ArrayList<Integer> id) throws SQLException;
+	public boolean deleteTurnier_has_Spieler(int idGruppe, int idSpieler) throws SQLException;
 
 	public ArrayList<Integer> findSpielerisinTurnier_has_Spieler(Player spieler) throws SQLException;
 
