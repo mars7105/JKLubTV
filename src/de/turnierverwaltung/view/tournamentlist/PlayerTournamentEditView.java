@@ -42,7 +42,7 @@ public class PlayerTournamentEditView extends JDialog {
 		setBackground(titleColor);
 		setForeground(titleTextColor);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
-		table.setRowHeight(30);
+		table.setRowHeight(40);
 
 		@SuppressWarnings("unused")
 		final ButtonColumn buttonColumn = new ButtonColumn(table, deleteAction, 3);
@@ -75,7 +75,7 @@ public class PlayerTournamentEditView extends JDialog {
 	private void setColumnWidth() {
 		final int playerWidth = 200;
 		final int medium = 75;
-		final int high = 125;
+		final int high = 200;
 
 		final int columnCount = table.getColumnCount();
 		for (int i = 0; i < columnCount; i++) {

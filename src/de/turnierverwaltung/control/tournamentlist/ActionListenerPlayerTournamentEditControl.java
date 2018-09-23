@@ -8,6 +8,7 @@ import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.sqlite.SQLGamesControl;
@@ -52,7 +53,6 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 		int groupId = 0;
 		for (final JButton button : playerOfGroupButtons) {
 			if (button == playerOfGroupButton) {
-				// System.out.println(i);
 				groupId = i;
 			}
 			i++;
@@ -99,16 +99,20 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				// final JTable table = (JTable) e.getSource();
+				final JTable table = (JTable) e.getSource();
 				final int modelRow = Integer.valueOf(e.getActionCommand());
-				// ((DefaultTableModel) table.getModel()).removeRow(modelRow);
-				// System.out.println("row:" + modelRow);
-				final Player player = group.getSpieler()[modelRow];
-				try {
-					deletePlayerFromGroup(player, groupId);
-				} catch (final SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
+
+				final String name = (String) table.getModel().getValueAt(modelRow, 0);
+				if (name.equals("<Spielfrei>")) {
+					// System.out.println("<Spielfrei> " + modelRow);
+				} else {
+					final Player player = group.getSpieler()[modelRow];
+					try {
+						deletePlayerFromGroup(player, groupId);
+					} catch (final SQLException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 
@@ -134,10 +138,8 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 				"Delete Player " + player.getName() + " of Group " + group.getGruppenName() + "?");
 		if (option == JOptionPane.YES_OPTION) {
 			mainControl.getSqlGamesControl().deletePartienFromPlayer(player, group.getGruppeId());
-			// System.out.println("Player Id:" + player.getSpielerId());
 			mainControl.getSqlTournament_has_PlayerControl().deletePlayerOfGroup(player.getSpielerId(),
 					group.getGruppeId());
-			// System.out.println("Group Id:" + group.getGruppeId());
 			playerTorunamentEditView.dispose();
 			loadGroup(groupId);
 		}

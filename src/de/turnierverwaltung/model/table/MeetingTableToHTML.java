@@ -34,7 +34,7 @@ public class MeetingTableToHTML {
 	private final WebserverFileLink fileLink;
 	private final String webServerPath;
 	private final String icsfilename;
-	private final int anzahlSpieler;
+	// private final int anzahlSpieler;
 	private final String cssTableClass;
 	private final int anzahlPartienProRunde;
 
@@ -57,7 +57,7 @@ public class MeetingTableToHTML {
 		startDatum = turnier.getStartDatum();
 		endDatum = turnier.getEndDatum();
 		gruppenName = gruppe.getGruppenName();
-		anzahlSpieler = gruppe.getSpielerAnzahl();
+		// anzahlSpieler = gruppe.getSpielerAnzahl();
 		anzahlPartienProRunde = gruppe.getPartienAnzahl() / gruppe.getRundenAnzahl();
 		this.webServerPath = webServerPath;
 		this.filename = filename;

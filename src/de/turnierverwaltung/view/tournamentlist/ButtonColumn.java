@@ -52,6 +52,8 @@ public class ButtonColumn extends AbstractCellEditor
 	private boolean isButtonColumnEditor;
 	private final ImageIcon userDelete = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-delete-2.png"))); //$NON-NLS-1$
+	private final ImageIcon userAdd = new ImageIcon(
+			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-new-3.png"))); //$NON-NLS-1$
 
 	/**
 	 * Create the ButtonColumn to be used as a renderer and editor. The renderer and
@@ -129,7 +131,12 @@ public class ButtonColumn extends AbstractCellEditor
 			editButton.setIcon((Icon) value);
 		} else {
 			editButton.setText(value.toString());
-			editButton.setIcon(userDelete);
+			if (value.toString().equals("Löschen")) {
+				editButton.setIcon(userDelete);
+			} else {
+				editButton.setIcon(userAdd);
+			}
+
 		}
 
 		editorValue = value;
@@ -170,7 +177,11 @@ public class ButtonColumn extends AbstractCellEditor
 			renderButton.setIcon((Icon) value);
 		} else {
 			renderButton.setText(value.toString());
-			renderButton.setIcon(userDelete);
+			if (value.toString().equals("Löschen")) {
+				renderButton.setIcon(userDelete);
+			} else {
+				renderButton.setIcon(userAdd);
+			}
 		}
 
 		return renderButton;
