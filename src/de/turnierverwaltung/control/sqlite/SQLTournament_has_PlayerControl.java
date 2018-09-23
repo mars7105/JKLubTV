@@ -26,26 +26,26 @@ import de.turnierverwaltung.sqlite.DAOFactory;
 import de.turnierverwaltung.sqlite.Turnier_has_SpielerDAO;
 
 public class SQLTournament_has_PlayerControl {
-	private MainControl mainControl;
+	private final MainControl mainControl;
 	private Tournament turnier;
 	private Group[] gruppe;
 	DAOFactory daoFactory;
 	int turnierId;
 	int turnier_has_Spieler;
 
-	public SQLTournament_has_PlayerControl(MainControl mainControl) {
+	public SQLTournament_has_PlayerControl(final MainControl mainControl) {
 		this.mainControl = mainControl;
 	}
 
-	public void insertTurnier_has_Spieler(int gruppenNr) throws SQLException {
+	public void insertTurnier_has_Spieler(final int gruppenNr) throws SQLException {
 		int gruppeId = 0;
 		int spielerId = 0;
-		this.turnier = mainControl.getTournament();
+		turnier = mainControl.getTournament();
 		gruppe = turnier.getGruppe();
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
-		Turnier_has_SpielerDAO turnier_has_SpielerDAO = daoFactory.getTurnier_has_SpielerDAO();
+		final Turnier_has_SpielerDAO turnier_has_SpielerDAO = daoFactory.getTurnier_has_SpielerDAO();
 		gruppeId = gruppe[gruppenNr].getGruppeId();
-		Player[] spieler = gruppe[gruppenNr].getSpieler();
+		final Player[] spieler = gruppe[gruppenNr].getSpieler();
 		for (int i = 0; i < gruppe[gruppenNr].getSpielerAnzahl(); i++) {
 			spielerId = spieler[i].getSpielerId();
 			turnier_has_Spieler = turnier_has_SpielerDAO.insertTurnier_has_Spieler(gruppeId, spielerId);
@@ -53,12 +53,18 @@ public class SQLTournament_has_PlayerControl {
 
 	}
 
-	public void updateTurnier_has_Spieler(int gruppe) throws SQLException {
+	public void updateTurnier_has_Spieler(final int gruppe) throws SQLException {
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
-		Turnier_has_SpielerDAO mySQLTurnier_has_SpielerDAO = daoFactory.getTurnier_has_SpielerDAO();
+		final Turnier_has_SpielerDAO mySQLTurnier_has_SpielerDAO = daoFactory.getTurnier_has_SpielerDAO();
 		for (int i = 0; i < turnier.getGruppe()[gruppe].getSpielerAnzahl(); i++) {
 			mySQLTurnier_has_SpielerDAO.updateTurnier_has_Spieler(turnier);
 		}
 
+	}
+
+	public void deletePlayerOfGroup(final int spielerId, final int gruppeId) throws SQLException {
+		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
+		final Turnier_has_SpielerDAO mySQLTurnier_has_SpielerDAO = daoFactory.getTurnier_has_SpielerDAO();
+		mySQLTurnier_has_SpielerDAO.deleteTurnier_has_Spieler(gruppeId, spielerId);
 	}
 }

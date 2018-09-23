@@ -44,36 +44,36 @@ public class Player implements Comparable<Object> {
 	public Player() {
 		dwzData = new DWZData();
 		eloData = new ELOData();
-		this.name = "";
-		this.forename = "";
-		this.surname = "";
-		this.kuerzel = "";
-		this.age = 0;
+		name = "";
+		forename = "";
+		surname = "";
+		kuerzel = "";
+		age = 0;
 		dwzData.setCsvIndex(-1);
-		this.punkte = 0;
-		this.soberg = 0;
-		this.platz = 1;
-		this.spielerId = -1;
+		punkte = 0;
+		soberg = 0;
+		platz = 1;
+		spielerId = -1;
 		dwzData.setCsvZPS("");
 		dwzData.setCsvMgl_Nr("");
 
 	}
 
-	public Player(DWZData dwzData) {
+	public Player(final DWZData dwzData) {
 		this.dwzData = dwzData;
 		eloData = new ELOData();
-		this.spielerId = dwzData.getSpielerId();
+		spielerId = dwzData.getSpielerId();
 
 		setName(this.dwzData.getCsvSpielername());
 
-		this.age = this.dwzData.getAge();
-		this.punkte = 0;
-		this.soberg = 0;
-		this.platz = 1;
+		age = this.dwzData.getAge();
+		punkte = 0;
+		soberg = 0;
+		platz = 1;
 
 	}
 
-	public Player(ELOData eloData2) {
+	public Player(final ELOData eloData2) {
 		eloData = eloData2;
 
 		dwzData = new DWZData();
@@ -82,51 +82,52 @@ public class Player implements Comparable<Object> {
 		dwzData.setCsvMgl_Nr("");
 		dwzData.setCsvFIDE_Elo(eloData.getRating());
 		dwzData.setCsvFIDE_ID(eloData.getFideid());
-		this.spielerId = eloData2.getSpielerId();
+		spielerId = eloData2.getSpielerId();
 		setName(eloData.getName());
 
-		this.age = eloData.getAge();
-		this.punkte = 0;
-		this.soberg = 0;
-		this.platz = 1;
+		age = eloData.getAge();
+		punkte = 0;
+		soberg = 0;
+		platz = 1;
 
 	}
 
-	public Player(int idSpieler, String name2, String kuerzel2, int age2) {
+	public Player(final int idSpieler, final String name2, final String kuerzel2, final int age2) {
 		dwzData = new DWZData();
 		eloData = new ELOData();
 		setName(name2);
 
-		this.kuerzel = kuerzel2;
-		this.age = age2;
+		kuerzel = kuerzel2;
+		age = age2;
 		dwzData.setCsvIndex(-1);
-		this.punkte = 0;
-		this.soberg = 0;
-		this.platz = 1;
-		this.spielerId = idSpieler;
+		punkte = 0;
+		soberg = 0;
+		platz = 1;
+		spielerId = idSpieler;
 		dwzData.setCsvZPS("");
 		dwzData.setCsvMgl_Nr("");
 
 	}
 
-	public Player(int idSpieler, String foreName2, String surName2, String kuerzel2, int age2) {
+	public Player(final int idSpieler, final String foreName2, final String surName2, final String kuerzel2,
+			final int age2) {
 		dwzData = new DWZData();
 		eloData = new ELOData();
 		setName(surName2 + "," + foreName2);
 
-		this.age = age2;
+		age = age2;
 		dwzData.setCsvIndex(-1);
-		this.punkte = 0;
-		this.soberg = 0;
-		this.platz = 1;
-		this.spielerId = idSpieler;
+		punkte = 0;
+		soberg = 0;
+		platz = 1;
+		spielerId = idSpieler;
 		dwzData.setCsvZPS("");
 		dwzData.setCsvMgl_Nr("");
 
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id
 	 * @param name
 	 * @param kuerzel
@@ -134,14 +135,15 @@ public class Player implements Comparable<Object> {
 	 * @param age
 	 * @param dwzindex2
 	 */
-	public Player(int id, String name, String kuerzel, String dwz, int age, String zps, String mgl, int dwzindex2) {
+	public Player(final int id, final String name, final String kuerzel, final String dwz, final int age,
+			final String zps, final String mgl, final int dwzindex2) {
 		if (id == TournamentConstants.SPIELFREI_ID) {
 			this.name = name;
-			this.spielerId = id;
+			spielerId = id;
 		} else {
 			dwzData = new DWZData();
 			eloData = new ELOData();
-			this.spielerId = id;
+			spielerId = id;
 			dwzData.setSpielerId(id);
 			eloData.setSpielerId(id);
 			setName(name);
@@ -149,9 +151,9 @@ public class Player implements Comparable<Object> {
 			dwzData.setCsvSpielername(this.name);
 
 			this.age = age;
-			this.punkte = 0;
-			this.soberg = 0;
-			this.platz = 1;
+			punkte = 0;
+			soberg = 0;
+			platz = 1;
 			dwzData.setCsvZPS(zps);
 			dwzData.setCsvMgl_Nr(mgl);
 			dwzData.setCsvIndex(-1);
@@ -162,7 +164,7 @@ public class Player implements Comparable<Object> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param id
 	 * @param forename
 	 * @param surname
@@ -173,11 +175,11 @@ public class Player implements Comparable<Object> {
 	 * @param fideid
 	 * @param age2
 	 */
-	public Player(int id, String forename, String surname, String kuerzel, String dwz, int dwzindex, int age,
-			String zps, String mgl, int elo, int fideid) {
+	public Player(final int id, final String forename, final String surname, final String kuerzel, final String dwz,
+			final int dwzindex, final int age, final String zps, final String mgl, final int elo, final int fideid) {
 		dwzData = new DWZData();
 		eloData = new ELOData();
-		this.spielerId = id;
+		spielerId = id;
 		dwzData.setSpielerId(id);
 		dwzData.setCsvFIDE_Elo(elo);
 		dwzData.setCsvFIDE_ID(fideid);
@@ -188,22 +190,22 @@ public class Player implements Comparable<Object> {
 		setName(surname + "," + forename);
 		this.age = age;
 		dwzData.setCsvIndex(dwzindex);
-		this.punkte = 0;
-		this.soberg = 0;
-		this.platz = 1;
+		punkte = 0;
+		soberg = 0;
+		platz = 1;
 		dwzData.setCsvZPS(zps);
 		dwzData.setCsvMgl_Nr(mgl);
 
 		correctMGLNumber();
-		dwzData.setCsvSpielername(this.name);
+		dwzData.setCsvSpielername(name);
 		setDwz(dwz);
 
 	}
 
 	@Override
-	public int compareTo(Object o) {
+	public int compareTo(final Object o) {
 
-		int compareQuantity = ((Player) o).getSort();
+		final int compareQuantity = ((Player) o).getSort();
 
 		// ascending order
 		return compareQuantity - getSort();
@@ -227,7 +229,7 @@ public class Player implements Comparable<Object> {
 	public void copyDWZDataToPlayer() {
 		setName(dwzData.getCsvSpielername());
 
-		this.age = dwzData.getAge();
+		age = dwzData.getAge();
 
 		// spielerId = dwzData.getSpielerId();
 	}
@@ -235,15 +237,15 @@ public class Player implements Comparable<Object> {
 	public void copyELODataToPlayer() {
 		setName(eloData.getName());
 
-		this.age = eloData.getAge();
+		age = eloData.getAge();
 
 		// spielerId = eloData.getSpielerId();
 	}
 
 	private void correctMGLNumber() {
-		int length = dwzData.getCsvMgl_Nr().length();
+		final int length = dwzData.getCsvMgl_Nr().length();
 		if (length > 0 && length < 4) {
-			StringBuffer sb = new StringBuffer(dwzData.getCsvMgl_Nr());
+			final StringBuffer sb = new StringBuffer(dwzData.getCsvMgl_Nr());
 			for (int i = length; i < 4; i++) {
 				sb.insert(0, "0");
 			}
@@ -279,8 +281,8 @@ public class Player implements Comparable<Object> {
 			forename = "";
 			surname = "";
 			int i = 0;
-			String fullname = name.replaceAll(",", " ").replaceAll("\"", "");
-			for (String retval : fullname.split("\\s")) {
+			final String fullname = name.replaceAll(",", " ").replaceAll("\"", "");
+			for (final String retval : fullname.split("\\s")) {
 				if (i == 0) {
 					surname = retval;
 				}
@@ -369,7 +371,7 @@ public class Player implements Comparable<Object> {
 	}
 
 	public double getPunkte() {
-		return this.punkte;
+		return punkte;
 	}
 
 	public double getSoberg() {
@@ -377,7 +379,7 @@ public class Player implements Comparable<Object> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @return
 	 */
 	public int getSort() {
@@ -386,7 +388,7 @@ public class Player implements Comparable<Object> {
 		while (loop) {
 
 			loop = false;
-			sort = (int) (this.punkte * 1000000 + this.soberg * 100000 + dwzData.getCsvDWZ());
+			sort = (int) (punkte * 1000000 + soberg * 100000 + dwzData.getCsvDWZ());
 
 		}
 		return sort;
@@ -400,33 +402,33 @@ public class Player implements Comparable<Object> {
 		return surname;
 	}
 
-	public void setAge(int age) {
+	public void setAge(final int age) {
 		this.age = age;
 	}
 
-	public void setDwz(int intDWZ) {
+	public void setDwz(final int intDWZ) {
 
 		dwzData.setCsvDWZ(intDWZ);
 	}
 
-	public void setDwz(String dwz) {
+	public void setDwz(final String dwz) {
 		try {
 			dwzData.setCsvDWZ(Integer.parseInt(dwz));
-		} catch (NumberFormatException e) {
+		} catch (final NumberFormatException e) {
 			dwzData.setCsvDWZ(0);
 		}
 	}
 
-	public void setDwzData(DWZData dwzData) {
+	public void setDwzData(final DWZData dwzData) {
 		this.dwzData = dwzData;
 		if (spielerId >= 0) {
 			this.dwzData.setSpielerId(spielerId);
 		}
-		this.age = this.dwzData.getAge();
+		age = this.dwzData.getAge();
 
 	}
 
-	public void setEloData(ELOData eloData) {
+	public void setEloData(final ELOData eloData) {
 		this.eloData = eloData;
 		if (spielerId >= 0) {
 			this.eloData.setSpielerId(spielerId);
@@ -436,77 +438,84 @@ public class Player implements Comparable<Object> {
 
 	}
 
-	public void setFolgeDWZ(double folgeDWZ) {
+	public void setFolgeDWZ(final double folgeDWZ) {
 		this.folgeDWZ = (int) folgeDWZ;
 	}
 
-	public void setFolgeDWZ(int folgeDWZ) {
+	public void setFolgeDWZ(final int folgeDWZ) {
 		this.folgeDWZ = folgeDWZ;
 	}
 
-	public void setFolgeELO(int folgeELO) {
+	public void setFolgeELO(final int folgeELO) {
 		this.folgeELO = folgeELO;
 	}
 
-	public void setForename(String forename) {
+	public void setForename(final String forename) {
 		this.forename = forename;
 		cutForename();
 
 	}
 
-	public void setKuerzel(String kuerzel) {
+	public void setKuerzel(final String kuerzel) {
 		this.kuerzel = kuerzel;
 	}
 
-	public void setName(String name) {
+	public void setName(final String name) {
 		this.name = name.replaceAll("\"", "");
-		if ((eloData.getName().length() > 0)) {
-			this.name = eloData.getName().replaceAll("\"", "").replaceAll(" ", "");
+		if (eloData != null) {
+			if ((eloData.getName().length() > 0)) {
+				this.name = eloData.getName().replaceAll("\"", "").replaceAll(" ", "");
 
+			}
 		}
-		if (dwzData.getCsvSpielername().length() > 0) {
-			this.name = dwzData.getCsvSpielername().replaceAll("\"", "");
+		if (dwzData != null) {
+			if (dwzData.getCsvSpielername().length() > 0) {
+				this.name = dwzData.getCsvSpielername().replaceAll("\"", "");
 
+			}
 		}
+		if (spielerId != TournamentConstants.SPIELFREI_ID) {
 
-		extractNameToForenameAndSurename();
-		cutForename();
-		cutSurname();
-		extractNameToKuerzel();
-		this.name = surname + "," + forename;
+			extractNameToForenameAndSurename();
+			cutForename();
+			cutSurname();
+			extractNameToKuerzel();
+
+			this.name = surname + "," + forename;
+		}
 	}
 
-	public void setNeueDWZ(String neueDWZ) {
+	public void setNeueDWZ(final String neueDWZ) {
 		this.neueDWZ = neueDWZ;
 	}
 
-	public void setPartie(Game[] partie) {
+	public void setPartie(final Game[] partie) {
 		this.partie = partie;
 	}
 
-	public void setPlatz(int platz) {
+	public void setPlatz(final int platz) {
 		this.platz = platz;
 	}
 
-	public void setPunkte(double punkte) {
+	public void setPunkte(final double punkte) {
 		this.punkte = punkte;
 	}
 
-	public void setSoberg(double soberg) {
+	public void setSoberg(final double soberg) {
 		this.soberg = soberg;
 	}
 
-	public void setSort(int sort) {
+	public void setSort(final int sort) {
 		this.sort = sort;
 	}
 
-	public void setSpielerId(int spielerId) {
+	public void setSpielerId(final int spielerId) {
 		this.spielerId = spielerId;
 		dwzData.setSpielerId(spielerId);
 		eloData.setSpielerId(spielerId);
 	}
 
-	public void setSurname(String surname) {
+	public void setSurname(final String surname) {
 		this.surname = surname;
 
 		cutSurname();

@@ -25,7 +25,6 @@ import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.sqlite.DAOFactory;
 import de.turnierverwaltung.sqlite.PartienDAO;
-import de.turnierverwaltung.sqlite.Turnier_has_SpielerDAO;
 
 public class SQLGamesControl {
 	private Tournament turnier;
@@ -111,12 +110,32 @@ public class SQLGamesControl {
 		return saved;
 	}
 
-	public boolean deletePartien(final int groupId) throws SQLException {
+	public boolean deletePartienFromPlayer(final Player player, final int groupId) throws SQLException {
 		final boolean deleted = false;
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		final PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
-		final Turnier_has_SpielerDAO turnierhasspielerDAO = daoFactory.getTurnier_has_SpielerDAO();
-		mySQLPartienDAO.deletePartien(groupId);
+		final ArrayList<Game> games = mySQLPartienDAO.selectAllPartien(groupId);
+		final Player spielfrei = new Player();
+		spielfrei.setSpielerId(TournamentConstants.SPIELFREI_ID);
+		spielfrei.setSurname("Spielfrei");
+		final ArrayList<Game> spielfreiGames = new ArrayList<Game>();
+		for (final Game game : games) {
+			if (game.getSpielerWeiss().getSpielerId() == player.getSpielerId()) {
+				System.out.println(game.getSpielerWeiss().getName() + " - " + game.getSpielerSchwarz().getName());
+				game.setSpielerWeiss(spielfrei);
+				game.setErgebnis(TournamentConstants.MYSQL_KEIN_ERGEBNIS);
+				spielfreiGames.add(game);
+			}
+			if (game.getSpielerSchwarz().getSpielerId() == player.getSpielerId()) {
+				System.out.println(game.getSpielerWeiss().getName() + " - " + game.getSpielerSchwarz().getName());
+				game.setSpielerSchwarz(spielfrei);
+				game.setErgebnis(TournamentConstants.MYSQL_KEIN_ERGEBNIS);
+
+				spielfreiGames.add(game);
+			}
+
+		}
+		mySQLPartienDAO.updatePartien(spielfreiGames);
 		return deleted;
 	}
 }

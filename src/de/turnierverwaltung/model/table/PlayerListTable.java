@@ -39,7 +39,7 @@ public class PlayerListTable {
 		for (final Player player : players) {
 			if (player.getSpielerId() != TournamentConstants.SPIELFREI_ID) {
 
-				playerMatrix[index][0] = player.getForename() + " " + player.getSurname();
+				playerMatrix[index][0] = player.getSurname() + ", " + player.getForename();
 				playerMatrix[index][1] = player.getDwz();
 				if (player.getEloData() != null) {
 					if (player.getEloData().getRating() > 0) {

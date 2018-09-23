@@ -60,8 +60,9 @@ public class MeetingTable {
 		this.turnier = turnier;
 		this.gruppe = gruppe;
 		this.gruppe.getSpieler();
-		spielerAnzahl = this.gruppe.getSpielerAnzahl();
+		// spielerAnzahl = this.gruppe.getSpielerAnzahl();
 		partien = gruppe.getPartien();
+		spielerAnzahl = gruppe.getPartienAnzahl() * 2 / gruppe.getRundenAnzahl();
 		iCalendar = new ICal();
 		calcRunden();
 		calcAnzahlSpaltenZeilen();
@@ -79,8 +80,8 @@ public class MeetingTable {
 		// if (spielerAnzahl % 2 == 0) {
 		// } else {
 		// }
-		partienAnzahl = (spielerAnzahl * (spielerAnzahl - 1) / 2);
-
+		// partienAnzahl = (spielerAnzahl * (spielerAnzahl - 1) / 2);
+		partienAnzahl = gruppe.getPartienAnzahl();
 	}
 
 	/**
@@ -103,6 +104,12 @@ public class MeetingTable {
 		for (int i = 0; i < spielerAnzahl - 1; i++) {
 			for (int y = i + 1; y < spielerAnzahl; y++) {
 				String event = "";
+				if (partien[index].getSpielerWeiss().getSpielerId() == TournamentConstants.SPIELFREI_ID) {
+					partien[index].getSpielerWeiss().setName("Spielfrei");
+				}
+				if (partien[index].getSpielerSchwarz().getSpielerId() == TournamentConstants.SPIELFREI_ID) {
+					partien[index].getSpielerSchwarz().setName("Spielfrei");
+				}
 				tabellenMatrix[0][index + 1] = Integer.toString(partien[index].getRunde());
 				tabellenMatrix[1][index + 1] = partien[index].getSpielerWeiss().getName();
 				tabellenMatrix[2][index + 1] = partien[index].getSpielerSchwarz().getName();

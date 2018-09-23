@@ -4,16 +4,13 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dialog;
 import java.awt.SystemColor;
-import java.awt.event.ActionEvent;
 
-import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 
 import de.turnierverwaltung.model.table.PlayerListTableModel;
@@ -30,7 +27,8 @@ public class PlayerTournamentEditView extends JDialog {
 
 	private ButtonPanelView buttonPanel;
 
-	public PlayerTournamentEditView(final PlayerListTableModel tableModel, final String groupName) {
+	public PlayerTournamentEditView(final PlayerListTableModel tableModel, final String groupName,
+			final Action deleteAction) {
 		super();
 		setTitle("Playerlist");
 		final TitleLabelView label = new TitleLabelView(groupName);
@@ -45,21 +43,7 @@ public class PlayerTournamentEditView extends JDialog {
 		setForeground(titleTextColor);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table.setRowHeight(30);
-		final Action deleteAction = new AbstractAction() {
-			/**
-			 *
-			 */
-			private static final long serialVersionUID = 1L;
 
-			@Override
-			public void actionPerformed(final ActionEvent e) {
-				final JTable table = (JTable) e.getSource();
-				final int modelRow = Integer.valueOf(e.getActionCommand());
-				((DefaultTableModel) table.getModel()).removeRow(modelRow);
-				System.out.println("row:" + modelRow);
-			}
-
-		};
 		@SuppressWarnings("unused")
 		final ButtonColumn buttonColumn = new ButtonColumn(table, deleteAction, 3);
 		setColumnWidth();
@@ -74,7 +58,7 @@ public class PlayerTournamentEditView extends JDialog {
 		add(contentPanel, BorderLayout.CENTER);
 		contentPanel.updateUI();
 		buttonPanel = new ButtonPanelView();
-		buttonPanel.makeAllButtons();
+		buttonPanel.makeOKButton();
 		add(buttonPanel, BorderLayout.SOUTH);
 	}
 

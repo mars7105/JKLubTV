@@ -67,12 +67,14 @@ public class EditTournamentView extends JDialog {
 	private final Properties property;
 	private JTextField[] textFieldGruppenName;
 	private final JButton playerOfGroupButtons[];
-	private final JButton addGroupButton;
-	private final JButton deleteButtons[];
-	private final ImageIcon deleteIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-group-delete-2.png"))); //$NON-NLS-1$
-	private final ImageIcon groupIcon = new ImageIcon(
-			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-group-new-2.png"))); //$NON-NLS-1$
+	// private final JButton addGroupButton;
+	// private final JButton deleteButtons[];
+	// private final ImageIcon deleteIcon = new ImageIcon(
+	// Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-group-delete-2.png")));
+	// //$NON-NLS-1$
+	// private final ImageIcon groupIcon = new ImageIcon(
+	// Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-group-new-2.png")));
+	// //$NON-NLS-1$
 	private final ImageIcon playerIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-group.png"))); //$NON-NLS-1$
 
@@ -80,7 +82,7 @@ public class EditTournamentView extends JDialog {
 		textFieldGruppenName = new JTextField[turnier.getAnzahlGruppen()];
 
 		playerOfGroupButtons = new JButton[turnier.getAnzahlGruppen()];
-		deleteButtons = new JButton[turnier.getAnzahlGruppen()];
+		// deleteButtons = new JButton[turnier.getAnzahlGruppen()];
 
 		property = new Properties();
 		property.put("text.today", Messages.getString("TurnierEditierenView.3")); //$NON-NLS-1$ //$NON-NLS-2$
@@ -155,22 +157,24 @@ public class EditTournamentView extends JDialog {
 			playerOfGroupButtons[i] = new JButton(Messages.getString("TurnierEditierenView.15"), playerIcon);
 			label = new OwnLabel();
 			label.setText(Messages.getString("TurnierEditierenView.14") + (i + 1));
-			deleteButtons[i] = new JButton(Messages.getString("TurnierEditierenView.16"), deleteIcon);
-
-			deleteButtons[i].setActionCommand(Messages.getString("TurnierEditierenView.16"));
+			// deleteButtons[i] = new JButton(Messages.getString("TurnierEditierenView.16"),
+			// deleteIcon);
+			//
+			// deleteButtons[i].setActionCommand(Messages.getString("TurnierEditierenView.16"));
 
 			centerPane.add(label);
 			centerPane.add(textFieldGruppenName[i]);
-			centerPane.add(deleteButtons[i]);
+			// centerPane.add(deleteButtons[i]);
 
 			centerPane.add(playerOfGroupButtons[i]);
 			contentPanel.add(centerPane);
 		}
-		addGroupButton = new JButton(Messages.getString("TurnierEditierenView.17"), groupIcon);
-		centerPane = new JPanel();
-		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		centerPane.add(addGroupButton);
-		contentPanel.add(centerPane);
+		// addGroupButton = new JButton(Messages.getString("TurnierEditierenView.17"),
+		// groupIcon);
+		// centerPane = new JPanel();
+		// centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// centerPane.add(addGroupButton);
+		// contentPanel.add(centerPane);
 		contentPanel.add(buttonPane);
 		add(contentPanel);
 		contentPanel.updateUI();
@@ -187,13 +191,13 @@ public class EditTournamentView extends JDialog {
 
 	}
 
-	public JButton getAddGroupButton() {
-		return addGroupButton;
-	}
-
-	public JButton[] getDeleteButtons() {
-		return deleteButtons;
-	}
+	// public JButton getAddGroupButton() {
+	// return addGroupButton;
+	// }
+	//
+	// public JButton[] getDeleteButtons() {
+	// return deleteButtons;
+	// }
 
 	public JButton[] getPlayerOfGroupButtons() {
 		return playerOfGroupButtons;

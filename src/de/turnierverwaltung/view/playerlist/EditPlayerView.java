@@ -189,15 +189,15 @@ public class EditPlayerView extends JDialog {
 		centerPane.add(textFieldELO);
 		contentPanel.add(centerPane);
 
-		label = new OwnLabel();
-
-		label.setText(Messages.getString("SpielerEditierenView.18")); //$NON-NLS-1$
-		centerPane = new JPanel();
-		centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-		centerPane.add(label);
-		centerPane.add(tournamentsButton);
-
-		contentPanel.add(centerPane);
+		// label = new OwnLabel();
+		//
+		// label.setText(Messages.getString("SpielerEditierenView.18")); //$NON-NLS-1$
+		// centerPane = new JPanel();
+		// centerPane.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// centerPane.add(label);
+		// centerPane.add(tournamentsButton);
+		//
+		// contentPanel.add(centerPane);
 
 		contentPanel.add(buttonPane);
 		add(contentPanel);

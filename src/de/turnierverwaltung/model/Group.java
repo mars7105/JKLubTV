@@ -163,7 +163,8 @@ public class Group {
 	}
 
 	public int getPartienAnzahl() {
-		partienAnzahl = spielerAnzahl * (spielerAnzahl - 1) / 2;
+		// partienAnzahl = spielerAnzahl * (spielerAnzahl - 1) / 2;
+		partienAnzahl = partien.length;
 		return partienAnzahl;
 	}
 
@@ -178,12 +179,18 @@ public class Group {
 	}
 
 	public int getRundenAnzahl() {
-		if (spielerAnzahl % 2 == 0) {
-			rundenAnzahl = spielerAnzahl - 1;
-		} else {
-			rundenAnzahl = spielerAnzahl;
+		// if (spielerAnzahl % 2 == 0) {
+		// rundenAnzahl = spielerAnzahl - 1;
+		// } else {
+		// rundenAnzahl = spielerAnzahl;
+		// }
+		int pAnzahl = 0;
+		for (final Game partie : partien) {
+			if (partie.getRunde() > pAnzahl) {
+				pAnzahl = partie.getRunde();
+			}
 		}
-
+		rundenAnzahl = pAnzahl;
 		return rundenAnzahl;
 	}
 
@@ -192,7 +199,7 @@ public class Group {
 	}
 
 	public int getSpielerAnzahl() {
-		// spielerAnzahl = spieler.length;
+		spielerAnzahl = spieler.length;
 		return spielerAnzahl;
 	}
 
