@@ -3,6 +3,7 @@ package de.turnierverwaltung.control.tournamentlist;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -18,6 +19,7 @@ import de.turnierverwaltung.control.sqlite.SQLTournament_has_PlayerControl;
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
+import de.turnierverwaltung.model.table.PlayerListAllTable;
 import de.turnierverwaltung.model.table.PlayerListTable;
 import de.turnierverwaltung.model.table.PlayerListTableModel;
 import de.turnierverwaltung.view.tournamentlist.EditTournamentView;
@@ -104,7 +106,7 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 
 				final String name = (String) table.getModel().getValueAt(modelRow, 0);
 				if (name.equals("<Spielfrei>")) {
-					// System.out.println("<Spielfrei> " + modelRow);
+					newPlayer();
 				} else {
 					final Player player = group.getSpieler()[modelRow];
 					try {
@@ -144,5 +146,60 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 			loadGroup(groupId);
 		}
 
+	}
+
+	private void newPlayer() {
+		ArrayList<Player> playerList = null;
+		try {
+			playerList = mainControl.getSqlPlayerControl().getAllSpieler();
+		} catch (final SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		final PlayerListAllTable playerListTable = new PlayerListAllTable(playerList);
+		final PlayerListTableModel playerListTableModel = new PlayerListTableModel(playerListTable.getPlayerMatrix(),
+				playerListTable.getColumnNames());
+
+		final Action deleteAction = new AbstractAction() {
+			/**
+			 *
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(final ActionEvent e) {
+				// final JTable table = (JTable) e.getSource();
+				// final int modelRow = Integer.valueOf(e.getActionCommand());
+
+				// final String name = (String) table.getModel().getValueAt(modelRow, 0);
+				// if (name.equals("<Spielfrei>")) {
+				// newPlayer();
+				// } else {
+				// final Player player = group.getSpieler()[modelRow];
+				// try {
+				// deletePlayerFromGroup(player, groupId);
+				// } catch (final SQLException e1) {
+				// // TODO Auto-generated catch block
+				// e1.printStackTrace();
+				// }
+				// }
+			}
+
+		};
+
+		final PlayerTournamentEditView playerListView = new PlayerTournamentEditView(playerListTableModel,
+				"Add Player to Group", deleteAction);
+		final JButton okButton = playerListView.getButtonPanel().getOkButton();
+		okButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(final ActionEvent arg0) {
+				playerListView.dispose();
+
+			}
+
+		});
+		playerListView.showDialog();
 	}
 }

@@ -9,7 +9,6 @@ public class PlayerListTable {
 	public Group group;
 	private final Player[] players;
 	private final Game[] games;
-	// private final int playerCount;
 	private final String columnNames[];
 	private final Object playerMatrix[][];
 	private final int partienAnzahl;
@@ -20,17 +19,12 @@ public class PlayerListTable {
 		this.group = group;
 		players = this.group.getSpieler();
 		games = this.group.getPartien();
-		// playerCount = this.group.getSpielerAnzahl();
 		partienAnzahl = this.group.getPartienAnzahl();
 		rundenAnzahl = this.group.getRundenAnzahl();
 		int cols = 0;
-		// for (final Player player : players) {
-		// if (player.getSpielerId() == TournamentConstants.SPIELFREI_ID) {
-		// cols = playerCount - 1;
-		// } else {
+
 		cols = partienAnzahl * 2 / rundenAnzahl;
-		// }
-		// }
+
 		playerMatrix = new String[cols][4];
 		columnNames = new String[4];
 		columnNames[0] = "Name";
@@ -45,14 +39,16 @@ public class PlayerListTable {
 				playerMatrix[index][0] = player.getSurname() + ", " + player.getForename();
 
 				playerMatrix[index][1] = player.getDwz();
+				playerMatrix[index][2] = "";
 				if (player.getEloData() != null) {
 					if (player.getEloData().getRating() > 0) {
 						playerMatrix[index][2] = String.valueOf(player.getEloData().getRating());
-					} else {
-						playerMatrix[index][2] = "";
 					}
-				} else {
-					playerMatrix[index][2] = "";
+				}
+				if (player.getDwzData() != null) {
+					if (player.getDwzData().getCsvFIDE_Elo() > 0) {
+						playerMatrix[index][2] = String.valueOf(player.getDwzData().getCsvFIDE_Elo());
+					}
 				}
 				playerMatrix[index][3] = "Löschen";
 			} else {
