@@ -36,6 +36,7 @@ public class MeetingTableToHTML {
 	private final String icsfilename;
 	private final int anzahlSpieler;
 	private final String cssTableClass;
+	private final int anzahlPartienProRunde;
 
 	/**
 	 *
@@ -57,6 +58,7 @@ public class MeetingTableToHTML {
 		endDatum = turnier.getEndDatum();
 		gruppenName = gruppe.getGruppenName();
 		anzahlSpieler = gruppe.getSpielerAnzahl();
+		anzahlPartienProRunde = gruppe.getPartienAnzahl() / gruppe.getRundenAnzahl();
 		this.webServerPath = webServerPath;
 		this.filename = filename;
 		this.icsfilename = icsfilename;
@@ -179,7 +181,7 @@ public class MeetingTableToHTML {
 
 				}
 				htmlString += "</tr>\n";
-				if (y + 1 >= anzahlSpieler / 2 && y % (anzahlSpieler / 2) == 0 && y < row - 1) {
+				if (y + 1 >= anzahlPartienProRunde && y % anzahlPartienProRunde == 0 && y < row - 1) {
 					htmlString += "</tbody></table>\n";
 
 					htmlString += "<table class='" + cssTableClass + "'>\n";
