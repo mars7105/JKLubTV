@@ -19,6 +19,7 @@ package de.turnierverwaltung.view.navigation;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 
@@ -36,44 +37,44 @@ import de.turnierverwaltung.view.Messages;
 
 public class NaviView extends JToolBar {
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	private String tabellenname;
-	private JLabel tabellenLabel;
+	private final JLabel tabellenLabel;
 	private String gruppenname;
-	private JLabel gruppenLabel;
+	private final JLabel gruppenLabel;
 
-	private ImageIcon dbNewIcon = new ImageIcon(
+	private final ImageIcon dbNewIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/db_add.png"))); //$NON-NLS-1$
-	private ImageIcon dbLoadIcon = new ImageIcon(
+	private final ImageIcon dbLoadIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-open-4.png"))); //$NON-NLS-1$
-	private ImageIcon tabelleSpeichernIcon = new ImageIcon(
+	private final ImageIcon tabelleSpeichernIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-save-5.png"))); //$NON-NLS-1$
-	private ImageIcon tabelleAktualisierenIcon = new ImageIcon(
+	private final ImageIcon tabelleAktualisierenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-refresh-6.png"))); //$NON-NLS-1$
-	private ImageIcon tabelleHTMLAusgabeIcon = new ImageIcon(
+	private final ImageIcon tabelleHTMLAusgabeIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/homepage.png"))); //$NON-NLS-1$
-	private ImageIcon turnierNew = new ImageIcon(
+	private final ImageIcon turnierNew = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-new.png"))); //$NON-NLS-1$
 	private JButton turnierAddButton;
-	private ImageIcon userNew = new ImageIcon(
+	private final ImageIcon userNew = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/user-new-3.png"))); //$NON-NLS-1$
-	private ImageIcon userImport = new ImageIcon(
+	private final ImageIcon userImport = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-open-4.png"))); //$NON-NLS-1$
-	private ImageIcon userExport = new ImageIcon(
+	private final ImageIcon userExport = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-export.png"))); //$NON-NLS-1$
-	private ImageIcon DEWISSearch = new ImageIcon(
+	private final ImageIcon DEWISSearch = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/db.png"))); //$NON-NLS-1$
-	private ImageIcon iCalendarIcon = new ImageIcon(
+	private final ImageIcon iCalendarIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/accessories-date.png"))); //$NON-NLS-1$
-	private ImageIcon exitIcon = new ImageIcon(
+	private final ImageIcon exitIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/application-exit-5.png")));
-	private ImageIcon pairingsCancelIcon = new ImageIcon(
+	private final ImageIcon pairingsCancelIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/dialog-cancel-3.png")));
-	private ImageIcon launcherIcon = new ImageIcon(
+	private final ImageIcon launcherIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/launcher.png")));
-	private ImageIcon logoImg = new ImageIcon(
+	private final ImageIcon logoImg = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/jklubtv-logo.png")));
 	private JButton spielerImport;
 	private JButton spielerExport;
@@ -86,13 +87,13 @@ public class NaviView extends JToolBar {
 	private JButton infoButton;
 	private JButton exitButton;
 	private JLabel pathToDatabase;
-	private ImageIcon propertiesIcon = new ImageIcon(
+	private final ImageIcon propertiesIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/configure-2.png"))); //$NON-NLS-1$
-	private ImageIcon infoIcon = new ImageIcon(
+	private final ImageIcon infoIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/emblem-notice.png"))); //$NON-NLS-1$
-	private ImageIcon pdfIcon = new ImageIcon(
+	private final ImageIcon pdfIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/acroread-2.png"))); //$NON-NLS-1$
-	private ImageIcon excelIcon = new ImageIcon(
+	private final ImageIcon excelIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/excel-1.png"))); //$NON-NLS-1$
 	private JButton tabelleSpeichernButton;
 	private JPanel tabellenPanel;
@@ -108,27 +109,27 @@ public class NaviView extends JToolBar {
 	private JButton pairingsLoadButton;
 	private JButton pairingsSaveButton;
 	private JButton pairingsCancelButton;
-	private ImageIcon pairingsLoadIcon = new ImageIcon(
+	private final ImageIcon pairingsLoadIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/media-playlist-shuffle-3.png")));
-	private ImageIcon pairingsSaveIcon = new ImageIcon(
+	private final ImageIcon pairingsSaveIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/document-save-5.png")));
-	private ImageIcon updateButtonIcon = new ImageIcon(
+	private final ImageIcon updateButtonIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-refresh-6.png")));
 	private JPanel pairingsPanel;
-	private JLabel pairingsLabel;
+	private final JLabel pairingsLabel;
 	private String pairingsname;
 	private JButton updateButton;
 	private JButton spielerELOSearchButton;
 
 	public NaviView() {
-		Color titleColor = new Color((SystemColor.control).getRGB());
-		Color titleTextColor = new Color((SystemColor.controlText).getRGB());
+		final Color titleColor = new Color((SystemColor.control).getRGB());
+		final Color titleTextColor = new Color((SystemColor.controlText).getRGB());
 		setBackground(titleColor);
 		setForeground(titleTextColor);
-		JLabel logoLabel = new JLabel(logoImg);
-		JLabel logoText = new JLabel("Version: " + Version.getString("version.1"));
-		this.setLayout(new BorderLayout());
-		this.setRollover(true);
+		final JLabel logoLabel = new JLabel(logoImg);
+		final JLabel logoText = new JLabel("Version: " + Version.getString("version.1"));
+		setLayout(new BorderLayout());
+		setRollover(true);
 		wizardButton = new JButton(Messages.getString("NaviView.35"), launcherIcon);
 		wizardButton.setPreferredSize(new Dimension(200, 40));
 		wizardButton.setHorizontalAlignment(SwingConstants.LEFT);
@@ -185,7 +186,7 @@ public class NaviView extends JToolBar {
 
 		dateiPanel = new JPanel();
 		// dateiPanel.setBackground(Color.LIGHT_GRAY);
-		BoxLayout dateiPanelLayout = new BoxLayout(dateiPanel, BoxLayout.PAGE_AXIS);
+		final BoxLayout dateiPanelLayout = new BoxLayout(dateiPanel, BoxLayout.PAGE_AXIS);
 		dateiPanel.setLayout(dateiPanelLayout);
 		// Turnierliste
 		turnierAddButton = new JButton(Messages.getString("NaviView.17"), turnierNew); //$NON-NLS-1$
@@ -193,7 +194,7 @@ public class NaviView extends JToolBar {
 		turnierAddButton.setHorizontalAlignment(SwingConstants.LEFT);
 		turnierListePanel = new JPanel();
 		// turnierListePanel.setBackground(Color.LIGHT_GRAY);
-		BoxLayout turnierListePanelLayout = new BoxLayout(turnierListePanel, BoxLayout.PAGE_AXIS);
+		final BoxLayout turnierListePanelLayout = new BoxLayout(turnierListePanel, BoxLayout.PAGE_AXIS);
 		turnierListePanel.setLayout(turnierListePanelLayout);
 		NaviPanelElementView panel3 = new NaviPanelElementView();
 
@@ -210,7 +211,7 @@ public class NaviView extends JToolBar {
 		spielerAddButton.setHorizontalAlignment(SwingConstants.LEFT);
 		spielerListePanel = new JPanel();
 		// spielerListePanel.setBackground(Color.LIGHT_GRAY);
-		BoxLayout spielerListePanelLayout = new BoxLayout(spielerListePanel, BoxLayout.PAGE_AXIS);
+		final BoxLayout spielerListePanelLayout = new BoxLayout(spielerListePanel, BoxLayout.PAGE_AXIS);
 		spielerListePanel.setLayout(spielerListePanelLayout);
 		panel3 = new NaviPanelElementView();
 
@@ -273,51 +274,51 @@ public class NaviView extends JToolBar {
 		spielerListePanel.add(panel3);
 
 		tabellenPanel = new NaviPanelElementView();
-		BoxLayout tabellenPanelLayout = new BoxLayout(tabellenPanel, BoxLayout.PAGE_AXIS);
+		final BoxLayout tabellenPanelLayout = new BoxLayout(tabellenPanel, BoxLayout.PAGE_AXIS);
 		tabellenPanel.setLayout(tabellenPanelLayout);
-		NaviPanelElementView panel = new NaviPanelElementView();
+		final NaviPanelElementView panel = new NaviPanelElementView();
 
 		panel.add(newDatabseButton);
-		NaviPanelElementView panel2 = new NaviPanelElementView();
+		final NaviPanelElementView panel2 = new NaviPanelElementView();
 		panel2.add(loadDatabaseButton);
-		NaviPanelElementView panel2e = new NaviPanelElementView();
+		final NaviPanelElementView panel2e = new NaviPanelElementView();
 		panel2e.add(wizardButton);
 
-		NaviPanelElementView panel2a = new NaviPanelElementView();
+		final NaviPanelElementView panel2a = new NaviPanelElementView();
 		// panel2a.getFlowLayout().setVgap(1);
 
 		panel2a.add(propertiesButton);
-		NaviPanelElementView panel2b = new NaviPanelElementView();
+		final NaviPanelElementView panel2b = new NaviPanelElementView();
 		// panel2b.getFlowLayout().setVgap(1);
 
 		panel2b.add(infoButton);
-		NaviPanelElementView panel2c = new NaviPanelElementView();
+		final NaviPanelElementView panel2c = new NaviPanelElementView();
 		panel2c.add(exitButton);
-		NaviPanelElementView panelLabel = new NaviPanelElementView();
+		final NaviPanelElementView panelLabel = new NaviPanelElementView();
 		// panelLabel.getFlowLayout().setVgap(1);
 		pathToDatabase = new JLabel(" "); //$NON-NLS-1$
 		panelLabel.add(pathToDatabase);
 
-		NaviPanelElementView panel4c = new NaviPanelElementView();
+		final NaviPanelElementView panel4c = new NaviPanelElementView();
 		panel4c.add(tabelleAktualisierenButton);
-		NaviPanelElementView panel4d = new NaviPanelElementView();
+		final NaviPanelElementView panel4d = new NaviPanelElementView();
 		panel4d.add(tabelleSpeichernButton);
-		NaviPanelElementView panel4e = new NaviPanelElementView();
+		final NaviPanelElementView panel4e = new NaviPanelElementView();
 		panel4e.add(tabelleHTMLAusgabeButton);
-		NaviPanelElementView panel4f = new NaviPanelElementView();
+		final NaviPanelElementView panel4f = new NaviPanelElementView();
 		panel4f.add(pdfSpeichernButton);
 
-		NaviPanelElementView panel4g = new NaviPanelElementView();
+		final NaviPanelElementView panel4g = new NaviPanelElementView();
 		panel4g.add(excelSpeichernButton);
-		NaviPanelElementView panel4i = new NaviPanelElementView();
+		final NaviPanelElementView panel4i = new NaviPanelElementView();
 		panel4i.add(iCalendarSpeichernButton);
-		NaviPanelElementView panel4h = new NaviPanelElementView();
+		final NaviPanelElementView panel4h = new NaviPanelElementView();
 		// panel4h.setBackground(Color.LIGHT_GRAY);
 		panel4h.add(pairingsLoadButton);
 
-		NaviPanelElementView panel4k = new NaviPanelElementView();
+		final NaviPanelElementView panel4k = new NaviPanelElementView();
 		panel4k.add(pairingsSaveButton);
-		NaviPanelElementView panel4l = new NaviPanelElementView();
+		final NaviPanelElementView panel4l = new NaviPanelElementView();
 		panel4l.add(pairingsCancelButton);
 
 		titleView = new NaviTitleLabelView(Messages.getString("NaviView.25"));
@@ -332,16 +333,16 @@ public class NaviView extends JToolBar {
 
 		dateiPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		NaviPanelElementView datenbankPanelLabel = new NaviPanelElementView();
+		final NaviPanelElementView datenbankPanelLabel = new NaviPanelElementView();
 
-		JLabel datenbankLabel = new JLabel(Messages.getString("NaviView.26")); //$NON-NLS-1$
+		final JLabel datenbankLabel = new JLabel(Messages.getString("NaviView.26")); //$NON-NLS-1$
 		// datenbankLabel.setBackground(Color.LIGHT_GRAY);
 		datenbankPanelLabel.add(datenbankLabel);
 
 		titleView = new NaviTitleLabelView(tabellenname);
 		tabellenLabel = titleView.getTitleLabel();
 
-		NaviPanelElementView gruppenPanelLabel = new NaviPanelElementView();
+		final NaviPanelElementView gruppenPanelLabel = new NaviPanelElementView();
 		gruppenLabel = new JLabel(gruppenname);
 		gruppenPanelLabel.add(gruppenLabel);
 
@@ -366,7 +367,7 @@ public class NaviView extends JToolBar {
 		tabellenPanel.add(panel4h);
 
 		pairingsPanel = new NaviPanelElementView();
-		BoxLayout pairingsPanelLayout = new BoxLayout(pairingsPanel, BoxLayout.PAGE_AXIS);
+		final BoxLayout pairingsPanelLayout = new BoxLayout(pairingsPanel, BoxLayout.PAGE_AXIS);
 		pairingsPanel.setLayout(pairingsPanelLayout);
 		titleView = new NaviTitleLabelView(pairingsname);
 
@@ -379,8 +380,8 @@ public class NaviView extends JToolBar {
 		pairingsPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		dateiPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		NaviPanelElementView panel5 = new NaviPanelElementView();
-		BoxLayout boxLayout = new BoxLayout(panel5, BoxLayout.Y_AXIS);
+		final NaviPanelElementView panel5 = new NaviPanelElementView();
+		final BoxLayout boxLayout = new BoxLayout(panel5, BoxLayout.Y_AXIS);
 		panel5.setLayout(boxLayout);
 
 		panel5.add(dateiPanel);
@@ -390,17 +391,26 @@ public class NaviView extends JToolBar {
 		panel5.add(spielerListePanel);
 
 		this.add(panel5, BorderLayout.NORTH);
-		JPanel logoPanel = new JPanel();
-		logoPanel.setLayout(new BoxLayout(logoPanel, BoxLayout.Y_AXIS));
-		logoPanel.add(logoLabel);
-		logoPanel.add(logoText);
-		JPanel logoCenterPanel = new JPanel();
+		final JPanel logoPanel1 = new JPanel();
+		logoPanel1.setLayout(new FlowLayout(FlowLayout.CENTER));
+		final JPanel logoPanel2 = new JPanel();
+		logoPanel2.setLayout(new FlowLayout(FlowLayout.CENTER));
+		logoPanel1.add(logoLabel);
+		logoText.setForeground(Color.WHITE);
+		logoText.setBackground(Color.BLACK);
+		logoPanel2.add(logoText);
+
+		logoPanel1.setBackground(Color.BLACK);
+		logoPanel1.setForeground(Color.WHITE);
+		logoPanel2.setBackground(Color.BLACK);
+		logoPanel2.setForeground(Color.WHITE);
+		final JPanel logoCenterPanel = new JPanel();
 		logoCenterPanel.setLayout(new BorderLayout());
-		logoPanel.setBackground(titleColor);
-		logoPanel.setForeground(titleTextColor);
+
 		logoCenterPanel.setBackground(titleColor);
 		logoCenterPanel.setForeground(titleTextColor);
-		logoCenterPanel.add(logoPanel, BorderLayout.CENTER);
+		logoCenterPanel.add(logoPanel1, BorderLayout.CENTER);
+		logoCenterPanel.add(logoPanel2, BorderLayout.SOUTH);
 		this.add(logoCenterPanel, BorderLayout.SOUTH);
 
 	}
@@ -521,102 +531,102 @@ public class NaviView extends JToolBar {
 		return updateButton;
 	}
 
-	public void setDateiPanel(JPanel dateiPanel) {
+	public void setDateiPanel(final JPanel dateiPanel) {
 		this.dateiPanel = dateiPanel;
 	}
 
-	public void setExcelSpeichernButton(JButton excelSpeichernButton) {
+	public void setExcelSpeichernButton(final JButton excelSpeichernButton) {
 		this.excelSpeichernButton = excelSpeichernButton;
 	}
 
-	public void setExitButton(JButton exitButton) {
+	public void setExitButton(final JButton exitButton) {
 		this.exitButton = exitButton;
 	}
 
-	public void setGruppenname(String gruppenname) {
+	public void setGruppenname(final String gruppenname) {
 		this.gruppenname = gruppenname;
 		gruppenLabel.setText(gruppenname);
 		gruppenLabel.updateUI();
 	}
 
-	public void setiCalendarSpeichernButton(JButton iCalendarSpeichernButton) {
+	public void setiCalendarSpeichernButton(final JButton iCalendarSpeichernButton) {
 		this.iCalendarSpeichernButton = iCalendarSpeichernButton;
 	}
 
-	public void setInfoButton(JButton infoButton) {
+	public void setInfoButton(final JButton infoButton) {
 		this.infoButton = infoButton;
 	}
 
-	public void setLoadDatabaseButton(JButton loadDatabaseButton) {
+	public void setLoadDatabaseButton(final JButton loadDatabaseButton) {
 		this.loadDatabaseButton = loadDatabaseButton;
 	}
 
-	public void setNewDatabseButton(JButton newDatabseButton) {
+	public void setNewDatabseButton(final JButton newDatabseButton) {
 		this.newDatabseButton = newDatabseButton;
 	}
 
-	public void setPairingsCancelButton(JButton pairingsCancelButton) {
+	public void setPairingsCancelButton(final JButton pairingsCancelButton) {
 		this.pairingsCancelButton = pairingsCancelButton;
 	}
 
-	public void setPairingsLoadButton(JButton pairingsLoadButton) {
+	public void setPairingsLoadButton(final JButton pairingsLoadButton) {
 		this.pairingsLoadButton = pairingsLoadButton;
 	}
 
-	public void setPairingsPanel(JPanel pairingsPanel) {
+	public void setPairingsPanel(final JPanel pairingsPanel) {
 		this.pairingsPanel = pairingsPanel;
 	}
 
-	public void setPairingsSaveButton(JButton pairingsSaveButton) {
+	public void setPairingsSaveButton(final JButton pairingsSaveButton) {
 		this.pairingsSaveButton = pairingsSaveButton;
 	}
 
-	public void setPathToDatabase(JLabel pathToDatabase) {
+	public void setPathToDatabase(final JLabel pathToDatabase) {
 		this.pathToDatabase = pathToDatabase;
 		this.pathToDatabase.updateUI();
 	}
 
-	public void setPdfSpeichernButton(JButton pdfSpeichernButton) {
+	public void setPdfSpeichernButton(final JButton pdfSpeichernButton) {
 		this.pdfSpeichernButton = pdfSpeichernButton;
 	}
 
-	public void setPropertiesButton(JButton propertiesButton) {
+	public void setPropertiesButton(final JButton propertiesButton) {
 		this.propertiesButton = propertiesButton;
 	}
 
-	public void setSpielerAddButton(JButton spielerAddButton) {
+	public void setSpielerAddButton(final JButton spielerAddButton) {
 		this.spielerAddButton = spielerAddButton;
 	}
 
-	public void setSpielerDEWISSearchButton(JButton spielerDEWISSearchButton) {
+	public void setSpielerDEWISSearchButton(final JButton spielerDEWISSearchButton) {
 		this.spielerDEWISSearchButton = spielerDEWISSearchButton;
 	}
 
-	public void setSpielerELOSearchButton(JButton spielerELOSearchButton) {
+	public void setSpielerELOSearchButton(final JButton spielerELOSearchButton) {
 		this.spielerELOSearchButton = spielerELOSearchButton;
 	}
 
-	public void setSpielerExport(JButton spielerExport) {
+	public void setSpielerExport(final JButton spielerExport) {
 		this.spielerExport = spielerExport;
 	}
 
-	public void setSpielerImport(JButton spielerImport) {
+	public void setSpielerImport(final JButton spielerImport) {
 		this.spielerImport = spielerImport;
 	}
 
-	public void setSpielerListePanel(JPanel spielerListePanel) {
+	public void setSpielerListePanel(final JPanel spielerListePanel) {
 		this.spielerListePanel = spielerListePanel;
 	}
 
-	public void setTabelleAktualisierenButton(JButton tabelleAktualisierenButton) {
+	public void setTabelleAktualisierenButton(final JButton tabelleAktualisierenButton) {
 		this.tabelleAktualisierenButton = tabelleAktualisierenButton;
 	}
 
-	public void setTabelleHTMLAusgabeButton(JButton tabelleHTMLAusgabeButton) {
+	public void setTabelleHTMLAusgabeButton(final JButton tabelleHTMLAusgabeButton) {
 		this.tabelleHTMLAusgabeButton = tabelleHTMLAusgabeButton;
 	}
 
-	public void setTabellenname(String tabellenname) {
+	public void setTabellenname(final String tabellenname) {
 		this.tabellenname = tabellenname;
 		tabellenLabel.setText(tabellenname);
 		tabellenLabel.updateUI();
@@ -625,23 +635,23 @@ public class NaviView extends JToolBar {
 		pairingsLabel.updateUI();
 	}
 
-	public void setTabellenPanel(JPanel tabellenPanel) {
+	public void setTabellenPanel(final JPanel tabellenPanel) {
 		this.tabellenPanel = tabellenPanel;
 	}
 
-	public void setTabelleSpeichernButton(JButton tabelleSpeichernButton) {
+	public void setTabelleSpeichernButton(final JButton tabelleSpeichernButton) {
 		this.tabelleSpeichernButton = tabelleSpeichernButton;
 	}
 
-	public void setTurnierAddButton(JButton turnierAddButton) {
+	public void setTurnierAddButton(final JButton turnierAddButton) {
 		this.turnierAddButton = turnierAddButton;
 	}
 
-	public void setTurnierListePanel(JPanel turnierListePanel) {
+	public void setTurnierListePanel(final JPanel turnierListePanel) {
 		this.turnierListePanel = turnierListePanel;
 	}
 
-	public void setUpdateButton(JButton updateButton) {
+	public void setUpdateButton(final JButton updateButton) {
 		this.updateButton = updateButton;
 	}
 
@@ -649,7 +659,7 @@ public class NaviView extends JToolBar {
 		return wizardButton;
 	}
 
-	public void setWizardButton(JButton wizardButton) {
+	public void setWizardButton(final JButton wizardButton) {
 		this.wizardButton = wizardButton;
 	}
 
