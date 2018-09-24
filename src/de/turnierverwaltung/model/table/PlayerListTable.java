@@ -1,103 +1,61 @@
 package de.turnierverwaltung.model.table;
 
-import de.turnierverwaltung.model.Game;
-import de.turnierverwaltung.model.Group;
+import java.util.ArrayList;
+
 import de.turnierverwaltung.model.Player;
-import de.turnierverwaltung.model.TournamentConstants;
 
 public class PlayerListTable {
-	public Group group;
-	private final Player[] players;
-	private final Game[] games;
-	private final String columnNames[];
-	private final Object playerMatrix[][];
-	private final int partienAnzahl;
-	private final int rundenAnzahl;
+	private final ArrayList<Player> playerList;
+	private String[][] playerMatrix;
+	private final int cols;
+	private String[] columnNames;
 
-	public PlayerListTable(final Group group) {
+	public PlayerListTable(final ArrayList<Player> playerList) {
 		super();
-		this.group = group;
-		players = this.group.getSpieler();
-		games = this.group.getPartien();
-		partienAnzahl = this.group.getPartienAnzahl();
-		rundenAnzahl = this.group.getRundenAnzahl();
-		int cols = 0;
-
-		cols = partienAnzahl * 2 / rundenAnzahl;
-
-		playerMatrix = new String[cols][4];
-		columnNames = new String[4];
+		this.playerList = playerList;
+		cols = playerList.size();
+		playerMatrix = new String[cols][5];
+		columnNames = new String[5];
 		columnNames[0] = "Name";
 		columnNames[1] = "DWZ";
 		columnNames[2] = "ELO";
-		columnNames[3] = "Löschen";
+		columnNames[3] = "Edit";
+		columnNames[4] = "Delete";
 		int index = 0;
-		for (final Player player : players) {
-
-			if (player.getSpielerId() != TournamentConstants.SPIELFREI_ID) {
-
-				playerMatrix[index][0] = player.getSurname() + ", " + player.getForename();
-
-				playerMatrix[index][1] = player.getDwz();
-				playerMatrix[index][2] = "";
-				if (player.getEloData() != null) {
-					if (player.getEloData().getRating() > 0) {
-						playerMatrix[index][2] = String.valueOf(player.getEloData().getRating());
-					}
+		for (final Player player : this.playerList) {
+			playerMatrix[index][0] = player.getSurname() + ", " + player.getForename();
+			playerMatrix[index][1] = player.getDwz();
+			playerMatrix[index][2] = "";
+			if (player.getEloData() != null) {
+				if (player.getEloData().getRating() > 0) {
+					playerMatrix[index][2] = String.valueOf(player.getEloData().getRating());
 				}
-				if (player.getDwzData() != null) {
-					if (player.getDwzData().getCsvFIDE_Elo() > 0) {
-						playerMatrix[index][2] = String.valueOf(player.getDwzData().getCsvFIDE_Elo());
-					}
-				}
-				playerMatrix[index][3] = "Löschen";
-			} else {
-				playerMatrix[index][0] = "<Spielfrei>";
-
-				playerMatrix[index][1] = "";
-
-				playerMatrix[index][2] = "";
-
-				playerMatrix[index][3] = "Neuer Spieler";
-
 			}
-
+			if (player.getDwzData() != null) {
+				if (player.getDwzData().getCsvFIDE_Elo() > 0) {
+					playerMatrix[index][2] = String.valueOf(player.getDwzData().getCsvFIDE_Elo());
+				}
+			}
+			playerMatrix[index][3] = "Edit";
+			playerMatrix[index][4] = "Delete";
 			index++;
 		}
-		for (int i = index; i < cols; i++) {
-			playerMatrix[i][0] = "<Spielfrei>";
-
-			playerMatrix[i][1] = "";
-
-			playerMatrix[i][2] = "";
-
-			playerMatrix[i][3] = "Neuer Spieler";
-		}
-
 	}
 
-	public Group getGroup() {
-		return group;
-	}
-
-	public void setGroup(final Group group) {
-		this.group = group;
-	}
-
-	public Player[] getPlayers() {
-		return players;
-	}
-
-	public Game[] getGames() {
-		return games;
-	}
-
-	public Object[][] getPlayerMatrix() {
+	public String[][] getPlayerMatrix() {
 		return playerMatrix;
+	}
+
+	public void setPlayerMatrix(final String[][] playerMatrix) {
+		this.playerMatrix = playerMatrix;
 	}
 
 	public String[] getColumnNames() {
 		return columnNames;
+	}
+
+	public void setColumnNames(final String[] columnNames) {
+		this.columnNames = columnNames;
 	}
 
 }

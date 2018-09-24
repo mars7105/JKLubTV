@@ -20,7 +20,9 @@ public class PlayerListTableModel extends DefaultTableModel {
 		if (columnIndex == 3) {
 			icE = true;
 		}
-
+		if (columnIndex == 4) {
+			icE = true;
+		}
 		return icE;
 	}
 

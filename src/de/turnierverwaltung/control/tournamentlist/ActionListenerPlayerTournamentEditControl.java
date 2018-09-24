@@ -19,8 +19,8 @@ import de.turnierverwaltung.control.sqlite.SQLTournament_has_PlayerControl;
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
-import de.turnierverwaltung.model.table.PlayerListAllTable;
-import de.turnierverwaltung.model.table.PlayerListTable;
+import de.turnierverwaltung.model.table.PlayerListGroupAddTable;
+import de.turnierverwaltung.model.table.PlayerListGroupTable;
 import de.turnierverwaltung.model.table.PlayerListTableModel;
 import de.turnierverwaltung.view.tournamentlist.EditTournamentView;
 import de.turnierverwaltung.view.tournamentlist.PlayerTournamentEditView;
@@ -90,7 +90,7 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 		}
 		group.getPartien();
 		mainControl.setSqlTournament_has_PlayerControl(new SQLTournament_has_PlayerControl(mainControl));
-		final PlayerListTable playerListTable = new PlayerListTable(group);
+		final PlayerListGroupTable playerListTable = new PlayerListGroupTable(group);
 		final PlayerListTableModel playerListTableModel = new PlayerListTableModel(playerListTable.getPlayerMatrix(),
 				playerListTable.getColumnNames());
 		final Action deleteAction = new AbstractAction() {
@@ -157,7 +157,7 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 			e.printStackTrace();
 		}
 
-		final PlayerListAllTable playerListTable = new PlayerListAllTable(playerList);
+		final PlayerListGroupAddTable playerListTable = new PlayerListGroupAddTable(playerList);
 		final PlayerListTableModel playerListTableModel = new PlayerListTableModel(playerListTable.getPlayerMatrix(),
 				playerListTable.getColumnNames());
 

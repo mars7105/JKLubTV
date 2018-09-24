@@ -4,13 +4,13 @@ import java.util.ArrayList;
 
 import de.turnierverwaltung.model.Player;
 
-public class PlayerListAllTable {
+public class PlayerListGroupAddTable {
 	private final ArrayList<Player> playerList;
 	private String[][] playerMatrix;
 	private final int cols;
 	private String[] columnNames;
 
-	public PlayerListAllTable(final ArrayList<Player> playerList) {
+	public PlayerListGroupAddTable(final ArrayList<Player> playerList) {
 		super();
 		this.playerList = playerList;
 		cols = playerList.size();

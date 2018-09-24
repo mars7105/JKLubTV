@@ -22,6 +22,8 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.AbstractAction;
+import javax.swing.Action;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
@@ -33,16 +35,18 @@ import de.turnierverwaltung.control.PropertiesControl;
 import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.TournamentConstants;
+import de.turnierverwaltung.model.table.PlayerListTable;
+import de.turnierverwaltung.model.table.PlayerListTableModel;
 import de.turnierverwaltung.view.playerlist.EditPlayerView;
-import de.turnierverwaltung.view.playerlist.PlayerListView;
+import de.turnierverwaltung.view.playerlist.PlayerList2View;
 import de.turnierverwaltung.view.tournamenttable.ButtonTabComponent;
 
-public class PlayerListControl implements ActionListener {
+public class PlayerListControl {
 	private final MainControl mainControl;
 	// private TabAnzeigeView tabbedPaneView;
 	private final JTabbedPane hauptPanel;
-	private int spielerAnzahl;
-	private PlayerListView spielerLadenView;
+	// private int spielerAnzahl;
+	private PlayerList2View playerList2View;
 	private ArrayList<Player> spieler;
 	private SQLPlayerControl spielerTableControl;
 	private EditPlayerView spielerEditierenView;
@@ -50,6 +54,8 @@ public class PlayerListControl implements ActionListener {
 
 	private final ImageIcon spielerListeIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-group.png"))); //$NON-NLS-1$
+	private Action deleteAction;
+	private Action editAction;
 
 	public PlayerListControl(final MainControl mainControl) {
 		this.mainControl = mainControl;
@@ -59,153 +65,20 @@ public class PlayerListControl implements ActionListener {
 
 	}
 
-	@Override
-	public void actionPerformed(final ActionEvent arg0) {
-
-		if (spielerEditierenView != null) {
-			if (arg0.getSource().equals(spielerEditierenView.getOkButton())) {
-				final String foreName = spielerEditierenView.getTextFieldForename().getText();
-				final String surName = spielerEditierenView.getTextFieldSurname().getText();
-				final String name = surName + "," + foreName;
-				try {
-					final String kuerzel = spielerEditierenView.getTextFieldKuerzel().getText();
-					final String dwz = spielerEditierenView.getTextFieldDwz().getText();
-					final String dindex = spielerEditierenView.getTextFieldDwzIndex().getText();
-					final String zps = spielerEditierenView.getTextFieldZPS().getText();
-					final String mgl = spielerEditierenView.getTextFieldMGL().getText();
-					final String fideid = spielerEditierenView.getTextFieldFideId().getText();
-					final String elo = spielerEditierenView.getTextFieldELO().getText();
-					int dwzindex = -1;
-					try {
-						dwzindex = Integer.parseInt(dindex);
-					} catch (final NumberFormatException e) {
-						dwzindex = -1;
-					}
-					int dwzInt = 0;
-					try {
-						dwzInt = Integer.parseInt(dwz);
-					} catch (final NumberFormatException e) {
-						dwzInt = 0;
-					}
-					int fideId = 0;
-					try {
-						fideId = Integer.parseInt(fideid);
-					} catch (final NumberFormatException e) {
-						fideId = 0;
-					}
-					int rating = 0;
-					try {
-						rating = Integer.parseInt(elo);
-					} catch (final NumberFormatException e) {
-						rating = 0;
-					}
-					final int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
-
-					spieler.get(spielerIndex).setForename(foreName);
-					spieler.get(spielerIndex).setSurname(surName);
-					spieler.get(spielerIndex).setKuerzel(kuerzel);
-					spieler.get(spielerIndex).setDwz(dwzInt);
-					spieler.get(spielerIndex).getDwzData().setCsvDWZ(dwzInt);
-					spieler.get(spielerIndex).getDwzData().setCsvZPS(zps);
-					spieler.get(spielerIndex).getDwzData().setCsvMgl_Nr(mgl);
-					spieler.get(spielerIndex).getDwzData().setCsvIndex(dwzindex);
-					if (fideId > 0) {
-						spieler.get(spielerIndex).getDwzData().setCsvFIDE_ID(fideId);
-						spieler.get(spielerIndex).getEloData().setFideid(fideId);
-					}
-					if (rating > 0) {
-						spieler.get(spielerIndex).getDwzData().setCsvFIDE_Elo(rating);
-						spieler.get(spielerIndex).getEloData().setRating(rating);
-					}
-					spieler.get(spielerIndex).setAge(age);
-					// spieler.get(spielerIndex).extractForenameAndSurenameToName();
-					spieler.get(spielerIndex).setName(name);
-					final SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-
-					stc.updateOneSpieler(spieler.get(spielerIndex));
-
-					if (mainControl.getTournament() != null) {
-						mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
-					}
-					spielerEditierenView.closeWindow();
-					// mainControl.setEnabled(true);
-					updateSpielerListe();
-				} catch (final SQLException e1) {
-					spielerEditierenView.closeWindow();
-					final ExceptionHandler eh = new ExceptionHandler(mainControl);
-					eh.fileSQLError(e1.getMessage());
-
-				}
-
-			}
-
-			if (arg0.getSource().equals(spielerEditierenView.getCancelButton())) {
-				// mainControl.setEnabled(true);
-				spielerEditierenView.closeWindow();
-
-			}
-
-		}
-
-		if (spielerLadenView != null) {
-
-			for (int i = 0; i < spielerAnzahl; i++) {
-				if (arg0.getSource()
-						.equals(spielerLadenView.getPlayerListItems().get(i).getSpielerBearbeitenButton())) {
-					// mainControl.setEnabled(false);
-					if (mainControl.getNewTournament() == false) {
-						spielerIndex = i;
-						if (spieler.get(i).getDwzData().getCsvSpielername().length() > 0) {
-							spieler.get(i).setName(spieler.get(i).getDwzData().getCsvSpielername());
-							spieler.get(i).extractNameToForenameAndSurename();
-						}
-						spielerEditierenView = new EditPlayerView(spieler.get(i));
-						spielerEditierenView.getOkButton().addActionListener(this);
-						spielerEditierenView.getCancelButton().addActionListener(this);
-						spielerEditierenView.showDialog();
-					} else {
-						JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerLadenControl.2"));
-					}
-				}
-			}
-
-			for (int i = 0; i < spielerAnzahl; i++) {
-				if (arg0.getSource().equals(spielerLadenView.getPlayerListItems().get(i).getSpielerLoeschenButton())) {
-					if (mainControl.getNewTournament() == false) {
-						try {
-							final SQLPlayerControl stC = new SQLPlayerControl(mainControl);
-
-							stC.loescheSpieler(spieler.get(i));
-
-							updateSpielerListe();
-						} catch (final SQLException e) {
-							final ExceptionHandler eh = new ExceptionHandler(mainControl);
-							eh.fileSQLError(e.getMessage());
-						}
-					} else {
-						JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerLadenControl.2"));
-					}
-				}
-			}
-
-		}
-
-	}
-
 	public ArrayList<Player> getSpieler() {
 		return spieler;
 	}
 
-	public PlayerListView getSpielerLadenView() {
-		return spielerLadenView;
+	public PlayerList2View getSpielerLadenView() {
+		return playerList2View;
 	}
 
 	public void setSpieler(final ArrayList<Player> spieler) {
 		this.spieler = spieler;
 	}
 
-	public void setSpielerLadenView(final PlayerListView spielerLadenView) {
-		this.spielerLadenView = spielerLadenView;
+	public void setSpielerLadenView(final PlayerList2View spielerLadenView) {
+		playerList2View = spielerLadenView;
 	}
 
 	public EditPlayerView getSpielerEditierenView() {
@@ -227,39 +100,178 @@ public class PlayerListControl implements ActionListener {
 			spieler = new ArrayList<Player>();
 			spieler = spielerTableControl.getAllSpieler();
 			// testPlayerListForDoubles();
-			spielerAnzahl = spieler.size();
-			int selectedTab = 0;
-			if (spielerLadenView == null) {
-				spielerLadenView = new PlayerListView(spielerAnzahl,
-						mainControl.getPropertiesControl().getSpielerProTab());
-				hauptPanel.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, spielerLadenView);
-				final ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel, mainControl, spielerListeIcon,
-						false);
-				hauptPanel.setTabComponentAt(TournamentConstants.TAB_PLAYER_LIST, buttonComp);
+			// spielerAnzahl = spieler.size();
+			// final int selectedTab = 0;
+			final PlayerListTable playerListTable = new PlayerListTable(spieler);
+			final PlayerListTableModel playerListTableModel = new PlayerListTableModel(
+					playerListTable.getPlayerMatrix(), playerListTable.getColumnNames());
+			actionListener();
+			playerList2View = new PlayerList2View(playerListTableModel, editAction, deleteAction);
+			if (hauptPanel.getTabCount() == 0) {
+				hauptPanel.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, playerList2View);
 
 			} else {
-				selectedTab = spielerLadenView.getSpielerListe().getSelectedIndex();
-				spielerLadenView.removeAll();
-				spielerLadenView.init(spieler.size());
-
+				final int selectedTab = hauptPanel.getSelectedIndex();
+				hauptPanel.removeTabAt(TournamentConstants.TAB_PLAYER_LIST);
+				hauptPanel.insertTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, playerList2View,
+						"Playerlist", TournamentConstants.TAB_PLAYER_LIST);
+				hauptPanel.setSelectedIndex(selectedTab);
 			}
-			spielerLadenView.getTitleView().setFlowLayoutLeft();
+			final ButtonTabComponent buttonComp = new ButtonTabComponent(hauptPanel, mainControl, spielerListeIcon,
+					false);
+			hauptPanel.setTabComponentAt(TournamentConstants.TAB_PLAYER_LIST, buttonComp);
 
-			int index = 0;
-			for (final Player player : spieler) {
+			playerList2View.updateUI();
 
-				spielerLadenView.makeSpielerZeile(player, index);
-				spielerLadenView.getPlayerListItems().get(index).getSpielerBearbeitenButton().addActionListener(this);
-				spielerLadenView.getPlayerListItems().get(index).getSpielerLoeschenButton().addActionListener(this);
-				index++;
-			}
-			if (selectedTab > 0 && spielerLadenView.getSpielerListe().getComponentCount() > selectedTab) {
-				spielerLadenView.getSpielerListe().setSelectedIndex(selectedTab);
-			}
-			spielerLadenView.updateUI();
 		} catch (final NullPointerException e) {
 
 		}
 	}
 
+	private void actionListener() {
+		deleteAction = new AbstractAction() {
+			/**
+			 *
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(final ActionEvent e) {
+				// final JTable table = (JTable) e.getSource();
+				final int modelRow = Integer.valueOf(e.getActionCommand());
+
+				if (mainControl.getNewTournament() == false) {
+					try {
+						final SQLPlayerControl stC = new SQLPlayerControl(mainControl);
+
+						stC.loescheSpieler(spieler.get(modelRow));
+
+						updateSpielerListe();
+					} catch (final SQLException e2) {
+						final ExceptionHandler eh = new ExceptionHandler(mainControl);
+						eh.fileSQLError(e2.getMessage());
+					}
+				} else {
+					JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerLadenControl.2"));
+				}
+			}
+
+		};
+		editAction = new AbstractAction() {
+			/**
+			 *
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(final ActionEvent e) {
+				// final JTable table = (JTable) e.getSource();
+				final int modelRow = Integer.valueOf(e.getActionCommand());
+
+				// final String name = (String) table.getModel().getValueAt(modelRow, 0);
+				// mainControl.setEnabled(false);
+				if (mainControl.getNewTournament() == false) {
+					spielerIndex = modelRow;
+					if (spieler.get(modelRow).getDwzData().getCsvSpielername().length() > 0) {
+						spieler.get(modelRow).setName(spieler.get(modelRow).getDwzData().getCsvSpielername());
+						spieler.get(modelRow).extractNameToForenameAndSurename();
+					}
+					spielerEditierenView = new EditPlayerView(spieler.get(modelRow));
+					spielerEditierenView.getOkButton().addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(final ActionEvent e) {
+							final String foreName = spielerEditierenView.getTextFieldForename().getText();
+							final String surName = spielerEditierenView.getTextFieldSurname().getText();
+							final String name = surName + "," + foreName;
+							try {
+								final String kuerzel = spielerEditierenView.getTextFieldKuerzel().getText();
+								final String dwz = spielerEditierenView.getTextFieldDwz().getText();
+								final String dindex = spielerEditierenView.getTextFieldDwzIndex().getText();
+								final String zps = spielerEditierenView.getTextFieldZPS().getText();
+								final String mgl = spielerEditierenView.getTextFieldMGL().getText();
+								final String fideid = spielerEditierenView.getTextFieldFideId().getText();
+								final String elo = spielerEditierenView.getTextFieldELO().getText();
+								int dwzindex = -1;
+								try {
+									dwzindex = Integer.parseInt(dindex);
+								} catch (final NumberFormatException e1) {
+									dwzindex = -1;
+								}
+								int dwzInt = 0;
+								try {
+									dwzInt = Integer.parseInt(dwz);
+								} catch (final NumberFormatException e1) {
+									dwzInt = 0;
+								}
+								int fideId = 0;
+								try {
+									fideId = Integer.parseInt(fideid);
+								} catch (final NumberFormatException e1) {
+									fideId = 0;
+								}
+								int rating = 0;
+								try {
+									rating = Integer.parseInt(elo);
+								} catch (final NumberFormatException e1) {
+									rating = 0;
+								}
+								final int age = spielerEditierenView.getTextComboBoxAge().getSelectedIndex();
+
+								spieler.get(spielerIndex).setForename(foreName);
+								spieler.get(spielerIndex).setSurname(surName);
+								spieler.get(spielerIndex).setKuerzel(kuerzel);
+								spieler.get(spielerIndex).setDwz(dwzInt);
+								spieler.get(spielerIndex).getDwzData().setCsvDWZ(dwzInt);
+								spieler.get(spielerIndex).getDwzData().setCsvZPS(zps);
+								spieler.get(spielerIndex).getDwzData().setCsvMgl_Nr(mgl);
+								spieler.get(spielerIndex).getDwzData().setCsvIndex(dwzindex);
+								if (fideId > 0) {
+									spieler.get(spielerIndex).getDwzData().setCsvFIDE_ID(fideId);
+									spieler.get(spielerIndex).getEloData().setFideid(fideId);
+								}
+								if (rating > 0) {
+									spieler.get(spielerIndex).getDwzData().setCsvFIDE_Elo(rating);
+									spieler.get(spielerIndex).getEloData().setRating(rating);
+								}
+								spieler.get(spielerIndex).setAge(age);
+								// spieler.get(spielerIndex).extractForenameAndSurenameToName();
+								spieler.get(spielerIndex).setName(name);
+								final SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+
+								stc.updateOneSpieler(spieler.get(spielerIndex));
+
+								if (mainControl.getTournament() != null) {
+									mainControl.getActionListenerTournamentItemsControl().reloadTurnier();
+								}
+								spielerEditierenView.closeWindow();
+								// mainControl.setEnabled(true);
+								updateSpielerListe();
+							} catch (final SQLException e1) {
+								spielerEditierenView.closeWindow();
+								final ExceptionHandler eh = new ExceptionHandler(mainControl);
+								eh.fileSQLError(e1.getMessage());
+
+							}
+
+						}
+
+					});
+					spielerEditierenView.getCancelButton().addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(final ActionEvent e) {
+							spielerEditierenView.closeWindow();
+
+						}
+
+					});
+					spielerEditierenView.showDialog();
+				} else {
+					JOptionPane.showMessageDialog(mainControl, Messages.getString("SpielerLadenControl.2"));
+				}
+			}
+
+		};
+	}
 }
