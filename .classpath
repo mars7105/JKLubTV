@@ -16,6 +16,6 @@
 	<classpathentry kind="lib" path="lib/opencsv-3.7.jar"/>
 	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.20.0.jar"/>
 	<classpathentry kind="lib" path="lib/jfontchooser-1.0.5.jar"/>
-	<classpathentry kind="lib" path="/home/martin/git/JKLubTV/lib/jcalendar-1.4.jar"/>
+	<classpathentry kind="lib" path="lib/jcalendar-1.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
