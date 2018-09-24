@@ -452,20 +452,22 @@ public class SettingsView extends JPanel {
 		titleView = new TitleLabelView(Messages.getString("EigenschaftenView.26"));
 		titleView.setFlowLayoutLeft();
 
-		htmlAll.add(titleView);
-
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(spielerListeAuswahlBox);
-		htmlPanel.add(new JLabel(Messages.getString("EigenschaftenView.24"))); //$NON-NLS-1$
-
-		htmlAll.add(htmlPanel);
-		htmlPanel = new JPanel();
-		htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-		htmlPanel.add(turnierListeAuswahlBox);
-		htmlPanel.add(new JLabel(Messages.getString("EigenschaftenView.25"))); //$NON-NLS-1$
-
-		htmlAll.add(htmlPanel);
+		// htmlAll.add(titleView);
+		//
+		// htmlPanel = new JPanel();
+		// htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// htmlPanel.add(spielerListeAuswahlBox);
+		// htmlPanel.add(new JLabel(Messages.getString("EigenschaftenView.24")));
+		// //$NON-NLS-1$
+		//
+		// htmlAll.add(htmlPanel);
+		// htmlPanel = new JPanel();
+		// htmlPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+		// htmlPanel.add(turnierListeAuswahlBox);
+		// htmlPanel.add(new JLabel(Messages.getString("EigenschaftenView.25")));
+		// //$NON-NLS-1$
+		//
+		// htmlAll.add(htmlPanel);
 
 		htmlAll.add(new JSeparator());
 		titleView = new TitleLabelView(Messages.getString("EigenschaftenView.71"));

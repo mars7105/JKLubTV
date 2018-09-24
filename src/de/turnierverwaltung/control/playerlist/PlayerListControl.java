@@ -38,7 +38,7 @@ import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.model.table.PlayerListTable;
 import de.turnierverwaltung.model.table.PlayerListTableModel;
 import de.turnierverwaltung.view.playerlist.EditPlayerView;
-import de.turnierverwaltung.view.playerlist.PlayerList2View;
+import de.turnierverwaltung.view.playerlist.PlayerListView;
 import de.turnierverwaltung.view.tournamenttable.ButtonTabComponent;
 
 public class PlayerListControl {
@@ -46,7 +46,7 @@ public class PlayerListControl {
 	// private TabAnzeigeView tabbedPaneView;
 	private final JTabbedPane hauptPanel;
 	// private int spielerAnzahl;
-	private PlayerList2View playerList2View;
+	private PlayerListView playerList2View;
 	private ArrayList<Player> spieler;
 	private SQLPlayerControl spielerTableControl;
 	private EditPlayerView spielerEditierenView;
@@ -69,7 +69,7 @@ public class PlayerListControl {
 		return spieler;
 	}
 
-	public PlayerList2View getSpielerLadenView() {
+	public PlayerListView getSpielerLadenView() {
 		return playerList2View;
 	}
 
@@ -77,7 +77,7 @@ public class PlayerListControl {
 		this.spieler = spieler;
 	}
 
-	public void setSpielerLadenView(final PlayerList2View spielerLadenView) {
+	public void setSpielerLadenView(final PlayerListView spielerLadenView) {
 		playerList2View = spielerLadenView;
 	}
 
@@ -106,7 +106,7 @@ public class PlayerListControl {
 			final PlayerListTableModel playerListTableModel = new PlayerListTableModel(
 					playerListTable.getPlayerMatrix(), playerListTable.getColumnNames());
 			actionListener();
-			playerList2View = new PlayerList2View(playerListTableModel, editAction, deleteAction);
+			playerList2View = new PlayerListView(playerListTableModel, editAction, deleteAction);
 			if (hauptPanel.getTabCount() == 0) {
 				hauptPanel.addTab(Messages.getString("SpielerLadenControl.1"), spielerListeIcon, playerList2View);
 
