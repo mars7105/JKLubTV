@@ -16,9 +16,11 @@ import de.turnierverwaltung.control.sqlite.SQLGamesControl;
 import de.turnierverwaltung.control.sqlite.SQLGroupsControl;
 import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
 import de.turnierverwaltung.control.sqlite.SQLTournament_has_PlayerControl;
+import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
+import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.model.table.PlayerListGroupAddTable;
 import de.turnierverwaltung.model.table.PlayerListGroupTable;
 import de.turnierverwaltung.model.table.PlayerListTableModel;
@@ -32,6 +34,8 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 	private Tournament tournament;
 	private Group group;
 	private PlayerTournamentEditView playerTorunamentEditView;
+	private ArrayList<Player> allPlayerList;
+	private PlayerTournamentEditView playerListView;
 
 	public ActionListenerPlayerTournamentEditControl(final MainControl mainControl, final Tournament turnierEdit) {
 		super();
@@ -88,7 +92,7 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		group.getPartien();
+		// group.getPartien();
 		mainControl.setSqlTournament_has_PlayerControl(new SQLTournament_has_PlayerControl(mainControl));
 		final PlayerListGroupTable playerListTable = new PlayerListGroupTable(group);
 		final PlayerListTableModel playerListTableModel = new PlayerListTableModel(playerListTable.getPlayerMatrix(),
@@ -148,20 +152,50 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 
 	}
 
-	private void newPlayer() {
-		ArrayList<Player> playerList = null;
+	private void loadGroupId(final int groupId) {
+		tournament = mainControl.getActionListenerTournamentItemsControl().getTurnierEdit();
+		mainControl.setTournament(tournament);
+		mainControl.setSqlGroupsControl(new SQLGroupsControl(mainControl));
 		try {
-			playerList = mainControl.getSqlPlayerControl().getAllSpieler();
+			mainControl.getSqlGroupsControl().getGruppe();
+		} catch (final SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		final Group[] grps = tournament.getGruppe();
+		int index = 0;
+		for (final Group grp : grps) {
+			if (grp.getGruppeId() == groupId) {
+				loadGroup(index);
+			}
+			index++;
+		}
+
+	}
+
+	private void newPlayer() {
+		allPlayerList = null;
+		try {
+			allPlayerList = mainControl.getSqlPlayerControl().getAllSpieler();
 		} catch (final SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		for (int i = 0; i < allPlayerList.size(); i++) {
+			for (final Player groupPlayer : group.getSpieler()) {
+				if (allPlayerList.get(i).getSpielerId() == groupPlayer.getSpielerId()) {
+					allPlayerList.remove(i);
+					i--;
+				}
+			}
 
-		final PlayerListGroupAddTable playerListTable = new PlayerListGroupAddTable(playerList);
+		}
+		final PlayerListGroupAddTable playerListTable = new PlayerListGroupAddTable(allPlayerList);
 		final PlayerListTableModel playerListTableModel = new PlayerListTableModel(playerListTable.getPlayerMatrix(),
 				playerListTable.getColumnNames());
 
-		final Action deleteAction = new AbstractAction() {
+		final Action newPlayerAction = new AbstractAction() {
 			/**
 			 *
 			 */
@@ -169,27 +203,50 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				// final JTable table = (JTable) e.getSource();
-				// final int modelRow = Integer.valueOf(e.getActionCommand());
+				final JTable table = (JTable) e.getSource();
+				final int modelRow = Integer.valueOf(e.getActionCommand());
 
 				// final String name = (String) table.getModel().getValueAt(modelRow, 0);
-				// if (name.equals("<Spielfrei>")) {
-				// newPlayer();
-				// } else {
-				// final Player player = group.getSpieler()[modelRow];
-				// try {
-				// deletePlayerFromGroup(player, groupId);
-				// } catch (final SQLException e1) {
-				// // TODO Auto-generated catch block
-				// e1.printStackTrace();
+				final Player player = allPlayerList.get(modelRow);
+				final Game partien[] = group.getPartien();
+
+				// final int playerCount = group.getSpielerAnzahl();
+				// final int rounds = group.getRundenAnzahl();
+				// final int gamesCount = group.getPartienAnzahl();
+				int index = 0;
+				// if ((gamesCount * 2 / rounds) - playerCount == 1) {
+				for (final Game partie : partien) {
+					final Player schwarz = partie.getSpielerSchwarz();
+					final Player weiss = partie.getSpielerWeiss();
+					if (schwarz.getSpielerId() == TournamentConstants.SPIELFREI_ID) {
+						partien[index].setSpielerSchwarz(player);
+					}
+					if (weiss.getSpielerId() == TournamentConstants.SPIELFREI_ID) {
+						partien[index].setSpielerWeiss(player);
+					}
+
+					index++;
+				}
 				// }
-				// }
+				// group.setPartien(partien);
+				try {
+					mainControl.getSqlGamesControl().updatePartien(group);
+					mainControl.getSqlTournament_has_PlayerControl()
+							.deletePlayerOfGroup(TournamentConstants.SPIELFREI_ID, group.getGruppeId());
+					mainControl.getSqlTournament_has_PlayerControl().insertTurnier_has_Spieler(player.getSpielerId(),
+							group.getGruppeId());
+				} catch (final SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} finally {
+					playerListView.dispose();
+					playerTorunamentEditView.dispose();
+					loadGroupId(group.getGruppeId());
+				}
 			}
 
 		};
-
-		final PlayerTournamentEditView playerListView = new PlayerTournamentEditView(playerListTableModel,
-				"Add Player to Group", deleteAction);
+		playerListView = new PlayerTournamentEditView(playerListTableModel, "Add Player to Group", newPlayerAction);
 		final JButton okButton = playerListView.getButtonPanel().getOkButton();
 		okButton.addActionListener(new ActionListener() {
 

@@ -18,8 +18,8 @@ import java.sql.SQLException;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.util.ArrayList;
 
+import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
-import de.turnierverwaltung.model.Tournament;
 
 public interface Turnier_has_SpielerDAO {
 	public void createTurnier_has_SpielerTable() throws SQLException;
@@ -34,5 +34,5 @@ public interface Turnier_has_SpielerDAO {
 
 	public ArrayList<String> selectAllTurnier_has_Spieler() throws SQLException;
 
-	public boolean updateTurnier_has_Spieler(Tournament turnier) throws SQLException;
+	public boolean updateTurnier_has_Spieler(Group group, Player player) throws SQLException;
 }

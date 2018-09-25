@@ -53,12 +53,13 @@ public class SQLTournament_has_PlayerControl {
 
 	}
 
-	public void updateTurnier_has_Spieler(final int gruppe) throws SQLException {
+	public void insertTurnier_has_Spieler(final int spielerId, final int gruppeId) throws SQLException {
+
+		turnier = mainControl.getTournament();
+		gruppe = turnier.getGruppe();
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
-		final Turnier_has_SpielerDAO mySQLTurnier_has_SpielerDAO = daoFactory.getTurnier_has_SpielerDAO();
-		for (int i = 0; i < turnier.getGruppe()[gruppe].getSpielerAnzahl(); i++) {
-			mySQLTurnier_has_SpielerDAO.updateTurnier_has_Spieler(turnier);
-		}
+		final Turnier_has_SpielerDAO turnier_has_SpielerDAO = daoFactory.getTurnier_has_SpielerDAO();
+		turnier_has_Spieler = turnier_has_SpielerDAO.insertTurnier_has_Spieler(gruppeId, spielerId);
 
 	}
 

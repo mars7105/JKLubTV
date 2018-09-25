@@ -285,12 +285,14 @@ public class SQLPlayerControl {
 			if (!spieler.getDwzData().getCsvZPS().equals("")) {
 				mySQLDWZDataDAO.updateDWZ(spieler.getDwzData());
 			}
-			if (spieler.getEloData().getFideid() > 0) {
-				mySQLELODataDAO.updateELO(spieler.getEloData());
-			} else {
-				if (spieler.getDwzData().getCsvFIDE_ID() > 0) {
-					spieler.copyDWZDataToELOData();
-					mySQLELODataDAO.insertELO(spieler.getEloData());
+			if (spieler.getEloData() != null) {
+				if (spieler.getEloData().getFideid() > 0) {
+					mySQLELODataDAO.updateELO(spieler.getEloData());
+				} else {
+					if (spieler.getDwzData().getCsvFIDE_ID() > 0) {
+						spieler.copyDWZDataToELOData();
+						mySQLELODataDAO.insertELO(spieler.getEloData());
+					}
 				}
 			}
 		}

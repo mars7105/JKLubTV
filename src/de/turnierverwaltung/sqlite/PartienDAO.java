@@ -37,4 +37,5 @@ public interface PartienDAO {
 	public boolean updatePartien(ArrayList<Game> changedPartien) throws SQLException;
 
 	public boolean updatePartien(Game[] parties) throws SQLException;
+
 }

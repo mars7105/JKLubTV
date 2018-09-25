@@ -22,8 +22,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
-import de.turnierverwaltung.model.Tournament;
 
 public class SQLiteTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 	private Connection dbConnect;
@@ -136,8 +136,26 @@ public class SQLiteTurnier_has_SpielerDAO implements Turnier_has_SpielerDAO {
 	}
 
 	@Override
-	public boolean updateTurnier_has_Spieler(final Tournament turnier) {
-		// TODO Automatisch generierter Methodenstub
-		return false;
+	public boolean updateTurnier_has_Spieler(final Group group, final Player player) throws SQLException {
+		boolean ok = false;
+
+		if (dbConnect != null) {
+
+			dbConnect.setAutoCommit(false);
+			final String sql = "update turnier_has_spieler set Spieler_idSpieler = ?" + " where Gruppe_idGruppe = "
+					+ group.getGruppeId() + ";";
+
+			final PreparedStatement preStm = dbConnect.prepareStatement(sql);
+
+			preStm.setInt(1, player.getSpielerId());
+			preStm.addBatch();
+			dbConnect.setAutoCommit(false);
+			preStm.executeBatch();
+			dbConnect.setAutoCommit(true);
+			preStm.close();
+			ok = true;
+
+		}
+		return ok;
 	}
 }

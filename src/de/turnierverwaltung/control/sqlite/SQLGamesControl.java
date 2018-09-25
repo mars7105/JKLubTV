@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.model.Game;
+import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
@@ -106,6 +107,16 @@ public class SQLGamesControl {
 		// for (int i = 0; i < turnier.getGruppe()[gruppe].getPartienAnzahl();
 		// i++) {
 		saved = mySQLPartienDAO.updatePartien(turnier.getGruppe()[gruppe].getPartien());
+		// }
+		return saved;
+	}
+
+	public boolean updatePartien(final Group group) throws SQLException {
+		boolean saved = false;
+		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
+		final PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
+		turnier = mainControl.getTournament();
+		saved = mySQLPartienDAO.updatePartien(group.getPartien());
 		// }
 		return saved;
 	}
