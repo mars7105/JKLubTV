@@ -52,7 +52,7 @@ public class CrossTable {
 	private Boolean checkForSpielfrei() {
 		for (int i = 0; i < spielerAnzahl; i++) {
 
-			if (spieler[i].getSpielerId() == TournamentConstants.SPIELFREI_ID) {
+			if (spieler[i].getSpielerId() <= TournamentConstants.SPIELFREI_ID) {
 				return true;
 			}
 
@@ -217,9 +217,9 @@ public class CrossTable {
 			}
 		}
 		for (int x = 0; x < sp; x++) {
-			if (spieler[x].getSpielerId() != TournamentConstants.SPIELFREI_ID) {
+			if (spieler[x].getSpielerId() > TournamentConstants.SPIELFREI_ID) {
 				for (int y = 0; y < sp; y++) {
-					if (spieler[y].getSpielerId() != TournamentConstants.SPIELFREI_ID) {
+					if (spieler[y].getSpielerId() > TournamentConstants.SPIELFREI_ID) {
 
 						if (x == y) {
 							tabellenMatrix[x + gesamtabstand + 1][y + 1] = TournamentConstants.LEERE_MENGE;

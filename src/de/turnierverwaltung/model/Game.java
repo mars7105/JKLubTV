@@ -37,7 +37,7 @@ public class Game implements Comparable<Object> {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param idPartie
 	 * @param spielDatum
 	 * @param ergebnis
@@ -45,8 +45,9 @@ public class Game implements Comparable<Object> {
 	 * @param spielerWeiss
 	 * @param spielerSchwarz
 	 */
-	public Game(int idPartie, String spielDatum, int ergebnis, int runde, Player spielerWeiss, Player spielerSchwarz) {
-		this.partieId = idPartie;
+	public Game(final int idPartie, final String spielDatum, final int ergebnis, final int runde,
+			final Player spielerWeiss, final Player spielerSchwarz) {
+		partieId = idPartie;
 		eventDate = new EventDate(spielDatum);
 		this.spielDatum = eventDate.getDateString();
 		this.spielerWeiss = spielerWeiss;
@@ -61,8 +62,8 @@ public class Game implements Comparable<Object> {
 	}
 
 	@Override
-	public int compareTo(Object o) {
-		int compareQuantity = ((Game) o).getSort();
+	public int compareTo(final Object o) {
+		final int compareQuantity = ((Game) o).getSort();
 
 		// ascending order
 		return getSort() - compareQuantity;
@@ -92,11 +93,11 @@ public class Game implements Comparable<Object> {
 	}
 
 	public int getSort() {
-		if (this.spielerWeiss.getSpielerId() == TournamentConstants.SPIELFREI_ID
-				|| this.spielerSchwarz.getSpielerId() == TournamentConstants.SPIELFREI_ID) {
-			sort = this.runde * 10;
+		if (spielerWeiss.getSpielerId() <= TournamentConstants.SPIELFREI_ID
+				|| spielerSchwarz.getSpielerId() <= TournamentConstants.SPIELFREI_ID) {
+			sort = runde * 10;
 		} else {
-			sort = this.runde * 11;
+			sort = runde * 11;
 		}
 		return sort;
 
@@ -119,75 +120,75 @@ public class Game implements Comparable<Object> {
 	}
 
 	/**
-	 * 
+	 *
 	 */
 	private void makeErgebnisse() {
 		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_WEISS) {
-			this.ergebnisWeiss = TournamentConstants.GEWINN;
-			this.ergebnisSchwarz = TournamentConstants.VERLUST;
+			ergebnisWeiss = TournamentConstants.GEWINN;
+			ergebnisSchwarz = TournamentConstants.VERLUST;
 		}
 		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_SCHWARZ) {
-			this.ergebnisWeiss = TournamentConstants.VERLUST;
-			this.ergebnisSchwarz = TournamentConstants.GEWINN;
+			ergebnisWeiss = TournamentConstants.VERLUST;
+			ergebnisSchwarz = TournamentConstants.GEWINN;
 		}
 		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_WEISS) {
-			this.ergebnisWeiss = TournamentConstants.GEWINN_KAMPFLOS;
-			this.ergebnisSchwarz = TournamentConstants.VERLUST_KAMPFLOS;
+			ergebnisWeiss = TournamentConstants.GEWINN_KAMPFLOS;
+			ergebnisSchwarz = TournamentConstants.VERLUST_KAMPFLOS;
 		}
 		if (ergebnis == TournamentConstants.MYSQL_PARTIE_GEWINN_KAMPFLOS_SCHWARZ) {
-			this.ergebnisWeiss = TournamentConstants.VERLUST_KAMPFLOS;
-			this.ergebnisSchwarz = TournamentConstants.GEWINN_KAMPFLOS;
+			ergebnisWeiss = TournamentConstants.VERLUST_KAMPFLOS;
+			ergebnisSchwarz = TournamentConstants.GEWINN_KAMPFLOS;
 		}
 		if (ergebnis == TournamentConstants.MYSQL_PARTIE_VERLUST_KAMPFLOS_BEIDE) {
-			this.ergebnisWeiss = TournamentConstants.VERLUST_KAMPFLOS;
-			this.ergebnisSchwarz = TournamentConstants.VERLUST_KAMPFLOS;
+			ergebnisWeiss = TournamentConstants.VERLUST_KAMPFLOS;
+			ergebnisSchwarz = TournamentConstants.VERLUST_KAMPFLOS;
 		}
 		if (ergebnis == TournamentConstants.MYSQL_PARTIE_REMIS) {
-			this.ergebnisWeiss = TournamentConstants.REMIS;
-			this.ergebnisSchwarz = TournamentConstants.REMIS;
+			ergebnisWeiss = TournamentConstants.REMIS;
+			ergebnisSchwarz = TournamentConstants.REMIS;
 		}
 		if (ergebnis == TournamentConstants.MYSQL_KEIN_ERGEBNIS) {
-			this.ergebnisWeiss = TournamentConstants.KEIN_ERGEBNIS;
-			this.ergebnisSchwarz = TournamentConstants.KEIN_ERGEBNIS;
+			ergebnisWeiss = TournamentConstants.KEIN_ERGEBNIS;
+			ergebnisSchwarz = TournamentConstants.KEIN_ERGEBNIS;
 		}
 	}
 
-	public void setErgebnis(int ergebnis) {
+	public void setErgebnis(final int ergebnis) {
 		this.ergebnis = ergebnis;
 		makeErgebnisse();
 
 	}
 
-	public void setErgebnisSchwarz(String ergebnisSchwarz) {
+	public void setErgebnisSchwarz(final String ergebnisSchwarz) {
 		this.ergebnisSchwarz = ergebnisSchwarz;
 	}
 
-	public void setErgebnisWeiss(String ergebnisWeiss) {
+	public void setErgebnisWeiss(final String ergebnisWeiss) {
 		this.ergebnisWeiss = ergebnisWeiss;
 	}
 
-	public void setPartieId(int partieId) {
+	public void setPartieId(final int partieId) {
 		this.partieId = partieId;
 	}
 
-	public void setRunde(int runde) {
+	public void setRunde(final int runde) {
 		this.runde = runde;
 	}
 
-	public void setSpielDatum(String spielDatum) {
+	public void setSpielDatum(final String spielDatum) {
 		eventDate = new EventDate(spielDatum);
 		this.spielDatum = eventDate.getDateString();
 	}
 
-	public void setSpielerSchwarz(Player spielerSchwarz) {
+	public void setSpielerSchwarz(final Player spielerSchwarz) {
 		this.spielerSchwarz = spielerSchwarz;
 	}
 
-	public void setSpielerWeiss(Player spielerWeiss) {
+	public void setSpielerWeiss(final Player spielerWeiss) {
 		this.spielerWeiss = spielerWeiss;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(final String status) {
 		this.status = status;
 	}
 }

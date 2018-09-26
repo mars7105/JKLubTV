@@ -46,7 +46,7 @@ public class ResultControl implements Ratingsmethods {
 
 			for (int s = 0; s < spielerAnzahl; s++) {
 				final Player player = gruppe.getSpieler()[s];
-				if (player.getSpielerId() != TournamentConstants.SPIELFREI_ID) {
+				if (player.getSpielerId() > TournamentConstants.SPIELFREI_ID) {
 
 					opponents = new ArrayList<OpponentModel>();
 
@@ -58,7 +58,7 @@ public class ResultControl implements Ratingsmethods {
 						final String ergebnisWhite = partien[i].getErgebnisWeiss();
 						final String ergebnisBlack = partien[i].getErgebnisSchwarz();
 						if (whitePlayer.equals(player)
-								&& blackPlayer.getSpielerId() != TournamentConstants.SPIELFREI_ID) {
+								&& blackPlayer.getSpielerId() > TournamentConstants.SPIELFREI_ID) {
 							ergebnis = 0;
 							if (ergebnisWhite.equals(TournamentConstants.GEWINN)) {
 								ergebnis = 1;
@@ -75,7 +75,7 @@ public class ResultControl implements Ratingsmethods {
 
 						}
 						if (blackPlayer.equals(player)
-								&& whitePlayer.getSpielerId() != TournamentConstants.SPIELFREI_ID) {
+								&& whitePlayer.getSpielerId() > TournamentConstants.SPIELFREI_ID) {
 							ergebnis = 0;
 							if (ergebnisBlack.equals(TournamentConstants.GEWINN)) {
 								ergebnis = 1;

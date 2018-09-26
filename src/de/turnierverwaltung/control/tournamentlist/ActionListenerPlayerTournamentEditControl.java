@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Hashtable;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -175,19 +176,24 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 	}
 
 	private void newPlayer() {
-		allPlayerList = null;
+		ArrayList<Player> allPlayerList2 = null;
+		allPlayerList = new ArrayList<Player>();
 		try {
-			allPlayerList = mainControl.getSqlPlayerControl().getAllSpieler();
+			allPlayerList2 = mainControl.getSqlPlayerControl().getAllSpieler();
 		} catch (final SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		for (int i = 0; i < allPlayerList.size(); i++) {
+		Boolean remove = false;
+		for (int i = 0; i < allPlayerList2.size(); i++) {
+			remove = false;
 			for (final Player groupPlayer : group.getSpieler()) {
-				if (allPlayerList.get(i).getSpielerId() == groupPlayer.getSpielerId()) {
-					allPlayerList.remove(i);
-					i--;
+				if (allPlayerList2.get(i).getSpielerId() == groupPlayer.getSpielerId()) {
+					remove = true;
 				}
+			}
+			if (remove == false) {
+				allPlayerList.add(allPlayerList2.get(i));
 			}
 
 		}
@@ -203,7 +209,7 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 
 			@Override
 			public void actionPerformed(final ActionEvent e) {
-				final JTable table = (JTable) e.getSource();
+				// final JTable table = (JTable) e.getSource();
 				final int modelRow = Integer.valueOf(e.getActionCommand());
 
 				// final String name = (String) table.getModel().getValueAt(modelRow, 0);
@@ -215,16 +221,48 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 				// final int gamesCount = group.getPartienAnzahl();
 				int index = 0;
 				// if ((gamesCount * 2 / rounds) - playerCount == 1) {
+				final Hashtable<Integer, Boolean> htable = new Hashtable<Integer, Boolean>();
+				final Hashtable<Integer, Boolean> hplayerid = new Hashtable<Integer, Boolean>();
+				int spielfreiId = 0;
 				for (final Game partie : partien) {
+					final int runde = partie.getRunde();
 					final Player schwarz = partie.getSpielerSchwarz();
 					final Player weiss = partie.getSpielerWeiss();
-					if (schwarz.getSpielerId() == TournamentConstants.SPIELFREI_ID) {
-						partien[index].setSpielerSchwarz(player);
-					}
-					if (weiss.getSpielerId() == TournamentConstants.SPIELFREI_ID) {
-						partien[index].setSpielerWeiss(player);
-					}
+					if (spielfreiId == 0) {
+						if (schwarz.getSpielerId() <= TournamentConstants.SPIELFREI_ID) {
 
+							spielfreiId = schwarz.getSpielerId();
+
+						}
+						if (weiss.getSpielerId() <= TournamentConstants.SPIELFREI_ID) {
+
+							spielfreiId = weiss.getSpielerId();
+
+						}
+					}
+					if (schwarz.getSpielerId() == spielfreiId) {
+						if (htable.getOrDefault(runde, false) == false) {
+							if (hplayerid.getOrDefault(weiss.getSpielerId(), false) == false) {
+								htable.put(runde, true);
+								hplayerid.put(weiss.getSpielerId(), true);
+
+								partien[index].setSpielerSchwarz(player);
+
+							}
+						}
+					}
+					if (weiss.getSpielerId() == spielfreiId) {
+						if (htable.getOrDefault(runde, false) == false) {
+							if (hplayerid.getOrDefault(schwarz.getSpielerId(), false) == false) {
+								htable.put(runde, true);
+
+								hplayerid.put(schwarz.getSpielerId(), true);
+
+								partien[index].setSpielerWeiss(player);
+
+							}
+						}
+					}
 					index++;
 				}
 				// }

@@ -137,7 +137,7 @@ public class Player implements Comparable<Object> {
 	 */
 	public Player(final int id, final String name, final String kuerzel, final String dwz, final int age,
 			final String zps, final String mgl, final int dwzindex2) {
-		if (id == TournamentConstants.SPIELFREI_ID) {
+		if (id <= TournamentConstants.SPIELFREI_ID) {
 			this.name = name;
 			spielerId = id;
 		} else {
@@ -474,7 +474,7 @@ public class Player implements Comparable<Object> {
 
 			}
 		}
-		if (spielerId != TournamentConstants.SPIELFREI_ID) {
+		if (spielerId > TournamentConstants.SPIELFREI_ID) {
 
 			extractNameToForenameAndSurename();
 			cutForename();

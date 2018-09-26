@@ -126,19 +126,36 @@ public class SQLGamesControl {
 		daoFactory = DAOFactory.getDAOFactory(TournamentConstants.DATABASE_DRIVER);
 		final PartienDAO mySQLPartienDAO = daoFactory.getPartienDAO();
 		final ArrayList<Game> games = mySQLPartienDAO.selectAllPartien(groupId);
+		int count = 0;
+		int rounds = 0;
+		for (final Game game : games) {
+			if (game.getSpielerWeiss().getSpielerId() <= TournamentConstants.SPIELFREI_ID) {
+				count++;
+			}
+			if (game.getSpielerSchwarz().getSpielerId() <= TournamentConstants.SPIELFREI_ID) {
+				count++;
+			}
+			if (game.getRunde() > rounds) {
+				rounds = game.getRunde();
+			}
+		}
+		final int anzahlSpielfrei = count / rounds;
+		final int spielfreiId = TournamentConstants.SPIELFREI_ID - anzahlSpielfrei;
 		final Player spielfrei = new Player();
-		spielfrei.setSpielerId(TournamentConstants.SPIELFREI_ID);
+		spielfrei.setSpielerId(spielfreiId);
 		spielfrei.setSurname("Spielfrei");
 		final ArrayList<Game> spielfreiGames = new ArrayList<Game>();
 		for (final Game game : games) {
 			if (game.getSpielerWeiss().getSpielerId() == player.getSpielerId()) {
-				System.out.println(game.getSpielerWeiss().getName() + " - " + game.getSpielerSchwarz().getName());
+				// System.out.println(game.getSpielerWeiss().getName() + " - " +
+				// game.getSpielerSchwarz().getName());
 				game.setSpielerWeiss(spielfrei);
 				game.setErgebnis(TournamentConstants.MYSQL_KEIN_ERGEBNIS);
 				spielfreiGames.add(game);
 			}
 			if (game.getSpielerSchwarz().getSpielerId() == player.getSpielerId()) {
-				System.out.println(game.getSpielerWeiss().getName() + " - " + game.getSpielerSchwarz().getName());
+				// System.out.println(game.getSpielerWeiss().getName() + " - " +
+				// game.getSpielerSchwarz().getName());
 				game.setSpielerSchwarz(spielfrei);
 				game.setErgebnis(TournamentConstants.MYSQL_KEIN_ERGEBNIS);
 

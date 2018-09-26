@@ -23,8 +23,8 @@ public class PlayerListGroupTable {
 		rundenAnzahl = this.group.getRundenAnzahl();
 		int cols = 0;
 
-		// cols = partienAnzahl * 2 / rundenAnzahl;
-		cols = this.group.getSpielerAnzahl();
+		cols = partienAnzahl * 2 / rundenAnzahl;
+		// cols = this.group.getSpielerAnzahl();
 		playerMatrix = new String[cols][4];
 		columnNames = new String[4];
 		columnNames[0] = "Name";
@@ -34,7 +34,7 @@ public class PlayerListGroupTable {
 		int index = 0;
 		for (final Player player : players) {
 
-			if (player.getSpielerId() != TournamentConstants.SPIELFREI_ID) {
+			if (player.getSpielerId() > TournamentConstants.SPIELFREI_ID) {
 
 				playerMatrix[index][0] = player.getSurname() + ", " + player.getForename();
 

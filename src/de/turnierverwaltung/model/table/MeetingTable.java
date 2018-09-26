@@ -104,10 +104,10 @@ public class MeetingTable {
 		for (int i = 0; i < spielerAnzahl - 1; i++) {
 			for (int y = i + 1; y < spielerAnzahl; y++) {
 				String event = "";
-				if (partien[index].getSpielerWeiss().getSpielerId() == TournamentConstants.SPIELFREI_ID) {
+				if (partien[index].getSpielerWeiss().getSpielerId() <= TournamentConstants.SPIELFREI_ID) {
 					partien[index].getSpielerWeiss().setName("Spielfrei");
 				}
-				if (partien[index].getSpielerSchwarz().getSpielerId() == TournamentConstants.SPIELFREI_ID) {
+				if (partien[index].getSpielerSchwarz().getSpielerId() <= TournamentConstants.SPIELFREI_ID) {
 					partien[index].getSpielerSchwarz().setName("Spielfrei");
 				}
 				tabellenMatrix[0][index + 1] = Integer.toString(partien[index].getRunde());
