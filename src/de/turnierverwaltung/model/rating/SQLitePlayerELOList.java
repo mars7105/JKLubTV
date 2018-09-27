@@ -94,6 +94,11 @@ public class SQLitePlayerELOList {
 			infoDAO = daoFactory.getInfoDAO();
 			try {
 				infos = infoDAO.getAllInfos();
+				for (final Info info : infos) {
+					if (info.getInfonotice().equals("date") == true) {
+						return info.getDatum();
+					}
+				}
 			} catch (final SQLException e) {
 
 				final ExceptionHandler eh = new ExceptionHandler(null);
@@ -103,11 +108,7 @@ public class SQLitePlayerELOList {
 			}
 
 		}
-		for (final Info info : infos) {
-			if (info.getInfonotice().equals("date") == true) {
-				return info.getDatum();
-			}
-		}
+
 		return "";
 	}
 }

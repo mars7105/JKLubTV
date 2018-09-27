@@ -159,6 +159,11 @@ public class SQLitePlayerDWZList {
 			infoDAO = daoFactory.getInfoDAO();
 			try {
 				infos = infoDAO.getAllInfos();
+				for (final Info info : infos) {
+					if (info.getInfonotice().equals("Create tables") == true) {
+						return info.getDatum();
+					}
+				}
 			} catch (final SQLException e) {
 
 				final ExceptionHandler eh = new ExceptionHandler(null);
@@ -168,11 +173,7 @@ public class SQLitePlayerDWZList {
 			}
 
 		}
-		for (final Info info : infos) {
-			if (info.getInfonotice().equals("Create tables") == true) {
-				return info.getDatum();
-			}
-		}
+
 		return "";
 	}
 }
