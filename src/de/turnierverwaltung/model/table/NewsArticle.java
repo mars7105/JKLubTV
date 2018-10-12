@@ -7,10 +7,48 @@ import java.util.TreeMap;
 public class NewsArticle {
 	private String tabellenMatrix[][];
 	private String htmlContent;
+	private String groupName;
+	private String cssTableClass;
 
 	public NewsArticle(String[][] tabellenMatrix, String groupName, String cssTableClass) {
 		super();
 		this.setTabellenMatrix(tabellenMatrix);
+		this.groupName = groupName;
+		this.cssTableClass = cssTableClass;
+		makeHTMLArticles();
+	}
+
+	public NewsArticle(ArrayList<String[][]> allNewsArticleMatrix, String groupName, String cssTable) {
+		super();
+		this.groupName = groupName;
+		this.cssTableClass = cssTable;
+		int x = 0;
+		int y = 0;
+		for (String[][] matrix : allNewsArticleMatrix) {
+			x = matrix.length;
+			y += matrix[0].length;
+		}
+		this.tabellenMatrix = new String[x][y];
+		System.out.println("x=" + x + "y=" + y);
+		int yIndex = 0;
+		for (String[][] matrix : allNewsArticleMatrix) {
+			for (int ym = 0; ym < matrix[0].length; ym++) {
+				for (int xm = 0; xm < matrix.length; xm++) {
+
+					this.tabellenMatrix[xm][yIndex] = matrix[xm][ym];
+					System.out.println("yIndex=" + yIndex + " ym=" + ym + "xm" + xm + "inhalt=" + matrix[xm][ym]);
+
+				}
+				yIndex++;
+
+			}
+
+		}
+
+		makeHTMLArticles();
+	}
+
+	private void makeHTMLArticles() {
 		int x = tabellenMatrix.length;
 		int y = tabellenMatrix[0].length;
 		String roundColumnName = tabellenMatrix[0][0];
@@ -29,12 +67,12 @@ public class NewsArticle {
 			}
 			String dateKey = "";
 			// um zu sortieren braucht man das Datumsformat yyyymmdd
-			if (!event[4].equals("")) {
+			if (!event[4].equals("") && event[4].length() == 10) {
 				dateKey = event[4].substring(6, 10) + event[4].substring(3, 5) + event[4].substring(0, 2);
 			} else {
 				dateKey = "";
 			}
-//			System.out.println(dateKey);
+//		System.out.println(dateKey);
 			if (hashMap.containsKey(dateKey)) {
 				hashMap.get(dateKey).add(event);
 			} else {

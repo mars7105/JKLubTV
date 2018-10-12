@@ -27,6 +27,8 @@ public class HTMLCopyToClipboardControl {
 	public void copyToClipboard() {
 		final Boolean ready = mainControl.getPairingsControl().checkNewTurnier();
 		if (ready) {
+			final Boolean ohneHeaderundFooter = mainControl.getPropertiesControl().getOnlyTables();
+
 			final int anzahlGruppen = mainControl.getTournament().getAnzahlGruppen();
 			final String cssTable = mainControl.getPropertiesControl().getCSSTable();
 
@@ -34,7 +36,7 @@ public class HTMLCopyToClipboardControl {
 			final HTMLToClipBoardDialogView htmlToClipboardDialog = new HTMLToClipBoardDialogView();
 
 			final ArrayList<HTMLToClipBoardView> htmlToClipboardArray = new ArrayList<HTMLToClipBoardView>();
-
+			ArrayList<String[][]> allNewsArticleMatrix = new ArrayList<String[][]>();
 			for (int i = 0; i < anzahlGruppen; i++) {
 
 				String wfn = mainControl.getTournament().getTurnierName();
@@ -82,7 +84,6 @@ public class HTMLCopyToClipboardControl {
 					}
 				}
 
-				final Boolean ohneHeaderundFooter = mainControl.getPropertiesControl().getOnlyTables();
 				final Boolean showLink = mainControl.getPropertiesControl().getPDFLinks();
 
 				final HTMLToClipBoardView crosshtmlToClipboard = new HTMLToClipBoardView();
@@ -140,11 +141,13 @@ public class HTMLCopyToClipboardControl {
 				});
 
 				htmlToClipboardArray.add(allToClipboard);
-
+				allNewsArticleMatrix
+						.add(mainControl.getMeetingTableControl().getTerminTabelle()[i].getTabellenMatrix());
 				NewsArticle htmlArticle = new NewsArticle(
 						mainControl.getMeetingTableControl().getTerminTabelle()[i].getTabellenMatrix(),
 						mainControl.getTournament().getTurnierName() + " "
-								+ mainControl.getTournament().getGruppe()[i].getGruppenName(), cssTable);
+								+ mainControl.getTournament().getGruppe()[i].getGruppenName(),
+						cssTable);
 				String newsHTMLContent = htmlArticle.getHtmlContent(ohneHeaderundFooter);
 				final HTMLToClipBoardView newsHTMLContentToClipboard = new HTMLToClipBoardView();
 				newsHTMLContentToClipboard.getLabel().setText(newsLabel);
@@ -161,7 +164,25 @@ public class HTMLCopyToClipboardControl {
 				});
 				htmlToClipboardArray.add(newsHTMLContentToClipboard);
 			}
+			NewsArticle allhtmlArticles = new NewsArticle(allNewsArticleMatrix,
+					mainControl.getTournament().getTurnierName() + " " + mainControl.getTournament().getTurnierName(),
+					cssTable);
+			String allNewsHTMLContent = allhtmlArticles.getHtmlContent(ohneHeaderundFooter);
+			String newsLabel = mainControl.getTournament().getTurnierName() + " " + "News Article";
+			final HTMLToClipBoardView allNewsHTMLContentToClipboard = new HTMLToClipBoardView();
+			allNewsHTMLContentToClipboard.getLabel().setText(newsLabel);
 
+			allNewsHTMLContentToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(final ActionEvent e) {
+					final CopyToClipboard clipBoardcopy = new CopyToClipboard();
+					clipBoardcopy.copy(allNewsHTMLContent);
+					htmlToClipboardDialog.getStatusLabel().getTitleLabel().setText("Clipboard: " + newsLabel);
+				}
+
+			});
+			htmlToClipboardArray.add(allNewsHTMLContentToClipboard);
 			htmlToClipboardDialog.makeDialog(htmlToClipboardArray);
 
 			htmlToClipboardDialog.getButtonPanel().getOkButton().addActionListener(new ActionListener() {
