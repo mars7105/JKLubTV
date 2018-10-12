@@ -10,6 +10,7 @@ import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.Messages;
 import de.turnierverwaltung.model.CopyToClipboard;
 import de.turnierverwaltung.model.table.CrossTable;
+import de.turnierverwaltung.model.table.NewsArticle;
 import de.turnierverwaltung.view.export.HTMLToClipBoardDialogView;
 import de.turnierverwaltung.view.export.HTMLToClipBoardView;
 
@@ -59,6 +60,8 @@ public class HTMLCopyToClipboardControl {
 				final String allLabel = mainControl.getTournament().getTurnierName() + " "
 						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + " "
 						+ Messages.getString("PDFSaveControler.21");
+				final String newsLabel = mainControl.getTournament().getTurnierName() + " "
+						+ mainControl.getTournament().getGruppe()[i].getGruppenName() + " " + "News Article";
 				if (mainControl.getCrossTable()[i] == null) {
 					mainControl.getCrossTableControl().makeSimpleTableView(i);
 
@@ -116,6 +119,7 @@ public class HTMLCopyToClipboardControl {
 				});
 
 				htmlToClipboardArray.add(meetinghtmlToClipboard);
+
 				final HTMLToClipBoardView allToClipboard = new HTMLToClipBoardView();
 				allToClipboard.getLabel().setText(allLabel);
 				final String crosstableall = mainControl.getCrossTable()[i].getHTMLTableOnlyWithHeader(
@@ -136,7 +140,28 @@ public class HTMLCopyToClipboardControl {
 				});
 
 				htmlToClipboardArray.add(allToClipboard);
+
+				NewsArticle htmlArticle = new NewsArticle(
+						mainControl.getMeetingTableControl().getTerminTabelle()[i].getTabellenMatrix(),
+						mainControl.getTournament().getTurnierName() + " "
+								+ mainControl.getTournament().getGruppe()[i].getGruppenName(), cssTable);
+				String newsHTMLContent = htmlArticle.getHtmlContent(ohneHeaderundFooter);
+				final HTMLToClipBoardView newsHTMLContentToClipboard = new HTMLToClipBoardView();
+				newsHTMLContentToClipboard.getLabel().setText(newsLabel);
+
+				newsHTMLContentToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {
+
+					@Override
+					public void actionPerformed(final ActionEvent e) {
+						final CopyToClipboard clipBoardcopy = new CopyToClipboard();
+						clipBoardcopy.copy(newsHTMLContent);
+						htmlToClipboardDialog.getStatusLabel().getTitleLabel().setText("Clipboard: " + newsLabel);
+					}
+
+				});
+				htmlToClipboardArray.add(newsHTMLContentToClipboard);
 			}
+
 			htmlToClipboardDialog.makeDialog(htmlToClipboardArray);
 
 			htmlToClipboardDialog.getButtonPanel().getOkButton().addActionListener(new ActionListener() {
