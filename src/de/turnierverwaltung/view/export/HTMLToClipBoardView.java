@@ -1,6 +1,7 @@
 package de.turnierverwaltung.view.export;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.ImageIcon;
@@ -16,18 +17,19 @@ public class HTMLToClipBoardView extends JPanel {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	JButton copyToClipBoardButton;
+	private JButton copyToClipBoardButton;
 	private JLabel label;
 	private ImageIcon copyIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/edit-copy-2.png")));
+
 	public HTMLToClipBoardView() {
 		super();
 		setBorder(new EmptyBorder(10, 10, 10, 10));
 		label = new JLabel();
+		label.setPreferredSize(new Dimension(500, 40));
 		label.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLayout(new BorderLayout());
-		setBorder(new EmptyBorder(5, 5, 5, 5));
-		copyToClipBoardButton = new JButton(Messages.getString("HTMLToClipBoardView.0"),copyIcon);
+		copyToClipBoardButton = new JButton(Messages.getString("HTMLToClipBoardView.0"), copyIcon);
 		copyToClipBoardButton.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		add(label, BorderLayout.WEST);

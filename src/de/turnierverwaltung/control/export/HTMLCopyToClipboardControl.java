@@ -3,6 +3,8 @@ package de.turnierverwaltung.control.export;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.TreeMap;
 
 import javax.swing.JOptionPane;
 
@@ -13,6 +15,7 @@ import de.turnierverwaltung.model.table.CrossTable;
 import de.turnierverwaltung.model.table.NewsArticle;
 import de.turnierverwaltung.view.export.HTMLToClipBoardDialogView;
 import de.turnierverwaltung.view.export.HTMLToClipBoardView;
+import de.turnierverwaltung.view.export.HTMLToClipBoardWithSelectBoxView;
 
 public class HTMLCopyToClipboardControl {
 
@@ -36,7 +39,7 @@ public class HTMLCopyToClipboardControl {
 			final HTMLToClipBoardDialogView htmlToClipboardDialog = new HTMLToClipBoardDialogView();
 
 			final ArrayList<HTMLToClipBoardView> htmlToClipboardArray = new ArrayList<HTMLToClipBoardView>();
-			ArrayList<String[][]> allNewsArticleMatrix = new ArrayList<String[][]>();
+			HashMap<String, String[][]> allNewsArticleMatrix = new HashMap<String, String[][]>();
 			for (int i = 0; i < anzahlGruppen; i++) {
 
 				String wfn = mainControl.getTournament().getTurnierName();
@@ -141,15 +144,15 @@ public class HTMLCopyToClipboardControl {
 				});
 
 				htmlToClipboardArray.add(allToClipboard);
-				allNewsArticleMatrix
-						.add(mainControl.getMeetingTableControl().getTerminTabelle()[i].getTabellenMatrix());
+				allNewsArticleMatrix.put(mainControl.getTournament().getGruppe()[i].getGruppenName(),
+						mainControl.getMeetingTableControl().getTerminTabelle()[i].getTabellenMatrix());
 				NewsArticle htmlArticle = new NewsArticle(
 						mainControl.getMeetingTableControl().getTerminTabelle()[i].getTabellenMatrix(),
 						mainControl.getTournament().getTurnierName() + " "
 								+ mainControl.getTournament().getGruppe()[i].getGruppenName(),
 						cssTable);
-				String newsHTMLContent = htmlArticle.getHtmlContent(ohneHeaderundFooter);
-				final HTMLToClipBoardView newsHTMLContentToClipboard = new HTMLToClipBoardView();
+				final HTMLToClipBoardWithSelectBoxView newsHTMLContentToClipboard = new HTMLToClipBoardWithSelectBoxView(
+						htmlArticle.getDateList());
 				newsHTMLContentToClipboard.getLabel().setText(newsLabel);
 
 				newsHTMLContentToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {
@@ -157,6 +160,10 @@ public class HTMLCopyToClipboardControl {
 					@Override
 					public void actionPerformed(final ActionEvent e) {
 						final CopyToClipboard clipBoardcopy = new CopyToClipboard();
+						int selectedIndex = newsHTMLContentToClipboard.getjComboBox().getSelectedIndex();
+						String selectedItem = newsHTMLContentToClipboard.getjComboBox().getItemAt(selectedIndex);
+						String newsHTMLContent = htmlArticle.getHtmlContent(ohneHeaderundFooter, selectedItem);
+
 						clipBoardcopy.copy(newsHTMLContent);
 						htmlToClipboardDialog.getStatusLabel().getTitleLabel().setText("Clipboard: " + newsLabel);
 					}
@@ -164,18 +171,23 @@ public class HTMLCopyToClipboardControl {
 				});
 				htmlToClipboardArray.add(newsHTMLContentToClipboard);
 			}
-			NewsArticle allhtmlArticles = new NewsArticle(allNewsArticleMatrix,
-					mainControl.getTournament().getTurnierName() + " " + mainControl.getTournament().getTurnierName(),
-					cssTable);
-			String allNewsHTMLContent = allhtmlArticles.getHtmlContent(ohneHeaderundFooter);
-			String newsLabel = mainControl.getTournament().getTurnierName() + " " + "News Article";
-			final HTMLToClipBoardView allNewsHTMLContentToClipboard = new HTMLToClipBoardView();
+			String groupname = mainControl.getTournament().getTurnierName();
+			TreeMap<String, String[][]> tMap = new TreeMap<String, String[][]>();
+			tMap.putAll(allNewsArticleMatrix);
+			NewsArticle allhtmlArticles = new NewsArticle(tMap, groupname, cssTable);
+			String newsLabel = mainControl.getTournament().getTurnierName() + " News Article (all Groups)";
+			final HTMLToClipBoardWithSelectBoxView allNewsHTMLContentToClipboard = new HTMLToClipBoardWithSelectBoxView(
+					allhtmlArticles.getDateList());
 			allNewsHTMLContentToClipboard.getLabel().setText(newsLabel);
 
 			allNewsHTMLContentToClipboard.getCopyToClipBoardButton().addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(final ActionEvent e) {
+					int selectedIndex = allNewsHTMLContentToClipboard.getjComboBox().getSelectedIndex();
+					String selectedItem = allNewsHTMLContentToClipboard.getjComboBox().getItemAt(selectedIndex);
+					String allNewsHTMLContent = allhtmlArticles.getHtmlContent(ohneHeaderundFooter, selectedItem);
+
 					final CopyToClipboard clipBoardcopy = new CopyToClipboard();
 					clipBoardcopy.copy(allNewsHTMLContent);
 					htmlToClipboardDialog.getStatusLabel().getTitleLabel().setText("Clipboard: " + newsLabel);
