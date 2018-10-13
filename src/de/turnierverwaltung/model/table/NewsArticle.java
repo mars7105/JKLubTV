@@ -90,8 +90,6 @@ public class NewsArticle {
 
 	}
 
-	
-
 	private void makeHTMLArticles() {
 		int x = tabellenMatrix.length;
 		int y = tabellenMatrix[0].length;
@@ -236,5 +234,22 @@ public class NewsArticle {
 			dateList.add(dKey);
 		}
 		return dateList;
+	}
+
+	public String getHtmlContent(Boolean ohneHeaderundFooter) {
+		String htmlString;
+		if (ohneHeaderundFooter == false) {
+			htmlString = getHTMLHeader();
+		} else {
+			htmlString = "";
+		}
+		for (ArrayList<String[]> list : tMap.values()) {
+			htmlString += getEventTable(list);
+		}
+
+		if (ohneHeaderundFooter == false) {
+			htmlString += getHTMLFooter();
+		}
+		return htmlString;
 	}
 }

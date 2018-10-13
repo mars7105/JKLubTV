@@ -35,6 +35,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.Messages;
 import de.turnierverwaltung.model.table.CrossTable;
+import de.turnierverwaltung.model.table.NewsArticle;
 
 /**
  *
@@ -119,6 +120,10 @@ public class HTMLSaveControl {
 					final File filename2 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
 							+ filename + Messages.getString("HTMLSaveControler.8") //$NON-NLS-1$
 							+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".html"); //$NON-NLS-1$
+
+					final File filename3 = new File(savefile.getCurrentDirectory() + "/" //$NON-NLS-1$
+							+ filename + "news-article" //$NON-NLS-1$
+							+ mainControl.getTournament().getGruppe()[i].getGruppenName() + ".html");
 					int n1 = 0;
 					if (filename1.exists() && fileExist == false) {
 						fileExist = true;
@@ -143,11 +148,33 @@ public class HTMLSaveControl {
 								options, options[1]);
 
 					}
+					int n3 = 0;
+					if (filename3.exists() && fileExist == false) {
+						fileExist = true;
+						final Object[] options = { Messages.getString("SaveDialog.2"),
+								Messages.getString("SaveDialog.3") };
+						n3 = JOptionPane.showOptionDialog(null,
+								Messages.getString("SaveDialog.0") + filename1.getAbsolutePath()
+										+ Messages.getString("SaveDialog.1"),
+								"Dateioperation", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+								options, options[1]);
+
+					}
+					// news article
+					final String cssTable = mainControl.getPropertiesControl().getCSSTable();
+
+					NewsArticle htmlArticle = new NewsArticle(
+							mainControl.getMeetingTableControl().getTerminTabelle()[i].getTabellenMatrix(),
+							mainControl.getTournament().getTurnierName() + " "
+									+ mainControl.getTournament().getGruppe()[i].getGruppenName(),
+							cssTable);
+
 					Writer writer1;
 					Writer writer2;
+					Writer writer3;
 					final Boolean ohneHeaderundFooter = mainControl.getPropertiesControl().getOnlyTables();
 					final Boolean showLink = mainControl.getPropertiesControl().getPDFLinks();
-					final String cssTable = mainControl.getPropertiesControl().getCSSTable();
+//					final String cssTable = mainControl.getPropertiesControl().getCSSTable();
 
 					try {
 						if (n1 == 0) {
@@ -167,20 +194,26 @@ public class HTMLSaveControl {
 							writer2.flush();
 							writer2.close();
 						}
+						if (n3 == 0) {
+							writer3 = new OutputStreamWriter(new FileOutputStream(filename3), "UTF8"); //$NON-NLS-1$
+							writer3.write(htmlArticle.getHtmlContent(ohneHeaderundFooter));
+							writer3.flush();
+							writer3.close();
+						}
 						try {
 							final InputStreamReader isReader = new InputStreamReader(
 									this.getClass().getResourceAsStream("/files/style.css")); //$NON-NLS-1$
 							final BufferedReader br = new BufferedReader(isReader);
 
-							final PrintWriter writer3 = new PrintWriter(
+							final PrintWriter writer4 = new PrintWriter(
 									new File(savefile.getCurrentDirectory() + "/style.css")); //$NON-NLS-1$
 
 							String Bs;
 							while ((Bs = br.readLine()) != null) {
-								writer3.println(Bs);
+								writer4.println(Bs);
 							}
 
-							writer3.close();
+							writer4.close();
 							br.close();
 
 						} catch (final FileNotFoundException fnfe) {
