@@ -11,8 +11,8 @@ public class PlayerListGroupTable {
 	private final Game[] games;
 	private final String columnNames[];
 	private final Object playerMatrix[][];
-	private final int partienAnzahl;
-	private final int rundenAnzahl;
+	private int partienAnzahl;
+	private int rundenAnzahl;
 
 	public PlayerListGroupTable(final Group group) {
 		super();
@@ -21,9 +21,21 @@ public class PlayerListGroupTable {
 		games = this.group.getPartien();
 		partienAnzahl = this.group.getPartienAnzahl();
 		rundenAnzahl = this.group.getRundenAnzahl();
+		int spielerAnzahl = this.group.getSpielerAnzahl();
 		int cols = 0;
+		if (rundenAnzahl == 0) {
 
-		cols = partienAnzahl * 2 / rundenAnzahl;
+			if (spielerAnzahl % 2 == 0) {
+				partienAnzahl = (spielerAnzahl / 2) * (spielerAnzahl - 1);
+				rundenAnzahl = spielerAnzahl - 1;
+			} else {
+				partienAnzahl = (spielerAnzahl - 1) / 2;
+				rundenAnzahl = spielerAnzahl;
+			}
+		} else {
+			cols = partienAnzahl * 2 / rundenAnzahl;
+		}
+//		System.out.println(partienAnzahl + " " + rundenAnzahl + " " + this.group.getSpielerAnzahl());
 		// cols = this.group.getSpielerAnzahl();
 		playerMatrix = new String[cols][4];
 		columnNames = new String[4];
