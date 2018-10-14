@@ -3,8 +3,6 @@ package de.turnierverwaltung.view.export;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dialog;
-import java.awt.GradientPaint;
-import java.awt.Paint;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
