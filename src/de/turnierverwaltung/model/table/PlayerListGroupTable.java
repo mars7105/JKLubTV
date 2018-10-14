@@ -1,5 +1,6 @@
 package de.turnierverwaltung.model.table;
 
+import de.turnierverwaltung.model.Formeln;
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Group;
 import de.turnierverwaltung.model.Player;
@@ -21,21 +22,30 @@ public class PlayerListGroupTable {
 		games = this.group.getPartien();
 		partienAnzahl = this.group.getPartienAnzahl();
 		rundenAnzahl = this.group.getRundenAnzahl();
-		int spielerAnzahl = this.group.getSpielerAnzahl();
-		int cols = 0;
-		if (rundenAnzahl == 0) {
 
-			if (spielerAnzahl % 2 == 0) {
-				partienAnzahl = (spielerAnzahl / 2) * (spielerAnzahl - 1);
-				rundenAnzahl = spielerAnzahl - 1;
-			} else {
-				partienAnzahl = (spielerAnzahl - 1) / 2;
-				rundenAnzahl = spielerAnzahl;
-			}
-		} else {
-			cols = partienAnzahl * 2 / rundenAnzahl;
+		int cols = 0;
+
+		int spielerAnzahl = this.group.getSpielerAnzahl();
+		Formeln formeln = new Formeln();
+		if (spielerAnzahl <= 0 && partienAnzahl > 0) {
+			spielerAnzahl = formeln.getSpielerAnzahl(partienAnzahl);
+
 		}
-//		System.out.println(partienAnzahl + " " + rundenAnzahl + " " + this.group.getSpielerAnzahl());
+		if (rundenAnzahl <= 0 && spielerAnzahl > 0) {
+			rundenAnzahl = formeln.getRundenAnzahl(spielerAnzahl);
+
+		}
+		if (partienAnzahl <= 0) {
+
+			partienAnzahl = formeln.getPartienanzahl(spielerAnzahl);
+		}
+		this.group.setSpielerAnzahl(spielerAnzahl);
+		this.group.setRundenAnzahl(rundenAnzahl);
+		this.group.setPartienAnzahl(partienAnzahl);
+
+		cols = partienAnzahl * 2 / rundenAnzahl;
+
+		System.out.println(partienAnzahl + " " + rundenAnzahl + " " + this.group.getSpielerAnzahl());
 		// cols = this.group.getSpielerAnzahl();
 		playerMatrix = new String[cols][4];
 		columnNames = new String[4];
