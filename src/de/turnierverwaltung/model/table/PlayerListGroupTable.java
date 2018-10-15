@@ -45,7 +45,7 @@ public class PlayerListGroupTable {
 
 		cols = partienAnzahl * 2 / rundenAnzahl;
 
-		System.out.println(partienAnzahl + " " + rundenAnzahl + " " + this.group.getSpielerAnzahl());
+//		System.out.println(partienAnzahl + " " + rundenAnzahl + " " + this.group.getSpielerAnzahl());
 		// cols = this.group.getSpielerAnzahl();
 		playerMatrix = new String[cols][4];
 		columnNames = new String[4];

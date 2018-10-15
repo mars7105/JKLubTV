@@ -141,16 +141,26 @@ public class ActionListenerPlayerTournamentEditControl implements ActionListener
 	}
 
 	private void deletePlayerFromGroup(final Player player, final int groupId) throws SQLException {
-		final int option = JOptionPane.showConfirmDialog(null,
-				"Delete Player " + player.getName() + " of Group " + group.getGruppenName() + "?");
-		if (option == JOptionPane.YES_OPTION) {
-			mainControl.getSqlGamesControl().deletePartienFromPlayer(player, group.getGruppeId());
-			mainControl.getSqlTournament_has_PlayerControl().deletePlayerOfGroup(player.getSpielerId(),
-					group.getGruppeId());
-			playerTorunamentEditView.dispose();
-			loadGroup(groupId);
+		int anzahl = 0;
+		for (Player pl : group.getSpieler()) {
+			if (pl.getSpielerId() >= 0) {
+				anzahl++;
+			}
 		}
-
+		if (anzahl > 3) {
+			final int option = JOptionPane.showConfirmDialog(null,
+					"Delete Player " + player.getName() + " of Group " + group.getGruppenName() + "?");
+			if (option == JOptionPane.YES_OPTION) {
+				mainControl.getSqlGamesControl().deletePartienFromPlayer(player, group.getGruppeId());
+				mainControl.getSqlTournament_has_PlayerControl().deletePlayerOfGroup(player.getSpielerId(),
+						group.getGruppeId());
+				playerTorunamentEditView.dispose();
+				loadGroup(groupId);
+			}
+		} else {
+			JOptionPane.showMessageDialog(null, "Weniger als 3 Spieler nicht möglich!", "Hinweis",
+					JOptionPane.WARNING_MESSAGE);
+		}
 	}
 
 	private void loadGroupId(final int groupId) {
