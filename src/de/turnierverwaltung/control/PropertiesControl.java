@@ -47,6 +47,8 @@ public class PropertiesControl {
 	public static final String DEFAULTPATH = "defaultPath";
 	public static final String TURNIEREPROTAB = "TurniereproTab";
 	public static final String SPIELERPROTAB = "SpielerproTab";
+	public static final String SPIELFREI = "Spielfrei";
+
 	public static final String PACKAGE = "/de/jklubtv";
 	public static final String TABLE_COLUMN_OLD_DWZ = "tablecolumn-olddwz";
 	public static final String TABLE_COLUMN_NEW_DWZ = "tablecolumn-newdwz";
@@ -128,6 +130,7 @@ public class PropertiesControl {
 		prop.setProperty(DEFAULTPATH, "");
 		prop.setProperty(TURNIEREPROTAB, "1");
 		prop.setProperty(SPIELERPROTAB, "1");
+		prop.setProperty(SPIELFREI, "Spielfrei");
 		prop.setProperty(TABLE_COLUMN_OLD_DWZ, "");
 		prop.setProperty(TABLE_COLUMN_NEW_DWZ, "");
 		prop.setProperty(TABLE_COLUMN_OLD_ELO, "");
@@ -627,6 +630,11 @@ public class PropertiesControl {
 			prop.setProperty(TEXTFIELD_HEIGHT, "40");
 			saveChanges = true;
 		}
+		if (!(prop.getProperty(SPIELFREI).equals(""))) {
+			prop.setProperty(SPIELFREI, TournamentConstants.SPIELFREI);
+			saveChanges = true;
+		}
+
 		TournamentConstants.setTextField(getTextFieldWidth(), getTextFieldHeight());
 
 		checkCrossTableColumnForDoubles();
