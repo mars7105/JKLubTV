@@ -72,6 +72,7 @@ public class TournamentConstants {
 	public static final int TAB_ACTIVE_TOURNAMENT = 2;
 	public static final String CUT_FORENAME = "20";
 	public static final String CUT_SURNAME = "20";
+	public static String SPIELFREI = Messages.getString("TurnierKonstanten.13");
 	public static String TABLE_COLUMN_PLAYER = Messages.getString("TurnierKonstanten.0");
 	public static String TABLE_COLUMN_OLD_DWZ = Messages.getString("TurnierKonstanten.1");
 	public static String TABLE_COLUMN_NEW_DWZ = Messages.getString("TurnierKonstanten.2");
@@ -103,6 +104,7 @@ public class TournamentConstants {
 		TABLE_COLUMN_MEETING = Messages.getString("TurnierKonstanten.10");
 		TABLE_COLUMN_OLD_ELO = Messages.getString("TurnierKonstanten.11");
 		TABLE_COLUMN_NEW_ELO = Messages.getString("TurnierKonstanten.12");
+		SPIELFREI = Messages.getString("TurnierKonstanten.13");
 	}
 
 	private static int setWidth() {

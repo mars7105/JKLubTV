@@ -144,6 +144,7 @@ public class SettingsView extends JPanel {
 	private JTextField tableCSSTextField;
 	private JLabel createELODateLabel;
 	private JLabel createDWZDateLabel;
+	private JTextField spielfreiTextField;
 
 	/**
 	 * Create the panel.
@@ -688,6 +689,9 @@ public class SettingsView extends JPanel {
 		roundTextField = new JTextField(TournamentConstants.TABLE_COLUMN_ROUND, textFieldColumns);
 		roundTextField.setPreferredSize(dimTextField);
 
+		spielfreiTextField = new JTextField(TournamentConstants.SPIELFREI, textFieldColumns);
+		spielfreiTextField.setPreferredSize(dimTextField);
+		
 		final Dimension dim = new Dimension(175, 30);
 		final JLabel oldDWZTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.22") + ":");
 		oldDWZTextFieldLabel.setPreferredSize(dim);
@@ -725,6 +729,10 @@ public class SettingsView extends JPanel {
 
 		final JLabel roundTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.36") + ":");
 		roundTextFieldLabel.setPreferredSize(dim);
+		
+		final JLabel spielfreiTextFieldLabel = new JLabel(Messages.getString("EigenschaftenView.36") + ":");
+		spielfreiTextFieldLabel.setPreferredSize(dim);
+		
 		titleView = new TitleLabelView(Messages.getString("EigenschaftenView.37"));
 		titleView.setFlowLayoutLeft();
 		// JLabel leftTitleLabel = new
