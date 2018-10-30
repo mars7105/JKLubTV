@@ -146,7 +146,7 @@ public class HTMLCopyToClipboardControl {
 				htmlToClipboardArray.add(allToClipboard);
 				allNewsArticleMatrix.put(mainControl.getTournament().getGruppe()[i].getGruppenName(),
 						mainControl.getMeetingTableControl().getTerminTabelle()[i].getTabellenMatrix());
-				NewsArticle htmlArticle = new NewsArticle(
+				final NewsArticle htmlArticle = new NewsArticle(
 						mainControl.getMeetingTableControl().getTerminTabelle()[i].getTabellenMatrix(),
 						mainControl.getTournament().getTurnierName() + " "
 								+ mainControl.getTournament().getGruppe()[i].getGruppenName(),
@@ -174,8 +174,8 @@ public class HTMLCopyToClipboardControl {
 			String groupname = mainControl.getTournament().getTurnierName();
 			TreeMap<String, String[][]> tMap = new TreeMap<String, String[][]>();
 			tMap.putAll(allNewsArticleMatrix);
-			NewsArticle allhtmlArticles = new NewsArticle(tMap, groupname, cssTable);
-			String newsLabel = mainControl.getTournament().getTurnierName() + " News Article (all Groups)";
+			final NewsArticle allhtmlArticles = new NewsArticle(tMap, groupname, cssTable);
+			final String newsLabel = mainControl.getTournament().getTurnierName() + " News Article (all Groups)";
 			final HTMLToClipBoardWithSelectBoxView allNewsHTMLContentToClipboard = new HTMLToClipBoardWithSelectBoxView(
 					allhtmlArticles.getDateList());
 			allNewsHTMLContentToClipboard.getLabel().setText(newsLabel);

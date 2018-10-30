@@ -47,7 +47,7 @@ public class PropertiesControl {
 	public static final String DEFAULTPATH = "defaultPath";
 	public static final String TURNIEREPROTAB = "TurniereproTab";
 	public static final String SPIELERPROTAB = "SpielerproTab";
-	public static final String SPIELFREI = "Spielfrei";
+	public static final String SPIELFREI = TournamentConstants.SPIELFREI;
 
 	public static final String PACKAGE = "/de/jklubtv";
 	public static final String TABLE_COLUMN_OLD_DWZ = "tablecolumn-olddwz";
@@ -130,7 +130,7 @@ public class PropertiesControl {
 		prop.setProperty(DEFAULTPATH, "");
 		prop.setProperty(TURNIEREPROTAB, "1");
 		prop.setProperty(SPIELERPROTAB, "1");
-		prop.setProperty(SPIELFREI, "Spielfrei");
+		prop.setProperty(SPIELFREI, "");
 		prop.setProperty(TABLE_COLUMN_OLD_DWZ, "");
 		prop.setProperty(TABLE_COLUMN_NEW_DWZ, "");
 		prop.setProperty(TABLE_COLUMN_OLD_ELO, "");
@@ -256,7 +256,7 @@ public class PropertiesControl {
 		tableColumns[2] = prop.getProperty(TABLE_COLUMN_BLACK);
 		tableColumns[3] = prop.getProperty(TABLE_COLUMN_RESULT);
 		tableColumns[4] = prop.getProperty(TABLE_COLUMN_MEETING);
-		Boolean loop = false;
+		boolean loop = false;
 		do {
 			loop = false;
 			for (int i = 0; i < 5; i++) {
@@ -350,6 +350,10 @@ public class PropertiesControl {
 		}
 		if (!prop.getProperty(PATHTODATABASE).equals("") && checkPathToDatabase() == false) {
 			prop.setProperty(PATHTODATABASE, "");
+			saveChanges = true;
+		}
+		if (prop.getProperty(SPIELFREI).equals("") && checkPathToDatabase() == false) {
+			prop.setProperty(SPIELFREI, TournamentConstants.SPIELFREI);
 			saveChanges = true;
 		}
 		if (!prop.getProperty(PATHTOVEREINECSV).equals("") && checkPathToVereineCSV() == false) {
@@ -630,7 +634,7 @@ public class PropertiesControl {
 			prop.setProperty(TEXTFIELD_HEIGHT, "40");
 			saveChanges = true;
 		}
-		if (!(prop.getProperty(SPIELFREI).equals(""))) {
+		if ((prop.getProperty(SPIELFREI).equals(""))) {
 			prop.setProperty(SPIELFREI, TournamentConstants.SPIELFREI);
 			saveChanges = true;
 		}
@@ -1496,5 +1500,15 @@ public class PropertiesControl {
 
 		return ok;
 
+	}
+
+	public void setSpielfrei(final String spielfrei) {
+		prop.setProperty(SPIELFREI, spielfrei);
+		TournamentConstants.setSpielfrei(spielfrei);
+
+	}
+
+	public String getSpielfrei() {
+		return prop.getProperty(SPIELFREI);
 	}
 }
