@@ -124,4 +124,9 @@ public class TournamentConstants {
 		TournamentConstants.TEXTFIELD_HEIGHT = height;
 
 	}
+
+	public static void setSpielfrei(String spielfrei) {
+		TournamentConstants.SPIELFREI = spielfrei;
+
+	}
 }
