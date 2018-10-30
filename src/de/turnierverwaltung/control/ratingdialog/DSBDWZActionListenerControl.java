@@ -92,13 +92,14 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 								if (eloDataList != null) {
 									neuerSpieler.setEloData(eloDataList);
 								}
-								SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-								neuerSpieler.setName(neuerSpieler.getDwzData().getCsvSpielername());
-								neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-								mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
-								dewisDialogControl.getSpielerDewisView().getListModel().getElementAt(temp)
-										.setIcon(insertIcon3);
 							}
+							SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+							neuerSpieler.setName(neuerSpieler.getDwzData().getCsvSpielername());
+							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+							mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
+							dewisDialogControl.getSpielerDewisView().getListModel().getElementAt(temp)
+									.setIcon(insertIcon3);
+
 						}
 						dewisDialogControl.getSpielerDewisView().updateUI();
 						dewisDialogControl.makeSelectedList();

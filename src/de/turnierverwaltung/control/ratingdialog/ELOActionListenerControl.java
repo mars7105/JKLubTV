@@ -47,8 +47,8 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 		this.mainControl = mainControl;
 		eloDialogControl = dewisDialogControl;
 		indices = new ArrayList<Integer>();
-		 spdwzlist = new SQLitePlayerDWZList();		
-			final String pathToPlayersCSV = mainControl.getPropertiesControl().getPathToPlayersCSV();
+		spdwzlist = new SQLitePlayerDWZList();
+		final String pathToPlayersCSV = mainControl.getPropertiesControl().getPathToPlayersCSV();
 		dbChecked = spdwzlist.checkDatabase(pathToPlayersCSV);
 
 	}
@@ -75,7 +75,7 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 						final Player neuerSpieler = spieler.get(temp);
 						neuerSpieler.copyELODataToPlayer();
 						if (playerExist(neuerSpieler) == false) {
-							
+
 							final String pathToPlayersCSV = mainControl.getPropertiesControl().getPathToPlayersCSV();
 							if (dbChecked == true) {
 								final ArrayList<DWZData> dwzDataList = spdwzlist.getPlayersByFideId(pathToPlayersCSV,
@@ -85,15 +85,14 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 										neuerSpieler.setDwzData(dwzDataList.get(0));
 									}
 								}
-								final SQLPlayerControl stc = new SQLPlayerControl(mainControl);
-
-								neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
-								mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
-								eloDialogControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
-										.setIcon(insertIcon3);
-
 							}
-							
+							final SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+
+							neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+							mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
+							eloDialogControl.getSpielerSearchPanelList().getListModel().getElementAt(temp)
+									.setIcon(insertIcon3);
+
 						}
 						eloDialogControl.getSpielerSearchPanelList().getList().updateUI();
 
