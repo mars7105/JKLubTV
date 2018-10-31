@@ -485,7 +485,7 @@ public class MainControl extends JFrame implements WindowListener {
 			startpageControl = new StartpageControl(this);
 			startpageControl.createStartPanels();
 		}
-
+		TournamentConstants.setSpielfrei(propertiesControl.getSpielfrei());
 	}
 
 	private void loadDatabase(final String path) {
