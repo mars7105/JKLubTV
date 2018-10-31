@@ -116,11 +116,11 @@ public class SQLiteSpielerDAO implements SpielerDAO {
 				int age = rs.getInt("Age");
 
 				Player player = new Player();
-				player.setName(name);
+				
 				player.setForename(foreName);
 				player.setSurname(surName);
 				player.setKuerzel(kuerzel);
-				
+				player.setName(name);
 				player.setSpielerId(idSpieler);
 
 				player.setDwzData(mySQLDWZDataDAO.getDWZData(idSpieler));

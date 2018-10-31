@@ -172,10 +172,10 @@ public class PlayerListControl {
 				// mainControl.setEnabled(false);
 				if (mainControl.getNewTournament() == false) {
 					spielerIndex = modelRow;
-					if (spieler.get(modelRow).getDwzData().getCsvSpielername().length() > 0) {
-						spieler.get(modelRow).setName(spieler.get(modelRow).getDwzData().getCsvSpielername());
-						spieler.get(modelRow).extractNameToForenameAndSurename();
-					}
+//					if (spieler.get(modelRow).getDwzData().getCsvSpielername().length() > 0) {
+//						spieler.get(modelRow).setName(spieler.get(modelRow).getDwzData().getCsvSpielername());
+//						spieler.get(modelRow).extractNameToForenameAndSurename();
+//					}
 					spielerEditierenView = new EditPlayerView(spieler.get(modelRow));
 					spielerEditierenView.getOkButton().addActionListener(new ActionListener() {
 

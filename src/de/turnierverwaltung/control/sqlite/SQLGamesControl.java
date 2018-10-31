@@ -143,7 +143,7 @@ public class SQLGamesControl {
 		final int spielfreiId = TournamentConstants.SPIELFREI_ID - anzahlSpielfrei;
 		final Player spielfrei = new Player();
 		spielfrei.setSpielerId(spielfreiId);
-		spielfrei.setSurname("Spielfrei");
+		spielfrei.setSurname(TournamentConstants.SPIELFREI);
 		final ArrayList<Game> spielfreiGames = new ArrayList<Game>();
 		for (final Game game : games) {
 			if (game.getSpielerWeiss().getSpielerId() == player.getSpielerId()) {

@@ -165,7 +165,14 @@ public class ActionListenerPlayerListControl implements ActionListener, FocusLis
 	public void focusGained(FocusEvent e) {
 		String forename = spielerHinzufuegenView.getTextFieldForeName().getText();
 		String surname = spielerHinzufuegenView.getTextFieldSurName().getText();
-		String kuerzel = forename.substring(0, 1) + surname.substring(0, 1);
+		String kuerzel = "";
+		if (forename.length() > 0) {
+			kuerzel = forename.substring(0, 1);
+		}
+		if (surname.length() > 0) {
+			kuerzel += surname.substring(0, 1);
+		}
+//		String kuerzel = forename.substring(0, 1) + surname.substring(0, 1);
 		spielerHinzufuegenView.getTextFieldKuerzel().setText(kuerzel);
 
 	}
