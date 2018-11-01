@@ -436,6 +436,8 @@ public class MainControl extends JFrame implements WindowListener {
 		final String wrongFilename = "file not found.";
 		final String parameterPath = parameter.getTournamentPath();
 		final String propertiesPath = propertiesControl.getPathToDatabase();
+		TournamentConstants.setSpielfrei(propertiesControl.getSpielfrei());
+
 		if (parameter.getHelp() == true) {
 			final String helpString1 = "-f <filename> : filename of database to load.";
 			final String helpString2 = "--reset : reset properties.";
@@ -485,7 +487,6 @@ public class MainControl extends JFrame implements WindowListener {
 			startpageControl = new StartpageControl(this);
 			startpageControl.createStartPanels();
 		}
-		TournamentConstants.setSpielfrei(propertiesControl.getSpielfrei());
 	}
 
 	private void loadDatabase(final String path) {

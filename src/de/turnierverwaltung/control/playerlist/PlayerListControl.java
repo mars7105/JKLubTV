@@ -99,7 +99,7 @@ public class PlayerListControl {
 			spielerTableControl = new SQLPlayerControl(mainControl);
 			spieler = new ArrayList<Player>();
 			spieler = spielerTableControl.getAllSpieler();
-			// testPlayerListForDoubles();
+			testPlayerListForDoubles();
 			// spielerAnzahl = spieler.size();
 			// final int selectedTab = 0;
 			final PlayerListTable playerListTable = new PlayerListTable(spieler);
@@ -126,6 +126,17 @@ public class PlayerListControl {
 		} catch (final NullPointerException e) {
 
 		}
+	}
+
+	public void testPlayerListForDoubles() {
+		for (Player player : spieler) {
+			if (player.getName().equals(TournamentConstants.SPIELFREI)) {
+				TournamentConstants.setSpielfrei(TournamentConstants.SPIELFREI + "*");
+				mainControl.getPropertiesControl().setSpielfrei(TournamentConstants.SPIELFREI);
+				mainControl.getPropertiesControl().writeProperties();
+			}
+		}
+
 	}
 
 	private void actionListener() {

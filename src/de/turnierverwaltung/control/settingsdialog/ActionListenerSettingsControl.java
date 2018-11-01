@@ -77,6 +77,9 @@ public class ActionListenerSettingsControl {
 				ppC.setTableComumnSonnebornBerger(settingsView.getSbbTextField().getText());
 				ppC.setTableComumnRound(settingsView.getRoundTextField().getText());
 				ppC.setSpielfrei(settingsView.getSpielfreiTextField().getText());
+				if (mainControl.getPlayerListControl() != null) {
+					mainControl.getPlayerListControl().testPlayerListForDoubles();
+				}
 				ppC.setCutForename(settingsView.getForenameLengthBox().getValue());
 				ppC.setCutSurname(settingsView.getSurnameLengthBox().getValue());
 				ppC.setWebserverPath(settingsView.getWebserverPathTextField().getText());

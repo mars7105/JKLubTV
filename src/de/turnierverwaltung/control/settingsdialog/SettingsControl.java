@@ -68,6 +68,7 @@ public class SettingsControl {
 		eigenschaftenView.getResultTextField().setText(ppC.getTableComumnResult());
 		eigenschaftenView.getRoundTextField().setText(ppC.getTableComumnRound());
 		eigenschaftenView.getSpielfreiTextField().setText(ppC.getSpielfrei());
+		
 		eigenschaftenView.getForenameLengthBox().setValue(ppC.getCutForename());
 		eigenschaftenView.getSurnameLengthBox().setValue(ppC.getCutSurname());
 		final String eloDate = "Ratinglist from:" + sqlitePlayerEloList.getELODate(ppC.getPathToPlayersELO());
