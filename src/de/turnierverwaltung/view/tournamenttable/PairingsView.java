@@ -16,18 +16,22 @@ package de.turnierverwaltung.view.tournamenttable;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
 //import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.geom.AffineTransform;
 import java.util.Locale;
 import java.util.Properties;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTabbedPane;
 import javax.swing.border.EmptyBorder;
 
 import de.turnierverwaltung.model.EventDate;
@@ -44,7 +48,7 @@ public class PairingsView extends JPanel {
 	private JPanel contentPanel;
 	private JPanel flowPane;
 	private JPanel downPane;
-	private JTabbedPane tabbedPane;
+	private JPanel tabbedPane;
 	private JComboBox<String>[] rundenNummer;
 	private int spielerAnzahl;
 	private JLabel[] weissSpieler;
@@ -122,7 +126,7 @@ public class PairingsView extends JPanel {
 		return statusLabel.getTitleLabel();
 	}
 
-	public JTabbedPane getTabbedPane() {
+	public JPanel getTabbedPane() {
 		return tabbedPane;
 	}
 
@@ -164,17 +168,17 @@ public class PairingsView extends JPanel {
 	public void makeZeilen(String[][] terminMatrix) {
 		String[] zeile = new String[5];
 
-		tabbedPane = new JTabbedPane();
+		tabbedPane = new JPanel();
+		tabbedPane.setLayout(new BoxLayout(tabbedPane, BoxLayout.PAGE_AXIS));
 		FlowLayout flowLayout = new FlowLayout(FlowLayout.LEFT);
 		flowLayout.setVgap(1);
-		// int index = 1;
+		Dimension dim = new Dimension(175, 35);
 		for (int r = 0; r < rundenanzahl; r++) {
-			JPanel panel = new JPanel();
-			panel.setLayout(new BorderLayout());
+
 			flowPane = new JPanel();
 			flowPane.setLayout(new BoxLayout(flowPane, BoxLayout.PAGE_AXIS));
 			// flowPane.setLayout(new BorderLayout());
-			flowPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+			flowPane.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 			// flowPane.setAlignmentY(Component.TOP_ALIGNMENT);
 
 			for (int i = 0; i < partienanzahl; i++) {
@@ -230,12 +234,21 @@ public class PairingsView extends JPanel {
 				downPane.add(rundenNummer[anzahlElemente]);
 				downPane.add(new JLabel(" = ")); //$NON-NLS-1$
 				weissSpieler[anzahlElemente] = new JLabel();
-				weissSpieler[anzahlElemente]
-						.setText(Messages.getString("RundenEingabeFormularView.13") + zeile[1] + " - "); //$NON-NLS-1$ //$NON-NLS-2$
+				weissSpieler[anzahlElemente].setPreferredSize(dim);
+				weissSpieler[anzahlElemente].setBorder(new EmptyBorder(5, 5, 5, 5));
+				weissSpieler[anzahlElemente].setOpaque(true);
+				weissSpieler[anzahlElemente].setBackground(Color.WHITE);
+				weissSpieler[anzahlElemente].setForeground(Color.BLACK);
+				weissSpieler[anzahlElemente].setText(zeile[1]);
 				schwarzSpieler[anzahlElemente] = new JLabel();
-				schwarzSpieler[anzahlElemente]
-						.setText(Messages.getString("RundenEingabeFormularView.15") + zeile[2] + " "); //$NON-NLS-1$ //$NON-NLS-2$
+				schwarzSpieler[anzahlElemente].setPreferredSize(dim);
+				schwarzSpieler[anzahlElemente].setBorder(new EmptyBorder(5, 5, 5, 5));
+				schwarzSpieler[anzahlElemente].setOpaque(true);
+				schwarzSpieler[anzahlElemente].setBackground(Color.BLACK);
+				schwarzSpieler[anzahlElemente].setForeground(Color.WHITE);
+				schwarzSpieler[anzahlElemente].setText(zeile[2]);
 				downPane.add(weissSpieler[anzahlElemente]);
+				downPane.add(new JLabel(" - "));
 				downPane.add(schwarzSpieler[anzahlElemente]);
 
 				anzahlElemente++;
@@ -248,13 +261,25 @@ public class PairingsView extends JPanel {
 				flowPane.updateUI();
 			}
 
-			panel.add(flowPane, BorderLayout.NORTH);
-			JScrollPane scrollPane = new JScrollPane();
-			scrollPane.setViewportView(panel);
-			scrollPane.setAlignmentY(TOP_ALIGNMENT);
-			tabbedPane.add(Messages.getString("RundenEingabeFormularView.17") + (r + 1), scrollPane); //$NON-NLS-1$
+			JLabel roundLabel = new JLabel(Messages.getString("RundenEingabeFormularView.17") + (r + 1));
+			roundLabel.setOpaque(true);
+			Font font = roundLabel.getFont();
+			float size = font.getSize() + 2;
+			roundLabel.setFont(font.deriveFont(size));
+			roundLabel.getFont().deriveFont(size);
+
+			tabbedPane.add(roundLabel);
+			tabbedPane.add(flowPane);
+
 		}
-		contentPanel.add(tabbedPane, BorderLayout.CENTER);
+		JPanel panel = new JPanel();
+		panel.setLayout(new BorderLayout());
+		panel.add(tabbedPane, BorderLayout.NORTH);
+
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setViewportView(panel);
+		scrollPane.setAlignmentY(TOP_ALIGNMENT);
+		contentPanel.add(scrollPane, BorderLayout.CENTER);
 		contentPanel.updateUI();
 	}
 
@@ -296,7 +321,7 @@ public class PairingsView extends JPanel {
 
 	}
 
-	public void setTabbedPane(final JTabbedPane tabbedPane) {
+	public void setTabbedPane(final JPanel tabbedPane) {
 		this.tabbedPane = tabbedPane;
 	}
 

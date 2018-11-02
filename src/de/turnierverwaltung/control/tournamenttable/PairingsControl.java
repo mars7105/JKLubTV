@@ -1,7 +1,5 @@
 package de.turnierverwaltung.control.tournamenttable;
 
-
-
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -120,12 +118,10 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 					pairingsView[index].getWeissSpieler()[i].setText("");
 					pairingsView[index].getWeissSpieler()[i]
-							.setText(Messages.getString("RundenEingabeFormularControl.8")
-									+ groups[index].getPartien()[i].getSpielerWeiss().getName() + " - ");
+							.setText(groups[index].getPartien()[i].getSpielerWeiss().getName());
 					pairingsView[index].getSchwarzSpieler()[i].setText("");
 					pairingsView[index].getSchwarzSpieler()[i]
-							.setText(Messages.getString("RundenEingabeFormularControl.9")
-									+ groups[index].getPartien()[i].getSpielerSchwarz().getName());
+							.setText(groups[index].getPartien()[i].getSpielerSchwarz().getName());
 
 				}
 
@@ -453,13 +449,13 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 						changeDate(index, i);
 						changedGames.add(groups[index].getPartien()[i]);
 						changedGroups[index][NaviControl.PAARUNGSTABELLE] = NaviControl.STANDARD;
-						for (int y = i; y < (pairingsView[index].getTabbedPane().getSelectedIndex() + 1) * max
-								/ 2; y++) {
-
-							if ((y != i) && (pairingsView[index].getDatum()[y].getDate() == null)) {
-								pairingsView[index].getDatum()[y].setDate(pairingsView[index].getDatum()[i].getDate());
-							}
-						}
+//						for (int y = i; y < (pairingsView[index].getTabbedPane().getSelectedIndex() + 1) * max
+//								/ 2; y++) {
+//
+//							if ((y != i) && (pairingsView[index].getDatum()[y].getDate() == null)) {
+//								pairingsView[index].getDatum()[y].setDate(pairingsView[index].getDatum()[i].getDate());
+//							}
+//						}
 						pairingsView[index].getStatusLabel().setText(new Integer(changedGames.size()).toString());
 //						pairingsView[index].getStatusLabel().setBackground(Color.ORANGE);
 					}
