@@ -83,12 +83,13 @@ public class MeetingTableModel extends DefaultTableModel {
 
 		boolean icE = false;
 		// if (columnIndex == 4 || columnIndex == 3) {
-		if (columnIndex == 3 || columnIndex == 4) {
+		if (columnIndex == 3) {
 			icE = true;
 
 		}
-		if (this.getValueAt(rowIndex, 1).equals(TournamentConstants.SPIELFREI) || this.getValueAt(rowIndex, 2).equals(TournamentConstants.SPIELFREI)) {
-			if (columnIndex <= 3) {
+		if (this.getValueAt(rowIndex, 1).equals(TournamentConstants.SPIELFREI)
+				|| this.getValueAt(rowIndex, 2).equals(TournamentConstants.SPIELFREI)) {
+			if (columnIndex <= 4) {
 				icE = false;
 			}
 		}
@@ -110,14 +111,14 @@ public class MeetingTableModel extends DefaultTableModel {
 
 	public Object getValueAt(int row, int col) {
 		// row++;
-		if (col == 4) {
-
-			EventDate event = new EventDate(tabellenMatrix[col][row]);
-			return event.getDate();
-
-		} else {
+//		if (col == 4) {
+//
+//			EventDate event = new EventDate(tabellenMatrix[col][row]);
+//			return event.getDate();
+//
+//		} else {
 			return tabellenMatrix[col][row];
-		}
+//		}
 	}
 
 	public Class<?> getColumnClass(int columnIndex) {
@@ -128,28 +129,39 @@ public class MeetingTableModel extends DefaultTableModel {
 	 * Don't need to implement this method unless your table's data can change.
 	 */
 	public void setValueAt(Object value, int row, int col) {
-
+//		super.setValueAt(value, row, col);
 //		if (col == 4) {
-			if (value instanceof Date) {
+		if (value instanceof Date) {
 
-				EventDate event = new EventDate((Date) value);
-				if (!tabellenMatrix[col][row].equals(event.getDateString())) {
+			EventDate event = new EventDate((Date) value);
+//			if (!tabellenMatrix[col][row].equals(event.getDateString())) {
+			tabellenMatrix[col][row] = event.getDateString();
+			fireTableCellUpdated(row, col);
+//			}
+		}
+		if (value instanceof String) {
+			if (!tabellenMatrix[col][row].equals((String) value)) {
+				if (col == 4) {
+					EventDate event = new EventDate();
+					
+					event.setDate((String) value);
 					tabellenMatrix[col][row] = event.getDateString();
-					fireTableCellUpdated(row, col);
-				}
-			}
-			if (value instanceof String) {
-				if (!tabellenMatrix[col][row].equals((String) value)) {
+				} else {
 					tabellenMatrix[col][row] = (String) value;
-					fireTableCellUpdated(row, col);
 				}
+
+				fireTableCellUpdated(row, col);
 			}
+		}
+//		fireTableCellUpdated(row, col);
 //		} else {
 		// if (!tabellenMatrix[col][row].equals((String) value)) {
 		// tabellenMatrix[col][row] = (String) value;
 		// fireTableCellUpdated(row, col);
 		// }
 //		}
+
+//		this.fireTableChanged(new TableModelEvent( this) );
 	}
 
 }

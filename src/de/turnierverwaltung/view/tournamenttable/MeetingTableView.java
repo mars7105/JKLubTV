@@ -1,7 +1,7 @@
 package de.turnierverwaltung.view.tournamenttable;
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 
-import java.awt.AWTException;
+
 
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -34,66 +34,54 @@ import java.awt.AWTException;
 //You should have received a copy of the GNU General Public License
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //import java.awt.Color;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.Locale;
+
 import java.util.Properties;
 import java.awt.BorderLayout;
-import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
-
-import javax.swing.AbstractCellEditor;
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.RowFilter;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableCellRenderer;
+
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-import com.toedter.calendar.JDateChooser;
 import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.model.table.MeetingTableModel;
 import de.turnierverwaltung.view.Messages;
 import de.turnierverwaltung.view.TitleLabelView;
 
 public class MeetingTableView<M> extends JPanel {
-	public class DateLabelFormatter extends AbstractFormatter {
-
-		/**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-		private String datePattern = "dd.MM.yyy"; //$NON-NLS-1$
-		private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
-
-		@Override
-		public Object stringToValue(String text) throws ParseException {
-			return dateFormatter.parseObject(text);
-		}
-
-		@Override
-		public String valueToString(Object value) throws ParseException {
-			if (value != null) {
-				Calendar cal = (Calendar) value;
-				return dateFormatter.format(cal.getTime());
-			}
-
-			return "";
-		}
-
-	}
+//	public class DateLabelFormatter extends AbstractFormatter {
+//
+//		/**
+//		 * 
+//		 */
+//		private static final long serialVersionUID = 1L;
+//		private String datePattern = "dd.MM.yyy"; //$NON-NLS-1$
+//		private SimpleDateFormat dateFormatter = new SimpleDateFormat(datePattern);
+//
+//		@Override
+//		public Object stringToValue(String text) throws ParseException {
+//			return dateFormatter.parseObject(text);
+//		}
+//
+//		@Override
+//		public String valueToString(Object value) throws ParseException {
+//			if (value != null) {
+//				Calendar cal = (Calendar) value;
+//				return dateFormatter.format(cal.getTime());
+//			}
+//
+//			return "";
+//		}
+//
+//	}
 
 	/**
 	 * 
@@ -117,7 +105,8 @@ public class MeetingTableView<M> extends JPanel {
 		table = new JTable();
 
 		table.setModel(this.simpleTerminTabelle);
-
+		
+		table.setLocale(getDefaultLocale());
 		comboBox = new JComboBox<String>();
 		comboBox.addItem(TournamentConstants.KEIN_ERGEBNIS);
 		comboBox.addItem(TournamentConstants.PARTIE_GEWINN_OPPONENT);
@@ -134,6 +123,8 @@ public class MeetingTableView<M> extends JPanel {
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_NEXT_COLUMN);
 		table.setRowHeight(30);
 		setColumnWidth();
+//		table.getModel().addTableModelListener(new TableListener());
+
 		JScrollPane sPane = new JScrollPane();
 		sPane.setViewportView(table);
 
@@ -209,6 +200,7 @@ public class MeetingTableView<M> extends JPanel {
 
 		int columnCount = table.getColumnCount();
 		
+
 		for (int i = 0; i < columnCount; i++) {
 
 			TableColumn c = table.getColumnModel().getColumn(i);
@@ -216,13 +208,14 @@ public class MeetingTableView<M> extends JPanel {
 				c.setCellEditor(new DefaultCellEditor(comboBox));
 			}
 			if (i == 4) {
-				JDateChooser dateChooser = new JDateChooser();
-				dateChooser.setLocale(Locale.getDefault());
-				JDateChooserRenderer datePanel = new JDateChooserRenderer();
-				JDateChooserCellEditor cellEditor = new JDateChooserCellEditor();
-				c.setCellRenderer(datePanel);
-				c.setCellEditor(cellEditor);
-
+////				JDateChooserRenderer datePanel = new JDateChooserRenderer();
+////
+////				JDateChooserCellEditor cellEditor = new JDateChooserCellEditor();
+////				
+////				c.setCellRenderer(datePanel);
+////				c.setCellEditor(cellEditor);
+//				
+//				c.setLocale(getDefaultLocale());
 			}
 
 		}
@@ -270,92 +263,83 @@ public class MeetingTableView<M> extends JPanel {
 	 * @version $LastChangedRevision: 100 $
 	 * @version $LastChangedDate: 2006-06-04 14:36:06 +0200 (So, 04 Jun 2006) $
 	 */
-	public class JDateChooserCellEditor extends AbstractCellEditor implements TableCellEditor {
-
-		private static final long serialVersionUID = 917881575221755609L;
-
-		private JDateChooser dateChooser;
-		
-		public JDateChooserCellEditor(JDateChooser dateChooser) {
-			super();
-			this.dateChooser = dateChooser;
-			dateChooser.setLocale(Locale.getDefault());
-		}
-		public JDateChooserCellEditor() {
-			dateChooser = new JDateChooser();
-			dateChooser.setLocale(Locale.getDefault());
-}
-		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
-				int column) {
-			
-			Date date = null;
-			if (value instanceof Date)
-				date = (Date) value;
-			
-			dateChooser.setDate(date);
-
-			return dateChooser;
-		}
-
-		public Object getCellEditorValue() {
-			return dateChooser.getDate();
-		}
-	}
-	class JDateChooserRenderer  implements TableCellRenderer {
-
-		private JDateChooser dateChooser;
-
-		
-
-		public JDateChooserRenderer(JDateChooser dateChooser) {
-			super();
-			this.dateChooser = dateChooser;
-		}
-
-		public JDateChooserRenderer() {
-			dateChooser = new JDateChooser();
-			dateChooser.setLocale(Locale.getDefault());
-		}
-
-		public boolean isCellEditable(int rowIndex, int columnIndex) {
-			return false;
-		}
-
-		@Override
-		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-				int row, int column) {
-//			if (value instanceof Date) {
-//			if (row >= 0 && column == 4) {
-//				this.setDate((Date) value);
-//					EventDate event = new EventDate();
-//					event.setDate((Date) value);
-//					if (this.getDate() == null) {
-			dateChooser.setDate((Date) value);
-//					}
-//						if (value instanceof Date) {						
-//					}
-//			}
-//			}
-			if (table.getSelectedColumn() == 4) {
-				try {
-
-					Robot robot = new Robot();
-//					table.changeSelection(rowIndex, columnIndex, toggle, extend);
-					robot.keyPress(KeyEvent.VK_F2);
-					robot.keyRelease(KeyEvent.VK_F2);
-//				robot.keyPress(KeyEvent.VK_F2);
-//				robot.keyRelease(KeyEvent.VK_F2);
-				} catch (AWTException e1) {
-					e1.printStackTrace();
-				}
-			}
-			return dateChooser;
-		}
-
-//		@Override
+//	public class JDateChooserCellEditor extends AbstractCellEditor implements TableCellEditor {
+//
+//		private static final long serialVersionUID = 917881575221755609L;
+//
+//		private JDateChooser dateChooser;
+//
+//		public JDateChooserCellEditor(JDateChooser dateChooser) {
+//			super();
+//			this.dateChooser = dateChooser;
+//			dateChooser.setLocale(Locale.getDefault());
+//		}
+//
+//		public JDateChooserCellEditor() {
+//			dateChooser = new JDateChooser();
+//			dateChooser.setLocale(Locale.getDefault());
+//			
+//		}
+//
+//		public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row,
+//				int column) {
+//
+//			Date date = null;
+//			if (value instanceof Date)
+//				date = (Date) value;
+//
+//			dateChooser.setDate(date);
+//			
+//			return dateChooser;
+//		}
+//
 //		public Object getCellEditorValue() {
 //			return dateChooser.getDate();
 //		}
+//	}
+//
+//	class JDateChooserRenderer implements TableCellRenderer {
+//
+//		private JDateChooser dateChooser;
+//
+//		public JDateChooserRenderer(JDateChooser dateChooser) {
+//			super();
+//			this.dateChooser = dateChooser;
+//		}
+//
+//		public JDateChooserRenderer() {
+//			dateChooser = new JDateChooser();
+//			dateChooser.setLocale(Locale.getDefault());
+//		}
+//
+//		public boolean isCellEditable(int rowIndex, int columnIndex) {
+//			return true;
+//		}
+//
+//		@Override
+//		public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+//				int row, int column) {
+//
+//			dateChooser.setDate((Date) value);
+//			
+//			try {
+//
+//				Robot robot = new Robot();
+//				robot.keyPress(KeyEvent.VK_F2);
+//				robot.keyRelease(KeyEvent.VK_F2);
+//			} catch (AWTException e1) {
+//				e1.printStackTrace();
+//			}
+//
+//			return dateChooser;
+//		}
+//
+////		@Override
+////		public Object getCellEditorValue() {
+////			return dateChooser.getDate();
+////		}
+//
+//	}
 
-	}
+	
 }

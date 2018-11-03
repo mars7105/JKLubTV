@@ -1,5 +1,6 @@
 package de.turnierverwaltung.control.tournamenttable;
 
+
 //JKlubTV - Ein Programm zum verwalten von Schach Turnieren
 //Copyright (C) 2015  Martin Schmuck m_schmuck@gmx.net
 //
@@ -18,8 +19,6 @@ package de.turnierverwaltung.control.tournamenttable;
 
 import java.awt.Toolkit;
 import java.util.ArrayList;
-import java.util.Date;
-
 import javax.swing.ImageIcon;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -29,7 +28,6 @@ import javax.swing.event.TableModelListener;
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.Messages;
 import de.turnierverwaltung.control.PropertiesControl;
-import de.turnierverwaltung.model.EventDate;
 import de.turnierverwaltung.model.Game;
 import de.turnierverwaltung.model.Tournament;
 import de.turnierverwaltung.model.TournamentConstants;
@@ -117,40 +115,54 @@ public class MeetingTableControl {
 				mainControl.getCrossTableControl().updateStatus();
 				updateStatus();
 			}
-			if (col == 4) {
+//			if (col == 4) {
+//
+//				String spielerWeiss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 1);
+//				String spielerSchwarz = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row,
+//						2);
+//
+//				Date datum = (Date) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 4);
+//
+//				EventDate event = new EventDate();
+//				event.setDate(datum);
+//				Game game = null;
+//				// System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
+//				for (int i = 0; i < turnier.getGruppe()[gruppenNummer].getPartienAnzahl(); i++) {
+//					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss().getName()
+//							.equals(spielerWeiss)
+//							&& turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerSchwarz().getName()
+//									.equals(spielerSchwarz)) {
+//						
+//						if (!turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielDatum()
+//								.equals(event.getDateString())) {
+//							
+//							turnier.getGruppe()[gruppenNummer].getPartien()[i].setSpielDatum(event.getDateString());
+//							game = turnier.getGruppe()[gruppenNummer].getPartien()[i];
+//							updateSimpleTableView(game, gruppenNummer);
+//							changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
+//							System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
+//							
+//						}
+//
+//					}
+//
+//				}
 
-				String spielerWeiss = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 1);
-				String spielerSchwarz = (String) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row,
-						2);
-
-				Date datum = (Date) simpleTableView[gruppenNummer].getTable().getModel().getValueAt(row, 4);
-
-				EventDate event = new EventDate();
-				event.setDate(datum);
-				// System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
-				for (int i = 0; i < turnier.getGruppe()[gruppenNummer].getPartienAnzahl(); i++) {
-					if (turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerWeiss().getName()
-							.equals(spielerWeiss)
-							&& turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielerSchwarz().getName()
-									.equals(spielerSchwarz)) {
-						if (!turnier.getGruppe()[gruppenNummer].getPartien()[i].getSpielDatum()
-								.equals(event.getDateString())) {
-							turnier.getGruppe()[gruppenNummer].getPartien()[i].setSpielDatum(event.getDateString());
-							changedPartien.add(turnier.getGruppe()[gruppenNummer].getPartien()[i]);
-						}
-						// System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
-
-					}
-
-				}
-				if (changedPartien.size() > 0) {
-					mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(true);
-				}
-				mainControl.getCrossTableControl().updateStatus();
-
-				updateStatus();
-
-			}
+//				if (changedPartien.size() > 0) {
+//					mainControl.getNaviView().getTabelleSpeichernButton().setEnabled(true);
+//				}
+//				mainControl.getCrossTableControl().updateStatus();
+//				System.out.println(event.getDateString() + spielerWeiss + spielerSchwarz);
+//				updateStatus();
+//				try {
+//
+//					Robot robot = new Robot();
+//					robot.keyPress(KeyEvent.VK_F2);
+//					robot.keyRelease(KeyEvent.VK_F2);
+//				} catch (AWTException e1) {
+//					e1.printStackTrace();
+//				}
+//			}
 		}
 
 	}
@@ -271,6 +283,8 @@ public class MeetingTableControl {
 				simpleTableView[gruppenNummer].getTable().getModel().removeTableModelListener(tml[gruppenNummer]);
 
 				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(ergebnissSet, i, 3);
+				simpleTableView[gruppenNummer].getTable().getModel().setValueAt(game.getSpielDatum(), i, 4);
+
 				simpleTableView[gruppenNummer].getTable().getModel().addTableModelListener(tml[gruppenNummer]);
 
 			}
