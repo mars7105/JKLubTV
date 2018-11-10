@@ -249,7 +249,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 		Boolean readyToSave = false;
 		for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
 
-			if (mainControl.getNewTournamentPlayerInputControl().getReadyToSave()[i] == true) {
+			if (mainControl.getNewTournamentPlayerIncludeControl().getReadyToSave()[i] == true) {
 				readyToSave = true;
 			} else {
 				return false;
@@ -260,9 +260,9 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 
 	public Boolean checkNewTurnier() {
 		Boolean ready = true;
-		if (mainControl.getNewTournamentPlayerInputControl() != null) {
+		if (mainControl.getNewTournamentPlayerIncludeControl() != null) {
 			for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
-				if (mainControl.getNewTournamentPlayerInputControl().getReadyToSave()[i] == false) {
+				if (mainControl.getNewTournamentPlayerIncludeControl().getReadyToSave()[i] == false) {
 					ready = false;
 				}
 			}
@@ -417,7 +417,7 @@ public class PairingsControl implements ActionListener, PropertyChangeListener {
 		} else {
 			Boolean nextTab = true;
 			for (int i = 0; i < mainControl.getTournament().getAnzahlGruppen(); i++) {
-				if (nextTab == true && mainControl.getNewTournamentPlayerInputControl().getReadyToSave()[i] == false) {
+				if (nextTab == true && mainControl.getNewTournamentPlayerIncludeControl().getReadyToSave()[i] == false) {
 					nextTab = false;
 
 					this.mainControl.getTabbedPaneView().getTabbedPane().setSelectedIndex(i);

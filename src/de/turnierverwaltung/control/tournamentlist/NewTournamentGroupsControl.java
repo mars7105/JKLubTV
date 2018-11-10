@@ -145,19 +145,16 @@ public class NewTournamentGroupsControl implements ActionListener {
 	private void runPlayerInput() {
 		final int fehlerIndex = 0;
 		try {
-			NewTournamentPlayerInputControl spielerEingabeControl;
-			if (mainControl.getNewTournamentPlayerInputControl() == null) {
-				spielerEingabeControl = new NewTournamentPlayerInputControl(mainControl);
-				mainControl.setNewTournamentPlayerInputControl(spielerEingabeControl);
+			NewTournamentPlayerIncludeControl spielerEingabeControl;
+			if (mainControl.getNewTournamentPlayerIncludeControl() == null) {
+				spielerEingabeControl = new NewTournamentPlayerIncludeControl(mainControl);
+				mainControl.setNewTournamentPlayerIncludeControl(spielerEingabeControl);
 			} else {
-				spielerEingabeControl = mainControl.getNewTournamentPlayerInputControl();
+				spielerEingabeControl = mainControl.getNewTournamentPlayerIncludeControl();
 			}
 
 			for (int i = 0; i < gruppenAnzahl; i++) {
-				//
-				// fehlerIndex = i;
-				// spielerAnzahl[i] = getSpielerAnzahl(i);
-				// gruppe[i].setSpielerAnzahl(spielerAnzahl[i]);
+				
 				spielerEingabeControl.makeTabbedPane(i);
 
 			}

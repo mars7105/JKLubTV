@@ -48,7 +48,7 @@ import de.turnierverwaltung.control.tournamentlist.ActionListenerTournamentItems
 import de.turnierverwaltung.control.tournamentlist.ActionListenerTournamentListControl;
 import de.turnierverwaltung.control.tournamentlist.NewTournamentControl;
 import de.turnierverwaltung.control.tournamentlist.NewTournamentGroupsControl;
-import de.turnierverwaltung.control.tournamentlist.NewTournamentPlayerInputControl;
+import de.turnierverwaltung.control.tournamentlist.NewTournamentPlayerIncludeControl;
 import de.turnierverwaltung.control.tournamenttable.ActionListenerPairingsMenuControl;
 import de.turnierverwaltung.control.tournamenttable.CrossTableControl;
 import de.turnierverwaltung.control.tournamenttable.MeetingTableControl;
@@ -69,7 +69,6 @@ import de.turnierverwaltung.view.TabbedPaneView;
 import de.turnierverwaltung.view.TitleLabelView;
 import de.turnierverwaltung.view.navigation.NaviView;
 import de.turnierverwaltung.view.tournamentlist.NewTournamentGroupsView;
-import de.turnierverwaltung.view.tournamentlist.NewTournamentPlayerInputView;
 import de.turnierverwaltung.view.tournamentlist.NewTournamentView;
 import de.turnierverwaltung.view.tournamentlist.TournamentListView;
 import de.turnierverwaltung.view.tournamenttable.ButtonTabComponent;
@@ -102,8 +101,7 @@ public class MainControl extends JFrame implements WindowListener {
 	private NewTournamentGroupsView newTournamentGroupsView;
 
 	private NewTournamentGroupsControl newTournamentGroupsControl;
-	private NewTournamentPlayerInputView[] newTournamentPlayerInputView;
-	private NewTournamentPlayerInputControl newTournamentPlayerInputControl;
+//	private NewTournamentPlayerInputControl newTournamentPlayerInputControl;
 	private TabbedPaneViewControl tabbedPaneViewControl;
 	private TabbedPaneView tabbedPaneView;
 	private TabbedPaneView[] tabbedPaneViewArray;
@@ -149,7 +147,7 @@ public class MainControl extends JFrame implements WindowListener {
 	private ActionListenerTournamentEditControl actionListenerTournamentEditControl;
 	private StartpageControl startpageControl;
 	private final Parameter parameter;
-
+	private	NewTournamentPlayerIncludeControl newTournamentPlayerIncludeControl;
 	public MainControl(final String[] args) {
 
 		parameter = new Parameter(args);
@@ -295,13 +293,13 @@ public class MainControl extends JFrame implements WindowListener {
 		return newTournamentGroupsView;
 	}
 
-	public NewTournamentPlayerInputControl getNewTournamentPlayerInputControl() {
-		return newTournamentPlayerInputControl;
-	}
+//	public NewTournamentPlayerInputControl getNewTournamentPlayerInputControl() {
+//		return newTournamentPlayerInputControl;
+//	}
 
-	public NewTournamentPlayerInputView[] getNewTournamentPlayerInputView() {
-		return newTournamentPlayerInputView;
-	}
+//	public NewTournamentPlayerInputView[] getNewTournamentPlayerInputView() {
+//		return newTournamentPlayerInputView;
+//	}
 
 	public NewTournamentView getNewTournamentView() {
 		return newTournamentView;
@@ -571,8 +569,8 @@ public class MainControl extends JFrame implements WindowListener {
 		newTournamentGroupsView = null;
 		newTournamentGroupsControl = null;
 
-		newTournamentPlayerInputView = null;
-		newTournamentPlayerInputControl = null;
+//		newTournamentPlayerInputView = null;
+		newTournamentPlayerIncludeControl = null;
 		tabbedPaneViewControl = null;
 		tabbedPaneView = null;
 		tabbedPaneViewArray = null;
@@ -712,14 +710,14 @@ public class MainControl extends JFrame implements WindowListener {
 		this.newTournamentGroupsView = newTournamentGroupsView;
 	}
 
-	public void setNewTournamentPlayerInputControl(
-			final NewTournamentPlayerInputControl newTournamentPlayerInputControl) {
-		this.newTournamentPlayerInputControl = newTournamentPlayerInputControl;
-	}
+//	public void setNewTournamentPlayerInputControl(
+//			final NewTournamentPlayerInputControl newTournamentPlayerInputControl) {
+//		this.newTournamentPlayerInputControl = newTournamentPlayerInputControl;
+//	}
 
-	public void setNewTournamentPlayerInputView(final NewTournamentPlayerInputView[] newTournamentPlayerInputView) {
-		this.newTournamentPlayerInputView = newTournamentPlayerInputView;
-	}
+//	public void setNewTournamentPlayerInputView(final NewTournamentPlayerInputView[] newTournamentPlayerInputView) {
+//		this.newTournamentPlayerInputView = newTournamentPlayerInputView;
+//	}
 
 	public void setNewTournamentView(final NewTournamentView newTournamentView) {
 		this.newTournamentView = newTournamentView;
@@ -735,6 +733,14 @@ public class MainControl extends JFrame implements WindowListener {
 
 	public void setPairingsView(final PairingsView[] pairingsView) {
 		this.pairingsView = pairingsView;
+	}
+
+	public NewTournamentPlayerIncludeControl getNewTournamentPlayerIncludeControl() {
+		return newTournamentPlayerIncludeControl;
+	}
+
+	public void setNewTournamentPlayerIncludeControl(NewTournamentPlayerIncludeControl newTournamentPlayerIncludeControl) {
+		this.newTournamentPlayerIncludeControl = newTournamentPlayerIncludeControl;
 	}
 
 	public void setPlayerListControl(final PlayerListControl playerListControl) {

@@ -368,7 +368,7 @@ public class ActionListenerTournamentItemsControl implements ActionListener {
 	public void loadTurnier(final int index) throws SQLException {
 		int selectedTab = hauptPanel.getSelectedIndex();
 
-		mainControl.setNewTournamentPlayerInputControl(null);
+		mainControl.setNewTournamentPlayerIncludeControl(null);
 		if (mainControl.getTournament() != null) {
 			if (hauptPanel.getTabCount() - 1 == TournamentConstants.TAB_ACTIVE_TOURNAMENT) {
 				hauptPanel.remove(TournamentConstants.TAB_ACTIVE_TOURNAMENT);

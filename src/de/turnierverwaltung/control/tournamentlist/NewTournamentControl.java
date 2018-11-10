@@ -85,7 +85,7 @@ public class NewTournamentControl implements ActionListener {
 		this.mainControl = mainControl;
 		this.mainControl.setNewTournamentGroupsControl(null);
 		// this.mainControl.setSpielerAnzahlControl(null);
-		this.mainControl.setNewTournamentPlayerInputControl(null);
+		this.mainControl.setNewTournamentPlayerIncludeControl(null);
 		this.mainControl.setPairingsControl(null);
 		this.mainControl.setCrossTableControl(null);
 		hauptPanel = this.mainControl.getHauptPanel();

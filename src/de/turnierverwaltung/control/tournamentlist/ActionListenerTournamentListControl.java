@@ -32,7 +32,7 @@ public class ActionListenerTournamentListControl implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
 		if (arg0.getSource() .equals( newTurnierButton)) {
-			mainControl.setNewTournamentPlayerInputControl(null);
+			mainControl.setNewTournamentPlayerIncludeControl(null);
 			Tournament turnier = this.mainControl.getTournament();
 			if (turnier == null) {
 				mainControl.setNewTournamentControl(new NewTournamentControl(mainControl));
