@@ -77,6 +77,7 @@ public class NewTournamentPlayerIncludeView extends JPanel {
 
 		public PlayerLineView() {
 			super();
+			spielerID = -1;
 			JPanel line = new JPanel();
 			line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
 			JLabel label1 = new JLabel(" " + Messages.getString("SpielerEingabeView.14"));
@@ -106,7 +107,7 @@ public class NewTournamentPlayerIncludeView extends JPanel {
 			JLabel label4 = new JLabel(Messages.getString("SpielerEingabeView.9")); //$NON-NLS-1$
 			dwzTextfield = new JTextField(10);
 			dwzTextfield.setEnabled(false);
-			
+
 			dwzTextfield.setDisabledTextColor(Color.BLACK);
 			line.add(label4);
 			line.add(dwzTextfield);

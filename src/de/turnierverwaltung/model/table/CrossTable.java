@@ -146,10 +146,13 @@ public class CrossTable {
 			tabellenMatrix[1 + dwzabstand][0] = oldELOColumnName;
 		}
 		for (int i = 0; i < sp; i++) {
-			if (spieler[i].getKuerzel().length() >= 2) {
+			if (spieler[i].getKuerzel().length() >= 3) {
+				tabellenMatrix[i + gesamtabstand + 1][0] = spieler[i].getKuerzel().substring(0, 1) + "<br />"
+						+ spieler[i].getKuerzel().substring(1, 3);
+			} else if (spieler[i].getKuerzel().length() == 2) {
 				tabellenMatrix[i + gesamtabstand + 1][0] = spieler[i].getKuerzel().substring(0, 1) + "<br />"
 						+ spieler[i].getKuerzel().substring(1, 2);
-			} else {
+			} else if (spieler[i].getKuerzel().length() == 1){
 				tabellenMatrix[i + gesamtabstand + 1][0] = spieler[i].getKuerzel();
 			}
 

@@ -103,7 +103,7 @@ public class NewTournamentPlayerIncludeControl {
 	public void makeTabbedPane(final int index) throws NumberFormatException, ZahlKleinerAlsN, ZahlGroesserAlsN {
 //		mainControl.getHauptPanel();
 		ArrayList<Player> playerList = new ArrayList<Player>();
-		for (Player player:alleSpieler) {
+		for (Player player : alleSpieler) {
 			playerList.add(player);
 		}
 		playerOfGroupList.put(index, playerList);
@@ -138,9 +138,6 @@ public class NewTournamentPlayerIncludeControl {
 
 		private void newPlayer() {
 
-//			Boolean remove = false;
-//			SQLPlayerControl group;
-
 			final PlayerListGroupAddTable playerListTable = new PlayerListGroupAddTable(playerOfGroupList.get(index));
 			final PlayerListTableModel playerListTableModel = new PlayerListTableModel(
 					playerListTable.getPlayerMatrix(), playerListTable.getColumnNames());
@@ -156,14 +153,24 @@ public class NewTournamentPlayerIncludeControl {
 					final int modelRow = Integer.valueOf(e.getActionCommand());
 
 					final Player player = playerOfGroupList.get(index).get(modelRow);
-
+					int oldSpielerID = playerLineView.getSpielerID();
+					
 
 					playerLineView.setSpielerID(player.getSpielerId());
 					playerLineView.getDwzTextfield().setText(player.getDwz());
 					playerLineView.getForenameTextfield().setText(player.getForename());
 					playerLineView.getSurnameTextfield().setText(player.getSurname());
 					playerLineView.getKuerzelTextfield().setText(player.getKuerzel());
+
 					playerOfGroupList.get(index).remove(modelRow);
+					
+					if (oldSpielerID >= 0) {
+						for (Player temp : alleSpieler) {
+							if (temp.getSpielerId() == oldSpielerID) {
+								playerOfGroupList.get(index).add(temp);
+							}
+						}
+					}
 					playerListView.dispose();
 				}
 

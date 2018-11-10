@@ -102,6 +102,7 @@ public class Player implements Comparable<Object> {
 		eloData = new ELOData();
 		forename = "";
 		surname = "";
+		kuerzel = "";
 		setName(name2);
 
 		kuerzel = kuerzel2;
@@ -124,7 +125,7 @@ public class Player implements Comparable<Object> {
 		surname = "";
 		kuerzel = "";
 		setName(surName2 + "," + foreName2);
-
+		kuerzel = kuerzel2;
 		age = age2;
 		dwzData.setCsvIndex(-1);
 		punkte = 0;
