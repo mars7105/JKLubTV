@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,9 +21,12 @@ import javax.swing.JTabbedPane;
 
 import de.turnierverwaltung.ZahlGroesserAlsN;
 import de.turnierverwaltung.ZahlKleinerAlsN;
+import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.Messages;
 import de.turnierverwaltung.control.TabbedPaneViewControl;
+import de.turnierverwaltung.control.ratingdialog.DSBDWZControl;
+import de.turnierverwaltung.control.ratingdialog.ELOControl;
 import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
 import de.turnierverwaltung.control.tournamenttable.PairingsControl;
 import de.turnierverwaltung.model.Formeln;
@@ -31,6 +37,7 @@ import de.turnierverwaltung.model.TournamentConstants;
 import de.turnierverwaltung.model.table.PlayerListGroupAddTable;
 import de.turnierverwaltung.model.table.PlayerListTableModel;
 import de.turnierverwaltung.view.TabbedPaneView;
+import de.turnierverwaltung.view.playerlist.NewPlayerView;
 import de.turnierverwaltung.view.tournamentlist.NewTournamentPlayerIncludeView;
 import de.turnierverwaltung.view.tournamentlist.PlayerTournamentEditView;
 import de.turnierverwaltung.view.tournamentlist.NewTournamentPlayerIncludeView.PlayerLineView;
@@ -46,20 +53,21 @@ public class NewTournamentPlayerIncludeControl {
 	private final Group[] gruppe;
 	private Player[] spieler;
 	private final PairingsControl rundenEingabeFormularControl;
-	private final ArrayList<Player> alleSpieler;
+	private ArrayList<Player> alleSpieler;
 	private HashMap<Integer, ArrayList<Player>> playerOfGroupList;
 	private Boolean[] readyToSave;
 	private final ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png"))); //$NON-NLS-1$
 	private final JTabbedPane hauptPanel;
+	private SQLPlayerControl spielerTableControl;
 
 	public NewTournamentPlayerIncludeControl(MainControl mainControl) throws SQLException {
 		super();
 		this.mainControl = mainControl;
 		final int windowWidth = TournamentConstants.WINDOW_WIDTH - 25;
 		final int windowHeight = TournamentConstants.WINDOW_HEIGHT - 75;
-		final SQLPlayerControl spielerTableControl = new SQLPlayerControl(mainControl);
-		alleSpieler = spielerTableControl.getAllSpieler();
+		spielerTableControl = new SQLPlayerControl(mainControl);
+//		alleSpieler = spielerTableControl.getAllSpieler();
 		playerOfGroupList = new HashMap<Integer, ArrayList<Player>>();
 		turnier = this.mainControl.getTournament();
 		gruppe = turnier.getGruppe();
@@ -101,12 +109,7 @@ public class NewTournamentPlayerIncludeControl {
 	}
 
 	public void makeTabbedPane(final int index) throws NumberFormatException, ZahlKleinerAlsN, ZahlGroesserAlsN {
-//		mainControl.getHauptPanel();
-		ArrayList<Player> playerList = new ArrayList<Player>();
-		for (Player player : alleSpieler) {
-			playerList.add(player);
-		}
-		playerOfGroupList.put(index, playerList);
+//		fillPlayerList(index);
 		spielerEingabeView.put(index, new NewTournamentPlayerIncludeView(gruppe[index].getSpielerAnzahl()));
 		tabAnzeigeView.getTabbedPane().addTab(null, spielerEingabeView.get(index));
 		spielerEingabeView.get(index).getOkButton().addActionListener(new OkActionPopup(index));
@@ -118,6 +121,22 @@ public class NewTournamentPlayerIncludeControl {
 			playerLineView.getPlayerAddButton().addActionListener(new PlayerListActionPopup(playerLineView, index));
 		}
 
+	}
+
+	public void fillPlayerList(int index) {
+
+		try {
+			alleSpieler = spielerTableControl.getAllSpieler();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		ArrayList<Player> playerList = new ArrayList<Player>();
+		for (Player player : alleSpieler) {
+			playerList.add(player);
+		}
+		playerOfGroupList.put(index, playerList);
 	}
 
 	class PlayerListActionPopup implements ActionListener {
@@ -137,7 +156,7 @@ public class NewTournamentPlayerIncludeControl {
 		}
 
 		private void newPlayer() {
-
+			fillPlayerList(index);
 			final PlayerListGroupAddTable playerListTable = new PlayerListGroupAddTable(playerOfGroupList.get(index));
 			final PlayerListTableModel playerListTableModel = new PlayerListTableModel(
 					playerListTable.getPlayerMatrix(), playerListTable.getColumnNames());
@@ -154,7 +173,6 @@ public class NewTournamentPlayerIncludeControl {
 
 					final Player player = playerOfGroupList.get(index).get(modelRow);
 					int oldSpielerID = playerLineView.getSpielerID();
-					
 
 					playerLineView.setSpielerID(player.getSpielerId());
 					playerLineView.getDwzTextfield().setText(player.getDwz());
@@ -163,7 +181,7 @@ public class NewTournamentPlayerIncludeControl {
 					playerLineView.getKuerzelTextfield().setText(player.getKuerzel());
 
 					playerOfGroupList.get(index).remove(modelRow);
-					
+
 					if (oldSpielerID >= 0) {
 						for (Player temp : alleSpieler) {
 							if (temp.getSpielerId() == oldSpielerID) {
@@ -177,12 +195,149 @@ public class NewTournamentPlayerIncludeControl {
 			};
 			playerListView = new PlayerTournamentEditView(playerListTableModel, "Add Player to Group", newPlayerAction);
 			final JButton okButton = playerListView.getButtonPanel().getOkButton();
+			playerListView.getButtonPanel().makeELOButton();
+			playerListView.getButtonPanel().makeDWZButton();
+			playerListView.getButtonPanel().makeAddPlayerButton();
+			final JButton eloButton = playerListView.getButtonPanel().getSpielerELOSearchButton();
+			final JButton dwzButton = playerListView.getButtonPanel().getSpielerDEWISSearchButton();
+			final JButton addPlayerButton = playerListView.getButtonPanel().getSpielerAddButton();
 			okButton.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(final ActionEvent arg0) {
 					playerListView.dispose();
 
+				}
+
+			});
+			eloButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(final ActionEvent arg0) {
+					playerListView.dispose();
+					ELOControl eloDialogControl;
+					try {
+						eloDialogControl = new ELOControl(mainControl);
+						eloDialogControl.makeDialog();
+						eloDialogControl.makePlayerSearchList();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+//					playerListView.dispose();
+//					newPlayer();
+
+				}
+
+			});
+			dwzButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(final ActionEvent arg0) {
+					playerListView.dispose();
+					DSBDWZControl dewisDialogControl = new DSBDWZControl(mainControl);
+					try {
+						dewisDialogControl.makeDialog();
+						dewisDialogControl.makePlayerSearchList();
+					} catch (ArrayIndexOutOfBoundsException e) {
+						e.printStackTrace();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+//					playerListView.dispose();
+//					newPlayer();
+
+				}
+
+			});
+			addPlayerButton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(final ActionEvent arg0) {
+					playerListView.dispose();
+					NewPlayerView spielerHinzufuegenView = new NewPlayerView();
+
+					spielerHinzufuegenView.getOkButton().addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(final ActionEvent arg0) {
+							try {
+								String forename = spielerHinzufuegenView.getTextFieldForeName().getText();
+								String surname = spielerHinzufuegenView.getTextFieldSurName().getText();
+
+								String kuerzel = spielerHinzufuegenView.getTextFieldKuerzel().getText();
+								String dwz = spielerHinzufuegenView.getTextFieldDwz().getText();
+								int age = spielerHinzufuegenView.getTextComboBoxAge().getSelectedIndex();
+								Player neuerSpieler = new Player();
+								// neuerSpieler.setForename(forename);
+								// neuerSpieler.setSurname(surname);
+								neuerSpieler.setName(surname + "," + forename);
+								neuerSpieler.setKuerzel(kuerzel);
+								neuerSpieler.setDwz(dwz);
+								neuerSpieler.setAge(age);
+								SQLPlayerControl stc = new SQLPlayerControl(mainControl);
+
+								neuerSpieler.setSpielerId(stc.insertOneSpieler(neuerSpieler));
+
+								mainControl.getPlayerListControl().getSpieler().add(neuerSpieler);
+
+								spielerHinzufuegenView.getTextFieldForeName().setEditable(false);
+								spielerHinzufuegenView.getTextFieldSurName().setEditable(false);
+								spielerHinzufuegenView.getTextFieldKuerzel().setEditable(false);
+								spielerHinzufuegenView.getTextFieldDwz().setEditable(false);
+								spielerHinzufuegenView.getTextComboBoxAge().setEnabled(false);
+								spielerHinzufuegenView.spielerPanel();
+//								spielerHinzufuegenView.getTextFieldKuerzel().addFocusListener(this);
+							} catch (SQLException e) {
+								ExceptionHandler eh = new ExceptionHandler(mainControl);
+								eh.fileSQLError(e.getMessage());
+							}
+
+						}
+
+					});
+					spielerHinzufuegenView.getCancelButton().addActionListener(new ActionListener() {
+
+						@Override
+						public void actionPerformed(final ActionEvent arg0) {
+							playerListView.setEnabled(false);
+							try {
+								mainControl.getPlayerListControl().updateSpielerListe();
+							} catch (SQLException e) {
+								ExceptionHandler eh = new ExceptionHandler(mainControl);
+								eh.fileSQLError(e.getMessage());
+							}
+
+							spielerHinzufuegenView.closeWindow();
+//							playerListView.dispose();
+//							newPlayer();
+						}
+
+					});
+					spielerHinzufuegenView.getTextFieldKuerzel().addFocusListener(new FocusListener() {
+
+						@Override
+						public void focusGained(FocusEvent e) {
+							String forename = spielerHinzufuegenView.getTextFieldForeName().getText();
+							String surname = spielerHinzufuegenView.getTextFieldSurName().getText();
+							String kuerzel = "";
+							if (forename.length() > 0) {
+								kuerzel = forename.substring(0, 1);
+							}
+							if (surname.length() > 0) {
+								kuerzel += surname.substring(0, 1);
+							}
+							spielerHinzufuegenView.getTextFieldKuerzel().setText(kuerzel);
+
+						}
+
+						@Override
+						public void focusLost(FocusEvent arg0) {
+							// TODO Auto-generated method stub
+
+						}
+
+					});
+					spielerHinzufuegenView.showDialog();
 				}
 
 			});

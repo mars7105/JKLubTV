@@ -60,6 +60,7 @@ public class NewTournamentPlayerIncludeView extends JPanel {
 		scrollPane.setViewportView(all);
 
 		add(scrollPane, BorderLayout.CENTER);
+		setVisible(true);
 	}
 
 	public class PlayerLineView extends JPanel {

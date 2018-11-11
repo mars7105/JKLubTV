@@ -14,7 +14,6 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.TableColumn;
 
 import de.turnierverwaltung.model.table.PlayerListTableModel;
-import de.turnierverwaltung.view.ButtonPanelView;
 import de.turnierverwaltung.view.TitleLabelView;
 
 public class PlayerTournamentEditView extends JDialog {
@@ -25,7 +24,7 @@ public class PlayerTournamentEditView extends JDialog {
 	private final PlayerListTableModel tableModel;
 	private final JTable table;
 
-	private ButtonPanelView buttonPanel;
+	private OkDWZELOPlayerButtonPanelView buttonPanel;
 
 	public PlayerTournamentEditView(final PlayerListTableModel tableModel, final String groupName,
 			final Action deleteAction) {
@@ -57,8 +56,9 @@ public class PlayerTournamentEditView extends JDialog {
 		contentPanel.add(sPane, BorderLayout.CENTER);
 		add(contentPanel, BorderLayout.CENTER);
 		contentPanel.updateUI();
-		buttonPanel = new ButtonPanelView();
+		buttonPanel = new OkDWZELOPlayerButtonPanelView();
 		buttonPanel.makeOKButton();
+		
 		add(buttonPanel, BorderLayout.SOUTH);
 	}
 
@@ -82,7 +82,6 @@ public class PlayerTournamentEditView extends JDialog {
 			final TableColumn c = table.getColumnModel().getColumn(i);
 
 			if (i == 0) {
-				// c.setCellEditor(new DefaultCellEditor(comboBox));
 				c.setPreferredWidth(playerWidth);
 			}
 
@@ -97,11 +96,11 @@ public class PlayerTournamentEditView extends JDialog {
 
 	}
 
-	public ButtonPanelView getButtonPanel() {
+	public OkDWZELOPlayerButtonPanelView getButtonPanel() {
 		return buttonPanel;
 	}
 
-	public void setButtonPanel(final ButtonPanelView buttonPanel) {
+	public void setButtonPanel(final OkDWZELOPlayerButtonPanelView buttonPanel) {
 		this.buttonPanel = buttonPanel;
 	}
 
