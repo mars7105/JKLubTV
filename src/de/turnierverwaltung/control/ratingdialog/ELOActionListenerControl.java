@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ListIterator;
 
 import javax.swing.ImageIcon;
@@ -14,10 +15,13 @@ import javax.swing.event.ListSelectionListener;
 import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
+import de.turnierverwaltung.control.tournamentlist.NewTournamentPlayerIncludeControl.PlayerListActionPopup;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.rating.DWZData;
 import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
 import de.turnierverwaltung.view.ratingdialog.ELODialogView;
+import de.turnierverwaltung.view.tournamentlist.NewTournamentPlayerIncludeView;
+import de.turnierverwaltung.view.tournamentlist.NewTournamentPlayerIncludeView.PlayerLineView;
 
 /**
  *
@@ -62,6 +66,25 @@ public class ELOActionListenerControl implements ListSelectionListener, ActionLi
 					dialog.getBounds().width, dialog.getBounds().height);
 
 			dialog.closeWindow();
+			if (mainControl.getNewTournamentPlayerIncludeControl().getPlayerListView() != null) {
+				HashMap<Integer, NewTournamentPlayerIncludeView> spielerEingabeView = mainControl
+						.getNewTournamentPlayerIncludeControl().getSpielerEingabeView();
+				int index = mainControl.getNewTournamentPlayerIncludeControl().getPlayerListView().getIndex();
+				int lineIndex=mainControl.getNewTournamentPlayerIncludeControl().getPlayerListView().getLineIndex();
+				
+				
+				mainControl.getNewTournamentPlayerIncludeControl().fillPlayerList(index);
+				for (PlayerLineView playerLineView : spielerEingabeView.get(index).getPlayerLineViews()) {
+					for (ActionListener act : playerLineView.getPlayerAddButton().getActionListeners()) {
+						if (((PlayerListActionPopup) act).getPlayerLineView().getLineIndex() == lineIndex) {
+							mainControl.getNewTournamentPlayerIncludeControl().getPlayerListView().dispose();
+							((PlayerListActionPopup) act).newPlayer();
+						}
+					}
+
+				}
+
+			}
 		}
 		if (arg0.getSource().equals(eloDialogControl.getDialog().getPlayerSearchView().getOkButton())) {
 			try {

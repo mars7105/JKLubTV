@@ -54,21 +54,24 @@ public class NewTournamentPlayerIncludeControl {
 	private Player[] spieler;
 	private final PairingsControl rundenEingabeFormularControl;
 	private ArrayList<Player> alleSpieler;
-	private HashMap<Integer, ArrayList<Player>> playerOfGroupList;
+	private ArrayList<Player> playerOfGroupList;
 	private Boolean[] readyToSave;
 	private final ImageIcon gruppenIcon = new ImageIcon(
 			Toolkit.getDefaultToolkit().getImage(getClass().getResource("/images/view-calendar-month.png"))); //$NON-NLS-1$
 	private final JTabbedPane hauptPanel;
 	private SQLPlayerControl spielerTableControl;
-
+	private PlayerTournamentEditView playerListView;
+	private HashMap<Integer, Boolean> playerIDCheck;
+	private HashMap<Integer,  HashMap<Integer, Boolean>> playerIDs;
 	public NewTournamentPlayerIncludeControl(MainControl mainControl) throws SQLException {
 		super();
+		playerIDs=new HashMap<Integer,  HashMap<Integer, Boolean>>();
 		this.mainControl = mainControl;
 		final int windowWidth = TournamentConstants.WINDOW_WIDTH - 25;
 		final int windowHeight = TournamentConstants.WINDOW_HEIGHT - 75;
 		spielerTableControl = new SQLPlayerControl(mainControl);
 //		alleSpieler = spielerTableControl.getAllSpieler();
-		playerOfGroupList = new HashMap<Integer, ArrayList<Player>>();
+		playerOfGroupList = new ArrayList<Player>();
 		turnier = this.mainControl.getTournament();
 		gruppe = turnier.getGruppe();
 		hauptPanel = this.mainControl.getHauptPanel();
@@ -109,7 +112,8 @@ public class NewTournamentPlayerIncludeControl {
 	}
 
 	public void makeTabbedPane(final int index) throws NumberFormatException, ZahlKleinerAlsN, ZahlGroesserAlsN {
-//		fillPlayerList(index);
+		playerIDCheck = new HashMap<Integer, Boolean>();
+		playerIDs.put(index, playerIDCheck);
 		spielerEingabeView.put(index, new NewTournamentPlayerIncludeView(gruppe[index].getSpielerAnzahl()));
 		tabAnzeigeView.getTabbedPane().addTab(null, spielerEingabeView.get(index));
 		spielerEingabeView.get(index).getOkButton().addActionListener(new OkActionPopup(index));
@@ -123,8 +127,7 @@ public class NewTournamentPlayerIncludeControl {
 
 	}
 
-	public void fillPlayerList(int index) {
-
+	public void fillPlayerList(final int index) {
 		try {
 			alleSpieler = spielerTableControl.getAllSpieler();
 		} catch (SQLException e) {
@@ -134,30 +137,57 @@ public class NewTournamentPlayerIncludeControl {
 
 		ArrayList<Player> playerList = new ArrayList<Player>();
 		for (Player player : alleSpieler) {
-			playerList.add(player);
+			if (playerIDs.get(index).getOrDefault(player.getSpielerId(), true)) {
+				playerList.add(player);
+			}
 		}
-		playerOfGroupList.put(index, playerList);
+		playerOfGroupList = playerList;
 	}
 
-	class PlayerListActionPopup implements ActionListener {
+	public HashMap<Integer, NewTournamentPlayerIncludeView> getSpielerEingabeView() {
+		return spielerEingabeView;
+	}
+
+	public PlayerTournamentEditView getPlayerListView() {
+		return playerListView;
+	}
+
+	public void setPlayerListView(PlayerTournamentEditView playerListView) {
+		this.playerListView = playerListView;
+	}
+
+	public class PlayerListActionPopup implements ActionListener {
 		private PlayerLineView playerLineView;
-		private PlayerTournamentEditView playerListView;
+
 		private int index;
+//		private PlayerListActionPopup playerListActionPopup;
 
 		public PlayerListActionPopup(PlayerLineView playerLineView, int index) {
 			super();
 			this.index = index;
+			playerListView = null;
 			this.playerLineView = playerLineView;
+
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
+
 			newPlayer();
 		}
 
-		private void newPlayer() {
+		public int getIndex() {
+			return index;
+		}
+
+		public void setIndex(int index) {
+			this.index = index;
+		}
+
+		public void newPlayer() {
+
 			fillPlayerList(index);
-			final PlayerListGroupAddTable playerListTable = new PlayerListGroupAddTable(playerOfGroupList.get(index));
+			final PlayerListGroupAddTable playerListTable = new PlayerListGroupAddTable(playerOfGroupList);
 			final PlayerListTableModel playerListTableModel = new PlayerListTableModel(
 					playerListTable.getPlayerMatrix(), playerListTable.getColumnNames());
 
@@ -171,7 +201,7 @@ public class NewTournamentPlayerIncludeControl {
 				public void actionPerformed(final ActionEvent e) {
 					final int modelRow = Integer.valueOf(e.getActionCommand());
 
-					final Player player = playerOfGroupList.get(index).get(modelRow);
+					final Player player = playerOfGroupList.get(modelRow);
 					int oldSpielerID = playerLineView.getSpielerID();
 
 					playerLineView.setSpielerID(player.getSpielerId());
@@ -180,12 +210,13 @@ public class NewTournamentPlayerIncludeControl {
 					playerLineView.getSurnameTextfield().setText(player.getSurname());
 					playerLineView.getKuerzelTextfield().setText(player.getKuerzel());
 
-					playerOfGroupList.get(index).remove(modelRow);
-
+					playerOfGroupList.remove(modelRow);
+					playerIDs.get(index).put(player.getSpielerId(), false);
 					if (oldSpielerID >= 0) {
 						for (Player temp : alleSpieler) {
 							if (temp.getSpielerId() == oldSpielerID) {
-								playerOfGroupList.get(index).add(temp);
+								playerOfGroupList.add(temp);
+								playerIDs.get(index).put(temp.getSpielerId(), true);
 							}
 						}
 					}
@@ -194,6 +225,8 @@ public class NewTournamentPlayerIncludeControl {
 
 			};
 			playerListView = new PlayerTournamentEditView(playerListTableModel, "Add Player to Group", newPlayerAction);
+			playerListView.setLineIndex(playerLineView.getLineIndex());
+
 			final JButton okButton = playerListView.getButtonPanel().getOkButton();
 			playerListView.getButtonPanel().makeELOButton();
 			playerListView.getButtonPanel().makeDWZButton();
@@ -214,7 +247,7 @@ public class NewTournamentPlayerIncludeControl {
 
 				@Override
 				public void actionPerformed(final ActionEvent arg0) {
-					playerListView.dispose();
+					playerListView.setIndex(index);
 					ELOControl eloDialogControl;
 					try {
 						eloDialogControl = new ELOControl(mainControl);
@@ -233,11 +266,13 @@ public class NewTournamentPlayerIncludeControl {
 
 				@Override
 				public void actionPerformed(final ActionEvent arg0) {
-					playerListView.dispose();
+					playerListView.setIndex(index);
 					DSBDWZControl dewisDialogControl = new DSBDWZControl(mainControl);
 					try {
 						dewisDialogControl.makeDialog();
 						dewisDialogControl.makePlayerSearchList();
+//						dewisDialogControl.setPlayerListView(playerListView);
+//						dewisDialogControl.setPlayerListActionPopup(playerListActionPopup);
 					} catch (ArrayIndexOutOfBoundsException e) {
 						e.printStackTrace();
 					} catch (IOException e) {
@@ -253,7 +288,7 @@ public class NewTournamentPlayerIncludeControl {
 
 				@Override
 				public void actionPerformed(final ActionEvent arg0) {
-					playerListView.dispose();
+//					playerListView.dispose();
 					NewPlayerView spielerHinzufuegenView = new NewPlayerView();
 
 					spielerHinzufuegenView.getOkButton().addActionListener(new ActionListener() {
@@ -342,6 +377,14 @@ public class NewTournamentPlayerIncludeControl {
 
 			});
 			playerListView.showDialog();
+		}
+
+		public PlayerLineView getPlayerLineView() {
+			return playerLineView;
+		}
+
+		public void setPlayerLineView(PlayerLineView playerLineView) {
+			this.playerLineView = playerLineView;
 		}
 
 	}

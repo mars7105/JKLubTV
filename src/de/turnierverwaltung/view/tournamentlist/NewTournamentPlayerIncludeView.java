@@ -46,7 +46,7 @@ public class NewTournamentPlayerIncludeView extends JPanel {
 
 		centerPane.setLayout(new BoxLayout(centerPane, BoxLayout.Y_AXIS));
 		for (int i = 0; i < this.spielerAnzahl; i++) {
-			PlayerLineView line = new PlayerLineView();
+			PlayerLineView line = new PlayerLineView(i);
 			playerLineViews.add(line);
 			centerPane.add(line);
 
@@ -75,9 +75,11 @@ public class NewTournamentPlayerIncludeView extends JPanel {
 		private JTextField dwzTextfield;
 		private JTextField kuerzelTextfield;
 		private JButton playerAddButton;
+		private int lineIndex;
 
-		public PlayerLineView() {
+		public PlayerLineView(int i) {
 			super();
+			lineIndex = i;
 			spielerID = -1;
 			JPanel line = new JPanel();
 			line.setLayout(new BoxLayout(line, BoxLayout.X_AXIS));
@@ -115,6 +117,14 @@ public class NewTournamentPlayerIncludeView extends JPanel {
 
 			this.add(line);
 
+		}
+
+		public int getLineIndex() {
+			return lineIndex;
+		}
+
+		public void setLineIndex(int lineIndex) {
+			this.lineIndex = lineIndex;
 		}
 
 		public int getSpielerID() {

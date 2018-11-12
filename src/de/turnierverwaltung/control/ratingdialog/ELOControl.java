@@ -145,15 +145,16 @@ public class ELOControl {
 			}
 
 			dialog.getPlayerSearchView().getOkButton().setEnabled(false);
-			dialog.setLocationRelativeTo(null);
-			dialog.pack();
+//			dialog.setLocationRelativeTo(null);
+//			dialog.pack();
 			dialog.setBounds(mainControl.getPropertiesControl().getELODialogX(),
 					mainControl.getPropertiesControl().getELODialogY(),
 					mainControl.getPropertiesControl().getELODialogWidth(),
 					mainControl.getPropertiesControl().getELODialogHeight());
 
-			dialog.setEnabled(true);
-			dialog.setVisible(true);
+//			dialog.setEnabled(true);
+//			dialog.setVisible(true);
+			
 		} else {
 			errorHandler();
 		}
@@ -244,6 +245,7 @@ public class ELOControl {
 
 				}
 			});
+			dialog.showDialog();
 		} else {
 			errorHandler();
 		}

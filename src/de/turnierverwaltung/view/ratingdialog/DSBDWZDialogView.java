@@ -18,6 +18,7 @@ package de.turnierverwaltung.view.ratingdialog;
 
 import java.awt.BorderLayout;
 import java.awt.Desktop;
+import java.awt.Dialog;
 import java.awt.FlowLayout;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -109,8 +110,8 @@ public class DSBDWZDialogView extends JDialog {
 		setTitle(Messages.getString("DEWISDialogView.0")); //$NON-NLS-1$
 		// setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
 		// setBounds(100, 100, 450, 300);
-		getContentPane().setLayout(new BorderLayout());
-
+//		getContentPane().setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 		contentPanel.setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		vereinsSuche = new JTextField(25);
@@ -192,17 +193,27 @@ public class DSBDWZDialogView extends JDialog {
 			final JTabbedPane tp = new JTabbedPane();
 			tp.addTab(Messages.getString("DEWISDialogView.0"), tabIcon, contentPanel);
 			tp.addTab("Info", infoIcon, sv);
-			getContentPane().add(tp, BorderLayout.CENTER);
+//			getContentPane().add(tp, BorderLayout.CENTER);
+			add(tp, BorderLayout.CENTER);
 		} else {
 			final JTabbedPane tp = new JTabbedPane();
 
 			tp.addTab(Messages.getString("DEWISDialogView.0"), tabIcon, contentPanel);
 			tp.addTab(Messages.getString("DEWISDialogView.8"), tabIcon, playerSearchView);
-			getContentPane().add(tp, BorderLayout.CENTER);
+//			getContentPane().add(tp, BorderLayout.CENTER);
+			add(tp, BorderLayout.CENTER);
 		}
 
 	}
+	public void showDialog() {
+		pack();
 
+		setLocationRelativeTo(null);
+		setEnabled(true);
+		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		setVisible(true);
+
+	}
 	public void closeWindow() {
 		dispose();
 	}

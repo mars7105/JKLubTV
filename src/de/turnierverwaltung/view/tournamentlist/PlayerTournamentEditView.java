@@ -25,10 +25,14 @@ public class PlayerTournamentEditView extends JDialog {
 	private final JTable table;
 
 	private OkDWZELOPlayerButtonPanelView buttonPanel;
+	private int index;
+	protected int lineIndex;
 
 	public PlayerTournamentEditView(final PlayerListTableModel tableModel, final String groupName,
 			final Action deleteAction) {
 		super();
+		index = 0;
+		lineIndex = 0;
 		setTitle("Playerlist");
 		final TitleLabelView label = new TitleLabelView(groupName);
 		this.tableModel = tableModel;
@@ -58,7 +62,7 @@ public class PlayerTournamentEditView extends JDialog {
 		contentPanel.updateUI();
 		buttonPanel = new OkDWZELOPlayerButtonPanelView();
 		buttonPanel.makeOKButton();
-		
+
 		add(buttonPanel, BorderLayout.SOUTH);
 	}
 
@@ -102,6 +106,23 @@ public class PlayerTournamentEditView extends JDialog {
 
 	public void setButtonPanel(final OkDWZELOPlayerButtonPanelView buttonPanel) {
 		this.buttonPanel = buttonPanel;
+	}
+
+	public void setIndex(int index) {
+		this.index = index;
+	}
+
+	public int getIndex() {
+		return index;
+	}
+
+	public void setLineIndex(int lineIndex) {
+		this.lineIndex = lineIndex;
+
+	}
+
+	public int getLineIndex() {
+		return lineIndex;
 	}
 
 }

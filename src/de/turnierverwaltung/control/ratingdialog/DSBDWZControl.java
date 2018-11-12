@@ -49,6 +49,7 @@ import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
 import de.turnierverwaltung.model.rating.SortCSVVereine;
 import de.turnierverwaltung.view.ratingdialog.DSBDWZDialogView;
 import de.turnierverwaltung.view.ratingdialog.DSBDWZPlayerView;
+import de.turnierverwaltung.view.tournamentlist.PlayerTournamentEditView;
 
 public class DSBDWZControl {
 	private final MainControl mainControl;
@@ -67,6 +68,7 @@ public class DSBDWZControl {
 	private SQLitePlayerDWZList sqlitePlayerlist;
 	private String standardZPS;
 	private Boolean dbChecked;
+	private PlayerTournamentEditView playerListView;
 
 	/**
 	 *
@@ -160,15 +162,15 @@ public class DSBDWZControl {
 				e.printStackTrace();
 			}
 		}
-		dialog.setLocationRelativeTo(null);
-		dialog.pack();
+//		dialog.setLocationRelativeTo(null);
+//		dialog.pack();
 		dialog.setBounds(mainControl.getPropertiesControl().getDWZDialogX(),
 				mainControl.getPropertiesControl().getDWZDialogY(),
 				mainControl.getPropertiesControl().getDWZDialogWidth(),
 				mainControl.getPropertiesControl().getDWZDialogHeight());
 
-		dialog.setEnabled(true);
-		dialog.setVisible(true);
+//		dialog.setEnabled(true);
+//		dialog.setVisible(true);
 
 		String zps = mainControl.getPropertiesControl().getZPS();
 
@@ -192,13 +194,12 @@ public class DSBDWZControl {
 			makeDWZListe(zps);
 			dialog.getVereinsAuswahl().addItemListener(dewisDialogActionListenerControl);
 		}
-
+		dialog.showDialog();
 	}
 
 	/**
 	 *
-	 * @param zps
-	 *            = ZPS number of the association
+	 * @param zps = ZPS number of the association
 	 * @throws IOException
 	 * @throws ArrayIndexOutOfBoundsException
 	 */
@@ -613,4 +614,14 @@ public class DSBDWZControl {
 		this.zpsItems = zpsItems;
 	}
 
+	public void setPlayerListView(PlayerTournamentEditView playerListView) {
+		this.playerListView = playerListView;
+	}
+
+	public PlayerTournamentEditView getPlayerListView() {
+		return playerListView;
+	}
+
+	
+	
 }

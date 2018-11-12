@@ -17,6 +17,7 @@ package de.turnierverwaltung.view.ratingdialog;
 //along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 import java.awt.BorderLayout;
+import java.awt.Dialog;
 import java.net.URISyntaxException;
 
 import javax.swing.BoxLayout;
@@ -72,8 +73,8 @@ public class ELODialogView extends JDialog {
 		// setAlwaysOnTop(true);
 		setTitle(Messages.getString("ELOPlayerView.1")); //$NON-NLS-1$
 
-		getContentPane().setLayout(new BorderLayout());
-
+//		getContentPane().setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 		contentPanel.setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		vereinsSuche = new JTextField(25);
@@ -90,14 +91,22 @@ public class ELODialogView extends JDialog {
 		// southPanel.add(buttonPane);
 		contentPanel.add(southPanel, BorderLayout.SOUTH);
 
-		getContentPane().add(contentPanel, BorderLayout.CENTER);
-		// pack();
+//		getContentPane().add(contentPanel, BorderLayout.CENTER);
+		add(contentPanel, BorderLayout.CENTER);
 
-		setEnabled(true);
-		setVisible(true);
+//		setEnabled(true);
+//		setVisible(true);
 		// setLocationRelativeTo(null);
 	}
+	public void showDialog() {
+		pack();
 
+		setLocationRelativeTo(null);
+		setEnabled(true);
+		setModalityType(Dialog.ModalityType.APPLICATION_MODAL);
+		setVisible(true);
+
+	}
 	public void closeWindow() {
 		dispose();
 	}
@@ -161,7 +170,7 @@ public class ELODialogView extends JDialog {
 
 	public void refresh() {
 		// getButtonPanel().updateUI();
-		getContentPanel().updateUI();
+//		updateUI();
 		// pack();
 		// setLocationRelativeTo(null);
 	}
