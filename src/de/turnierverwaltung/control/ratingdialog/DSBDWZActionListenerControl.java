@@ -75,25 +75,25 @@ public class DSBDWZActionListenerControl implements ListSelectionListener, Actio
 					dialog.getBounds().width, dialog.getBounds().height);
 
 			dialog.closeWindow();
-			if (mainControl.getNewTournamentPlayerIncludeControl().getPlayerListView() != null) {
-				HashMap<Integer, NewTournamentPlayerIncludeView> spielerEingabeView = mainControl
-						.getNewTournamentPlayerIncludeControl().getSpielerEingabeView();
-				int index = mainControl.getNewTournamentPlayerIncludeControl().getPlayerListView().getIndex();
-				int lineIndex=mainControl.getNewTournamentPlayerIncludeControl().getPlayerListView().getLineIndex();
-				
-				
-				mainControl.getNewTournamentPlayerIncludeControl().fillPlayerList(index);
-				for (PlayerLineView playerLineView : spielerEingabeView.get(index).getPlayerLineViews()) {
-					for (ActionListener act : playerLineView.getPlayerAddButton().getActionListeners()) {
-						if (((PlayerListActionPopup) act).getPlayerLineView().getLineIndex() == lineIndex) {
-							mainControl.getNewTournamentPlayerIncludeControl().getPlayerListView().dispose();
-							((PlayerListActionPopup) act).newPlayer();
-						}
-					}
-
-				}
-
-			}
+//			if (mainControl.getNewTournamentPlayerIncludeControl() != null) {
+//				HashMap<Integer, NewTournamentPlayerIncludeView> spielerEingabeView = mainControl
+//						.getNewTournamentPlayerIncludeControl().getSpielerEingabeView();
+//				int index = mainControl.getNewTournamentPlayerIncludeControl().getPlayerListView().getIndex();
+//				int lineIndex=mainControl.getNewTournamentPlayerIncludeControl().getPlayerListView().getLineIndex();
+//				
+//				
+//				mainControl.getNewTournamentPlayerIncludeControl().fillPlayerList(index);
+//				for (PlayerLineView playerLineView : spielerEingabeView.get(index).getPlayerLineViews()) {
+//					for (ActionListener act : playerLineView.getPlayerAddButton().getActionListeners()) {
+//						if (((PlayerListActionPopup) act).getPlayerLineView().getLineIndex() == lineIndex) {
+//							mainControl.getNewTournamentPlayerIncludeControl().getPlayerListView().dispose();
+//							((PlayerListActionPopup) act).newPlayer();
+//						}
+//					}
+//
+//				}
+//
+//			}
 		}
 		if (arg0.getSource().equals(dewisDialogControl.getDialog().getOkButton()))
 

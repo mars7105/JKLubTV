@@ -28,6 +28,7 @@ import de.turnierverwaltung.control.TabbedPaneViewControl;
 import de.turnierverwaltung.control.ratingdialog.DSBDWZControl;
 import de.turnierverwaltung.control.ratingdialog.ELOControl;
 import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
+import de.turnierverwaltung.control.tournamentlist.NewTournamentPlayerIncludeControl.PlayerListActionPopup;
 import de.turnierverwaltung.control.tournamenttable.PairingsControl;
 import de.turnierverwaltung.model.Formeln;
 import de.turnierverwaltung.model.Group;
@@ -62,10 +63,11 @@ public class NewTournamentPlayerIncludeControl {
 	private SQLPlayerControl spielerTableControl;
 	private PlayerTournamentEditView playerListView;
 	private HashMap<Integer, Boolean> playerIDCheck;
-	private HashMap<Integer,  HashMap<Integer, Boolean>> playerIDs;
+	private HashMap<Integer, HashMap<Integer, Boolean>> playerIDs;
+
 	public NewTournamentPlayerIncludeControl(MainControl mainControl) throws SQLException {
 		super();
-		playerIDs=new HashMap<Integer,  HashMap<Integer, Boolean>>();
+		playerIDs = new HashMap<Integer, HashMap<Integer, Boolean>>();
 		this.mainControl = mainControl;
 		final int windowWidth = TournamentConstants.WINDOW_WIDTH - 25;
 		final int windowHeight = TournamentConstants.WINDOW_HEIGHT - 75;
@@ -256,8 +258,10 @@ public class NewTournamentPlayerIncludeControl {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-//					playerListView.dispose();
-//					newPlayer();
+					fillPlayerList(index);
+
+					playerListView.dispose();
+					newPlayer();
 
 				}
 
@@ -278,9 +282,10 @@ public class NewTournamentPlayerIncludeControl {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-//					playerListView.dispose();
-//					newPlayer();
+					fillPlayerList(index);
 
+					playerListView.dispose();
+					newPlayer();
 				}
 
 			});
@@ -288,7 +293,7 @@ public class NewTournamentPlayerIncludeControl {
 
 				@Override
 				public void actionPerformed(final ActionEvent arg0) {
-//					playerListView.dispose();
+					playerListView.setIndex(index);
 					NewPlayerView spielerHinzufuegenView = new NewPlayerView();
 
 					spielerHinzufuegenView.getOkButton().addActionListener(new ActionListener() {
@@ -322,6 +327,7 @@ public class NewTournamentPlayerIncludeControl {
 								spielerHinzufuegenView.getTextComboBoxAge().setEnabled(false);
 								spielerHinzufuegenView.spielerPanel();
 //								spielerHinzufuegenView.getTextFieldKuerzel().addFocusListener(this);
+
 							} catch (SQLException e) {
 								ExceptionHandler eh = new ExceptionHandler(mainControl);
 								eh.fileSQLError(e.getMessage());
@@ -334,7 +340,7 @@ public class NewTournamentPlayerIncludeControl {
 
 						@Override
 						public void actionPerformed(final ActionEvent arg0) {
-							playerListView.setEnabled(false);
+							playerListView.setIndex(index);
 							try {
 								mainControl.getPlayerListControl().updateSpielerListe();
 							} catch (SQLException e) {
@@ -343,8 +349,11 @@ public class NewTournamentPlayerIncludeControl {
 							}
 
 							spielerHinzufuegenView.closeWindow();
-//							playerListView.dispose();
-//							newPlayer();
+
+							fillPlayerList(index);
+
+							playerListView.dispose();
+							newPlayer();
 						}
 
 					});
