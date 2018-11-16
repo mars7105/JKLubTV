@@ -28,7 +28,6 @@ import de.turnierverwaltung.control.TabbedPaneViewControl;
 import de.turnierverwaltung.control.ratingdialog.DSBDWZControl;
 import de.turnierverwaltung.control.ratingdialog.ELOControl;
 import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
-import de.turnierverwaltung.control.tournamentlist.NewTournamentPlayerIncludeControl.PlayerListActionPopup;
 import de.turnierverwaltung.control.tournamenttable.PairingsControl;
 import de.turnierverwaltung.model.Formeln;
 import de.turnierverwaltung.model.Group;

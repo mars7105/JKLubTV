@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ListIterator;
 
 import javax.swing.ImageIcon;
@@ -15,13 +14,10 @@ import javax.swing.event.ListSelectionListener;
 import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
-import de.turnierverwaltung.control.tournamentlist.NewTournamentPlayerIncludeControl.PlayerListActionPopup;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.rating.DWZData;
 import de.turnierverwaltung.model.rating.SQLitePlayerDWZList;
 import de.turnierverwaltung.view.ratingdialog.ELODialogView;
-import de.turnierverwaltung.view.tournamentlist.NewTournamentPlayerIncludeView;
-import de.turnierverwaltung.view.tournamentlist.NewTournamentPlayerIncludeView.PlayerLineView;
 
 /**
  *

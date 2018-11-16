@@ -8,7 +8,6 @@ import java.awt.event.ItemListener;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.ListIterator;
 
 import javax.swing.ImageIcon;
@@ -18,14 +17,11 @@ import javax.swing.event.ListSelectionListener;
 import de.turnierverwaltung.control.ExceptionHandler;
 import de.turnierverwaltung.control.MainControl;
 import de.turnierverwaltung.control.sqlite.SQLPlayerControl;
-import de.turnierverwaltung.control.tournamentlist.NewTournamentPlayerIncludeControl.PlayerListActionPopup;
 import de.turnierverwaltung.model.Player;
 import de.turnierverwaltung.model.rating.CSVVereine;
 import de.turnierverwaltung.model.rating.ELOData;
 import de.turnierverwaltung.model.rating.SQLitePlayerELOList;
 import de.turnierverwaltung.view.ratingdialog.DSBDWZDialogView;
-import de.turnierverwaltung.view.tournamentlist.NewTournamentPlayerIncludeView;
-import de.turnierverwaltung.view.tournamentlist.NewTournamentPlayerIncludeView.PlayerLineView;
 
 /**
  * 
