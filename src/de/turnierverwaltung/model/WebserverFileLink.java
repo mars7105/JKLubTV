@@ -95,4 +95,22 @@ public class WebserverFileLink {
 		}
 		return pathToFile;
 	}
+
+	public String getPathToWhitePoint() {
+//		if (showLink) {
+			pathToFile = "style='background-image: url(" + webserverPath
+					+ "whitepoint.png); background-repeat: no-repeat;background-position: right center;'";
+
+//		}
+		return pathToFile;
+	}
+
+	public String getPathToBlackPoint() {
+//		if (showLink) {
+			pathToFile = "style='background-image: url(" + webserverPath
+					+ "blackpoint.png); background-repeat: no-repeat;background-position: right center;'";
+
+//		}
+		return pathToFile;
+	}
 }

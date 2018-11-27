@@ -14,49 +14,73 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-* { 
-	margin: 0; 
-	padding: 0; 
+
+* {
+	margin: 0;
+	padding: 0;
 }
-body { 
-	font: 14px/1.4 Georgia, Serif; 
+
+body {
+	font: 14px/1.4 Georgia, Serif;
 }
+
 #page-wrap {
 	margin: 50px;
 }
+
 p {
-	margin: 20px; 
+	margin: 20px;
 }
+
 h1 {
-	margin: 20px; 
+	margin: 20px;
 }
+
 h2 {
-	margin: 20px; 
+	margin: 20px;
 }
-	/* 
+
+/* 
 	Generic Styling, for Desktops/Laptops 
 	*/
-	table { 
-		width: 100%; 
-		border-collapse: collapse; 
-	}
-	/* Zebra striping */
-	tr:nth-of-type(odd) { 
-		background: #eee; 
-	}
-	th { 
-		background: #333; 
-		color: white; 
-		font-weight: bold; 
-	}
-	td, th { 
-		padding: 6px; 
-		border: 1px solid #ccc; 
-		text-align: left; 
-	}
-	div {
-		background: #eee; 
-		padding: 6px; 
-		border: 1px solid #ccc; 
-		text-align: left;		
-	}
+
+table {
+	width: 100%;
+	border-collapse: collapse;
+}
+
+/* Zebra striping */
+
+tr:nth-of-type(odd) {
+	background: #eee;
+}
+
+th {
+	background: #333;
+	color: white;
+	font-weight: bold;
+}
+
+td,
+th {
+	padding: 6px;
+	border: 1px solid #ccc;
+	text-align: left;
+}
+
+div {
+	background: #eee;
+	padding: 6px;
+	border: 1px solid #ccc;
+	text-align: left;
+}
+
+.blackcolor {
+	background-color: #ddd;
+}
+
+.whitecolor {}
+.nogame {
+	color:#eee;
+	background-color: #555;
+}

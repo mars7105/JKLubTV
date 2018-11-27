@@ -175,21 +175,24 @@ public class CrossTableToHTML {
 				String ausgabeWert = tabellenMatrix[reihenfolge[x]][y];
 
 				final Boolean color = colorMatrix[reihenfolge[x]][y];
-				String cell = "        <td>";
+				String cell = "        <td >";
 				if (color != null) {
 					if (color == true) {
-						cell = "<td " + fileLink.getPathToUserImageWhiteBlack() + ">";
+						cell = "<td class='whitecolor'>";
 					}
 					if (color == false) {
-						cell = "<td " + fileLink.getPathToUserImageBlackWhite() + ">";
+						cell = "<td class='blackcolor'>";
 					}
 				}
+				
 				if (ausgabeWert != null && !ausgabeWert.equals("") && !ausgabeWert.equals(" ")) {
 
 					if (ausgabeWert.equals(TournamentConstants.REMIS)) {
 						ausgabeWert = "&frac12;";
 					}
-
+					if (ausgabeWert.equals(TournamentConstants.LEERE_MENGE)) {
+						cell = "<td class='nogame'>";
+					}
 					htmlString += cell + ausgabeWert + "</td>\n";
 
 				} else {
